@@ -488,30 +488,33 @@
 
             </div>
             <!-- Buttons Row -->
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-12">
+            <div class="flex flex-row flex-wrap justify-center items-center gap-4 mt-12">
                 <a href="https://www.mirajoco.org/blog"
                     class="inline-block bg-transparent border border-black text-black px-6 py-3 rounded-lg hover:bg-black hover:text-white transition text-sm font-semibold">
                     View All Articles
                 </a>
                 <a href="#" data-toggle="modal" data-target="#newsletter_subscribe_modal" class="inline-block bg-[#006E6E] text-white px-6 py-3 rounded-lg hover:bg-[#005555] transition text-sm font-semibold btn btn-lg newsletter_footer_button col-xs-12 col-md-6 nofloat fpad bold">
                     <span class="font-semibold">Subscribe to our Newsletter</span>
-                    <span class="ml-2">Stay updated with the latest news and events!</span>
                     <div class="clearfix"></div>
                 </a>
-                    <!-- Repeat logo block as needed -->
-                    <img src="img/partner1.png" class="h-12 w-auto object-contain" alt="Partner 1" />
-                    <img src="img/ad3.png" class="h-12 w-auto object-contain" alt="Partner 2" />
-                    <img src="img/ad4.png" class="h-12 w-auto object-contain" alt="Partner 3" />
-                    <img src="img/ad2.png" class="h-12 w-auto object-contain" alt="Partner 4" />
-                    <img src="img/ad1.png" class="h-12 w-auto object-contain" alt="Partner 5" />
-                    <img src="img/ad.png" class="h-12 w-auto object-contain" alt="Partner 6" />
-                    <!-- Repeat once more to simulate infinite loop -->
-                    <img src="img/partner1.png" class="h-12 w-auto object-contain" alt="Partner 1" />
-                    <img src="img/ad3.png" class="h-12 w-auto object-contain" alt="Partner 2" />
-                    <img src="img/ad4.png" class="h-12 w-auto object-contain" alt="Partner 3" />
-                    <img src="img/ad2.png" class="h-12 w-auto object-contain" alt="Partner 4" />
-                    <img src="img/ad1.png" class="h-12 w-auto object-contain" alt="Partner 5" />
-                    <img src="img/ad.png" class="h-12 w-auto object-contain" alt="Partner 6" />
+            </div>
+            <!-- Partner Logos Marquee -->
+                <div class="overflow-x-hidden w-full py-6">
+                    <div class="flex animate-scroll whitespace-nowrap gap-8">
+                        <img src="img/partner1.png" class="h-12 w-auto object-contain inline-block" alt="Partner 1" />
+                        <img src="img/ad3.png" class="h-12 w-auto object-contain inline-block" alt="Partner 2" />
+                        <img src="img/ad4.png" class="h-12 w-auto object-contain inline-block" alt="Partner 3" />
+                        <img src="img/ad2.png" class="h-12 w-auto object-contain inline-block" alt="Partner 4" />
+                        <img src="img/ad1.png" class="h-12 w-auto object-contain inline-block" alt="Partner 5" />
+                        <img src="img/ad.png" class="h-12 w-auto object-contain inline-block" alt="Partner 6" />
+                        <!-- Repeat for seamless loop -->
+                        <img src="img/partner1.png" class="h-12 w-auto object-contain inline-block" alt="Partner 1" />
+                        <img src="img/ad3.png" class="h-12 w-auto object-contain inline-block" alt="Partner 2" />
+                        <img src="img/ad4.png" class="h-12 w-auto object-contain inline-block" alt="Partner 3" />
+                        <img src="img/ad2.png" class="h-12 w-auto object-contain inline-block" alt="Partner 4" />
+                        <img src="img/ad1.png" class="h-12 w-auto object-contain inline-block" alt="Partner 5" />
+                        <img src="img/ad.png" class="h-12 w-auto object-contain inline-block" alt="Partner 6" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -522,14 +525,21 @@
             0% {
                 transform: translateX(0);
             }
-
             100% {
                 transform: translateX(-50%);
             }
         }
-
         .animate-scroll {
             animation: scroll 30s linear infinite;
+        }
+        /* Ensure horizontal scroll on all screens */
+        .animate-scroll {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            .animate-scroll {
+                gap: 2rem;
+            }
         }
     </style>
 
