@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiRAjO Collective</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+</head>
+
+<body class="bg-white text-gray-700 scroll-smooth">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="navbar-left">
+                <img src="img/nav.png" alt="Logo" class="navbar-img" style="height: 5rem;">
+            </div>
+            <!-- NAV + DROPDOWNS -->
+            <nav class="hidden md:flex items-center space-x-6 ml-12">
+                <a href="https://www.mirajoco.org/search_results" class="hover:text-[#006E6E]">Directory</a>
+                <a href="https://www.mirajoco.org/about" class="hover:text-[#006E6E]">About</a>
+                <!-- Event Dropdown -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="hover:text-[#006E6E]">Event</button>
+                    <div x-show="open" @click.away="open = false"
+                        class="absolute bg-white mt-2 rounded-md shadow w-40 text-sm">
+                        <a href="#" class="block px-4 py-2 hover:bg-[#006E6E] hover:text-white">Blog</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-[#006E6E] hover:text-white">Newsletter</a>
+                    </div>
+                </div>
+
+                <a href="https://www.mirajoco.org/healthy-networking" class="hover:text-[#006E6E]">MiRAjO AI</a>
+                <a href="https://www.mirajoco.org/about/contact" class="hover:text-[#006E6E]">Contact Us</a>
+            </nav>
+
+            <!-- CTA BUTTONS -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://www.mirajoco.org/login"
+                    class="px-4 py-2 border border-black rounded-md text-black font-semibold hover:bg-black hover:text-white transition duration-300">
+                    Sign In
+                </a>
+
+                <a href="https://www.mirajoco.org/join"
+                    class="bg-[#006E6E] text-white px-4 py-2 rounded-md hover:bg-[#005555] transition">Get Listed</a>
+            </div>
+
+            <!-- Hamburger -->
+            <div class="md:hidden" x-data="{ open: false }">
+                <button @click="open = !open">
+                    <svg class="w-6 h-6 text-[#006E6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu -->
+                <div x-show="open" class="absolute left-0 top-16 w-full bg-white shadow-lg py-4 px-6 flex flex-col space-y-3 z-50">
+                    <a href="https://www.mirajoco.org/search_results" class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">Directory</a>
+                    <a href="https://www.mirajoco.org/about" class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">About</a>
+                    <a href="#" class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">Event</a>
+                    <a href="https://www.mirajoco.org/healthy-networking" class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">MiRAjO AI</a>
+                    <a href="https://www.mirajoco.org/about/contact" class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">Contact Us</a>
+                    <a href="https://www.mirajoco.org/login" class="block w-full py-2 px-2 rounded font-semibold text-[#006E6E] hover:bg-[#F0F0F0]">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-[90vh] min-h-[400px] overflow-hidden">
+        <!-- Background Image Parallax -->
+        <div class="absolute inset-0">
+            <img src="img/hero.png" alt="Hero Background"
+                class="w-full h-full object-cover object-center fixed md:static opacity-90" style="z-index: -1;" />
+        </div>
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 h-full flex flex-col justify-center items-center text-white px-4" data-aos="fade-up">
+            <h1 class="text-5xl font-bold mb-4">MiRAjO Collective</h1>
+            <p class="text-xl font-thin mb-6">
+                A collaborative business network where leaders, entrepreneurs, and professionals connect, grow, and
+                showcase their work to clients, customers, and peers. Use our member dashboard and business directory to
+                build visibility, foster real relationships, and grow your impact through community.</p>
+            <a href="https://www.mirajoco.org/join"
+                class="bg-[#006E6E] px-6 py-3 rounded-md hover:bg-[#005555] transition">Join Our
+                Network</a>
+        </div>
+        <script>
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from(".hero-title", {
+                scrollTrigger: {
+                    trigger: ".hero-title",
+                    start: "top 80%",
+                    toggleActions: "play none none reset"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        </script>
+    </section>
+    <!-- WHAT WE DO SECTION -->
+    <!-- WHAT WE DO SECTION -->
+    <section class="relative bg-white py-20 px-4 md:px-10" id="what-we-do">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center">
+            <!-- Left Text Content -->
+            <div class="w-full md:w-1/2 mb-12 md:mb-0 pr-10" data-aos="fade-right">
+                <h2 class="text-4xl md:text-5xl font-bold text-[#0A0A0A] leading-snug mb-6">
+                    Built to Amplify Your Leadership
+                </h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                    Step into a space designed to make your work seen, your voice heard, and your mission amplified. The
+                    MiRAjO Collective connects bold professionals, creators, and visionaries to visibility, tools, and
+                    real opportunities all from one dashboard.
+                </p>
+                <div class="flex justify-center">
+                    <a href="https://www.mirajoco.org/search_results"
+                        class="inline-block bg-[#006E6E] text-white px-6 py-3 rounded-md hover:bg-[#005555] transition text-sm font-semibold">
+                        Join the Directory
+                    </a>
+                </div>
+            </div>
+
+            <!-- Phone Image and Floating Boxes (Updated) -->
+            <div class="relative z-10 w-full md:w-1/2 flex justify-center">
+                <img src="img/mockumirajo1.png" alt="Mirajo Phone Preview"
+                    class="w-[340px] md:w-[420px] bounce-slow z-0">
+
+                <!-- Floating Boxes (wider, more spaced) -->
+                <!-- Box 1 -->
+                <div class="absolute top-[42%] right-4 w-44 md:w-56 p-3 bg-gradient-to-br from-yellow-200/80 to-pink-200/70 border border-black text-[#0A0A0A] rounded-lg shadow-md"
+                    data-aos="fade-up" data-aos-delay="500">
+                    <p class="font-semibold text-xs">Real Estate & Jobs</p>
+                    <p class="text-[10px] mt-1">We here to serve you whether you're building a business or your next
+                        gig.</p>
+                </div>
+
+                <!-- Box 2 -->
+                <div class="absolute top-6 right-16 md:top-28 w-52 md:w-60 p-3 bg-[#F4FAF9] text-[#0A0A0A] border border-black rounded-lg shadow-md"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <p class="font-semibold text-xs">Healthy Networking Events</p>
+                    <p class="text-[10px] mt-1">Connect offline in wellness spaces. New vibes, new people.</p>
+                </div>
+
+                <!-- Box 3 -->
+                <div class="absolute bottom-24 left-24 w-44 md:w-52 p-3 rounded-lg shadow-lg text-[#0A0A0A] border border-black bg-[#008080]"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <p class="font-semibold text-xs leading-tight">Member Directory</p>
+                    <p class="text-[10px] mt-1 leading-tight">By just landing on our homepage you Explore profiles &
+                        build
+                        partnerships.</p>
+                </div>
+
+                <!-- Box 4 -->
+                <div class="absolute bottom-10 right-4 w-44 md:w-52 p-3 bg-white text-[#0A0A0A] border border-[#006E6E] rounded-lg shadow-md"
+                    data-aos="fade-up" data-aos-delay="400">
+                    <p class="font-semibold text-xs">Content Spotlight</p>
+                    <p class="text-[10px] mt-1">Share your podcast, videos and get seen by the right people.</p>
+                </div>
+
+                <!-- Box 5 -->
+                <div class="absolute top-20 left-14 w-44 md:w-52 p-3 bg-[#006E6E] text-white rounded-lg shadow-lg border border-black"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <p class="font-semibold text-xs">Webinars & Courses</p>
+                    <p class="text-[10px] mt-1">Led by industry experts to keep you sharp and ahead of the curve.</p>
+                </div>
+                <!-- Box 6 -->
+                <div class="absolute top-[44%] left-20 w-44 md:w-56 p-3 bg-gradient-to-br from-[#B2EBF2] to-[#0097A7] text-[#0A0A0A] rounded-lg shadow-md"
+                    data-aos="fade-up" data-aos-delay="600">
+                    <p class="font-semibold text-xs">Accountability Calls</p>
+                    <p class="text-[10px] mt-1">Weekly check-ins keeping you aligned, focused, and moving forward.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Bouncing Animation Style -->
+    <style>
+        @keyframes bounceSlow {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .bounce-slow {
+            animation: bounceSlow 5s ease-in-out infinite;
+        }
+    </style>
+
+    <section class="bg-white py-14 px-6 md:px-10" data-aos="fade-up" data-aos-duration="1000"
+        data-aos-easing="ease-in-out">
+
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#0A0A0A] leading-snug mb-6">A Better Way to Connect</h2>
+
+            <p class="text-base md:text-lg text-gray-700 mb-8">
+                From weekly calls to wellness meetups, hear what makes MiRAjO Collective more than just a platform.
+            </p>
+            <div class="w-full rounded-xl shadow-xl overflow-hidden aspect-video">
+                <iframe class="w-full h-full"
+                    src="https://www.youtube.com/embed/ddISMidbrBM?autoplay=1&mute=1&playsinline=1"
+                    title="Mirajo Collective Launch" frameborder="0"
+                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+
+        </div>
+    </section>
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 text-center">
+            <h2
+                class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 opacity-0 translate-y-10 transition-all duration-700 scroll-fade">
+                Upcoming Events
+            </h2>
+            <p
+                class="text-gray-600 mb-12 text-base md:text-lg opacity-0 translate-y-10 transition-all duration-700 scroll-fade delay-200">
+                Join us in building better connections through movement, meditation, and meaningful conversations.
+            </p>
+
+            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Event Card 1 -->
+                <div
+                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700">
+                    <img src="img/net1.png" alt="Move Forward Thursdays" class="w-full h-48 object-cover">
+                    <div class="p-5 text-left">
+                        <h3 class="text-xl font-semibold text-white mb-2">Move Forward - Thursday Evenings!</h3>
+                        <a href="https://www.mirajoco.org/events/move-forward-thursday-evenings"
+                            class="text-[#00FFF0] font-medium hover:underline transition duration-300">Learn more</a>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div
+                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-150">
+                    <img src="img/net2.png" alt="Talk in the Park" class="w-full h-48 object-cover">
+                    <div class="p-5 text-left">
+                        <h3 class="text-xl font-semibold text-white mb-2">Talk In The Park</h3>
+                        <a href="https://www.mirajoco.org/events/talk-in-the-park--"
+                            class="text-[#FF783C] font-medium hover:underline transition duration-300">Learn more</a>
+                    </div>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div
+                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-300">
+                    <img src="img/net3.png" alt="Hands in the Sand" class="w-full h-48 object-cover">
+                    <div class="p-5 text-left">
+                        <h3 class="text-xl font-semibold text-white mb-2">Hands in the Sand: Meditation</h3>
+                        <a href="https://www.mirajoco.org/events/hands-in-the-sand-meditation-on-the-beach-193---"
+                            class="text-[#00FF99] font-medium hover:underline transition duration-300">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const fadeElements = document.querySelectorAll(".scroll-fade");
+
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.remove("opacity-0", "translate-y-10");
+                                entry.target.classList.add("opacity-100", "translate-y-0");
+                            }
+                        });
+                    },
+                    { threshold: 0.3 }
+                );
+
+                fadeElements.forEach((el) => observer.observe(el));
+            });
+        </script>
+
+    </section>
+
+    <section class="py-10 bg-[#F9FAFB]">
+        <div class="max-w-4xl mx-auto text-center px-4 md:px-0">
+            <div class="transition-all duration-700 ease-in-out transform translate-y-10 opacity-0 section-intro">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Explore the Future of Human Connection
+                </h2>
+                <p class="text-gray-700 text-base md:text-lg">
+                    From mindful networking to intelligent automation, MiRAjO is building a world where relationships
+                    drive results and wellness fuels innovation.
+                </p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.remove("translate-y-10", "opacity-0");
+                            entry.target.classList.add("translate-y-0", "opacity-100");
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                const introSection = document.querySelector(".section-intro");
+                if (introSection) observer.observe(introSection);
+            });
+        </script>
+    </section>
+
+    <section class="py-14 bg-[#F9FAFB]">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-8">
+            <!-- Healthy Networking Box -->
+            <div class="relative overflow-hidden rounded-2xl shadow-md p-8 flex flex-col justify-between min-h-[420px] h-full cursor-pointer transition-colors duration-300"
+                x-data="{ hovered: false }" @mouseenter="hovered = true" @mouseleave="hovered = false"
+                :class="hovered ? 'bg-gradient-to-br from-[#009688] to-[#006E6E]' : 'bg-[#FFFDF8]'">
+                <!-- Text -->
+                <div class="w-full z-20 flex flex-col items-start">
+                    <h2 class="text-3xl md:text-3xl font-bold mb-2 transition-colors duration-300 text-left"
+                        :class="hovered ? 'text-white' : 'text-[#009688]'">
+                        Healthy Networking
+                    </h2>
+                    <p class="text-base md:text-lg mb-4 leading-relaxed transition-colors duration-300 text-left"
+                        :class="hovered ? 'text-white' : 'text-gray-700'">
+                        At Healthy Networking, we’re redefining what it means to connect. It’s not just about business
+                        cards it is about <span class="italic">balance</span>. We bring professionals together in
+                        vibrant, health-focused spaces across cities to inspire authentic relationships and shared
+                        growth.
+                    </p>
+                </div>
+                <!-- Arrow + Link at bottom left -->
+                <div class="absolute bottom-6 left-6 z-30">
+                    <a href="https://www.mirajoco.org/healthy-networking"
+                        class="group inline-flex items-center font-semibold text-lg transition duration-300"
+                        :class="hovered ? 'text-white' : 'text-[#009688]'">
+                        Start Networking
+                        <svg class="ml-2 w-6 h-6 transition-transform duration-300 rotate-[-45deg]"
+                            :class="hovered ? 'text-white' : 'text-[#009688] group-hover:translate-x-1'" fill="none"
+                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- Image at bottom right, appears from bottom right -->
+                <div
+                    class="absolute bottom-0 right-0 z-30 flex items-end justify-end h-[180px] w-[180px] pointer-events-none">
+                    <img src="img/kkc.png" alt="Healthy Networking Preview" :class="hovered 
+                            ? 'opacity-100 translate-x-0 translate-y-0 scale-110' 
+                            : 'opacity-0 translate-y-16 translate-x-16 scale-95'"
+                        class="w-[140px] md:w-[170px] lg:w-[180px] transition-all duration-700 ease-in-out"
+                        style="will-change: transform, opacity;" />
+                </div>
+            </div>
+            <!-- Mirajo AI Box -->
+            <div class="relative overflow-hidden rounded-2xl shadow-md p-8 flex flex-col justify-between min-h-[420px] h-full cursor-pointer transition-colors duration-300"
+                x-data="{ hovered: false }" @mouseenter="hovered = true" @mouseleave="hovered = false"
+                :class="hovered ? 'bg-[#F7C707]' : 'bg-white'">
+                <!-- Text -->
+                <div class="w-full z-20 flex flex-col items-start">
+                    <h2 class="text-3xl md:text-3xl font-bold mb-4 transition-colors duration-300 text-left"
+                        :class="hovered ? 'text-white' : 'text-[#F7C707]'">
+                        Meet MiRAjO AI
+                    </h2>
+                    <p class="text-lg md:text-xl mb-6 leading-relaxed transition-colors duration-300 text-left"
+                        :class="hovered ? 'text-white' : 'text-gray-700'">
+                        Your AI-powered business partner. From handling bookings to managing inquiries, MiRAjO is
+                        designed to streamline conversations and automate workflows in real time. It adapts, learns, and
+                        delivers value every time someone chats with your brand.
+                    </p>
+                </div>
+                <!-- Arrow + Link at bottom left -->
+                <div class="absolute bottom-6 left-6 z-30">
+                    <a href="https://mirajoagency.org/"
+                        class="group inline-flex items-center font-semibold text-lg transition duration-300"
+                        :class="hovered ? 'text-white' : 'text-[#F7C707]'">
+                        Discover MiRAjO AI
+                        <svg class="ml-2 w-6 h-6 transition-transform duration-300"
+                            :class="hovered ? 'text-white' : 'text-[#F7C707] group-hover:translate-x-1'" fill="none"
+                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- Image at bottom right, appears from bottom right -->
+                <div
+                    class="absolute bottom-0 right-0 z-30 flex items-end justify-end h-[180px] w-[180px] pointer-events-none">
+                    <img src="img/ai].png" alt="Mirajo AI Preview" :class="hovered 
+                            ? 'opacity-100 translate-x-0 translate-y-0 scale-110' 
+                            : 'opacity-0 translate-y-16 translate-x-16 scale-95'"
+                        class="w-[140px] md:w-[170px] lg:w-[180px] transition-all duration-700 ease-in-out"
+                        style="will-change: transform, opacity;" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove("translate-x-[120%]", "opacity-0");
+                        entry.target.classList.add("translate-x-0", "opacity-100");
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll(".phone-img").forEach((img) => observer.observe(img));
+        });
+    </script>
+
+
+    </section>
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+            <!-- Section Intro -->
+            <div
+                class="text-center mb-12 transition-all duration-700 ease-in-out transform translate-y-10 opacity-0 blog-intro">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Check Out Our Latest Blog Articles</h2>
+                <p class="text-gray-700 text-base md:text-lg">
+                    Bold insights, real stories, and powerful advice for leaders who don’t follow the crowd.
+                </p>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="grid md:grid-cols-3 gap-10">
+
+                <!-- Blog Card 1 -->
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl opacity-0 translate-y-8 blog-card">
+                    <img src="img/blog.jpeg" alt="Leadership Time Trap" class="w-full h-48 object-cover rounded-t-2xl">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">The Leadership Time Trap: Are You Stuck in
+                            a Loop?</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            As leaders, we strive for growth. But what happens when the strategies still leave us stuck?
+                        </p>
+                        <p class="text-xs text-gray-500 mb-4">Posted By Miranda Johnson on 03/04/2025</p>
+                        <a href="https://www.mirajoco.org/blog/the-leadership-time-trap-are-you-stuck-in-a-loop"
+                            class="text-[#006E6E] font-semibold hover:underline">Continue Reading →</a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 2 -->
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl opacity-0 translate-y-8 blog-card delay-100">
+                    <img src="img/blog1.png" alt="Vulnerability in Leadership"
+                        class="w-full h-48 object-cover rounded-t-2xl">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Vulnerability Exists in Leadership</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Leadership isn’t all wins. Let’s get real about the emotional labor behind every great
+                            decision.
+                        </p>
+                        <p class="text-xs text-gray-500 mb-4">Posted By Samantha Gorski on 01/31/2025</p>
+                        <a href="https://www.mirajoco.org/blog/vulnerability-exists-in-leadership-and-it%E2%80%99s-time-to-talk-about-it"
+                            class="text-[#006E6E] font-semibold hover:underline">Continue Reading →</a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 3 -->
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl opacity-0 translate-y-8 blog-card delay-200">
+                    <img src="img/blog2.png" alt="Interview Tips" class="w-full h-48 object-cover rounded-t-2xl">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">What Hiring Managers Really Want</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Most candidates prep answers. But real standout energy? It’s deeper than that.
+                        </p>
+                        <p class="text-xs text-gray-500 mb-4">Posted By Samantha Gorski on 01/23/2025</p>
+                        <a href="https://www.mirajoco.org/blog/what-hiring-managers-are-looking-for-in-an-interview"
+                            class="text-[#006E6E] font-semibold hover:underline">Continue Reading →</a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Buttons Row -->
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-12">
+                <a href="https://www.mirajoco.org/blog"
+                    class="inline-block bg-transparent border border-black text-black px-6 py-3 rounded-lg hover:bg-black hover:text-white transition text-sm font-semibold">
+                    View All Articles
+                </a>
+                <a href="#" data-toggle="modal" data-target="#newsletter_subscribe_modal" class="inline-block bg-[#006E6E] text-white px-6 py-3 rounded-lg hover:bg-[#005555] transition text-sm font-semibold btn btn-lg newsletter_footer_button col-xs-12 col-md-6 nofloat fpad bold">
+                    <span class="font-semibold">Subscribe to our Newsletter</span>
+                    <span class="ml-2">Stay updated with the latest news and events!</span>
+                    <div class="clearfix"></div>
+                </a>
+                    <!-- Repeat logo block as needed -->
+                    <img src="img/partner1.png" class="h-12 w-auto object-contain" alt="Partner 1" />
+                    <img src="img/ad3.png" class="h-12 w-auto object-contain" alt="Partner 2" />
+                    <img src="img/ad4.png" class="h-12 w-auto object-contain" alt="Partner 3" />
+                    <img src="img/ad2.png" class="h-12 w-auto object-contain" alt="Partner 4" />
+                    <img src="img/ad1.png" class="h-12 w-auto object-contain" alt="Partner 5" />
+                    <img src="img/ad.png" class="h-12 w-auto object-contain" alt="Partner 6" />
+                    <!-- Repeat once more to simulate infinite loop -->
+                    <img src="img/partner1.png" class="h-12 w-auto object-contain" alt="Partner 1" />
+                    <img src="img/ad3.png" class="h-12 w-auto object-contain" alt="Partner 2" />
+                    <img src="img/ad4.png" class="h-12 w-auto object-contain" alt="Partner 3" />
+                    <img src="img/ad2.png" class="h-12 w-auto object-contain" alt="Partner 4" />
+                    <img src="img/ad1.png" class="h-12 w-auto object-contain" alt="Partner 5" />
+                    <img src="img/ad.png" class="h-12 w-auto object-contain" alt="Partner 6" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll {
+            animation: scroll 30s linear infinite;
+        }
+    </style>
+
+
+
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove("opacity-0", "translate-y-8");
+                        entry.target.classList.add("opacity-100", "translate-y-0");
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll(".blog-card, .blog-intro").forEach(el => observer.observe(el));
+        });
+    </script>
+    <!-- CTA BUTTON -->
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-white pt-12 pb-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-between gap-10 text-sm">
+
+            <!-- Platform Section -->
+            <div class="w-full">
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="https://www.mirajoco.org/about" class="hover:text-[#006E6E]">How It Works</a>
+                    <a href="https://www.mirajoco.org/join" class="hover:text-[#006E6E]">List Your Company</a>
+                    <a href="https://www.mirajoco.org/categories" class="hover:text-[#006E6E]">Browse Categories</a>
+                    <a href="https://www.mirajoco.org/locations" class="hover:text-[#006E6E]">Browse Locations</a>
+                    <a href="https://www.mirajoco.org/login" class="hover:text-[#006E6E]">Member Login</a>
+                    <a href="https://www.mirajoco.org/about/contact" class="hover:text-[#006E6E]">Contact Us</a>
+                    <a href="https://www.mirajoco.org/faq" class="hover:text-[#006E6E]">FAQ</a>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <span class="text-sm leading-relaxed text-center">
+                        Finding members is easy by searching our trusted network of top-rated individuals.
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <section class="py-12 bg-[#006E6E]">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 text-center">
+            <div class="flex justify-center gap-8">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/company/mirajocollective/" target="_blank"
+                    class="inline-flex items-center gap-2 text-white font-semibold hover:underline transition duration-300">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M100.28 448H7.4V149.9h92.88zM53.79 108.1C24.09 108.1 0 83.47 0 53.77a53.76 53.76 0 0 1 107.52 0c0 29.7-24.09 54.33-53.73 54.33zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.6-2.9 13.4-2.9 21.2V448h-92.7s1.2-241.1 0-266.1h92.7v37.7c12.3-19 34.2-46 83.2-46 60.7 0 106.2 39.6 106.2 124.7V448z" />
+                    </svg>
+                    LinkedIn
+                </a>
+                <!-- Contact -->
+                <a href="https://www.mirajoco.org/about/contact" target="_blank"
+                    class="inline-flex items-center gap-2 text-white font-semibold hover:underline transition duration-300">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M502.3 190.8l-192-160a48 48 0 0 0-60.6 0l-192 160A48 48 0 0 0 32 232v208a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V232a48 48 0 0 0-13.7-41.2zM464 440a16 16 0 0 1-16 16H64a16 16 0 0 1-16-16V232l192-160 192 160zM256 320a64 64 0 1 1 64-64 64.07 64.07 0 0 1-64 64z" />
+                    </svg>
+                    Contact Us
+                </a>
+            </div>
+        </div>
+        <div class="text-center mt-10 text-xs text-white">
+            © 2025 The MiRAjO Collective • All Rights Reserved •
+            <a href="#" class="underline">Terms of Use</a> •
+            <a href="#" class="underline">Privacy Policy</a>
+        </div>
+    </section>
+
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true
+        });
+    </script>
+
+    <!-- ✅ LeadConnector Widget Script -->
+    <script src="https://beta.leadconnectorhq.com/loader.js"
+        data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+        data-widget-id="67f491168a468a269790c4ca">
+        </script>
+
+</body>
+
+</html>
