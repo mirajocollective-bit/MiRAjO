@@ -250,7 +250,9 @@
                 Join us in building better connections through movement, meditation, and meaningful conversations.
             </p>
 
+            <!-- Grid wrapper for all cards -->
             <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
                 <!-- Event Card 1 -->
                 <div
                     class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700">
@@ -264,50 +266,52 @@
                     </div>
                 </div>
 
-            </div>
-
-            <!-- Event Card 2 -->
-            <div
-                class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-150">
-                <img src="img/net2.png" alt="Talk in the Park" class="w-full h-48 object-cover">
-                <div class="p-5 text-left">
-                    <h3 class="text-xl font-semibold text-white mb-2">Talk In The Park</h3>
-                    <a href="https://www.mirajoco.org/events/talk-in-the-park"
-                        class="text-[#FF783C] font-medium hover:underline transition duration-300">Learn more</a>
+                <!-- Event Card 2 -->
+                <div
+                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-150">
+                    <img src="img/net2.png" alt="Talk in the Park" class="w-full h-48 object-cover">
+                    <div class="p-5 text-left">
+                        <h3 class="text-xl font-semibold text-white mb-2">Talk In The Park</h3>
+                        <a href="https://www.mirajoco.org/events/talk-in-the-park"
+                            class="text-[#FF783C] font-medium hover:underline transition duration-300">Learn more</a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Event Card 3 -->
-            <div
-                class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-300">
-                <img src="img/net3.png" alt="Hands in the Sand" class="w-full h-48 object-cover">
-                <div class="p-5 text-left">
-                    <h3 class="text-xl font-semibold text-white mb-2">Hands in the Sand: Meditation</h3>
-                    <a href="https://www.mirajoco.org/events/hands-in-the-sand-meditation-on-the-beach-193"
-                        class="text-[#00FF99] font-medium hover:underline transition duration-300">Learn more</a>
+                <!-- Event Card 3 -->
+                <div
+                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-300">
+                    <img src="img/net3.png" alt="Hands in the Sand" class="w-full h-48 object-cover">
+                    <div class="p-5 text-left">
+                        <h3 class="text-xl font-semibold text-white mb-2">Hands in the Sand: Meditation</h3>
+                        <a href="https://www.mirajoco.org/events/hands-in-the-sand-meditation-on-the-beach-193"
+                            class="text-[#00FF99] font-medium hover:underline transition duration-300">Learn more</a>
+                    </div>
                 </div>
+
             </div>
         </div>
-        </div>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const fadeElements = document.querySelectorAll(".scroll-fade");
+    </section>
 
-                const observer = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.remove("opacity-0", "translate-y-10");
-                                entry.target.classList.add("opacity-100", "translate-y-0");
-                            }
-                        });
-                    },
-                    { threshold: 0.3 }
-                );
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fadeElements = document.querySelectorAll(".scroll-fade");
 
-                fadeElements.forEach((el) => observer.observe(el));
-            });
-        </script>
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.remove("opacity-0", "translate-y-10");
+                            entry.target.classList.add("opacity-100", "translate-y-0");
+                        }
+                    });
+                },
+                { threshold: 0.3 }
+            );
+
+            fadeElements.forEach((el) => observer.observe(el));
+        });
+    </script>
 
     </section>
 
