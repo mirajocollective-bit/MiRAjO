@@ -1024,40 +1024,13 @@
   <div class="section-eyebrow" data-aos="fade-up">Gather</div>
   <div class="section-head" data-aos="fade-up">Upcoming Events</div>
 
-  <div class="events-grid">
-    <!-- Event 1 -->
-    <div class="event-card" data-aos="fade-up" data-aos-delay="0">
-      <img src="img/MAM.jpg" alt="Healthy Networking – Trinity | MelO Wellness">
-      <div class="event-body">
-        <div class="event-title">Healthy Networking – Trinity | MelO Wellness</div>
-        <div class="event-date">Sat, Oct 4 · 11:30am – 2:30pm EDT</div>
-        <a href="https://www.eventbrite.com/e/healthy-networking-trinity-melo-wellness-tickets-1608321315349" target="_blank" rel="noopener" class="event-link">Register Now</a>
-      </div>
+  <div style="text-align:center; padding: 80px 20px;" data-aos="fade-up">
+    <div style="display:inline-block; border: 1px solid var(--border-light); border-radius: 12px; padding: 48px 64px; background: #fff;">
+      <div style="font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--living-green); font-weight: 500; margin-bottom: 16px;">Coming Soon</div>
+      <div style="font-family: 'Instrument Serif', serif; font-size: clamp(22px, 3vw, 30px); color: var(--deep-forest); font-weight: 400; margin-bottom: 12px;">New events are on the way.</div>
+      <p style="font-size: 14px; color: var(--text-muted-light); font-weight: 300; max-width: 380px; line-height: 1.7; margin: 0 auto 28px;">Stay connected — upcoming gatherings will be announced here and through the newsletter.</p>
+      <a href="https://www.mirajoco.org/events" class="btn-outline">View All Events</a>
     </div>
-
-    <!-- Event 2 -->
-    <div class="event-card" data-aos="fade-up" data-aos-delay="100">
-      <img src="img/HNM.png" alt="Healthy Networking – Clearwater">
-      <div class="event-body">
-        <div class="event-title">Healthy Networking – Clearwater</div>
-        <div class="event-date">Understanding Your Bloodwork!</div>
-        <a href="https://www.eventbrite.com/e/healthy-networking-clearwater-understanding-your-bloodwork-tickets-1618556830049" target="_blank" rel="noopener" class="event-link">Register Now</a>
-      </div>
-    </div>
-
-    <!-- Event 3 -->
-    <div class="event-card" data-aos="fade-up" data-aos-delay="200">
-      <img src="img/Neon Modern Music Flyer (3).png" alt="Healthy Networking Tampa – Alzheimer's Awareness">
-      <div class="event-body">
-        <div class="event-title">Healthy Networking Tampa – Alzheimer's Awareness</div>
-        <div class="event-date">Tue, Oct 14 · 11:30am – 1:30pm EST</div>
-        <a href="https://www.eventbrite.com/e/healthy-networking-tampa-alzheimers-awareness-tickets-1657160976089" target="_blank" rel="noopener" class="event-link">Register Now</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="events-actions">
-    <a href="https://www.mirajoco.org/events" class="btn-outline">View All Events</a>
   </div>
 </section>
 
@@ -1082,6 +1055,7 @@
   var PROXY = 'https://api.allorigins.win/raw?url=';
   var POSTS_TO_SHOW = 3;
   var container = document.getElementById('blog-feed');
+  var FALLBACK_IMGS = ['img/Superpower.jpg', 'img/blo5.png', 'img/ExternalvsInternal.jpeg', 'img/blog.jpeg', 'img/blog1.png', 'img/blog2.png'];
 
   function formatDate(pubDate) {
     if (!pubDate) return '';
@@ -1090,14 +1064,29 @@
     return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
-  function extractImage(contentHtml) {
-    if (!contentHtml) return '';
+  function extractImage(item) {
+    // 1. media:content
+    var media = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content')[0];
+    if (media && media.getAttribute('url')) return media.getAttribute('url');
+    // 2. media:thumbnail
+    var thumb = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0];
+    if (thumb && thumb.getAttribute('url')) return thumb.getAttribute('url');
+    // 3. enclosure
+    var enclosure = item.querySelector('enclosure');
+    if (enclosure && enclosure.getAttribute('url')) return enclosure.getAttribute('url');
+    // 4. first <img> in content:encoded
+    var contentEl = item.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/', 'encoded')[0];
+    var contentHtml = contentEl ? contentEl.textContent : '';
     var match = contentHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
     if (match && match[1]) {
       var src = match[1];
       if (src.startsWith('/')) src = 'https://www.mirajoco.org' + src;
       return src;
     }
+    // 5. first <img> in description
+    var desc = item.querySelector('description') ? item.querySelector('description').textContent : '';
+    var descMatch = desc.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (descMatch && descMatch[1]) return descMatch[1];
     return '';
   }
 
@@ -1115,16 +1104,10 @@
         var link = item.querySelector('link') ? item.querySelector('link').textContent : '#';
         var desc = item.querySelector('description') ? item.querySelector('description').textContent : '';
         var pubDate = item.querySelector('pubDate') ? item.querySelector('pubDate').textContent : '';
-
-        // Try to get image from content:encoded
-        var contentEl = item.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/', 'encoded')[0];
-        var contentHtml = contentEl ? contentEl.textContent : '';
-        var imgUrl = extractImage(contentHtml);
-
-        var excerpt = desc.length > 160 ? desc.substring(0, 160) + '...' : desc;
-        var imgHtml = imgUrl
-          ? '<img src="' + imgUrl + '" alt="' + title.replace(/"/g, '&quot;') + '" loading="lazy">'
-          : '';
+        var imgUrl = extractImage(item) || FALLBACK_IMGS[i % FALLBACK_IMGS.length];
+        var excerpt = desc.replace(/<[^>]*>/g, '');
+        excerpt = excerpt.length > 160 ? excerpt.substring(0, 160) + '...' : excerpt;
+        var imgHtml = '<img src="' + imgUrl + '" alt="' + title.replace(/"/g, '&quot;') + '" loading="lazy">';
 
         html += '<div class="blog-card" data-aos="fade-up" data-aos-delay="' + (i * 100) + '">' +
           imgHtml +
