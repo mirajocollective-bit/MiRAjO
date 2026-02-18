@@ -1,705 +1,1241 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MiRAjO Collective</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMJHN44YJN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiRAjO Collective</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMJHN44YJN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-GMJHN44YJN');
+  </script>
+  <style>
+    :root {
+      --deep-forest: #2A3A2A;
+      --forest-mid: #3A5A3E;
+      --living-green: #4A7C59;
+      --living-green-light: #5E9470;
+      --new-growth: #A8C5A0;
+      --dry-sage: #C9B896;
+      --warm-parchment: #EDE8DF;
+      --soft-white: #F7F4EF;
+      --cream: #FBF9F5;
+      --parchment-dark: #DDD5C8;
+      --bronze-earth: #A89068;
+      --text-on-dark: #EDE8DF;
+      --text-muted-dark: #9AAA94;
+      --text-on-light: #2A3A2A;
+      --text-muted-light: #6A7A68;
+      --text-body-light: #4A5A48;
+      --border-light: rgba(42,58,42,0.08);
+      --border-dark: rgba(237,232,223,0.12);
+    }
 
-        gtag('config', 'G-GMJHN44YJN');
-    </script>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--soft-white);
+      color: var(--text-on-light);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══ NAV ═══ */
+    .site-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: var(--soft-white);
+      border-bottom: 1px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--deep-forest);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--living-green); }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-muted-light);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--deep-forest); }
+    .nav-cta {
+      display: inline-block;
+      font-size: 12px;
+      padding: 9px 22px;
+      background: var(--deep-forest);
+      color: var(--soft-white);
+      border-radius: 6px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-cta:hover { background: var(--forest-mid); }
+
+    /* Mobile nav */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--deep-forest);
+    }
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--soft-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 20px 40px;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(42,58,42,0.08);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 14px;
+      color: var(--text-body-light);
+      text-decoration: none;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-weight: 400;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .nav-cta {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 40px 40px 80px;
+      text-align: left;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 60%;
+      background-image: url('img/black and white outfit miranda.jpg');
+      background-size: cover;
+      background-position: center top;
+      z-index: 0;
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,1) 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,1) 100%);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--soft-white) 30%, rgba(247,244,239,0.75) 55%, rgba(247,244,239,0.5) 100%);
+      z-index: 1;
+    }
+    .hero > *:not(.hero-bg):not(.hero-overlay):not(.hero-bottom-fade) {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-bottom-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(to bottom, transparent, var(--warm-parchment));
+      z-index: 3;
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      margin-bottom: 28px;
+      font-weight: 500;
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      color: var(--deep-forest);
+      max-width: 560px;
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-muted-light);
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .hero-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--deep-forest);
+      color: var(--soft-white);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .hero-btn:hover { background: var(--forest-mid); }
+
+    /* ═══ LOGOS MARQUEE ═══ */
+    .logos-marquee {
+      background: var(--warm-parchment);
+      padding: 28px 0;
+      overflow: hidden;
+      width: 100%;
+    }
+    .logos-track {
+      display: flex;
+      align-items: center;
+      gap: 56px;
+      width: max-content;
+      animation: marquee-scroll 22s linear infinite;
+    }
+    .logos-track img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.7;
+      filter: grayscale(30%);
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+    .logos-track img:hover {
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+    @keyframes marquee-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-25%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .logos-track { animation: none; }
+    }
+
+    /* ═══ PARCHMENT SECTION ═══ */
+    .parchment-section {
+      background: var(--warm-parchment);
+      padding: 160px 40px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .section-head {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 400;
+      text-align: center;
+      color: var(--deep-forest);
+      margin-bottom: 48px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .offer-card {
+      background: var(--soft-white);
+      border: 1px solid rgba(42,58,42,0.06);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .offer-card .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(74,124,89,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--living-green);
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .offer-card .card-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: var(--deep-forest);
+    }
+    .offer-card .card-desc {
+      font-size: 14px;
+      color: var(--text-muted-light);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ═══ DARK SECTION ═══ */
+    .dark-section {
+      background: var(--deep-forest);
+      padding: 160px 40px;
+      text-align: center;
+    }
+    .dark-section .dark-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .dark-section .dark-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 400;
+      color: var(--warm-parchment);
+      margin-bottom: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .dark-section .dark-body {
+      font-size: 15px;
+      color: var(--text-muted-dark);
+      max-width: 540px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .dark-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--dry-sage);
+      color: var(--deep-forest);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: background 0.3s;
+    }
+    .dark-btn:hover { background: var(--bronze-earth); color: var(--soft-white); }
+
+    /* ═══ BOOKS SECTION ═══ */
+    .books-section {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 40px;
+      text-align: left;
+      overflow: hidden;
+      background: var(--warm-parchment);
+    }
+    .books-content {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .books-bg {
+      position: absolute;
+      right: 5%;
+      bottom: 0;
+      width: 45%;
+      height: 95%;
+      background-image: url('img/miranda-book2.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .books-overlay {
+      display: none;
+    }
+    .books-section > *:not(.books-bg):not(.books-overlay):not(.books-content) {
+      position: relative;
+      z-index: 2;
+    }
+    .books-content {
+      position: relative;
+      z-index: 2;
+    }
+    .books-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .books-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--deep-forest);
+      margin-bottom: 24px;
+      max-width: 520px;
+    }
+    .books-list {
+      list-style: none;
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+    .books-list li {
+      font-size: 15px;
+      color: var(--text-body-light);
+      line-height: 1.7;
+      font-weight: 300;
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    .books-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--living-green);
+      font-size: 8px;
+      top: 12px;
+    }
+    .books-desc {
+      font-size: 15px;
+      color: var(--text-muted-light);
+      max-width: 460px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 36px;
+    }
+    .books-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--deep-forest);
+      color: var(--soft-white);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .books-btn:hover { background: var(--forest-mid); }
+
+    @media (max-width: 768px) {
+      .books-section {
+        padding: 60px 20px 0;
+        min-height: auto;
+      }
+      .books-bg {
+        position: relative;
+        width: 70%;
+        height: auto;
+        padding-top: 90%;
+        margin: 40px auto 0;
+        right: auto;
+        left: auto;
+      }
+    }
+
+    /* ═══ HEALTHY NETWORKING SECTION ═══ */
+    .hn-section {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 40px;
+      text-align: right;
+      overflow: hidden;
+      background: var(--soft-white);
+      border-top: 1px solid var(--border-light);
+    }
+    .hn-bg {
+      position: absolute;
+      left: 5%;
+      bottom: 0;
+      width: 35%;
+      height: 85%;
+      background-image: url('img/healthy-networking.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      z-index: 2;
+    }
+    .hn-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .hn-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .hn-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--deep-forest);
+      margin-bottom: 20px;
+      max-width: 520px;
+    }
+    .hn-desc {
+      font-size: 15px;
+      color: var(--text-muted-light);
+      max-width: 480px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 28px;
+    }
+    .hn-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--living-green);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .hn-btn:hover { background: var(--living-green-light); }
+
+    @media (max-width: 768px) {
+      .hn-section {
+        padding: 60px 20px;
+        min-height: auto;
+        text-align: center;
+      }
+      .hn-bg {
+        position: relative;
+        width: 60%;
+        height: auto;
+        padding-top: 50%;
+        margin: 0 auto 32px;
+        left: auto;
+      }
+      .hn-content { align-items: center; }
+    }
+
+    /* ═══ EVENTS SECTION ═══ */
+    .events-section {
+      padding: 140px 40px;
+      background: var(--soft-white);
+      border-top: 1px solid var(--border-light);
+    }
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+    .event-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .event-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(42,58,42,0.08);
+    }
+    .event-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .event-card .event-body {
+      padding: 28px;
+    }
+    .event-card .event-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--deep-forest);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .event-card .event-date {
+      font-size: 12px;
+      color: var(--text-muted-light);
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+    }
+    .event-card .event-link {
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--living-green);
+      color: #fff;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .event-card .event-link:hover { background: var(--living-green-light); }
+    .events-actions {
+      text-align: center;
+    }
+
+    /* ═══ BLOG SECTION ═══ */
+    .blog-section {
+      padding: 80px 40px;
+      background: var(--soft-white);
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+    .blog-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(42,58,42,0.08);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .blog-card .blog-body {
+      padding: 28px;
+    }
+    .blog-card .blog-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--deep-forest);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .blog-card .blog-excerpt {
+      font-size: 13px;
+      color: var(--text-muted-light);
+      line-height: 1.6;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+    .blog-card .blog-date {
+      font-size: 11px;
+      color: var(--text-muted-light);
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+    .blog-card .blog-link {
+      font-size: 13px;
+      color: var(--living-green);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .blog-card .blog-link:hover { color: var(--deep-forest); }
+    .blog-actions {
+      text-align: center;
+    }
+    .btn-outline {
+      display: inline-block;
+      padding: 13px 30px;
+      background: transparent;
+      color: var(--deep-forest);
+      border: 1px solid var(--deep-forest);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover {
+      background: var(--deep-forest);
+      color: var(--soft-white);
+    }
+
+    /* ═══ NEWSLETTER ═══ */
+    .newsletter-section {
+      padding: 80px 40px;
+      background: var(--cream);
+      text-align: center;
+      border-top: 1px solid var(--border-light);
+    }
+    .newsletter-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 56px;
+    }
+    .newsletter-text {
+      flex: 1;
+      text-align: left;
+    }
+    .newsletter-section .newsletter-head {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--deep-forest);
+      margin-bottom: 10px;
+    }
+    .newsletter-section .newsletter-sub {
+      font-size: 15px;
+      color: var(--text-muted-light);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .newsletter-form-wrap {
+      flex: 1.4;
+      min-width: 0;
+    }
+    .newsletter-form-wrap iframe {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: 520px;
+      border: none;
+      border-radius: 8px;
+    }
+    @media (max-width: 768px) {
+      .newsletter-wrap {
+        flex-direction: column;
+        gap: 24px;
+      }
+      .newsletter-text { text-align: center; }
+      .newsletter-section .newsletter-head { font-size: 26px; }
+      .newsletter-form-wrap iframe { height: 540px; }
+    }
+
+    /* ═══ FOOTER ═══ */
+    .site-footer {
+      background: var(--deep-forest);
+      padding: 48px 40px 24px;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted-dark);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--warm-parchment); }
+    .footer-tagline {
+      font-size: 14px;
+      color: var(--text-muted-dark);
+      text-align: center;
+      margin-bottom: 32px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--new-growth);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover { color: var(--warm-parchment); }
+    .footer-social svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-dark);
+      font-size: 11px;
+      color: var(--text-muted-dark);
+      letter-spacing: 0.5px;
+    }
+    .footer-bottom a {
+      color: var(--text-muted-dark);
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .footer-bottom a:hover { color: var(--warm-parchment); }
+
+    /* ═══ NAV CTA ═══ */
+    .nav-cta-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .site-nav { padding: 16px 20px; }
+      .nav-links, .nav-cta-wrap { display: none; }
+      .nav-hamburger { display: block; }
+      .mobile-menu { padding: 20px; }
+
+      .hero {
+        padding: 80px 20px 60px;
+        align-items: flex-start;
+        text-align: left;
+      }
+      .hero h1 { max-width: 100%; }
+      .hero-sub { font-size: 15px; max-width: 100%; }
+
+      .parchment-section, .dark-section, .blog-section, .newsletter-section, .events-section {
+        padding: 60px 20px;
+      }
+      .card-grid, .blog-grid, .events-grid {
+        grid-template-columns: 1fr;
+      }
+      .site-footer { padding: 40px 20px 20px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .card-grid, .blog-grid, .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
+<body>
 
-<body class="bg-white text-gray-700 scroll-smooth">
+<!-- ═══ NAV ═══ -->
+<nav class="site-nav" x-data="{ open: false }">
+  <a href="/" class="nav-logo">
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" style="height: 48px; width: auto; display: block;">
+  </a>
 
-    <!-- Navbar -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <div class="navbar-left">
-                <img src="img/nav.png" alt="Logo" class="navbar-img" style="height: 5rem;">
-            </div>
+  <ul class="nav-links">
+    <li><a href="https://www.mirajoco.org/about">Philosophy</a></li>
+    <li><a href="https://www.mirajoco.org/join">Programs</a></li>
+    <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
+    <li><a href="https://www.mirajoco.org/search_results">Directory</a></li>
+    <li><a href="https://www.mirajoco.org/events">Events</a></li>
+    <li><a href="https://mirajo.ai/">MiRAjO AI</a></li>
+  </ul>
 
-            <!-- NAV + DROPDOWNS -->
-            <nav class="hidden md:flex items-center space-x-6 ml-12">
-                <a href="https://www.mirajoco.org/search_results" class="hover:text-[#006E6E]">Directory</a>
-                <a href="https://www.mirajoco.org/about" class="hover:text-[#006E6E]">About</a>
-                <a href="https://www.mirajoco.org/events" class="hover:text-[#006E6E]">Events</a>
-                <a href="https://www.mirajoco.org/blog" class="hover:text-[#006E6E]">Blog</a>
-                <a href="https://www.mirajoco.org/about/contact" class="hover:text-[#006E6E]">Contact Us</a>
-                <a href="https://mirajo.ai/" class="hover:text-[#006E6E]">MiRAjO AI</a>
-            </nav>
-
-            <!-- CTA BUTTONS -->
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="https://www.mirajoco.org/login"
-                    class="px-4 py-2 border border-black rounded-md text-black font-semibold hover:bg-black hover:text-white transition duration-300">
-                    Sign In
-                </a>
-
-                <a href="https://www.mirajoco.org/join"
-                    class="bg-[#006E6E] text-white px-4 py-2 rounded-md hover:bg-[#005555] transition">
-                    Get Listed
-                </a>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="md:hidden" x-data="{ open: false }">
-                <button @click="open = !open">
-                    <svg class="w-6 h-6 text-[#006E6E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-
-                <!-- Mobile Menu -->
-                <div x-show="open"
-                    class="absolute left-0 top-16 w-full bg-white shadow-lg py-4 px-6 flex flex-col space-y-3 z-50">
-                    <a href="https://www.mirajoco.org/search_results"
-                        class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">Directory</a>
-                    <a href="https://www.mirajoco.org/about"
-                        class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">About</a>
-                    <a href="https://www.mirajoco.org/events"
-                        class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">Events</a>
-                    <a href="https://www.mirajoco.org/about/contact"
-                        class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">Contact Us</a>
-                    <a href="https://www.mirajoco.org/blog"
-                        class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">Blog</a>
-                    <a href="https://mirajo.ai/" class="block w-full py-2 px-2 rounded hover:bg-[#F0F0F0]">MiRAjO
-                        AI</a>
-
-                    <a href="https://www.mirajoco.org/join"
-                        class="bg-[#006E6E] text-white px-4 py-2 hover:bg-[#005555] transition">Get Listed</a>
-
-                    <a href="https://www.mirajoco.org/login"
-                        class="block w-full py-2 px-2 rounded font-semibold text-[#006E6E] hover:bg-[#F0F0F0]">Sign
-                        In</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-
-    <!-- Hero Section -->
-    <section class="relative h-[90vh] min-h-[400px] overflow-hidden">
-        <!-- Background Image Parallax -->
-        <div class="absolute inset-0">
-            <img src="img/output.png" alt="Hero Background"
-                class="w-full h-full object-cover object-center fixed md:static opacity-90" style="z-index: -1;" />
-        </div>
-
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-black/50"></div>
-
-<!-- Content -->
-<div class="relative z-10 h-full flex flex-col justify-center md:justify-center items-center text-white px-4 pt-12 sm:pt-20 md:pt-0" data-aos="fade-up">  
-    
-  <!-- Headline -->
-  <h1 class="text-5xl md:text-6xl font-bold mb-2 text-center">
-    MiRAjO Collective
-  </h1>
-
-  <!-- Tagline -->
-  <h2 class="text-lg md:text-2xl lg:text-3xl font-light mb-6 text-center italic">
-    The platform built for the whole leader, in business and in life  </h2>
-
-  <!-- Description -->
-  <p class="text-lg md:text-xl font-light mb-8 max-w-3xl text-center">
-     MiRAjO brings together the spaces and tools leaders need when they are starting fresh, building together, 
-     or searching for what comes next. It is designed to support the whole leader, not just the role, with programs, communities, 
-     and resources that meet you where you are and grow with you over time.
-</p>
-
-  <!-- Buttons -->
-  <div class="flex flex-col sm:flex-row gap-3 mt-4">
-    <a href="https://www.mirajoco.org/join"
-       class="px-5 py-2 text-sm md:text-base rounded-md font-semibold bg-white text-[#006E6E] hover:bg-gray-100 transition text-center">
-      Explore Programs
-    </a>
-    <a href="https://www.mirajoco.org/join"
-       class="px-5 py-2 text-sm md:text-base rounded-md font-semibold bg-[#006E6E] text-white hover:bg-[#005555] transition text-center">
-      List Business
-    </a>
+  <div class="nav-cta-wrap">
+    <div class="pchat-widget-placeholder"></div>
   </div>
 
+  <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <div class="mobile-menu" :class="open ? 'open' : ''">
+    <a href="https://www.mirajoco.org/about">Philosophy</a>
+    <a href="https://www.mirajoco.org/join">Programs</a>
+    <a href="https://www.mirajoco.org/blog">Writing</a>
+    <a href="https://www.mirajoco.org/search_results">Directory</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="https://mirajo.ai/">MiRAjO AI</a>
+    <a href="https://premium.chat/852215" target="_blank" class="nav-cta">Let's Talk Now</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" data-aos="fade-up">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-bottom-fade"></div>
+  <div class="hero-eyebrow">MiRAjO Collective</div>
+  <h1>See what you're planting before you harvest the wrong thing.</h1>
+  <p class="hero-sub">You teach leaders to read the season they're in, align effort with outcome, and lead from understanding — not urgency.</p>
+  <a href="https://www.mirajoco.org/about" class="hero-btn">Explore the Philosophy</a>
+  <div class="pchat-widget-placeholder" style="margin-top: 48px; display: block; text-align: left;"></div>
+</section>
+
+<!-- ═══ LOGOS MARQUEE ═══ -->
+<div class="logos-marquee" aria-hidden="true">
+  <div class="logos-track">
+    <!-- set 1 -->
+    <img src="img/ad3.png" alt="">
+    <img src="img/ad2.png" alt="">
+    <img src="img/bup-official-registered.png" alt="BŪP">
+    <img src="img/ad1.png" alt="">
+    <img src="img/ad.png"  alt="">
+    <img src="img/ad4.png" alt="">
+    <!-- set 2 -->
+    <img src="img/ad3.png" alt="">
+    <img src="img/ad2.png" alt="">
+    <img src="img/bup-official-registered.png" alt="BŪP">
+    <img src="img/ad1.png" alt="">
+    <img src="img/ad.png"  alt="">
+    <img src="img/ad4.png" alt="">
+    <!-- set 3 -->
+    <img src="img/ad3.png" alt="">
+    <img src="img/ad2.png" alt="">
+    <img src="img/bup-official-registered.png" alt="BŪP">
+    <img src="img/ad1.png" alt="">
+    <img src="img/ad.png"  alt="">
+    <img src="img/ad4.png" alt="">
+    <!-- set 4 -->
+    <img src="img/ad3.png" alt="">
+    <img src="img/ad2.png" alt="">
+    <img src="img/bup-official-registered.png" alt="BŪP">
+    <img src="img/ad1.png" alt="">
+    <img src="img/ad.png"  alt="">
+    <img src="img/ad4.png" alt="">
+  </div>
 </div>
 
-        <script>
-            gsap.registerPlugin(ScrollTrigger);
-
-            gsap.from(".hero-title", {
-                scrollTrigger: {
-                    trigger: ".hero-title",
-                    start: "top 80%",
-                    toggleActions: "play none none reset"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: "power2.out"
-            });
-        </script>
-    </section>
-    <!-- WHAT WE DO SECTION -->
-    <!-- WHAT WE DO SECTION -->
-    <section class="relative bg-white py-20 px-4 md:px-10" id="what-we-do">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center">
-            <!-- Left Text Content -->
-            <div class="w-full md:w-1/2 mb-12 md:mb-0 pr-10" data-aos="fade-right">
-                <h2 class="text-4xl md:text-5xl font-bold text-[#0A0A0A] leading-snug mb-6">
-                    Inside MiRAjO
-                </h2>
-                <p class="text-lg text-gray-600 leading-relaxed mb-6">
-                  <ul>
-  <li><strong>25 Days 25 Nights</strong> – A reset that helps you step away from the noise and return to yourself before starting something new or when you feel lost.</li>
-  <li><strong>Couples in Entrepreneurship</strong> – A space for partners learning how to build a business while keeping their relationship strong.</li>
-  <li><strong>Healthy Networking</strong> – Events held in wellness spaces where people and businesses connect naturally.</li>
-  <li><strong>The Business Directory</strong> – Get leads, build visibility, and connect with people ready to do business.</li>
-</ul>
-<p>We are only getting started.</p>
-        </p>
-                </p>
-                <div class="flex justify-center">
-                    <a href="https://www.mirajoco.org/search_results"
-                        class="inline-block bg-[#006E6E] text-white px-6 py-3 rounded-md hover:bg-[#005555] transition text-sm font-semibold">
-                        Join the Directory
-                    </a>
-                </div>
-            </div>
-
-            <!-- Phone Image and Floating Boxes (Updated) -->
-            <div class="relative z-10 w-full md:w-1/2 flex justify-center">
-                <img src="img/mockumirajo1.png" alt="Mirajo Phone Preview"
-                    class="w-[340px] md:w-[420px] bounce-slow z-0">
-
-                <!-- Floating Boxes (wider, more spaced) -->
-                <!-- Box 1 -->
-                <div class="absolute top-[42%] right-4 w-44 md:w-56 p-3 bg-gradient-to-br from-yellow-200/80 to-pink-200/70 border border-black text-[#0A0A0A] rounded-lg shadow-md"
-                    data-aos="fade-up" data-aos-delay="500">
-                    <p class="font-semibold text-xs">Real Estate & Jobs</p>
-                    <p class="text-[10px] mt-1">We here to serve you.</p>
-                </div>
-
-                <!-- Box 2 -->
-                <div class="absolute top-6 right-16 md:top-28 w-52 md:w-60 p-3 bg-[#F4FAF9] text-[#0A0A0A] border border-black rounded-lg shadow-md"
-                    data-aos="fade-up" data-aos-delay="200">
-                    <p class="font-semibold text-xs">Healthy Networking Events</p>
-                    <p class="text-[10px] mt-1">Connect offline in wellness spaces. New vibes, new people.</p>
-                </div>
-
-                <!-- Box 3 -->
-                <div class="absolute bottom-24 left-24 w-44 md:w-52 p-3 rounded-lg shadow-lg text-[#0A0A0A] border border-black bg-[#008080]"
-                    data-aos="fade-up" data-aos-delay="300">
-                    <p class="font-semibold text-xs leading-tight">Member Directory</p>
-                    <p class="text-[10px] mt-1 leading-tight"> Explore profiles & build partnerships.</p>
-                </div>
-
-                <!-- Box 4 -->
-                <div class="absolute bottom-10 right-4 w-44 md:w-52 p-3 bg-white text-[#0A0A0A] border border-[#006E6E] rounded-lg shadow-md"
-                    data-aos="fade-up" data-aos-delay="400">
-                    <p class="font-semibold text-xs">Content Spotlight</p>
-                    <p class="text-[10px] mt-1">Share and get seen by the right people.</p>
-                </div>
-
-                <!-- Box 5 -->
-                <div class="absolute top-20 left-14 w-44 md:w-52 p-3 bg-[#006E6E] text-white rounded-lg shadow-lg border border-black"
-                    data-aos="fade-up" data-aos-delay="100">
-                    <p class="font-semibold text-xs">Webinars & Courses</p>
-                    <p class="text-[10px] mt-1">Led by industry experts.</p>
-                </div>
-                <!-- Box 6 -->
-                <div class="absolute top-[44%] left-20 w-44 md:w-56 p-3 bg-gradient-to-br from-[#B2EBF2] to-[#0097A7] text-[#0A0A0A] rounded-lg shadow-md"
-                    data-aos="fade-up" data-aos-delay="600">
-                    <p class="font-semibold text-xs">Accountability Calls</p>
-                    <p class="text-[10px] mt-1">Weekly check-ins keeping you aligned & focused.</p>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
-
-    <!-- Bouncing Animation Style -->
-    <style>
-        @keyframes bounceSlow {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .bounce-slow {
-            animation: bounceSlow 5s ease-in-out infinite;
-        }
-    </style>
-
-    <section class="bg-white py-14 px-6 md:px-10" data-aos="fade-up" data-aos-duration="1000"
-        data-aos-easing="ease-in-out">
-
-        <div class="max-w-5xl mx-auto text-center">
-            
-            </p>
-
-        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 text-center">
-            <h2
-                class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 opacity-0 translate-y-10 transition-all duration-700 scroll-fade">
-                Upcoming Events
-            </h2>
-            <p
-                class="text-gray-600 mb-12 text-base md:text-lg opacity-0 translate-y-10 transition-all duration-700 scroll-fade delay-200">
-                Join us in building better connections through movement, meditation, and meaningful conversations.
-            </p>
-
-            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-
-                <!-- Event Card 1 -->
-                <div
-                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700">
-                    <img src="img/MAM.jpg" alt="Healthy Networking – Trinity | MelO Wellness"
-                        class="w-full h-48 object-cover">
-                    <div class="p-5 text-left">
-                        <h3 class="text-xl font-semibold text-white mb-2">Healthy Networking – Trinity | MelO Wellness
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-2">Sat, Oct 4 · 11:30am - 2:30pm EDT</p>
-                        <a href="https://www.eventbrite.com/e/healthy-networking-trinity-melo-wellness-tickets-1608321315349?aff=oddtdtcreator"
-                            class="text-[#00FFF0] font-medium hover:underline transition duration-300">Get Tickets</a>
-                    </div>
-                </div>
-
-                <!-- Event Card 2 -->
-                <div
-                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-150">
-                    <img src="img/HNM.png" alt="Healthy Networking – Clearwater, Understanding Your Bloodwork"
-                        class="w-full h-48 object-cover">
-                    <div class="p-5 text-left">
-                        <h3 class="text-xl font-semibold text-white mb-2">Healthy Networking – Clearwater</h3>
-                        <p class="text-gray-400 text-sm mb-2">Understanding Your Bloodwork!</p>
-                        <a href="https://www.eventbrite.com/e/healthy-networking-clearwater-understanding-your-bloodwork-tickets-1618556830049?aff=oddtdtcreator"
-                            class="text-[#FF783C] font-medium hover:underline transition duration-300">Get Tickets</a>
-                    </div>
-                </div>
-
-                <!-- Event Card 3 (Updated with Healthcare Webinar) -->
-                <div
-                    class="bg-black rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 scroll-fade opacity-0 translate-y-10 duration-700 delay-300">
-                    <img src="img/Neon Modern Music Flyer (3).png" alt="Healthy Networking – Tampa- Alzheimer's Awareness"
-                        class="w-full h-48 object-cover">
-                    <div class="p-5 text-left">
-                        <h3 class="text-xl font-semibold text-white mb-2">Healthy Networking Tampa- Alzheimer's Awareness</h3>
-                        <p class="text-gray-400 text-sm mb-2">Tue, October 14th · 11:30am - 1:30pm EST</p>
-                        <a href="https://www.eventbrite.com/e/healthy-networking-tampa-alzheimers-awareness-tickets-1657160976089?aff=oddtdtcreator"
-                        <a href="#" class="text-[#FFB400] font-medium hover:underline transition duration-300">Get
-                            Tickets</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const fadeElements = document.querySelectorAll(".scroll-fade");
-
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.remove("opacity-0", "translate-y-10");
-                            entry.target.classList.add("opacity-100", "translate-y-0");
-                        }
-                    });
-                },
-                { threshold: 0.3 }
-            );
-
-            fadeElements.forEach((el) => observer.observe(el));
-        });
-    </script>
-
-    </section>
-
-    <section class="py-10 bg-[#F9FAFB]">
-        <div class="max-w-4xl mx-auto text-center px-4 md:px-0">
-            <div class="transition-all duration-700 ease-in-out transform translate-y-10 opacity-0 section-intro">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">This is Just the Beginning
-                </h2>
-                <p class="text-gray-700 text-base md:text-lg">
-    <div class="step">
-      <p>MiRAjO started as a network for leaders to find each other.</p>
+<!-- ═══ WHAT WE OFFER ═══ -->
+<section class="parchment-section">
+  <div class="section-eyebrow" data-aos="fade-up">What We Offer</div>
+  <div class="section-head" data-aos="fade-up">Not motivation. Not hype. Something rarer.</div>
+  <div class="card-grid">
+    <div class="offer-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="card-icon">&#9670;</div>
+      <div class="card-title">Clearer Thinking</div>
+      <div class="card-desc">See patterns others miss. Understand why your effort and your results don't match.</div>
     </div>
-    <div class="arrow">↓</div>
-    <div class="step">
-      <p>It grew into communities and programs built around real life, not just business titles.</p>
+    <div class="offer-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="card-icon">&#9670;</div>
+      <div class="card-title">Season & Timing</div>
+      <div class="card-desc">Know what season you're in. Stop planting in winter and wondering why nothing grows.</div>
     </div>
-    <div class="arrow">↓</div>
-    <div class="step">
-      <p>Today it holds signature experiences like 25 Days 25 Nights, Couples in Entrepreneurship, Healthy Networking, and the Business Directory.</p>
+    <div class="offer-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="card-icon">&#9670;</div>
+      <div class="card-title">Better Judgement</div>
+      <div class="card-desc">Understand the consequences of your decisions before you make them. That's rare air.</div>
     </div>
-    <div class="arrow">↓</div>
-    <div class="step">
-      <p>And tomorrow it expands again, adding more programs, more tools, and more ways to grow in business and in life.</p>
+  </div>
+</section>
+
+<!-- ═══ THE COLLECTIVE ═══ -->
+<section class="dark-section" data-aos="fade-up">
+  <div class="dark-eyebrow">The Collective</div>
+  <div class="dark-title">The environment where leaders practice what is taught.</div>
+  <p class="dark-body">The community orbits the philosophy. Programs, events, and the directory exist as extensions of the framework — proof of alignment, not features on a platform.</p>
+  <a href="https://www.mirajoco.org/join" class="dark-btn">Join the Collective</a>
+</section>
+
+<!-- ═══ HEALTHY NETWORKING ═══ -->
+<section class="hn-section" data-aos="fade-up">
+  <div class="hn-bg" aria-hidden="true"></div>
+  <div class="hn-content">
+    <div class="hn-eyebrow">Healthy Networking</div>
+    <div class="hn-title">A better way to connect.</div>
+    <p class="hn-desc">We bring professionals together in vibrant, health-focused spaces across cities. It's not just about business cards — it's about balance, authentic relationships, and shared growth.</p>
+    <a href="https://www.mirajoco.org/healthy-networking" class="hn-btn">Start Networking</a>
+  </div>
+</section>
+
+<!-- ═══ BOOKS ═══ -->
+<section class="books-section" data-aos="fade-up">
+  <div class="books-overlay"></div>
+  <div class="books-content">
+    <div class="books-eyebrow">Books by Miranda Johnson</div>
+    <div class="books-title">Each book is part of the work behind MiRAjO.</div>
+    <ul class="books-list">
+      <li><strong>LeadLoud:</strong> 11 Commandments of NextGen Leaders</li>
+      <li><strong>The Pain Principle:</strong> Self-Inflicted Pain to Break Free</li>
+      <li><strong>25 Days 25 Nights Workbook</strong> <em>(upcoming release)</em></li>
+    </ul>
+    <p class="books-desc">Lessons and practices leaders can carry into real life — not theory, but tools forged from lived experience.</p>
+    <a href="https://mirajoagency.org/" class="books-btn">Read More</a>
+  </div>
+  <div class="books-bg"></div>
+</section>
+
+<!-- ═══ UPCOMING EVENTS ═══ -->
+<section class="events-section">
+  <div class="section-eyebrow" data-aos="fade-up">Gather</div>
+  <div class="section-head" data-aos="fade-up">Upcoming Events</div>
+
+  <div class="events-grid">
+    <!-- Event 1 -->
+    <div class="event-card" data-aos="fade-up" data-aos-delay="0">
+      <img src="img/MAM.jpg" alt="Healthy Networking – Trinity | MelO Wellness">
+      <div class="event-body">
+        <div class="event-title">Healthy Networking – Trinity | MelO Wellness</div>
+        <div class="event-date">Sat, Oct 4 · 11:30am – 2:30pm EDT</div>
+        <a href="https://www.eventbrite.com/e/healthy-networking-trinity-melo-wellness-tickets-1608321315349" target="_blank" rel="noopener" class="event-link">Register Now</a>
+      </div>
+    </div>
+
+    <!-- Event 2 -->
+    <div class="event-card" data-aos="fade-up" data-aos-delay="100">
+      <img src="img/HNM.png" alt="Healthy Networking – Clearwater">
+      <div class="event-body">
+        <div class="event-title">Healthy Networking – Clearwater</div>
+        <div class="event-date">Understanding Your Bloodwork!</div>
+        <a href="https://www.eventbrite.com/e/healthy-networking-clearwater-understanding-your-bloodwork-tickets-1618556830049" target="_blank" rel="noopener" class="event-link">Register Now</a>
+      </div>
+    </div>
+
+    <!-- Event 3 -->
+    <div class="event-card" data-aos="fade-up" data-aos-delay="200">
+      <img src="img/Neon Modern Music Flyer (3).png" alt="Healthy Networking Tampa – Alzheimer's Awareness">
+      <div class="event-body">
+        <div class="event-title">Healthy Networking Tampa – Alzheimer's Awareness</div>
+        <div class="event-date">Tue, Oct 14 · 11:30am – 1:30pm EST</div>
+        <a href="https://www.eventbrite.com/e/healthy-networking-tampa-alzheimers-awareness-tickets-1657160976089" target="_blank" rel="noopener" class="event-link">Register Now</a>
+      </div>
     </div>
   </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.remove("translate-y-10", "opacity-0");
-                            entry.target.classList.add("translate-y-0", "opacity-100");
-                        }
-                    });
-                }, { threshold: 0.3 });
+  <div class="events-actions">
+    <a href="https://www.mirajoco.org/events" class="btn-outline">View All Events</a>
+  </div>
+</section>
 
-                const introSection = document.querySelector(".section-intro");
-                if (introSection) observer.observe(introSection);
-            });
-        </script>
-    </section>
+<!-- ═══ BLOG ═══ -->
+<section class="blog-section">
+  <div class="section-eyebrow" data-aos="fade-up">From the Writing Desk</div>
+  <div class="section-head" data-aos="fade-up">Bold insights, real stories, grounded truth.</div>
 
-    <section class="py-14 bg-[#F9FAFB]">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-8">
-            <!-- Healthy Networking Box -->
-            <div class="relative overflow-hidden rounded-2xl shadow-md p-8 flex flex-col justify-between min-h-[420px] h-full cursor-pointer transition-colors duration-300"
-                x-data="{ hovered: false }" @mouseenter="hovered = true" @mouseleave="hovered = false"
-                :class="hovered ? 'bg-gradient-to-br from-[#009688] to-[#006E6E]' : 'bg-[#FFFDF8]'">
-                <!-- Text -->
-                <div class="w-full z-20 flex flex-col items-start">
-                    <h2 class="text-3xl md:text-3xl font-bold mb-2 transition-colors duration-300 text-left"
-                        :class="hovered ? 'text-white' : 'text-[#009688]'">
-                        Healthy Networking
-                    </h2>
-                    <p class="text-base md:text-lg mb-4 leading-relaxed transition-colors duration-300 text-left"
-                        :class="hovered ? 'text-white' : 'text-gray-700'">
-                        At Healthy Networking, we’re redefining what it means to connect. It’s not just about business
-                        cards it is about <span class="italic">balance</span>. We bring professionals together in
-                        vibrant, health-focused spaces across cities to inspire authentic relationships and shared
-                        growth.
-                    </p>
-                </div>
-                <!-- Arrow + Link at bottom left -->
-                <div class="absolute bottom-6 left-6 z-30">
-                    <a href="https://www.mirajoco.org/healthy-networking"
-                        class="group inline-flex items-center font-semibold text-lg transition duration-300"
-                        :class="hovered ? 'text-white' : 'text-[#009688]'">
-                        Start Networking
-                        <svg class="ml-2 w-6 h-6 transition-transform duration-300 rotate-[-45deg]"
-                            :class="hovered ? 'text-white' : 'text-[#009688] group-hover:translate-x-1'" fill="none"
-                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-                        </svg>
-                    </a>
-                </div>
-                <!-- Image at bottom right, appears from bottom right -->
-                <div
-                    class="absolute bottom-0 right-0 z-30 flex items-end justify-end h-[180px] w-[180px] pointer-events-none">
-                    <img src="img/kkc.png" alt="Healthy Networking Preview" :class="hovered 
-                            ? 'opacity-100 translate-x-0 translate-y-0 scale-110' 
-                            : 'opacity-0 translate-y-16 translate-x-16 scale-95'"
-                        class="w-[140px] md:w-[170px] lg:w-[180px] transition-all duration-700 ease-in-out"
-                        style="will-change: transform, opacity;" />
-                </div>
-            </div>
-            <!-- My Books Box -->
-            <div class="relative overflow-hidden rounded-2xl shadow-md p-8 flex flex-col justify-between min-h-[420px] h-full cursor-pointer transition-colors duration-300"
-                x-data="{ hovered: false }" @mouseenter="hovered = true" @mouseleave="hovered = false"
-                :class="hovered ? 'bg-[#F7C707]' : 'bg-white'">
-                <!-- Text -->
-                <div class="w-full z-20 flex flex-col items-start">
-                    <h2 class="text-3xl md:text-3xl font-bold mb-4 transition-colors duration-300 text-left"
-                        :class="hovered ? 'text-white' : 'text-[#F7C707]'">
-                        Books by Miranda Johnson
-                    </h2>
-                    <p class="text-lg md:text-xl mb-6 leading-relaxed transition-colors duration-300 text-left"
-                        :class="hovered ? 'text-white' : 'text-gray-700'">
- <strong>LeadLoud: 11 Commandments of NextGen Leaders</strong><br>
-  <strong>The Pain Principle: Self-Inflicted Pain to Break Free</strong><br>
-  <strong>25 Days 25 Nights Workbook</strong> <em>(upcoming release)</em>
-</p>
-<p>
-  Each book is part of the work behind MiRAjO, offering lessons and practices leaders can carry into real life.
-</p>
-                </div>
-                <!-- Arrow + Link at bottom left -->
-                <div class="absolute bottom-6 left-6 z-30">
-                    <a href="https://mirajoagency.org/"
-                        class="group inline-flex items-center font-semibold text-lg transition duration-300"
-                        :class="hovered ? 'text-white' : 'text-[#F7C707]'">
-                        Read More
-                        <svg class="ml-2 w-6 h-6 transition-transform duration-300"
-                            :class="hovered ? 'text-white' : 'text-[#F7C707] group-hover:translate-x-1'" fill="none"
-                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-                        </svg>
-                    </a>
-                </div>
-                <!-- Image at bottom right, appears from bottom right -->
-                <div
-                    class="absolute bottom-0 right-0 z-30 flex items-end justify-end h-[180px] w-[180px] pointer-events-none">
-                    <img src="img/black and white outfit miranda.jpg" alt="Miranda J photo" :class="hovered 
-                            ? 'opacity-100 translate-x-0 translate-y-0 scale-110' 
-                            : 'opacity-0 translate-y-16 translate-x-16 scale-95'"
-                        class="w-[140px] md:w-[170px] lg:w-[180px] transition-all duration-700 ease-in-out"
-                        style="will-change: transform, opacity;" />
-                </div>
-            </div>
-        </div>
-    </section>
+  <div class="blog-grid" id="blog-feed">
+    <!-- Populated dynamically from RSS feed -->
+    <div class="blog-loading" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted-light);font-size:14px;font-weight:300;">Loading latest articles...</div>
+  </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.remove("translate-x-[120%]", "opacity-0");
-                        entry.target.classList.add("translate-x-0", "opacity-100");
-                    }
-                });
-            }, { threshold: 0.3 });
+  <div class="blog-actions">
+    <a href="https://www.mirajoco.org/blog" class="btn-outline">View All Articles</a>
+  </div>
+</section>
 
-            document.querySelectorAll(".phone-img").forEach((img) => observer.observe(img));
-        });
-    </script>
+<script>
+(function() {
+  var FEED_URL = 'https://www.mirajoco.org/blog/rss';
+  var PROXY = 'https://api.allorigins.win/raw?url=';
+  var POSTS_TO_SHOW = 3;
+  var container = document.getElementById('blog-feed');
 
+  function formatDate(pubDate) {
+    if (!pubDate) return '';
+    var d = new Date(pubDate);
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
 
-    </section>
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+  function extractImage(contentHtml) {
+    if (!contentHtml) return '';
+    var match = contentHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (match && match[1]) {
+      var src = match[1];
+      if (src.startsWith('/')) src = 'https://www.mirajoco.org' + src;
+      return src;
+    }
+    return '';
+  }
 
-            <!-- Section Intro -->
-            <div
-                class="text-center mb-12 transition-all duration-700 ease-in-out transform translate-y-10 opacity-0 blog-intro">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Check Out Our Latest Blog Articles</h2>
-                <p class="text-gray-700 text-base md:text-lg">
-                    Bold insights, real stories, and powerful advice for leaders who don’t follow the crowd.
-                </p>
-            </div>
+  fetch(PROXY + encodeURIComponent(FEED_URL))
+    .then(function(res) { return res.text(); })
+    .then(function(xml) {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(xml, 'text/xml');
+      var items = doc.querySelectorAll('item');
+      var html = '';
 
-            <!-- Blog Grid -->
-            <div class="grid md:grid-cols-3 gap-10">
+      for (var i = 0; i < Math.min(items.length, POSTS_TO_SHOW); i++) {
+        var item = items[i];
+        var title = item.querySelector('title') ? item.querySelector('title').textContent : '';
+        var link = item.querySelector('link') ? item.querySelector('link').textContent : '#';
+        var desc = item.querySelector('description') ? item.querySelector('description').textContent : '';
+        var pubDate = item.querySelector('pubDate') ? item.querySelector('pubDate').textContent : '';
 
-                <!-- Blog Card 1 -->
-                <div
-                    class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl opacity-0 translate-y-8 blog-card">
-                    <img src="img/blo5.png" alt="Hungry or Bitter? A Champion Mindset in Business"
-                        class="w-full h-48 object-cover rounded-t-2xl">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Hungry or Bitter? A Champion Mindset in
-                            Business</h3>
-                        <p class="text-gray-600 text-sm mb-4">
-                            A champion doesn’t let setbacks turn into bitterness. Learn how hunger, not resentment,
-                            drives true success.
-                        </p>
-                        <p class="text-xs text-gray-500 mb-4">Posted By Miranda Johnson on 03/04/2025</p>
-                        <a href="https://www.mirajoco.org/blog/hungry-or-bitter-a-champion-mindset-in-business"
-                            class="text-[#006E6E] font-semibold hover:underline">Continue Reading →</a>
-                    </div>
-                </div>
+        // Try to get image from content:encoded
+        var contentEl = item.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/', 'encoded')[0];
+        var contentHtml = contentEl ? contentEl.textContent : '';
+        var imgUrl = extractImage(contentHtml);
 
+        var excerpt = desc.length > 160 ? desc.substring(0, 160) + '...' : desc;
+        var imgHtml = imgUrl
+          ? '<img src="' + imgUrl + '" alt="' + title.replace(/"/g, '&quot;') + '" loading="lazy">'
+          : '';
 
-                <!-- Blog Card 2 (Updated) -->
-                <div
-                    class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl opacity-0 translate-y-8 blog-card delay-100">
-                    <img src="img/ExternalvsInternal.jpeg" alt="external vs Internal"
-                        class="w-full h-48 object-cover rounded-t-2xl">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Internal vs External Dialogue: Can you trust yourself?</h3>
-                        <p class="text-gray-600 text-sm mb-4">
-                            We are always in conversation, even when no words are spoken.
-                        </p>
-                        <p class="text-xs text-gray-500 mb-4">Posted By MiraJoCo on 09/22/2025</p>
-                        <a href="https://www.mirajoco.org/blog/internal-vs-external-dialogue-can-you-trust-yourself"
-                            class="text-[#006E6E] font-semibold hover:underline">Continue Reading →</a>
-                    </div>
-                </div>
+        html += '<div class="blog-card" data-aos="fade-up" data-aos-delay="' + (i * 100) + '">' +
+          imgHtml +
+          '<div class="blog-body">' +
+            '<div class="blog-title">' + title + '</div>' +
+            '<p class="blog-excerpt">' + excerpt + '</p>' +
+            '<div class="blog-date">' + formatDate(pubDate) + '</div>' +
+            '<a href="' + link + '" class="blog-link">Continue Reading &rarr;</a>' +
+          '</div>' +
+        '</div>';
+      }
 
-                <!-- Blog Card 3 -->
-                <div
-                    class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl opacity-0 translate-y-8 blog-card delay-200">
-                    <img src="img/Superpower.jpg" alt="Supergirl" class="w-full h-48 object-cover rounded-t-2xl">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Who stole your superpower?</h3>
-                        <p class="text-gray-600 text-sm mb-4">
-                            A story of childhood intuition, lost friendship, and the reminder to trust the superpower within you.
-                        </p>
-                        <p class="text-xs text-gray-500 mb-4">Posted By Miranda Johnson on 09/09/2025</p>
-                        <a href="https://www.mirajoco.org/blog/who-stole-your-superpower"
-                            class="text-[#006E6E] font-semibold hover:underline">Continue Reading →</a>
-                    </div>
-                </div>
-            </div>
+      container.innerHTML = html;
+      if (typeof AOS !== 'undefined') AOS.refresh();
+    })
+    .catch(function() {
+      container.innerHTML =
+        '<div class="blog-card">' +
+          '<img src="img/Superpower.jpg" alt="Who Stole Your Superpower?">' +
+          '<div class="blog-body">' +
+            '<div class="blog-title">Who Stole Your Superpower?</div>' +
+            '<p class="blog-excerpt">A story of childhood intuition, lost friendship, and the reminder to trust the superpower within you.</p>' +
+            '<div class="blog-date">September 9, 2025</div>' +
+            '<a href="https://www.mirajoco.org/blog/who-stole-your-superpower" class="blog-link">Continue Reading &rarr;</a>' +
+          '</div></div>' +
+        '<div class="blog-card">' +
+          '<img src="img/blo5.png" alt="Hungry or Bitter?">' +
+          '<div class="blog-body">' +
+            '<div class="blog-title">Hungry or Bitter? A Champion Mindset in Business</div>' +
+            '<p class="blog-excerpt">A champion doesn\'t let setbacks turn into bitterness. Learn how hunger, not resentment, drives true success.</p>' +
+            '<div class="blog-date">August 26, 2025</div>' +
+            '<a href="https://www.mirajoco.org/blog/hungry-or-bitter-a-champion-mindset-in-business" class="blog-link">Continue Reading &rarr;</a>' +
+          '</div></div>' +
+        '<div class="blog-card">' +
+          '<img src="img/ExternalvsInternal.jpeg" alt="Internal vs External Dialogue">' +
+          '<div class="blog-body">' +
+            '<div class="blog-title">Internal vs External Dialogue</div>' +
+            '<p class="blog-excerpt">We are always in conversation, even when no words are spoken.</p>' +
+            '<div class="blog-date">September 22, 2025</div>' +
+            '<a href="https://www.mirajoco.org/blog/internal-vs-external-dialogue-can-you-trust-yourself" class="blog-link">Continue Reading &rarr;</a>' +
+          '</div></div>';
+    });
+})();
+</script>
 
+<!-- ═══ NEWSLETTER ═══ -->
+<section class="newsletter-section">
+  <div class="newsletter-wrap">
+    <div class="newsletter-text">
+      <div class="newsletter-head">Stay rooted.</div>
+      <p class="newsletter-sub">Insights and writing delivered with care — not urgency. No countdowns, no spam. Just grounded truth that helps you see what you've been missing.</p>
+    </div>
+    <div class="newsletter-form-wrap">
+      <iframe src="https://api.leadconnectorhq.com/widget/form/IQKPOmt4KBDFJf1roiBR"
+        id="inline-IQKPOmt4KBDFJf1roiBR" data-form-name="Newsletter" data-form-id="IQKPOmt4KBDFJf1roiBR"
+        title="Newsletter">
+      </iframe>
+    </div>
+  </div>
+  <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+</section>
 
-        </div>
-        <!-- Buttons Row -->
-        <div class="flex flex-row flex-wrap justify-center items-center gap-4 mt-12">
-            <a href="https://www.mirajoco.org/blog"
-                class="inline-block bg-transparent border border-black text-black px-6 py-3 rounded-lg hover:bg-black hover:text-white transition text-sm font-semibold">
-                View All Articles
-            </a>
-        </div>
-        <div class="flex justify-center mt-12">
-            <iframe src="https://api.leadconnectorhq.com/widget/form/IQKPOmt4KBDFJf1roiBR"
-                style="display:block;width:100%;max-width:300px;height:360px;border:none;border-radius:8px"
-                id="inline-IQKPOmt4KBDFJf1roiBR" data-form-name="Newsletter" data-form-id="IQKPOmt4KBDFJf1roiBR"
-                title="Newsletter">
-            </iframe>
-        </div>
-        <script src="https://link.msgsndr.com/js/form_embed.js"></script>
-        <!-- Partner Logos Marquee -->
-        <div class="overflow-x-hidden w-full py-6">
-            <div class="flex animate-scroll whitespace-nowrap gap-8">
-                <img src="img/ad3.png" class="h-12 w-auto object-contain inline-block" alt="Partner 2" />
-                <img src="img/ad2.png" class="h-12 w-auto object-contain inline-block" alt="Partner 4" />
-                <img src="img/ad1.png" class="h-12 w-auto object-contain inline-block" alt="Partner 5" />
-                <img src="img/ad.png" class="h-12 w-auto object-contain inline-block" alt="Partner 6" />
-                <!-- Repeat for seamless loop -->
-                <img src="img/ad3.png" class="h-12 w-auto object-contain inline-block" alt="Partner 2" />
-                <img src="img/ad2.png" class="h-12 w-auto object-contain inline-block" alt="Partner 4" />
-                <img src="img/ad1.png" class="h-12 w-auto object-contain inline-block" alt="Partner 5" />
-                <img src="img/ad.png" class="h-12 w-auto object-contain inline-block" alt="Partner 6" />
-            </div>
-        </div>
-        </div>
-        </div>
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://www.mirajoco.org/about">Philosophy</a>
+    <a href="https://www.mirajoco.org/join">Programs</a>
+    <a href="https://www.mirajoco.org/blog">Writing</a>
+    <a href="https://www.mirajoco.org/search_results">Directory</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="https://www.mirajoco.org/about/contact">Contact</a>
+    <a href="https://www.mirajoco.org/login">Member Login</a>
+  </div>
+  <p class="footer-tagline">Rooted clarity for leaders who build from understanding — not urgency.</p>
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/company/mirajocollective/" target="_blank">
+      <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100.28 448H7.4V149.9h92.88zM53.79 108.1C24.09 108.1 0 83.47 0 53.77a53.76 53.76 0 0 1 107.52 0c0 29.7-24.09 54.33-53.73 54.33zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.6-2.9 13.4-2.9 21.2V448h-92.7s1.2-241.1 0-266.1h92.7v37.7c12.3-19 34.2-46 83.2-46 60.7 0 106.2 39.6 106.2 124.7V448z"/>
+      </svg>
+      LinkedIn
+    </a>
+    <a href="https://www.mirajoco.org/about/contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      Contact
+    </a>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 MiRAjO Collective &middot;
+    <a href="https://www.mirajoco.org/about/terms">Terms of Use</a> &middot;
+    <a href="https://www.mirajoco.org/about/privacy">Privacy Policy</a>
+  </div>
+</footer>
 
-    </section>
+<!-- ═══ SCRIPTS ═══ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+</script>
 
-    <style>
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
+<!-- Premium.chat Button Widget -->
+<script type='text/javascript'>(function(d,w,i){w.premiumchat = w.premiumchat || [];var p = w.premiumchat; if(!p.length){(()=>{
+w.premiumchat_domain = 'https://premium.chat/';var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = w.premiumchat_domain+'embed/js/widget.js'; var ss = d.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();}
+p.push({'num': p.length, 'wid': i, 'type': 'button'});})(document, window,852215);</script>
 
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .animate-scroll {
-            animation: scroll 15s linear infinite;
-        }
-
-        /* Ensure horizontal scroll on all screens */
-        .animate-scroll {
-            display: flex;
-        }
-
-        @media (max-width: 768px) {
-            .animate-scroll {
-                gap: 2rem;
-            }
-        }
-    </style>
-
-
-
-
-    <!-- Scroll Reveal Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.remove("opacity-0", "translate-y-8");
-                        entry.target.classList.add("opacity-100", "translate-y-0");
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            document.querySelectorAll(".blog-card, .blog-intro").forEach(el => observer.observe(el));
-        });
-    </script>
-    <!-- CTA BUTTON -->
-
-    <!-- FOOTER -->
-    <footer class="bg-black text-white pt-12 pb-6">
-        <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-between gap-10 text-sm">
-
-            <!-- Platform Section -->
-            <div class="w-full">
-                <div class="flex flex-wrap justify-center gap-6">
-                    <a href="https://www.mirajoco.org/about" class="hover:text-[#006E6E]">How It Works</a>
-                    <a href="https://www.mirajoco.org/join" class="hover:text-[#006E6E]">List Your Company</a>
-                    <a href="https://www.mirajoco.org/categories" class="hover:text-[#006E6E]">Browse Categories</a>
-                    <a href="https://www.mirajoco.org/locations" class="hover:text-[#006E6E]">Browse Locations</a>
-                    <a href="https://www.mirajoco.org/login" class="hover:text-[#006E6E]">Member Login</a>
-                    <a href="https://www.mirajoco.org/about/contact" class="hover:text-[#006E6E]">Contact Us</a>
-                    <a href="https://www.mirajoco.org/faq" class="hover:text-[#006E6E]">FAQ</a>
-                </div>
-                <div class="flex justify-center mt-6">
-                    <span class="text-sm leading-relaxed text-center">
-                        Finding members is easy by searching our trusted network of top-rated individuals.
-                    </span>
-                </div>
-            </div>
-        </div>
-
-    </footer>
-
-    <section class="py-12 bg-[#006E6E]">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 text-center">
-            <div class="flex justify-center gap-8">
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/company/mirajocollective/" target="_blank"
-                    class="inline-flex items-center gap-2 text-white font-semibold hover:underline transition duration-300">
-                    <svg class="w-6 h-6 fill-current" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M100.28 448H7.4V149.9h92.88zM53.79 108.1C24.09 108.1 0 83.47 0 53.77a53.76 53.76 0 0 1 107.52 0c0 29.7-24.09 54.33-53.73 54.33zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.6-2.9 13.4-2.9 21.2V448h-92.7s1.2-241.1 0-266.1h92.7v37.7c12.3-19 34.2-46 83.2-46 60.7 0 106.2 39.6 106.2 124.7V448z" />
-                    </svg>
-                    LinkedIn
-                </a>
-                <!-- Contact -->
-                <a href="https://www.mirajoco.org/about/contact" target="_blank"
-                    class="inline-flex items-center gap-2 text-white font-semibold hover:underline transition duration-300">
-                    <svg class="w-6 h-6 fill-current" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M502.3 190.8l-192-160a48 48 0 0 0-60.6 0l-192 160A48 48 0 0 0 32 232v208a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V232a48 48 0 0 0-13.7-41.2zM464 440a16 16 0 0 1-16 16H64a16 16 0 0 1-16-16V232l192-160 192 160zM256 320a64 64 0 1 1 64-64 64.07 64.07 0 0 1-64 64z" />
-                    </svg>
-                    Contact Us
-                </a>
-            </div>
-        </div>
-        <div class="text-center mt-10 text-xs text-white">
-            © 2025 The MiRAjO Collective • All Rights Reserved •
-            <a href="" class="underline">Terms of Use</a> •
-            <a href="https://www.mirajoco.org/about/terms" class="underline">Terms of Use</a> •
-            <a href="https://www.mirajoco.org/about/privacy" class="underline">Privacy Policy</a>
-        </div>
-    </section>
-
-    </section>
-
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            easing: 'ease-in-out',
-            once: true
-        });
-    </script>
-
-    <!-- ✅ LeadConnector Widget Script -->
-    <script src="https://widgets.leadconnectorhq.com/loader.js"
-        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
-        data-widget-id="6898f8eb81758b3c263c119a">
-        </script>
+<!-- LeadConnector Chat Widget -->
+<script src="https://widgets.leadconnectorhq.com/loader.js"
+  data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+  data-widget-id="6898f8eb81758b3c263c119a">
+</script>
 
 </body>
-
 </html>
