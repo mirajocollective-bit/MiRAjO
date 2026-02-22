@@ -1066,7 +1066,7 @@
 <script>
 (function() {
   var FEED_URL = 'https://www.mirajoco.org/blog/rss';
-  var PROXY = 'https://api.allorigins.win/raw?url=';
+  var PROXY = 'https://corsproxy.io/?';
   var POSTS_TO_SHOW = 3;
   var container = document.getElementById('blog-feed');
   var FALLBACK_IMGS = ['img/Superpower.jpg', 'img/blo5.png', 'img/ExternalvsInternal.jpeg', 'img/blog.jpeg', 'img/blog1.png', 'img/blog2.png'];
@@ -1108,7 +1108,7 @@
   function loadFeed() {
     // Cache-busting timestamp ensures proxy never serves a stale response
     var bustUrl = FEED_URL + '?_t=' + Date.now();
-    fetch(PROXY + encodeURIComponent(bustUrl))
+    fetch(PROXY + encodeURIComponent(bustUrl), { cache: 'no-store' })
       .then(function(res) { return res.text(); })
       .then(function(xml) {
         var parser = new DOMParser();
