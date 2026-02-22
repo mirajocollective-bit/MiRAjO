@@ -1113,7 +1113,12 @@
       .then(function(xml) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(xml, 'text/xml');
-        var items = doc.querySelectorAll('item');
+        // Sort items newest first by pubDate
+        var items = Array.from(doc.querySelectorAll('item')).sort(function(a, b) {
+          var aDate = a.querySelector('pubDate') ? new Date(a.querySelector('pubDate').textContent) : 0;
+          var bDate = b.querySelector('pubDate') ? new Date(b.querySelector('pubDate').textContent) : 0;
+          return bDate - aDate;
+        });
         var html = '';
 
         for (var i = 0; i < Math.min(items.length, POSTS_TO_SHOW); i++) {
