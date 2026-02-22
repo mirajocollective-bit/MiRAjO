@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Philosophy — MiRAjO Collective</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    :root {
+      --deep-forest: #2A3A2A;
+      --forest-mid: #3A5A3E;
+      --living-green: #4A7C59;
+      --living-green-light: #5E9470;
+      --new-growth: #A8C5A0;
+      --dry-sage: #C9B896;
+      --warm-parchment: #EDE8DF;
+      --soft-white: #F7F4EF;
+      --cream: #FBF9F5;
+      --parchment-dark: #DDD5C8;
+      --bronze-earth: #A89068;
+      --text-on-dark: #EDE8DF;
+      --text-muted-dark: #9AAA94;
+      --text-on-light: #2A3A2A;
+      --text-muted-light: #6A7A68;
+      --text-body-light: #4A5A48;
+      --border-light: rgba(42,58,42,0.08);
+      --border-dark: rgba(237,232,223,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--soft-white);
+      color: var(--text-on-light);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══ NAV ═══ */
+    .site-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: var(--deep-forest);
+      border-bottom: 1px solid var(--border-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo img { height: 48px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-muted-dark);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--warm-parchment); }
+    .nav-cta-wrap { display: flex; align-items: center; gap: 10px; }
+    .nav-login {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted-dark);
+      transition: color 0.2s;
+    }
+    .nav-login:hover { color: var(--warm-parchment); }
+    .nav-cta {
+      display: inline-block;
+      font-size: 12px;
+      padding: 9px 22px;
+      background: var(--dry-sage);
+      color: var(--deep-forest);
+      border-radius: 6px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-cta:hover { background: var(--bronze-earth); color: #fff; }
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--warm-parchment); }
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: var(--deep-forest);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 20px 40px;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 14px;
+      color: var(--text-muted-dark);
+      text-decoration: none;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .nav-cta { text-align: center; margin-top: 8px; }
+
+    /* ═══ PHILOSOPHY HERO — TYPEWRITER ═══ */
+    .phil-hero {
+      min-height: 100vh;
+      background: var(--deep-forest);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .phil-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(74,124,89,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .phil-hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      margin-bottom: 40px;
+      font-weight: 500;
+    }
+    .typewriter-wrap {
+      min-height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .typewriter-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4.5vw, 54px);
+      font-weight: 400;
+      color: var(--warm-parchment);
+      line-height: 1.2;
+      max-width: 800px;
+    }
+    .typewriter-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1em;
+      background: var(--living-green);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .phil-hero-sub {
+      font-size: 15px;
+      color: var(--text-muted-dark);
+      max-width: 480px;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+    .phil-hero-scroll {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted-dark);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .phil-hero-scroll svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--new-growth);
+      animation: bounce 1.8s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* ═══ THE ORIGINAL LAW ═══ */
+    .law-section {
+      background: var(--warm-parchment);
+      padding: 120px 40px;
+      text-align: center;
+    }
+    .law-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .law-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 400;
+      color: var(--deep-forest);
+      margin-bottom: 24px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .law-body {
+      font-size: 16px;
+      color: var(--text-body-light);
+      max-width: 620px;
+      margin: 0 auto 48px;
+      line-height: 1.9;
+      font-weight: 300;
+    }
+    .law-pillars {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      max-width: 720px;
+      margin: 0 auto;
+      border: 1px solid var(--parchment-dark);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .law-pillar {
+      flex: 1;
+      padding: 36px 24px;
+      text-align: center;
+      border-right: 1px solid var(--parchment-dark);
+    }
+    .law-pillar:last-child { border-right: none; }
+    .law-pillar-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .law-pillar-label {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px;
+      color: var(--deep-forest);
+      margin-bottom: 6px;
+    }
+    .law-pillar-desc {
+      font-size: 12px;
+      color: var(--text-muted-light);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ═══ QUESTION & REVEAL ═══ */
+    .reveal-section {
+      background: var(--soft-white);
+      padding: 120px 40px;
+    }
+    .reveal-section .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .reveal-section .section-head {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 400;
+      text-align: center;
+      color: var(--deep-forest);
+      margin-bottom: 64px;
+    }
+    .reveal-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .reveal-item {
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: box-shadow 0.3s;
+    }
+    .reveal-item.open {
+      box-shadow: 0 8px 32px rgba(42,58,42,0.07);
+    }
+    .reveal-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      gap: 20px;
+    }
+    .reveal-question-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(17px, 2vw, 22px);
+      font-weight: 400;
+      color: var(--deep-forest);
+      line-height: 1.3;
+    }
+    .reveal-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--living-green);
+      transition: transform 0.3s, background 0.3s;
+    }
+    .reveal-item.open .reveal-icon {
+      transform: rotate(45deg);
+      background: var(--living-green);
+      color: #fff;
+      border-color: var(--living-green);
+    }
+    .reveal-icon svg { width: 16px; height: 16px; }
+    .reveal-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 32px;
+    }
+    .reveal-item.open .reveal-answer {
+      max-height: 400px;
+      padding: 0 32px 28px;
+    }
+    .reveal-answer-inner {
+      font-size: 15px;
+      color: var(--text-body-light);
+      line-height: 1.85;
+      font-weight: 300;
+      border-top: 1px solid var(--border-light);
+      padding-top: 20px;
+    }
+    .reveal-answer-inner strong {
+      color: var(--deep-forest);
+      font-weight: 600;
+    }
+
+    /* ═══ THE 3 LEVELS ═══ */
+    .levels-section {
+      background: var(--deep-forest);
+      padding: 120px 40px;
+    }
+    .levels-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .levels-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 400;
+      color: var(--warm-parchment);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .levels-sub {
+      font-size: 15px;
+      color: var(--text-muted-dark);
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto 64px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .level-card {
+      background: rgba(237,232,223,0.04);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 40px 32px;
+      position: relative;
+      transition: background 0.3s;
+    }
+    .level-card:hover { background: rgba(237,232,223,0.07); }
+    .level-card.highlight {
+      background: rgba(74,124,89,0.12);
+      border-color: rgba(74,124,89,0.3);
+    }
+    .level-number {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .level-phase {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--warm-parchment);
+      margin-bottom: 6px;
+    }
+    .level-motion {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--living-green-light);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .level-desc {
+      font-size: 14px;
+      color: var(--text-muted-dark);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+    .level-tag {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 11px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: rgba(237,232,223,0.08);
+      color: var(--text-muted-dark);
+      letter-spacing: 0.5px;
+    }
+    .level-card.highlight .level-tag {
+      background: rgba(74,124,89,0.2);
+      color: var(--new-growth);
+    }
+
+    /* ═══ WHAT SEASON ARE YOU IN — ASSESSMENT ═══ */
+    .assessment-section {
+      background: var(--warm-parchment);
+      padding: 120px 40px;
+    }
+    .assessment-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .assessment-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 400;
+      color: var(--deep-forest);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .assessment-sub {
+      font-size: 15px;
+      color: var(--text-muted-light);
+      text-align: center;
+      max-width: 460px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .assessment-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .assessment-progress {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 40px;
+      justify-content: center;
+    }
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--parchment-dark);
+      transition: background 0.3s;
+    }
+    .progress-dot.active { background: var(--living-green); }
+    .progress-dot.done { background: var(--deep-forest); }
+    .assessment-step { display: none; }
+    .assessment-step.active { display: block; }
+    .assessment-q {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(20px, 2.5vw, 28px);
+      color: var(--deep-forest);
+      margin-bottom: 32px;
+      line-height: 1.3;
+      text-align: center;
+    }
+    .assessment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .assessment-option {
+      width: 100%;
+      padding: 20px 28px;
+      background: #fff;
+      border: 1px solid var(--parchment-dark);
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text-body-light);
+      font-weight: 300;
+      line-height: 1.5;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .assessment-option:hover {
+      border-color: var(--living-green);
+      background: rgba(74,124,89,0.04);
+      color: var(--deep-forest);
+    }
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--parchment-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted-light);
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .assessment-option:hover .option-letter {
+      border-color: var(--living-green);
+      background: var(--living-green);
+      color: #fff;
+    }
+
+    /* Assessment Result */
+    .assessment-result { display: none; text-align: center; }
+    .assessment-result.active { display: block; }
+    .result-season {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .result-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      color: var(--deep-forest);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .result-body {
+      font-size: 16px;
+      color: var(--text-body-light);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+    .result-cta {
+      display: inline-block;
+      padding: 16px 40px;
+      background: var(--deep-forest);
+      color: var(--soft-white);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+      margin-bottom: 16px;
+    }
+    .result-cta:hover { background: var(--forest-mid); }
+    .result-restart {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted-light);
+      cursor: pointer;
+      margin-top: 12px;
+      background: none;
+      border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .result-restart:hover { color: var(--deep-forest); }
+
+    /* ═══ PROGRAMS ═══ */
+    .programs-section {
+      background: var(--soft-white);
+      padding: 120px 40px;
+    }
+    .programs-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .programs-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 400;
+      color: var(--deep-forest);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .programs-sub {
+      font-size: 15px;
+      color: var(--text-muted-light);
+      text-align: center;
+      max-width: 440px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+    .program-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .program-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(42,58,42,0.09);
+    }
+    .program-card-header {
+      background: var(--deep-forest);
+      padding: 40px 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .program-card-header::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(74,124,89,0.15);
+    }
+    .program-logo-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      background: rgba(237,232,223,0.1);
+      border: 1px solid rgba(237,232,223,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .program-logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .program-logo-placeholder {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--dry-sage);
+    }
+    .program-badge {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .program-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 24px;
+      color: var(--warm-parchment);
+      line-height: 1.2;
+    }
+    .program-card-body {
+      padding: 32px 36px;
+    }
+    .program-tagline {
+      font-size: 14px;
+      color: var(--text-muted-light);
+      font-style: italic;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .program-pillars {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    .program-pillars li {
+      font-size: 14px;
+      color: var(--text-body-light);
+      padding: 6px 0;
+      padding-left: 18px;
+      position: relative;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .program-pillars li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--living-green);
+      font-size: 7px;
+      top: 10px;
+    }
+    .program-cta {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 14px 28px;
+      background: var(--deep-forest);
+      color: var(--soft-white);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .program-cta:hover { background: var(--forest-mid); }
+
+    /* Coming soon card */
+    .program-card-soon {
+      border: 1px dashed var(--parchment-dark);
+      border-radius: 16px;
+      padding: 48px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 300px;
+      background: transparent;
+    }
+    .soon-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px dashed var(--parchment-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted-light);
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .soon-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted-light);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .soon-text {
+      font-size: 14px;
+      color: var(--text-muted-light);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ═══ BOOK CTA BAND ═══ */
+    .books-band {
+      background: var(--warm-parchment);
+      border-top: 1px solid var(--parchment-dark);
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .books-band-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .books-band-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 3vw, 32px);
+      color: var(--deep-forest);
+      margin-bottom: 12px;
+    }
+    .books-band-sub {
+      font-size: 15px;
+      color: var(--text-muted-light);
+      max-width: 420px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .books-band-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-dark {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--deep-forest);
+      color: var(--soft-white);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .btn-dark:hover { background: var(--forest-mid); }
+    .btn-outline-dark {
+      display: inline-block;
+      padding: 13px 30px;
+      background: transparent;
+      color: var(--deep-forest);
+      border: 1px solid var(--deep-forest);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-outline-dark:hover { background: var(--deep-forest); color: var(--soft-white); }
+
+    /* ═══ FOOTER ═══ */
+    .site-footer { background: var(--deep-forest); padding: 48px 40px 24px; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted-dark);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--warm-parchment); }
+    .footer-tagline {
+      font-size: 14px;
+      color: var(--text-muted-dark);
+      text-align: center;
+      margin-bottom: 32px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--new-growth);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover { color: var(--warm-parchment); }
+    .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-dark);
+      font-size: 11px;
+      color: var(--text-muted-dark);
+      letter-spacing: 0.5px;
+    }
+    .footer-bottom a { color: var(--text-muted-dark); text-decoration: underline; }
+    .footer-bottom a:hover { color: var(--warm-parchment); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .site-nav { padding: 16px 20px; }
+      .nav-links, .nav-cta-wrap { display: none; }
+      .nav-hamburger { display: block; }
+      .mobile-menu { padding: 20px; }
+
+      .phil-hero { padding: 80px 24px; }
+      .typewriter-wrap { min-height: 120px; }
+
+      .law-section, .reveal-section, .levels-section,
+      .assessment-section, .programs-section, .books-band { padding: 72px 24px; }
+
+      .law-pillars { flex-direction: column; border-radius: 10px; }
+      .law-pillar { border-right: none; border-bottom: 1px solid var(--parchment-dark); }
+      .law-pillar:last-child { border-bottom: none; }
+
+      .levels-grid { grid-template-columns: 1fr; gap: 12px; }
+
+      .reveal-question { padding: 20px 20px; }
+      .reveal-item.open .reveal-answer { padding: 0 20px 20px; }
+
+      .programs-grid { grid-template-columns: 1fr; }
+
+      .site-footer { padding: 40px 20px 20px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .levels-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="site-nav" x-data="{ open: false }">
+  <a href="/" class="nav-logo">
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO">
+  </a>
+  <ul class="nav-links">
+    <li><a href="philosophy.html" class="active">Philosophy</a></li>
+    <li><a href="https://www.mirajoco.org/programs">Programs</a></li>
+    <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
+    <li><a href="https://www.mirajoco.org/search_results">Directory</a></li>
+    <li><a href="https://www.mirajoco.org/events">Events</a></li>
+    <li><a href="https://www.mirajoco.org/coaching">Coaching</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="https://www.mirajoco.org/login" class="nav-login" aria-label="Member Login">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </a>
+    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="nav-cta">Let's Talk Now!</a>
+  </div>
+  <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+  <div class="mobile-menu" :class="open ? 'open' : ''">
+    <a href="philosophy.html">Philosophy</a>
+    <a href="https://www.mirajoco.org/join">Programs</a>
+    <a href="https://www.mirajoco.org/blog">Writing</a>
+    <a href="https://www.mirajoco.org/search_results">Directory</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="https://www.mirajoco.org/coaching">Coaching</a>
+    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" class="nav-cta">Let's Talk Now</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO — TYPEWRITER ═══ -->
+<section class="phil-hero">
+  <div class="phil-hero-eyebrow">The Philosophy of Miranda Johnson</div>
+  <div class="typewriter-wrap">
+    <div class="typewriter-text">
+      <span id="typewriter-output"></span><span class="typewriter-cursor"></span>
+    </div>
+  </div>
+  <p class="phil-hero-sub">Everything you are living right now is a seed you planted. The law doesn't lie. It never has.</p>
+  <div class="phil-hero-scroll">
+    <span>Explore</span>
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ THE ORIGINAL LAW ═══ -->
+<section class="law-section" data-aos="fade-up">
+  <div class="law-eyebrow">The Foundation</div>
+  <h2 class="law-title">The most basic, original law ever created.</h2>
+  <p class="law-body">Before karma. Before success formulas. Before every self-help book ever written — there was Seedtime and Harvest. It is the operating system of every outcome in your life. You don't get to opt out. You only get to choose what you plant, where you plant it, and whether you understand the season you're in.</p>
+  <div class="law-pillars" data-aos="fade-up" data-aos-delay="100">
+    <div class="law-pillar">
+      <div class="law-pillar-icon">🌱</div>
+      <div class="law-pillar-label">The Seed</div>
+      <div class="law-pillar-desc">Every action, word, dollar, and hour is a seed. You are always planting.</div>
+    </div>
+    <div class="law-pillar">
+      <div class="law-pillar-icon">🌿</div>
+      <div class="law-pillar-label">The Ground</div>
+      <div class="law-pillar-desc">Not all ground is equal. Where you invest determines what multiplies.</div>
+    </div>
+    <div class="law-pillar">
+      <div class="law-pillar-icon">🌾</div>
+      <div class="law-pillar-label">The Season</div>
+      <div class="law-pillar-desc">Timing is not luck. Knowing your season changes everything you do next.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUESTION & REVEAL ═══ -->
+<section class="reveal-section">
+  <div class="section-eyebrow" data-aos="fade-up">The Hard Questions</div>
+  <h2 class="section-head" data-aos="fade-up">Truth has always been in the asking.</h2>
+  <div class="reveal-list" id="reveal-list">
+
+    <div class="reveal-item" data-aos="fade-up" data-aos-delay="0">
+      <button class="reveal-question" onclick="toggleReveal(this)">
+        <span class="reveal-question-text">Based on your current harvest, what seeds are you planting?</span>
+        <span class="reveal-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </span>
+      </button>
+      <div class="reveal-answer">
+        <div class="reveal-answer-inner">
+          We are all self-made. Not just in the millionaire sense — <strong>but in the way we fail too.</strong> Every result in your life is a seed you planted. Your relationships, your finances, your health, your peace — all of it is a harvest. If you don't like what you're reaping, the question isn't who did this to you. The question is: what have you been sowing?
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-item" data-aos="fade-up" data-aos-delay="100">
+      <button class="reveal-question" onclick="toggleReveal(this)">
+        <span class="reveal-question-text">Are you in good ground?</span>
+        <span class="reveal-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </span>
+      </button>
+      <div class="reveal-answer">
+        <div class="reveal-answer-inner">
+          Your time and your money are seeds. <strong>Where they go determines what grows.</strong> Good ground multiplies. Bad ground consumes. You can work hard in the wrong soil your entire life and still have nothing to show for it. Stop pouring into environments, relationships, and systems that cannot hold what you are planting. Assess your ground before you assess your effort.
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-item" data-aos="fade-up" data-aos-delay="150">
+      <button class="reveal-question" onclick="toggleReveal(this)">
+        <span class="reveal-question-text">What level of life are you on?</span>
+        <span class="reveal-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </span>
+      </button>
+      <div class="reveal-answer">
+        <div class="reveal-answer-inner">
+          There are three levels. <strong>Level 1: Crawl and Walk.</strong> Level 2: Run. Level 3: Fly. Most people live and die at Level 1 — not because they couldn't reach Level 3, but because they never identified which level they were on. You cannot run until you have finished learning to walk. And most people assign "fly" to the afterlife or the next generation. It doesn't have to be that way. But you have to be honest about where you actually are right now.
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-item" data-aos="fade-up" data-aos-delay="200">
+      <button class="reveal-question" onclick="toggleReveal(this)">
+        <span class="reveal-question-text">Do you know the laws of Seedtime and Harvest?</span>
+        <span class="reveal-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </span>
+      </button>
+      <div class="reveal-answer">
+        <div class="reveal-answer-inner">
+          This is not new. It is the <strong>oldest operating law in existence</strong> — pre-dating every philosophy, every religion, every financial system. Seedtime and Harvest governs everything: your body, your relationships, your business, your legacy. The reason most people miss it is because they are always reacting to the harvest without ever examining the seed. Once you learn this law, you cannot unsee it.
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-item" data-aos="fade-up" data-aos-delay="250">
+      <button class="reveal-question" onclick="toggleReveal(this)">
+        <span class="reveal-question-text">Would you move differently if you knew you were always planting?</span>
+        <span class="reveal-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </span>
+      </button>
+      <div class="reveal-answer">
+        <div class="reveal-answer-inner">
+          Every conversation is a seed. Every dollar is a seed. Every hour of silence or noise is a seed. <strong>This is bigger than karma</strong> — because karma is reactive. Seedtime and Harvest is intentional. You choose the seed. You choose the ground. You choose the season. Karma happens to you. Seedtime and Harvest is something you do. The question is whether you are doing it consciously or by default.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ THE 3 LEVELS ═══ -->
+<section class="levels-section">
+  <div class="levels-eyebrow" data-aos="fade-up">The Framework</div>
+  <h2 class="levels-title" data-aos="fade-up">Three levels. Most never leave the first.</h2>
+  <p class="levels-sub" data-aos="fade-up">Where you are determines your next move. Be honest about the level you're on.</p>
+  <div class="levels-grid">
+    <div class="level-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="level-number">Level One</div>
+      <div class="level-phase">Crawl &amp; Walk</div>
+      <div class="level-motion">Planting Season</div>
+      <p class="level-desc">The foundation is being laid. Seeds are being planted — often without knowing it. Most people live and die here. Not because it's a trap, but because they never name it.</p>
+      <span class="level-tag">Where most begin — and stay</span>
+    </div>
+    <div class="level-card highlight" data-aos="fade-up" data-aos-delay="100">
+      <div class="level-number">Level Two</div>
+      <div class="level-phase">Run</div>
+      <div class="level-motion">Tending Season</div>
+      <p class="level-desc">Momentum exists. You can feel that something is possible. The work is in motion. This is where discipline and environment determine whether you rise or reset back to Level 1.</p>
+      <span class="level-tag">Where the real work happens</span>
+    </div>
+    <div class="level-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="level-number">Level Three</div>
+      <div class="level-phase">Fly</div>
+      <div class="level-motion">Harvest Season</div>
+      <p class="level-desc">Full alignment. Every door you are capable of opening becomes available. Most assign this to the afterlife or the next generation. It doesn't have to wait that long.</p>
+      <span class="level-tag">What becomes possible</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT SEASON ARE YOU IN — ASSESSMENT ═══ -->
+<section class="assessment-section" id="assessment">
+  <div class="assessment-eyebrow" data-aos="fade-up">The Assessment</div>
+  <h2 class="assessment-title" data-aos="fade-up">What season are you in?</h2>
+  <p class="assessment-sub" data-aos="fade-up">Three questions. Honest answers. A clear next step.</p>
+
+  <div class="assessment-wrap" data-aos="fade-up">
+    <div class="assessment-progress" id="assessment-progress">
+      <div class="progress-dot active" id="dot-0"></div>
+      <div class="progress-dot" id="dot-1"></div>
+      <div class="progress-dot" id="dot-2"></div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="assessment-step active" id="step-0">
+      <div class="assessment-q">How would you describe your current results?</div>
+      <div class="assessment-options">
+        <button class="assessment-option" onclick="answer(0, 'A')">
+          <span class="option-letter">A</span>
+          I'm putting in real effort but not seeing the return I expected.
+        </button>
+        <button class="assessment-option" onclick="answer(0, 'B')">
+          <span class="option-letter">B</span>
+          Things are moving, but I feel like I'm in the grind with no end in sight.
+        </button>
+        <button class="assessment-option" onclick="answer(0, 'C')">
+          <span class="option-letter">C</span>
+          I'm seeing real returns — but I know there's a next level I haven't reached.
+        </button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="assessment-step" id="step-1">
+      <div class="assessment-q">Where is most of your time and energy actually going?</div>
+      <div class="assessment-options">
+        <button class="assessment-option" onclick="answer(1, 'A')">
+          <span class="option-letter">A</span>
+          Starting, restarting, or trying to rebuild something that keeps falling apart.
+        </button>
+        <button class="assessment-option" onclick="answer(1, 'B')">
+          <span class="option-letter">B</span>
+          Staying consistent, maintaining momentum, pushing through resistance.
+        </button>
+        <button class="assessment-option" onclick="answer(1, 'C')">
+          <span class="option-letter">C</span>
+          Leveraging what's working and figuring out how to scale it.
+        </button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="assessment-step" id="step-2">
+      <div class="assessment-q">What feels most honest about right now?</div>
+      <div class="assessment-options">
+        <button class="assessment-option" onclick="answer(2, 'A')">
+          <span class="option-letter">A</span>
+          I need a reset. Something fundamental has to change before anything else will.
+        </button>
+        <button class="assessment-option" onclick="answer(2, 'B')">
+          <span class="option-letter">B</span>
+          I'm on the right path — I just need the right environment to keep going.
+        </button>
+        <button class="assessment-option" onclick="answer(2, 'C')">
+          <span class="option-letter">C</span>
+          I'm ready for the next level. I just need someone who can see what I can't.
+        </button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="assessment-result" id="result-A">
+      <div class="result-season">You are in Seedtime</div>
+      <div class="result-title">You're planting.<br>Make it intentional.</div>
+      <p class="result-body">The harvest hasn't come yet — not because you aren't working, but because the seeds need resetting. The 25 Days &amp; 25 Nights program was built for exactly this moment. Reconnect to yourself, silence the noise, and plant with purpose for the first time.</p>
+      <a href="https://25d25n.mirajoco.org/" target="_blank" rel="noopener" class="result-cta">Start 25 Days &amp; 25 Nights</a>
+      <button class="result-restart" onclick="restartAssessment()">Take it again</button>
+    </div>
+
+    <div class="assessment-result" id="result-B">
+      <div class="result-season">You are in Tending Season</div>
+      <div class="result-title">You're in the work.<br>Environment is everything now.</div>
+      <p class="result-body">The seeds are in the ground. What happens next depends entirely on where you are planted. The MiRAjO Collective is the environment built to keep leaders like you tending with intention — not alone, not in the wrong soil.</p>
+      <a href="https://www.mirajoco.org/join" target="_blank" rel="noopener" class="result-cta">Join the Collective</a>
+      <button class="result-restart" onclick="restartAssessment()">Take it again</button>
+    </div>
+
+    <div class="assessment-result" id="result-C">
+      <div class="result-season">You are in Harvest Season</div>
+      <div class="result-title">You're ready to harvest.<br>Don't leave it on the field.</div>
+      <p class="result-body">You've planted. You've tended. The results are showing — but you can feel there is a ceiling. This is the season where working directly with Miranda can show you what you can't see from inside it. The harvest doesn't wait.</p>
+      <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="result-cta">Work with Miranda</a>
+      <button class="result-restart" onclick="restartAssessment()">Take it again</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PROGRAMS ═══ -->
+<section class="programs-section">
+  <div class="programs-eyebrow" data-aos="fade-up">Put the Philosophy to Work</div>
+  <h2 class="programs-title" data-aos="fade-up">Programs built on the law.</h2>
+  <p class="programs-sub" data-aos="fade-up">Each program is a direct application of Seedtime &amp; Harvest. More are on the way.</p>
+
+  <div class="programs-grid">
+
+    <!-- 25 Days & 25 Nights -->
+    <div class="program-card" data-aos="fade-up">
+      <div class="program-card-header">
+        <div class="program-logo-wrap">
+          <!-- Drop your 25D25N logo into /img and update src below -->
+          <img src="img/25d25n-logo.png" alt="25 Days 25 Nights" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="program-logo-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">25</div>
+        </div>
+        <div class="program-badge">Now Available</div>
+        <div class="program-name">25 Days &amp;<br>25 Nights</div>
+      </div>
+      <div class="program-card-body">
+        <p class="program-tagline">A 25-day reset to find your purpose, realign, and open every door you are capable of.</p>
+        <ul class="program-pillars">
+          <li>7 Currents of Nature's Law</li>
+          <li>10 Non-Negotiables for lasting change</li>
+          <li>Health, Movement &amp; Silence practices</li>
+          <li>Disconnect from noise. Reconnect to self.</li>
+          <li>Break free and step into what's next</li>
+        </ul>
+        <a href="https://25d25n.mirajoco.org/" target="_blank" rel="noopener" class="program-cta">Begin the Reset</a>
+      </div>
+    </div>
+
+    <!-- Coming Soon Slot 1 -->
+    <div class="program-card-soon" data-aos="fade-up" data-aos-delay="100">
+      <div class="soon-icon">+</div>
+      <div class="soon-label">Coming Soon</div>
+      <p class="soon-text">The next program is in development. Stay connected to be first to know.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ BOOKS BAND ═══ -->
+<section class="books-band" data-aos="fade-up">
+  <div class="books-band-eyebrow">The Books</div>
+  <h2 class="books-band-title">The philosophy in your hands.</h2>
+  <p class="books-band-sub">LeadLoud and The Pain Principle are the written foundation of everything Miranda teaches. Tools forged from lived experience — not theory.</p>
+  <div class="books-band-links">
+    <a href="https://mirajoagency.org/" target="_blank" rel="noopener" class="btn-dark">Get the Books</a>
+    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="btn-outline-dark">Work 1:1 with Miranda</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://www.mirajoco.org/about">Philosophy</a>
+    <a href="https://www.mirajoco.org/join">Programs</a>
+    <a href="https://www.mirajoco.org/blog">Writing</a>
+    <a href="https://www.mirajoco.org/search_results">Directory</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="https://www.mirajoco.org/about/contact">Contact</a>
+    <a href="https://www.mirajoco.org/login">Member Login</a>
+  </div>
+  <p class="footer-tagline">Rooted clarity for leaders who build from understanding — not urgency.</p>
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/company/mirajocollective/" target="_blank">
+      <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100.28 448H7.4V149.9h92.88zM53.79 108.1C24.09 108.1 0 83.47 0 53.77a53.76 53.76 0 0 1 107.52 0c0 29.7-24.09 54.33-53.73 54.33zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.6-2.9 13.4-2.9 21.2V448h-92.7s1.2-241.1 0-266.1h92.7v37.7c12.3-19 34.2-46 83.2-46 60.7 0 106.2 39.6 106.2 124.7V448z"/>
+      </svg>
+      LinkedIn
+    </a>
+    <a href="https://www.mirajoco.org/about/contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      Contact
+    </a>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 MiRAjO Collective &middot;
+    <a href="https://www.mirajoco.org/about/terms">Terms of Use</a> &middot;
+    <a href="https://www.mirajoco.org/about/privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+</script>
+
+<!-- Typewriter -->
+<script>
+(function() {
+  var questions = [
+    "Based on your current harvest, what seeds are you planting?",
+    "Are you in good ground?",
+    "What level of life are you on?",
+    "Do you know the laws of Seedtime and Harvest?",
+    "Would you move differently if you knew you were always planting?"
+  ];
+  var el = document.getElementById('typewriter-output');
+  var qi = 0, ci = 0, deleting = false;
+  var TYPE_SPEED = 48, DELETE_SPEED = 22, PAUSE = 2400, PAUSE_SHORT = 500;
+
+  function tick() {
+    var current = questions[qi];
+    if (!deleting) {
+      el.textContent = current.slice(0, ci + 1);
+      ci++;
+      if (ci === current.length) {
+        deleting = true;
+        setTimeout(tick, PAUSE);
+        return;
+      }
+      setTimeout(tick, TYPE_SPEED);
+    } else {
+      el.textContent = current.slice(0, ci - 1);
+      ci--;
+      if (ci === 0) {
+        deleting = false;
+        qi = (qi + 1) % questions.length;
+        setTimeout(tick, PAUSE_SHORT);
+        return;
+      }
+      setTimeout(tick, DELETE_SPEED);
+    }
+  }
+  tick();
+})();
+</script>
+
+<!-- Question & Reveal -->
+<script>
+function toggleReveal(btn) {
+  var item = btn.closest('.reveal-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.reveal-item.open').forEach(function(el) {
+    el.classList.remove('open');
+  });
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+
+<!-- Assessment -->
+<script>
+var answers = [];
+
+function answer(stepIndex, val) {
+  answers[stepIndex] = val;
+  var current = document.getElementById('step-' + stepIndex);
+  var next = document.getElementById('step-' + (stepIndex + 1));
+  var dot = document.getElementById('dot-' + stepIndex);
+
+  current.classList.remove('active');
+  if (dot) { dot.classList.remove('active'); dot.classList.add('done'); }
+
+  if (next) {
+    next.classList.add('active');
+    var nextDot = document.getElementById('dot-' + (stepIndex + 1));
+    if (nextDot) nextDot.classList.add('active');
+  } else {
+    // Show result
+    document.getElementById('assessment-progress').style.display = 'none';
+    var counts = { A: 0, B: 0, C: 0 };
+    answers.forEach(function(a) { counts[a]++; });
+    var season = Object.keys(counts).reduce(function(a, b) { return counts[a] >= counts[b] ? a : b; });
+    document.getElementById('result-' + season).classList.add('active');
+  }
+}
+
+function restartAssessment() {
+  answers = [];
+  ['A','B','C'].forEach(function(r) {
+    document.getElementById('result-' + r).classList.remove('active');
+  });
+  for (var i = 0; i < 3; i++) {
+    var step = document.getElementById('step-' + i);
+    var dot = document.getElementById('dot-' + i);
+    step.classList.remove('active');
+    if (dot) { dot.classList.remove('active', 'done'); }
+  }
+  document.getElementById('assessment-progress').style.display = 'flex';
+  document.getElementById('step-0').classList.add('active');
+  document.getElementById('dot-0').classList.add('active');
+}
+</script>
+
+</body>
+</html>
