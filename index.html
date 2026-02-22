@@ -1071,6 +1071,7 @@
   var container = document.getElementById('blog-feed');
   var FALLBACK_IMGS = ['img/Superpower.jpg', 'img/blo5.png', 'img/ExternalvsInternal.jpeg', 'img/blog.jpeg', 'img/blog1.png', 'img/blog2.png'];
   var firstLoad = true;
+  var ogImageCache = {}; // Cache OG images by post URL so we don't re-fetch on every refresh
 
   function formatDate(pubDate) {
     if (!pubDate) return '';
@@ -1079,75 +1080,69 @@
     return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
-  function extractImage(item) {
-    // 1. media:content
-    var media = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content')[0];
-    if (media && media.getAttribute('url')) return media.getAttribute('url');
-    // 2. media:thumbnail
-    var thumb = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0];
-    if (thumb && thumb.getAttribute('url')) return thumb.getAttribute('url');
-    // 3. enclosure
-    var enclosure = item.querySelector('enclosure');
-    if (enclosure && enclosure.getAttribute('url')) return enclosure.getAttribute('url');
-    // 4. first <img> in content:encoded
-    var contentEl = item.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/', 'encoded')[0];
-    var contentHtml = contentEl ? contentEl.textContent : '';
-    var match = contentHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if (match && match[1]) {
-      var src = match[1];
-      if (src.startsWith('/')) src = 'https://www.mirajoco.org' + src;
-      return src;
-    }
-    // 5. first <img> in description
-    var desc = item.querySelector('description') ? item.querySelector('description').textContent : '';
-    var descMatch = desc.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if (descMatch && descMatch[1]) return descMatch[1];
-    return '';
+  function fetchOgImage(postUrl, fallback) {
+    if (ogImageCache[postUrl] !== undefined) return Promise.resolve(ogImageCache[postUrl] || fallback);
+    var fullUrl = postUrl.startsWith('http') ? postUrl : 'https://www.mirajoco.org' + postUrl;
+    return fetch(PROXY + encodeURIComponent(fullUrl), { cache: 'no-store' })
+      .then(function(res) { return res.text(); })
+      .then(function(html) {
+        var match = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+                 || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+        var img = match ? match[1] : '';
+        ogImageCache[postUrl] = img;
+        return img || fallback;
+      })
+      .catch(function() { ogImageCache[postUrl] = ''; return fallback; });
   }
 
   function loadFeed() {
-    // Cache-busting timestamp ensures proxy never serves a stale response
     var bustUrl = FEED_URL + '?_t=' + Date.now();
     fetch(PROXY + encodeURIComponent(bustUrl), { cache: 'no-store' })
       .then(function(res) { return res.text(); })
       .then(function(xml) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(xml, 'text/xml');
-        // Sort items newest first by pubDate
         var items = Array.from(doc.querySelectorAll('item')).sort(function(a, b) {
           var aDate = a.querySelector('pubDate') ? new Date(a.querySelector('pubDate').textContent) : 0;
           var bDate = b.querySelector('pubDate') ? new Date(b.querySelector('pubDate').textContent) : 0;
           return bDate - aDate;
+        }).slice(0, POSTS_TO_SHOW);
+
+        // Extract post data
+        var posts = items.map(function(item, i) {
+          return {
+            title:   item.querySelector('title')       ? item.querySelector('title').textContent       : '',
+            link:    item.querySelector('link')        ? item.querySelector('link').textContent.trim() : '#',
+            desc:    item.querySelector('description') ? item.querySelector('description').textContent : '',
+            pubDate: item.querySelector('pubDate')     ? item.querySelector('pubDate').textContent     : '',
+            fallback: FALLBACK_IMGS[i % FALLBACK_IMGS.length]
+          };
         });
-        var html = '';
 
-        for (var i = 0; i < Math.min(items.length, POSTS_TO_SHOW); i++) {
-          var item = items[i];
-          var title = item.querySelector('title') ? item.querySelector('title').textContent : '';
-          var link = item.querySelector('link') ? item.querySelector('link').textContent : '#';
-          var desc = item.querySelector('description') ? item.querySelector('description').textContent : '';
-          var pubDate = item.querySelector('pubDate') ? item.querySelector('pubDate').textContent : '';
-          var imgUrl = extractImage(item) || FALLBACK_IMGS[i % FALLBACK_IMGS.length];
-          var excerpt = desc.replace(/<[^>]*>/g, '');
-          excerpt = excerpt.length > 160 ? excerpt.substring(0, 160) + '...' : excerpt;
-          var imgHtml = '<img src="' + imgUrl + '" alt="' + title.replace(/"/g, '&quot;') + '" loading="lazy">';
-
-          html += '<div class="blog-card" data-aos="fade-up" data-aos-delay="' + (i * 100) + '">' +
-            imgHtml +
-            '<div class="blog-body">' +
-              '<div class="blog-title">' + title + '</div>' +
-              '<p class="blog-excerpt">' + excerpt + '</p>' +
-              '<div class="blog-date">' + formatDate(pubDate) + '</div>' +
-              '<a href="' + link + '" class="blog-link">Continue Reading &rarr;</a>' +
-            '</div>' +
-          '</div>';
-        }
-
-        container.innerHTML = html;
-        if (firstLoad && typeof AOS !== 'undefined') { AOS.refresh(); firstLoad = false; }
+        // Fetch OG images for all posts in parallel, then render
+        return Promise.all(posts.map(function(p) {
+          return fetchOgImage(p.link, p.fallback);
+        })).then(function(images) {
+          var html = '';
+          posts.forEach(function(p, i) {
+            var excerpt = p.desc.replace(/<[^>]*>/g, '');
+            excerpt = excerpt.length > 160 ? excerpt.substring(0, 160) + '...' : excerpt;
+            html += '<div class="blog-card" data-aos="fade-up" data-aos-delay="' + (i * 100) + '">' +
+              '<img src="' + images[i] + '" alt="' + p.title.replace(/"/g, '&quot;') + '" loading="lazy">' +
+              '<div class="blog-body">' +
+                '<div class="blog-title">' + p.title + '</div>' +
+                '<p class="blog-excerpt">' + excerpt + '</p>' +
+                '<div class="blog-date">' + formatDate(p.pubDate) + '</div>' +
+                '<a href="' + p.link + '" class="blog-link">Continue Reading &rarr;</a>' +
+              '</div>' +
+            '</div>';
+          });
+          container.innerHTML = html;
+          if (firstLoad && typeof AOS !== 'undefined') { AOS.refresh(); firstLoad = false; }
+        });
       })
       .catch(function() {
-        if (!firstLoad) return; // Keep existing cards on background refresh failure
+        if (!firstLoad) return;
         container.innerHTML =
           '<div class="blog-card">' +
             '<img src="img/Superpower.jpg" alt="Who Stole Your Superpower?">' +
