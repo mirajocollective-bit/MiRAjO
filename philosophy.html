@@ -40,16 +40,24 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ═══ GLOBAL BACKGROUND IMAGE ═══ */
+    /* ═══ GLOBAL BACKGROUND IMAGE — PARALLAX ═══ */
     .page-bg {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background-image: url('img/Miranda J- Headshot.jpeg');
-      background-size: cover;
-      background-position: center top;
-      opacity: 0.12;
       pointer-events: none;
+      overflow: hidden;
+    }
+    .page-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 140vh;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.12;
+      will-change: transform;
     }
 
     /* ═══ NAV ═══ */
@@ -967,7 +975,9 @@
 </head>
 <body>
 
-<div class="page-bg" aria-hidden="true"></div>
+<div class="page-bg" aria-hidden="true">
+  <img src="img/Miranda J- Headshot.jpeg" alt="" class="page-bg-img">
+</div>
 
 <!-- ═══ NAV ═══ -->
 <nav class="site-nav" x-data="{ open: false }">
@@ -1442,6 +1452,22 @@ function toggleReveal(btn) {
   });
   if (!isOpen) item.classList.add('open');
 }
+</script>
+
+<!-- Parallax background -->
+<script>
+(function() {
+  var img = document.querySelector('.page-bg-img');
+  var total = 0;
+  function updateParallax() {
+    total = document.body.scrollHeight - window.innerHeight;
+    var scrolled = window.pageYOffset;
+    var offset = -(scrolled / total) * 35;
+    img.style.transform = 'translateY(' + offset + 'vh)';
+  }
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  window.addEventListener('resize', updateParallax, { passive: true });
+})();
 </script>
 
 <!-- Assessment -->
