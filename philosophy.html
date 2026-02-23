@@ -41,18 +41,16 @@
     }
 
     /* ═══ GLOBAL BACKGROUND IMAGE ═══ */
-    body::before {
-      content: '';
+    .page-bg {
       position: fixed;
       inset: 0;
-      z-index: 0;
+      z-index: 9999;
       background-image: url('img/Miranda J- Headshot.jpeg');
       background-size: cover;
       background-position: center top;
-      opacity: 0.30;
+      opacity: 0.12;
       pointer-events: none;
     }
-    body > * { position: relative; z-index: 1; }
 
     /* ═══ NAV ═══ */
     .site-nav {
@@ -968,6 +966,8 @@
   </style>
 </head>
 <body>
+
+<div class="page-bg" aria-hidden="true"></div>
 
 <!-- ═══ NAV ═══ -->
 <nav class="site-nav" x-data="{ open: false }">
