@@ -40,6 +40,20 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ═══ GLOBAL BACKGROUND IMAGE ═══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: url('img/Miranda J- Headshot.jpeg');
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.05;
+      pointer-events: none;
+    }
+    body > * { position: relative; z-index: 1; }
+
     /* ═══ NAV ═══ */
     .site-nav {
       display: flex;
@@ -682,9 +696,9 @@
       background: rgba(74,124,89,0.15);
     }
     .program-logo-wrap {
-      width: 72px;
-      height: 72px;
-      border-radius: 14px;
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
       background: rgba(237,232,223,0.1);
       border: 1px solid rgba(237,232,223,0.15);
       display: flex;
@@ -1019,8 +1033,8 @@
   <div class="law-pillars" data-aos="fade-up" data-aos-delay="100">
     <div class="law-pillar">
       <div class="law-pillar-icon">🌱</div>
-      <div class="law-pillar-label">The Seed</div>
-      <div class="law-pillar-desc">Every action, word, dollar, and hour is a seed. You are always planting.</div>
+      <div class="law-pillar-label">The Season</div>
+      <div class="law-pillar-desc">Every action, word, dollar, and hour is a seed. Knowing your season changes what you plant and when.</div>
     </div>
     <div class="law-pillar">
       <div class="law-pillar-icon">🌿</div>
@@ -1029,8 +1043,8 @@
     </div>
     <div class="law-pillar">
       <div class="law-pillar-icon">🌾</div>
-      <div class="law-pillar-label">The Season</div>
-      <div class="law-pillar-desc">Timing is not luck. Knowing your season changes everything you do next.</div>
+      <div class="law-pillar-label">The Harvest</div>
+      <div class="law-pillar-desc">The harvest doesn't lie. What you reap is a direct reflection of what you sowed.</div>
     </div>
   </div>
 </section>
@@ -1283,14 +1297,58 @@
   </div>
 </section>
 
-<!-- ═══ BOOKS BAND ═══ -->
-<section class="books-band" data-aos="fade-up">
-  <div class="books-band-eyebrow">The Books</div>
-  <h2 class="books-band-title">The philosophy in your hands.</h2>
-  <p class="books-band-sub">LeadLoud and The Pain Principle are the written foundation of everything Miranda teaches. Tools forged from lived experience — not theory.</p>
-  <div class="books-band-links">
-    <a href="https://mirajoagency.org/" target="_blank" rel="noopener" class="btn-dark">Get the Books</a>
-    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="btn-outline-dark">Work 1:1 with Miranda</a>
+<!-- ═══ BOOKS ═══ -->
+<section class="programs-section" style="background: var(--warm-parchment);">
+  <div class="programs-eyebrow" data-aos="fade-up">The Books</div>
+  <h2 class="programs-title" data-aos="fade-up">The philosophy in your hands.</h2>
+  <p class="programs-sub" data-aos="fade-up">Written foundations of everything Miranda teaches. Forged from lived experience — not theory.</p>
+
+  <div class="programs-grid">
+
+    <!-- Lead Loud -->
+    <div class="program-card" data-aos="fade-up">
+      <div class="program-card-header" style="background: #1C2B1C;">
+        <div class="program-logo-wrap">
+          <img src="img/LEADLOUD.png" alt="Lead Loud" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="program-logo-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">LL</div>
+        </div>
+        <div class="program-badge">Now Available</div>
+        <div class="program-name">Lead Loud</div>
+      </div>
+      <div class="program-card-body">
+        <p class="program-tagline">11 Commandments of the Next-Gen Leader</p>
+        <ul class="program-pillars">
+          <li>A blueprint for leaders who refuse to shrink</li>
+          <li>11 commandments that redefine what leadership looks like</li>
+          <li>Written for the generation that leads with authenticity</li>
+          <li>Practical, direct, and built from the inside out</li>
+        </ul>
+        <a href="https://www.amazon.com/s?k=lead+loud+miranda+johnson" target="_blank" rel="noopener" class="program-cta">Get it on Amazon</a>
+      </div>
+    </div>
+
+    <!-- The Pain Principle -->
+    <div class="program-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="program-card-header" style="background: #2A1C1C;">
+        <div class="program-logo-wrap">
+          <img src="img/miranda-book2.png" alt="The Pain Principle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="program-logo-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">PP</div>
+        </div>
+        <div class="program-badge">Now Available</div>
+        <div class="program-name">The Pain Principle</div>
+      </div>
+      <div class="program-card-body">
+        <p class="program-tagline">Embracing Self-Inflicted Pain to Break Free</p>
+        <ul class="program-pillars">
+          <li>A raw and honest look at the pain we create for ourselves</li>
+          <li>How to use that pain as a catalyst — not a cage</li>
+          <li>Break free from the cycles holding you at Level 1</li>
+          <li>The seed of your next season is inside the struggle</li>
+        </ul>
+        <a href="https://www.amazon.com/s?k=the+pain+principle+miranda+johnson" target="_blank" rel="noopener" class="program-cta">Get it on Amazon</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
