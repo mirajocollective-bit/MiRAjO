@@ -179,7 +179,15 @@
     /* ═══ PROGRAM SECTION — FLAGSHIP ═══ */
     .program-section {
       padding: 0;
-      background: var(--soft-white);
+      background: #F3F0F9;
+    }
+    /* 25D25N purple palette */
+    :root {
+      --25d-deep: #3D2B72;
+      --25d-mid: #5A3F9A;
+      --25d-light: #8B72C8;
+      --25d-pale: #EDE8F8;
+      --25d-silver: #C8C4DC;
     }
     .program-inner {
       max-width: 1100px;
@@ -197,7 +205,7 @@
       font-size: 11px;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--living-green);
+      color: var(--25d-mid);
       font-weight: 500;
       margin-bottom: 16px;
     }
@@ -212,9 +220,10 @@
       height: 80px;
       border-radius: 14px;
       object-fit: contain;
-      background: var(--cream);
-      border: 1px solid var(--border-light);
+      background: #fff;
+      border: 1px solid rgba(90,63,154,0.2);
       padding: 8px;
+      box-shadow: 0 4px 16px rgba(90,63,154,0.12);
     }
     .program-title {
       font-family: 'Instrument Serif', serif;
@@ -268,7 +277,7 @@
       content: '◆';
       position: absolute;
       left: 0;
-      color: var(--living-green);
+      color: var(--25d-light);
       font-size: 7px;
       top: 14px;
     }
@@ -288,8 +297,8 @@
     }
     .purchase-badge {
       display: inline-block;
-      background: rgba(168,197,160,0.2);
-      color: var(--living-green);
+      background: rgba(90,63,154,0.1);
+      color: var(--25d-mid);
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 2px;
@@ -325,8 +334,8 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(74,124,89,0.06);
-      border: 1px solid rgba(74,124,89,0.15);
+      background: rgba(90,63,154,0.07);
+      border: 1px solid rgba(90,63,154,0.2);
       border-radius: 8px;
       padding: 12px 16px;
       margin-bottom: 28px;
@@ -335,22 +344,22 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--living-green);
+      background: var(--25d-mid);
       flex-shrink: 0;
       animation: pulse 2s ease-in-out infinite;
     }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
     .promo-text {
       font-size: 13px;
-      color: var(--living-green);
+      color: var(--25d-mid);
       font-weight: 500;
     }
     .enroll-btn {
       display: block;
       width: 100%;
       padding: 18px 28px;
-      background: var(--deep-forest);
-      color: var(--soft-white);
+      background: var(--25d-deep);
+      color: #fff;
       border-radius: 10px;
       font-size: 15px;
       font-weight: 600;
@@ -361,7 +370,7 @@
       margin-bottom: 16px;
     }
     .enroll-btn:hover {
-      background: var(--forest-mid);
+      background: var(--25d-mid);
       transform: translateY(-1px);
     }
     .enroll-sub {
@@ -400,7 +409,7 @@
       content: '✓';
       position: absolute;
       left: 0;
-      color: var(--living-green);
+      color: var(--25d-mid);
       font-weight: 600;
       font-size: 11px;
     }
