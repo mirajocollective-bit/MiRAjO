@@ -881,6 +881,77 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+    /* ═══ QUOTE TICKER ═══ */
+    .quote-ticker {
+      background: var(--deep-forest);
+      padding: 20px 0;
+      overflow: hidden;
+      width: 100%;
+      border-top: 1px solid rgba(168,197,160,0.1);
+      border-bottom: 1px solid rgba(168,197,160,0.12);
+    }
+    .quote-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: ticker-scroll 55s linear infinite;
+    }
+    .quote-track:hover { animation-play-state: paused; }
+    .quote-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: 16px;
+      color: var(--text-muted-dark);
+      font-style: italic;
+      white-space: nowrap;
+      padding: 0 52px;
+    }
+    .quote-sep {
+      color: var(--new-growth);
+      font-size: 9px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .quote-track { animation: none; }
+    }
+
+    /* ═══ BLOG SKELETON LOADER ═══ */
+    .blog-skeleton {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .skeleton-img {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(90deg, #ede9e2 25%, #e4e0d8 50%, #ede9e2 75%);
+      background-size: 400% 100%;
+      animation: shimmer 1.6s ease-in-out infinite;
+    }
+    .skeleton-body { padding: 28px; }
+    .skeleton-line {
+      height: 13px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #ede9e2 25%, #e4e0d8 50%, #ede9e2 75%);
+      background-size: 400% 100%;
+      animation: shimmer 1.6s ease-in-out infinite;
+      margin-bottom: 10px;
+    }
+    .skeleton-line.sk-title { height: 19px; width: 85%; margin-bottom: 14px; }
+    .skeleton-line.sk-long  { width: 100%; }
+    .skeleton-line.sk-med   { width: 75%; }
+    .skeleton-line.sk-short { width: 45%; margin-bottom: 16px; }
+    .skeleton-line.sk-link  { width: 36%; height: 11px; }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
   </style>
 </head>
 <body>
@@ -1005,6 +1076,54 @@
   <a href="https://www.mirajoco.org/join" class="dark-btn">Join the Collective</a>
 </section>
 
+<!-- ═══ QUOTE TICKER ═══ -->
+<div class="quote-ticker" aria-hidden="true">
+  <div class="quote-track">
+    <!-- Set 1 -->
+    <span class="quote-text">Everything you are living right now is a seed you planted.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The law doesn't lie. It never has.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Your time and your money are seeds. Where they go determines what grows.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Karma happens to you. Seedtime and Harvest is something you do.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Stop pouring into environments that cannot hold what you are planting.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The harvest doesn't lie.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Once you learn this law, you cannot unsee it.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">We are all self-made — not just in the millionaire sense, but in the way we fail too.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Every conversation is a seed. Every dollar is a seed. Every hour of silence is a seed.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">You can work hard in the wrong soil your entire life and still have nothing to show for it.</span>
+    <span class="quote-sep">◆</span>
+    <!-- Set 2 (duplicate for seamless loop) -->
+    <span class="quote-text">Everything you are living right now is a seed you planted.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The law doesn't lie. It never has.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Your time and your money are seeds. Where they go determines what grows.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Karma happens to you. Seedtime and Harvest is something you do.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Stop pouring into environments that cannot hold what you are planting.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The harvest doesn't lie.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Once you learn this law, you cannot unsee it.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">We are all self-made — not just in the millionaire sense, but in the way we fail too.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Every conversation is a seed. Every dollar is a seed. Every hour of silence is a seed.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">You can work hard in the wrong soil your entire life and still have nothing to show for it.</span>
+    <span class="quote-sep">◆</span>
+  </div>
+</div>
+
 <!-- ═══ HEALTHY NETWORKING ═══ -->
 <section class="hn-section" data-aos="fade-up">
   <div class="hn-bg" aria-hidden="true"></div>
@@ -1054,8 +1173,37 @@
   <div class="section-head" data-aos="fade-up">Bold insights, real stories, grounded truth.</div>
 
   <div class="blog-grid" id="blog-feed">
-    <!-- Populated dynamically from RSS feed -->
-    <div class="blog-loading" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted-light);font-size:14px;font-weight:300;">Loading latest articles...</div>
+    <!-- Skeleton loaders shown while feed loads -->
+    <div class="blog-skeleton">
+      <div class="skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line sk-title"></div>
+        <div class="skeleton-line sk-long"></div>
+        <div class="skeleton-line sk-med"></div>
+        <div class="skeleton-line sk-short"></div>
+        <div class="skeleton-line sk-link"></div>
+      </div>
+    </div>
+    <div class="blog-skeleton">
+      <div class="skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line sk-title"></div>
+        <div class="skeleton-line sk-long"></div>
+        <div class="skeleton-line sk-med"></div>
+        <div class="skeleton-line sk-short"></div>
+        <div class="skeleton-line sk-link"></div>
+      </div>
+    </div>
+    <div class="blog-skeleton">
+      <div class="skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line sk-title"></div>
+        <div class="skeleton-line sk-long"></div>
+        <div class="skeleton-line sk-med"></div>
+        <div class="skeleton-line sk-short"></div>
+        <div class="skeleton-line sk-link"></div>
+      </div>
+    </div>
   </div>
 
   <div class="blog-actions">

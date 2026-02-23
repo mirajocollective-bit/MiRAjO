@@ -954,6 +954,44 @@
     .footer-bottom a { color: var(--text-muted-dark); text-decoration: underline; }
     .footer-bottom a:hover { color: var(--warm-parchment); }
 
+    /* ═══ QUOTE TICKER ═══ */
+    .quote-ticker {
+      background: var(--deep-forest);
+      padding: 20px 0;
+      overflow: hidden;
+      width: 100%;
+      border-top: 1px solid rgba(168,197,160,0.1);
+      border-bottom: 1px solid rgba(168,197,160,0.12);
+    }
+    .quote-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: ticker-scroll 55s linear infinite;
+    }
+    .quote-track:hover { animation-play-state: paused; }
+    .quote-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: 16px;
+      color: var(--text-muted-dark);
+      font-style: italic;
+      white-space: nowrap;
+      padding: 0 52px;
+    }
+    .quote-sep {
+      color: var(--new-growth);
+      font-size: 9px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .quote-track { animation: none; }
+    }
+
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
       .site-nav { padding: 16px 20px; }
@@ -1101,6 +1139,58 @@
     </div>
   </div>
 </section>
+
+<!-- ═══ QUOTE TICKER ═══ -->
+<div class="quote-ticker" aria-hidden="true">
+  <div class="quote-track">
+    <!-- Set 1 -->
+    <span class="quote-text">Everything you are living right now is a seed you planted.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The law doesn't lie. It never has.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Karma happens to you. Seedtime and Harvest is something you do.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Your time and your money are seeds. Where they go determines what grows.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">You cannot run until you have finished learning to walk.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Stop pouring into environments that cannot hold what you are planting.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The harvest doesn't lie.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Every conversation is a seed. Every dollar is a seed. Every hour of silence is a seed.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Once you learn this law, you cannot unsee it.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">We are all self-made — not just in the millionaire sense, but in the way we fail too.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Assess your ground before you assess your effort.</span>
+    <span class="quote-sep">◆</span>
+    <!-- Set 2 (duplicate for seamless loop) -->
+    <span class="quote-text">Everything you are living right now is a seed you planted.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The law doesn't lie. It never has.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Karma happens to you. Seedtime and Harvest is something you do.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Your time and your money are seeds. Where they go determines what grows.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">You cannot run until you have finished learning to walk.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Stop pouring into environments that cannot hold what you are planting.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">The harvest doesn't lie.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Every conversation is a seed. Every dollar is a seed. Every hour of silence is a seed.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Once you learn this law, you cannot unsee it.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">We are all self-made — not just in the millionaire sense, but in the way we fail too.</span>
+    <span class="quote-sep">◆</span>
+    <span class="quote-text">Assess your ground before you assess your effort.</span>
+    <span class="quote-sep">◆</span>
+  </div>
+</div>
 
 <!-- ═══ QUESTION & REVEAL ═══ -->
 <section class="reveal-section">
