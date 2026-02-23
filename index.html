@@ -958,7 +958,7 @@
 
 <!-- ═══ NAV ═══ -->
 <nav class="site-nav" x-data="{ open: false }">
-  <a href="/" class="nav-logo">
+  <a href="https://home.mirajoco.org" class="nav-logo">
     <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" style="height: 48px; width: auto; display: block;">
   </a>
 
@@ -1213,13 +1213,21 @@
 
 <script>
 (function() {
-  var FEED_URL = 'https://www.mirajoco.org/blog/rss';
-  var PROXY = 'https://corsproxy.io/?';
+  var FEED_URL   = 'https://www.mirajoco.org/blog/rss';
+  var PROXY      = 'https://api.allorigins.win/raw?url=';
   var POSTS_TO_SHOW = 3;
-  var container = document.getElementById('blog-feed');
+  var TIMEOUT_MS = 9000;
+  var container  = document.getElementById('blog-feed');
   var FALLBACK_IMGS = ['img/Superpower.jpg', 'img/blo5.png', 'img/ExternalvsInternal.jpeg', 'img/blog.jpeg', 'img/blog1.png', 'img/blog2.png'];
-  var firstLoad = true;
-  var ogImageCache = {}; // Cache OG images by post URL so we don't re-fetch on every refresh
+  var hasRendered = false;
+  var ogImageCache = {};
+
+  function timed(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise(function(_, reject) { setTimeout(function() { reject(new Error('timeout')); }, ms); })
+    ]);
+  }
 
   function formatDate(pubDate) {
     if (!pubDate) return '';
@@ -1231,7 +1239,7 @@
   function fetchOgImage(postUrl, fallback) {
     if (ogImageCache[postUrl] !== undefined) return Promise.resolve(ogImageCache[postUrl] || fallback);
     var fullUrl = postUrl.startsWith('http') ? postUrl : 'https://www.mirajoco.org' + postUrl;
-    return fetch(PROXY + encodeURIComponent(fullUrl), { cache: 'no-store' })
+    return timed(fetch(PROXY + encodeURIComponent(fullUrl), { cache: 'no-store' }), 6000)
       .then(function(res) { return res.text(); })
       .then(function(html) {
         var match = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
@@ -1243,9 +1251,39 @@
       .catch(function() { ogImageCache[postUrl] = ''; return fallback; });
   }
 
+  function showFallback() {
+    if (hasRendered) return;
+    hasRendered = true;
+    container.innerHTML =
+      '<div class="blog-card">' +
+        '<img src="img/Superpower.jpg" alt="Who Stole Your Superpower?">' +
+        '<div class="blog-body">' +
+          '<div class="blog-title">Who Stole Your Superpower?</div>' +
+          '<p class="blog-excerpt">A story of childhood intuition, lost friendship, and the reminder to trust the superpower within you.</p>' +
+          '<div class="blog-date">September 9, 2025</div>' +
+          '<a href="https://www.mirajoco.org/blog/who-stole-your-superpower" class="blog-link">Continue Reading &rarr;</a>' +
+        '</div></div>' +
+      '<div class="blog-card">' +
+        '<img src="img/blo5.png" alt="Hungry or Bitter?">' +
+        '<div class="blog-body">' +
+          '<div class="blog-title">Hungry or Bitter? A Champion Mindset in Business</div>' +
+          '<p class="blog-excerpt">A champion doesn\'t let setbacks turn into bitterness. Learn how hunger, not resentment, drives true success.</p>' +
+          '<div class="blog-date">August 26, 2025</div>' +
+          '<a href="https://www.mirajoco.org/blog/hungry-or-bitter-a-champion-mindset-in-business" class="blog-link">Continue Reading &rarr;</a>' +
+        '</div></div>' +
+      '<div class="blog-card">' +
+        '<img src="img/ExternalvsInternal.jpeg" alt="Internal vs External Dialogue">' +
+        '<div class="blog-body">' +
+          '<div class="blog-title">Internal vs External Dialogue</div>' +
+          '<p class="blog-excerpt">We are always in conversation, even when no words are spoken.</p>' +
+          '<div class="blog-date">September 22, 2025</div>' +
+          '<a href="https://www.mirajoco.org/blog/internal-vs-external-dialogue-can-you-trust-yourself" class="blog-link">Continue Reading &rarr;</a>' +
+        '</div></div>';
+  }
+
   function loadFeed() {
     var bustUrl = FEED_URL + '?_t=' + Date.now();
-    fetch(PROXY + encodeURIComponent(bustUrl), { cache: 'no-store' })
+    timed(fetch(PROXY + encodeURIComponent(bustUrl), { cache: 'no-store' }), TIMEOUT_MS)
       .then(function(res) { return res.text(); })
       .then(function(xml) {
         var parser = new DOMParser();
@@ -1256,18 +1294,18 @@
           return bDate - aDate;
         }).slice(0, POSTS_TO_SHOW);
 
-        // Extract post data
+        if (!items.length) { showFallback(); return; }
+
         var posts = items.map(function(item, i) {
           return {
-            title:   item.querySelector('title')       ? item.querySelector('title').textContent       : '',
-            link:    item.querySelector('link')        ? item.querySelector('link').textContent.trim() : '#',
-            desc:    item.querySelector('description') ? item.querySelector('description').textContent : '',
-            pubDate: item.querySelector('pubDate')     ? item.querySelector('pubDate').textContent     : '',
+            title:    item.querySelector('title')       ? item.querySelector('title').textContent       : '',
+            link:     item.querySelector('link')        ? item.querySelector('link').textContent.trim() : '#',
+            desc:     item.querySelector('description') ? item.querySelector('description').textContent : '',
+            pubDate:  item.querySelector('pubDate')     ? item.querySelector('pubDate').textContent     : '',
             fallback: FALLBACK_IMGS[i % FALLBACK_IMGS.length]
           };
         });
 
-        // Fetch OG images for all posts in parallel, then render
         return Promise.all(posts.map(function(p) {
           return fetchOgImage(p.link, p.fallback);
         })).then(function(images) {
@@ -1286,38 +1324,11 @@
             '</div>';
           });
           container.innerHTML = html;
-          if (firstLoad && typeof AOS !== 'undefined') { AOS.refresh(); firstLoad = false; }
+          hasRendered = true;
+          if (typeof AOS !== 'undefined') AOS.refresh();
         });
       })
-      .catch(function() {
-        if (!firstLoad) return;
-        container.innerHTML =
-          '<div class="blog-card">' +
-            '<img src="img/Superpower.jpg" alt="Who Stole Your Superpower?">' +
-            '<div class="blog-body">' +
-              '<div class="blog-title">Who Stole Your Superpower?</div>' +
-              '<p class="blog-excerpt">A story of childhood intuition, lost friendship, and the reminder to trust the superpower within you.</p>' +
-              '<div class="blog-date">September 9, 2025</div>' +
-              '<a href="https://www.mirajoco.org/blog/who-stole-your-superpower" class="blog-link">Continue Reading &rarr;</a>' +
-            '</div></div>' +
-          '<div class="blog-card">' +
-            '<img src="img/blo5.png" alt="Hungry or Bitter?">' +
-            '<div class="blog-body">' +
-              '<div class="blog-title">Hungry or Bitter? A Champion Mindset in Business</div>' +
-              '<p class="blog-excerpt">A champion doesn\'t let setbacks turn into bitterness. Learn how hunger, not resentment, drives true success.</p>' +
-              '<div class="blog-date">August 26, 2025</div>' +
-              '<a href="https://www.mirajoco.org/blog/hungry-or-bitter-a-champion-mindset-in-business" class="blog-link">Continue Reading &rarr;</a>' +
-            '</div></div>' +
-          '<div class="blog-card">' +
-            '<img src="img/ExternalvsInternal.jpeg" alt="Internal vs External Dialogue">' +
-            '<div class="blog-body">' +
-              '<div class="blog-title">Internal vs External Dialogue</div>' +
-              '<p class="blog-excerpt">We are always in conversation, even when no words are spoken.</p>' +
-              '<div class="blog-date">September 22, 2025</div>' +
-              '<a href="https://www.mirajoco.org/blog/internal-vs-external-dialogue-can-you-trust-yourself" class="blog-link">Continue Reading &rarr;</a>' +
-            '</div></div>';
-        firstLoad = false;
-      });
+      .catch(showFallback);
   }
 
   loadFeed();
@@ -1382,11 +1393,6 @@
 </script>
 
 
-<!-- LeadConnector Chat Widget -->
-<script src="https://widgets.leadconnectorhq.com/loader.js"
-  data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
-  data-widget-id="6898f8eb81758b3c263c119a">
-</script>
 
 </body>
 </html>
