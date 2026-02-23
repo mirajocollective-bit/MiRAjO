@@ -655,18 +655,44 @@
       border-radius: 12px;
       overflow: hidden;
       transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
     }
+    .blog-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--living-green);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .blog-card:hover::after { transform: scaleX(1); }
     .blog-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(42,58,42,0.08);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(42,58,42,0.1);
     }
     .blog-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
+      transition: transform 0.5s ease;
     }
+    .blog-card:hover img { transform: scale(1.03); }
     .blog-card .blog-body {
       padding: 28px;
+    }
+    .blog-badge {
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 600;
+      background: rgba(74,124,89,0.08);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
     }
     .blog-card .blog-title {
       font-family: 'Instrument Serif', serif;
@@ -694,8 +720,16 @@
       color: var(--living-green);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.2s;
+      transition: color 0.2s, gap 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
+    .blog-card .blog-link .arrow {
+      display: inline-block;
+      transition: transform 0.25s ease;
+    }
+    .blog-card:hover .blog-link .arrow { transform: translateX(5px); }
     .blog-card .blog-link:hover { color: var(--deep-forest); }
     .blog-actions {
       text-align: center;
@@ -895,7 +929,7 @@
       display: flex;
       align-items: center;
       width: max-content;
-      animation: ticker-scroll 55s linear infinite;
+      animation: ticker-scroll 85s linear infinite;
     }
     .quote-track:hover { animation-play-state: paused; }
     .quote-text {
@@ -1258,10 +1292,11 @@
       '<div class="blog-card">' +
         '<img src="img/Superpower.jpg" alt="Who Stole Your Superpower?">' +
         '<div class="blog-body">' +
+          '<span class="blog-badge">Latest</span>' +
           '<div class="blog-title">Who Stole Your Superpower?</div>' +
           '<p class="blog-excerpt">A story of childhood intuition, lost friendship, and the reminder to trust the superpower within you.</p>' +
           '<div class="blog-date">September 9, 2025</div>' +
-          '<a href="https://www.mirajoco.org/blog/who-stole-your-superpower" class="blog-link">Continue Reading &rarr;</a>' +
+          '<a href="https://www.mirajoco.org/blog/who-stole-your-superpower" class="blog-link">Continue Reading <span class="arrow">&rarr;</span></a>' +
         '</div></div>' +
       '<div class="blog-card">' +
         '<img src="img/blo5.png" alt="Hungry or Bitter?">' +
@@ -1269,7 +1304,7 @@
           '<div class="blog-title">Hungry or Bitter? A Champion Mindset in Business</div>' +
           '<p class="blog-excerpt">A champion doesn\'t let setbacks turn into bitterness. Learn how hunger, not resentment, drives true success.</p>' +
           '<div class="blog-date">August 26, 2025</div>' +
-          '<a href="https://www.mirajoco.org/blog/hungry-or-bitter-a-champion-mindset-in-business" class="blog-link">Continue Reading &rarr;</a>' +
+          '<a href="https://www.mirajoco.org/blog/hungry-or-bitter-a-champion-mindset-in-business" class="blog-link">Continue Reading <span class="arrow">&rarr;</span></a>' +
         '</div></div>' +
       '<div class="blog-card">' +
         '<img src="img/ExternalvsInternal.jpeg" alt="Internal vs External Dialogue">' +
@@ -1277,7 +1312,7 @@
           '<div class="blog-title">Internal vs External Dialogue</div>' +
           '<p class="blog-excerpt">We are always in conversation, even when no words are spoken.</p>' +
           '<div class="blog-date">September 22, 2025</div>' +
-          '<a href="https://www.mirajoco.org/blog/internal-vs-external-dialogue-can-you-trust-yourself" class="blog-link">Continue Reading &rarr;</a>' +
+          '<a href="https://www.mirajoco.org/blog/internal-vs-external-dialogue-can-you-trust-yourself" class="blog-link">Continue Reading <span class="arrow">&rarr;</span></a>' +
         '</div></div>';
   }
 
@@ -1313,13 +1348,15 @@
           posts.forEach(function(p, i) {
             var excerpt = p.desc.replace(/<[^>]*>/g, '');
             excerpt = excerpt.length > 160 ? excerpt.substring(0, 160) + '...' : excerpt;
+            var badge = i === 0 ? '<span class="blog-badge">Latest</span>' : '';
             html += '<div class="blog-card" data-aos="fade-up" data-aos-delay="' + (i * 100) + '">' +
               '<img src="' + images[i] + '" alt="' + p.title.replace(/"/g, '&quot;') + '" loading="lazy">' +
               '<div class="blog-body">' +
+                badge +
                 '<div class="blog-title">' + p.title + '</div>' +
                 '<p class="blog-excerpt">' + excerpt + '</p>' +
                 '<div class="blog-date">' + formatDate(p.pubDate) + '</div>' +
-                '<a href="' + p.link + '" class="blog-link">Continue Reading &rarr;</a>' +
+                '<a href="' + p.link + '" class="blog-link">Continue Reading <span class="arrow">&rarr;</span></a>' +
               '</div>' +
             '</div>';
           });
