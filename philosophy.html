@@ -56,7 +56,7 @@
       height: 140vh;
       object-fit: cover;
       object-position: center top;
-      opacity: 0.12;
+      opacity: 0.07;
       will-change: transform;
     }
 
@@ -246,7 +246,7 @@
       max-width: 620px;
       margin: 0 auto 48px;
       line-height: 1.9;
-      font-weight: 300;
+      font-weight: 400;
     }
     .law-pillars {
       display: flex;
@@ -373,7 +373,7 @@
       font-size: 15px;
       color: var(--text-body-light);
       line-height: 1.85;
-      font-weight: 300;
+      font-weight: 400;
       border-top: 1px solid var(--border-light);
       padding-top: 20px;
     }
@@ -459,7 +459,7 @@
       font-size: 14px;
       color: var(--text-muted-dark);
       line-height: 1.75;
-      font-weight: 300;
+      font-weight: 400;
     }
     .level-tag {
       display: inline-block;
@@ -608,7 +608,7 @@
       max-width: 520px;
       margin: 0 auto 36px;
       line-height: 1.85;
-      font-weight: 300;
+      font-weight: 400;
     }
     .result-cta {
       display: inline-block;
@@ -718,6 +718,17 @@
       height: 100%;
       object-fit: contain;
     }
+    /* Full-width book cover image */
+    .book-cover-img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .book-cover-img { height: 260px; }
+    }
     .program-logo-placeholder {
       font-family: 'Instrument Serif', serif;
       font-size: 22px;
@@ -745,7 +756,7 @@
       color: var(--text-muted-light);
       font-style: italic;
       margin-bottom: 20px;
-      font-weight: 300;
+      font-weight: 400;
     }
     .program-pillars {
       list-style: none;
@@ -757,7 +768,7 @@
       padding: 6px 0;
       padding-left: 18px;
       position: relative;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.5;
     }
     .program-pillars li::before {
@@ -948,28 +959,58 @@
       .nav-hamburger { display: block; }
       .mobile-menu { padding: 20px; }
 
-      .phil-hero { padding: 80px 24px; }
-      .typewriter-wrap { min-height: 120px; }
+      /* Nav logo size on mobile */
+      .nav-logo img { height: 52px; }
 
+      /* Hero */
+      .phil-hero { padding: 80px 20px 60px; }
+      .typewriter-wrap { min-height: 100px; }
+      .typewriter-text { font-size: clamp(22px, 6vw, 32px); }
+      .phil-hero-sub { font-size: 14px; }
+
+      /* Sections */
       .law-section, .reveal-section, .levels-section,
-      .assessment-section, .programs-section, .books-band { padding: 72px 24px; }
+      .assessment-section, .programs-section { padding: 64px 20px; }
 
+      /* Law pillars — stack vertically */
       .law-pillars { flex-direction: column; border-radius: 10px; }
-      .law-pillar { border-right: none; border-bottom: 1px solid var(--parchment-dark); }
+      .law-pillar { border-right: none; border-bottom: 1px solid var(--parchment-dark); padding: 28px 20px; }
       .law-pillar:last-child { border-bottom: none; }
 
+      /* Levels — single column */
       .levels-grid { grid-template-columns: 1fr; gap: 12px; }
+      .level-card { padding: 28px 24px; }
 
-      .reveal-question { padding: 20px 20px; }
-      .reveal-item.open .reveal-answer { padding: 0 20px 20px; }
+      /* Reveal items */
+      .reveal-question { padding: 18px 16px; gap: 12px; }
+      .reveal-item.open .reveal-answer { padding: 0 16px 18px; }
+      .reveal-answer-inner { font-size: 14px; }
 
-      .programs-grid { grid-template-columns: 1fr; }
+      /* Assessment */
+      .assessment-wrap { padding: 0; }
+      .assessment-option { padding: 16px 18px; font-size: 14px; }
+      .result-title { font-size: clamp(24px, 7vw, 36px); }
+      .result-body { font-size: 15px; }
+      .result-cta { display: block; text-align: center; }
+
+      /* Programs & books grid */
+      .programs-grid { grid-template-columns: 1fr; gap: 20px; }
+      .program-card-body { padding: 24px 20px; }
+      .book-cover-img { height: 220px; }
+      .program-cta { display: block; text-align: center; }
+
+      /* Coming soon card */
+      .program-card-soon { min-height: 180px; padding: 36px 20px; }
 
       .site-footer { padding: 40px 20px 20px; }
+      .footer-links { gap: 16px; }
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
       .levels-grid { grid-template-columns: repeat(3, 1fr); }
+      .programs-grid { grid-template-columns: repeat(2, 1fr); }
+      .law-section, .reveal-section, .levels-section,
+      .assessment-section, .programs-section { padding: 80px 32px; }
     }
   </style>
 </head>
@@ -1317,15 +1358,10 @@
 
     <!-- Lead Loud -->
     <div class="program-card" data-aos="fade-up">
-      <div class="program-card-header" style="background: #1C2B1C;">
-        <div class="program-logo-wrap">
-          <img src="img/leadloud front book cover.png" alt="Lead Loud" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="program-logo-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">LL</div>
-        </div>
-        <div class="program-badge">Now Available</div>
-        <div class="program-name">Lead Loud</div>
-      </div>
+      <img src="img/leadloud front book cover.png" alt="Lead Loud" class="book-cover-img">
       <div class="program-card-body">
+        <div class="program-badge">Now Available</div>
+        <div class="program-name" style="color: var(--deep-forest); margin-bottom: 6px;">Lead Loud</div>
         <p class="program-tagline">11 Commandments of the Next-Gen Leader</p>
         <ul class="program-pillars">
           <li>A blueprint for leaders who refuse to shrink</li>
@@ -1339,15 +1375,10 @@
 
     <!-- The Pain Principle -->
     <div class="program-card" data-aos="fade-up" data-aos-delay="100">
-      <div class="program-card-header" style="background: #2A1C1C;">
-        <div class="program-logo-wrap">
-          <img src="img/pain principle front cover.png" alt="The Pain Principle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="program-logo-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">PP</div>
-        </div>
-        <div class="program-badge">Now Available</div>
-        <div class="program-name">The Pain Principle</div>
-      </div>
+      <img src="img/pain principle front cover.png" alt="The Pain Principle" class="book-cover-img">
       <div class="program-card-body">
+        <div class="program-badge">Now Available</div>
+        <div class="program-name" style="color: var(--deep-forest); margin-bottom: 6px;">The Pain Principle</div>
         <p class="program-tagline">Embracing Self-Inflicted Pain to Break Free</p>
         <ul class="program-pillars">
           <li>A raw and honest look at the pain we create for ourselves</li>
