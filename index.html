@@ -1040,7 +1040,7 @@
   <div class="hero-bottom-fade"></div>
   <div class="hero-eyebrow">MiRAjO Collective</div>
   <h1>See what you're planting before you harvest the wrong thing.</h1>
-  <p class="hero-sub">You teach leaders to read the season they're in, align effort with outcome, and lead from understanding — not urgency.</p>
+  <p class="hero-sub">You teach leaders to read the season they're in, align effort with outcome, and lead from understanding, not urgency.</p>
   <a href="https://mi-r-aj-o-rho.vercel.app/philosophy.html" class="hero-btn">Explore the Philosophy</a>
   <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="hero-btn" style="margin-top: 48px; background: transparent; border: 1px solid var(--deep-forest); color: var(--deep-forest);">Let's Talk Now!</a>
 </section>
@@ -1106,7 +1106,7 @@
 <section class="dark-section" data-aos="fade-up">
   <div class="dark-eyebrow">The Collective</div>
   <div class="dark-title">The environment where leaders practice what is taught.</div>
-  <p class="dark-body">The community orbits the philosophy. Programs, events, and the directory exist as extensions of the framework — proof of alignment, not features on a platform.</p>
+  <p class="dark-body">The community orbits the philosophy. Programs, events, and the directory exist as extensions of the framework: proof of alignment, not features on a platform.</p>
   <a href="https://www.mirajoco.org/join" class="dark-btn">Join the Collective</a>
 </section>
 
@@ -1128,7 +1128,7 @@
     <span class="quote-sep">◆</span>
     <span class="quote-text">Once you learn this law, you cannot unsee it.</span>
     <span class="quote-sep">◆</span>
-    <span class="quote-text">We are all self-made — not just in the millionaire sense, but in the way we fail too.</span>
+    <span class="quote-text">We are all self-made. Not just in the millionaire sense, but in the way we fail too.</span>
     <span class="quote-sep">◆</span>
     <span class="quote-text">Every conversation is a seed. Every dollar is a seed. Every hour of silence is a seed.</span>
     <span class="quote-sep">◆</span>
@@ -1149,7 +1149,7 @@
     <span class="quote-sep">◆</span>
     <span class="quote-text">Once you learn this law, you cannot unsee it.</span>
     <span class="quote-sep">◆</span>
-    <span class="quote-text">We are all self-made — not just in the millionaire sense, but in the way we fail too.</span>
+    <span class="quote-text">We are all self-made. Not just in the millionaire sense, but in the way we fail too.</span>
     <span class="quote-sep">◆</span>
     <span class="quote-text">Every conversation is a seed. Every dollar is a seed. Every hour of silence is a seed.</span>
     <span class="quote-sep">◆</span>
@@ -1164,7 +1164,7 @@
   <div class="hn-content">
     <div class="hn-eyebrow">Healthy Networking</div>
     <div class="hn-title">A better way to connect.</div>
-    <p class="hn-desc">We bring professionals together in vibrant, health-focused spaces across cities. It's not just about business cards — it's about balance, authentic relationships, and shared growth.</p>
+    <p class="hn-desc">We bring professionals together in vibrant, health-focused spaces across cities. It's not just about business cards. It's about balance, authentic relationships, and shared growth.</p>
     <a href="https://www.mirajoco.org/events" class="hn-btn">Start Networking</a>
   </div>
 </section>
@@ -1180,7 +1180,7 @@
       <li><strong>The Pain Principle:</strong> Self-Inflicted Pain to Break Free</li>
       <li><strong>25 Days 25 Nights Workbook</strong> <em>(upcoming release)</em></li>
     </ul>
-    <p class="books-desc">Lessons and practices leaders can carry into real life — not theory, but tools forged from lived experience.</p>
+    <p class="books-desc">Lessons and practices leaders can carry into real life. Not theory, but tools forged from lived experience.</p>
     <a href="https://mi-r-aj-o-rho.vercel.app/philosophy.html#books" class="books-btn">Read More</a>
   </div>
   <div class="books-bg"></div>
@@ -1195,7 +1195,7 @@
     <div style="display:inline-block; border: 1px solid var(--border-light); border-radius: 12px; padding: 48px 64px; background: #fff;">
       <div style="font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--living-green); font-weight: 500; margin-bottom: 16px;">Coming Soon</div>
       <div style="font-family: 'Instrument Serif', serif; font-size: clamp(22px, 3vw, 30px); color: var(--deep-forest); font-weight: 400; margin-bottom: 12px;">New events are on the way.</div>
-      <p style="font-size: 14px; color: var(--text-muted-light); font-weight: 300; max-width: 380px; line-height: 1.7; margin: 0 auto 28px;">Stay connected — upcoming gatherings will be announced here and through the newsletter.</p>
+      <p style="font-size: 14px; color: var(--text-muted-light); font-weight: 300; max-width: 380px; line-height: 1.7; margin: 0 auto 28px;">Stay connected. Upcoming gatherings will be announced here and through the newsletter.</p>
       <a href="https://www.mirajoco.org/events" class="btn-outline">View All Events</a>
     </div>
   </div>
@@ -1270,6 +1270,22 @@
     return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
+  function extractRssImage(item) {
+    // Try <enclosure type="image/...">
+    var enc = item.querySelector('enclosure');
+    if (enc && enc.getAttribute('url') && (enc.getAttribute('type') || '').startsWith('image')) {
+      return enc.getAttribute('url');
+    }
+    // Try to find <img> in the description HTML
+    var desc = item.querySelector('description');
+    if (desc) {
+      var text = desc.textContent;
+      var m = text.match(/<img[^>]+src=["']([^"']+)["']/i);
+      if (m && m[1] && !m[1].includes('spacer') && !m[1].includes('pixel')) return m[1];
+    }
+    return '';
+  }
+
   function fetchOgImage(postUrl, fallback) {
     if (ogImageCache[postUrl] !== undefined) return Promise.resolve(ogImageCache[postUrl] || fallback);
     var fullUrl = postUrl.startsWith('http') ? postUrl : 'https://www.mirajoco.org' + postUrl;
@@ -1337,11 +1353,13 @@
             link:     item.querySelector('link')        ? item.querySelector('link').textContent.trim() : '#',
             desc:     item.querySelector('description') ? item.querySelector('description').textContent : '',
             pubDate:  item.querySelector('pubDate')     ? item.querySelector('pubDate').textContent     : '',
+            rssImg:   extractRssImage(item),
             fallback: FALLBACK_IMGS[i % FALLBACK_IMGS.length]
           };
         });
 
         return Promise.all(posts.map(function(p) {
+          if (p.rssImg) return Promise.resolve(p.rssImg);
           return fetchOgImage(p.link, p.fallback);
         })).then(function(images) {
           var html = '';
@@ -1378,7 +1396,7 @@
   <div class="newsletter-wrap">
     <div class="newsletter-text">
       <div class="newsletter-head">Stay rooted.</div>
-      <p class="newsletter-sub">Insights and writing delivered with care — not urgency. No countdowns, no spam. Just grounded truth that helps you see what you've been missing.</p>
+      <p class="newsletter-sub">Insights and writing delivered with care, not urgency. No countdowns, no spam. Just grounded truth that helps you see what you've been missing.</p>
     </div>
     <div class="newsletter-form-wrap">
       <iframe src="https://api.leadconnectorhq.com/widget/form/IQKPOmt4KBDFJf1roiBR"
@@ -1401,7 +1419,7 @@
     <a href="https://www.mirajoco.org/about/contact">Contact</a>
     <a href="https://www.mirajoco.org/login">Member Login</a>
   </div>
-  <p class="footer-tagline">Rooted clarity for leaders who build from understanding — not urgency.</p>
+  <p class="footer-tagline">Rooted clarity for leaders who build from understanding, not urgency.</p>
   <div class="footer-social">
     <a href="https://www.linkedin.com/company/mirajocollective/" target="_blank">
       <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
