@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/philosophy",      "destination": "/philosophy.html" },
+    { "source": "/programs",        "destination": "/programs.html" },
     { "source": "/blog",            "destination": "https://directory.mirajoco.org/blog" },
     { "source": "/blog/:path*",     "destination": "https://directory.mirajoco.org/blog/:path*" },
     { "source": "/events/:path*",   "destination": "https://directory.mirajoco.org/events/:path*" },
