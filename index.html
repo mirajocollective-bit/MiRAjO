@@ -986,6 +986,75 @@
       0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
+
+    /* ═══ PORTRAIT VIDEO SECTION ═══ */
+    .portrait-video-section {
+      background: var(--deep-forest);
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .portrait-video-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .portrait-video-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      color: var(--warm-parchment);
+      font-weight: 400;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .portrait-video-sub {
+      font-size: 15px;
+      color: var(--text-muted-dark);
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+    .portrait-video-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto 36px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .portrait-video-wrap::before {
+      content: '';
+      display: block;
+      padding-bottom: 177.78%; /* 9:16 portrait ratio */
+    }
+    .portrait-video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .portrait-video-cta {
+      display: inline-block;
+      padding: 16px 40px;
+      background: var(--dry-sage);
+      color: var(--deep-forest);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .portrait-video-cta:hover { background: var(--bronze-earth); color: #fff; }
+
+    @media (max-width: 768px) {
+      .portrait-video-section { padding: 56px 24px; }
+      .portrait-video-wrap { max-width: 100%; border-radius: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -1108,6 +1177,23 @@
   <div class="dark-title">The environment where leaders practice what is taught.</div>
   <p class="dark-body">The community orbits the philosophy. Programs, events, and the directory exist as extensions of the framework: proof of alignment, not features on a platform.</p>
   <a href="https://www.mirajoco.org/programs" class="dark-btn">Join the Collective</a>
+</section>
+
+<!-- ═══ PORTRAIT VIDEO — 25 DAYS ═══ -->
+<section class="portrait-video-section" data-aos="fade-up">
+  <div class="portrait-video-eyebrow">Now Enrolling</div>
+  <h2 class="portrait-video-heading">25 Days &amp; 25 Nights is officially live.</h2>
+  <p class="portrait-video-sub">The reset that changes everything. See it for yourself.</p>
+  <div class="portrait-video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/a6OauLaJp_U?rel=0&modestbranding=1"
+      title="25 Days 25 Nights is officially LIVE."
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <a href="https://www.mirajoco.org/programs" class="portrait-video-cta">Enroll in 25 Days &amp; 25 Nights</a>
 </section>
 
 <!-- ═══ QUOTE TICKER ═══ -->
