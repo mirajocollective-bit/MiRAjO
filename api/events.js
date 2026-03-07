@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
     // Get all events for that organizer
     const response = await fetch(
-      `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc&time_filter=current_future`,
+      `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc`,
       { headers }
     );
 
