@@ -1,9 +1,15 @@
 {
+  "redirects": [
+    { "source": "/blog/the-leadership-time-trap-are-you-stuck-in-a-loop",             "destination": "https://www.directory.mirajoco.org/blog/the-leadership-time-trap-are-you-stuck-in-a-loop",             "permanent": true },
+    { "source": "/blog/3-levels-of-life-can-you-pass-the-test",                       "destination": "https://www.directory.mirajoco.org/blog/3-levels-of-life-can-you-pass-the-test",                       "permanent": true },
+    { "source": "/blog/what-if-you-didn-t-have-to-suffer",                            "destination": "https://www.directory.mirajoco.org/blog/what-if-you-didn-t-have-to-suffer",                            "permanent": true },
+    { "source": "/blog/practice-being-in-the-present-moment",                         "destination": "https://www.directory.mirajoco.org/blog/practice-being-in-the-present-moment",                         "permanent": true },
+    { "source": "/blog/outsourcing-awareness-rebuilding-trust-in-your-own-intuition", "destination": "https://www.directory.mirajoco.org/blog/outsourcing-awareness-rebuilding-trust-in-your-own-intuition", "permanent": true }
+  ],
   "rewrites": [
+    { "source": "/blog",            "destination": "/blog.html" },
     { "source": "/philosophy",      "destination": "/philosophy.html" },
     { "source": "/programs",        "destination": "/programs.html" },
-    { "source": "/blog",            "destination": "https://directory.mirajoco.org/blog" },
-    { "source": "/blog/:path*",     "destination": "https://directory.mirajoco.org/blog/:path*" },
     { "source": "/events/:path*",   "destination": "https://directory.mirajoco.org/events/:path*" },
     { "source": "/search_results",  "destination": "https://directory.mirajoco.org/search_results" },
     { "source": "/login",           "destination": "https://directory.mirajoco.org/login" },
