@@ -7,10 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      'https://www.eventbriteapi.com/v3/users/me/events/?expand=venue,ticket_classes&status=live,started&order_by=start_asc&time_filter=current_future',
-      {
-        headers: { 'Authorization': `Bearer ${apiKey}` }
-      }
+      `https://www.eventbriteapi.com/v3/users/me/events/?token=${apiKey}&expand=venue,ticket_classes&status=live,started&order_by=start_asc&time_filter=current_future`
     );
 
     if (!response.ok) {
