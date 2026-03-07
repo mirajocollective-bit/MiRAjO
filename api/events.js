@@ -13,9 +13,13 @@ export default async function handler(req, res) {
       'https://www.eventbriteapi.com/v3/events/1983918066342/',
       { headers }
     );
-    if (!eventRes.ok) throw new Error(`Eventbrite event lookup error: ${eventRes.status}`);
+    if (!eventRes.ok) throw new Error(`Event lookup failed: ${eventRes.status}`);
     const eventData = await eventRes.json();
     const organizerId = eventData.organizer_id;
+
+    if (!organizerId) {
+      return res.status(200).json({ debug: eventData });
+    }
 
     // Get all events for that organizer
     const response = await fetch(
@@ -24,7 +28,8 @@ export default async function handler(req, res) {
     );
 
     if (!response.ok) {
-      throw new Error(`Eventbrite API error: ${response.status}`);
+      const errBody = await response.text();
+      throw new Error(`Organizer events failed: ${response.status} — ${errBody}`);
     }
 
     const data = await response.json();
