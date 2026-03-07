@@ -8,9 +8,9 @@
   ],
   "rewrites": [
     { "source": "/blog",            "destination": "/blog.html" },
+    { "source": "/events",          "destination": "/events.html" },
     { "source": "/philosophy",      "destination": "/philosophy.html" },
     { "source": "/programs",        "destination": "/programs.html" },
-    { "source": "/events/:path*",   "destination": "https://directory.mirajoco.org/events/:path*" },
     { "source": "/search_results",  "destination": "https://directory.mirajoco.org/search_results" },
     { "source": "/login",           "destination": "https://directory.mirajoco.org/login" },
     { "source": "/join",            "destination": "https://directory.mirajoco.org/join" },
@@ -22,7 +22,6 @@
     { "source": "/about/contact",   "destination": "https://directory.mirajoco.org/about/contact" },
     { "source": "/about/terms",     "destination": "https://directory.mirajoco.org/about/terms" },
     { "source": "/about/privacy",   "destination": "https://directory.mirajoco.org/about/privacy" },
-    { "source": "/coaching",        "destination": "https://directory.mirajoco.org/coaching" },
-    { "source": "/events",          "destination": "https://directory.mirajoco.org/events" }
+    { "source": "/coaching",        "destination": "https://directory.mirajoco.org/coaching" }
   ]
 }
