@@ -6,11 +6,21 @@ export default async function handler(req, res) {
   }
 
   try {
+    const headers = { 'Authorization': `Bearer ${apiKey}` };
+
+    // Get organizer ID from known event
+    const eventRes = await fetch(
+      'https://www.eventbriteapi.com/v3/events/1983918066342/',
+      { headers }
+    );
+    if (!eventRes.ok) throw new Error(`Eventbrite event lookup error: ${eventRes.status}`);
+    const eventData = await eventRes.json();
+    const organizerId = eventData.organizer_id;
+
+    // Get all events for that organizer
     const response = await fetch(
-      'https://www.eventbriteapi.com/v3/users/me/events/?expand=venue,ticket_classes&status=live,started&order_by=start_asc&time_filter=current_future',
-      {
-        headers: { 'Authorization': `Bearer ${apiKey}` }
-      }
+      `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc&time_filter=current_future`,
+      { headers }
     );
 
     if (!response.ok) {
