@@ -23,6 +23,6 @@
     { "source": "/about/contact",   "destination": "https://directory.mirajoco.org/about/contact" },
     { "source": "/about/terms",     "destination": "https://directory.mirajoco.org/about/terms" },
     { "source": "/about/privacy",   "destination": "https://directory.mirajoco.org/about/privacy" },
-    { "source": "/coaching",        "destination": "https://directory.mirajoco.org/coaching" }
+    { "source": "/coaching",        "destination": "/coaching.html" }
   ]
 }
