@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    { "source": "/blog",            "destination": "https://directory.mirajoco.org/blog" },
+    { "source": "/blog/:path*",     "destination": "https://directory.mirajoco.org/blog/:path*" },
+    { "source": "/events/:path*",   "destination": "https://directory.mirajoco.org/events/:path*" },
+    { "source": "/search_results",  "destination": "https://directory.mirajoco.org/search_results" },
+    { "source": "/login",           "destination": "https://directory.mirajoco.org/login" },
+    { "source": "/join",            "destination": "https://directory.mirajoco.org/join" },
+    { "source": "/checkout/:path*", "destination": "https://directory.mirajoco.org/checkout/:path*" },
+    { "source": "/newsletter",      "destination": "https://directory.mirajoco.org/newsletter" },
+    { "source": "/categories",      "destination": "https://directory.mirajoco.org/categories" },
+    { "source": "/locations",       "destination": "https://directory.mirajoco.org/locations" },
+    { "source": "/faq",             "destination": "https://directory.mirajoco.org/faq" },
+    { "source": "/about/contact",   "destination": "https://directory.mirajoco.org/about/contact" },
+    { "source": "/about/terms",     "destination": "https://directory.mirajoco.org/about/terms" },
+    { "source": "/about/privacy",   "destination": "https://directory.mirajoco.org/about/privacy" },
+    { "source": "/coaching",        "destination": "https://directory.mirajoco.org/coaching" },
+    { "source": "/events",          "destination": "https://directory.mirajoco.org/events" }
+  ]
+}
