@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>25 Days & 25 Nights — MiRAjO Collective</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    :root {
+      --deep-forest: #2A3A2A;
+      --forest-mid: #3A5A3E;
+      --living-green: #4A7C59;
+      --new-growth: #A8C5A0;
+      --dry-sage: #C9B896;
+      --warm-parchment: #EDE8DF;
+      --soft-white: #F7F4EF;
+      --parchment-dark: #DDD5C8;
+      --bronze-earth: #A89068;
+      --text-muted-dark: #9AAA94;
+      --text-on-light: #2A3A2A;
+      --text-muted-light: #6A7A68;
+      --text-body-light: #4A5A48;
+      --border-light: rgba(42,58,42,0.08);
+      --border-dark: rgba(237,232,223,0.12);
+      /* 25D25N Purple Palette */
+      --p-deep: #3D2B72;
+      --p-mid: #5A3F9A;
+      --p-light: #8B72C8;
+      --p-pale: #EDE8F8;
+      --p-silver: #C8C4DC;
+      --p-dark: #1A1228;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--soft-white);
+      color: var(--text-on-light);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ═══ NAV ═══ */
+    .site-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: var(--p-dark);
+      border-bottom: 1px solid rgba(139,114,200,0.18);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo img { height: 72px; width: auto; display: block; }
+    .nav-badge {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--p-silver);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--p-light);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--p-silver);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--warm-parchment); }
+    .nav-cta {
+      display: inline-block;
+      font-size: 12px;
+      padding: 9px 22px;
+      background: var(--p-mid);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-cta:hover { background: var(--p-light); }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--warm-parchment); }
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--p-dark);
+      border-bottom: 1px solid rgba(139,114,200,0.18);
+      padding: 20px;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 14px; color: var(--p-silver); text-decoration: none; padding: 8px 0; border-bottom: 1px solid rgba(139,114,200,0.15); }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .nav-cta { text-align: center; margin-top: 8px; }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      background: var(--p-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(90,63,154,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-clock {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.04;
+      font-size: clamp(200px, 40vw, 400px);
+      color: var(--p-light);
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      font-weight: 500;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero-logo {
+      width: 120px;
+      height: auto;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 400;
+      color: var(--warm-parchment);
+      line-height: 1.1;
+      margin-bottom: 32px;
+      max-width: 800px;
+      position: relative;
+    }
+    .hero-title em {
+      color: var(--p-light);
+      font-style: italic;
+    }
+    .hero-body {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: var(--p-silver);
+      max-width: 640px;
+      line-height: 1.9;
+      margin-bottom: 48px;
+      position: relative;
+    }
+    .hero-body p { margin-bottom: 16px; }
+    .hero-body p:last-child { margin-bottom: 0; }
+    .btn-primary {
+      display: inline-block;
+      padding: 18px 48px;
+      background: linear-gradient(135deg, var(--p-mid), var(--p-light));
+      color: #fff;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 32px rgba(90,63,154,0.4);
+      position: relative;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(90,63,154,0.5); }
+    .btn-secondary {
+      display: inline-block;
+      padding: 16px 40px;
+      background: transparent;
+      color: var(--warm-parchment);
+      border: 1px solid rgba(139,114,200,0.4);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover { background: rgba(139,114,200,0.1); border-color: var(--p-light); }
+
+    /* ═══ WHAT IS SECTION ═══ */
+    .what-section {
+      background: var(--soft-white);
+      padding: 100px 40px;
+      text-align: center;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--p-mid);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 400;
+      color: var(--deep-forest);
+      line-height: 1.2;
+      margin-bottom: 32px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-title span { color: var(--p-mid); }
+    .section-body {
+      font-size: 16px;
+      color: var(--text-body-light);
+      max-width: 680px;
+      margin: 0 auto 40px;
+      line-height: 1.9;
+    }
+    .section-body p { margin-bottom: 16px; }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    /* ═══ PILLARS (Eat, Move, Silence, YOU) ═══ */
+    .pillars-section { background: var(--p-dark); padding: 100px 40px; }
+    .pillars-inner { max-width: 1100px; margin: 0 auto; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 56px; }
+    .pillar-card {
+      background: rgba(237,232,223,0.04);
+      border: 1px solid rgba(139,114,200,0.2);
+      border-radius: 20px;
+      padding: 48px 40px;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .pillar-card:hover { border-color: var(--p-light); transform: translateY(-4px); }
+    .pillar-icon {
+      font-size: 36px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .pillar-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .pillar-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 2.5vw, 30px);
+      color: var(--warm-parchment);
+      font-weight: 400;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .pillar-body {
+      font-size: 15px;
+      color: var(--p-silver);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .pillar-body p { margin-bottom: 12px; }
+    .pillar-list {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    .pillar-list li {
+      font-size: 14px;
+      color: var(--p-silver);
+      padding: 8px 0;
+      padding-left: 20px;
+      position: relative;
+      border-bottom: 1px solid rgba(139,114,200,0.1);
+      line-height: 1.5;
+    }
+    .pillar-list li:last-child { border-bottom: none; }
+    .pillar-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--p-light);
+      font-size: 6px;
+      top: 13px;
+    }
+    .pillar-emoji-list { list-style: none; margin-bottom: 28px; }
+    .pillar-emoji-list li {
+      font-size: 14px;
+      color: var(--p-silver);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(139,114,200,0.1);
+      line-height: 1.5;
+    }
+    .pillar-emoji-list li:last-child { border-bottom: none; }
+    .pillar-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: rgba(90,63,154,0.15);
+      color: var(--p-light);
+      border: 1px solid rgba(139,114,200,0.3);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .pillar-btn:hover { background: var(--p-mid); color: #fff; border-color: var(--p-mid); }
+
+    /* ═══ FOUNDER ═══ */
+    .founder-section {
+      background: var(--warm-parchment);
+      padding: 100px 40px;
+    }
+    .founder-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .founder-img-wrap {
+      position: sticky;
+      top: 120px;
+    }
+    .founder-img-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--p-deep), var(--p-mid));
+      border-radius: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 24px;
+    }
+    .founder-img-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--warm-parchment);
+      font-weight: 400;
+      text-align: center;
+    }
+    .founder-content .section-eyebrow { text-align: left; }
+    .founder-content .section-title { text-align: left; margin-left: 0; margin-right: 0; }
+    .founder-content .section-body { margin-left: 0; margin-right: 0; text-align: left; }
+    .founder-brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(42,58,42,0.08);
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--deep-forest);
+      letter-spacing: 0.5px;
+      margin-top: 24px;
+    }
+    .founder-brand-tag img { height: 20px; width: auto; }
+
+    /* ═══ TESTIMONIALS ═══ */
+    .testimonials-section { background: var(--p-pale); padding: 100px 40px; }
+    .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .testimonial-card {
+      background: #fff;
+      border: 1px solid rgba(90,63,154,0.1);
+      border-radius: 16px;
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .testimonial-stars { color: var(--p-mid); font-size: 16px; letter-spacing: 2px; }
+    .testimonial-text {
+      font-size: 15px;
+      color: var(--text-body-light);
+      line-height: 1.8;
+      font-style: italic;
+      flex: 1;
+    }
+    .testimonial-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--p-deep);
+      letter-spacing: 0.5px;
+    }
+
+    /* ═══ PRICING ═══ */
+    .pricing-section { background: var(--p-dark); padding: 100px 40px; text-align: center; }
+    .pricing-card {
+      background: rgba(237,232,223,0.04);
+      border: 1px solid rgba(139,114,200,0.25);
+      border-radius: 24px;
+      padding: 56px 48px;
+      max-width: 580px;
+      margin: 56px auto 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--p-mid), var(--p-light));
+    }
+    .pricing-badge {
+      display: inline-block;
+      background: rgba(139,114,200,0.15);
+      color: var(--p-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 32px;
+    }
+    .pricing-value {
+      font-size: 14px;
+      color: var(--p-silver);
+      text-decoration: line-through;
+      margin-bottom: 8px;
+    }
+    .pricing-price {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(64px, 10vw, 96px);
+      color: var(--warm-parchment);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .pricing-note { font-size: 13px; color: var(--p-silver); margin-bottom: 36px; }
+    .pricing-list {
+      list-style: none;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+    .pricing-list li {
+      font-size: 15px;
+      color: var(--p-silver);
+      padding: 12px 0;
+      padding-left: 24px;
+      position: relative;
+      border-bottom: 1px solid rgba(139,114,200,0.1);
+    }
+    .pricing-list li:last-child { border-bottom: none; }
+    .pricing-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--p-light);
+      font-weight: 700;
+    }
+    .pricing-btn {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--p-mid), var(--p-light));
+      color: #fff;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 32px rgba(90,63,154,0.4);
+    }
+    .pricing-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(90,63,154,0.5); }
+    .pricing-sub { font-size: 12px; color: var(--p-silver); margin-top: 16px; }
+
+    /* ═══ FAQ ═══ */
+    .faq-section { background: var(--soft-white); padding: 100px 40px; }
+    .faq-inner { max-width: 760px; margin: 0 auto; }
+    .faq-list { margin-top: 56px; display: flex; flex-direction: column; gap: 4px; }
+    .faq-item {
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 24px 28px;
+      text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--deep-forest);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--p-mid); }
+    .faq-question svg {
+      width: 18px; height: 18px;
+      stroke: var(--p-mid);
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-question svg { transform: rotate(45deg); }
+    .faq-answer {
+      display: none;
+      padding: 0 28px 24px;
+      font-size: 15px;
+      color: var(--text-body-light);
+      line-height: 1.8;
+    }
+    .faq-answer ol { padding-left: 20px; }
+    .faq-answer ol li { margin-bottom: 8px; }
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ═══ FOOTER ═══ */
+    .site-footer { background: var(--deep-forest); padding: 48px 40px 24px; border-top: 1px solid var(--border-dark); }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 24px; }
+    .footer-links a { font-size: 13px; color: var(--text-muted-dark); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--warm-parchment); }
+    .footer-tagline { font-size: 14px; color: var(--text-muted-dark); text-align: center; margin-bottom: 32px; font-weight: 400; line-height: 1.6; }
+    .footer-social { display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+    .footer-social a { display: inline-flex; align-items: center; gap: 8px; color: var(--new-growth); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+    .footer-social a:hover { color: var(--warm-parchment); }
+    .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
+    .footer-bottom { text-align: center; padding-top: 24px; border-top: 1px solid var(--border-dark); font-size: 11px; color: var(--text-muted-dark); letter-spacing: 0.5px; }
+    .footer-bottom a { color: var(--text-muted-dark); text-decoration: underline; }
+    .footer-bottom a:hover { color: var(--warm-parchment); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .site-nav { padding: 16px 20px; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: block; }
+      .nav-logo img { height: 52px; }
+      .nav-badge { font-size: 10px; }
+
+      .hero { padding: 80px 24px; min-height: auto; }
+      .hero-logo { width: 80px; }
+
+      .what-section, .faq-section { padding: 64px 24px; }
+      .pillars-section, .testimonials-section, .pricing-section, .founder-section { padding: 64px 24px; }
+
+      .pillars-grid { grid-template-columns: 1fr; }
+      .pillar-card { padding: 36px 28px; }
+
+      .founder-inner { grid-template-columns: 1fr; gap: 36px; }
+      .founder-img-wrap { position: static; }
+      .founder-img-placeholder { aspect-ratio: 4/3; }
+
+      .testimonials-grid { grid-template-columns: 1fr; }
+
+      .pricing-card { padding: 40px 28px; }
+
+      .site-footer { padding: 40px 20px 20px; }
+      .footer-links { gap: 12px; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .founder-inner { grid-template-columns: 220px 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="site-nav" x-data="{ open: false }">
+  <a href="https://www.mirajoco.org" class="nav-logo">
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO">
+  </a>
+  <div class="nav-badge">A MiRAjO Collective Program</div>
+  <ul class="nav-links">
+    <li><a href="https://www.mirajoco.org/philosophy">Philosophy</a></li>
+    <li><a href="https://www.mirajoco.org/programs">Programs</a></li>
+    <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
+    <li><a href="https://www.mirajoco.org/events">Events</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Enroll Now</a>
+  <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+  <div class="mobile-menu" :class="open ? 'open' : ''">
+    <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
+    <a href="https://www.mirajoco.org/programs">Programs</a>
+    <a href="https://www.mirajoco.org/blog">Writing</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="#pricing" class="nav-cta">Enroll Now</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-clock">🕐</div>
+  <div class="hero-eyebrow">Yep, Another Challenge!</div>
+  <img src="img/2525 Official Logo.png" alt="25 Days 25 Nights" class="hero-logo" data-aos="fade-down">
+  <h1 class="hero-title" data-aos="fade-up">
+    25 Days &amp; <em>25 Nights</em>
+  </h1>
+  <div class="hero-body" data-aos="fade-up">
+    <p>Because apparently, we all needed one more reason to stop talking about change and actually do it.</p>
+    <p>Starting a new chapter? <strong style="color:var(--warm-parchment)">Do the 25.</strong></p>
+    <p>Need to reset that beautiful overthinking brain? <strong style="color:var(--warm-parchment)">Do the 25.</strong></p>
+    <p>Still letting the noise from everyone else play louder than your own voice? <strong style="color:var(--warm-parchment)">Do the 25.</strong></p>
+  </div>
+  <a href="#pricing" class="btn-primary" data-aos="fade-up">That's good enough — Let's Go!</a>
+</section>
+
+<!-- ═══ WHAT IS ═══ -->
+<section class="what-section" data-aos="fade-up">
+  <div class="section-eyebrow">What Is This</div>
+  <h2 class="section-title">What is <span>25 Days and 25 Nights?</span><br>You. Finally.</h2>
+  <div class="section-body">
+    <p>You have talked, planned, and overthought. Now it is time to actually listen to yourself.</p>
+    <p>This is not a cleanse or a retreat. It is a back to basics gut check. Call it a challenge or a mental fast if that helps you show up.</p>
+    <p>You will face everything you have been avoiding, and the laws of nature will make sure you see it clearly. What you speak and what you feel finally meet. Karma resets. Noise clears.</p>
+    <p>It is just you, raw and unfiltered. And it is still your choice.</p>
+  </div>
+  <a href="#pricing" class="btn-primary">Sign me up, Now!</a>
+</section>
+
+<!-- ═══ PILLARS ═══ -->
+<section class="pillars-section">
+  <div class="pillars-inner">
+    <div class="section-eyebrow" style="color:var(--p-silver);text-align:center" data-aos="fade-up">The Four Pillars</div>
+    <h2 class="section-title" style="color:var(--warm-parchment);text-align:center" data-aos="fade-up">Everything you need.<br>Nothing you don't.</h2>
+    <div class="pillars-grid">
+
+      <!-- Eat -->
+      <div class="pillar-card" data-aos="fade-up">
+        <span class="pillar-icon">🥗</span>
+        <div class="pillar-eyebrow">Pillar 01</div>
+        <h3 class="pillar-title">Eat Like You Actually Love Yourself</h3>
+        <div class="pillar-body">
+          <p>This is about fuel that calms your nervous system, clears the fog, and keeps your fire lit.</p>
+        </div>
+        <ul class="pillar-list">
+          <li>Meals that ground you instead of guilt you</li>
+          <li>Food that fits your life instead of a formula</li>
+          <li>Structure that supports you without shame</li>
+        </ul>
+        <p style="font-size:14px;color:var(--p-silver);margin-bottom:24px;line-height:1.7">Your body is your first leadership tool. Feed it like you plan to win.</p>
+        <a href="#pricing" class="pillar-btn">Nourish Me, Please</a>
+      </div>
+
+      <!-- Move -->
+      <div class="pillar-card" data-aos="fade-up" data-aos-delay="100">
+        <span class="pillar-icon">💪</span>
+        <div class="pillar-eyebrow">Pillar 02</div>
+        <h3 class="pillar-title">Daily Fitness Classes</h3>
+        <div class="pillar-body">
+          <p>Your body has been talking to you the whole time. When you move, you clear your head, your energy rises, and your spirit actually feels lighter.</p>
+          <p>You do not need scales or tracking systems — you need to know your body and learn to listen.</p>
+        </div>
+        <ul class="pillar-emoji-list">
+          <li>🔥 A body that starts to show what discipline looks like</li>
+          <li>💪 Fat loss and real muscle tone you can feel</li>
+          <li>⚡ Energy that lasts instead of crashing by mid-afternoon</li>
+          <li>🧘‍♀️ Stress that finally leaves your system</li>
+          <li>🌙 Sleep that feels earned and restorative</li>
+        </ul>
+        <a href="#pricing" class="pillar-btn">Move Me, Please</a>
+      </div>
+
+      <!-- Silence -->
+      <div class="pillar-card" data-aos="fade-up" data-aos-delay="200">
+        <span class="pillar-icon">🤫</span>
+        <div class="pillar-eyebrow">Pillar 03</div>
+        <h3 class="pillar-title">Quiet Minds Make Louder Moves</h3>
+        <div class="pillar-body">
+          <p>For some, your voice was taken. For others, you have been talking your whole damn life. Take a breath.</p>
+          <p>Having a voice is power, but silence is strength. It will always be the most powerful thing you own.</p>
+          <p>The answers you keep chasing are not in opinions, podcasts, or self-help books. They are in your gut.</p>
+          <p>Stop the doom scrolling. Stop reacting to every ping. Busy is not productive. Chaos is not peace.</p>
+        </div>
+        <a href="#pricing" class="pillar-btn">I can do this!</a>
+      </div>
+
+      <!-- YOU vs YOU -->
+      <div class="pillar-card" data-aos="fade-up" data-aos-delay="300">
+        <span class="pillar-icon">🪞</span>
+        <div class="pillar-eyebrow">Pillar 04</div>
+        <h3 class="pillar-title">YOU vs. YOU</h3>
+        <div class="pillar-body">
+          <p>25 days to rule your morning. 25 nights to rule your night.</p>
+          <p>This is where it all comes together. The food that fuels you, the movement that clears you, the silence that grounds you, and the laws that guide you.</p>
+          <p>It is not about perfection. It is about awareness.</p>
+          <p>You start paying attention to what your body says, how your mind reacts, and where your energy belongs.</p>
+          <p>You will always need a moment to recenter, but now you know how to do it. And when you do, the things you have been chasing will chase you.</p>
+        </div>
+        <a href="#pricing" class="pillar-btn">What do you want?</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOUNDER ═══ -->
+<section class="founder-section" data-aos="fade-up">
+  <div class="founder-inner">
+    <div class="founder-img-wrap">
+      <div class="founder-img-placeholder">
+        <div class="founder-img-name">Miranda<br>Johnson</div>
+      </div>
+    </div>
+    <div class="founder-content">
+      <div class="section-eyebrow">Meet the Founder &amp; Creator</div>
+      <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Miranda Johnson</h2>
+      <div class="section-body">
+        <p>For almost two decades I have built businesses, raised five daughters, and learned how to rebuild myself when life required it. I know what it feels like to carry titles that were earned and others that were given, and to still show up when life does not make it easy.</p>
+        <p>I started as a teenage entrepreneur and learned early that power is something you must protect. I gave it away, had it taken, and had to fight to take it back. Each time I went inward to rise again.</p>
+        <p>After years of work across multiple industries and two years of deep personal research and reflection, I created 25 Days and 25 Nights to share the structure and pace that helped me build balance and success in every area of my life.</p>
+        <p>Through MiRAjO Collective, I now build programs that help Dreamers, Leaders, and Doers move beyond level one of life and step into their own clarity and discipline.</p>
+      </div>
+      <div class="founder-brand-tag">
+        <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO">
+        A MiRAjO Collective Program
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testimonials-section" data-aos="fade-up">
+  <div class="testimonials-inner">
+    <div class="section-eyebrow" style="text-align:center">What People Are Saying</div>
+    <h2 class="section-title" style="text-align:center">Real people. Real results.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Really liked the custom meal plans and the meditation sessions. Felt more tuned into my health than ever. Great program!"</p>
+        <div class="testimonial-name">Jasmine Richards</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Tried many programs, but 25 Days and 25 Nights stands out. The mindfulness workshops really center you, and the exercise sessions are versatile. Worth checking out."</p>
+        <div class="testimonial-name">Monica Chandler</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Explored their Sleep Optimization Strategies recently. Noticeably better sleep quality. It's straightforward, effective — no more tossing and turning. Pretty decent outcome."</p>
+        <div class="testimonial-name">Thomas Krazinski</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="pricing-section" id="pricing" data-aos="fade-up">
+  <div class="section-eyebrow" style="color:var(--p-silver)">Access Granted</div>
+  <h2 class="section-title" style="color:var(--warm-parchment)">Here's What You Get When You<br>Finally Choose Yourself</h2>
+  <div class="pricing-card">
+    <span class="pricing-badge">Limited Offer</span>
+    <div class="pricing-value">Total Value: $797</div>
+    <div class="pricing-price">$497</div>
+    <p class="pricing-note">One-time payment · Instant access</p>
+    <ul class="pricing-list">
+      <li>25 Days and 25 Nights Daily Guide</li>
+      <li>Seven (7) Laws of Nature Course</li>
+      <li>Private Member Community</li>
+      <li>Open Support Webinars</li>
+      <li>Daily Reflection Prompts</li>
+      <li>One Year Access</li>
+    </ul>
+    <a href="https://25d25n.mirajoco.org/checkout" class="pricing-btn">Get Instant Access</a>
+    <p class="pricing-sub">Secure checkout &middot; Instant access upon enrollment</p>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="section-eyebrow" style="text-align:center" data-aos="fade-up">FAQs</div>
+    <h2 class="section-title" style="text-align:center" data-aos="fade-up">Your wellness journey decoded.</h2>
+    <div class="faq-list" data-aos="fade-up">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What makes 25 Days and 25 Nights unique among wellness programs?
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <ol>
+            <li><strong>You actually learn.</strong> This is not another follow-the-rules challenge. You understand why each part matters so you can keep living it long after the 25 days end.</li>
+            <li><strong>Everything connects.</strong> The food, the movement, the silence, and the reflection all follow the same laws of nature. Nothing stands alone here.</li>
+            <li><strong>It fits real life.</strong> You will not start over for missing a day. You learn how to get back on track when life happens instead of quitting every time it gets messy.</li>
+            <li><strong>It locks in.</strong> It takes 21 days to build a habit. You get 25 days and 25 nights to make it part of who you are.</li>
+            <li><strong>It delivers what you need.</strong> This is for people looking for real answers, not trends. If you show up and follow through, you will receive what you came for.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Who can join the 25 Days and 25 Nights wellness program?
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-answer">
+          This program is for anyone ready to stop talking about change and start doing it. You do not need to be fit, spiritual, or have any experience. You just need to be willing to show up for yourself every day.<br><br>
+          It is for people who want to feel clear again, think sharper, and stop living on autopilot. Whether you lead a team, a business, a family, or just yourself, this will meet you where you are.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What if I have specific dietary restrictions or allergies?
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-answer">
+          You can still do the program. The food part is flexible and focused on awareness, not a strict plan. You work within your limits and learn how to fuel your body with what actually makes you feel good.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What happens after the 25 days?
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-answer">
+          You will know how to continue the habits you built. Most people repeat it quarterly or return to it when they need a reset.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
+    <a href="https://www.mirajoco.org/programs">Programs</a>
+    <a href="https://www.mirajoco.org/blog">Writing</a>
+    <a href="http://www.directory.mirajoco.org/search_results">Directory</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="https://www.mirajoco.org/about/contact">Contact</a>
+    <a href="https://www.directory.mirajoco.org/login">Member Login</a>
+  </div>
+  <p class="footer-tagline">Rooted clarity for leaders who build from understanding, not urgency.</p>
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/company/mirajocollective/" target="_blank">
+      <svg viewBox="0 0 448 512"><path d="M100.28 448H7.4V149.9h92.88zM53.79 108.1C24.09 108.1 0 83.47 0 53.77a53.76 53.76 0 0 1 107.52 0c0 29.7-24.09 54.33-53.73 54.33zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.6-2.9 13.4-2.9 21.2V448h-92.7s1.2-241.1 0-266.1h92.7v37.7c12.3-19 34.2-46 83.2-46 60.7 0 106.2 39.6 106.2 124.7V448z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://www.mirajoco.org/about/contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      Contact
+    </a>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 MiRAjO Collective &middot;
+    <a href="https://www.mirajoco.org/about/terms">Terms of Use</a> &middot;
+    <a href="https://www.mirajoco.org/about/privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>

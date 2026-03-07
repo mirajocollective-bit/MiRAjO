@@ -7,7 +7,8 @@
     { "source": "/blog/outsourcing-awareness-rebuilding-trust-in-your-own-intuition", "destination": "https://www.directory.mirajoco.org/blog/outsourcing-awareness-rebuilding-trust-in-your-own-intuition", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/blog",            "destination": "/blog.html" },
+    { "source": "/blog",              "destination": "/blog.html" },
+    { "source": "/25daysand25nights", "destination": "/25daysand25nights.html" },
     { "source": "/events",          "destination": "/events.html" },
     { "source": "/philosophy",      "destination": "/philosophy.html" },
     { "source": "/programs",        "destination": "/programs.html" },
