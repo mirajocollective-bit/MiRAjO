@@ -17,10 +17,6 @@ export default async function handler(req, res) {
     const eventData = await eventRes.json();
     const organizerId = eventData.organizer_id;
 
-    if (!organizerId) {
-      return res.status(200).json({ debug: eventData });
-    }
-
     // Get all events for that organizer
     const response = await fetch(
       `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc`,
@@ -28,8 +24,7 @@ export default async function handler(req, res) {
     );
 
     if (!response.ok) {
-      const errBody = await response.text();
-      throw new Error(`Organizer events failed: ${response.status} — ${errBody}`);
+      throw new Error(`Eventbrite API error: ${response.status}`);
     }
 
     const data = await response.json();
