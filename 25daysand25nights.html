@@ -557,6 +557,61 @@
     .faq-answer ol li { margin-bottom: 8px; }
     .faq-item.open .faq-answer { display: block; }
 
+    /* ═══ WAITLIST ═══ */
+    .waitlist-section {
+      background: var(--p-dark);
+      padding: 100px 40px;
+      text-align: center;
+    }
+    .waitlist-inner { max-width: 560px; margin: 0 auto; }
+    .waitlist-sub {
+      font-size: 16px;
+      color: var(--p-silver);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .waitlist-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .waitlist-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(237,232,223,0.06);
+      border: 1px solid rgba(139,114,200,0.25);
+      border-radius: 10px;
+      font-size: 15px;
+      color: var(--warm-parchment);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .waitlist-input::placeholder { color: rgba(200,196,220,0.45); }
+    .waitlist-input:focus { border-color: var(--p-light); }
+    .waitlist-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--p-mid), var(--p-light));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 32px rgba(90,63,154,0.4);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .waitlist-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(90,63,154,0.5); }
+    .waitlist-msg {
+      margin-top: 16px;
+      font-size: 14px;
+      min-height: 20px;
+      color: var(--p-light);
+    }
+
     /* ═══ FOOTER ═══ */
     .site-footer { background: var(--deep-forest); padding: 48px 40px 24px; border-top: 1px solid var(--border-dark); }
     .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 24px; }
@@ -850,6 +905,21 @@
   </div>
 </section>
 
+<!-- ═══ WAITLIST ═══ -->
+<section class="waitlist-section">
+  <div class="waitlist-inner">
+    <div class="section-eyebrow" style="color:var(--p-silver)">Be First In</div>
+    <h2 class="section-title" style="color:var(--warm-parchment)">Join the Waitlist</h2>
+    <p class="waitlist-sub">Get notified the moment the next enrollment opens. No spam. Just the signal.</p>
+    <form class="waitlist-form" id="waitlist-form">
+      <input type="text" name="first_name" placeholder="First name" class="waitlist-input">
+      <input type="email" name="email" placeholder="Your email address" class="waitlist-input" required>
+      <button type="submit" class="waitlist-btn">Notify Me</button>
+    </form>
+    <p class="waitlist-msg" id="waitlist-msg"></p>
+  </div>
+</section>
+
 <!-- ═══ FAQ ═══ -->
 <section class="faq-section">
   <div class="faq-inner">
@@ -942,6 +1012,37 @@
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+  // Waitlist form
+  document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.waitlist-btn');
+    const msg = document.getElementById('waitlist-msg');
+    const email = this.email.value;
+    const first_name = this.first_name.value;
+    btn.textContent = 'Joining...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, first_name })
+      });
+      if (res.ok) {
+        msg.textContent = "You're on the list. We'll be in touch.";
+        msg.style.color = '#A8C5A0';
+        this.reset();
+      } else {
+        msg.textContent = "Something went wrong. Please try again.";
+        msg.style.color = '#E88080';
+      }
+    } catch {
+      msg.textContent = "Something went wrong. Please try again.";
+      msg.style.color = '#E88080';
+    }
+    btn.textContent = 'Notify Me';
+    btn.disabled = false;
+  });
 
   // FAQ accordion
   document.querySelectorAll('.faq-question').forEach(btn => {
