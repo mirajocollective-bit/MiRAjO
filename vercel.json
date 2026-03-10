@@ -23,6 +23,9 @@
     { "source": "/about/contact",   "destination": "https://directory.mirajoco.org/about/contact" },
     { "source": "/about/terms",     "destination": "https://directory.mirajoco.org/about/terms" },
     { "source": "/about/privacy",   "destination": "https://directory.mirajoco.org/about/privacy" },
-    { "source": "/coaching",        "destination": "/coaching.html" }
+    { "source": "/coaching",          "destination": "/coaching.html" },
+    { "source": "/programs/login",    "destination": "/programs/login.html" },
+    { "source": "/programs/confirm",  "destination": "/programs/confirm.html" },
+    { "source": "/programs/dashboard","destination": "/programs/dashboard.html" }
   ]
 }

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login — MiRAjO Collective</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-forest: #2A3A2A;
+      --warm-parchment: #EDE8DF;
+      --soft-white: #F7F4EF;
+      --dry-sage: #C9B896;
+      --bronze-earth: #A89068;
+      --text-muted-dark: #9AAA94;
+      --border-dark: rgba(237,232,223,0.12);
+      --p-deep: #3D2B72;
+      --p-mid: #5A3F9A;
+      --p-light: #8B72C8;
+      --p-dark: #1A1228;
+      --p-silver: #C8C4DC;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--p-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .login-card {
+      background: rgba(237,232,223,0.04);
+      border: 1px solid rgba(139,114,200,0.2);
+      border-radius: 24px;
+      padding: 56px 48px;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    .login-logo {
+      height: 80px;
+      width: auto;
+      margin: 0 auto 32px;
+      display: block;
+    }
+
+    .login-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .login-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--warm-parchment);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .login-sub {
+      font-size: 14px;
+      color: var(--p-silver);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .login-form { display: flex; flex-direction: column; gap: 12px; }
+
+    .login-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(237,232,223,0.06);
+      border: 1px solid rgba(139,114,200,0.25);
+      border-radius: 10px;
+      font-size: 15px;
+      color: var(--warm-parchment);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      text-align: center;
+    }
+
+    .login-input::placeholder { color: rgba(200,196,220,0.45); }
+    .login-input:focus { border-color: var(--p-light); }
+
+    .login-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--p-mid), var(--p-light));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 32px rgba(90,63,154,0.4);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .login-btn:hover { transform: translateY(-2px); }
+    .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .login-msg {
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 20px;
+      color: var(--p-light);
+    }
+
+    .login-back {
+      margin-top: 32px;
+      font-size: 13px;
+      color: var(--p-silver);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .login-back:hover { color: var(--warm-parchment); }
+
+    @media (max-width: 480px) {
+      .login-card { padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+  <img src="/img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" class="login-logo">
+  <div class="login-eyebrow">Student Access</div>
+  <h1 class="login-title">Welcome Back</h1>
+  <p class="login-sub">Enter your email and we'll send you a secure login link. No password needed.</p>
+
+  <form class="login-form" id="login-form">
+    <input type="email" class="login-input" placeholder="Your email address" required>
+    <button type="submit" class="login-btn">Send My Login Link</button>
+  </form>
+
+  <p class="login-msg" id="login-msg"></p>
+  <a href="https://www.mirajoco.org" class="login-back">← Back to MiRAjO</a>
+</div>
+
+<script>
+  document.getElementById('login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.login-btn');
+    const msg = document.getElementById('login-msg');
+    const email = this.querySelector('input[type="email"]').value;
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('/api/auth-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      if (res.ok) {
+        msg.textContent = "Check your email — your login link is on its way.";
+        msg.style.color = '#A8C5A0';
+        this.reset();
+      } else {
+        msg.textContent = "Something went wrong. Please try again.";
+        msg.style.color = '#E88080';
+        btn.textContent = 'Send My Login Link';
+        btn.disabled = false;
+      }
+    } catch {
+      msg.textContent = "Something went wrong. Please try again.";
+      msg.style.color = '#E88080';
+      btn.textContent = 'Send My Login Link';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
