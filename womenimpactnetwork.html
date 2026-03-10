@@ -39,19 +39,27 @@
 
     /* ═══ NAV ═══ */
     .site-nav {
-      background: var(--tbc-navy);
+      background: #F4F6FA;
       padding: 18px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(196,104,122,0.2);
+      border-bottom: 2px solid rgba(196,104,122,0.35);
       position: sticky;
       top: 0;
       z-index: 100;
     }
-    .nav-logos { display: flex; align-items: center; gap: 24px; }
+    .nav-logos { display: flex; align-items: center; gap: 28px; }
     .nav-logos img { height: 56px; width: auto; display: block; }
-    .nav-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+    .nav-divider { width: 1px; height: 40px; background: rgba(27,42,74,0.2); }
+    .nav-powered {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #6A7A9A;
+    }
+    .nav-powered span { color: var(--tbc-navy); font-weight: 700; }
     .nav-cta {
       display: inline-block;
       padding: 10px 24px;
@@ -523,7 +531,7 @@
   <div class="nav-logos">
     <img src="img/TampaBusinessClub_Logo_Gray.png" alt="Tampa Business Club">
     <div class="nav-divider"></div>
-    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO Collective">
+    <span class="nav-powered">Powered by <span>MiRAjO</span></span>
   </div>
   <a href="#register" class="nav-cta">Register Now</a>
 </nav>
