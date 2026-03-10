@@ -28,6 +28,8 @@
     { "source": "/coaching",          "destination": "/coaching.html" },
     { "source": "/programs/login",    "destination": "/programs/login.html" },
     { "source": "/programs/confirm",  "destination": "/programs/confirm.html" },
-    { "source": "/programs/dashboard","destination": "/programs/dashboard.html" }
+    { "source": "/programs/dashboard",    "destination": "/programs/dashboard.html" },
+    { "source": "/leadnowprogram",         "destination": "/leadnowprogram.html" },
+    { "source": "/womenimpactnetwork",     "destination": "/womenimpactnetwork.html" }
   ]
 }

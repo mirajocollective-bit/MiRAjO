@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Now Program — Tampa Business Club × MiRAjO Collective</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --tbc-navy: #1B2A4A;
+      --tbc-mid: #2C4270;
+      --tbc-light: #4A6FA5;
+      --tbc-pale: #EEF2F8;
+      --tbc-gold: #C9A84C;
+      --tbc-gold-light: #E8C97A;
+      --warm-white: #F8F7F4;
+      --text-dark: #1B2A4A;
+      --text-mid: #3A4A6A;
+      --text-muted: #6A7A9A;
+      --border: rgba(27,42,74,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--warm-white);
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ═══ NAV ═══ */
+    .site-nav {
+      background: var(--tbc-navy);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logos { display: flex; align-items: center; gap: 24px; }
+    .nav-logos img { height: 56px; width: auto; display: block; }
+    .nav-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.2);
+    }
+    .nav-cta {
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--tbc-gold);
+      color: var(--tbc-navy);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--tbc-gold-light); }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      background: linear-gradient(135deg, var(--tbc-navy) 0%, var(--tbc-mid) 100%);
+      padding: 100px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--tbc-gold);
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-title em { color: var(--tbc-gold); font-style: italic; }
+    .hero-sub {
+      font-size: clamp(16px, 1.5vw, 18px);
+      color: rgba(255,255,255,0.75);
+      max-width: 620px;
+      margin: 0 auto 48px;
+      line-height: 1.8;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .hero-meta-item {
+      text-align: center;
+    }
+    .hero-meta-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--tbc-gold);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .hero-meta-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: #fff;
+      font-weight: 400;
+    }
+    .hero-meta-divider {
+      width: 1px;
+      height: 48px;
+      background: rgba(255,255,255,0.15);
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--tbc-gold);
+      color: var(--tbc-navy);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 32px rgba(201,168,76,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.45); }
+    .btn-secondary {
+      display: inline-block;
+      padding: 16px 40px;
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin-left: 16px;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+    /* ═══ ABOUT ═══ */
+    .about-section { padding: 100px 40px; background: #fff; }
+    .about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--tbc-gold);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 400;
+      color: var(--tbc-navy);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .section-body {
+      font-size: 16px;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+    .section-body p { margin-bottom: 16px; }
+    .section-body p:last-child { margin-bottom: 0; }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .about-stat {
+      background: var(--tbc-pale);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .about-stat-number {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px;
+      color: var(--tbc-navy);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .about-stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ═══ CURRICULUM ═══ */
+    .curriculum-section { padding: 100px 40px; background: var(--tbc-pale); }
+    .curriculum-inner { max-width: 1100px; margin: 0 auto; }
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .curriculum-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 36px 28px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .curriculum-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(27,42,74,0.08); }
+    .curriculum-month {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--tbc-gold);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .curriculum-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--tbc-navy);
+      font-weight: 400;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .curriculum-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ═══ ASSIGNMENTS ═══ */
+    .assignments-section { padding: 100px 40px; background: var(--tbc-navy); }
+    .assignments-inner { max-width: 900px; margin: 0 auto; }
+    .assignments-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 56px;
+    }
+    .assignment-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .assignment-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--tbc-gold);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 36px;
+    }
+    .assignment-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+      padding-top: 4px;
+    }
+
+    /* ═══ AUDIENCE ═══ */
+    .audience-section { padding: 100px 40px; background: #fff; }
+    .audience-inner { max-width: 1100px; margin: 0 auto; }
+    .audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .audience-card {
+      background: var(--tbc-pale);
+      border-radius: 16px;
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .audience-icon { font-size: 40px; margin-bottom: 20px; display: block; }
+    .audience-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--tbc-navy);
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .audience-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ═══ PRICING ═══ */
+    .pricing-section { padding: 100px 40px; background: var(--tbc-pale); text-align: center; }
+    .pricing-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 48px;
+      max-width: 580px;
+      margin: 56px auto 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 48px rgba(27,42,74,0.08);
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--tbc-navy), var(--tbc-gold));
+    }
+    .pricing-badge {
+      display: inline-block;
+      background: rgba(27,42,74,0.08);
+      color: var(--tbc-navy);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .pricing-price {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(56px, 8vw, 80px);
+      color: var(--tbc-navy);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .pricing-note { font-size: 13px; color: var(--text-muted); margin-bottom: 36px; }
+    .pricing-list { list-style: none; margin-bottom: 40px; text-align: left; }
+    .pricing-list li {
+      font-size: 15px;
+      color: var(--text-mid);
+      padding: 12px 0;
+      padding-left: 24px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    .pricing-list li:last-child { border-bottom: none; }
+    .pricing-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--tbc-gold);
+      font-weight: 700;
+    }
+    .pricing-btn {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      background: var(--tbc-navy);
+      color: #fff;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .pricing-btn:hover { background: var(--tbc-mid); transform: translateY(-2px); }
+    .pricing-deposit { font-size: 12px; color: var(--text-muted); margin-top: 16px; }
+
+    /* ═══ SPONSORS ═══ */
+    .sponsors-section { padding: 100px 40px; background: var(--tbc-navy); }
+    .sponsors-inner { max-width: 1100px; margin: 0 auto; }
+    .sponsors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .sponsor-tier {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .sponsor-tier.featured {
+      border-color: var(--tbc-gold);
+      background: rgba(201,168,76,0.06);
+    }
+    .sponsor-tier.featured::before {
+      content: 'Most Visible';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      background: var(--tbc-gold);
+      color: var(--tbc-navy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px;
+      text-align: center;
+    }
+    .sponsor-tier-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--tbc-gold);
+      font-weight: 400;
+      margin-bottom: 8px;
+      margin-top: 16px;
+    }
+    .sponsor-tier.featured .sponsor-tier-name { margin-top: 32px; }
+    .sponsor-price {
+      font-family: 'Instrument Serif', serif;
+      font-size: 44px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .sponsor-list { list-style: none; margin-bottom: 28px; text-align: left; }
+    .sponsor-list li {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      padding: 8px 0;
+      padding-left: 18px;
+      position: relative;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      line-height: 1.5;
+    }
+    .sponsor-list li:last-child { border-bottom: none; }
+    .sponsor-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--tbc-gold);
+      font-size: 6px;
+      top: 12px;
+    }
+    .sponsor-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: rgba(201,168,76,0.15);
+      color: var(--tbc-gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .sponsor-btn:hover { background: var(--tbc-gold); color: var(--tbc-navy); }
+    .sponsor-tier.featured .sponsor-btn { background: var(--tbc-gold); color: var(--tbc-navy); }
+
+    /* ═══ LEADERSHIP ═══ */
+    .leadership-section { padding: 100px 40px; background: #fff; }
+    .leadership-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .leadership-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 56px; }
+    .leader-card {
+      background: var(--tbc-pale);
+      border-radius: 16px;
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+    }
+    .leader-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--tbc-navy), var(--tbc-light));
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: #fff;
+    }
+    .leader-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--tbc-navy);
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .leader-role { font-size: 13px; color: var(--tbc-gold); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .leader-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ═══ FOOTER ═══ */
+    .site-footer { background: var(--tbc-navy); padding: 48px 40px 24px; border-top: 1px solid rgba(201,168,76,0.15); }
+    .footer-logos { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 24px; }
+    .footer-logos img { height: 48px; width: auto; opacity: 0.8; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 24px; }
+    .footer-bottom { text-align: center; font-size: 11px; color: rgba(255,255,255,0.3); padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .site-nav { padding: 16px 20px; }
+      .hero { padding: 72px 24px; }
+      .hero-meta { gap: 24px; }
+      .hero-meta-divider { display: none; }
+      .btn-secondary { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .curriculum-grid { grid-template-columns: 1fr; }
+      .assignments-grid { grid-template-columns: 1fr; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .sponsors-grid { grid-template-columns: 1fr; }
+      .leadership-grid { grid-template-columns: 1fr; }
+      .pricing-card { padding: 40px 24px; }
+      .about-section, .curriculum-section, .assignments-section,
+      .audience-section, .pricing-section, .sponsors-section,
+      .leadership-section { padding: 64px 24px; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .curriculum-grid { grid-template-columns: repeat(2, 1fr); }
+      .sponsors-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-logos">
+    <img src="img/TampaBusinessClub_Logo_Gray.png" alt="Tampa Business Club">
+    <div class="nav-divider"></div>
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO Collective">
+  </div>
+  <a href="#register" class="nav-cta">Register Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Tampa Business Club × MiRAjO Collective</div>
+  <h1 class="hero-title">Lead <em>Now</em> Program</h1>
+  <p class="hero-sub">A 6-month leadership development initiative crafted to help professionals across Tampa Bay expand their leadership abilities through real-world application, mentorship, and community impact.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Duration</div>
+      <div class="hero-meta-value">6 Months</div>
+    </div>
+    <div class="hero-meta-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Dates</div>
+      <div class="hero-meta-value">Jan – Jun 2026</div>
+    </div>
+    <div class="hero-meta-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Investment</div>
+      <div class="hero-meta-value">$4,999</div>
+    </div>
+    <div class="hero-meta-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Location</div>
+      <div class="hero-meta-value">Tampa Bay, FL</div>
+    </div>
+  </div>
+  <a href="#register" class="btn-primary">Reserve Your Seat</a>
+  <a href="#overview" class="btn-secondary">Learn More</a>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="overview" data-aos="fade-up">
+  <div class="about-inner">
+    <div>
+      <div class="section-eyebrow">About the Program</div>
+      <h2 class="section-title">Leadership built for Tampa Bay's next generation of impact makers.</h2>
+      <div class="section-body">
+        <p>The Lead Now Program is a hands-on, immersive leadership experience designed for professionals ready to move beyond theory and into real leadership practice. Through monthly classroom sessions, leadership tours of Tampa Bay businesses, and collaborative community impact projects, participants build the skills that matter most.</p>
+        <p>Facilitated by Miranda Johnson (CEO, MiRAjO Collective) and Roberto Borrero (CEO, Tampa Business Club), this program brings together the best of both organizations — a powerful network and a proven leadership framework.</p>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat">
+        <div class="about-stat-number">6</div>
+        <div class="about-stat-label">Months of Immersive Learning</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-number">7</div>
+        <div class="about-stat-label">Leadership Assignments</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-number">1</div>
+        <div class="about-stat-label">Spring Retreat Included</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-number">#1</div>
+        <div class="about-stat-label">Networking Group in Tampa Bay</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum-section" data-aos="fade-up">
+  <div class="curriculum-inner">
+    <div class="section-eyebrow" style="text-align:center">Monthly Curriculum</div>
+    <h2 class="section-title" style="text-align:center;max-width:600px;margin:0 auto 0">Six months. Six themes. One transformation.</h2>
+    <div class="curriculum-grid">
+      <div class="curriculum-card" data-aos="fade-up">
+        <div class="curriculum-month">Month 01 — January</div>
+        <h3 class="curriculum-title">Leadership Foundations</h3>
+        <p class="curriculum-desc">Establishing your leadership baseline, personal values, and the core principles that will guide your journey through the program.</p>
+      </div>
+      <div class="curriculum-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="curriculum-month">Month 02 — February</div>
+        <h3 class="curriculum-title">Innovation & Technology</h3>
+        <p class="curriculum-desc">Exploring how technology is reshaping leadership. Learning to lead adaptive teams in rapidly changing environments.</p>
+      </div>
+      <div class="curriculum-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="curriculum-month">Month 03 — March</div>
+        <h3 class="curriculum-title">Diversity, Equity & Inclusion</h3>
+        <p class="curriculum-desc">Building inclusive workplaces and understanding how diversity drives innovation and stronger business outcomes.</p>
+      </div>
+      <div class="curriculum-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="curriculum-month">Month 04 — April</div>
+        <h3 class="curriculum-title">Spring Leadership Retreat</h3>
+        <p class="curriculum-desc">A two-day off-site retreat focused on vision, reflection, and deep collaboration with your cohort and facilitators.</p>
+      </div>
+      <div class="curriculum-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="curriculum-month">Month 05 — May</div>
+        <h3 class="curriculum-title">Mental Wellness in Leadership</h3>
+        <p class="curriculum-desc">Understanding the critical role mental health plays in sustainable leadership and building resilience under pressure.</p>
+      </div>
+      <div class="curriculum-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="curriculum-month">Month 06 — June</div>
+        <h3 class="curriculum-title">Future-Proofing Your Leadership</h3>
+        <p class="curriculum-desc">Finalizing your Community Impact Initiative and presenting at the graduation ceremony. Leaving with a clear leadership vision.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSIGNMENTS -->
+<section class="assignments-section" data-aos="fade-up">
+  <div class="assignments-inner">
+    <div class="section-eyebrow" style="color:var(--tbc-gold);text-align:center">Program Deliverables</div>
+    <h2 class="section-title" style="color:#fff;text-align:center">Seven assignments. Real-world application.</h2>
+    <div class="assignments-grid">
+      <div class="assignment-item">
+        <div class="assignment-num">01</div>
+        <div class="assignment-text">Personal Leadership Action Plan</div>
+      </div>
+      <div class="assignment-item">
+        <div class="assignment-num">02</div>
+        <div class="assignment-text">Technology Impact Report</div>
+      </div>
+      <div class="assignment-item">
+        <div class="assignment-num">03</div>
+        <div class="assignment-text">Diversity, Equity & Inclusion Strategy</div>
+      </div>
+      <div class="assignment-item">
+        <div class="assignment-num">04</div>
+        <div class="assignment-text">30-Day Wellness Plan</div>
+      </div>
+      <div class="assignment-item">
+        <div class="assignment-num">05</div>
+        <div class="assignment-text">Leadership Vision Statement</div>
+      </div>
+      <div class="assignment-item">
+        <div class="assignment-num">06</div>
+        <div class="assignment-text">Global Leadership Case Study</div>
+      </div>
+      <div class="assignment-item" style="grid-column: 1 / -1; max-width: 420px; margin: 0 auto;">
+        <div class="assignment-num">07</div>
+        <div class="assignment-text">Final Community Impact Initiative Project — presented at graduation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="audience-section" data-aos="fade-up">
+  <div class="audience-inner">
+    <div class="section-eyebrow" style="text-align:center">Who This Is For</div>
+    <h2 class="section-title" style="text-align:center;max-width:600px;margin:0 auto 0">Built for Tampa Bay's most driven professionals.</h2>
+    <div class="audience-grid">
+      <div class="audience-card" data-aos="fade-up">
+        <span class="audience-icon">🚀</span>
+        <h3 class="audience-title">Growth-Driven Innovators</h3>
+        <p class="audience-desc">Professionals in mental wellness, sustainability, and tech innovation leading adaptive teams through change.</p>
+      </div>
+      <div class="audience-card" data-aos="fade-up" data-aos-delay="100">
+        <span class="audience-icon">🌱</span>
+        <h3 class="audience-title">Community-Focused Entrepreneurs</h3>
+        <p class="audience-desc">Business owners in wellness and green tech committed to sustainable growth and community impact.</p>
+      </div>
+      <div class="audience-card" data-aos="fade-up" data-aos-delay="200">
+        <span class="audience-icon">⚡</span>
+        <h3 class="audience-title">Strategic Innovators</h3>
+        <p class="audience-desc">Leaders in digital strategy and corporate wellness creating inclusive, forward-thinking workplaces.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="register" data-aos="fade-up">
+  <div class="section-eyebrow">Investment</div>
+  <h2 class="section-title">Ready to Lead Now?</h2>
+  <div class="pricing-card">
+    <span class="pricing-badge">2026 Cohort</span>
+    <div class="pricing-price">$4,999</div>
+    <p class="pricing-note">Includes non-refundable $250 deposit to secure your seat</p>
+    <ul class="pricing-list">
+      <li>6 months of monthly classroom sessions (8AM–3:30PM)</li>
+      <li>Leadership tours of Tampa Bay businesses</li>
+      <li>Spring Leadership Vision Retreat (2 days, off-site)</li>
+      <li>7 real-world leadership assignments</li>
+      <li>Mentorship from experienced Tampa Bay business leaders</li>
+      <li>Networking access through Tampa Business Club events</li>
+      <li>Formal graduation ceremony with certificate</li>
+    </ul>
+    <a href="mailto:programs@mirajoco.org?subject=Lead Now Program — Registration Interest" class="pricing-btn">Reserve My Seat — January 2026</a>
+    <p class="pricing-deposit">$250 non-refundable deposit required to confirm enrollment. Final pricing may adjust based on overnight tour accommodations.</p>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section class="sponsors-section" data-aos="fade-up">
+  <div class="sponsors-inner">
+    <div class="section-eyebrow" style="color:var(--tbc-gold);text-align:center">Sponsorship Opportunities</div>
+    <h2 class="section-title" style="color:#fff;text-align:center;max-width:600px;margin:0 auto 0">Put your brand in front of Tampa Bay's emerging leaders.</h2>
+    <p style="text-align:center;color:rgba(255,255,255,0.6);font-size:15px;max-width:580px;margin:20px auto 0;line-height:1.8">Sponsors gain direct access to motivated, growth-driven professionals across Tampa Bay's most dynamic industries — all in one room, for six months.</p>
+    <div class="sponsors-grid">
+      <div class="sponsor-tier" data-aos="fade-up">
+        <div class="sponsor-tier-name">Community</div>
+        <div class="sponsor-price">$500</div>
+        <ul class="sponsor-list">
+          <li>Logo in program materials</li>
+          <li>Recognition at graduation ceremony</li>
+          <li>Social media mention</li>
+          <li>Certificate of sponsorship</li>
+        </ul>
+        <a href="mailto:programs@mirajoco.org?subject=Lead Now — Community Sponsorship" class="sponsor-btn">Become a Sponsor</a>
+      </div>
+      <div class="sponsor-tier featured" data-aos="fade-up" data-aos-delay="100">
+        <div class="sponsor-tier-name">Premier</div>
+        <div class="sponsor-price">$2,500</div>
+        <ul class="sponsor-list">
+          <li>Featured branding at all sessions</li>
+          <li>Speaking opportunity at one session</li>
+          <li>Logo on all program materials</li>
+          <li>VIP graduation ceremony access</li>
+          <li>Dedicated social media feature</li>
+          <li>Direct access to participant network</li>
+        </ul>
+        <a href="mailto:programs@mirajoco.org?subject=Lead Now — Premier Sponsorship" class="sponsor-btn">Become a Sponsor</a>
+      </div>
+      <div class="sponsor-tier" data-aos="fade-up" data-aos-delay="200">
+        <div class="sponsor-tier-name">Retreat</div>
+        <div class="sponsor-price">$1,500</div>
+        <ul class="sponsor-list">
+          <li>Exclusive Spring Retreat sponsorship</li>
+          <li>Branding at retreat venue</li>
+          <li>Welcome remarks opportunity</li>
+          <li>Logo on retreat materials</li>
+          <li>Social media recognition</li>
+        </ul>
+        <a href="mailto:programs@mirajoco.org?subject=Lead Now — Retreat Sponsorship" class="sponsor-btn">Become a Sponsor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="leadership-section" data-aos="fade-up">
+  <div class="leadership-inner">
+    <div class="section-eyebrow" style="text-align:center">Program Leadership</div>
+    <h2 class="section-title">Meet Your Facilitators</h2>
+    <div class="leadership-grid">
+      <div class="leader-card">
+        <div class="leader-avatar">MJ</div>
+        <div class="leader-name">Miranda Johnson</div>
+        <div class="leader-role">CEO, MiRAjO Collective</div>
+        <p class="leader-desc">Nearly two decades of entrepreneurship, leadership development, and building programs that help leaders move beyond level one of life.</p>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">RB</div>
+        <div class="leader-name">Roberto Borrero</div>
+        <div class="leader-role">CEO, Tampa Business Club</div>
+        <p class="leader-desc">Founder of Tampa Bay's #1 networking group, connecting thousands of professionals through events, expos, and community initiatives across the region.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-logos">
+    <img src="img/TampaBusinessClub_Logo_Gray.png" alt="Tampa Business Club">
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO Collective">
+  </div>
+  <p class="footer-tagline">A Tampa Business Club × MiRAjO Collective Partnership Program</p>
+  <div class="footer-bottom">&copy; 2026 Tampa Business Club &amp; MiRAjO Collective. All rights reserved.</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init({ duration: 800, easing: 'ease-in-out', once: true });</script>
+</body>
+</html>

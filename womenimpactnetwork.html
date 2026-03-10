@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Her Vitality — Tampa Business Club × MiRAjO Collective</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --tbc-navy: #1B2A4A;
+      --tbc-mid: #2C4270;
+      --tbc-light: #4A6FA5;
+      --tbc-pale: #EEF2F8;
+      --tbc-gold: #C9A84C;
+      --tbc-gold-light: #E8C97A;
+      --hv-rose: #C4687A;
+      --hv-rose-light: #E8A0AE;
+      --hv-rose-pale: #FBF0F2;
+      --hv-teal: #3A7D7B;
+      --hv-teal-light: #6AADAB;
+      --warm-white: #FBF8F5;
+      --text-dark: #1B2A4A;
+      --text-mid: #3A4A6A;
+      --text-muted: #6A7A9A;
+      --border: rgba(27,42,74,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--warm-white);
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ═══ NAV ═══ */
+    .site-nav {
+      background: var(--tbc-navy);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(196,104,122,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logos { display: flex; align-items: center; gap: 24px; }
+    .nav-logos img { height: 56px; width: auto; display: block; }
+    .nav-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+    .nav-cta {
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--hv-rose);
+      color: #fff;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--hv-rose-light); }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      background: linear-gradient(135deg, var(--tbc-navy) 0%, #2D1A2E 60%, #3A1A2A 100%);
+      padding: 100px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(196,104,122,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,104,122,0.15);
+      border: 1px solid rgba(196,104,122,0.3);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--hv-rose-light);
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-title em { color: var(--hv-rose-light); font-style: italic; }
+    .hero-subtitle {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(18px, 2vw, 24px);
+      color: rgba(255,255,255,0.6);
+      font-style: italic;
+      margin-bottom: 32px;
+    }
+    .hero-sub {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: rgba(255,255,255,0.7);
+      max-width: 620px;
+      margin: 0 auto 48px;
+      line-height: 1.8;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .hero-meta-item { text-align: center; }
+    .hero-meta-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--hv-rose-light);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .hero-meta-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: #fff;
+      font-weight: 400;
+    }
+    .hero-meta-divider { width: 1px; height: 48px; background: rgba(255,255,255,0.15); }
+    .btn-primary {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--hv-rose);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 32px rgba(196,104,122,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(196,104,122,0.5); }
+    .btn-secondary {
+      display: inline-block;
+      padding: 16px 40px;
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin-left: 16px;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+    /* ═══ SPONSOR BANNER ═══ */
+    .sponsor-banner {
+      background: var(--hv-rose-pale);
+      border-bottom: 1px solid rgba(196,104,122,0.15);
+      padding: 20px 40px;
+      text-align: center;
+    }
+    .sponsor-banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .sponsor-banner-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--hv-rose);
+      font-weight: 600;
+    }
+    .sponsor-banner-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--tbc-navy);
+      font-weight: 400;
+    }
+
+    /* ═══ ABOUT ═══ */
+    .about-section { padding: 100px 40px; background: #fff; }
+    .about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--hv-rose);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 400;
+      color: var(--tbc-navy);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .section-body {
+      font-size: 16px;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+    .section-body p { margin-bottom: 16px; }
+    .section-body p:last-child { margin-bottom: 0; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .about-stat {
+      background: var(--hv-rose-pale);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid rgba(196,104,122,0.15);
+    }
+    .about-stat-number {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px;
+      color: var(--hv-rose);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .about-stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+    /* ═══ MODULES ═══ */
+    .modules-section { padding: 100px 40px; background: var(--hv-rose-pale); }
+    .modules-inner { max-width: 1100px; margin: 0 auto; }
+    .modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .module-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 32px;
+      border: 1px solid rgba(196,104,122,0.12);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .module-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--hv-rose), var(--hv-rose-light));
+    }
+    .module-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(196,104,122,0.1); }
+    .module-num {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--hv-rose);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .module-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--tbc-navy);
+      font-weight: 400;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .module-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+    .module-list { list-style: none; }
+    .module-list li {
+      font-size: 13px;
+      color: var(--text-mid);
+      padding: 6px 0;
+      padding-left: 16px;
+      position: relative;
+      border-bottom: 1px solid rgba(196,104,122,0.08);
+      line-height: 1.5;
+    }
+    .module-list li:last-child { border-bottom: none; }
+    .module-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--hv-rose);
+      font-size: 5px;
+      top: 10px;
+    }
+
+    /* ═══ CASE STUDIES ═══ */
+    .case-section { padding: 100px 40px; background: var(--tbc-navy); }
+    .case-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .case-body {
+      font-size: 18px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.9;
+      max-width: 700px;
+      margin: 32px auto 0;
+      font-style: italic;
+      font-family: 'Instrument Serif', serif;
+    }
+
+    /* ═══ PRICING ═══ */
+    .pricing-section { padding: 100px 40px; background: #fff; text-align: center; }
+    .pricing-card {
+      background: var(--warm-white);
+      border: 1px solid rgba(196,104,122,0.2);
+      border-radius: 24px;
+      padding: 56px 48px;
+      max-width: 580px;
+      margin: 56px auto 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 48px rgba(196,104,122,0.08);
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--hv-rose), var(--hv-rose-light));
+    }
+    .pricing-sponsor {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,104,122,0.08);
+      border: 1px solid rgba(196,104,122,0.2);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: var(--hv-rose);
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .pricing-price {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(56px, 8vw, 80px);
+      color: var(--tbc-navy);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .pricing-note { font-size: 13px; color: var(--text-muted); margin-bottom: 36px; }
+    .pricing-list { list-style: none; margin-bottom: 40px; text-align: left; }
+    .pricing-list li {
+      font-size: 15px;
+      color: var(--text-mid);
+      padding: 12px 0;
+      padding-left: 24px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    .pricing-list li:last-child { border-bottom: none; }
+    .pricing-list li::before { content: '✓'; position: absolute; left: 0; color: var(--hv-rose); font-weight: 700; }
+    .pricing-btn {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      background: var(--hv-rose);
+      color: #fff;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 8px 32px rgba(196,104,122,0.3);
+    }
+    .pricing-btn:hover { background: var(--hv-rose-light); transform: translateY(-2px); }
+
+    /* ═══ SPONSORS ═══ */
+    .sponsors-section { padding: 100px 40px; background: var(--hv-rose-pale); }
+    .sponsors-inner { max-width: 1100px; margin: 0 auto; }
+    .sponsors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .sponsor-tier {
+      background: #fff;
+      border: 1px solid rgba(196,104,122,0.15);
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(196,104,122,0.06);
+    }
+    .sponsor-tier.featured { border-color: var(--hv-rose); }
+    .sponsor-tier.featured::before {
+      content: 'Presenting Sponsor';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      background: var(--hv-rose);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px;
+      text-align: center;
+    }
+    .sponsor-tier-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--hv-rose);
+      font-weight: 400;
+      margin-bottom: 8px;
+      margin-top: 16px;
+    }
+    .sponsor-tier.featured .sponsor-tier-name { margin-top: 32px; }
+    .sponsor-price {
+      font-family: 'Instrument Serif', serif;
+      font-size: 44px;
+      color: var(--tbc-navy);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .sponsor-note { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-style: italic; }
+    .sponsor-list { list-style: none; margin-bottom: 28px; text-align: left; }
+    .sponsor-list li {
+      font-size: 13px;
+      color: var(--text-mid);
+      padding: 8px 0;
+      padding-left: 18px;
+      position: relative;
+      border-bottom: 1px solid rgba(196,104,122,0.08);
+      line-height: 1.5;
+    }
+    .sponsor-list li:last-child { border-bottom: none; }
+    .sponsor-list li::before { content: '◆'; position: absolute; left: 0; color: var(--hv-rose); font-size: 6px; top: 12px; }
+    .sponsor-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: rgba(196,104,122,0.08);
+      color: var(--hv-rose);
+      border: 1px solid rgba(196,104,122,0.2);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .sponsor-btn:hover { background: var(--hv-rose); color: #fff; }
+    .sponsor-tier.featured .sponsor-btn { background: var(--hv-rose); color: #fff; border-color: var(--hv-rose); }
+
+    /* ═══ LEADERSHIP ═══ */
+    .leadership-section { padding: 100px 40px; background: #fff; }
+    .leadership-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .leadership-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 56px; }
+    .leader-card {
+      background: var(--hv-rose-pale);
+      border-radius: 16px;
+      padding: 40px 32px;
+      border: 1px solid rgba(196,104,122,0.12);
+    }
+    .leader-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--hv-rose), var(--tbc-navy));
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: #fff;
+    }
+    .leader-name { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--tbc-navy); font-weight: 400; margin-bottom: 6px; }
+    .leader-role { font-size: 13px; color: var(--hv-rose); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .leader-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ═══ FOOTER ═══ */
+    .site-footer { background: var(--tbc-navy); padding: 48px 40px 24px; border-top: 1px solid rgba(196,104,122,0.15); }
+    .footer-logos { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 24px; }
+    .footer-logos img { height: 48px; width: auto; opacity: 0.8; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 24px; }
+    .footer-bottom { text-align: center; font-size: 11px; color: rgba(255,255,255,0.3); padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .site-nav { padding: 16px 20px; }
+      .hero { padding: 72px 24px; }
+      .hero-meta { gap: 24px; }
+      .hero-meta-divider { display: none; }
+      .btn-secondary { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .modules-grid { grid-template-columns: 1fr; }
+      .sponsors-grid { grid-template-columns: 1fr; }
+      .leadership-grid { grid-template-columns: 1fr; }
+      .pricing-card { padding: 40px 24px; }
+      .about-section, .modules-section, .case-section,
+      .pricing-section, .sponsors-section, .leadership-section { padding: 64px 24px; }
+      .sponsor-banner { padding: 16px 20px; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .modules-grid { grid-template-columns: repeat(2, 1fr); }
+      .sponsors-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-logos">
+    <img src="img/TampaBusinessClub_Logo_Gray.png" alt="Tampa Business Club">
+    <div class="nav-divider"></div>
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO Collective">
+  </div>
+  <a href="#register" class="nav-cta">Register Now</a>
+</nav>
+
+<!-- SPONSOR BANNER -->
+<div class="sponsor-banner">
+  <div class="sponsor-banner-inner">
+    <span class="sponsor-banner-label">Proudly Sponsored By</span>
+    <span class="sponsor-banner-name">Florida Blue</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Tampa Business Club × MiRAjO Collective</div>
+  <h1 class="hero-title"><em>Her</em> Vitality</h1>
+  <p class="hero-subtitle">Health-Centered Leadership for Women</p>
+  <p class="hero-sub">A transformative 6-month program designed for women in leadership who are ready to align their mental, physical, financial, and personal well-being with the power of who they are built to be.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Duration</div>
+      <div class="hero-meta-value">6 Months</div>
+    </div>
+    <div class="hero-meta-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Dates</div>
+      <div class="hero-meta-value">Jun – Nov 2026</div>
+    </div>
+    <div class="hero-meta-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Investment</div>
+      <div class="hero-meta-value">$2,500</div>
+    </div>
+    <div class="hero-meta-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Sponsor</div>
+      <div class="hero-meta-value">Florida Blue</div>
+    </div>
+  </div>
+  <a href="#register" class="btn-primary">Reserve Your Seat</a>
+  <a href="#overview" class="btn-secondary">Learn More</a>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="overview" data-aos="fade-up">
+  <div class="about-inner">
+    <div>
+      <div class="section-eyebrow">About the Program</div>
+      <h2 class="section-title">Leadership that starts from the inside out.</h2>
+      <div class="section-body">
+        <p>Her Vitality is a health-centered leadership program built for women who lead — and who are ready to lead themselves first. Across five powerful modules, participants address the mental, physical, financial, and personal dimensions of leadership that are rarely talked about in traditional programs.</p>
+        <p>All modules require full participation including Round Table Discussions and written feedback — because real growth happens in the room, not from a workbook.</p>
+        <p>Proudly sponsored by Florida Blue and presented by Tampa Business Club in partnership with MiRAjO Collective.</p>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat">
+        <div class="about-stat-number">5</div>
+        <div class="about-stat-label">Core Leadership Modules</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-number">6</div>
+        <div class="about-stat-label">Months of Transformation</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-number">100%</div>
+        <div class="about-stat-label">Participation Required</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-number">1</div>
+        <div class="about-stat-label">Case Study Per Participant</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules-section" data-aos="fade-up">
+  <div class="modules-inner">
+    <div class="section-eyebrow" style="text-align:center">The Five Modules</div>
+    <h2 class="section-title" style="text-align:center;max-width:600px;margin:0 auto 0">Every dimension of your vitality. Covered.</h2>
+    <div class="modules-grid">
+
+      <div class="module-card" data-aos="fade-up">
+        <div class="module-num">Module 01</div>
+        <h3 class="module-title">Mental Health in Leadership</h3>
+        <p class="module-desc">Building mental resilience and healthy emotional management in leadership roles.</p>
+        <ul class="module-list">
+          <li>Breaking free from perfectionism</li>
+          <li>Emotional expression and boundaries</li>
+          <li>Mindfulness practices for leaders</li>
+          <li>Personalized self-care planning</li>
+        </ul>
+      </div>
+
+      <div class="module-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="module-num">Module 02</div>
+        <h3 class="module-title">Physical Health as Foundation</h3>
+        <p class="module-desc">Recognizing the direct connection between physical wellness and leadership effectiveness.</p>
+        <ul class="module-list">
+          <li>Moving beyond the "tough it out" mentality</li>
+          <li>Nutrition and exercise routines that work</li>
+          <li>Body image and self-perception in leadership</li>
+          <li>Physical wellness schedule development</li>
+        </ul>
+      </div>
+
+      <div class="module-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="module-num">Module 03</div>
+        <h3 class="module-title">Financial Health</h3>
+        <p class="module-desc">Moving from financial dependence or impulsive spending toward lasting financial confidence.</p>
+        <ul class="module-list">
+          <li>Money mindset and financial identity</li>
+          <li>Budgeting and building independence</li>
+          <li>Balancing generosity with self-care</li>
+          <li>Digital budget planning tools</li>
+        </ul>
+      </div>
+
+      <div class="module-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="module-num">Module 04</div>
+        <h3 class="module-title">Life Balance</h3>
+        <p class="module-desc">Finding a fulfilling balance between professional ambitions and personal life — without guilt.</p>
+        <ul class="module-list">
+          <li>Relationship dynamics and boundaries</li>
+          <li>Building a personal support system</li>
+          <li>Emotional intelligence in leadership</li>
+          <li>Goal-setting across all life areas</li>
+        </ul>
+      </div>
+
+      <div class="module-card" data-aos="fade-up" data-aos-delay="400" style="grid-column: 2 / 3;">
+        <div class="module-num">Module 05</div>
+        <h3 class="module-title">Legacy & Long-Term Success</h3>
+        <p class="module-desc">Creating a legacy that values balance, emotional intelligence, and well-being above all.</p>
+        <ul class="module-list">
+          <li>Redefining what success means for you</li>
+          <li>Mentorship opportunities and giving back</li>
+          <li>Addressing systemic challenges for women</li>
+          <li>Sustainability planning for the long game</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="case-section" data-aos="fade-up">
+  <div class="case-inner">
+    <div class="section-eyebrow" style="color:var(--hv-rose-light);text-align:center">Case Studies</div>
+    <h2 class="section-title" style="color:#fff;text-align:center">Research that makes it real.</h2>
+    <p class="case-body">"Each participant conducts original research examining how mental, physical, financial, and life-balance health have affected the career longevity of women leaders historically — then presents their findings to the group."</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="register" data-aos="fade-up">
+  <div class="section-eyebrow" style="color:var(--hv-rose)">Investment</div>
+  <h2 class="section-title">Ready to Reclaim Your Vitality?</h2>
+  <div class="pricing-card">
+    <div class="pricing-sponsor">Sponsored by Florida Blue</div>
+    <div class="pricing-price">$2,500</div>
+    <p class="pricing-note">June – November 2026 · Tampa Bay, FL</p>
+    <ul class="pricing-list">
+      <li>5 mandatory modules with Round Table Discussions</li>
+      <li>Written feedback and guided journaling</li>
+      <li>Personalized wellness and self-care planning</li>
+      <li>Financial planning tools and resources</li>
+      <li>Original case study research and group presentation</li>
+      <li>Mentorship opportunities within the cohort</li>
+      <li>Access to Tampa Business Club network and events</li>
+    </ul>
+    <a href="mailto:programs@mirajoco.org?subject=Her Vitality — Registration Interest" class="pricing-btn">Reserve My Seat — June 2026</a>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section class="sponsors-section" data-aos="fade-up">
+  <div class="sponsors-inner">
+    <div class="section-eyebrow" style="text-align:center">Sponsorship Opportunities</div>
+    <h2 class="section-title" style="text-align:center;max-width:640px;margin:0 auto 0">Champion women's leadership in Tampa Bay.</h2>
+    <p style="text-align:center;color:var(--text-muted);font-size:15px;max-width:580px;margin:20px auto 0;line-height:1.8">Her Vitality attracts ambitious women in leadership across Tampa Bay's most dynamic industries. Sponsoring this program puts your brand at the center of a movement.</p>
+    <div class="sponsors-grid">
+      <div class="sponsor-tier" data-aos="fade-up">
+        <div class="sponsor-tier-name">Wellness</div>
+        <div class="sponsor-price">$500</div>
+        <ul class="sponsor-list">
+          <li>Logo in all program materials</li>
+          <li>Recognition at each session</li>
+          <li>Social media feature</li>
+          <li>Certificate of sponsorship</li>
+        </ul>
+        <a href="mailto:programs@mirajoco.org?subject=Her Vitality — Wellness Sponsorship" class="sponsor-btn">Become a Sponsor</a>
+      </div>
+      <div class="sponsor-tier featured" data-aos="fade-up" data-aos-delay="100">
+        <div class="sponsor-tier-name">Vitality</div>
+        <div class="sponsor-price">$2,500</div>
+        <p class="sponsor-note">Currently held by Florida Blue</p>
+        <ul class="sponsor-list">
+          <li>Top billing on all program materials</li>
+          <li>Speaking opportunity at one module</li>
+          <li>Dedicated social media campaign</li>
+          <li>VIP access to all sessions</li>
+          <li>Direct access to participant network</li>
+          <li>Co-branding on program certificate</li>
+        </ul>
+        <a href="mailto:programs@mirajoco.org?subject=Her Vitality — Vitality Sponsorship Interest" class="sponsor-btn">Inquire About Future Cohorts</a>
+      </div>
+      <div class="sponsor-tier" data-aos="fade-up" data-aos-delay="200">
+        <div class="sponsor-tier-name">Legacy</div>
+        <div class="sponsor-price">$1,500</div>
+        <ul class="sponsor-list">
+          <li>Module 05 exclusive sponsorship</li>
+          <li>Legacy session branding</li>
+          <li>Speaking or panel opportunity</li>
+          <li>Featured in case study materials</li>
+          <li>Social media recognition</li>
+        </ul>
+        <a href="mailto:programs@mirajoco.org?subject=Her Vitality — Legacy Sponsorship" class="sponsor-btn">Become a Sponsor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="leadership-section" data-aos="fade-up">
+  <div class="leadership-inner">
+    <div class="section-eyebrow" style="text-align:center;color:var(--hv-rose)">Program Leadership</div>
+    <h2 class="section-title">Meet Your Facilitators</h2>
+    <div class="leadership-grid">
+      <div class="leader-card">
+        <div class="leader-avatar">MJ</div>
+        <div class="leader-name">Miranda Johnson</div>
+        <div class="leader-role">CEO, MiRAjO Collective</div>
+        <p class="leader-desc">Nearly two decades of entrepreneurship, leadership development, and building programs that help women move beyond the noise and into their power.</p>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">RB</div>
+        <div class="leader-name">Roberto Borrero</div>
+        <div class="leader-role">CEO, Tampa Business Club</div>
+        <p class="leader-desc">Founder of Tampa Bay's #1 networking group, connecting thousands of professionals through events, expos, and community-driven initiatives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-logos">
+    <img src="img/TampaBusinessClub_Logo_Gray.png" alt="Tampa Business Club">
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO Collective">
+  </div>
+  <p class="footer-tagline">A Tampa Business Club × MiRAjO Collective Partnership · Sponsored by Florida Blue</p>
+  <div class="footer-bottom">&copy; 2026 Tampa Business Club &amp; MiRAjO Collective. All rights reserved.</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init({ duration: 800, easing: 'ease-in-out', once: true });</script>
+</body>
+</html>
