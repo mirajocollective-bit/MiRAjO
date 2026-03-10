@@ -1,4 +1,6 @@
 {
+  "buildCommand": null,
+  "outputDirectory": ".",
   "redirects": [
     { "source": "/blog/the-leadership-time-trap-are-you-stuck-in-a-loop",             "destination": "https://www.directory.mirajoco.org/blog/the-leadership-time-trap-are-you-stuck-in-a-loop",             "permanent": true },
     { "source": "/blog/3-levels-of-life-can-you-pass-the-test",                       "destination": "https://www.directory.mirajoco.org/blog/3-levels-of-life-can-you-pass-the-test",                       "permanent": true },
