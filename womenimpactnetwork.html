@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Her Vitality — Tampa Business Club × MiRAjO Collective</title>
+  <title>Women Impact Network — Tampa Business Club × MiRAjO</title>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
@@ -14,16 +14,15 @@
       --tbc-pale: #EEF2F8;
       --tbc-gold: #C9A84C;
       --tbc-gold-light: #E8C97A;
-      --hv-rose: #C4687A;
-      --hv-rose-light: #E8A0AE;
-      --hv-rose-pale: #FBF0F2;
-      --hv-teal: #3A7D7B;
-      --hv-teal-light: #6AADAB;
-      --warm-white: #FBF8F5;
-      --text-dark: #1B2A4A;
-      --text-mid: #3A4A6A;
-      --text-muted: #6A7A9A;
-      --border: rgba(27,42,74,0.1);
+      --win-red: #CC1212;
+      --win-red-light: #E84444;
+      --win-red-pale: #FFF2F2;
+      --win-charcoal: #2D2D2D;
+      --warm-white: #F9F9F9;
+      --text-dark: #2D2D2D;
+      --text-mid: #444444;
+      --text-muted: #777777;
+      --border: rgba(45,45,45,0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,7 +43,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 2px solid rgba(196,104,122,0.35);
+      border-bottom: 2px solid rgba(204,18,18,0.35);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -63,7 +62,7 @@
     .nav-cta {
       display: inline-block;
       padding: 10px 24px;
-      background: var(--hv-rose);
+      background: var(--win-red);
       color: #fff;
       border-radius: 6px;
       font-size: 13px;
@@ -72,11 +71,11 @@
       letter-spacing: 0.5px;
       transition: background 0.2s;
     }
-    .nav-cta:hover { background: var(--hv-rose-light); }
+    .nav-cta:hover { background: var(--win-red-light); }
 
     /* ═══ HERO ═══ */
     .hero {
-      background: linear-gradient(135deg, var(--tbc-navy) 0%, #2D1A2E 60%, #3A1A2A 100%);
+      background: linear-gradient(135deg, #1B1B1B 0%, #2D2D2D 60%, #1B2A4A 100%);
       padding: 100px 40px;
       text-align: center;
       position: relative;
@@ -86,21 +85,21 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(196,104,122,0.15) 0%, transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(204,18,18,0.15) 0%, transparent 70%);
       pointer-events: none;
     }
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(196,104,122,0.15);
-      border: 1px solid rgba(196,104,122,0.3);
+      background: rgba(204,18,18,0.15);
+      border: 1px solid rgba(204,18,18,0.3);
       border-radius: 20px;
       padding: 6px 16px;
       font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--hv-rose-light);
+      color: var(--win-red-light);
       font-weight: 600;
       margin-bottom: 28px;
     }
@@ -115,7 +114,7 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .hero-title em { color: var(--hv-rose-light); font-style: italic; }
+    .hero-title em { color: var(--win-red-light); font-style: italic; }
     .hero-subtitle {
       font-family: 'Instrument Serif', serif;
       font-size: clamp(18px, 2vw, 24px);
@@ -143,7 +142,7 @@
       font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--hv-rose-light);
+      color: var(--win-red-light);
       font-weight: 600;
       margin-bottom: 4px;
     }
@@ -157,7 +156,7 @@
     .btn-primary {
       display: inline-block;
       padding: 18px 48px;
-      background: var(--hv-rose);
+      background: var(--win-red);
       color: #fff;
       border-radius: 10px;
       font-size: 15px;
@@ -165,9 +164,9 @@
       letter-spacing: 0.5px;
       text-decoration: none;
       transition: transform 0.2s, box-shadow 0.3s;
-      box-shadow: 0 8px 32px rgba(196,104,122,0.4);
+      box-shadow: 0 8px 32px rgba(204,18,18,0.4);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(196,104,122,0.5); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(204,18,18,0.5); }
     .btn-secondary {
       display: inline-block;
       padding: 16px 40px;
@@ -185,8 +184,8 @@
 
     /* ═══ SPONSOR BANNER ═══ */
     .sponsor-banner {
-      background: var(--hv-rose-pale);
-      border-bottom: 1px solid rgba(196,104,122,0.15);
+      background: var(--win-red-pale);
+      border-bottom: 1px solid rgba(204,18,18,0.15);
       padding: 20px 40px;
       text-align: center;
     }
@@ -201,7 +200,7 @@
       font-size: 12px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--hv-rose);
+      color: var(--win-red);
       font-weight: 600;
     }
     .sponsor-banner-name {
@@ -218,7 +217,7 @@
       font-size: 11px;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--hv-rose);
+      color: var(--win-red);
       font-weight: 600;
       margin-bottom: 16px;
     }
@@ -239,30 +238,30 @@
     .section-body p:last-child { margin-bottom: 0; }
     .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .about-stat {
-      background: var(--hv-rose-pale);
+      background: var(--win-red-pale);
       border-radius: 16px;
       padding: 32px 24px;
       text-align: center;
-      border: 1px solid rgba(196,104,122,0.15);
+      border: 1px solid rgba(204,18,18,0.15);
     }
     .about-stat-number {
       font-family: 'Instrument Serif', serif;
       font-size: 48px;
-      color: var(--hv-rose);
+      color: var(--win-red);
       line-height: 1;
       margin-bottom: 8px;
     }
     .about-stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
 
     /* ═══ MODULES ═══ */
-    .modules-section { padding: 100px 40px; background: var(--hv-rose-pale); }
+    .modules-section { padding: 100px 40px; background: var(--win-red-pale); }
     .modules-inner { max-width: 1100px; margin: 0 auto; }
     .modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
     .module-card {
       background: #fff;
       border-radius: 20px;
       padding: 40px 32px;
-      border: 1px solid rgba(196,104,122,0.12);
+      border: 1px solid rgba(204,18,18,0.12);
       transition: transform 0.2s, box-shadow 0.2s;
       position: relative;
       overflow: hidden;
@@ -272,14 +271,14 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--hv-rose), var(--hv-rose-light));
+      background: linear-gradient(90deg, var(--win-red), var(--win-red-light));
     }
-    .module-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(196,104,122,0.1); }
+    .module-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(204,18,18,0.1); }
     .module-num {
       font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--hv-rose);
+      color: var(--win-red);
       font-weight: 600;
       margin-bottom: 12px;
     }
@@ -299,7 +298,7 @@
       padding: 6px 0;
       padding-left: 16px;
       position: relative;
-      border-bottom: 1px solid rgba(196,104,122,0.08);
+      border-bottom: 1px solid rgba(204,18,18,0.08);
       line-height: 1.5;
     }
     .module-list li:last-child { border-bottom: none; }
@@ -307,7 +306,7 @@
       content: '◆';
       position: absolute;
       left: 0;
-      color: var(--hv-rose);
+      color: var(--win-red);
       font-size: 5px;
       top: 10px;
     }
@@ -329,32 +328,32 @@
     .pricing-section { padding: 100px 40px; background: #fff; text-align: center; }
     .pricing-card {
       background: var(--warm-white);
-      border: 1px solid rgba(196,104,122,0.2);
+      border: 1px solid rgba(204,18,18,0.2);
       border-radius: 24px;
       padding: 56px 48px;
       max-width: 580px;
       margin: 56px auto 0;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 8px 48px rgba(196,104,122,0.08);
+      box-shadow: 0 8px 48px rgba(204,18,18,0.08);
     }
     .pricing-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--hv-rose), var(--hv-rose-light));
+      background: linear-gradient(90deg, var(--win-red), var(--win-red-light));
     }
     .pricing-sponsor {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(196,104,122,0.08);
-      border: 1px solid rgba(196,104,122,0.2);
+      background: rgba(204,18,18,0.08);
+      border: 1px solid rgba(204,18,18,0.2);
       border-radius: 20px;
       padding: 6px 16px;
       font-size: 12px;
-      color: var(--hv-rose);
+      color: var(--win-red);
       font-weight: 600;
       margin-bottom: 28px;
     }
@@ -376,12 +375,12 @@
       border-bottom: 1px solid var(--border);
     }
     .pricing-list li:last-child { border-bottom: none; }
-    .pricing-list li::before { content: '✓'; position: absolute; left: 0; color: var(--hv-rose); font-weight: 700; }
+    .pricing-list li::before { content: '✓'; position: absolute; left: 0; color: var(--win-red); font-weight: 700; }
     .pricing-btn {
       display: block;
       width: 100%;
       padding: 20px;
-      background: var(--hv-rose);
+      background: var(--win-red);
       color: #fff;
       border-radius: 12px;
       font-size: 16px;
@@ -390,30 +389,30 @@
       text-decoration: none;
       text-align: center;
       transition: background 0.3s, transform 0.2s;
-      box-shadow: 0 8px 32px rgba(196,104,122,0.3);
+      box-shadow: 0 8px 32px rgba(204,18,18,0.3);
     }
-    .pricing-btn:hover { background: var(--hv-rose-light); transform: translateY(-2px); }
+    .pricing-btn:hover { background: var(--win-red-light); transform: translateY(-2px); }
 
     /* ═══ SPONSORS ═══ */
-    .sponsors-section { padding: 100px 40px; background: var(--hv-rose-pale); }
+    .sponsors-section { padding: 100px 40px; background: var(--win-red-pale); }
     .sponsors-inner { max-width: 1100px; margin: 0 auto; }
     .sponsors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
     .sponsor-tier {
       background: #fff;
-      border: 1px solid rgba(196,104,122,0.15);
+      border: 1px solid rgba(204,18,18,0.15);
       border-radius: 20px;
       padding: 40px 32px;
       text-align: center;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(196,104,122,0.06);
+      box-shadow: 0 4px 24px rgba(204,18,18,0.06);
     }
-    .sponsor-tier.featured { border-color: var(--hv-rose); }
+    .sponsor-tier.featured { border-color: var(--win-red); }
     .sponsor-tier.featured::before {
       content: 'Presenting Sponsor';
       position: absolute;
       top: 0; left: 0; right: 0;
-      background: var(--hv-rose);
+      background: var(--win-red);
       color: #fff;
       font-size: 11px;
       font-weight: 700;
@@ -425,7 +424,7 @@
     .sponsor-tier-name {
       font-family: 'Instrument Serif', serif;
       font-size: 28px;
-      color: var(--hv-rose);
+      color: var(--win-red);
       font-weight: 400;
       margin-bottom: 8px;
       margin-top: 16px;
@@ -446,18 +445,18 @@
       padding: 8px 0;
       padding-left: 18px;
       position: relative;
-      border-bottom: 1px solid rgba(196,104,122,0.08);
+      border-bottom: 1px solid rgba(204,18,18,0.08);
       line-height: 1.5;
     }
     .sponsor-list li:last-child { border-bottom: none; }
-    .sponsor-list li::before { content: '◆'; position: absolute; left: 0; color: var(--hv-rose); font-size: 6px; top: 12px; }
+    .sponsor-list li::before { content: '◆'; position: absolute; left: 0; color: var(--win-red); font-size: 6px; top: 12px; }
     .sponsor-btn {
       display: block;
       width: 100%;
       padding: 12px;
-      background: rgba(196,104,122,0.08);
-      color: var(--hv-rose);
-      border: 1px solid rgba(196,104,122,0.2);
+      background: rgba(204,18,18,0.08);
+      color: var(--win-red);
+      border: 1px solid rgba(204,18,18,0.2);
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
@@ -465,23 +464,23 @@
       text-align: center;
       transition: all 0.2s;
     }
-    .sponsor-btn:hover { background: var(--hv-rose); color: #fff; }
-    .sponsor-tier.featured .sponsor-btn { background: var(--hv-rose); color: #fff; border-color: var(--hv-rose); }
+    .sponsor-btn:hover { background: var(--win-red); color: #fff; }
+    .sponsor-tier.featured .sponsor-btn { background: var(--win-red); color: #fff; border-color: var(--win-red); }
 
     /* ═══ LEADERSHIP ═══ */
     .leadership-section { padding: 100px 40px; background: #fff; }
     .leadership-inner { max-width: 900px; margin: 0 auto; text-align: center; }
     .leadership-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 56px; }
     .leader-card {
-      background: var(--hv-rose-pale);
+      background: var(--win-red-pale);
       border-radius: 16px;
       padding: 40px 32px;
-      border: 1px solid rgba(196,104,122,0.12);
+      border: 1px solid rgba(204,18,18,0.12);
     }
     .leader-avatar {
       width: 80px; height: 80px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--hv-rose), var(--tbc-navy));
+      background: linear-gradient(135deg, var(--win-red), var(--tbc-navy));
       margin: 0 auto 20px;
       display: flex;
       align-items: center;
@@ -491,11 +490,11 @@
       color: #fff;
     }
     .leader-name { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--tbc-navy); font-weight: 400; margin-bottom: 6px; }
-    .leader-role { font-size: 13px; color: var(--hv-rose); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .leader-role { font-size: 13px; color: var(--win-red); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 16px; }
     .leader-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
 
     /* ═══ FOOTER ═══ */
-    .site-footer { background: var(--tbc-navy); padding: 48px 40px 24px; border-top: 1px solid rgba(196,104,122,0.15); }
+    .site-footer { background: var(--tbc-navy); padding: 48px 40px 24px; border-top: 1px solid rgba(204,18,18,0.15); }
     .footer-logos { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 24px; }
     .footer-logos img { height: 48px; width: auto; opacity: 0.8; }
     .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 24px; }
@@ -530,6 +529,8 @@
 <nav class="site-nav">
   <div class="nav-logos">
     <img src="img/TampaBusinessClub_Logo_Gray.png" alt="Tampa Business Club">
+    <div class="nav-divider"></div>
+    <img src="img/WIN logo.png" alt="Women Impact Network" style="height:48px;">
     <div class="nav-divider"></div>
     <span class="nav-powered">Powered by <span>MiRAjO</span></span>
   </div>
@@ -682,7 +683,7 @@
 <!-- CASE STUDIES -->
 <section class="case-section" data-aos="fade-up">
   <div class="case-inner">
-    <div class="section-eyebrow" style="color:var(--hv-rose-light);text-align:center">Case Studies</div>
+    <div class="section-eyebrow" style="color:var(--win-red-light);text-align:center">Case Studies</div>
     <h2 class="section-title" style="color:#fff;text-align:center">Research that makes it real.</h2>
     <p class="case-body">"Each participant conducts original research examining how mental, physical, financial, and life-balance health have affected the career longevity of women leaders historically — then presents their findings to the group."</p>
   </div>
@@ -690,7 +691,7 @@
 
 <!-- PRICING -->
 <section class="pricing-section" id="register" data-aos="fade-up">
-  <div class="section-eyebrow" style="color:var(--hv-rose)">Investment</div>
+  <div class="section-eyebrow" style="color:var(--win-red)">Investment</div>
   <h2 class="section-title">Ready to Reclaim Your Vitality?</h2>
   <div class="pricing-card">
     <div class="pricing-sponsor">Sponsored by Florida Blue</div>
@@ -760,7 +761,7 @@
 <!-- LEADERSHIP -->
 <section class="leadership-section" data-aos="fade-up">
   <div class="leadership-inner">
-    <div class="section-eyebrow" style="text-align:center;color:var(--hv-rose)">Program Leadership</div>
+    <div class="section-eyebrow" style="text-align:center;color:var(--win-red)">Program Leadership</div>
     <h2 class="section-title">Meet Your Facilitators</h2>
     <div class="leadership-grid">
       <div class="leader-card">
