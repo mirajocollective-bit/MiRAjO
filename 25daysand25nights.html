@@ -908,15 +908,15 @@
 <!-- ═══ WAITLIST ═══ -->
 <section class="waitlist-section" id="waitlist">
   <div class="waitlist-inner">
-    <div class="section-eyebrow" style="color:var(--p-silver)">Be First In</div>
-    <h2 class="section-title" style="color:var(--warm-parchment)">Join the Waitlist</h2>
-    <p class="waitlist-sub">Get notified the moment the next enrollment opens. No spam. Just the signal.</p>
-    <form class="waitlist-form" id="waitlist-form">
-      <input type="text" name="first_name" placeholder="First name" class="waitlist-input">
+    <div class="section-eyebrow" style="color:var(--p-silver)">Enrollment is Open</div>
+    <h2 class="section-title" style="color:var(--warm-parchment)">Ready to Begin?</h2>
+    <p class="waitlist-sub">Enter your email and get instant access. Secure checkout — you'll receive your login link immediately after payment.</p>
+    <form class="waitlist-form" id="checkout-form">
       <input type="email" name="email" placeholder="Your email address" class="waitlist-input" required>
-      <button type="submit" class="waitlist-btn">Notify Me</button>
+      <button type="submit" class="waitlist-btn">Get Instant Access</button>
     </form>
     <p class="waitlist-msg" id="waitlist-msg"></p>
+    <p style="margin-top:16px;font-size:12px;color:rgba(200,196,220,0.45);text-align:center;">🔒 Secure checkout via Stripe &middot; Instant access upon payment</p>
   </div>
 </section>
 
@@ -1013,35 +1013,35 @@
 <script>
   AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
 
-  // Waitlist form
-  document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+  // Checkout form
+  document.getElementById('checkout-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = this.querySelector('.waitlist-btn');
     const msg = document.getElementById('waitlist-msg');
     const email = this.email.value;
-    const first_name = this.first_name.value;
-    btn.textContent = 'Joining...';
+    btn.textContent = 'Redirecting...';
     btn.disabled = true;
     try {
-      const res = await fetch('/api/waitlist', {
+      const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, first_name })
+        body: JSON.stringify({ email })
       });
-      if (res.ok) {
-        msg.textContent = "You're on the list. We'll be in touch.";
-        msg.style.color = '#A8C5A0';
-        this.reset();
+      const data = await res.json();
+      if (res.ok && data.url) {
+        window.location.href = data.url;
       } else {
         msg.textContent = "Something went wrong. Please try again.";
         msg.style.color = '#E88080';
+        btn.textContent = 'Get Instant Access';
+        btn.disabled = false;
       }
     } catch {
       msg.textContent = "Something went wrong. Please try again.";
       msg.style.color = '#E88080';
+      btn.textContent = 'Get Instant Access';
+      btn.disabled = false;
     }
-    btn.textContent = 'Notify Me';
-    btn.disabled = false;
   });
 
   // FAQ accordion
