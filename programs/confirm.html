@@ -92,17 +92,31 @@
   );
 
   async function handleConfirm() {
-    const hash = window.location.hash;
-    const params = new URLSearchParams(hash.replace('#', '?'));
-    const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token');
-    const errorDesc = params.get('error_description');
+    // Check for errors in hash or query string
+    const hashParams = new URLSearchParams(window.location.hash.replace('#', '?'));
+    const queryParams = new URLSearchParams(window.location.search);
 
+    const errorDesc = hashParams.get('error_description') || queryParams.get('error_description');
     if (errorDesc) {
       showError(decodeURIComponent(errorDesc.replace(/\+/g, ' ')));
       return;
     }
 
+    // PKCE flow: ?code= in query string (Supabase JS v2 default)
+    const code = queryParams.get('code');
+    if (code) {
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      if (error) {
+        showError('Your link has expired. Please request a new one.');
+        return;
+      }
+      window.location.href = '/programs/dashboard';
+      return;
+    }
+
+    // Legacy implicit flow: #access_token in hash
+    const accessToken = hashParams.get('access_token');
+    const refreshToken = hashParams.get('refresh_token');
     if (accessToken && refreshToken) {
       const { error } = await supabase.auth.setSession({
         access_token: accessToken,
@@ -116,8 +130,8 @@
       return;
     }
 
-    // Try getSession fallback
-    const { data: { session }, error } = await supabase.auth.getSession();
+    // Fallback: already have a session
+    const { data: { session } } = await supabase.auth.getSession();
     if (session) {
       window.location.href = '/programs/dashboard';
     } else {
