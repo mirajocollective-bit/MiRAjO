@@ -86,12 +86,12 @@
 <script src="/api/config"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabase = window.supabase.createClient(
-    window.SUPABASE_URL,
-    window.SUPABASE_ANON_KEY
-  );
-
   async function handleConfirm() {
+    try {
+    const supabase = window.supabase.createClient(
+      window.SUPABASE_URL,
+      window.SUPABASE_ANON_KEY
+    );
     // Check for errors in hash or query string
     const hashParams = new URLSearchParams(window.location.hash.replace('#', '?'));
     const queryParams = new URLSearchParams(window.location.search);
@@ -137,6 +137,9 @@
     } else {
       showError('Your link has expired or is invalid. Please request a new one.');
     }
+    } catch (err) {
+      showError('Something went wrong: ' + err.message);
+    }
   }
 
   function showError(msg) {
@@ -148,7 +151,13 @@
     document.getElementById('confirm-link').style.display = 'inline-block';
   }
 
-  handleConfirm();
+  handleConfirm().catch(err => {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('confirm-title').textContent = 'Something went wrong';
+    document.getElementById('confirm-error').textContent = err.message;
+    document.getElementById('confirm-error').style.display = 'block';
+    document.getElementById('confirm-link').style.display = 'inline-block';
+  });
 </script>
 
 </body>
