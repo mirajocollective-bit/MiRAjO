@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course — MiRAjO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --p-deep: #3D2B72;
+      --p-mid: #5A3F9A;
+      --p-light: #8B72C8;
+      --p-dark: #1A1228;
+      --p-silver: #C8C4DC;
+      --p-pale: #EDE8F8;
+      --warm-parchment: #EDE8DF;
+      --soft-white: #F7F4EF;
+      --text-body: #2A2A3A;
+      --text-muted: #7A7A9A;
+      --border: rgba(90,63,154,0.12);
+      --sidebar-w: 300px;
+      --xp-gold: #F5C842;
+      --xp-gold-light: #FDE98A;
+      --success: #4CAF7D;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--soft-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ═══ TOP NAV ═══ */
+    .top-nav {
+      background: var(--p-dark);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      border-bottom: 1px solid rgba(139,114,200,0.15);
+    }
+    .top-nav-left { display: flex; align-items: center; gap: 16px; }
+    .nav-back {
+      color: var(--p-silver);
+      font-size: 13px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: #fff; }
+    .nav-course-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      max-width: 300px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .top-nav-right { display: flex; align-items: center; gap: 20px; }
+
+    /* ═══ XP BADGE ═══ */
+    .xp-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,200,66,0.12);
+      border: 1px solid rgba(245,200,66,0.25);
+      border-radius: 20px;
+      padding: 5px 12px;
+    }
+    .xp-icon { font-size: 14px; }
+    .xp-value { font-size: 13px; font-weight: 700; color: var(--xp-gold); }
+    .xp-label { font-size: 11px; color: rgba(245,200,66,0.6); }
+
+    /* ═══ STREAK BADGE ═══ */
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,120,50,0.1);
+      border: 1px solid rgba(255,120,50,0.2);
+      border-radius: 20px;
+      padding: 5px 12px;
+    }
+    .streak-value { font-size: 13px; font-weight: 700; color: #FF7832; }
+    .streak-label { font-size: 11px; color: rgba(255,120,50,0.6); }
+
+    /* ═══ LAYOUT ═══ */
+    .layout {
+      display: flex;
+      padding-top: 60px;
+      min-height: 100vh;
+    }
+
+    /* ═══ SIDEBAR ═══ */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--p-dark);
+      border-right: 1px solid rgba(139,114,200,0.12);
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(139,114,200,0.3); border-radius: 2px; }
+
+    /* Progress ring in sidebar */
+    .sidebar-progress {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(139,114,200,0.1);
+      text-align: center;
+    }
+    .progress-ring-wrap {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 12px;
+    }
+    .progress-ring { transform: rotate(-90deg); }
+    .progress-ring-bg { fill: none; stroke: rgba(139,114,200,0.15); stroke-width: 6; }
+    .progress-ring-fill {
+      fill: none;
+      stroke: url(#ringGrad);
+      stroke-width: 6;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.6s ease;
+    }
+    .progress-ring-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress-pct { font-size: 18px; font-weight: 700; color: #fff; line-height: 1; }
+    .progress-done-label { font-size: 9px; color: var(--p-silver); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+    .sidebar-course-name {
+      font-size: 13px;
+      color: var(--p-silver);
+      font-weight: 500;
+    }
+
+    /* Day counter for 25D25N */
+    .day-counter {
+      margin: 0 20px 0;
+      padding: 12px 16px;
+      background: rgba(139,114,200,0.08);
+      border-radius: 10px;
+      border: 1px solid rgba(139,114,200,0.15);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .day-counter-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--p-light);
+      line-height: 1;
+    }
+    .day-counter-label { font-size: 10px; color: var(--p-silver); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* Module list */
+    .module-list { padding: 8px 0 80px; }
+    .module-group { }
+    .module-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(139,114,200,0.06);
+      transition: background 0.15s;
+    }
+    .module-header:hover { background: rgba(139,114,200,0.06); }
+    .module-badge {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(139,114,200,0.12);
+      border: 1px solid rgba(139,114,200,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--p-light);
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    .module-badge.complete {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+    .module-info { flex: 1; min-width: 0; }
+    .module-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .module-meta { font-size: 11px; color: var(--p-silver); margin-top: 2px; }
+    .module-chevron {
+      color: var(--p-silver);
+      font-size: 10px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .module-group.open .module-chevron { transform: rotate(90deg); }
+
+    .lesson-list { display: none; }
+    .module-group.open .lesson-list { display: block; }
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px 10px 32px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(139,114,200,0.04);
+      transition: background 0.15s;
+    }
+    .lesson-item:hover { background: rgba(139,114,200,0.06); }
+    .lesson-item.active { background: rgba(139,114,200,0.12); border-left: 2px solid var(--p-light); }
+    .lesson-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(139,114,200,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 9px;
+      color: transparent;
+      transition: all 0.3s;
+    }
+    .lesson-check.done {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+    .lesson-title {
+      font-size: 12px;
+      color: var(--p-silver);
+      line-height: 1.4;
+      flex: 1;
+    }
+    .lesson-item.active .lesson-title { color: #fff; font-weight: 600; }
+    .lesson-xp {
+      font-size: 10px;
+      color: var(--xp-gold);
+      font-weight: 600;
+      opacity: 0.7;
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* Video */
+    .video-wrap {
+      background: #000;
+      width: 100%;
+      aspect-ratio: 16/9;
+      max-height: 60vh;
+      position: relative;
+    }
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--p-dark), #2D1F50);
+      color: var(--p-silver);
+    }
+    .video-placeholder-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
+    .video-placeholder-text { font-size: 14px; opacity: 0.5; }
+
+    /* Lesson body */
+    .lesson-body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 40px 120px;
+    }
+    .lesson-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .lesson-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 400;
+      color: var(--text-body);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .lesson-content {
+      font-size: 16px;
+      color: #4A4A6A;
+      line-height: 1.9;
+    }
+    .lesson-content p { margin-bottom: 20px; }
+    .lesson-content h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--text-body);
+      margin: 32px 0 12px;
+    }
+    .lesson-content ul, .lesson-content ol {
+      padding-left: 24px;
+      margin-bottom: 20px;
+    }
+    .lesson-content li { margin-bottom: 8px; }
+    .lesson-content blockquote {
+      border-left: 3px solid var(--p-light);
+      padding: 16px 24px;
+      background: var(--p-pale);
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      font-style: italic;
+      color: var(--p-deep);
+    }
+
+    /* Complete button */
+    .lesson-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .btn-complete {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--p-mid), var(--p-light));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(90,63,154,0.3);
+    }
+    .btn-complete:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(90,63,154,0.4); }
+    .btn-complete.done {
+      background: linear-gradient(135deg, var(--success), #3DA86A);
+      box-shadow: 0 6px 24px rgba(76,175,125,0.3);
+    }
+    .btn-complete:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .btn-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { border-color: var(--p-light); color: var(--p-deep); }
+    .btn-nav-next {
+      background: var(--p-pale);
+      border-color: var(--border);
+      color: var(--p-deep);
+    }
+    .btn-nav-next:hover { background: var(--p-mid); color: #fff; border-color: var(--p-mid); }
+
+    /* ═══ XP TOAST ═══ */
+    .xp-toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: var(--p-dark);
+      border: 1px solid rgba(245,200,66,0.3);
+      border-radius: 16px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 500;
+      pointer-events: none;
+    }
+    .xp-toast.show { transform: translateY(0); opacity: 1; }
+    .xp-toast-icon { font-size: 28px; }
+    .xp-toast-title { font-size: 14px; font-weight: 700; color: var(--xp-gold); }
+    .xp-toast-sub { font-size: 12px; color: var(--p-silver); }
+
+    /* ═══ CONFETTI ═══ */
+    .confetti-container {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 999;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      top: -10px;
+      border-radius: 2px;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ═══ LOADING ═══ */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+    .loading-spinner {
+      width: 36px; height: 36px;
+      border: 3px solid rgba(139,114,200,0.15);
+      border-top-color: var(--p-light);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ═══ MOBILE ═══ */
+    .sidebar-toggle {
+      display: none;
+      background: rgba(139,114,200,0.15);
+      border: none;
+      color: var(--p-silver);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    @media (max-width: 768px) {
+      :root { --sidebar-w: 280px; }
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .sidebar-toggle { display: block; }
+      .lesson-body { padding: 32px 20px 100px; }
+      .nav-course-title { display: none; }
+      .lesson-footer { flex-direction: column; align-items: stretch; }
+      .btn-complete, .btn-nav { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CONFETTI CONTAINER -->
+<div class="confetti-container" id="confetti-container"></div>
+
+<!-- XP TOAST -->
+<div class="xp-toast" id="xp-toast">
+  <div class="xp-toast-icon">⚡</div>
+  <div>
+    <div class="xp-toast-title" id="xp-toast-title">+50 XP Earned!</div>
+    <div class="xp-toast-sub" id="xp-toast-sub">Lesson complete. Keep going!</div>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="top-nav-left">
+    <button class="sidebar-toggle" id="sidebar-toggle">☰ Lessons</button>
+    <a href="/programs/dashboard" class="nav-back">← Dashboard</a>
+    <span style="color:rgba(139,114,200,0.3)">|</span>
+    <span class="nav-course-title" id="nav-course-title">Loading...</span>
+  </div>
+  <div class="top-nav-right">
+    <div class="streak-badge">
+      <span>🔥</span>
+      <span class="streak-value" id="streak-value">0</span>
+      <span class="streak-label">day streak</span>
+    </div>
+    <div class="xp-badge">
+      <span class="xp-icon">⚡</span>
+      <span class="xp-value" id="total-xp">0</span>
+      <span class="xp-label">XP</span>
+    </div>
+  </div>
+</nav>
+
+<!-- SVG GRADIENT FOR RING -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5A3F9A"/>
+      <stop offset="100%" stop-color="#8B72C8"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-progress">
+      <div class="progress-ring-wrap">
+        <svg class="progress-ring" width="80" height="80" viewBox="0 0 80 80">
+          <circle class="progress-ring-bg" cx="40" cy="40" r="34"/>
+          <circle class="progress-ring-fill" id="ring-fill" cx="40" cy="40" r="34"
+            stroke-dasharray="213.6"
+            stroke-dashoffset="213.6"/>
+        </svg>
+        <div class="progress-ring-text">
+          <span class="progress-pct" id="progress-pct">0%</span>
+          <span class="progress-done-label">done</span>
+        </div>
+      </div>
+      <div class="sidebar-course-name" id="sidebar-course-name">Loading...</div>
+    </div>
+
+    <div class="day-counter" id="day-counter" style="display:none">
+      <div class="day-counter-num" id="day-counter-num">Day 1</div>
+      <div class="day-counter-label">of 25</div>
+    </div>
+
+    <div class="module-list" id="module-list">
+      <div class="loading"><div class="loading-spinner"></div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+    <div class="video-wrap" id="video-wrap">
+      <div class="video-placeholder">
+        <div class="video-placeholder-icon">▶</div>
+        <div class="video-placeholder-text">Select a lesson to begin</div>
+      </div>
+    </div>
+
+    <div class="lesson-body" id="lesson-body">
+      <div class="loading"><div class="loading-spinner"></div></div>
+    </div>
+  </main>
+
+</div>
+
+<script src="/api/config"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+  // Get course slug from URL: /programs/course/slug
+  const slug = window.location.pathname.split('/').pop();
+
+  let state = {
+    user: null,
+    course: null,
+    modules: [],
+    lessons: {},      // moduleId → [lessons]
+    allLessons: [],
+    completed: new Set(),
+    currentLesson: null,
+    xp: 0,
+    streak: 0,
+  };
+
+  // ═══ INIT ═══
+  async function init() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { window.location.href = '/programs/login'; return; }
+    state.user = session.user;
+
+    // Load course
+    const { data: course } = await supabase
+      .from('courses')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+
+    if (!course) { window.location.href = '/programs/dashboard'; return; }
+    state.course = course;
+
+    // Check enrollment
+    const { data: enrollment } = await supabase
+      .from('enrollments')
+      .select('id')
+      .eq('user_id', state.user.id)
+      .eq('course_id', course.id)
+      .single();
+
+    if (!enrollment) { window.location.href = '/programs/dashboard'; return; }
+
+    document.getElementById('nav-course-title').textContent = course.title;
+    document.getElementById('sidebar-course-name').textContent = course.title;
+
+    // Load modules and lessons
+    const { data: modules } = await supabase
+      .from('modules')
+      .select('*')
+      .eq('course_id', course.id)
+      .order('position');
+
+    state.modules = modules || [];
+
+    for (const mod of state.modules) {
+      const { data: lessons } = await supabase
+        .from('lessons')
+        .select('*')
+        .eq('module_id', mod.id)
+        .order('position');
+      state.lessons[mod.id] = lessons || [];
+      state.allLessons.push(...(lessons || []));
+    }
+
+    // Load progress
+    if (state.allLessons.length > 0) {
+      const lessonIds = state.allLessons.map(l => l.id);
+      const { data: progress } = await supabase
+        .from('progress')
+        .select('lesson_id')
+        .eq('user_id', state.user.id)
+        .eq('completed', true)
+        .in('lesson_id', lessonIds);
+
+      (progress || []).forEach(p => state.completed.add(p.lesson_id));
+    }
+
+    // XP = 50 per completed lesson
+    state.xp = state.completed.size * 50;
+    updateXP();
+    loadStreak();
+    renderSidebar();
+    updateProgress();
+
+    // Show day counter for 25D25N
+    if (slug === '25-days-and-25-nights') {
+      const dayEl = document.getElementById('day-counter');
+      const dayNum = document.getElementById('day-counter-num');
+      const day = Math.min(state.completed.size + 1, 25);
+      dayNum.textContent = `Day ${day}`;
+      dayEl.style.display = 'block';
+    }
+
+    // Auto-open first incomplete lesson
+    const firstIncomplete = state.allLessons.find(l => !state.completed.has(l.id));
+    const firstLesson = firstIncomplete || state.allLessons[0];
+    if (firstLesson) loadLesson(firstLesson.id);
+  }
+
+  // ═══ RENDER SIDEBAR ═══
+  function renderSidebar() {
+    const list = document.getElementById('module-list');
+    if (state.modules.length === 0) {
+      list.innerHTML = '<div style="padding:24px 20px;color:rgba(200,196,220,0.4);font-size:13px;">No lessons added yet.</div>';
+      return;
+    }
+
+    list.innerHTML = state.modules.map((mod, i) => {
+      const lessons = state.lessons[mod.id] || [];
+      const completedCount = lessons.filter(l => state.completed.has(l.id)).length;
+      const isComplete = lessons.length > 0 && completedCount === lessons.length;
+      const isOpen = i === 0;
+
+      return `
+        <div class="module-group ${isOpen ? 'open' : ''}" data-module="${mod.id}">
+          <div class="module-header" onclick="toggleModule('${mod.id}')">
+            <div class="module-badge ${isComplete ? 'complete' : ''}">${isComplete ? '✓' : i + 1}</div>
+            <div class="module-info">
+              <div class="module-name">${mod.title}</div>
+              <div class="module-meta">${completedCount}/${lessons.length} lessons</div>
+            </div>
+            <span class="module-chevron">▶</span>
+          </div>
+          <div class="lesson-list">
+            ${lessons.map((lesson, j) => `
+              <div class="lesson-item ${state.currentLesson?.id === lesson.id ? 'active' : ''}"
+                   id="lesson-item-${lesson.id}"
+                   onclick="loadLesson('${lesson.id}')">
+                <div class="lesson-check ${state.completed.has(lesson.id) ? 'done' : ''}">
+                  ${state.completed.has(lesson.id) ? '✓' : ''}
+                </div>
+                <div class="lesson-title">${lesson.title}</div>
+                <div class="lesson-xp">+50</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function toggleModule(moduleId) {
+    const group = document.querySelector(`[data-module="${moduleId}"]`);
+    group.classList.toggle('open');
+  }
+
+  // ═══ LOAD LESSON ═══
+  async function loadLesson(lessonId) {
+    const lesson = state.allLessons.find(l => l.id === lessonId);
+    if (!lesson) return;
+    state.currentLesson = lesson;
+
+    // Update active state in sidebar
+    document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+    const item = document.getElementById(`lesson-item-${lessonId}`);
+    if (item) {
+      item.classList.add('active');
+      item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    // Open the parent module
+    const mod = state.modules.find(m => state.lessons[m.id]?.some(l => l.id === lessonId));
+    if (mod) {
+      const group = document.querySelector(`[data-module="${mod.id}"]`);
+      if (group) group.classList.add('open');
+    }
+
+    // Render video
+    const videoWrap = document.getElementById('video-wrap');
+    if (lesson.video_url) {
+      const embedUrl = toEmbedUrl(lesson.video_url);
+      videoWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen allow="autoplay; fullscreen"></iframe>`;
+    } else {
+      videoWrap.innerHTML = `
+        <div class="video-placeholder">
+          <div class="video-placeholder-icon">▶</div>
+          <div class="video-placeholder-text">No video for this lesson</div>
+        </div>`;
+    }
+
+    // Find prev/next
+    const idx = state.allLessons.findIndex(l => l.id === lessonId);
+    const prevLesson = idx > 0 ? state.allLessons[idx - 1] : null;
+    const nextLesson = idx < state.allLessons.length - 1 ? state.allLessons[idx + 1] : null;
+    const isDone = state.completed.has(lessonId);
+
+    // Render body
+    document.getElementById('lesson-body').innerHTML = `
+      <div class="lesson-eyebrow">${mod?.title || ''}</div>
+      <h1 class="lesson-heading">${lesson.title}</h1>
+      <div class="lesson-content">${lesson.content || '<p style="color:var(--text-muted)">Content coming soon.</p>'}</div>
+      <div class="lesson-footer">
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          ${prevLesson ? `<button class="btn-nav" onclick="loadLesson('${prevLesson.id}')">← Previous</button>` : ''}
+          ${nextLesson ? `<button class="btn-nav btn-nav-next" onclick="loadLesson('${nextLesson.id}')">Next Lesson →</button>` : ''}
+        </div>
+        <button class="btn-complete ${isDone ? 'done' : ''}" id="complete-btn"
+          onclick="markComplete('${lessonId}')" ${isDone ? 'disabled' : ''}>
+          ${isDone ? '✓ Completed' : '✦ Mark Complete'}
+        </button>
+      </div>`;
+  }
+
+  // ═══ MARK COMPLETE ═══
+  async function markComplete(lessonId) {
+    if (state.completed.has(lessonId)) return;
+
+    const btn = document.getElementById('complete-btn');
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    const { error } = await supabase
+      .from('progress')
+      .upsert({ user_id: state.user.id, lesson_id: lessonId, completed: true, completed_at: new Date().toISOString() },
+               { onConflict: 'user_id,lesson_id' });
+
+    if (error) {
+      btn.disabled = false;
+      btn.textContent = '✦ Mark Complete';
+      return;
+    }
+
+    state.completed.add(lessonId);
+    state.xp += 50;
+    saveStreak();
+    updateXP();
+    updateProgress();
+    renderSidebar();
+
+    btn.classList.add('done');
+    btn.textContent = '✓ Completed';
+
+    // Update day counter
+    if (slug === '25-days-and-25-nights') {
+      const day = Math.min(state.completed.size + 1, 25);
+      document.getElementById('day-counter-num').textContent = `Day ${day}`;
+    }
+
+    // Toast
+    const isModuleComplete = checkModuleComplete(lessonId);
+    showXPToast(50, isModuleComplete);
+
+    // Confetti on module complete
+    if (isModuleComplete) launchConfetti();
+
+    // Auto-advance after 1.5s
+    const idx = state.allLessons.findIndex(l => l.id === lessonId);
+    const next = state.allLessons[idx + 1];
+    if (next) setTimeout(() => loadLesson(next.id), 1500);
+  }
+
+  function checkModuleComplete(lessonId) {
+    const mod = state.modules.find(m => state.lessons[m.id]?.some(l => l.id === lessonId));
+    if (!mod) return false;
+    return state.lessons[mod.id].every(l => state.completed.has(l.id));
+  }
+
+  // ═══ PROGRESS RING ═══
+  function updateProgress() {
+    if (state.allLessons.length === 0) return;
+    const pct = Math.round((state.completed.size / state.allLessons.length) * 100);
+    const circumference = 213.6;
+    const offset = circumference - (pct / 100) * circumference;
+    document.getElementById('ring-fill').style.strokeDashoffset = offset;
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
+
+  // ═══ XP ═══
+  function updateXP() {
+    document.getElementById('total-xp').textContent = state.xp;
+  }
+
+  // ═══ STREAK ═══
+  function loadStreak() {
+    const key = `streak_${state.user.id}`;
+    const data = JSON.parse(localStorage.getItem(key) || '{"count":0,"lastDate":null}');
+    const today = new Date().toDateString();
+    if (data.lastDate === today) {
+      state.streak = data.count;
+    } else if (data.lastDate === new Date(Date.now() - 86400000).toDateString()) {
+      state.streak = data.count;
+    } else {
+      state.streak = 0;
+    }
+    document.getElementById('streak-value').textContent = state.streak;
+  }
+
+  function saveStreak() {
+    const key = `streak_${state.user.id}`;
+    const today = new Date().toDateString();
+    const data = JSON.parse(localStorage.getItem(key) || '{"count":0,"lastDate":null}');
+    if (data.lastDate !== today) {
+      state.streak = (data.lastDate === new Date(Date.now() - 86400000).toDateString())
+        ? data.count + 1 : 1;
+      localStorage.setItem(key, JSON.stringify({ count: state.streak, lastDate: today }));
+      document.getElementById('streak-value').textContent = state.streak;
+    }
+  }
+
+  // ═══ TOAST ═══
+  function showXPToast(xp, isModuleComplete) {
+    const toast = document.getElementById('xp-toast');
+    const title = document.getElementById('xp-toast-title');
+    const sub = document.getElementById('xp-toast-sub');
+
+    title.textContent = `+${xp} XP Earned!`;
+    sub.textContent = isModuleComplete
+      ? '🏆 Module complete! Badge unlocked!'
+      : getMotivationalMessage();
+
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  function getMotivationalMessage() {
+    const messages = [
+      'Keep going — you\'re building momentum.',
+      'One lesson closer to your transformation.',
+      'Consistency is your superpower.',
+      'There is no Opportunity without Unity.',
+      'Progress over perfection. Always.',
+      'You showed up today. That matters.',
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+  // ═══ CONFETTI ═══
+  function launchConfetti() {
+    const container = document.getElementById('confetti-container');
+    const colors = ['#8B72C8', '#F5C842', '#4CAF7D', '#FF7832', '#C8C4DC', '#5A3F9A'];
+    for (let i = 0; i < 80; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+      piece.style.animationDelay = Math.random() * 0.5 + 's';
+      piece.style.width = (Math.random() * 8 + 4) + 'px';
+      piece.style.height = (Math.random() * 8 + 4) + 'px';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      container.appendChild(piece);
+      setTimeout(() => piece.remove(), 4000);
+    }
+  }
+
+  // ═══ VIDEO URL CONVERTER ═══
+  function toEmbedUrl(url) {
+    // YouTube
+    const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?rel=0&modestbranding=1`;
+    // Vimeo
+    const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+    if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+    // Already embed URL
+    return url;
+  }
+
+  // ═══ MOBILE SIDEBAR ═══
+  document.getElementById('sidebar-toggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+
+  init();
+</script>
+
+</body>
+</html>

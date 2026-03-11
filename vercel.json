@@ -29,7 +29,8 @@
     { "source": "/programs/login",    "destination": "/programs/login.html" },
     { "source": "/programs/confirm",  "destination": "/programs/confirm.html" },
     { "source": "/programs/dashboard",    "destination": "/programs/dashboard.html" },
-    { "source": "/leadnowprogram",         "destination": "/leadnowprogram.html" },
-    { "source": "/womenimpactnetwork",     "destination": "/womenimpactnetwork.html" }
+    { "source": "/leadnowprogram",              "destination": "/leadnowprogram.html" },
+    { "source": "/womenimpactnetwork",         "destination": "/womenimpactnetwork.html" },
+    { "source": "/programs/course/:slug",      "destination": "/programs/course.html" }
   ]
 }
