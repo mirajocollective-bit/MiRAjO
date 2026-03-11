@@ -828,10 +828,19 @@
 
     // Toast
     const isModuleComplete = checkModuleComplete(lessonId);
-    showXPToast(50, isModuleComplete);
+    const isCourseComplete = state.allLessons.every(l => state.completed.has(l.id));
+    showXPToast(50, isModuleComplete, isCourseComplete);
 
-    // Confetti on module complete
-    if (isModuleComplete) launchConfetti();
+    // Confetti on module or course complete
+    if (isModuleComplete || isCourseComplete) launchConfetti();
+
+    // Fire email tags
+    if (isCourseComplete) {
+      triggerEmail('course-25d25n-complete');
+    } else if (isModuleComplete) {
+      const modIdx = state.modules.findIndex(m => state.lessons[m.id]?.some(l => l.id === lessonId));
+      triggerEmail(`module-${modIdx + 1}-complete`);
+    }
 
     // Auto-advance after 1.5s
     const idx = state.allLessons.findIndex(l => l.id === lessonId);
@@ -888,18 +897,32 @@
   }
 
   // ═══ TOAST ═══
-  function showXPToast(xp, isModuleComplete) {
+  function showXPToast(xp, isModuleComplete, isCourseComplete) {
     const toast = document.getElementById('xp-toast');
     const title = document.getElementById('xp-toast-title');
     const sub = document.getElementById('xp-toast-sub');
 
-    title.textContent = `+${xp} XP Earned!`;
-    sub.textContent = isModuleComplete
+    title.textContent = isCourseComplete ? '🎓 Course Complete!' : `+${xp} XP Earned!`;
+    sub.textContent = isCourseComplete
+      ? 'You finished 25 Days & 25 Nights. You showed up. That\'s everything.'
+      : isModuleComplete
       ? '🏆 Module complete! Badge unlocked!'
       : getMotivationalMessage();
 
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  async function triggerEmail(tag) {
+    try {
+      await fetch('/api/trigger-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: state.user.email, tag }),
+      });
+    } catch (e) {
+      console.error('Email trigger failed:', e);
+    }
   }
 
   function getMotivationalMessage() {

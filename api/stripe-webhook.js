@@ -9,6 +9,19 @@ const supabase = createClient(
 
 export const config = { api: { bodyParser: false } };
 
+async function tagSubscriber(email, tag) {
+  const apiSecret = process.env.CONVERTKIT_API_SECRET;
+  const tagsRes = await fetch(`https://api.convertkit.com/v3/tags?api_secret=${apiSecret}`);
+  const tagsData = await tagsRes.json();
+  const tagObj = tagsData.tags?.find(t => t.name === tag);
+  if (!tagObj) return;
+  await fetch(`https://api.convertkit.com/v3/tags/${tagObj.id}/subscribe`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ api_secret: apiSecret, email }),
+  });
+}
+
 async function getRawBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -77,6 +90,9 @@ export default async function handler(req, res) {
       console.error('Enrollment error:', enrollError);
       return res.status(500).json({ error: 'Failed to enroll user' });
     }
+
+    // Tag in Kit → triggers welcome email automation
+    await tagSubscriber(email, 'enrolled-25d25n');
 
     console.log(`Enrolled ${email} in course ${courseSlug}`);
   }
