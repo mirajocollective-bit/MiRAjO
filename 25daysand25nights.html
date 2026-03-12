@@ -710,7 +710,7 @@
     <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
     <li><a href="https://www.mirajoco.org/events">Events</a></li>
   </ul>
-  <a href="#waitlist" class="nav-cta">Enroll Now</a>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
   <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -723,7 +723,7 @@
     <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 25 Days &amp; 25 Nights</a>
     <a href="https://www.mirajoco.org/blog">Writing</a>
     <a href="https://www.mirajoco.org/events">Events</a>
-    <a href="#waitlist" class="nav-cta">Enroll Now</a>
+    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
   </div>
 </nav>
 
@@ -883,40 +883,19 @@
   </div>
 </section>
 
-<!-- ═══ PRICING ═══ -->
-<section class="pricing-section" id="pricing" data-aos="fade-up">
-  <div class="section-eyebrow" style="color:var(--p-silver)">Access Granted</div>
-  <h2 class="section-title" style="color:var(--warm-parchment)">Here's What You Get When You<br>Finally Choose Yourself</h2>
-  <div class="pricing-card">
-    <span class="pricing-badge">Limited Offer</span>
-    <div class="pricing-value">Total Value: $797</div>
-    <div class="pricing-price">$497</div>
-    <p class="pricing-note">One-time payment · Instant access</p>
-    <ul class="pricing-list">
-      <li>25 Days and 25 Nights Daily Guide</li>
-      <li>Seven (7) Laws of Nature Course</li>
-      <li>Private Member Community</li>
-      <li>Open Support Webinars</li>
-      <li>Daily Reflection Prompts</li>
-      <li>One Year Access</li>
-    </ul>
-    <a href="#waitlist" class="pricing-btn">Get Instant Access</a>
-    <p class="pricing-sub">Secure checkout &middot; Instant access upon enrollment</p>
-  </div>
-</section>
 
 <!-- ═══ WAITLIST ═══ -->
 <section class="waitlist-section" id="waitlist">
   <div class="waitlist-inner">
-    <div class="section-eyebrow" style="color:var(--p-silver)">Enrollment is Open</div>
-    <h2 class="section-title" style="color:var(--warm-parchment)">Ready to Begin?</h2>
-    <p class="waitlist-sub">Enter your email and get instant access. Secure checkout — you'll receive your login link immediately after payment.</p>
-    <form class="waitlist-form" id="checkout-form">
+    <div class="section-eyebrow" style="color:var(--p-silver)">Be First In</div>
+    <h2 class="section-title" style="color:var(--warm-parchment)">Join the Waitlist</h2>
+    <p class="waitlist-sub">Be the first to know when enrollment opens. No spam. Just the signal.</p>
+    <form class="waitlist-form" id="waitlist-form">
+      <input type="text" name="first_name" placeholder="First name" class="waitlist-input">
       <input type="email" name="email" placeholder="Your email address" class="waitlist-input" required>
-      <button type="submit" class="waitlist-btn">Get Instant Access</button>
+      <button type="submit" class="waitlist-btn">Notify Me</button>
     </form>
     <p class="waitlist-msg" id="waitlist-msg"></p>
-    <p style="margin-top:16px;font-size:12px;color:rgba(200,196,220,0.45);text-align:center;">🔒 Secure checkout via Stripe &middot; Instant access upon payment</p>
   </div>
 </section>
 
@@ -1013,33 +992,36 @@
 <script>
   AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
 
-  // Checkout form
-  document.getElementById('checkout-form').addEventListener('submit', async function(e) {
+  // Waitlist form
+  document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = this.querySelector('.waitlist-btn');
     const msg = document.getElementById('waitlist-msg');
     const email = this.email.value;
-    btn.textContent = 'Redirecting...';
+    const first_name = this.first_name.value;
+    btn.textContent = 'Submitting...';
     btn.disabled = true;
     try {
-      const res = await fetch('/api/create-checkout', {
+      const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, first_name })
       });
-      const data = await res.json();
-      if (res.ok && data.url) {
-        window.location.href = data.url;
+      if (res.ok) {
+        msg.textContent = "You're on the list. We'll be in touch.";
+        msg.style.color = '#A8C5A0';
+        this.reset();
+        btn.textContent = 'You\'re In';
       } else {
         msg.textContent = "Something went wrong. Please try again.";
         msg.style.color = '#E88080';
-        btn.textContent = 'Get Instant Access';
+        btn.textContent = 'Notify Me';
         btn.disabled = false;
       }
     } catch {
       msg.textContent = "Something went wrong. Please try again.";
       msg.style.color = '#E88080';
-      btn.textContent = 'Get Instant Access';
+      btn.textContent = 'Notify Me';
       btn.disabled = false;
     }
   });
