@@ -916,6 +916,92 @@
       }
     }
 
+    /* ═══ FROM MIRANDA ═══ */
+    .miranda-section {
+      background: var(--warm-parchment);
+      padding: 100px 40px;
+    }
+    .miranda-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .miranda-photo {
+      position: sticky;
+      top: 120px;
+    }
+    .miranda-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(160deg, var(--forest-mid), var(--deep-forest));
+      border-radius: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 28px;
+    }
+    .miranda-photo-placeholder span {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--warm-parchment);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .miranda-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--living-green);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .miranda-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      color: var(--deep-forest);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 36px;
+    }
+    .miranda-body {
+      font-size: 16px;
+      color: var(--text-body-light);
+      line-height: 1.95;
+    }
+    .miranda-body p { margin-bottom: 22px; }
+    .miranda-body p:last-child { margin-bottom: 0; }
+    .miranda-signature {
+      margin-top: 40px;
+      font-family: 'Instrument Serif', serif;
+      font-size: 24px;
+      color: var(--deep-forest);
+      font-style: italic;
+      padding-top: 28px;
+      border-top: 1px solid rgba(42,58,42,0.14);
+    }
+    .miranda-cta {
+      display: inline-block;
+      margin-top: 32px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--living-green);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--living-green);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .miranda-cta:hover { color: var(--deep-forest); border-color: var(--deep-forest); }
+    @media (max-width: 768px) {
+      .miranda-section { padding: 64px 24px; }
+      .miranda-inner { grid-template-columns: 1fr; gap: 36px; }
+      .miranda-photo { position: static; }
+      .miranda-photo-placeholder { aspect-ratio: 4/3; }
+    }
+
     /* ═══ QUOTE TICKER ═══ */
     .quote-ticker {
       background: var(--deep-forest);
@@ -1183,6 +1269,31 @@
     <img src="img/ad4.png" alt="">
   </div>
 </div>
+
+<!-- ═══ FROM MIRANDA ═══ -->
+<section class="miranda-section" data-aos="fade-up">
+  <div class="miranda-inner">
+    <div class="miranda-photo">
+      <div class="miranda-photo-placeholder">
+        <span>Miranda<br>Johnson</span>
+      </div>
+    </div>
+    <div class="miranda-letter">
+      <div class="miranda-eyebrow">From the Founder</div>
+      <h2 class="miranda-heading">I built this because this person is — and was — me.</h2>
+      <div class="miranda-body">
+        <p>You are the one everyone depends on. The decision maker. The one who holds it together, figures it out, and keeps moving — even when you are running on empty. You carry more than anyone can see, and somehow you still show up.</p>
+        <p>You are genuinely good. You love God. You want to build something that matters, something that lasts. But in a world that rewards performance over substance, you find yourself scrolling, disconnecting, becoming an influencer who cannot even influence your own home.</p>
+        <p>You attract people who want your gift more than they want you. You pour into rooms that cannot hold what you are carrying. And you have learned — sometimes the hard way — that being the one everyone leans on can be the loneliest place in the world.</p>
+        <p>You have failed before. You are willing to try again. But this time must be different, and somewhere inside you, you already know it.</p>
+        <p>You do not need more motivation. You do not need a new strategy. You need to go inward. Trust what you already know. Become the I AM statement you have been putting off.</p>
+        <p>That is exactly why MiRAjO exists.</p>
+      </div>
+      <div class="miranda-signature">— Miranda Johnson</div>
+      <a href="https://www.mirajoco.org/philosophy" class="miranda-cta">Read the Philosophy &rarr;</a>
+    </div>
+  </div>
+</section>
 
 <!-- ═══ WHAT WE OFFER ═══ -->
 <section class="parchment-section">
