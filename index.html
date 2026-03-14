@@ -138,87 +138,102 @@
 
     /* ═══ HERO ═══ */
     .hero {
-      position: relative;
+      display: grid;
+      grid-template-columns: 45% 55%;
       min-height: 100vh;
+      background: var(--deep-forest);
+      overflow: hidden;
+    }
+    .hero-content {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      padding: 40px 40px 40px 80px;
-      text-align: left;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 60%;
-      background-image: url('img/black and white outfit miranda.jpg');
-      background-size: cover;
-      background-position: center top;
-      z-index: 0;
-      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,1) 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,1) 100%);
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, var(--soft-white) 30%, rgba(247,244,239,0.75) 55%, rgba(247,244,239,0.5) 100%);
-      z-index: 1;
-    }
-    .hero > *:not(.hero-bg):not(.hero-overlay):not(.hero-bottom-fade) {
+      padding: 120px 60px 80px;
       position: relative;
       z-index: 2;
     }
-    .hero-bottom-fade {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 180px;
-      background: linear-gradient(to bottom, transparent, var(--warm-parchment));
-      z-index: 3;
-      pointer-events: none;
-    }
     .hero-eyebrow {
       font-size: 11px;
-      letter-spacing: 4px;
+      letter-spacing: 5px;
       text-transform: uppercase;
-      color: var(--living-green);
-      margin-bottom: 28px;
+      color: var(--new-growth);
       font-weight: 500;
+      margin-bottom: 28px;
     }
     .hero h1 {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(32px, 5vw, 52px);
+      font-size: clamp(38px, 4.8vw, 64px);
       font-weight: 400;
-      line-height: 1.15;
-      margin-bottom: 24px;
-      color: var(--deep-forest);
-      max-width: 560px;
+      line-height: 1.06;
+      color: var(--warm-parchment);
+      margin-bottom: 28px;
+      max-width: 540px;
     }
     .hero-sub {
       font-size: 16px;
-      color: var(--text-muted-light);
-      max-width: 480px;
-      margin-bottom: 40px;
-      line-height: 1.7;
+      color: var(--text-muted-dark);
+      max-width: 440px;
+      margin-bottom: 48px;
+      line-height: 1.75;
       font-weight: 300;
     }
-    .hero-btn {
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-btn-primary {
       display: inline-block;
-      padding: 14px 36px;
-      background: var(--deep-forest);
-      color: var(--soft-white);
+      padding: 16px 40px;
+      background: var(--living-green);
+      color: #fff;
       border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
       letter-spacing: 0.5px;
       text-decoration: none;
       transition: background 0.3s;
     }
-    .hero-btn:hover { background: var(--forest-mid); }
+    .hero-btn-primary:hover { background: var(--living-green-light); }
+    .hero-btn-secondary {
+      display: inline-block;
+      padding: 16px 40px;
+      background: transparent;
+      color: var(--warm-parchment);
+      border: 1px solid rgba(237,232,223,0.28);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .hero-btn-secondary:hover { border-color: var(--warm-parchment); background: rgba(237,232,223,0.06); }
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 160px;
+      background: linear-gradient(to right, var(--deep-forest), transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-image { height: 72vw; order: -1; }
+      .hero-image::before {
+        width: auto; top: auto; left: 0; right: 0; bottom: 0;
+        height: 120px;
+        background: linear-gradient(to top, var(--deep-forest), transparent);
+      }
+      .hero-content { padding: 40px 24px 64px; }
+    }
 
     /* ═══ LOGOS MARQUEE ═══ */
     .logos-marquee {
@@ -919,28 +934,36 @@
     /* ═══ FROM MIRANDA ═══ */
     .miranda-section {
       background: var(--deep-forest);
-      padding: 100px 40px;
-    }
-    .miranda-inner {
-      max-width: 960px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 72px;
-      align-items: start;
+      grid-template-columns: 50% 50%;
+      min-height: 90vh;
+      overflow: hidden;
     }
+    .miranda-inner { display: contents; }
     .miranda-photo {
-      position: sticky;
-      top: 120px;
+      position: relative;
+      overflow: hidden;
     }
     .miranda-photo img {
       width: 100%;
-      aspect-ratio: 3/4;
+      height: 100%;
       object-fit: cover;
       object-position: center top;
-      border-radius: 20px;
       display: block;
-      filter: grayscale(20%) contrast(1.05);
+    }
+    .miranda-photo::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 140px;
+      background: linear-gradient(to left, var(--deep-forest), transparent);
+      pointer-events: none;
+    }
+    .miranda-letter {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 72px 80px 56px;
     }
     .miranda-eyebrow {
       font-size: 11px;
@@ -988,10 +1011,10 @@
     }
     .miranda-cta:hover { color: var(--warm-parchment); border-color: var(--warm-parchment); }
     @media (max-width: 768px) {
-      .miranda-section { padding: 64px 24px; }
-      .miranda-inner { grid-template-columns: 1fr; gap: 36px; }
-      .miranda-photo { position: static; }
-      .miranda-photo img { aspect-ratio: 4/3; object-position: center 20%; }
+      .miranda-section { grid-template-columns: 1fr; min-height: auto; }
+      .miranda-photo { height: 80vw; order: -1; }
+      .miranda-photo::after { width: auto; right: 0; left: 0; top: auto; height: 100px; background: linear-gradient(to top, var(--deep-forest), transparent); }
+      .miranda-letter { padding: 48px 24px 64px; }
     }
 
     /* ═══ QUOTE TICKER ═══ */
@@ -1217,105 +1240,42 @@
 </nav>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero" data-aos="fade-up">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-bottom-fade"></div>
-  <div class="hero-eyebrow">MiRAjO Collective</div>
-  <h1>See what you're planting before you harvest the wrong thing.</h1>
-  <p class="hero-sub">For the decision makers, the builders, and the ones everyone calls — this is where you learn to lead yourself first.</p>
-  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
-    <a href="https://www.mirajoco.org/philosophy" class="hero-btn">Explore the Philosophy</a>
-    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="hero-btn" style="background:transparent;border:1px solid var(--deep-forest);color:var(--deep-forest);">Let's Talk Now</a>
+<section class="hero">
+  <div class="hero-content" data-aos="fade-right">
+    <div class="hero-eyebrow">Miranda Johnson</div>
+    <h1>See what you're planting before you harvest the wrong thing.</h1>
+    <p class="hero-sub">For the decision makers, the builders, and the ones everyone calls. This is where you learn to lead yourself first.</p>
+    <div class="hero-actions">
+      <a href="https://www.mirajoco.org/philosophy" class="hero-btn-primary">Explore the Work</a>
+      <a href="https://www.mirajoco.org/25daysand25nights" class="hero-btn-secondary">Start the 25</a>
+    </div>
+  </div>
+  <div class="hero-image" data-aos="fade-left">
+    <img src="img/Miranda J- Headshot.jpeg" alt="Miranda Johnson">
   </div>
 </section>
 
-<!-- ═══ LOGOS MARQUEE ═══ -->
-<div class="logos-marquee" aria-hidden="true">
-  <div class="logos-track">
-    <!-- set 1 -->
-    <img src="img/ad3.png" alt="">
-    <img src="img/ad2.png" alt="">
-    <img src="img/bup-official-registered.png" alt="BŪP">
-    <img src="img/ad1.png" alt="">
-    <img src="img/ad.png"  alt="">
-    <img src="img/ad4.png" alt="">
-    <!-- set 2 -->
-    <img src="img/ad3.png" alt="">
-    <img src="img/ad2.png" alt="">
-    <img src="img/bup-official-registered.png" alt="BŪP">
-    <img src="img/ad1.png" alt="">
-    <img src="img/ad.png"  alt="">
-    <img src="img/ad4.png" alt="">
-    <!-- set 3 -->
-    <img src="img/ad3.png" alt="">
-    <img src="img/ad2.png" alt="">
-    <img src="img/bup-official-registered.png" alt="BŪP">
-    <img src="img/ad1.png" alt="">
-    <img src="img/ad.png"  alt="">
-    <img src="img/ad4.png" alt="">
-    <!-- set 4 -->
-    <img src="img/ad3.png" alt="">
-    <img src="img/ad2.png" alt="">
-    <img src="img/bup-official-registered.png" alt="BŪP">
-    <img src="img/ad1.png" alt="">
-    <img src="img/ad.png"  alt="">
-    <img src="img/ad4.png" alt="">
-  </div>
-</div>
-
 <!-- ═══ FROM MIRANDA ═══ -->
-<section class="miranda-section" data-aos="fade-up">
+<section class="miranda-section">
   <div class="miranda-inner">
-    <div class="miranda-photo">
-      <img src="img/black and white outfit miranda.jpg" alt="Miranda Johnson — Founder, MiRAjO Collective">
+    <div class="miranda-photo" data-aos="fade-right">
+      <img src="img/black and white outfit miranda.jpg" alt="Miranda Johnson, Founder of MiRAjO Collective">
     </div>
-    <div class="miranda-letter">
+    <div class="miranda-letter" data-aos="fade-left">
       <div class="miranda-eyebrow">From the Founder</div>
-      <h2 class="miranda-heading">I built this because this person is — and was — me.</h2>
+      <h2 class="miranda-heading">I built this because this person is and was me.</h2>
       <div class="miranda-body">
-        <p>You are the one everyone depends on. The decision maker. The one who holds it together, figures it out, and keeps moving — even when you are running on empty. You carry more than anyone can see, and somehow you still show up.</p>
+        <p>You are the one everyone depends on. The decision maker. The one who holds it together, figures it out, and keeps moving even when you are running on empty. You carry more than anyone can see, and somehow you still show up.</p>
         <p>You are genuinely good. You love God. You want to build something that matters, something that lasts. But in a world that rewards performance over substance, you find yourself scrolling, disconnecting, becoming an influencer who cannot even influence your own home.</p>
-        <p>You attract people who want your gift more than they want you. You pour into rooms that cannot hold what you are carrying. And you have learned — sometimes the hard way — that being the one everyone leans on can be the loneliest place in the world.</p>
+        <p>You attract people who want your gift more than they want you. You pour into rooms that cannot hold what you are carrying. Being the one everyone leans on can be the loneliest place in the world.</p>
         <p>You have failed before. You are willing to try again. But this time must be different, and somewhere inside you, you already know it.</p>
         <p>You do not need more motivation. You do not need a new strategy. You need to go inward. Trust what you already know. Become the I AM statement you have been putting off.</p>
         <p>That is exactly why MiRAjO exists.</p>
       </div>
-      <div class="miranda-signature">— Miranda Johnson</div>
+      <div class="miranda-signature">Miranda Johnson</div>
       <a href="https://www.mirajoco.org/philosophy" class="miranda-cta">Read the Philosophy &rarr;</a>
     </div>
   </div>
-</section>
-
-<!-- ═══ WHAT WE OFFER ═══ -->
-<section class="parchment-section">
-  <div class="section-eyebrow" data-aos="fade-up">What We Offer</div>
-  <div class="section-head" data-aos="fade-up">Not motivation. Not hype. Something rarer.</div>
-  <div class="card-grid">
-    <div class="offer-card" data-aos="fade-up" data-aos-delay="0">
-      <div class="card-icon">&#9670;</div>
-      <div class="card-title">Clearer Thinking</div>
-      <div class="card-desc">See patterns others miss. Understand why your effort and your results don't match.</div>
-    </div>
-    <div class="offer-card" data-aos="fade-up" data-aos-delay="100">
-      <div class="card-icon">&#9670;</div>
-      <div class="card-title">Season & Timing</div>
-      <div class="card-desc">Know what season you're in. Stop planting in winter and wondering why nothing grows.</div>
-    </div>
-    <div class="offer-card" data-aos="fade-up" data-aos-delay="200">
-      <div class="card-icon">&#9670;</div>
-      <div class="card-title">Better Judgement</div>
-      <div class="card-desc">Understand the consequences of your decisions before you make them. That's rare air.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ THE COLLECTIVE ═══ -->
-<section class="dark-section" data-aos="fade-up">
-  <div class="dark-eyebrow">The Collective</div>
-  <div class="dark-title">The environment where leaders practice what is taught.</div>
-  <p class="dark-body">The community orbits the philosophy. Programs, events, and the directory exist as extensions of the framework: proof of alignment, not features on a platform.</p>
-  <a href="https://www.mirajoco.org/programs" class="dark-btn">Join the Collective</a>
 </section>
 
 <!-- ═══ PORTRAIT VIDEO — 25 DAYS ═══ -->
@@ -1386,16 +1346,6 @@
   </div>
 </div>
 
-<!-- ═══ HEALTHY NETWORKING ═══ -->
-<section class="hn-section" data-aos="fade-up">
-  <div class="hn-bg" aria-hidden="true"></div>
-  <div class="hn-content">
-    <div class="hn-eyebrow">Healthy Networking</div>
-    <div class="hn-title">A better way to connect.</div>
-    <p class="hn-desc">We bring professionals together in vibrant, health-focused spaces across cities. It's not just about business cards. It's about balance, authentic relationships, and shared growth.</p>
-    <a href="https://www.mirajoco.org/events" class="hn-btn">Start Networking</a>
-  </div>
-</section>
 
 <!-- ═══ BOOKS ═══ -->
 <section class="books-section" data-aos="fade-up">
@@ -1414,67 +1364,22 @@
   <div class="books-bg"></div>
 </section>
 
-<!-- ═══ UPCOMING EVENTS ═══ -->
-<section class="events-section">
-  <div class="section-eyebrow" data-aos="fade-up">Gather</div>
-  <div class="section-head" data-aos="fade-up">Upcoming Events</div>
-
-  <div style="text-align:center; padding: 80px 20px;" data-aos="fade-up">
-    <div style="display:inline-block; border: 1px solid var(--border-light); border-radius: 12px; padding: 48px 64px; background: #fff;">
-      <div style="font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--living-green); font-weight: 500; margin-bottom: 16px;">Coming Soon</div>
-      <div style="font-family: 'Instrument Serif', serif; font-size: clamp(22px, 3vw, 30px); color: var(--deep-forest); font-weight: 400; margin-bottom: 12px;">New events are on the way.</div>
-      <p style="font-size: 14px; color: var(--text-muted-light); font-weight: 300; max-width: 380px; line-height: 1.7; margin: 0 auto 28px;">Stay connected. Upcoming gatherings will be announced here and through the newsletter.</p>
-      <a href="https://www.mirajoco.org/events" class="btn-outline">View All Events</a>
-    </div>
+<!-- ═══ EXPLORE ═══ -->
+<section style="background:var(--warm-parchment);padding:64px 40px;text-align:center;border-top:1px solid var(--border-light);" data-aos="fade-up">
+  <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--living-green);font-weight:600;margin-bottom:16px;">Keep Exploring</div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:24px;">
+    <a href="https://www.mirajoco.org/philosophy" style="display:inline-block;padding:14px 32px;background:var(--deep-forest);color:var(--warm-parchment);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">The Philosophy</a>
+    <a href="https://www.mirajoco.org/25daysand25nights" style="display:inline-block;padding:14px 32px;background:transparent;border:1px solid var(--deep-forest);color:var(--deep-forest);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">25 Days &amp; 25 Nights</a>
+    <a href="https://www.mirajoco.org/blog" style="display:inline-block;padding:14px 32px;background:transparent;border:1px solid var(--deep-forest);color:var(--deep-forest);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">Writing</a>
+    <a href="https://www.mirajoco.org/events" style="display:inline-block;padding:14px 32px;background:transparent;border:1px solid var(--deep-forest);color:var(--deep-forest);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">Events</a>
+    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" style="display:inline-block;padding:14px 32px;background:var(--living-green);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.5px;">Let's Talk</a>
   </div>
 </section>
 
-<!-- ═══ BLOG ═══ -->
-<section class="blog-section">
-  <div class="section-eyebrow" data-aos="fade-up">From the Writing Desk</div>
-  <div class="section-head" data-aos="fade-up">Bold insights, real stories, grounded truth.</div>
-
-  <div class="blog-grid" id="blog-feed">
-    <!-- Skeleton loaders shown while feed loads -->
-    <div class="blog-skeleton">
-      <div class="skeleton-img"></div>
-      <div class="skeleton-body">
-        <div class="skeleton-line sk-title"></div>
-        <div class="skeleton-line sk-long"></div>
-        <div class="skeleton-line sk-med"></div>
-        <div class="skeleton-line sk-short"></div>
-        <div class="skeleton-line sk-link"></div>
-      </div>
-    </div>
-    <div class="blog-skeleton">
-      <div class="skeleton-img"></div>
-      <div class="skeleton-body">
-        <div class="skeleton-line sk-title"></div>
-        <div class="skeleton-line sk-long"></div>
-        <div class="skeleton-line sk-med"></div>
-        <div class="skeleton-line sk-short"></div>
-        <div class="skeleton-line sk-link"></div>
-      </div>
-    </div>
-    <div class="blog-skeleton">
-      <div class="skeleton-img"></div>
-      <div class="skeleton-body">
-        <div class="skeleton-line sk-title"></div>
-        <div class="skeleton-line sk-long"></div>
-        <div class="skeleton-line sk-med"></div>
-        <div class="skeleton-line sk-short"></div>
-        <div class="skeleton-line sk-link"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="blog-actions">
-    <a href="https://www.mirajoco.org/blog" class="btn-outline">View All Articles</a>
-  </div>
-</section>
-
+<!-- blog feed script removed with blog section -->
 <script>
-(function() {
+(function() { /* blog feed removed */
+  if (false) {
   var FEED_URL   = 'https://www.mirajoco.org/blog/rss';
   var PROXY      = 'https://api.allorigins.win/raw?url=';
   var POSTS_TO_SHOW = 3;
@@ -1616,6 +1521,7 @@
 
   loadFeed();
   setInterval(loadFeed, 60000);
+  } /* end if false */
 })();
 </script>
 
