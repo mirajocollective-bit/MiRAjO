@@ -89,10 +89,19 @@
     .featured-includes li { font-size: 14px; color: var(--text-body-light); padding: 6px 0; padding-left: 20px; position: relative; border-bottom: 1px solid var(--border-light); }
     .featured-includes li:last-child { border-bottom: none; }
     .featured-includes li::before { content: '→'; position: absolute; left: 0; color: var(--living-green); font-size: 12px; top: 8px; }
-    .featured-cta { display: inline-block; padding: 18px 48px; background: var(--deep-forest); color: var(--warm-parchment); border-radius: 8px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s; }
-    .featured-cta:hover { background: var(--forest-mid); }
-    .featured-image-wrap { border-radius: 16px; overflow: hidden; box-shadow: 0 32px 80px rgba(18,32,18,0.18); aspect-ratio: 4/5; background: var(--deep-forest); display: flex; align-items: center; justify-content: center; padding: 40px; }
-    .featured-image-wrap img { width: 100%; max-width: 280px; display: block; }
+    .featured-cta { display: inline-block; padding: 18px 48px; background: var(--deep-forest); color: var(--warm-parchment); border-radius: 8px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.2s; }
+    .featured-cta:hover { background: var(--forest-mid); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(18,32,18,0.22); }
+    .featured-image-wrap { border-radius: 16px; overflow: hidden; box-shadow: 0 32px 80px rgba(18,32,18,0.22); aspect-ratio: 3/4; position: relative; }
+    .featured-image-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.6s ease; }
+    .featured-image-wrap:hover img { transform: scale(1.04); }
+    .featured-image-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; background: linear-gradient(to top, rgba(18,32,18,0.85) 0%, transparent 100%); }
+    .featured-image-caption { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--warm-parchment); font-style: italic; line-height: 1.4; }
+
+    /* ═══ QUOTE BREAK ═══ */
+    .quote-break { background: var(--deep-forest); padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
+    .quote-break::before { content: '\201C'; font-family: 'Instrument Serif', serif; font-size: 280px; color: var(--living-green); opacity: 0.08; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); line-height: 1; pointer-events: none; }
+    .quote-break-text { font-family: 'Instrument Serif', serif; font-size: clamp(22px, 3vw, 36px); color: var(--warm-parchment); font-weight: 400; font-style: italic; line-height: 1.5; max-width: 640px; margin: 0 auto 20px; position: relative; z-index: 1; }
+    .quote-break-attr { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--new-growth); font-weight: 600; }
 
     /* ═══ COMING SOON GRID ═══ */
     .coming-section { background: var(--soft-white); padding: 100px 40px; }
@@ -100,10 +109,16 @@
     .coming-title { font-family: 'Instrument Serif', serif; font-size: clamp(26px, 3vw, 38px); color: var(--deep-forest); font-weight: 400; text-align: center; margin-bottom: 16px; line-height: 1.2; }
     .coming-sub { font-size: 15px; color: var(--text-muted-light); text-align: center; margin-bottom: 64px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
     .coming-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-    .coming-card { background: var(--cream); border: 1px solid var(--border-light); border-radius: 16px; padding: 36px 28px; display: flex; flex-direction: column; gap: 12px; }
+    .coming-card { background: var(--cream); border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .coming-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(18,32,18,0.14); }
+    .coming-card-visual { height: 160px; background: linear-gradient(135deg, var(--deep-forest) 0%, var(--forest-mid) 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .coming-card-visual::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(109,196,138,0.15) 0%, transparent 60%); }
+    .coming-card-visual img { width: auto; height: 120px; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4)); }
+    .coming-card-visual-num { font-family: 'Instrument Serif', serif; font-size: 80px; color: var(--new-growth); opacity: 0.18; position: relative; z-index: 1; font-style: italic; line-height: 1; }
+    .coming-card-body { padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
     .coming-card-badge { display: inline-block; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; padding: 5px 12px; border-radius: 20px; background: rgba(18,32,18,0.06); color: var(--text-muted-light); width: fit-content; }
     .coming-card-type { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--bronze-earth); font-weight: 600; }
-    .coming-card-name { font-family: 'Instrument Serif', serif; font-size: clamp(20px, 2vw, 26px); color: var(--deep-forest); font-weight: 400; line-height: 1.2; }
+    .coming-card-name { font-family: 'Instrument Serif', serif; font-size: clamp(18px, 2vw, 22px); color: var(--deep-forest); font-weight: 400; line-height: 1.2; }
     .coming-card-desc { font-size: 14px; color: var(--text-muted-light); line-height: 1.8; flex: 1; }
     .coming-card-notify { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--living-green); text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(37,107,66,0.3); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; width: fit-content; }
     .coming-card-notify:hover { color: var(--deep-forest); border-color: var(--deep-forest); }
@@ -131,8 +146,9 @@
       .programs-hero { padding: 72px 24px 56px; }
       .featured-section, .coming-section { padding: 64px 24px; }
       .featured-inner { grid-template-columns: 1fr; gap: 40px; }
-      .featured-image-wrap { aspect-ratio: auto; padding: 32px; }
+      .featured-image-wrap { aspect-ratio: 4/3; }
       .coming-grid { grid-template-columns: 1fr; gap: 20px; }
+      .quote-break { padding: 56px 24px; }
       .site-footer { padding: 40px 20px 20px; }
       .footer-links { gap: 16px; }
     }
@@ -215,9 +231,18 @@
       <a href="https://www.mirajoco.org/25daysand25nights" class="featured-cta">Join the Waitlist</a>
     </div>
     <div class="featured-image-wrap" data-aos="fade-left">
-      <img src="img/2525 Official Logo.png" alt="25 Days and 25 Nights" loading="lazy">
+      <img src="img/Miranda on stage.png" alt="Miranda Johnson speaking" loading="lazy">
+      <div class="featured-image-overlay">
+        <p class="featured-image-caption">Every seed has a season.<br>The question is whether you're planting or waiting.</p>
+      </div>
     </div>
   </div>
+</section>
+
+<!-- ═══ QUOTE BREAK ═══ -->
+<section class="quote-break" data-aos="fade-up">
+  <p class="quote-break-text">"You don't need more motivation. You need more alignment. The work isn't hard — you've just been doing the wrong work."</p>
+  <div class="quote-break-attr">— Miranda Johnson</div>
 </section>
 
 <!-- ═══ COMING SOON ═══ -->
@@ -229,43 +254,68 @@
   <div class="coming-grid">
 
     <div class="coming-card" data-aos="fade-up">
-      <span class="coming-card-badge">Coming Soon</span>
-      <div class="coming-card-type">Course + Live Webinars</div>
-      <div class="coming-card-name">Couples in Entrepreneurship</div>
-      <p class="coming-card-desc">Build and grow together without losing yourselves or each other. A program for couples navigating business, money, and partnership at the same time.</p>
-      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      <div class="coming-card-visual">
+        <span class="coming-card-visual-num">01</span>
+      </div>
+      <div class="coming-card-body">
+        <span class="coming-card-badge">Coming Soon</span>
+        <div class="coming-card-type">Course + Live Webinars</div>
+        <div class="coming-card-name">Couples in Entrepreneurship</div>
+        <p class="coming-card-desc">Build and grow together without losing yourselves or each other. A program for couples navigating business, money, and partnership at the same time.</p>
+        <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      </div>
     </div>
 
     <div class="coming-card" data-aos="fade-up" data-aos-delay="80">
-      <span class="coming-card-badge">Coming Soon</span>
-      <div class="coming-card-type">Course + Live Webinars</div>
-      <div class="coming-card-name">The Laws of Seedtime &amp; Harvest</div>
-      <p class="coming-card-desc">The complete framework — every law, every season, every level — applied to your business and your life. Built for the ones ready to stop reacting and start planting with intention.</p>
-      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      <div class="coming-card-visual">
+        <span class="coming-card-visual-num">02</span>
+      </div>
+      <div class="coming-card-body">
+        <span class="coming-card-badge">Coming Soon</span>
+        <div class="coming-card-type">Course + Live Webinars</div>
+        <div class="coming-card-name">The Laws of Seedtime &amp; Harvest</div>
+        <p class="coming-card-desc">The complete framework — every law, every season, every level — applied to your business and your life. Built for the ones ready to stop reacting and start planting with intention.</p>
+        <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      </div>
     </div>
 
     <div class="coming-card" data-aos="fade-up" data-aos-delay="160">
-      <span class="coming-card-badge">Coming Soon</span>
-      <div class="coming-card-type">Course + Live Webinars</div>
-      <div class="coming-card-name">Talk About Money</div>
-      <p class="coming-card-desc">Money follows alignment, not hustle. This program teaches you to stop chasing and start attracting — by understanding where your money seeds are actually going.</p>
-      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      <div class="coming-card-visual">
+        <span class="coming-card-visual-num">03</span>
+      </div>
+      <div class="coming-card-body">
+        <span class="coming-card-badge">Coming Soon</span>
+        <div class="coming-card-type">Course + Live Webinars</div>
+        <div class="coming-card-name">Talk About Money</div>
+        <p class="coming-card-desc">Money follows alignment, not hustle. This program teaches you to stop chasing and start attracting — by understanding where your money seeds are actually going.</p>
+        <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      </div>
     </div>
 
     <div class="coming-card" data-aos="fade-up" data-aos-delay="0">
-      <span class="coming-card-badge">Coming Soon</span>
-      <div class="coming-card-type">Self-Guided Workbook</div>
-      <div class="coming-card-name">The Pain Principle — Workbook</div>
-      <p class="coming-card-desc">The companion to Miranda's book. Exercises that turn your self-inflicted pain into the seed of your next season. Go at your own pace, on your own terms.</p>
-      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      <div class="coming-card-visual">
+        <img src="img/pain principle front cover.jpg" alt="The Pain Principle" loading="lazy">
+      </div>
+      <div class="coming-card-body">
+        <span class="coming-card-badge">Coming Soon</span>
+        <div class="coming-card-type">Self-Guided Workbook</div>
+        <div class="coming-card-name">The Pain Principle — Workbook</div>
+        <p class="coming-card-desc">The companion to Miranda's book. Exercises that turn your self-inflicted pain into the seed of your next season. Go at your own pace, on your own terms.</p>
+        <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      </div>
     </div>
 
     <div class="coming-card" data-aos="fade-up" data-aos-delay="80">
-      <span class="coming-card-badge">Coming Soon</span>
-      <div class="coming-card-type">Self-Guided Workbook</div>
-      <div class="coming-card-name">Lead Loud — Workbook</div>
-      <p class="coming-card-desc">Work through the 11 commandments at your own pace. Leadership from the inside out — practical, direct, and built for the ones who refuse to shrink.</p>
-      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      <div class="coming-card-visual">
+        <img src="img/leadloud front book cover.png" alt="Lead Loud" loading="lazy">
+      </div>
+      <div class="coming-card-body">
+        <span class="coming-card-badge">Coming Soon</span>
+        <div class="coming-card-type">Self-Guided Workbook</div>
+        <div class="coming-card-name">Lead Loud — Workbook</div>
+        <p class="coming-card-desc">Work through the 11 commandments at your own pace. Leadership from the inside out — practical, direct, and built for the ones who refuse to shrink.</p>
+        <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+      </div>
     </div>
 
   </div>
