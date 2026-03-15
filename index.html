@@ -399,62 +399,91 @@
 
     /* ═══ BOOKS SECTION ═══ */
     .books-section {
-      position: relative;
-      min-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 120px 40px;
-      text-align: left;
+      background: var(--deep-forest);
+      padding: 100px 40px;
+      text-align: center;
       overflow: hidden;
-      background: var(--warm-parchment);
     }
     .books-content {
-      width: 100%;
-      max-width: 1100px;
+      max-width: 900px;
       margin: 0 auto;
     }
-    .books-bg {
-      position: absolute;
-      right: 5%;
-      bottom: 0;
-      width: 45%;
-      height: 95%;
-      background-image: url('img/miranda-book2.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center bottom;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .books-overlay {
-      display: none;
-    }
-    .books-section > *:not(.books-bg):not(.books-overlay):not(.books-content) {
-      position: relative;
-      z-index: 2;
-    }
-    .books-content {
-      position: relative;
-      z-index: 2;
-    }
+    .books-bg { display: none; }
+    .books-overlay { display: none; }
     .books-eyebrow {
       font-size: 11px;
-      letter-spacing: 4px;
+      letter-spacing: 5px;
       text-transform: uppercase;
-      color: var(--living-green);
-      margin-bottom: 20px;
-      font-weight: 500;
+      color: var(--new-growth);
+      margin-bottom: 16px;
+      font-weight: 600;
     }
     .books-title {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(28px, 4vw, 42px);
+      font-size: clamp(28px, 4vw, 44px);
       font-weight: 400;
       line-height: 1.2;
+      color: var(--warm-parchment);
+      margin-bottom: 56px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .books-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 0;
+    }
+    .book-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .book-cover {
+      width: 100%;
+      max-width: 220px;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      display: block;
+    }
+    .book-cover:hover {
+      transform: translateY(-10px) rotate(-1.5deg);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.65);
+    }
+    .book-hook {
+      font-size: 15px;
+      color: var(--text-muted-dark);
+      line-height: 1.75;
+      max-width: 300px;
+      font-style: italic;
+    }
+    .book-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--dry-sage);
       color: var(--deep-forest);
-      margin-bottom: 24px;
-      max-width: 520px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .book-btn:hover { background: var(--bronze-earth); color: #fff; transform: translateY(-2px); }
+    .books-coming {
+      margin-top: 48px;
+      font-size: 13px;
+      color: var(--text-muted-dark);
+      letter-spacing: 1px;
+    }
+    @media (max-width: 640px) {
+      .books-grid { grid-template-columns: 1fr; gap: 56px; }
+      .books-section { padding: 64px 24px; }
     }
     .books-list {
       list-style: none;
@@ -1398,19 +1427,26 @@
 
 <!-- ═══ BOOKS ═══ -->
 <section class="books-section" data-aos="fade-up">
-  <div class="books-overlay"></div>
   <div class="books-content">
     <div class="books-eyebrow">Books by Miranda Johnson</div>
-    <div class="books-title">Each book is part of the work behind MiRAjO.</div>
-    <ul class="books-list">
-      <li><strong>LeadLoud:</strong> 11 Commandments of NextGen Leaders</li>
-      <li><strong>The Pain Principle:</strong> Self-Inflicted Pain to Break Free</li>
-      <li><strong>25 Days 25 Nights Workbook</strong> <em>(upcoming release)</em></li>
-    </ul>
-    <p class="books-desc">Lessons and practices leaders can carry into real life. Not theory, but tools forged from lived experience.</p>
-    <a href="https://www.mirajoco.org/philosophy#books" class="books-btn">Order Now</a>
+    <h2 class="books-title">The work in your hands.</h2>
+    <div class="books-grid">
+
+      <div class="book-card" data-aos="fade-up">
+        <img src="img/leadloud front book cover.png" alt="LeadLoud by Miranda Johnson" class="book-cover">
+        <p class="book-hook">"11 commandments to stay authentic in your leadership and push past what THEY say business is."</p>
+        <a href="https://a.co/d/0bqHZn0j" target="_blank" rel="noopener" class="book-btn">Order Now</a>
+      </div>
+
+      <div class="book-card" data-aos="fade-up" data-aos-delay="100">
+        <img src="img/pain principle front cover.png" alt="The Pain Principle by Miranda Johnson" class="book-cover">
+        <p class="book-hook">"People are not stupid. They just don't want to inflict pain on themselves. Embrace the pain to level up."</p>
+        <a href="https://a.co/d/05QnZ1gx" target="_blank" rel="noopener" class="book-btn">Order Now</a>
+      </div>
+
+    </div>
+    <p class="books-coming">25 Days &amp; 25 Nights Workbook — coming soon</p>
   </div>
-  <div class="books-bg"></div>
 </section>
 
 <!-- ═══ EXPLORE ═══ -->
