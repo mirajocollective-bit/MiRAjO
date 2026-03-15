@@ -622,6 +622,21 @@
       line-height: 1.85;
       font-weight: 400;
     }
+    .result-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .result-cta-outline {
+      display: inline-block;
+      padding: 16px 32px;
+      background: transparent;
+      border: 1px solid rgba(18,32,18,0.3);
+      color: var(--text-body-light);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .result-cta-outline:hover { background: var(--deep-forest); color: var(--warm-parchment); border-color: var(--deep-forest); }
     .result-cta {
       display: inline-block;
       padding: 16px 40px;
@@ -1043,7 +1058,8 @@
       .assessment-option { padding: 16px 18px; font-size: 14px; }
       .result-title { font-size: clamp(24px, 7vw, 36px); }
       .result-body { font-size: 15px; }
-      .result-cta { display: block; text-align: center; }
+      .result-actions { flex-direction: column; }
+      .result-cta, .result-cta-outline { display: block; text-align: center; }
 
       /* Programs & books grid */
       .programs-grid { grid-template-columns: 1fr; gap: 20px; }
@@ -1464,7 +1480,10 @@
       <div class="result-season">You are in Seedtime</div>
       <div class="result-title">You're planting.<br>Make it intentional.</div>
       <p class="result-body">The harvest hasn't come yet, not because you aren't working, but because the seeds need resetting. The 25 Days &amp; 25 Nights program was built for exactly this moment. Reconnect to yourself, silence the noise, and plant with purpose for the first time.</p>
-      <a href="https://www.mirajoco.org/25daysand25nights" target="_blank" rel="noopener" class="result-cta">Start 25 Days &amp; 25 Nights</a>
+      <div class="result-actions">
+        <a href="https://www.mirajoco.org/25daysand25nights" target="_blank" rel="noopener" class="result-cta">Start 25 Days &amp; 25 Nights</a>
+        <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="result-cta-outline">Talk to Miranda First</a>
+      </div>
       <button class="result-restart" onclick="restartAssessment()">Take it again</button>
     </div>
 
@@ -1472,7 +1491,10 @@
       <div class="result-season">You are in Tending Season</div>
       <div class="result-title">You're in the work.<br>Environment is everything now.</div>
       <p class="result-body">The seeds are in the ground. What happens next depends entirely on where you are planted. The MiRAjO Collective is the environment built to keep leaders like you tending with intention, not alone, not in the wrong soil.</p>
-      <a href="https://www.mirajoco.org/programs" target="_blank" rel="noopener" class="result-cta">Join the Collective</a>
+      <div class="result-actions">
+        <a href="https://www.mirajoco.org/programs" target="_blank" rel="noopener" class="result-cta">Explore Programs</a>
+        <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="result-cta-outline">Talk to Miranda First</a>
+      </div>
       <button class="result-restart" onclick="restartAssessment()">Take it again</button>
     </div>
 
@@ -1480,7 +1502,10 @@
       <div class="result-season">You are in Harvest Season</div>
       <div class="result-title">You're ready to harvest.<br>Don't leave it on the field.</div>
       <p class="result-body">You've planted. You've tended. The results are showing, but you can feel there is a ceiling. This is the season where working directly with Miranda can show you what you can't see from inside it. The harvest doesn't wait.</p>
-      <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="result-cta">Work with Miranda</a>
+      <div class="result-actions">
+        <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="result-cta">Work with Miranda</a>
+        <a href="https://www.mirajoco.org/programs" target="_blank" rel="noopener" class="result-cta-outline">Explore Programs</a>
+      </div>
       <button class="result-restart" onclick="restartAssessment()">Take it again</button>
     </div>
 
