@@ -957,13 +957,10 @@
       .nav-hamburger { display: block; }
       .mobile-menu { padding: 20px; }
 
-      .hero {
-        padding: 80px 20px 60px;
-        align-items: flex-start;
-        text-align: left;
-      }
-      .hero h1 { max-width: 100%; }
+      .hero h1 { max-width: 100%; font-size: clamp(32px, 8vw, 48px); }
       .hero-sub { font-size: 15px; max-width: 100%; }
+      .hero-actions { flex-direction: column; gap: 12px; }
+      .hero-btn-primary, .hero-btn-secondary { text-align: center; padding: 16px 28px; }
 
       .parchment-section, .dark-section, .blog-section, .newsletter-section, .events-section {
         padding: 60px 20px;
@@ -1341,29 +1338,36 @@
 </section>
 
 <!-- ═══ 25D25N OFFER ═══ -->
-<section style="background:var(--warm-parchment);padding:100px 40px;" data-aos="fade-up">
-  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+<style>
+  .offer-25-section { background: var(--warm-parchment); padding: 100px 40px; }
+  .offer-25-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 768px) {
+    .offer-25-section { padding: 64px 24px; }
+    .offer-25-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+    .offer-25-grid img { margin: 0 auto; }
+    .offer-25-grid a { display: block; text-align: center; }
+  }
+</style>
+<section class="offer-25-section" data-aos="fade-up">
+  <div class="offer-25-grid">
     <div>
       <img src="img/2525 Official Logo.png" alt="25 Days and 25 Nights" style="width:100%;max-width:320px;display:block;">
     </div>
     <div>
-      <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--living-green);font-weight:600;margin-bottom:20px;">Now Enrolling</div>
-      <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(28px,3.5vw,44px);color:var(--deep-forest);font-weight:400;line-height:1.15;margin-bottom:20px;">25 days to reset.<br>25 nights to rebuild.</h2>
+      <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--living-green);font-weight:600;margin-bottom:20px;">Waitlist Open</div>
       <p style="font-size:17px;color:var(--text-body-light);line-height:1.9;margin-bottom:8px;">25 days to stop performing. 25 nights to start becoming.</p>
       <p style="font-size:17px;color:var(--text-body-light);line-height:1.9;margin-bottom:32px;">You've held it together long enough. Now hold yourself.</p>
-      <a href="https://www.mirajoco.org/25daysand25nights" style="display:inline-block;padding:18px 48px;background:var(--deep-forest);color:var(--warm-parchment);border-radius:8px;font-size:14px;font-weight:700;letter-spacing:0.5px;text-decoration:none;transition:background 0.3s;" onmouseover="this.style.background='var(--forest-mid)'" onmouseout="this.style.background='var(--deep-forest)'">Join the 25</a>
+      <a href="https://www.mirajoco.org/25daysand25nights" style="display:inline-block;padding:18px 48px;background:var(--deep-forest);color:var(--warm-parchment);border-radius:8px;font-size:14px;font-weight:700;letter-spacing:0.5px;text-decoration:none;transition:background 0.3s;" onmouseover="this.style.background='var(--forest-mid)'" onmouseout="this.style.background='var(--deep-forest)'">Join the Waitlist</a>
     </div>
   </div>
 </section>
-<style>
-  @media (max-width: 768px) {
-    .offer-25-grid { grid-template-columns: 1fr !important; gap: 32px !important; text-align: center; }
-    .offer-25-grid img { margin: 0 auto; }
-  }
-</style>
 
 <!-- ═══ WATCH THIS ═══ -->
-<section style="background:var(--deep-forest);padding:80px 40px;text-align:center;" data-aos="fade-up">
+<style>
+  .watch-section { background: var(--deep-forest); padding: 80px 40px; text-align: center; }
+  @media (max-width: 768px) { .watch-section { padding: 56px 20px; } }
+</style>
+<section class="watch-section" data-aos="fade-up">
   <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--new-growth);font-weight:600;margin-bottom:16px;">Before You Go Any Further</div>
   <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,34px);color:var(--warm-parchment);font-weight:400;margin-bottom:12px;">Watch this. Two minutes.</h2>
   <p style="font-size:15px;color:var(--text-muted-dark);margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">This is what a weak mind costs you. Miranda breaks it down plainly.</p>
@@ -1456,17 +1460,6 @@
   </div>
 </section>
 
-<!-- ═══ EXPLORE ═══ -->
-<section style="background:var(--warm-parchment);padding:64px 40px;text-align:center;border-top:1px solid var(--border-light);" data-aos="fade-up">
-  <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--living-green);font-weight:600;margin-bottom:16px;">Keep Exploring</div>
-  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:24px;">
-    <a href="https://www.mirajoco.org/philosophy" style="display:inline-block;padding:14px 32px;background:var(--deep-forest);color:var(--warm-parchment);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">The Philosophy</a>
-    <a href="https://www.mirajoco.org/25daysand25nights" style="display:inline-block;padding:14px 32px;background:transparent;border:1px solid var(--deep-forest);color:var(--deep-forest);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">25 Days &amp; 25 Nights</a>
-    <a href="https://www.mirajoco.org/blog" style="display:inline-block;padding:14px 32px;background:transparent;border:1px solid var(--deep-forest);color:var(--deep-forest);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">Writing</a>
-    <a href="https://www.mirajoco.org/events" style="display:inline-block;padding:14px 32px;background:transparent;border:1px solid var(--deep-forest);color:var(--deep-forest);border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.5px;">Events</a>
-    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" style="display:inline-block;padding:14px 32px;background:var(--living-green);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.5px;">Let's Talk</a>
-  </div>
-</section>
 
 <!-- blog feed script removed with blog section -->
 <script>
