@@ -588,7 +588,7 @@
 <script src="/api/config"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
   // Get course slug from URL: /programs/course/slug
   const slug = window.location.pathname.split('/').pop();
@@ -607,7 +607,7 @@
 
   // ═══ INIT ═══
   async function init() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await db.auth.getSession();
     if (!session) { window.location.href = '/programs/login'; return; }
     state.user = session.user;
 

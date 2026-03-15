@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --warm-parchment: #EDE8DF;
-      --p-dark: #1A1228;
-      --p-light: #8B72C8;
-      --p-silver: #C8C4DC;
+      --deep-forest: #122012;
+      --new-growth: #6DC48A;
+      --warm-parchment: #F2EBD9;
+      --text-muted-dark: #8FAA8A;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--p-dark);
+      background: var(--deep-forest);
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       display: flex;
@@ -36,8 +36,8 @@
     .confirm-spinner {
       width: 48px;
       height: 48px;
-      border: 3px solid rgba(139,114,200,0.2);
-      border-top-color: var(--p-light);
+      border: 3px solid rgba(109,196,138,0.15);
+      border-top-color: var(--new-growth);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       margin: 0 auto 32px;
@@ -52,7 +52,7 @@
     }
     .confirm-sub {
       font-size: 15px;
-      color: var(--p-silver);
+      color: var(--text-muted-dark);
       line-height: 1.7;
     }
     .confirm-error {
@@ -66,7 +66,7 @@
       display: inline-block;
       margin-top: 24px;
       font-size: 13px;
-      color: var(--p-light);
+      color: var(--new-growth);
       text-decoration: none;
     }
     .confirm-link:hover { text-decoration: underline; }
@@ -88,7 +88,7 @@
 <script>
   async function handleConfirm() {
     try {
-    const supabase = window.supabase.createClient(
+    const db = window.supabase.createClient(
       window.SUPABASE_URL,
       window.SUPABASE_ANON_KEY
     );
@@ -105,7 +105,7 @@
     // PKCE flow: ?code= in query string (Supabase JS v2 default)
     const code = queryParams.get('code');
     if (code) {
-      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      const { error } = await db.auth.exchangeCodeForSession(code);
       if (error) {
         showError('Your link has expired. Please request a new one.');
         return;
@@ -118,7 +118,7 @@
     const accessToken = hashParams.get('access_token');
     const refreshToken = hashParams.get('refresh_token');
     if (accessToken && refreshToken) {
-      const { error } = await supabase.auth.setSession({
+      const { error } = await db.auth.setSession({
         access_token: accessToken,
         refresh_token: refreshToken
       });
@@ -131,7 +131,7 @@
     }
 
     // Fallback: already have a session
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await db.auth.getSession();
     if (session) {
       window.location.href = '/programs/dashboard';
     } else {

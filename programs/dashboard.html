@@ -272,13 +272,13 @@
 <script src="/api/config"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabase = window.supabase.createClient(
+  const db = window.supabase.createClient(
     window.SUPABASE_URL,
     window.SUPABASE_ANON_KEY
   );
 
   async function init() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await db.auth.getSession();
     if (!session) {
       window.location.href = '/programs/login';
       return;
@@ -287,7 +287,7 @@
     document.getElementById('user-email').textContent = session.user.email;
 
     document.getElementById('logout-btn').addEventListener('click', async () => {
-      await supabase.auth.signOut();
+      await db.auth.signOut();
       window.location.href = '/programs/login';
     });
 
@@ -298,7 +298,7 @@
     const container = document.getElementById('courses-container');
 
     try {
-    const { data: enrollments, error } = await supabase
+    const { data: enrollments, error } = await db
       .from('enrollments')
       .select(`
         course_id,
@@ -358,7 +358,7 @@
   }
 
   async function getCourseProgress(userId, courseId) {
-    const { data: lessons } = await supabase
+    const { data: lessons } = await db
       .from('lessons')
       .select('id, modules!inner(course_id)')
       .eq('modules.course_id', courseId);
@@ -366,7 +366,7 @@
     if (!lessons || lessons.length === 0) return 0;
 
     const lessonIds = lessons.map(l => l.id);
-    const { data: completed } = await supabase
+    const { data: completed } = await db
       .from('progress')
       .select('id')
       .eq('user_id', userId)
