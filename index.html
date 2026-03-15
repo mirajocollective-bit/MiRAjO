@@ -206,33 +206,32 @@
     .hero-btn-secondary:hover { border-color: var(--warm-parchment); background: rgba(237,232,223,0.06); }
     .hero-image {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 40px;
-      background: var(--deep-forest);
+      overflow: hidden;
     }
-    .hero-image iframe {
+    .hero-image img {
       width: 100%;
-      max-width: 320px;
-      aspect-ratio: 9/16;
-      border: none;
-      border-radius: 20px;
-      box-shadow: 0 32px 96px rgba(0,0,0,0.55), 0 0 0 1px rgba(109,196,138,0.15);
-      position: relative;
-      z-index: 1;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
     .hero-image::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(37,107,66,0.18) 0%, transparent 70%);
+      top: 0; left: 0; bottom: 0;
+      width: 160px;
+      background: linear-gradient(to right, var(--deep-forest), transparent);
+      z-index: 1;
       pointer-events: none;
     }
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-image { padding: 32px 24px; order: -1; }
-      .hero-image iframe { max-width: 260px; }
+      .hero-image { height: 72vw; order: -1; }
+      .hero-image::before {
+        width: auto; top: auto; left: 0; right: 0; bottom: 0;
+        height: 120px;
+        background: linear-gradient(to top, var(--deep-forest), transparent);
+      }
       .hero-content { padding: 40px 24px 64px; }
     }
 
@@ -943,23 +942,40 @@
     .miranda-inner { display: contents; }
     .miranda-photo {
       position: relative;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 40px;
+      background: var(--deep-forest);
     }
-    .miranda-photo img {
+    .miranda-photo iframe {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
+      max-width: 300px;
+      aspect-ratio: 9/16;
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(109,196,138,0.12);
+      position: relative;
+      z-index: 1;
     }
-    .miranda-photo::after {
+    .miranda-photo::before {
       content: '';
       position: absolute;
-      top: 0; right: 0; bottom: 0;
-      width: 140px;
-      background: linear-gradient(to left, var(--deep-forest), transparent);
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(37,107,66,0.15) 0%, transparent 70%);
       pointer-events: none;
     }
+    .miranda-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .miranda-cta-outline {
+      color: var(--text-muted-dark);
+      border-bottom-color: rgba(157,196,168,0.3);
+    }
+    .miranda-cta-outline:hover { color: var(--warm-parchment); border-bottom-color: var(--warm-parchment); }
     .miranda-letter {
       display: flex;
       flex-direction: column;
@@ -1013,9 +1029,10 @@
     .miranda-cta:hover { color: var(--warm-parchment); border-color: var(--warm-parchment); }
     @media (max-width: 768px) {
       .miranda-section { grid-template-columns: 1fr; min-height: auto; }
-      .miranda-photo { height: 80vw; order: -1; }
-      .miranda-photo::after { width: auto; right: 0; left: 0; top: auto; height: 100px; background: linear-gradient(to top, var(--deep-forest), transparent); }
+      .miranda-photo { padding: 40px 24px; order: -1; }
+      .miranda-photo iframe { max-width: 240px; }
       .miranda-letter { padding: 48px 24px 64px; }
+      .miranda-links { flex-direction: column; }
     }
 
     /* ═══ QUOTE TICKER ═══ */
@@ -1252,13 +1269,7 @@
     </div>
   </div>
   <div class="hero-image" data-aos="fade-left">
-    <iframe
-      src="https://www.youtube.com/embed/UsJMXwNqns0?rel=0&modestbranding=1"
-      title="A Weak Mind — Miranda Johnson"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>
+    <img src="img/Miranda J- Headshot.jpeg" alt="Miranda Johnson">
   </div>
 </section>
 
@@ -1266,18 +1277,27 @@
 <section class="miranda-section">
   <div class="miranda-inner">
     <div class="miranda-photo" data-aos="fade-right">
-      <img src="img/black and white outfit miranda.jpg" alt="Miranda Johnson, Founder of MiRAjO Collective">
+      <iframe
+        src="https://www.youtube.com/embed/UsJMXwNqns0?rel=0&modestbranding=1"
+        title="A Weak Mind — Miranda Johnson"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
     </div>
     <div class="miranda-letter" data-aos="fade-left">
       <div class="miranda-eyebrow">From the Founder</div>
       <h2 class="miranda-heading">I built this because this person is and was me.</h2>
       <div class="miranda-body">
-        <p>You are the one everyone depends on. The decision maker. Somehow you still show up even when you are running on empty — carrying more than anyone can see.</p>
+        <p>You are the one everyone depends on. The decision maker. Somehow you still show up even when you are running on empty, carrying more than anyone can see.</p>
         <p>You attract people who want your gift more than they want you. You pour into rooms that cannot hold what you are carrying. Being the one everyone leans on can be the loneliest place in the world.</p>
         <p>You have failed before and you are willing to try again. This time you go inward. You trust what you already know. You become the I AM statement you have been putting off. That is exactly why MiRAjO exists.</p>
       </div>
       <div class="miranda-signature">Miranda Johnson</div>
-      <a href="https://www.mirajoco.org/philosophy" class="miranda-cta">Read the Philosophy &rarr;</a>
+      <div class="miranda-links">
+        <a href="https://www.mirajoco.org/philosophy" class="miranda-cta">The Philosophy &rarr;</a>
+        <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="miranda-cta miranda-cta-outline">Connect with Miranda &rarr;</a>
+      </div>
     </div>
   </div>
 </section>
