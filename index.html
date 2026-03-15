@@ -957,6 +957,11 @@
       box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(109,196,138,0.12);
       position: relative;
       z-index: 1;
+      animation: videoFloat 6s ease-in-out infinite;
+    }
+    @keyframes videoFloat {
+      0%, 100% { transform: translateY(0px); box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(109,196,138,0.12); }
+      50% { transform: translateY(-12px); box-shadow: 0 40px 100px rgba(0,0,0,0.55), 0 0 40px rgba(109,196,138,0.18), 0 0 0 1px rgba(109,196,138,0.2); }
     }
     .miranda-photo::before {
       content: '';
@@ -1549,22 +1554,7 @@
 })();
 </script>
 
-<!-- ═══ NEWSLETTER ═══ -->
-<section class="newsletter-section">
-  <div class="newsletter-wrap">
-    <div class="newsletter-text">
-      <div class="newsletter-head">Stay rooted.</div>
-      <p class="newsletter-sub">Insights and writing delivered with care, not urgency. No countdowns, no spam. Just grounded truth that helps you see what you've been missing.</p>
-    </div>
-    <div class="newsletter-form-wrap">
-      <iframe src="https://api.leadconnectorhq.com/widget/form/IQKPOmt4KBDFJf1roiBR"
-        id="inline-IQKPOmt4KBDFJf1roiBR" data-form-name="Newsletter" data-form-id="IQKPOmt4KBDFJf1roiBR"
-        title="Newsletter">
-      </iframe>
-    </div>
-  </div>
-  <script src="https://link.msgsndr.com/js/form_embed.js"></script>
-</section>
+<!-- newsletter form removed — Kit form link to be added -->
 
 <!-- ═══ FOOTER ═══ -->
 <footer class="site-footer">
