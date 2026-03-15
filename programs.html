@@ -180,11 +180,12 @@
     .featured-includes li::before { content: '→'; position: absolute; left: 0; color: var(--living-green); font-size: 12px; top: 8px; }
     .featured-cta { display: inline-block; padding: 18px 48px; background: var(--deep-forest); color: var(--warm-parchment); border-radius: 8px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.2s; }
     .featured-cta:hover { background: var(--forest-mid); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(18,32,18,0.22); }
-    .featured-image-wrap { border-radius: 16px; overflow: hidden; box-shadow: 0 32px 80px rgba(18,32,18,0.22); aspect-ratio: 3/4; position: relative; }
-    .featured-image-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.6s ease; }
-    .featured-image-wrap:hover img { transform: scale(1.04); }
-    .featured-image-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px; background: linear-gradient(to top, rgba(18,32,18,0.85) 0%, transparent 100%); }
-    .featured-image-caption { font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--warm-parchment); font-style: italic; line-height: 1.4; }
+    .featured-image-wrap { border-radius: 16px; overflow: hidden; box-shadow: 0 40px 90px rgba(18,32,18,0.28); aspect-ratio: 3/4; position: relative; }
+    .featured-image-wrap::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(37,107,66,0.12) 0%, transparent 50%); z-index: 1; pointer-events: none; }
+    .featured-image-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; transition: transform 0.7s ease; }
+    .featured-image-wrap:hover img { transform: scale(1.05); }
+    .featured-image-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 28px; background: linear-gradient(to top, rgba(18,32,18,0.9) 0%, rgba(18,32,18,0.4) 60%, transparent 100%); z-index: 2; }
+    .featured-image-caption { font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--warm-parchment); font-style: italic; line-height: 1.5; }
 
     /* ═══ QUOTE BREAK ═══ */
     .quote-break { background: var(--deep-forest); padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
@@ -232,12 +233,18 @@
       .nav-links, .nav-cta-wrap { display: none; }
       .nav-hamburger { display: block; }
       .mobile-menu { padding: 20px; }
-      .programs-hero { padding: 72px 24px 56px; }
-      .featured-section, .coming-section { padding: 64px 24px; }
-      .featured-inner { grid-template-columns: 1fr; gap: 40px; }
-      .featured-image-wrap { aspect-ratio: 4/3; }
-      .coming-grid { grid-template-columns: 1fr; gap: 20px; }
-      .quote-break { padding: 56px 24px; }
+      .programs-hero { padding: 64px 20px 48px; }
+      .programs-hero h1 { font-size: clamp(28px, 7vw, 40px); }
+      .featured-section, .coming-section { padding: 56px 20px; }
+      .featured-inner { grid-template-columns: 1fr; gap: 32px; }
+      .featured-inner > div:first-child { order: 1; }
+      .featured-image-wrap { order: 2; aspect-ratio: 4/3; max-width: 100%; }
+      .featured-logo { max-width: 200px; }
+      .featured-cta { display: block; text-align: center; padding: 16px 32px; }
+      .coming-grid { grid-template-columns: 1fr; gap: 16px; }
+      .coming-card-visual { height: 120px; }
+      .quote-break { padding: 56px 20px; }
+      .quote-break-text { font-size: clamp(18px, 5vw, 26px); }
       .site-footer { padding: 40px 20px 20px; }
       .footer-links { gap: 16px; }
     }
@@ -320,7 +327,7 @@
       <a href="https://www.mirajoco.org/25daysand25nights" class="featured-cta">Join the Waitlist</a>
     </div>
     <div class="featured-image-wrap" data-aos="fade-left">
-      <img src="img/Miranda Praise.jpg" alt="Miranda Johnson" loading="lazy">
+      <img src="img/miranda praise.jpg" alt="Miranda Johnson" loading="lazy">
       <div class="featured-image-overlay">
         <p class="featured-image-caption">Every seed has a season.<br>The question is whether you're planting or waiting.</p>
       </div>
