@@ -991,32 +991,21 @@
     .miranda-inner { display: contents; }
     .miranda-photo {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 56px 40px;
-      background: var(--deep-forest);
+      overflow: hidden;
     }
-    .miranda-photo iframe {
+    .miranda-photo img {
       width: 100%;
-      max-width: 300px;
-      aspect-ratio: 9/16;
-      border: none;
-      border-radius: 18px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(109,196,138,0.12);
-      position: relative;
-      z-index: 1;
-      animation: videoFloat 6s ease-in-out infinite;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
-    @keyframes videoFloat {
-      0%, 100% { transform: translateY(0px); box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(109,196,138,0.12); }
-      50% { transform: translateY(-12px); box-shadow: 0 40px 100px rgba(0,0,0,0.55), 0 0 40px rgba(109,196,138,0.18), 0 0 0 1px rgba(109,196,138,0.2); }
-    }
-    .miranda-photo::before {
+    .miranda-photo::after {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(37,107,66,0.15) 0%, transparent 70%);
+      top: 0; right: 0; bottom: 0;
+      width: 140px;
+      background: linear-gradient(to left, var(--deep-forest), transparent);
       pointer-events: none;
     }
     .miranda-links {
@@ -1083,10 +1072,9 @@
     .miranda-cta:hover { color: var(--warm-parchment); border-color: var(--warm-parchment); }
     @media (max-width: 768px) {
       .miranda-section { grid-template-columns: 1fr; min-height: auto; }
-      .miranda-photo { padding: 40px 24px; order: -1; }
-      .miranda-photo iframe { max-width: 240px; }
+      .miranda-photo { height: 80vw; order: -1; }
+      .miranda-photo::after { width: auto; right: 0; left: 0; top: auto; height: 100px; background: linear-gradient(to top, var(--deep-forest), transparent); }
       .miranda-letter { padding: 48px 24px 64px; }
-      .miranda-links { flex-direction: column; }
     }
 
     /* ═══ QUOTE TICKER ═══ */
@@ -1318,8 +1306,8 @@
     <h1>Stop watering everyone else's field.</h1>
     <p class="hero-sub">For the decision makers, the builders, and the ones everyone calls. This is where you learn to lead yourself first.</p>
     <div class="hero-actions">
-      <a href="https://www.mirajoco.org/philosophy" class="hero-btn-primary">Explore the Work</a>
-      <a href="https://www.mirajoco.org/25daysand25nights" class="hero-btn-secondary">Start the 25</a>
+      <a href="https://www.mirajoco.org/philosophy" class="hero-btn-primary">Start Here</a>
+      <a href="https://www.mirajoco.org/25daysand25nights" class="hero-btn-secondary">Join the 25</a>
     </div>
   </div>
   <div class="hero-image" data-aos="fade-left">
@@ -1331,13 +1319,7 @@
 <section class="miranda-section">
   <div class="miranda-inner">
     <div class="miranda-photo" data-aos="fade-right">
-      <iframe
-        src="https://www.youtube.com/embed/UsJMXwNqns0?rel=0&modestbranding=1"
-        title="A Weak Mind — Miranda Johnson"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen>
-      </iframe>
+      <img src="img/black and white outfit miranda.jpg" alt="Miranda Johnson, Founder of MiRAjO Collective">
     </div>
     <div class="miranda-letter" data-aos="fade-left">
       <div class="miranda-eyebrow">From the Founder</div>
@@ -1356,21 +1338,44 @@
   </div>
 </section>
 
-<!-- ═══ PORTRAIT VIDEO — 25 DAYS ═══ -->
-<section class="portrait-video-section" data-aos="fade-up">
-  <div class="portrait-video-eyebrow">Now Enrolling</div>
-  <h2 class="portrait-video-heading">25 Days &amp; 25 Nights is officially live.</h2>
-  <p class="portrait-video-sub">The reset that changes everything. See it for yourself.</p>
-  <div class="portrait-video-wrap">
+<!-- ═══ 25D25N OFFER ═══ -->
+<section style="background:var(--warm-parchment);padding:100px 40px;" data-aos="fade-up">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <div>
+      <img src="img/2525 Official Logo.png" alt="25 Days and 25 Nights" style="width:100%;max-width:320px;display:block;">
+    </div>
+    <div>
+      <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--living-green);font-weight:600;margin-bottom:20px;">Now Enrolling</div>
+      <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(28px,3.5vw,44px);color:var(--deep-forest);font-weight:400;line-height:1.15;margin-bottom:20px;">25 days to reset.<br>25 nights to rebuild.</h2>
+      <p style="font-size:16px;color:var(--text-body-light);line-height:1.8;margin-bottom:12px;">Food. Movement. Silence. You. Four pillars. One decision.</p>
+      <p style="font-size:22px;font-family:'Instrument Serif',serif;color:var(--deep-forest);margin-bottom:32px;">$497 &middot; Lifetime Access</p>
+      <a href="https://www.mirajoco.org/25daysand25nights" style="display:inline-block;padding:18px 48px;background:var(--deep-forest);color:var(--warm-parchment);border-radius:8px;font-size:14px;font-weight:700;letter-spacing:0.5px;text-decoration:none;transition:background 0.3s;" onmouseover="this.style.background='var(--forest-mid)'" onmouseout="this.style.background='var(--deep-forest)'">Join the 25</a>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 768px) {
+    .offer-25-grid { grid-template-columns: 1fr !important; gap: 32px !important; text-align: center; }
+    .offer-25-grid img { margin: 0 auto; }
+  }
+</style>
+
+<!-- ═══ WATCH THIS ═══ -->
+<section style="background:var(--deep-forest);padding:80px 40px;text-align:center;" data-aos="fade-up">
+  <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--new-growth);font-weight:600;margin-bottom:16px;">Before You Go Any Further</div>
+  <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,34px);color:var(--warm-parchment);font-weight:400;margin-bottom:12px;">Watch this. Two minutes.</h2>
+  <p style="font-size:15px;color:var(--text-muted-dark);margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">This is what a weak mind costs you. Miranda breaks it down plainly.</p>
+  <div style="position:relative;width:100%;max-width:320px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.55);">
+    <div style="padding-bottom:177.78%;"></div>
     <iframe
-      src="https://www.youtube.com/embed/a6OauLaJp_U?rel=0&modestbranding=1"
-      title="25 Days 25 Nights is officially LIVE."
+      src="https://www.youtube.com/embed/UsJMXwNqns0?rel=0&modestbranding=1"
+      title="A Weak Mind — Miranda Johnson"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
+      allowfullscreen
+      style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;">
     </iframe>
   </div>
-  <a href="https://www.mirajoco.org/programs" class="portrait-video-cta">Enroll in 25 Days &amp; 25 Nights</a>
 </section>
 
 <!-- ═══ QUOTE TICKER ═══ -->
