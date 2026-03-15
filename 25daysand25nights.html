@@ -24,14 +24,14 @@
       --text-body-light: #4A5A48;
       --border-light: rgba(42,58,42,0.08);
       --border-dark: rgba(237,232,223,0.12);
-      /* 25D25N — warm dark palette, subtle purple accent, gold warmth */
-      --p-dark: #131110;
-      --p-dark-mid: #1C1917;
-      --p-deep: #2A2040;
-      --p-mid: #7A62B8;
-      --p-light: #A490D0;
-      --p-pale: #F4F1FC;
-      --p-silver: #C4BAD8;
+      /* 25D25N — forest dark + soft lavender + gold */
+      --p-dark: #0D1A0F;
+      --p-dark-mid: #121F13;
+      --p-deep: #1A1228;
+      --p-mid: #8E7BC4;
+      --p-light: #BDB0E0;
+      --p-pale: #F2F0FA;
+      --p-silver: #CCC4E0;
       --gold: #C9A96E;
       --gold-light: #DFC08A;
       --gold-glow: rgba(201,169,110,0.18);
@@ -54,8 +54,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 18px 40px;
-      background: linear-gradient(180deg, #1C1917, #131110);
-      border-bottom: 1px solid rgba(201,169,110,0.12);
+      background: linear-gradient(180deg, #162018, #0D1A0F);
+      border-bottom: 1px solid rgba(189,176,224,0.1);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -116,8 +116,8 @@
       display: none;
       position: absolute;
       top: 100%; left: 0; right: 0;
-      background: #131110;
-      border-bottom: 1px solid rgba(201,169,110,0.15);
+      background: #0D1A0F;
+      border-bottom: 1px solid rgba(189,176,224,0.1);
       padding: 20px;
       flex-direction: column;
       gap: 16px;
@@ -145,8 +145,9 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 60% 40%, rgba(201,169,110,0.10) 0%, transparent 65%),
-                  radial-gradient(ellipse at 20% 80%, rgba(122,98,184,0.08) 0%, transparent 50%);
+      background: radial-gradient(ellipse at 60% 30%, rgba(74,124,89,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 75%, rgba(189,176,224,0.09) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 80%, rgba(201,169,110,0.07) 0%, transparent 45%);
       pointer-events: none;
     }
     .hero-clock {
@@ -270,13 +271,13 @@
     .pillars-inner { max-width: 1100px; margin: 0 auto; }
     .pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 56px; }
     .pillar-card {
-      background: rgba(255,250,240,0.04);
-      border: 1px solid rgba(201,169,110,0.18);
+      background: rgba(240,248,242,0.03);
+      border: 1px solid rgba(189,176,224,0.18);
       border-radius: 20px;
       padding: 48px 40px;
       transition: border-color 0.3s, transform 0.2s;
     }
-    .pillar-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .pillar-card:hover { border-color: var(--p-light); transform: translateY(-4px); }
     .pillar-icon {
       font-size: 36px;
       margin-bottom: 20px;
@@ -286,7 +287,7 @@
       font-size: 10px;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--p-light);
       font-weight: 600;
       margin-bottom: 12px;
     }
@@ -323,7 +324,7 @@
       content: '◆';
       position: absolute;
       left: 0;
-      color: var(--gold);
+      color: var(--p-light);
       font-size: 6px;
       top: 13px;
     }
@@ -332,16 +333,16 @@
       font-size: 14px;
       color: rgba(237,232,223,0.65);
       padding: 8px 0;
-      border-bottom: 1px solid rgba(201,169,110,0.1);
+      border-bottom: 1px solid rgba(189,176,224,0.1);
       line-height: 1.5;
     }
     .pillar-emoji-list li:last-child { border-bottom: none; }
     .pillar-btn {
       display: inline-block;
       padding: 12px 28px;
-      background: rgba(201,169,110,0.12);
-      color: var(--gold-light);
-      border: 1px solid rgba(201,169,110,0.3);
+      background: rgba(189,176,224,0.1);
+      color: var(--p-light);
+      border: 1px solid rgba(189,176,224,0.28);
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
@@ -349,21 +350,21 @@
       text-decoration: none;
       transition: all 0.3s;
     }
-    .pillar-btn:hover { background: var(--gold); color: #131110; border-color: var(--gold); }
+    .pillar-btn:hover { background: var(--p-light); color: #0D1A0F; border-color: var(--p-light); }
 
     /* ═══ 7 CURRENTS ═══ */
-    .currents-section { background: var(--p-dark); padding: 100px 40px; }
+    .currents-section { background: var(--p-dark-mid); padding: 100px 40px; }
     .currents-inner { max-width: 1100px; margin: 0 auto; }
     .currents-intro { max-width: 680px; margin: 0 auto 64px; text-align: center; }
     .currents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .current-card {
-      background: rgba(255,250,240,0.03);
-      border: 1px solid rgba(201,169,110,0.15);
+      background: rgba(240,248,242,0.03);
+      border: 1px solid rgba(189,176,224,0.16);
       border-radius: 16px;
       padding: 36px 28px;
       transition: border-color 0.3s, transform 0.2s;
     }
-    .current-card:hover { border-color: rgba(201,169,110,0.42); transform: translateY(-4px); }
+    .current-card:hover { border-color: var(--p-light); transform: translateY(-4px); }
     .current-number {
       font-family: 'Instrument Serif', serif;
       font-size: 52px;
@@ -482,8 +483,8 @@
     /* ═══ PRICING ═══ */
     .pricing-section { background: var(--p-dark-mid); padding: 100px 40px; text-align: center; }
     .pricing-card {
-      background: rgba(255,250,240,0.05);
-      border: 1px solid rgba(201,169,110,0.22);
+      background: rgba(240,248,242,0.04);
+      border: 1px solid rgba(189,176,224,0.2);
       border-radius: 24px;
       padding: 56px 48px;
       max-width: 580px;
@@ -496,7 +497,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      background: linear-gradient(90deg, var(--living-green), var(--p-light), var(--gold));
     }
     .pricing-badge {
       display: inline-block;
@@ -535,14 +536,14 @@
       padding: 12px 0;
       padding-left: 24px;
       position: relative;
-      border-bottom: 1px solid rgba(201,169,110,0.1);
+      border-bottom: 1px solid rgba(189,176,224,0.1);
     }
     .pricing-list li:last-child { border-bottom: none; }
     .pricing-list li::before {
       content: '✓';
       position: absolute;
       left: 0;
-      color: var(--gold);
+      color: var(--new-growth);
       font-weight: 700;
     }
     .pricing-btn {
@@ -630,8 +631,8 @@
     .waitlist-input {
       width: 100%;
       padding: 16px 20px;
-      background: rgba(255,250,240,0.06);
-      border: 1px solid rgba(201,169,110,0.22);
+      background: rgba(240,248,242,0.05);
+      border: 1px solid rgba(189,176,224,0.2);
       border-radius: 10px;
       font-size: 15px;
       color: var(--warm-parchment);
@@ -640,7 +641,7 @@
       transition: border-color 0.2s;
     }
     .waitlist-input::placeholder { color: rgba(237,232,223,0.35); }
-    .waitlist-input:focus { border-color: var(--gold); }
+    .waitlist-input:focus { border-color: var(--p-light); }
     .waitlist-btn {
       width: 100%;
       padding: 18px;
@@ -718,8 +719,8 @@
       display: inline-flex;
       align-items: center;
       gap: 14px;
-      background: rgba(255,250,240,0.07);
-      border: 1px solid rgba(201,169,110,0.3);
+      background: rgba(240,248,242,0.06);
+      border: 1px solid rgba(189,176,224,0.3);
       border-radius: 50px;
       padding: 12px 24px 12px 12px;
       color: var(--warm-parchment);
@@ -753,16 +754,16 @@
       pointer-events: none;
       animation: heroRingPulse 8s ease-in-out infinite;
     }
-    .hero-ring-1 { width: 340px; height: 340px; top: 8%; right: 6%; border-color: rgba(201,169,110,0.07); animation-delay: 0s; }
-    .hero-ring-2 { width: 220px; height: 220px; bottom: 12%; left: 5%; border-color: rgba(164,144,208,0.06); animation-delay: -3s; }
-    .hero-ring-3 { width: 160px; height: 160px; top: 18%; left: 12%; border-color: rgba(201,169,110,0.05); animation-delay: -5.5s; }
+    .hero-ring-1 { width: 340px; height: 340px; top: 8%; right: 6%; border-color: rgba(189,176,224,0.09); animation-delay: 0s; }
+    .hero-ring-2 { width: 220px; height: 220px; bottom: 12%; left: 5%; border-color: rgba(74,124,89,0.1); animation-delay: -3s; }
+    .hero-ring-3 { width: 160px; height: 160px; top: 18%; left: 12%; border-color: rgba(201,169,110,0.07); animation-delay: -5.5s; }
     @keyframes heroRingPulse {
       0%,100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
       50% { transform: scale(1.12) rotate(15deg); opacity: 1; }
     }
 
     /* ═══ STATS BAR ═══ */
-    .stats-bar { background: var(--p-dark-mid); border-bottom: 1px solid rgba(201,169,110,0.1); padding: 48px 40px; }
+    .stats-bar { background: var(--p-dark-mid); border-bottom: 1px solid rgba(189,176,224,0.1); padding: 48px 40px; }
     .stats-bar-inner { max-width: 680px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
     .stat-item { flex: 1; text-align: center; }
     .stat-number {
@@ -891,8 +892,8 @@
       top: calc(100% + 12px);
       left: 50%;
       transform: translateX(-50%);
-      background: #1C1917;
-      border: 1px solid rgba(201,169,110,0.15);
+      background: #121F13;
+      border: 1px solid rgba(189,176,224,0.12);
       border-radius: 10px;
       padding: 8px 0;
       min-width: 210px;
@@ -1023,32 +1024,32 @@
 </section>
 
 <!-- ═══ THIS IS FOR YOU ═══ -->
-<section style="background:var(--p-dark-mid);padding:100px 40px;" data-aos="fade-up">
+<section style="background:var(--p-dark);padding:100px 40px;" data-aos="fade-up">
   <div style="max-width:860px;margin:0 auto;text-align:center;">
     <div class="section-eyebrow" style="color:var(--gold);">Who This Is For</div>
     <h2 class="section-title" style="color:var(--warm-parchment);">You've been doing the work.<br>Just not <em style="color:var(--gold-light);font-style:italic;">this</em> work.</h2>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;text-align:left;">
-      <div style="background:rgba(255,250,240,0.04);border:1px solid rgba(201,169,110,0.18);border-radius:16px;padding:28px 24px;" data-aos="fade-right" data-aos-delay="0">
+      <div style="background:rgba(240,248,242,0.04);border:1px solid rgba(189,176,224,0.16);border-radius:16px;padding:28px 24px;" data-aos="fade-right" data-aos-delay="0">
         <div style="color:var(--gold);font-size:22px;margin-bottom:10px;">→</div>
         <p style="color:rgba(237,232,223,0.65);font-size:15px;line-height:1.8;">You've tried motivation, accountability partners, and discipline — and none of it fully stuck.</p>
       </div>
-      <div style="background:rgba(255,250,240,0.04);border:1px solid rgba(201,169,110,0.18);border-radius:16px;padding:28px 24px;" data-aos="fade-left" data-aos-delay="80">
+      <div style="background:rgba(240,248,242,0.04);border:1px solid rgba(189,176,224,0.16);border-radius:16px;padding:28px 24px;" data-aos="fade-left" data-aos-delay="80">
         <div style="color:var(--gold);font-size:22px;margin-bottom:10px;">→</div>
         <p style="color:rgba(237,232,223,0.65);font-size:15px;line-height:1.8;">You lead a team, a business, or a family — but nobody's leading you back to yourself.</p>
       </div>
-      <div style="background:rgba(255,250,240,0.04);border:1px solid rgba(201,169,110,0.18);border-radius:16px;padding:28px 24px;" data-aos="fade-right" data-aos-delay="160">
+      <div style="background:rgba(240,248,242,0.04);border:1px solid rgba(189,176,224,0.16);border-radius:16px;padding:28px 24px;" data-aos="fade-right" data-aos-delay="160">
         <div style="color:var(--gold);font-size:22px;margin-bottom:10px;">→</div>
         <p style="color:rgba(237,232,223,0.65);font-size:15px;line-height:1.8;">You know exactly what you need to do. You just can't make yourself do it consistently.</p>
       </div>
-      <div style="background:rgba(255,250,240,0.04);border:1px solid rgba(201,169,110,0.18);border-radius:16px;padding:28px 24px;" data-aos="fade-left" data-aos-delay="240">
+      <div style="background:rgba(240,248,242,0.04);border:1px solid rgba(189,176,224,0.16);border-radius:16px;padding:28px 24px;" data-aos="fade-left" data-aos-delay="240">
         <div style="color:var(--gold);font-size:22px;margin-bottom:10px;">→</div>
         <p style="color:rgba(237,232,223,0.65);font-size:15px;line-height:1.8;">You're tired of starting over. You want to finish something — all the way through — and feel it.</p>
       </div>
-      <div style="background:rgba(255,250,240,0.04);border:1px solid rgba(201,169,110,0.18);border-radius:16px;padding:28px 24px;" data-aos="fade-right" data-aos-delay="320">
+      <div style="background:rgba(240,248,242,0.04);border:1px solid rgba(189,176,224,0.16);border-radius:16px;padding:28px 24px;" data-aos="fade-right" data-aos-delay="320">
         <div style="color:var(--gold);font-size:22px;margin-bottom:10px;">→</div>
         <p style="color:rgba(237,232,223,0.65);font-size:15px;line-height:1.8;">The noise from everyone else is louder than your own voice right now. You need that to change.</p>
       </div>
-      <div style="background:rgba(255,250,240,0.04);border:1px solid rgba(201,169,110,0.18);border-radius:16px;padding:28px 24px;" data-aos="fade-left" data-aos-delay="400">
+      <div style="background:rgba(240,248,242,0.04);border:1px solid rgba(189,176,224,0.16);border-radius:16px;padding:28px 24px;" data-aos="fade-left" data-aos-delay="400">
         <div style="color:var(--gold);font-size:22px;margin-bottom:10px;">→</div>
         <p style="color:rgba(237,232,223,0.65);font-size:15px;line-height:1.8;">You're a decision maker who's overdue for a decision about yourself.</p>
       </div>
