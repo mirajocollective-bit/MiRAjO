@@ -3,735 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Programs — MiRAjO Collective</title>
+  <title>Programs — Miranda Johnson | MiRAjO Collective</title>
+  <meta name="description" content="Programs by Miranda Johnson — courses, live webinars, and self-guided workbooks built on the law of Seedtime and Harvest. See what's available and what's coming.">
+  <meta name="author" content="Miranda Johnson">
+  <link rel="canonical" href="https://www.mirajoco.org/programs">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.mirajoco.org/programs">
+  <meta property="og:title" content="Programs — Miranda Johnson | MiRAjO Collective">
+  <meta property="og:description" content="Courses, live webinars, and self-guided workbooks built on the law of Seedtime and Harvest.">
+  <meta property="og:image" content="https://www.mirajoco.org/img/Miranda J- Headshot.jpeg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Programs — Miranda Johnson | MiRAjO Collective">
+  <meta name="twitter:description" content="Courses, live webinars, and self-guided workbooks built on the law of Seedtime and Harvest.">
+  <meta name="twitter:image" content="https://www.mirajoco.org/img/Miranda J- Headshot.jpeg">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
     :root {
-      --deep-forest: #2A3A2A;
-      --forest-mid: #3A5A3E;
-      --living-green: #4A7C59;
-      --living-green-light: #5E9470;
-      --new-growth: #A8C5A0;
-      --dry-sage: #C9B896;
-      --warm-parchment: #EDE8DF;
-      --soft-white: #F7F4EF;
-      --cream: #FBF9F5;
-      --parchment-dark: #DDD5C8;
-      --bronze-earth: #A89068;
-      --text-on-dark: #EDE8DF;
-      --text-muted-dark: #9AAA94;
-      --text-on-light: #2A3A2A;
-      --text-muted-light: #6A7A68;
-      --text-body-light: #4A5A48;
-      --border-light: rgba(42,58,42,0.08);
-      --border-dark: rgba(237,232,223,0.12);
+      --deep-forest: #122012;
+      --forest-mid: #1E4226;
+      --living-green: #256B42;
+      --living-green-light: #339158;
+      --new-growth: #6DC48A;
+      --dry-sage: #C4A245;
+      --warm-parchment: #F2EBD9;
+      --soft-white: #FAF7F2;
+      --cream: #FDFBF8;
+      --parchment-dark: #E0D4BC;
+      --bronze-earth: #B88A38;
+      --text-on-dark: #F2EBD9;
+      --text-muted-dark: #9DC4A8;
+      --text-on-light: #122012;
+      --text-muted-light: #3D5E42;
+      --text-body-light: #2A4830;
+      --border-light: rgba(18,32,18,0.10);
+      --border-dark: rgba(242,235,217,0.15);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: var(--soft-white);
-      color: var(--text-on-light);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    body { background: var(--soft-white); color: var(--text-on-light); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
     /* ═══ NAV ═══ */
-    .site-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 40px;
-      background: linear-gradient(180deg, #4A6B4E, #2A3A2A);
-      border-bottom: 1px solid var(--border-dark);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-logo img { height: 144px; width: auto; display: block; }
+    .site-nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 40px; background: var(--soft-white); border-bottom: 1px solid var(--border-light); position: sticky; top: 0; z-index: 100; }
+    .nav-logo img { height: 48px; width: auto; display: block; }
     .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a {
-      font-size: 13px;
-      color: var(--text-muted-dark);
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      font-weight: 400;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--warm-parchment); }
+    .nav-links a { font-size: 13px; color: var(--text-muted-light); text-decoration: none; letter-spacing: 0.5px; font-weight: 400; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--deep-forest); }
     .nav-cta-wrap { display: flex; align-items: center; gap: 10px; }
-    .nav-login {
-      display: inline-flex;
-      align-items: center;
-      color: var(--text-muted-dark);
-      transition: color 0.2s;
-    }
-    .nav-login:hover { color: var(--warm-parchment); }
-    .nav-cta {
-      display: inline-block;
-      font-size: 12px;
-      padding: 9px 22px;
-      background: var(--dry-sage);
-      color: var(--deep-forest);
-      border-radius: 6px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .nav-cta:hover { background: var(--bronze-earth); color: #fff; }
-    .nav-hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--warm-parchment); }
-    .mobile-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0; right: 0;
-      background: var(--deep-forest);
-      border-bottom: 1px solid var(--border-dark);
-      padding: 20px;
-      flex-direction: column;
-      gap: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      z-index: 99;
-    }
+    .nav-login { display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted-light); transition: color 0.2s; }
+    .nav-login:hover { color: var(--deep-forest); }
+    .nav-cta { display: inline-block; font-size: 12px; padding: 9px 22px; background: var(--living-green); color: #fff; border-radius: 6px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; animation: ctaPulse 3s ease-in-out infinite; }
+    .nav-cta::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); animation: ctaShimmer 3s ease-in-out infinite; }
+    @keyframes ctaPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(37,107,66,0.5); } 50% { box-shadow: 0 0 0 7px rgba(37,107,66,0); } }
+    @keyframes ctaShimmer { 0% { left: -100%; } 40%, 100% { left: 160%; } }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37,107,66,0.45); animation: none; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--deep-forest); }
+    .mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--soft-white); border-bottom: 1px solid var(--border-light); padding: 20px 40px; flex-direction: column; gap: 16px; box-shadow: 0 8px 24px rgba(42,58,42,0.08); }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-size: 14px;
-      color: var(--text-muted-dark);
-      text-decoration: none;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border-dark);
-    }
+    .mobile-menu a { font-size: 14px; color: var(--text-body-light); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-weight: 400; }
     .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu .nav-cta { text-align: center; margin-top: 8px; }
-
-    /* ═══ HERO ═══ */
-    .programs-hero {
-      background: var(--deep-forest);
-      padding: 100px 40px 80px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .programs-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(74,124,89,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-eyebrow {
-      font-size: 11px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: var(--new-growth);
-      font-weight: 500;
-      margin-bottom: 20px;
-    }
-    .hero-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(32px, 5vw, 56px);
-      font-weight: 400;
-      color: var(--warm-parchment);
-      line-height: 1.15;
-      margin-bottom: 20px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .hero-sub {
-      font-size: 16px;
-      color: var(--text-muted-dark);
-      max-width: 480px;
-      margin: 0 auto 40px;
-      line-height: 1.75;
-      font-weight: 400;
-    }
-    .hero-scroll {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted-dark);
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-    .hero-scroll svg {
-      width: 20px;
-      height: 20px;
-      stroke: var(--new-growth);
-      animation: bounce 1.8s ease-in-out infinite;
-    }
-    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-
-    /* ═══ PROGRAM SECTION — FLAGSHIP ═══ */
-    .program-section {
-      padding: 0;
-      background: #F3F0F9;
-    }
-    /* 25D25N purple palette */
-    :root {
-      --25d-deep: #3D2B72;
-      --25d-mid: #5A3F9A;
-      --25d-light: #8B72C8;
-      --25d-pale: #EDE8F8;
-      --25d-silver: #C8C4DC;
-    }
-    .program-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 100px 40px;
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 64px;
-      align-items: start;
-    }
-
-    /* Left — program details */
-    .program-details {}
-    .program-eyebrow {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--25d-mid);
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-    .program-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-    .program-logo-img {
-      width: 80px;
-      height: 80px;
-      border-radius: 14px;
-      object-fit: contain;
-      background: #fff;
-      border: 1px solid rgba(90,63,154,0.2);
-      padding: 8px;
-      box-shadow: 0 4px 16px rgba(90,63,154,0.12);
-    }
-    .program-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 400;
-      color: var(--deep-forest);
-      line-height: 1.15;
-    }
-    .program-tagline {
-      font-size: 17px;
-      color: var(--text-muted-light);
-      font-style: italic;
-      margin-bottom: 32px;
-      font-weight: 400;
-      line-height: 1.6;
-    }
-    .program-description {
-      font-size: 16px;
-      color: var(--text-body-light);
-      line-height: 1.85;
-      font-weight: 400;
-      margin-bottom: 40px;
-      max-width: 580px;
-    }
-    .includes-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--deep-forest);
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-    .includes-list {
-      list-style: none;
-      margin-bottom: 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px 24px;
-    }
-    .includes-list li {
-      font-size: 15px;
-      color: var(--text-body-light);
-      padding: 10px 0;
-      padding-left: 20px;
-      position: relative;
-      font-weight: 400;
-      line-height: 1.5;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .includes-list li::before {
-      content: '◆';
-      position: absolute;
-      left: 0;
-      color: var(--25d-light);
-      font-size: 7px;
-      top: 14px;
-    }
-    .program-mobile-cta {
-      display: none;
-    }
-
-    /* Right — purchase card */
-    .purchase-card {
-      background: #fff;
-      border: 1px solid var(--border-light);
-      border-radius: 20px;
-      padding: 40px 36px;
-      position: sticky;
-      top: 100px;
-      box-shadow: 0 8px 48px rgba(42,58,42,0.08);
-    }
-    .purchase-badge {
-      display: inline-block;
-      background: rgba(90,63,154,0.1);
-      color: var(--25d-mid);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 24px;
-    }
-    .purchase-price-wrap {
-      margin-bottom: 8px;
-    }
-    .purchase-original {
-      font-size: 18px;
-      color: var(--text-muted-light);
-      text-decoration: line-through;
-      font-weight: 400;
-      margin-right: 8px;
-    }
-    .purchase-price {
-      font-family: 'Instrument Serif', serif;
-      font-size: 52px;
-      color: var(--deep-forest);
-      font-weight: 400;
-      line-height: 1;
-    }
-    .purchase-price-note {
-      font-size: 13px;
-      color: var(--text-muted-light);
-      margin-bottom: 28px;
-      font-weight: 400;
-    }
-    .promo-tag {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(90,63,154,0.07);
-      border: 1px solid rgba(90,63,154,0.2);
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-bottom: 28px;
-    }
-    .promo-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--25d-mid);
-      flex-shrink: 0;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .promo-text {
-      font-size: 13px;
-      color: var(--25d-mid);
-      font-weight: 500;
-    }
-    .enroll-btn {
-      display: block;
-      width: 100%;
-      padding: 18px 28px;
-      background: var(--25d-deep);
-      color: #fff;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      text-align: center;
-      transition: background 0.3s, transform 0.2s;
-      margin-bottom: 16px;
-    }
-    .enroll-btn:hover {
-      background: var(--25d-mid);
-      transform: translateY(-1px);
-    }
-    .enroll-sub {
-      font-size: 12px;
-      color: var(--text-muted-light);
-      text-align: center;
-      line-height: 1.6;
-    }
-    .enroll-btn-secondary {
-      display: block;
-      width: 100%;
-      padding: 14px 28px;
-      background: transparent;
-      color: var(--25d-deep);
-      border: 1px solid rgba(61,43,114,0.3);
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      text-align: center;
-      transition: all 0.2s;
-      margin-bottom: 8px;
-    }
-    .enroll-btn-secondary:hover {
-      border-color: var(--25d-mid);
-      color: var(--25d-mid);
-      background: rgba(61,43,114,0.05);
-    }
-
-    /* ═══ NAV DROPDOWN ═══ */
     .nav-dropdown { position: relative; }
-    .nav-dropdown > a::after {
-      content: ' ▾';
-      font-size: 10px;
-      opacity: 0.6;
-    }
-    .nav-dropdown-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 12px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1A1228;
-      border: 1px solid rgba(139,114,200,0.2);
-      border-radius: 10px;
-      padding: 8px 0;
-      min-width: 210px;
-      z-index: 200;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-    }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
+    .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--deep-forest); border: 1px solid var(--border-dark); border-radius: 10px; padding: 8px 0; min-width: 210px; z-index: 200; box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
     .nav-dropdown:hover .nav-dropdown-menu { display: block; }
     .nav-dropdown-menu::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
-    .nav-dropdown-menu a {
-      display: block;
-      padding: 10px 20px;
-      font-size: 13px;
-      color: #C8C4DC;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: color 0.2s, background 0.2s;
-    }
-    .nav-dropdown-menu a:hover { color: #EDE8DF; background: rgba(139,114,200,0.1); }
-    .purchase-divider {
-      border: none;
-      border-top: 1px solid var(--border-light);
-      margin: 24px 0;
-    }
-    .card-includes-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-muted-light);
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
-    .card-includes-list {
-      list-style: none;
-    }
-    .card-includes-list li {
-      font-size: 13px;
-      color: var(--text-body-light);
-      padding: 7px 0;
-      padding-left: 18px;
-      position: relative;
-      font-weight: 400;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .card-includes-list li:last-child { border-bottom: none; }
-    .card-includes-list li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--25d-mid);
-      font-weight: 600;
-      font-size: 11px;
-    }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 13px; color: var(--text-muted-dark); text-decoration: none; white-space: nowrap; transition: color 0.2s, background 0.2s; }
+    .nav-dropdown-menu a:hover { color: var(--warm-parchment); background: rgba(255,255,255,0.05); }
 
-    /* ═══ WAITLIST ═══ */
-    .waitlist-section {
-      background: #F3F0F9;
-      padding: 100px 40px;
-      text-align: center;
-    }
-    .waitlist-inner { max-width: 560px; margin: 0 auto; }
-    .waitlist-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 400;
-      color: var(--deep-forest);
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-    .waitlist-sub {
-      font-size: 16px;
-      color: var(--text-muted-light);
-      margin-bottom: 40px;
-      line-height: 1.7;
-    }
-    .waitlist-form { display: flex; flex-direction: column; gap: 12px; }
-    .waitlist-input {
-      width: 100%;
-      padding: 16px 20px;
-      background: #fff;
-      border: 1px solid rgba(90,63,154,0.2);
-      border-radius: 10px;
-      font-size: 15px;
-      color: var(--deep-forest);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .waitlist-input::placeholder { color: rgba(106,122,104,0.5); }
-    .waitlist-input:focus { border-color: var(--25d-mid); }
-    .waitlist-btn {
-      width: 100%;
-      padding: 18px;
-      background: var(--25d-deep);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .waitlist-btn:hover { background: var(--25d-mid); transform: translateY(-1px); }
-    .waitlist-msg { margin-top: 16px; font-size: 14px; min-height: 20px; }
-    @media (max-width: 768px) { .waitlist-section { padding: 64px 24px; } }
+    /* ═══ HERO ═══ */
+    .programs-hero { background: var(--deep-forest); padding: 100px 40px 80px; text-align: center; }
+    .programs-hero-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--new-growth); font-weight: 600; margin-bottom: 20px; }
+    .programs-hero h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 4.5vw, 56px); color: var(--warm-parchment); font-weight: 400; line-height: 1.15; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .programs-hero-sub { font-size: 16px; color: var(--text-muted-dark); max-width: 520px; margin: 0 auto; line-height: 1.8; font-weight: 300; }
 
-    /* ═══ COMING SOON PROGRAM ═══ */
-    .coming-section {
-      background: var(--warm-parchment);
-      border-top: 1px solid var(--parchment-dark);
-      padding: 100px 40px;
-      text-align: center;
-    }
-    .coming-inner {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    .coming-eyebrow {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--bronze-earth);
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-    .coming-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(26px, 3.5vw, 38px);
-      color: var(--deep-forest);
-      font-weight: 400;
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-    .coming-sub {
-      font-size: 16px;
-      color: var(--text-muted-light);
-      font-weight: 400;
-      line-height: 1.75;
-      margin-bottom: 36px;
-    }
-    .coming-notify {
-      display: inline-block;
-      padding: 14px 32px;
-      border: 1px solid var(--deep-forest);
-      color: var(--deep-forest);
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-    .coming-notify:hover { background: var(--deep-forest); color: var(--soft-white); }
+    /* ═══ FEATURED PROGRAM ═══ */
+    .featured-section { background: var(--warm-parchment); padding: 100px 40px; }
+    .featured-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .featured-badge { display: inline-block; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--living-green); font-weight: 700; background: rgba(37,107,66,0.08); padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; }
+    .featured-logo { width: 100%; max-width: 280px; display: block; margin-bottom: 28px; }
+    .featured-type { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--bronze-earth); font-weight: 600; margin-bottom: 16px; }
+    .featured-desc { font-size: 16px; color: var(--text-body-light); line-height: 1.9; margin-bottom: 16px; }
+    .featured-includes { list-style: none; margin-bottom: 36px; }
+    .featured-includes li { font-size: 14px; color: var(--text-body-light); padding: 6px 0; padding-left: 20px; position: relative; border-bottom: 1px solid var(--border-light); }
+    .featured-includes li:last-child { border-bottom: none; }
+    .featured-includes li::before { content: '→'; position: absolute; left: 0; color: var(--living-green); font-size: 12px; top: 8px; }
+    .featured-cta { display: inline-block; padding: 18px 48px; background: var(--deep-forest); color: var(--warm-parchment); border-radius: 8px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s; }
+    .featured-cta:hover { background: var(--forest-mid); }
+    .featured-image-wrap { border-radius: 16px; overflow: hidden; box-shadow: 0 32px 80px rgba(18,32,18,0.18); aspect-ratio: 4/5; background: var(--deep-forest); display: flex; align-items: center; justify-content: center; padding: 40px; }
+    .featured-image-wrap img { width: 100%; max-width: 280px; display: block; }
 
-    /* ═══ DIRECTORY — BONUS SECTION ═══ */
-    .directory-section {
-      background: var(--deep-forest);
-      padding: 80px 40px;
-    }
-    .directory-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 56px;
-      align-items: center;
-    }
-    .directory-eyebrow {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--new-growth);
-      font-weight: 500;
-      margin-bottom: 12px;
-    }
-    .directory-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(22px, 3vw, 32px);
-      color: var(--warm-parchment);
-      font-weight: 400;
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-    .directory-desc {
-      font-size: 15px;
-      color: var(--text-muted-dark);
-      font-weight: 400;
-      line-height: 1.75;
-      margin-bottom: 24px;
-    }
-    .directory-perks {
-      list-style: none;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .directory-perks li {
-      font-size: 13px;
-      color: var(--text-muted-dark);
-      padding-left: 16px;
-      position: relative;
-      font-weight: 400;
-      line-height: 1.5;
-    }
-    .directory-perks li::before {
-      content: '◆';
-      position: absolute;
-      left: 0;
-      color: var(--new-growth);
-      font-size: 6px;
-      top: 6px;
-    }
-    .directory-card {
-      background: rgba(237,232,223,0.06);
-      border: 1px solid var(--border-dark);
-      border-radius: 16px;
-      padding: 36px 28px;
-      text-align: center;
-    }
-    .directory-price-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-muted-dark);
-      font-weight: 500;
-      margin-bottom: 8px;
-    }
-    .directory-price {
-      font-family: 'Instrument Serif', serif;
-      font-size: 44px;
-      color: var(--warm-parchment);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .directory-price-period {
-      font-size: 13px;
-      color: var(--text-muted-dark);
-      margin-bottom: 28px;
-      font-weight: 400;
-    }
-    .directory-btn {
-      display: block;
-      width: 100%;
-      padding: 15px 20px;
-      background: var(--dry-sage);
-      color: var(--deep-forest);
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      text-align: center;
-      transition: background 0.3s;
-      margin-bottom: 12px;
-    }
-    .directory-btn:hover { background: var(--bronze-earth); color: #fff; }
-    .directory-card-note {
-      font-size: 12px;
-      color: var(--text-muted-dark);
-      line-height: 1.6;
-    }
+    /* ═══ COMING SOON GRID ═══ */
+    .coming-section { background: var(--soft-white); padding: 100px 40px; }
+    .coming-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--living-green); font-weight: 600; text-align: center; margin-bottom: 16px; }
+    .coming-title { font-family: 'Instrument Serif', serif; font-size: clamp(26px, 3vw, 38px); color: var(--deep-forest); font-weight: 400; text-align: center; margin-bottom: 16px; line-height: 1.2; }
+    .coming-sub { font-size: 15px; color: var(--text-muted-light); text-align: center; margin-bottom: 64px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+    .coming-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .coming-card { background: var(--cream); border: 1px solid var(--border-light); border-radius: 16px; padding: 36px 28px; display: flex; flex-direction: column; gap: 12px; }
+    .coming-card-badge { display: inline-block; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; padding: 5px 12px; border-radius: 20px; background: rgba(18,32,18,0.06); color: var(--text-muted-light); width: fit-content; }
+    .coming-card-type { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--bronze-earth); font-weight: 600; }
+    .coming-card-name { font-family: 'Instrument Serif', serif; font-size: clamp(20px, 2vw, 26px); color: var(--deep-forest); font-weight: 400; line-height: 1.2; }
+    .coming-card-desc { font-size: 14px; color: var(--text-muted-light); line-height: 1.8; flex: 1; }
+    .coming-card-notify { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--living-green); text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(37,107,66,0.3); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; width: fit-content; }
+    .coming-card-notify:hover { color: var(--deep-forest); border-color: var(--deep-forest); }
 
     /* ═══ FOOTER ═══ */
-    .site-footer { background: var(--deep-forest); padding: 48px 40px 24px; border-top: 1px solid var(--border-dark); }
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-muted-dark);
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      transition: color 0.2s;
-    }
+    .site-footer { background: var(--deep-forest); padding: 48px 40px 24px; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 24px; }
+    .footer-links a { font-size: 13px; color: var(--text-muted-dark); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
     .footer-links a:hover { color: var(--warm-parchment); }
-    .footer-tagline {
-      font-size: 14px;
-      color: var(--text-muted-dark);
-      text-align: center;
-      margin-bottom: 32px;
-      font-weight: 400;
-      line-height: 1.6;
-    }
-    .footer-social {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-    .footer-social a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--new-growth);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
+    .footer-tagline { font-size: 14px; color: var(--text-muted-dark); text-align: center; margin-bottom: 32px; font-weight: 300; line-height: 1.6; }
+    .footer-social { display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; }
+    .footer-social a { display: inline-flex; align-items: center; gap: 8px; color: var(--new-growth); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
     .footer-social a:hover { color: var(--warm-parchment); }
     .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
-    .footer-bottom {
-      text-align: center;
-      padding-top: 24px;
-      border-top: 1px solid var(--border-dark);
-      font-size: 11px;
-      color: var(--text-muted-dark);
-      letter-spacing: 0.5px;
-    }
-    .footer-bottom a { color: var(--text-muted-dark); text-decoration: underline; }
+    .footer-bottom { text-align: center; padding-top: 24px; border-top: 1px solid var(--border-dark); font-size: 11px; color: var(--text-muted-dark); letter-spacing: 0.5px; }
+    .footer-bottom a { color: var(--text-muted-dark); text-decoration: underline; transition: color 0.2s; }
     .footer-bottom a:hover { color: var(--warm-parchment); }
 
     /* ═══ RESPONSIVE ═══ */
@@ -739,276 +127,18 @@
       .site-nav { padding: 16px 20px; }
       .nav-links, .nav-cta-wrap { display: none; }
       .nav-hamburger { display: block; }
-
-      .nav-logo img { height: 104px; }
-
+      .mobile-menu { padding: 20px; }
       .programs-hero { padding: 72px 24px 56px; }
-
-      .program-inner {
-        grid-template-columns: 1fr;
-        padding: 64px 24px;
-        gap: 40px;
-      }
-      .includes-list { grid-template-columns: 1fr; }
-
-      .purchase-card {
-        position: static;
-        padding: 28px 24px;
-      }
-
-      .program-mobile-cta {
-        display: block;
-        margin-bottom: 40px;
-      }
-      .program-mobile-cta .enroll-btn {
-        margin-bottom: 8px;
-      }
-
-      .coming-section { padding: 72px 24px; }
-
-      .directory-inner {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
-      .directory-perks { grid-template-columns: 1fr; }
-      .directory-section { padding: 64px 24px; }
-      .directory-card { padding: 28px 20px; }
-
+      .featured-section, .coming-section { padding: 64px 24px; }
+      .featured-inner { grid-template-columns: 1fr; gap: 40px; }
+      .featured-image-wrap { aspect-ratio: auto; padding: 32px; }
+      .coming-grid { grid-template-columns: 1fr; gap: 20px; }
       .site-footer { padding: 40px 20px 20px; }
       .footer-links { gap: 16px; }
     }
-
     @media (min-width: 769px) and (max-width: 1024px) {
-      .program-inner {
-        grid-template-columns: 1fr 360px;
-        gap: 40px;
-        padding: 80px 32px;
-      }
-      .directory-inner { gap: 40px; }
-    }
-
-    /* ═══ STATS BAND ═══ */
-    .stats-band {
-      background: #1A1228;
-      padding: 56px 40px;
-      border-bottom: 1px solid rgba(139,114,200,0.18);
-    }
-    .stats-band-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      text-align: center;
-    }
-    .stat-item {}
-    .stat-number {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(48px, 6vw, 72px);
-      color: #C8B8F0;
-      line-height: 1;
-      margin-bottom: 8px;
-      display: block;
-    }
-    .stat-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(200,184,240,0.5);
-      font-weight: 500;
-    }
-
-    /* ═══ JOURNEY TIMELINE ═══ */
-    .journey-wrap {
-      margin-bottom: 40px;
-    }
-    .journey-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--deep-forest);
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-    .journey-track {
-      display: flex;
-      align-items: flex-start;
-      position: relative;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      -webkit-overflow-scrolling: touch;
-    }
-    .journey-track::before {
-      content: '';
-      position: absolute;
-      top: 17px;
-      left: 44px;
-      right: 44px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--25d-light), var(--25d-deep));
-      z-index: 0;
-    }
-    .journey-step {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-      min-width: 90px;
-    }
-    .journey-dot {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #F3F0F9;
-      border: 2px solid var(--25d-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--25d-deep);
-      margin-bottom: 12px;
-      flex-shrink: 0;
-      letter-spacing: -0.3px;
-    }
-    .journey-step:first-child .journey-dot,
-    .journey-step:last-child .journey-dot {
-      background: var(--25d-deep);
-      border-color: var(--25d-deep);
-      color: #fff;
-    }
-    .journey-step-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--25d-deep);
-      text-align: center;
-      margin-bottom: 5px;
-      line-height: 1.3;
-    }
-    .journey-step-sub {
-      font-size: 11px;
-      color: var(--text-muted-light);
-      text-align: center;
-      line-height: 1.4;
-      max-width: 82px;
-    }
-
-    /* ═══ COUNTDOWN ═══ */
-    .countdown-wrap {
-      background: rgba(61,43,114,0.06);
-      border: 1px solid rgba(90,63,154,0.16);
-      border-radius: 10px;
-      padding: 16px 12px 14px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .countdown-label {
-      font-size: 10px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--25d-mid);
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    .countdown-clock {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 4px;
-    }
-    .countdown-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 48px;
-    }
-    .countdown-digit {
-      font-family: 'Instrument Serif', serif;
-      font-size: 30px;
-      color: var(--25d-deep);
-      line-height: 1;
-      margin-bottom: 5px;
-      font-weight: 400;
-    }
-    .countdown-unit-label {
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text-muted-light);
-      font-weight: 500;
-    }
-    .countdown-sep {
-      font-size: 22px;
-      color: var(--25d-light);
-      margin-top: 4px;
-      opacity: 0.4;
-      line-height: 1;
-    }
-
-    /* ═══ VIDEO SECTION ═══ */
-    .video-section {
-      background: #1A1228;
-      padding: 72px 40px;
-      text-align: center;
-    }
-    .video-eyebrow {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #8B72C8;
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-    .video-heading {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(24px, 3vw, 36px);
-      color: #EDE8DF;
-      font-weight: 400;
-      margin-bottom: 40px;
-      line-height: 1.2;
-    }
-    .video-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 860px;
-      margin: 0 auto;
-      padding-bottom: 56.25%;
-      height: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-    }
-    .video-wrap iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    /* ═══ RESPONSIVE ADDITIONS ═══ */
-    @media (max-width: 768px) {
-      .stats-band { padding: 40px 20px; }
-      .stats-band-inner { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
-      .stat-number { font-size: 48px; }
-
-      .journey-track::before { left: 30px; right: 30px; }
-      .journey-step { min-width: 72px; }
-      .journey-step-sub { max-width: 68px; font-size: 10px; }
-
-      .video-section { padding: 48px 20px; }
-      .video-heading { margin-bottom: 28px; }
-
-      .countdown-clock { gap: 2px; }
-      .countdown-unit { min-width: 40px; }
-      .countdown-digit { font-size: 24px; }
-      .countdown-sep { font-size: 18px; }
-
-      .footer-social { flex-wrap: wrap; gap: 16px; }
-      .footer-links { gap: 12px; }
-      .footer-bottom { font-size: 10px; }
+      .coming-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-inner { gap: 40px; }
     }
   </style>
 </head>
@@ -1017,29 +147,29 @@
 <!-- ═══ NAV ═══ -->
 <nav class="site-nav" x-data="{ open: false }">
   <a href="https://www.mirajoco.org" class="nav-logo">
-    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO">
+    <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" style="height:48px;width:auto;display:block;">
   </a>
   <ul class="nav-links">
     <li><a href="https://www.mirajoco.org/philosophy">Philosophy</a></li>
     <li class="nav-dropdown">
-      <a href="https://www.mirajoco.org/programs" class="active">Programs</a>
+      <a href="https://www.mirajoco.org/programs">Programs</a>
       <div class="nav-dropdown-menu">
         <a href="https://www.mirajoco.org/25daysand25nights">25 Days &amp; 25 Nights</a>
       </div>
     </li>
     <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
-    <li><a href="http://www.directory.mirajoco.org/search_results">Directory</a></li>
+    <li><a href="https://www.directory.mirajoco.org/search_results">Directory</a></li>
     <li><a href="https://www.mirajoco.org/events">Events</a></li>
     <li><a href="https://www.mirajoco.org/coaching">Coaching</a></li>
   </ul>
   <div class="nav-cta-wrap">
-    <a href="https://www.directory.mirajoco.org/login" class="nav-login" aria-label="Member Login">
+    <a href="https://www.directory.mirajoco.org/login" class="nav-login" aria-label="Member Login" title="Member Login">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
       </svg>
     </a>
-    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" rel="noopener" class="nav-cta">Let's Talk Now!</a>
   </div>
   <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1050,201 +180,92 @@
   <div class="mobile-menu" :class="open ? 'open' : ''">
     <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
     <a href="https://www.mirajoco.org/programs">Programs</a>
+    <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8;">↳ 25 Days &amp; 25 Nights</a>
     <a href="https://www.mirajoco.org/blog">Writing</a>
-    <a href="http://www.directory.mirajoco.org/search_results">Directory</a>
+    <a href="https://www.directory.mirajoco.org/search_results">Directory</a>
     <a href="https://www.mirajoco.org/events">Events</a>
     <a href="https://www.mirajoco.org/coaching">Coaching</a>
-    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    <a href="https://premium.chat/DecisionMirror/type/call" target="_blank" class="nav-cta">Let's Talk Now</a>
   </div>
 </nav>
 
 <!-- ═══ HERO ═══ -->
 <section class="programs-hero">
-  <div class="hero-eyebrow">MiRAjO Programs</div>
-  <h1 class="hero-title">The work that moves you from where you are to where you're capable of being.</h1>
-  <p class="hero-sub">Each program is built on the law of Seedtime &amp; Harvest. Choose your season. Do the work.</p>
-  <div class="hero-scroll">
-    <span>Explore</span>
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-    </svg>
-  </div>
+  <div class="programs-hero-eyebrow">MiRAjO Programs</div>
+  <h1>The work that plants.<br>The work that grows.</h1>
+  <p class="programs-hero-sub">Every program is built on the law of Seedtime &amp; Harvest. Choose your season. Do the work.</p>
 </section>
 
-<!-- ═══ STATS BAND ═══ -->
-<section class="stats-band">
-  <div class="stats-band-inner">
-    <div class="stat-item">
-      <span class="stat-number" data-target="25">0</span>
-      <div class="stat-label">Days</div>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number" data-target="25">0</span>
-      <div class="stat-label">Nights</div>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number" data-target="7">0</span>
-      <div class="stat-label">Laws of Nature</div>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number" data-target="10">0</span>
-      <div class="stat-label">Non-Negotiables</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ VIDEO — 25 DAYS & 25 NIGHTS ═══ -->
-<section class="video-section" data-aos="fade-up">
-  <div class="video-eyebrow">Now Live</div>
-  <h2 class="video-heading">25 Days &amp; 25 Nights is officially here.</h2>
-  <div class="video-wrap">
-    <iframe
-      src="https://www.youtube.com/embed/a6OauLaJp_U?autoplay=1&rel=0&modestbranding=1"
-      title="25 Days 25 Nights is officially LIVE."
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>
-  </div>
-</section>
-
-<!-- ═══ PROGRAM 1 — 25 DAYS & 25 NIGHTS ═══ -->
-<section class="program-section" id="25d25n">
-  <div class="program-inner">
-
-    <!-- Details -->
-    <div class="program-details" data-aos="fade-right">
-      <div class="program-eyebrow">Program 01: Enrollment Opening Soon</div>
-      <div class="program-logo-row">
-        <img src="img/2525 Official Logo.png" alt="25 Days 25 Nights" class="program-logo-img">
-        <h2 class="program-title">25 Days &amp;<br>25 Nights</h2>
-      </div>
-      <p class="program-tagline">25 days to rule your morning. 25 nights to rule your rest.</p>
-      <p class="program-description">A full 25-day reset built on the 7 Currents of Nature's Law, rewritten by Miranda Johnson from the ground up. This isn't a motivational course. It's a structured daily practice that disconnects you from the noise, reconnects you to yourself, and opens every door you are capable of walking through. Daily work. Daily assignments. Live webinars with Miranda. Real transformation.</p>
-
-      <!-- Journey Timeline -->
-      <div class="journey-wrap">
-        <div class="journey-label">The 25-Day Arc</div>
-        <div class="journey-track">
-          <div class="journey-step">
-            <div class="journey-dot">D1</div>
-            <div class="journey-step-title">The Reset Begins</div>
-            <div class="journey-step-sub">Silence. Intention. Ground zero.</div>
-          </div>
-          <div class="journey-step">
-            <div class="journey-dot">W1</div>
-            <div class="journey-step-title">Disconnect</div>
-            <div class="journey-step-sub">Strip the noise. Find the pattern.</div>
-          </div>
-          <div class="journey-step">
-            <div class="journey-dot">W2</div>
-            <div class="journey-step-title">Laws Activate</div>
-            <div class="journey-step-sub">The 7 Currents take root.</div>
-          </div>
-          <div class="journey-step">
-            <div class="journey-dot">W3</div>
-            <div class="journey-step-title">The Work Deepens</div>
-            <div class="journey-step-sub">Purpose aligns. Doors open.</div>
-          </div>
-          <div class="journey-step">
-            <div class="journey-dot">D25</div>
-            <div class="journey-step-title">The Harvest</div>
-            <div class="journey-step-sub">You walk out different.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="includes-label">What's Inside</div>
-      <ul class="includes-list">
+<!-- ═══ FEATURED — 25D25N ═══ -->
+<section class="featured-section" data-aos="fade-up">
+  <div class="featured-inner">
+    <div>
+      <span class="featured-badge">Waitlist Open</span>
+      <div class="featured-type">Course + Live Webinars</div>
+      <img src="img/2525 Official Logo.png" alt="25 Days and 25 Nights" class="featured-logo" loading="lazy">
+      <p class="featured-desc">A full 25-day reset built on the 7 Currents of Nature's Law. Daily structured work, live webinars with Miranda, and a framework that disconnects you from the noise and reconnects you to yourself.</p>
+      <ul class="featured-includes">
         <li>25 days of structured daily work</li>
         <li>25 nights of guided evening practice</li>
-        <li>Daily assignments &amp; reflection prompts</li>
         <li>Live webinars with Miranda Johnson</li>
         <li>7 Currents of Nature's Law framework</li>
         <li>10 Non-Negotiables for lasting change</li>
-        <li>Health, movement &amp; silence protocols</li>
         <li>Purpose alignment process</li>
       </ul>
-
-      <!-- Mobile CTA -->
-      <div class="program-mobile-cta">
-        <a href="#waitlist" class="enroll-btn">Join the Waitlist</a>
-        <a href="https://www.mirajoco.org/25daysand25nights" class="enroll-btn-secondary">Learn More</a>
-      </div>
+      <a href="https://www.mirajoco.org/25daysand25nights" class="featured-cta">Join the Waitlist</a>
     </div>
-
-    <!-- Waitlist Card -->
-    <div data-aos="fade-left">
-      <div class="purchase-card">
-        <span class="purchase-badge">Enrollment Opening Soon</span>
-        <div class="card-includes-label" style="margin-top:8px">What's Inside</div>
-        <ul class="card-includes-list">
-          <li>Full 25-day course access</li>
-          <li>Daily assignments &amp; practices</li>
-          <li>Live webinars with Miranda</li>
-          <li>7 Laws of Nature framework</li>
-          <li>Morning &amp; evening protocols</li>
-          <li>Purpose alignment process</li>
-        </ul>
-        <hr class="purchase-divider">
-        <p style="font-size:14px;color:var(--text-muted-light);margin-bottom:20px;line-height:1.7">Be the first to know when enrollment opens.</p>
-        <a href="#waitlist" class="enroll-btn">Join the Waitlist</a>
-        <a href="https://www.mirajoco.org/25daysand25nights" class="enroll-btn-secondary">Learn More</a>
-      </div>
+    <div class="featured-image-wrap" data-aos="fade-left">
+      <img src="img/2525 Official Logo.png" alt="25 Days and 25 Nights" loading="lazy">
     </div>
-
   </div>
 </section>
 
-<!-- ═══ WAITLIST ═══ -->
-<section class="waitlist-section" id="waitlist" data-aos="fade-up">
-  <div class="waitlist-inner">
-    <div class="section-eyebrow" style="color:var(--25d-mid);letter-spacing:4px;font-size:11px;text-transform:uppercase;font-weight:600;margin-bottom:16px">Be First In</div>
-    <h2 class="waitlist-title">Join the 25D25N Waitlist</h2>
-    <p class="waitlist-sub">Get notified the moment the next enrollment opens. No spam. Just the signal.</p>
-    <form class="waitlist-form" id="waitlist-form">
-      <input type="text" name="first_name" placeholder="First name" class="waitlist-input">
-      <input type="email" name="email" placeholder="Your email address" class="waitlist-input" required>
-      <button type="submit" class="waitlist-btn">Notify Me</button>
-    </form>
-    <p class="waitlist-msg" id="waitlist-msg"></p>
-  </div>
-</section>
+<!-- ═══ COMING SOON ═══ -->
+<section class="coming-section">
+  <div class="coming-eyebrow">What's Coming</div>
+  <h2 class="coming-title">More programs. Same law.</h2>
+  <p class="coming-sub">Each program in development is a direct application of the Seedtime &amp; Harvest framework. Join the newsletter to be first to know when they open.</p>
 
-<!-- ═══ COMING SOON — NEXT PROGRAM ═══ -->
-<section class="coming-section" data-aos="fade-up">
-  <div class="coming-inner">
-    <div class="coming-eyebrow">Program 02: Coming Soon</div>
-    <h2 class="coming-title">The next program is being built.</h2>
-    <p class="coming-sub">Every program in MiRAjO is rooted in the same law. The next one is in development. Join the newsletter to be first to know when it drops.</p>
-    <a href="https://www.mirajoco.org/join" class="coming-notify">Stay Connected</a>
-  </div>
-</section>
+  <div class="coming-grid">
 
-<!-- ═══ DIRECTORY — BONUS ═══ -->
-<section class="directory-section" data-aos="fade-up">
-  <div class="directory-inner">
-
-    <div>
-      <div class="directory-eyebrow">Also Available</div>
-      <h2 class="directory-title">The MiRAjO Business Directory</h2>
-      <p class="directory-desc">A product of the Collective. Your place to promote who you are and what you do on your leadership journey. More than a listing. A platform that works for you.</p>
-      <ul class="directory-perks">
-        <li>Post your own events</li>
-        <li>Write &amp; publish your own blog</li>
-        <li>Receive lead forms directly</li>
-        <li>Google SEO visibility</li>
-        <li>Leadership community exposure</li>
-        <li>Member profile &amp; branding</li>
-      </ul>
+    <div class="coming-card" data-aos="fade-up">
+      <span class="coming-card-badge">Coming Soon</span>
+      <div class="coming-card-type">Course + Live Webinars</div>
+      <div class="coming-card-name">Couples in Entrepreneurship</div>
+      <p class="coming-card-desc">Build and grow together without losing yourselves or each other. A program for couples navigating business, money, and partnership at the same time.</p>
+      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
     </div>
 
-    <div class="directory-card">
-      <div class="directory-price-label">Monthly</div>
-      <div class="directory-price">$5.55</div>
-      <div class="directory-price-period">per month · cancel anytime</div>
-      <a href="https://www.directory.mirajoco.org/checkout/mirajoplan" target="_blank" rel="noopener" class="directory-btn">Join the Directory</a>
-      <p class="directory-card-note">Less than a coffee. More reach than most social platforms.</p>
+    <div class="coming-card" data-aos="fade-up" data-aos-delay="80">
+      <span class="coming-card-badge">Coming Soon</span>
+      <div class="coming-card-type">Course + Live Webinars</div>
+      <div class="coming-card-name">The Laws of Seedtime &amp; Harvest</div>
+      <p class="coming-card-desc">The complete framework — every law, every season, every level — applied to your business and your life. Built for the ones ready to stop reacting and start planting with intention.</p>
+      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+    </div>
+
+    <div class="coming-card" data-aos="fade-up" data-aos-delay="160">
+      <span class="coming-card-badge">Coming Soon</span>
+      <div class="coming-card-type">Course + Live Webinars</div>
+      <div class="coming-card-name">Talk About Money</div>
+      <p class="coming-card-desc">Money follows alignment, not hustle. This program teaches you to stop chasing and start attracting — by understanding where your money seeds are actually going.</p>
+      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+    </div>
+
+    <div class="coming-card" data-aos="fade-up" data-aos-delay="0">
+      <span class="coming-card-badge">Coming Soon</span>
+      <div class="coming-card-type">Self-Guided Workbook</div>
+      <div class="coming-card-name">The Pain Principle — Workbook</div>
+      <p class="coming-card-desc">The companion to Miranda's book. Exercises that turn your self-inflicted pain into the seed of your next season. Go at your own pace, on your own terms.</p>
+      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
+    </div>
+
+    <div class="coming-card" data-aos="fade-up" data-aos-delay="80">
+      <span class="coming-card-badge">Coming Soon</span>
+      <div class="coming-card-type">Self-Guided Workbook</div>
+      <div class="coming-card-name">Lead Loud — Workbook</div>
+      <p class="coming-card-desc">Work through the 11 commandments at your own pace. Leadership from the inside out — practical, direct, and built for the ones who refuse to shrink.</p>
+      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="coming-card-notify">Notify me when it opens →</a>
     </div>
 
   </div>
@@ -1256,26 +277,24 @@
     <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
     <a href="https://www.mirajoco.org/programs">Programs</a>
     <a href="https://www.mirajoco.org/blog">Writing</a>
-    <a href="http://www.directory.mirajoco.org/search_results">Directory</a>
+    <a href="https://www.directory.mirajoco.org/search_results">Directory</a>
     <a href="https://www.mirajoco.org/events">Events</a>
-    <a href="https://www.mirajoco.org/about/contact">Contact</a>
+    <a href="https://www.mirajoco.org/coaching">Coaching</a>
     <a href="https://www.directory.mirajoco.org/login">Member Login</a>
   </div>
   <p class="footer-tagline">Rooted clarity for leaders who build from understanding, not urgency.</p>
   <div class="footer-social">
     <a href="https://www.linkedin.com/company/mirajocollective/" target="_blank">
-      <svg viewBox="0 0 448 512"><path d="M100.28 448H7.4V149.9h92.88zM53.79 108.1C24.09 108.1 0 83.47 0 53.77a53.76 53.76 0 0 1 107.52 0c0 29.7-24.09 54.33-53.73 54.33zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.6-2.9 13.4-2.9 21.2V448h-92.7s1.2-241.1 0-266.1h92.7v37.7c12.3-19 34.2-46 83.2-46 60.7 0 106.2 39.6 106.2 124.7V448z"/></svg>
+      <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M100.28 448H7.4V149.9h92.88zM53.79 108.1C24.09 108.1 0 83.47 0 53.77a53.76 53.76 0 0 1 107.52 0c0 29.7-24.09 54.33-53.73 54.33zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.6-2.9 13.4-2.9 21.2V448h-92.7s1.2-241.1 0-266.1h92.7v37.7c12.3-19 34.2-46 83.2-46 60.7 0 106.2 39.6 106.2 124.7V448z"/></svg>
       LinkedIn
     </a>
-    <a href="https://www.mirajoco.org/about/contact">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-      </svg>
+    <a href="mailto:hello@mirajoco.org">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       Contact
     </a>
   </div>
   <div class="footer-bottom">
-    &copy; 2025 MiRAjO Collective &middot;
+    &copy; 2026 MiRAjO Collective &middot;
     <a href="https://www.mirajoco.org/about/terms">Terms of Use</a> &middot;
     <a href="https://www.mirajoco.org/about/privacy">Privacy Policy</a>
   </div>
@@ -1284,106 +303,6 @@
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
-
-  /* ─── WAITLIST FORM ─── */
-  document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = this.querySelector('.waitlist-btn');
-    const msg = document.getElementById('waitlist-msg');
-    const email = this.email.value;
-    const first_name = this.first_name.value;
-    btn.textContent = 'Joining...';
-    btn.disabled = true;
-    try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, first_name })
-      });
-      if (res.ok) {
-        msg.textContent = "You're on the list. We'll be in touch.";
-        msg.style.color = '#4A7C59';
-        this.reset();
-      } else {
-        msg.textContent = "Something went wrong. Please try again.";
-        msg.style.color = '#E88080';
-      }
-    } catch {
-      msg.textContent = "Something went wrong. Please try again.";
-      msg.style.color = '#E88080';
-    }
-    btn.textContent = 'Notify Me';
-    btn.disabled = false;
-  });
-
-  /* ─── COUNT-UP ANIMATION ─── */
-  (function() {
-    var statNumbers = document.querySelectorAll('.stat-number[data-target]');
-    var hasAnimated = false;
-
-    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
-    function animateCount(el, target, duration) {
-      var start = null;
-      function step(ts) {
-        if (!start) start = ts;
-        var progress = Math.min((ts - start) / duration, 1);
-        el.textContent = Math.round(easeOut(progress) * target);
-        if (progress < 1) requestAnimationFrame(step);
-        else el.textContent = target;
-      }
-      requestAnimationFrame(step);
-    }
-
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting && !hasAnimated) {
-          hasAnimated = true;
-          statNumbers.forEach(function(el, i) {
-            var target = parseInt(el.getAttribute('data-target'), 10);
-            setTimeout(function() { animateCount(el, target, 1400); }, i * 180);
-          });
-        }
-      });
-    }, { threshold: 0.4 });
-
-    var band = document.querySelector('.stats-band');
-    if (band) observer.observe(band);
-  })();
-
-  /* ─── COUNTDOWN TIMER ─── */
-  (function() {
-    // ← Update this date when the promo changes
-    var PROMO_END = new Date('2026-03-31T23:59:59');
-
-    var dEl = document.getElementById('cd-days');
-    var hEl = document.getElementById('cd-hours');
-    var mEl = document.getElementById('cd-mins');
-    var sEl = document.getElementById('cd-secs');
-    var wrap = document.getElementById('countdown-wrap');
-
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
-
-    function tick() {
-      var now = new Date();
-      var diff = PROMO_END - now;
-      if (diff <= 0) {
-        if (wrap) wrap.style.display = 'none';
-        return;
-      }
-      var days  = Math.floor(diff / 86400000);
-      var hours = Math.floor((diff % 86400000) / 3600000);
-      var mins  = Math.floor((diff % 3600000)  / 60000);
-      var secs  = Math.floor((diff % 60000)    / 1000);
-      if (dEl) dEl.textContent = days;
-      if (hEl) hEl.textContent = pad(hours);
-      if (mEl) mEl.textContent = pad(mins);
-      if (sEl) sEl.textContent = pad(secs);
-    }
-
-    tick();
-    setInterval(tick, 1000);
-  })();
 </script>
 
 </body>
