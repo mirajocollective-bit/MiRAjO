@@ -63,7 +63,7 @@
       background: radial-gradient(ellipse at center, rgba(210,195,255,0.28) 0%, rgba(180,155,240,0.12) 55%, transparent 80%);
       padding: 4px 10px;
     }
-    .nav-logo img { height: 144px; width: auto; display: block; }
+    .nav-logo img { height: 48px; width: auto; display: block; }
     .nav-badge {
       font-size: 11px;
       letter-spacing: 3px;
@@ -631,14 +631,15 @@
       .site-nav { padding: 16px 20px; }
       .nav-links, .nav-cta { display: none; }
       .nav-hamburger { display: block; }
-      .nav-logo img { height: 104px; }
+      .nav-logo img { height: 44px; }
       .nav-badge { font-size: 10px; }
 
       .hero { padding: 80px 24px; min-height: auto; }
       .hero-logo { width: 80px; }
 
       .what-section, .faq-section { padding: 64px 24px; }
-      .pillars-section, .testimonials-section, .pricing-section, .founder-section { padding: 64px 24px; }
+      .pillars-section, .testimonials-section, .pricing-section, .founder-section, .waitlist-section { padding: 64px 24px; }
+      [data-aos="fade-up"] > div[style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
 
       .pillars-grid { grid-template-columns: 1fr; }
       .pillar-card { padding: 36px 28px; }
@@ -730,7 +731,7 @@
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero-clock">🕐</div>
-  <div class="hero-eyebrow">Yep, Another Challenge!</div>
+  <div class="hero-eyebrow">A 25-Day Immersive Reset</div>
   <img src="img/2525 Official Logo.png" alt="25 Days 25 Nights" class="hero-logo" data-aos="fade-down">
   <h1 class="hero-title" data-aos="fade-up">
     25 Days &amp; <em>25 Nights</em>
@@ -755,6 +756,43 @@
     <p>It is just you, raw and unfiltered. And it is still your choice.</p>
   </div>
   <a href="#waitlist" class="btn-primary">Sign me up, Now!</a>
+</section>
+
+<!-- ═══ THIS IS FOR YOU ═══ -->
+<section style="background:var(--p-dark);padding:100px 40px;" data-aos="fade-up">
+  <div style="max-width:860px;margin:0 auto;text-align:center;">
+    <div class="section-eyebrow" style="color:var(--p-silver);">Who This Is For</div>
+    <h2 class="section-title" style="color:var(--warm-parchment);">You've been doing the work.<br>Just not <em style="color:var(--p-light);font-style:italic;">this</em> work.</h2>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;text-align:left;">
+      <div style="background:rgba(237,232,223,0.04);border:1px solid rgba(139,114,200,0.2);border-radius:16px;padding:28px 24px;">
+        <div style="color:var(--p-light);font-size:22px;margin-bottom:10px;">→</div>
+        <p style="color:var(--p-silver);font-size:15px;line-height:1.8;">You've tried motivation, accountability partners, and discipline — and none of it fully stuck.</p>
+      </div>
+      <div style="background:rgba(237,232,223,0.04);border:1px solid rgba(139,114,200,0.2);border-radius:16px;padding:28px 24px;">
+        <div style="color:var(--p-light);font-size:22px;margin-bottom:10px;">→</div>
+        <p style="color:var(--p-silver);font-size:15px;line-height:1.8;">You lead a team, a business, or a family — but nobody's leading you back to yourself.</p>
+      </div>
+      <div style="background:rgba(237,232,223,0.04);border:1px solid rgba(139,114,200,0.2);border-radius:16px;padding:28px 24px;">
+        <div style="color:var(--p-light);font-size:22px;margin-bottom:10px;">→</div>
+        <p style="color:var(--p-silver);font-size:15px;line-height:1.8;">You know exactly what you need to do. You just can't make yourself do it consistently.</p>
+      </div>
+      <div style="background:rgba(237,232,223,0.04);border:1px solid rgba(139,114,200,0.2);border-radius:16px;padding:28px 24px;">
+        <div style="color:var(--p-light);font-size:22px;margin-bottom:10px;">→</div>
+        <p style="color:var(--p-silver);font-size:15px;line-height:1.8;">You're tired of starting over. You want to finish something — all the way through — and feel it.</p>
+      </div>
+      <div style="background:rgba(237,232,223,0.04);border:1px solid rgba(139,114,200,0.2);border-radius:16px;padding:28px 24px;">
+        <div style="color:var(--p-light);font-size:22px;margin-bottom:10px;">→</div>
+        <p style="color:var(--p-silver);font-size:15px;line-height:1.8;">The noise from everyone else is louder than your own voice right now. You need that to change.</p>
+      </div>
+      <div style="background:rgba(237,232,223,0.04);border:1px solid rgba(139,114,200,0.2);border-radius:16px;padding:28px 24px;">
+        <div style="color:var(--p-light);font-size:22px;margin-bottom:10px;">→</div>
+        <p style="color:var(--p-silver);font-size:15px;line-height:1.8;">You're a decision maker who's overdue for a decision about yourself.</p>
+      </div>
+    </div>
+    <div style="margin-top:48px;">
+      <a href="#waitlist" class="btn-primary">That's me — I'm in</a>
+    </div>
+  </div>
 </section>
 
 <!-- ═══ PILLARS ═══ -->
@@ -837,8 +875,8 @@
 <section class="founder-section" data-aos="fade-up">
   <div class="founder-inner">
     <div class="founder-img-wrap">
-      <div class="founder-img-placeholder">
-        <div class="founder-img-name">Miranda<br>Johnson</div>
+      <div style="border-radius:20px;overflow:hidden;aspect-ratio:3/4;box-shadow:0 24px 64px rgba(0,0,0,0.3);">
+        <img src="img/mirandapraise.jpg" alt="Miranda Johnson" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
       </div>
     </div>
     <div class="founder-content">
@@ -866,44 +904,29 @@
     <div class="testimonials-grid">
       <div class="testimonial-card">
         <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Really liked the custom meal plans and the meditation sessions. Felt more tuned into my health than ever. Great program!"</p>
-        <div class="testimonial-name">Jasmine Richards</div>
+        <p class="testimonial-text">"Working with Miranda as my professional advisor has been such a rewarding experience. Her insightful guidance and support have helped me overcome challenges and achieve both personal and professional goals. Miranda stands out with her genuine passion for helping others succeed."</p>
+        <div class="testimonial-name">Kayth Sanchez</div>
       </div>
       <div class="testimonial-card">
         <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Tried many programs, but 25 Days and 25 Nights stands out. The mindfulness workshops really center you, and the exercise sessions are versatile. Worth checking out."</p>
-        <div class="testimonial-name">Monica Chandler</div>
+        <p class="testimonial-text">"I can't remember the last time I felt inspired to create my life the way that I am now after speaking with Miranda Johnson. She truly opened my eyes to things that have helped me to see growth in my future and I'm excited about what's to come!"</p>
+        <div class="testimonial-name">Keisha Al-Amin</div>
       </div>
       <div class="testimonial-card">
         <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Explored their Sleep Optimization Strategies recently. Noticeably better sleep quality. It's straightforward, effective — no more tossing and turning. Pretty decent outcome."</p>
-        <div class="testimonial-name">Thomas Krazinski</div>
+        <p class="testimonial-text">"Miranda is the best! Thank you MiRAjO!"</p>
+        <div class="testimonial-name">Cole Robinson</div>
       </div>
     </div>
   </div>
 </section>
 
 
-<!-- ═══ WAITLIST ═══ -->
-<section class="waitlist-section" id="waitlist">
-  <div class="waitlist-inner">
-    <div class="section-eyebrow" style="color:var(--p-silver)">Be First In</div>
-    <h2 class="section-title" style="color:var(--warm-parchment)">Join the Waitlist</h2>
-    <p class="waitlist-sub">Be the first to know when enrollment opens. No spam. Just the signal.</p>
-    <form class="waitlist-form" id="waitlist-form">
-      <input type="text" name="first_name" placeholder="First name" class="waitlist-input">
-      <input type="email" name="email" placeholder="Your email address" class="waitlist-input" required>
-      <button type="submit" class="waitlist-btn">Notify Me</button>
-    </form>
-    <p class="waitlist-msg" id="waitlist-msg"></p>
-  </div>
-</section>
-
 <!-- ═══ FAQ ═══ -->
 <section class="faq-section">
   <div class="faq-inner">
-    <div class="section-eyebrow" style="text-align:center" data-aos="fade-up">FAQs</div>
-    <h2 class="section-title" style="text-align:center" data-aos="fade-up">Your wellness journey decoded.</h2>
+    <div class="section-eyebrow" style="text-align:center" data-aos="fade-up">Questions</div>
+    <h2 class="section-title" style="text-align:center" data-aos="fade-up">Everything you want to know<br>before you say yes.</h2>
     <div class="faq-list" data-aos="fade-up">
 
       <div class="faq-item">
@@ -957,6 +980,22 @@
   </div>
 </section>
 
+<!-- ═══ WAITLIST ═══ -->
+<section class="waitlist-section" id="waitlist">
+  <div class="waitlist-inner">
+    <div class="section-eyebrow" style="color:var(--p-silver)">You've Read This Far</div>
+    <h2 class="section-title" style="color:var(--warm-parchment)">That means something.<br>Don't walk away from it.</h2>
+    <p class="waitlist-sub">Be the first to know when enrollment opens. Put your name on the list. That's the first step — take it.</p>
+    <form class="waitlist-form" id="waitlist-form">
+      <input type="text" name="first_name" placeholder="First name" class="waitlist-input">
+      <input type="email" name="email" placeholder="Your email address" class="waitlist-input" required>
+      <button type="submit" class="waitlist-btn">I'm Ready — Notify Me</button>
+    </form>
+    <p class="waitlist-msg" id="waitlist-msg"></p>
+    <p style="font-size:12px;color:rgba(200,196,220,0.4);margin-top:20px;">No spam. No pressure. Just the signal when doors open.</p>
+  </div>
+</section>
+
 <!-- ═══ FOOTER ═══ -->
 <footer class="site-footer">
   <div class="footer-links">
@@ -982,7 +1021,7 @@
     </a>
   </div>
   <div class="footer-bottom">
-    &copy; 2025 MiRAjO Collective &middot;
+    &copy; 2026 MiRAjO Collective &middot;
     <a href="https://www.mirajoco.org/about/terms">Terms of Use</a> &middot;
     <a href="https://www.mirajoco.org/about/privacy">Privacy Policy</a>
   </div>
