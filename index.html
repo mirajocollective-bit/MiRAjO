@@ -1381,24 +1381,33 @@
 <!-- ═══ 25D25N OFFER ═══ -->
 <style>
   .offer-25-section { background: var(--warm-parchment); padding: 100px 40px; }
-  .offer-25-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .offer-25-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 280px; gap: 72px; align-items: center; }
+  .offer-25-video-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .offer-25-video-frame { width: 100%; aspect-ratio: 9/16; border-radius: 20px; overflow: hidden; box-shadow: 0 32px 80px rgba(18,32,18,0.2); }
+  .offer-25-video-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+  .offer-25-video-caption { font-family: 'Instrument Serif', serif; font-size: 15px; color: var(--text-muted-light); text-align: center; max-width: 240px; line-height: 1.6; font-style: italic; }
   @media (max-width: 768px) {
     .offer-25-section { padding: 64px 24px; }
     .offer-25-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
-    .offer-25-grid img { margin: 0 auto; }
     .offer-25-grid a { display: block; text-align: center; }
+    .offer-25-video-wrap { order: -1; }
+    .offer-25-video-frame { max-width: 200px; margin: 0 auto; }
   }
 </style>
 <section class="offer-25-section" data-aos="fade-up">
   <div class="offer-25-grid">
     <div>
-      <img src="img/2525 Official Logo.png" alt="25 Days and 25 Nights" style="width:100%;max-width:320px;display:block;" loading="lazy">
-    </div>
-    <div>
+      <img src="img/2525 Official Logo.png" alt="25 Days and 25 Nights" style="width:100%;max-width:280px;display:block;margin-bottom:24px;" loading="lazy">
       <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--living-green);font-weight:600;margin-bottom:20px;">Waitlist Open</div>
       <p style="font-size:17px;color:var(--text-body-light);line-height:1.9;margin-bottom:8px;">25 days to stop performing. 25 nights to start becoming.</p>
       <p style="font-size:17px;color:var(--text-body-light);line-height:1.9;margin-bottom:32px;">You've held it together long enough. Now hold yourself.</p>
       <a href="https://www.mirajoco.org/25daysand25nights" style="display:inline-block;padding:18px 48px;background:var(--deep-forest);color:var(--warm-parchment);border-radius:8px;font-size:14px;font-weight:700;letter-spacing:0.5px;text-decoration:none;transition:background 0.3s;" onmouseover="this.style.background='var(--forest-mid)'" onmouseout="this.style.background='var(--deep-forest)'">Join the Waitlist</a>
+    </div>
+    <div class="offer-25-video-wrap" data-aos="fade-left">
+      <div class="offer-25-video-frame">
+        <iframe src="https://www.youtube.com/embed/ohna1dHCM4c?autoplay=1&mute=1&loop=1&playlist=ohna1dHCM4c&controls=0&playsinline=1" title="Stop F'n Quitting" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="offer-25-video-caption">The ones who see it to the end are the ones who actually change.</p>
     </div>
   </div>
 </section>
