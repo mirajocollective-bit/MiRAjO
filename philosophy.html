@@ -1191,25 +1191,45 @@
 </style>
 
 <!-- ═══ THE ORIGINAL LAW ═══ -->
+<style>
+  .law-section { background: var(--deep-forest); padding: 120px 40px; }
+  .law-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--new-growth); font-weight: 600; margin-bottom: 16px; }
+  .law-title { font-family: 'Instrument Serif', serif; font-size: clamp(26px, 3.5vw, 40px); font-weight: 400; color: var(--warm-parchment); margin-bottom: 24px; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .law-body { font-size: 16px; color: var(--text-muted-dark); max-width: 620px; margin: 0 auto 72px; line-height: 1.9; font-weight: 400; }
+  .law-pillars { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+  .law-pillar { display: grid; grid-template-columns: 100px 1fr 2fr; align-items: center; gap: 40px; padding: 40px 0; border-top: 1px solid rgba(242,235,217,0.1); }
+  .law-pillar:last-child { border-bottom: 1px solid rgba(242,235,217,0.1); }
+  .law-pillar-num { font-family: 'Instrument Serif', serif; font-size: clamp(48px, 6vw, 80px); color: var(--dry-sage); font-weight: 400; line-height: 1; opacity: 0.6; }
+  .law-pillar-label { font-family: 'Instrument Serif', serif; font-size: clamp(22px, 2.5vw, 32px); color: var(--warm-parchment); font-weight: 400; line-height: 1.2; }
+  .law-pillar-desc { font-size: 15px; color: var(--text-muted-dark); line-height: 1.85; font-weight: 400; }
+  @media (max-width: 768px) {
+    .law-section { padding: 72px 24px; }
+    .law-pillar { grid-template-columns: 48px 1fr; gap: 16px; padding: 32px 0; }
+    .law-pillar-num { font-size: 36px; }
+    .law-pillar-desc { grid-column: 1 / -1; padding-top: 0; }
+  }
+</style>
 <section class="law-section" data-aos="fade-up">
-  <div class="law-eyebrow">The Foundation</div>
-  <h2 class="law-title">The most basic, original law ever created.</h2>
-  <p class="law-body">Before karma. Before success formulas. Before every self-help book ever written, there was Seedtime and Harvest. It is the operating system of every outcome in your life. You don't get to opt out. You only get to choose what you plant, where you plant it, and whether you understand the season you're in.</p>
-  <div class="law-pillars" data-aos="fade-up" data-aos-delay="100">
-    <div class="law-pillar">
-      <div class="law-pillar-icon">🌱</div>
+  <div style="text-align:center;">
+    <div class="law-eyebrow">The Foundation</div>
+    <h2 class="law-title">The most basic, original law ever created.</h2>
+    <p class="law-body">Before karma. Before success formulas. Before every self-help book ever written, there was Seedtime and Harvest. It is the operating system of every outcome in your life. You don't get to opt out. You only get to choose what you plant, where you plant it, and whether you understand the season you're in.</p>
+  </div>
+  <div class="law-pillars">
+    <div class="law-pillar" data-aos="fade-up">
+      <div class="law-pillar-num">01</div>
       <div class="law-pillar-label">The Season</div>
-      <div class="law-pillar-desc">Every action, word, dollar, and hour is a seed. Knowing your season changes what you plant and when.</div>
+      <div class="law-pillar-desc">Every action, word, dollar, and hour is a seed. Knowing your season changes what you plant and when. You cannot plant in harvest season and expect a return.</div>
     </div>
-    <div class="law-pillar">
-      <div class="law-pillar-icon">🌿</div>
+    <div class="law-pillar" data-aos="fade-up" data-aos-delay="100">
+      <div class="law-pillar-num">02</div>
       <div class="law-pillar-label">The Ground</div>
-      <div class="law-pillar-desc">Not all ground is equal. Where you invest determines what multiplies.</div>
+      <div class="law-pillar-desc">Not all ground is equal. Where you invest determines what multiplies. You can work hard in the wrong soil your entire life and still have nothing to show for it.</div>
     </div>
-    <div class="law-pillar">
-      <div class="law-pillar-icon">🌾</div>
+    <div class="law-pillar" data-aos="fade-up" data-aos-delay="200">
+      <div class="law-pillar-num">03</div>
       <div class="law-pillar-label">The Harvest</div>
-      <div class="law-pillar-desc">The harvest doesn't lie. What you reap is a direct reflection of what you sowed.</div>
+      <div class="law-pillar-desc">The harvest doesn't lie. What you reap is a direct reflection of what you sowed. If you don't like what you're reaping, the question isn't who did this to you.</div>
     </div>
   </div>
 </section>
@@ -1474,38 +1494,48 @@
 </section>
 
 <!-- ═══ TESTIMONIALS ═══ -->
-<section style="background:var(--warm-parchment);padding:100px 40px;" data-aos="fade-up">
-  <div style="max-width:960px;margin:0 auto;text-align:center;">
-    <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--living-green);font-weight:600;margin-bottom:16px;">What People Say</div>
-    <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(28px,3.5vw,40px);color:var(--deep-forest);font-weight:400;margin-bottom:64px;line-height:1.2;">The law works. Here's the proof.</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;" class="reviews-grid">
-
-      <div style="background:var(--soft-white);border-radius:12px;padding:36px 28px;text-align:left;border:1px solid var(--border-light);">
-        <div style="color:var(--dry-sage);font-size:20px;margin-bottom:16px;">★★★★★</div>
-        <p style="font-size:15px;color:var(--text-body-light);line-height:1.85;margin-bottom:24px;font-style:italic;">"Working with Miranda as my professional advisor has been such a rewarding experience. Her insightful guidance and support have helped me overcome challenges and achieve both personal and professional goals. Miranda stands out with her genuine passion for helping others succeed. I will always recommend MiRAjO and Miranda to anyone seeking to level up their self-development and business."</p>
-        <div style="font-size:13px;font-weight:600;color:var(--deep-forest);">Kayth Sanchez</div>
-      </div>
-
-      <div style="background:var(--soft-white);border-radius:12px;padding:36px 28px;text-align:left;border:1px solid var(--border-light);">
-        <div style="color:var(--dry-sage);font-size:20px;margin-bottom:16px;">★★★★★</div>
-        <p style="font-size:15px;color:var(--text-body-light);line-height:1.85;margin-bottom:24px;font-style:italic;">"I can't remember the last time I felt inspired to create my life the way that I am now after speaking with the founder Miranda Johnson. She truly opened my eyes to things that have helped me to see growth in my future and I'm excited about what's to come!"</p>
-        <div style="font-size:13px;font-weight:600;color:var(--deep-forest);">Keisha Al-Amin</div>
-      </div>
-
-      <div style="background:var(--soft-white);border-radius:12px;padding:36px 28px;text-align:left;border:1px solid var(--border-light);">
-        <div style="color:var(--dry-sage);font-size:20px;margin-bottom:16px;">★★★★★</div>
-        <p style="font-size:15px;color:var(--text-body-light);line-height:1.85;margin-bottom:24px;font-style:italic;">"Miranda is the best! Thank you MiRAjO!"</p>
-        <div style="font-size:13px;font-weight:600;color:var(--deep-forest);">Cole Robinson</div>
-      </div>
-
+<style>
+  .reviews-section { background: var(--deep-forest); padding: 100px 40px; }
+  .reviews-featured { max-width: 760px; margin: 0 auto 64px; text-align: center; position: relative; }
+  .reviews-featured-quote { font-family: 'Instrument Serif', serif; font-size: clamp(18px, 2.5vw, 26px); color: var(--warm-parchment); line-height: 1.7; font-style: italic; margin-bottom: 28px; }
+  .reviews-featured-mark { font-family: 'Instrument Serif', serif; font-size: 120px; color: var(--dry-sage); line-height: 0.6; opacity: 0.35; display: block; margin-bottom: 8px; }
+  .reviews-featured-name { font-size: 13px; font-weight: 600; color: var(--new-growth); letter-spacing: 1px; text-transform: uppercase; }
+  .reviews-featured-stars { color: var(--dry-sage); font-size: 16px; margin-bottom: 20px; }
+  .reviews-secondary { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .review-card-sm { background: rgba(242,235,217,0.05); border: 1px solid rgba(242,235,217,0.1); border-radius: 12px; padding: 32px 28px; }
+  .review-card-sm-stars { color: var(--dry-sage); font-size: 13px; margin-bottom: 14px; }
+  .review-card-sm-text { font-size: 14px; color: var(--text-muted-dark); line-height: 1.85; font-style: italic; margin-bottom: 16px; }
+  .review-card-sm-name { font-size: 12px; font-weight: 600; color: var(--new-growth); letter-spacing: 0.5px; text-transform: uppercase; }
+  @media (max-width: 768px) {
+    .reviews-section { padding: 64px 24px; }
+    .reviews-secondary { grid-template-columns: 1fr; }
+    .reviews-featured-mark { font-size: 80px; }
+  }
+</style>
+<section class="reviews-section" data-aos="fade-up">
+  <div style="text-align:center;margin-bottom:56px;">
+    <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--new-growth);font-weight:600;margin-bottom:16px;">What People Say</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(26px,3vw,38px);color:var(--warm-parchment);font-weight:400;line-height:1.2;">The law works. Here's the proof.</h2>
+  </div>
+  <div class="reviews-featured" data-aos="fade-up">
+    <span class="reviews-featured-mark">"</span>
+    <div class="reviews-featured-stars">★★★★★</div>
+    <p class="reviews-featured-quote">Working with Miranda as my professional advisor has been such a rewarding experience. Her insightful guidance and support have helped me overcome challenges and achieve both personal and professional goals. Miranda stands out with her genuine passion for helping others succeed. I will always recommend MiRAjO and Miranda to anyone seeking to level up their self-development and business.</p>
+    <div class="reviews-featured-name">Kayth Sanchez</div>
+  </div>
+  <div class="reviews-secondary">
+    <div class="review-card-sm" data-aos="fade-up">
+      <div class="review-card-sm-stars">★★★★★</div>
+      <p class="review-card-sm-text">"I can't remember the last time I felt inspired to create my life the way that I am now after speaking with Miranda Johnson. She truly opened my eyes to things that have helped me to see growth in my future and I'm excited about what's to come!"</p>
+      <div class="review-card-sm-name">Keisha Al-Amin</div>
+    </div>
+    <div class="review-card-sm" data-aos="fade-up" data-aos-delay="100">
+      <div class="review-card-sm-stars">★★★★★</div>
+      <p class="review-card-sm-text">"Miranda is the best! Thank you MiRAjO!"</p>
+      <div class="review-card-sm-name">Cole Robinson</div>
     </div>
   </div>
 </section>
-<style>
-  @media (max-width: 768px) {
-    .reviews-grid { grid-template-columns: 1fr !important; }
-  }
-</style>
 
 <!-- ═══ FOOTER ═══ -->
 <footer class="site-footer">
