@@ -85,15 +85,35 @@
       display: inline-block;
       font-size: 12px;
       padding: 9px 22px;
-      background: var(--deep-forest);
-      color: var(--soft-white);
+      background: var(--living-green);
+      color: #fff;
       border-radius: 6px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.5px;
       text-decoration: none;
-      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: ctaPulse 3s ease-in-out infinite;
     }
-    .nav-cta:hover { background: var(--forest-mid); }
+    .nav-cta::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: ctaShimmer 3s ease-in-out infinite;
+    }
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,107,66,0.5); }
+      50% { box-shadow: 0 0 0 7px rgba(37,107,66,0); }
+    }
+    @keyframes ctaShimmer {
+      0% { left: -100%; }
+      40%, 100% { left: 160%; }
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37,107,66,0.45); animation: none; }
 
     /* Mobile nav */
     .nav-hamburger {
@@ -1554,7 +1574,15 @@
 })();
 </script>
 
-<!-- newsletter form removed — Kit form link to be added -->
+<!-- ═══ NEWSLETTER ═══ -->
+<section style="background:var(--deep-forest);padding:80px 40px;text-align:center;">
+  <div style="max-width:560px;margin:0 auto;">
+    <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--new-growth);font-weight:600;margin-bottom:16px;">Stay Connected</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(26px,3.5vw,40px);color:var(--warm-parchment);font-weight:400;line-height:1.2;margin-bottom:16px;">Words worth reading. Delivered with intention.</h2>
+    <p style="font-size:15px;color:var(--text-muted-dark);line-height:1.8;margin-bottom:36px;">No countdowns. No spam. Just grounded truth when you need it.</p>
+    <script async data-uid="019ac3bc3d" src="https://mirajo.kit.com/019ac3bc3d/index.js"></script>
+  </div>
+</section>
 
 <!-- ═══ FOOTER ═══ -->
 <footer class="site-footer">
