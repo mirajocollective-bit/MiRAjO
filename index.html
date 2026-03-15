@@ -206,32 +206,33 @@
     .hero-btn-secondary:hover { border-color: var(--warm-parchment); background: rgba(237,232,223,0.06); }
     .hero-image {
       position: relative;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      background: var(--deep-forest);
     }
-    .hero-image img {
+    .hero-image iframe {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
+      max-width: 320px;
+      aspect-ratio: 9/16;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 32px 96px rgba(0,0,0,0.55), 0 0 0 1px rgba(109,196,138,0.15);
+      position: relative;
+      z-index: 1;
     }
     .hero-image::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; bottom: 0;
-      width: 160px;
-      background: linear-gradient(to right, var(--deep-forest), transparent);
-      z-index: 1;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(37,107,66,0.18) 0%, transparent 70%);
       pointer-events: none;
     }
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-image { height: 72vw; order: -1; }
-      .hero-image::before {
-        width: auto; top: auto; left: 0; right: 0; bottom: 0;
-        height: 120px;
-        background: linear-gradient(to top, var(--deep-forest), transparent);
-      }
+      .hero-image { padding: 32px 24px; order: -1; }
+      .hero-image iframe { max-width: 260px; }
       .hero-content { padding: 40px 24px 64px; }
     }
 
@@ -1251,7 +1252,13 @@
     </div>
   </div>
   <div class="hero-image" data-aos="fade-left">
-    <img src="img/Miranda J- Headshot.jpeg" alt="Miranda Johnson">
+    <iframe
+      src="https://www.youtube.com/embed/UsJMXwNqns0?rel=0&modestbranding=1"
+      title="A Weak Mind — Miranda Johnson"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
   </div>
 </section>
 
@@ -1265,12 +1272,9 @@
       <div class="miranda-eyebrow">From the Founder</div>
       <h2 class="miranda-heading">I built this because this person is and was me.</h2>
       <div class="miranda-body">
-        <p>You are the one everyone depends on. The decision maker. The one who holds it together, figures it out, and keeps moving even when you are running on empty. You carry more than anyone can see, and somehow you still show up.</p>
-        <p>You are genuinely good. You love God. You want to build something that matters, something that lasts. But in a world that rewards performance over substance, you find yourself scrolling, disconnecting, becoming an influencer who cannot even influence your own home.</p>
+        <p>You are the one everyone depends on. The decision maker. Somehow you still show up even when you are running on empty — carrying more than anyone can see.</p>
         <p>You attract people who want your gift more than they want you. You pour into rooms that cannot hold what you are carrying. Being the one everyone leans on can be the loneliest place in the world.</p>
-        <p>You have failed before. You are willing to try again. But this time must be different, and somewhere inside you, you already know it.</p>
-        <p>You do not need more motivation. You do not need a new strategy. You need to go inward. Trust what you already know. Become the I AM statement you have been putting off.</p>
-        <p>That is exactly why MiRAjO exists.</p>
+        <p>You have failed before and you are willing to try again. This time you go inward. You trust what you already know. You become the I AM statement you have been putting off. That is exactly why MiRAjO exists.</p>
       </div>
       <div class="miranda-signature">Miranda Johnson</div>
       <a href="https://www.mirajoco.org/philosophy" class="miranda-cta">Read the Philosophy &rarr;</a>
