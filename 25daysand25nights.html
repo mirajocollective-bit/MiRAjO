@@ -351,43 +351,71 @@
     }
     .pillar-btn:hover { background: var(--gold); color: #131110; border-color: var(--gold); }
 
-    /* ═══ FOUNDER ═══ */
-    .founder-section {
-      background: var(--warm-parchment);
-      padding: 100px 40px;
+    /* ═══ 7 CURRENTS ═══ */
+    .currents-section { background: var(--p-dark); padding: 100px 40px; }
+    .currents-inner { max-width: 1100px; margin: 0 auto; }
+    .currents-intro { max-width: 680px; margin: 0 auto 64px; text-align: center; }
+    .currents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .current-card {
+      background: rgba(255,250,240,0.03);
+      border: 1px solid rgba(201,169,110,0.15);
+      border-radius: 16px;
+      padding: 36px 28px;
+      transition: border-color 0.3s, transform 0.2s;
     }
-    .founder-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 64px;
-      align-items: start;
-    }
-    .founder-img-wrap {
-      position: sticky;
-      top: 120px;
-    }
-    .founder-img-placeholder {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: linear-gradient(135deg, var(--p-deep), var(--p-mid));
-      border-radius: 20px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 24px;
-    }
-    .founder-img-name {
+    .current-card:hover { border-color: rgba(201,169,110,0.42); transform: translateY(-4px); }
+    .current-number {
       font-family: 'Instrument Serif', serif;
-      font-size: 22px;
+      font-size: 52px;
+      color: var(--gold);
+      opacity: 0.25;
+      line-height: 1;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .current-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(18px, 2vw, 22px);
       color: var(--warm-parchment);
       font-weight: 400;
-      text-align: center;
+      line-height: 1.3;
+      margin-bottom: 14px;
     }
-    .founder-content .section-eyebrow { text-align: left; }
-    .founder-content .section-title { text-align: left; margin-left: 0; margin-right: 0; }
-    .founder-content .section-body { margin-left: 0; margin-right: 0; text-align: left; }
+    .current-body { font-size: 14px; color: rgba(237,232,223,0.58); line-height: 1.8; }
+    .current-card:last-child { grid-column: 2; }
+    @media (max-width: 768px) {
+      .currents-grid { grid-template-columns: 1fr; }
+      .current-card:last-child { grid-column: 1; }
+      .currents-section { padding: 64px 24px; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .currents-grid { grid-template-columns: repeat(2, 1fr); }
+      .current-card:last-child { grid-column: auto; }
+    }
+
+    /* ═══ FOUNDER ═══ */
+    .founder-section { background: var(--warm-parchment); padding: 100px 40px; }
+    .founder-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .founder-photo {
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 28px;
+      border: 4px solid rgba(42,58,42,0.1);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+    }
+    .founder-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .founder-name { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--deep-forest); margin-bottom: 6px; font-weight: 400; }
+    .founder-cred { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--living-green); font-weight: 600; margin-bottom: 28px; }
+    .founder-bio { font-size: 16px; color: var(--text-body-light); line-height: 1.9; margin-bottom: 28px; }
     .founder-brand-tag {
       display: inline-flex;
       align-items: center;
@@ -400,7 +428,6 @@
       font-weight: 500;
       color: var(--deep-forest);
       letter-spacing: 0.5px;
-      margin-top: 24px;
     }
     .founder-brand-tag img { height: 20px; width: auto; }
 
@@ -976,12 +1003,12 @@
 <!-- ═══ WHAT IS ═══ -->
 <section class="what-section" data-aos="fade-up">
   <div class="section-eyebrow">What Is This</div>
-  <h2 class="section-title">What is <span>25 Days and 25 Nights?</span><br>You. Finally.</h2>
+  <h2 class="section-title">Not a challenge.<br><span>A return to yourself.</span></h2>
   <div class="section-body">
-    <p>You have talked, planned, and overthought. Now it is time to actually listen to yourself.</p>
-    <p>This is not a cleanse or a retreat. It is a back to basics gut check. Call it a challenge or a mental fast if that helps you show up.</p>
-    <p>You will face everything you have been avoiding, and the laws of nature will make sure you see it clearly. What you speak and what you feel finally meet. Karma resets. Noise clears.</p>
-    <p>It is just you, raw and unfiltered. And it is still your choice.</p>
+    <p>This is not a 30-day sprint. It is not a test of how much you can endure. 75 Hard measures your willpower. 25 Days and 25 Nights teaches you something deeper — how to move with nature instead of against it.</p>
+    <p>For 25 days and 25 nights you will learn the 7 Currents of Nature's Law — the same framework that governs every season, every cycle, every living thing — and apply it to your body, your mind, your energy, and your decisions.</p>
+    <p>This is structured reconnection. You come in depleted, reactive, and performing for everyone else. You leave with a framework you will use for the rest of your life.</p>
+    <p style="font-weight:600;color:var(--text-on-light)">25 days. 25 nights. One framework. One version of you that finally makes sense to you.</p>
   </div>
   <div class="video-thumb" onclick="openVideoModal()" role="button" tabindex="0" data-aos="zoom-in" aria-label="Watch Miranda explain 25 Days and 25 Nights">
     <img src="https://img.youtube.com/vi/a6OauLaJp_U/maxresdefault.jpg" alt="Watch Miranda explain 25 Days and 25 Nights" loading="lazy">
@@ -1039,69 +1066,128 @@
     <h2 class="section-title" style="color:var(--warm-parchment);text-align:center" data-aos="fade-up">Everything you need.<br>Nothing you don't.</h2>
     <div class="pillars-grid">
 
-      <!-- Eat -->
+      <!-- Nutrition -->
       <div class="pillar-card" data-aos="fade-up">
         <span class="pillar-icon">🥗</span>
-        <div class="pillar-eyebrow">Pillar 01</div>
+        <div class="pillar-eyebrow">Pillar 01 — Nutrition</div>
         <h3 class="pillar-title">Eat Like You Actually Love Yourself</h3>
         <div class="pillar-body">
-          <p>This is about fuel that calms your nervous system, clears the fog, and keeps your fire lit.</p>
+          <p>This is not a diet. It is fuel awareness. Your body is your first leadership tool and most people have been running it on the wrong input for years.</p>
         </div>
         <ul class="pillar-list">
           <li>Meals that ground you instead of guilt you</li>
-          <li>Food that fits your life instead of a formula</li>
+          <li>Food that fits your real life, not a formula</li>
           <li>Structure that supports you without shame</li>
         </ul>
-        <p style="font-size:14px;color:var(--p-silver);margin-bottom:24px;line-height:1.7">Your body is your first leadership tool. Feed it like you plan to win.</p>
-        <a href="#waitlist" class="pillar-btn">Nourish Me, Please</a>
+        <p style="font-size:14px;color:rgba(237,232,223,0.55);margin-bottom:24px;line-height:1.7">Feed it like you plan to win.</p>
+        <a href="#waitlist" class="pillar-btn">I'm in</a>
       </div>
 
-      <!-- Move -->
+      <!-- Movement -->
       <div class="pillar-card" data-aos="fade-up" data-aos-delay="100">
         <span class="pillar-icon">💪</span>
-        <div class="pillar-eyebrow">Pillar 02</div>
-        <h3 class="pillar-title">Daily Fitness Classes</h3>
+        <div class="pillar-eyebrow">Pillar 02 — Movement</div>
+        <h3 class="pillar-title">Your Body Has Been Talking. Time to Listen.</h3>
         <div class="pillar-body">
-          <p>Your body has been talking to you the whole time. When you move, you clear your head, your energy rises, and your spirit actually feels lighter.</p>
-          <p>You do not need scales or tracking systems — you need to know your body and learn to listen.</p>
+          <p>Daily movement is not punishment. It is how you clear what the mind cannot process on its own. When you move, your energy rises, stress leaves, and something shifts.</p>
+          <p>You do not need a perfect regimen. You need to show up and keep moving.</p>
         </div>
-        <ul class="pillar-emoji-list">
-          <li>🔥 A body that starts to show what discipline looks like</li>
-          <li>💪 Fat loss and real muscle tone you can feel</li>
-          <li>⚡ Energy that lasts instead of crashing by mid-afternoon</li>
-          <li>🧘‍♀️ Stress that finally leaves your system</li>
-          <li>🌙 Sleep that feels earned and restorative</li>
+        <ul class="pillar-list">
+          <li>Daily fitness classes built into the 25 days</li>
+          <li>Energy that lasts instead of crashing mid-afternoon</li>
+          <li>Sleep that feels earned and actually restores you</li>
         </ul>
-        <a href="#waitlist" class="pillar-btn">Move Me, Please</a>
+        <a href="#waitlist" class="pillar-btn">I'm in</a>
       </div>
 
-      <!-- Silence -->
-      <div class="pillar-card" data-aos="fade-up" data-aos-delay="200">
-        <span class="pillar-icon">🤫</span>
-        <div class="pillar-eyebrow">Pillar 03</div>
-        <h3 class="pillar-title">Quiet Minds Make Louder Moves</h3>
+      <!-- 7 Currents -->
+      <div class="pillar-card" data-aos="fade-up" data-aos-delay="200" style="border-color:rgba(201,169,110,0.35);">
+        <span class="pillar-icon">🌊</span>
+        <div class="pillar-eyebrow" style="color:var(--gold-light)">Pillar 03 — The Core</div>
+        <h3 class="pillar-title">The 7 Currents of Nature's Law</h3>
         <div class="pillar-body">
-          <p>For some, your voice was taken. For others, you have been talking your whole damn life. Take a breath.</p>
-          <p>Having a voice is power, but silence is strength. It will always be the most powerful thing you own.</p>
-          <p>The answers you keep chasing are not in opinions, podcasts, or self-help books. They are in your gut.</p>
-          <p>Stop the doom scrolling. Stop reacting to every ping. Busy is not productive. Chaos is not peace.</p>
+          <p>This is the heart of the entire program. Nature does not operate on hustle or willpower. It follows a law — and so do you, whether you know it or not.</p>
+          <p>Over 25 days you will study, apply, and internalize all 7 currents. This is the part that stays with you long after the program ends.</p>
         </div>
-        <a href="#waitlist" class="pillar-btn">I can do this!</a>
+        <ul class="pillar-list">
+          <li>7 currents — each one a principle to live by</li>
+          <li>Daily application, not just theory</li>
+          <li>A framework built to last a lifetime</li>
+        </ul>
+        <a href="#currents" class="pillar-btn">See the 7 Currents ↓</a>
       </div>
 
-      <!-- YOU vs YOU -->
+      <!-- Silence & Purpose -->
       <div class="pillar-card" data-aos="fade-up" data-aos-delay="300">
-        <span class="pillar-icon">🪞</span>
-        <div class="pillar-eyebrow">Pillar 04</div>
-        <h3 class="pillar-title">YOU vs. YOU</h3>
+        <span class="pillar-icon">🤫</span>
+        <div class="pillar-eyebrow">Pillar 04 — Inner Work</div>
+        <h3 class="pillar-title">Silence Is Where It All Begins</h3>
         <div class="pillar-body">
-          <p>25 days to rule your morning. 25 nights to rule your night.</p>
-          <p>This is where it all comes together. The food that fuels you, the movement that clears you, the silence that grounds you, and the laws that guide you.</p>
-          <p>It is not about perfection. It is about awareness.</p>
-          <p>You start paying attention to what your body says, how your mind reacts, and where your energy belongs.</p>
-          <p>You will always need a moment to recenter, but now you know how to do it. And when you do, the things you have been chasing will chase you.</p>
+          <p>The answers you have been chasing are not in another podcast, opinion, or productivity hack. They are in you. Silence is how you access them.</p>
+          <p>25 days and 25 nights of intentional quiet. Committing to purpose. Learning to rule your morning and your night.</p>
         </div>
-        <a href="#waitlist" class="pillar-btn">What do you want?</a>
+        <ul class="pillar-list">
+          <li>Structured daily silence practices</li>
+          <li>Morning and evening rituals that anchor you</li>
+          <li>A commitment to your purpose — written, spoken, lived</li>
+        </ul>
+        <a href="#waitlist" class="pillar-btn">I'm ready</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7 CURRENTS ═══ -->
+<section class="currents-section" id="currents">
+  <div class="currents-inner">
+    <div class="currents-intro" data-aos="fade-up">
+      <div class="section-eyebrow" style="color:var(--gold)">The Heart of the Program</div>
+      <h2 class="section-title" style="color:var(--warm-parchment)">The 7 Currents<br>of Nature's Law</h2>
+      <p class="section-body" style="color:rgba(237,232,223,0.65)">Nature does not hustle. It follows a law — and so do you, whether you know it or not. These 7 currents are the framework you will study, apply, and carry with you long after the 25 days end.</p>
+    </div>
+    <div class="currents-grid">
+
+      <div class="current-card" data-aos="fade-up" data-aos-delay="0">
+        <span class="current-number">01</span>
+        <h3 class="current-name">The Current of Silence and Potential</h3>
+        <p class="current-body">Everything you need is already inside you. Silence is not empty — it is where your answers have been waiting. This current teaches you to stop drowning out your own signal.</p>
+      </div>
+
+      <div class="current-card" data-aos="fade-up" data-aos-delay="80">
+        <span class="current-number">02</span>
+        <h3 class="current-name">The Current of Flowing Energy</h3>
+        <p class="current-body">Energy does not disappear — it redirects. When you stop fighting your own rhythm and start moving with it, momentum stops being something you force and starts being something you follow.</p>
+      </div>
+
+      <div class="current-card" data-aos="fade-up" data-aos-delay="160">
+        <span class="current-number">03</span>
+        <h3 class="current-name">The Current of Ease</h3>
+        <p class="current-body">Ease is not the absence of effort. It is what happens when your actions finally align with who you actually are. You stop grinding against yourself and start working with your own nature.</p>
+      </div>
+
+      <div class="current-card" data-aos="fade-up" data-aos-delay="240">
+        <span class="current-number">04</span>
+        <h3 class="current-name">The Current of Intention</h3>
+        <p class="current-body">What you plant with clarity, you harvest with certainty. Nature never grows what was not first seeded with intention. This current puts you back in the driver's seat of your own outcomes.</p>
+      </div>
+
+      <div class="current-card" data-aos="fade-up" data-aos-delay="320">
+        <span class="current-number">05</span>
+        <h3 class="current-name">The Current of Choice</h3>
+        <p class="current-body">Every outcome in your life was a choice — made by you or made for you. This current is about reclaiming your decision. You are not a passenger in your own story.</p>
+      </div>
+
+      <div class="current-card" data-aos="fade-up" data-aos-delay="400">
+        <span class="current-number">06</span>
+        <h3 class="current-name">The Current of Release</h3>
+        <p class="current-body">You cannot carry what was and build what will be at the same time. Release is not giving up. It is making room. Every season that ends is making space for the one that is waiting to begin.</p>
+      </div>
+
+      <div class="current-card" data-aos="fade-up" data-aos-delay="480">
+        <span class="current-number">07</span>
+        <h3 class="current-name">The Current of Purpose</h3>
+        <p class="current-body">This is where everything lands. Not as a destination but as a direction. Purpose is not something you find — it is something you commit to. This current is the one that makes all the others matter.</p>
       </div>
 
     </div>
@@ -1111,24 +1197,15 @@
 <!-- ═══ FOUNDER ═══ -->
 <section class="founder-section" data-aos="fade-up">
   <div class="founder-inner">
-    <div class="founder-img-wrap">
-      <div style="border-radius:20px;overflow:hidden;aspect-ratio:3/4;box-shadow:0 24px 64px rgba(0,0,0,0.3);">
-        <img src="img/mirandapraise.jpg" alt="Miranda Johnson" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-      </div>
+    <div class="founder-photo">
+      <img src="img/Miranda J- Headshot.jpeg" alt="Miranda Johnson">
     </div>
-    <div class="founder-content">
-      <div class="section-eyebrow">Meet the Founder &amp; Creator</div>
-      <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Miranda Johnson</h2>
-      <div class="section-body">
-        <p>For almost two decades I have built businesses, raised five daughters, and learned how to rebuild myself when life required it. I know what it feels like to carry titles that were earned and others that were given, and to still show up when life does not make it easy.</p>
-        <p>I started as a teenage entrepreneur and learned early that power is something you must protect. I gave it away, had it taken, and had to fight to take it back. Each time I went inward to rise again.</p>
-        <p>After years of work across multiple industries and two years of deep personal research and reflection, I created 25 Days and 25 Nights to share the structure and pace that helped me build balance and success in every area of my life.</p>
-        <p>Through MiRAjO Collective, I now build programs that help Dreamers, Leaders, and Doers move beyond level one of life and step into their own clarity and discipline.</p>
-      </div>
-      <div class="founder-brand-tag">
-        <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO">
-        A MiRAjO Collective Program
-      </div>
+    <h2 class="founder-name">Miranda Johnson</h2>
+    <div class="founder-cred">Founder &amp; Creator — MiRAjO Collective</div>
+    <p class="founder-bio">For almost two decades I have built businesses, raised five daughters, and rebuilt myself every time life required it. I created 25 Days and 25 Nights after two years of deep personal research — a framework built on the same laws that govern every season in nature. I teach it through MiRAjO Collective to leaders who are ready to stop performing and start becoming.</p>
+    <div class="founder-brand-tag">
+      <img src="img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO">
+      A MiRAjO Collective Program
     </div>
   </div>
 </section>
