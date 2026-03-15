@@ -971,7 +971,7 @@
     <span class="hero-play-icon">
       <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
     </span>
-    Watch Miranda explain it — 3 min
+    Watch Miranda explain it — 1 min
   </button>
   <a href="#waitlist" class="btn-primary" data-aos="fade-up" data-aos-delay="350">That's good enough — Let's Go!</a>
 </section>
@@ -1017,7 +1017,7 @@
       <div class="video-thumb-play-btn">
         <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
       </div>
-      <span class="video-thumb-label">Watch Miranda explain it — 3 min</span>
+      <span class="video-thumb-label">Watch Miranda explain it — 1 min</span>
     </div>
   </div>
   <a href="#waitlist" class="btn-primary">Sign me up, Now!</a>
@@ -1358,7 +1358,7 @@
     <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Close video">✕</button>
     <div class="video-modal-frame">
       <iframe id="video-modal-iframe" src="" title="25 Days and 25 Nights — Miranda Johnson"
-        allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
 </div>
@@ -1371,7 +1371,7 @@
   function openVideoModal() {
     const modal = document.getElementById('video-modal');
     const iframe = document.getElementById('video-modal-iframe');
-    iframe.src = 'https://www.youtube.com/embed/a6OauLaJp_U?autoplay=1&rel=0&modestbranding=1&color=white';
+    iframe.src = 'https://www.youtube.com/embed/a6OauLaJp_U?autoplay=1&mute=0&rel=0&modestbranding=1&color=white&enablejsapi=1';
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
