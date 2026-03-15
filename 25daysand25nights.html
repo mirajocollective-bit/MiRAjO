@@ -967,7 +967,7 @@
     <p>Need to reset that beautiful overthinking brain? <strong style="color:var(--gold-light)">Do the 25.</strong></p>
     <p>Still letting the noise from everyone else play louder than your own voice? <strong style="color:var(--gold-light)">Do the 25.</strong></p>
   </div>
-  <button class="hero-play-btn" onclick="openVideoModal()" data-aos="fade-up" data-aos-delay="300">
+  <button class="hero-play-btn" onclick="scrollToVideo()" data-aos="fade-up" data-aos-delay="300">
     <span class="hero-play-icon">
       <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
     </span>
@@ -1011,7 +1011,7 @@
     <p>This is structured reconnection. You come in depleted, reactive, and performing for everyone else. You leave with a framework you will use for the rest of your life.</p>
     <p style="font-weight:600;color:var(--text-on-light)">25 days. 25 nights. One framework. One version of you that finally makes sense to you.</p>
   </div>
-  <div class="video-thumb" onclick="openVideoModal()" role="button" tabindex="0" data-aos="zoom-in" aria-label="Watch Miranda explain 25 Days and 25 Nights">
+  <div class="video-thumb" id="video-inline" onclick="playInline(this)" role="button" tabindex="0" data-aos="zoom-in" aria-label="Watch Miranda explain 25 Days and 25 Nights">
     <img src="https://img.youtube.com/vi/a6OauLaJp_U/maxresdefault.jpg" alt="Watch Miranda explain 25 Days and 25 Nights" loading="lazy">
     <div class="video-thumb-overlay">
       <div class="video-thumb-play-btn">
@@ -1351,38 +1351,23 @@
   </div>
 </footer>
 
-<!-- ═══ VIDEO MODAL ═══ -->
-<div id="video-modal" class="video-modal" role="dialog" aria-modal="true" aria-label="Video player">
-  <div class="video-modal-backdrop" onclick="closeVideoModal()"></div>
-  <div class="video-modal-inner">
-    <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Close video">✕</button>
-    <div class="video-modal-frame">
-      <iframe id="video-modal-iframe" src="" title="25 Days and 25 Nights — Miranda Johnson"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-  </div>
-</div>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 60 });
 
-  // Video modal
-  function openVideoModal() {
-    const modal = document.getElementById('video-modal');
-    const iframe = document.getElementById('video-modal-iframe');
-    iframe.src = 'https://www.youtube.com/embed/a6OauLaJp_U?autoplay=1&mute=0&rel=0&modestbranding=1&color=white&enablejsapi=1';
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+  // Inline video play — replaces thumbnail with iframe on click
+  function playInline(el) {
+    el.style.cursor = 'default';
+    el.onclick = null;
+    el.innerHTML = '<iframe src="https://www.youtube.com/embed/a6OauLaJp_U?autoplay=1&mute=0&rel=0&modestbranding=1&color=white" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:16px;display:block;"></iframe>';
   }
-  function closeVideoModal() {
-    const modal = document.getElementById('video-modal');
-    const iframe = document.getElementById('video-modal-iframe');
-    iframe.src = '';
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
+  function scrollToVideo() {
+    const el = document.getElementById('video-inline');
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => playInline(el), 600);
   }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal(); });
 
   // Animated number counters
   function animateCounter(el) {
