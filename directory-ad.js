@@ -107,7 +107,7 @@
         <span id="dir-ad-sub">Direct leads · Profile page · Events · Products</span>
         <span id="dir-ad-price">$5.55 / month</span>
       </div>
-      <a id="dir-ad-cta" href="https://www.directory.mirajoco.org/join" target="_blank" rel="noopener">Get Listed →</a>
+      <a id="dir-ad-cta" href="https://www.directory.mirajoco.org/checkout/mirajoplan" target="_blank" rel="noopener">Get Listed →</a>
       <button id="dir-ad-dismiss" aria-label="Dismiss">×</button>
     </div>
   `;
