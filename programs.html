@@ -193,6 +193,19 @@
     .quote-break-text { font-family: 'Instrument Serif', serif; font-size: clamp(22px, 3vw, 36px); color: var(--warm-parchment); font-weight: 400; font-style: italic; line-height: 1.5; max-width: 640px; margin: 0 auto 20px; position: relative; z-index: 1; }
     .quote-break-attr { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--new-growth); font-weight: 600; }
 
+    /* ═══ COUPLES SPOTLIGHT ═══ */
+    .couples-spotlight { background: var(--warm-parchment); padding: 100px 40px; }
+    .couples-spotlight-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .couples-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--living-green); font-weight: 600; margin-bottom: 16px; }
+    .couples-title { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 400; color: var(--deep-forest); line-height: 1.15; margin-bottom: 20px; }
+    .couples-desc { font-size: 15px; color: var(--text-muted-light); line-height: 1.8; margin-bottom: 32px; }
+    .couples-cta { display: inline-block; padding: 14px 32px; background: var(--deep-forest); color: var(--warm-parchment); border-radius: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .couples-cta:hover { background: var(--forest-mid); transform: translateY(-2px); }
+    .couples-video-wrap { position: relative; width: 100%; padding-bottom: 177.78%; border-radius: 16px; overflow: hidden; box-shadow: 0 16px 60px rgba(18,32,18,0.15); }
+    .couples-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    @media (max-width: 900px) { .couples-spotlight-inner { grid-template-columns: 1fr; gap: 40px; } .couples-video-wrap { max-width: 340px; margin: 0 auto; } }
+    @media (max-width: 768px) { .couples-spotlight { padding: 64px 24px; } }
+
     /* ═══ COMING SOON GRID ═══ */
     .coming-section { background: var(--soft-white); padding: 100px 40px; }
     .coming-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--living-green); font-weight: 600; text-align: center; margin-bottom: 16px; }
@@ -343,6 +356,21 @@
   <div class="quote-break-attr">— Miranda Johnson</div>
 </section>
 
+<!-- ═══ COUPLES IN ENTREPRENEURSHIP SPOTLIGHT ═══ -->
+<section class="couples-spotlight" data-aos="fade-up">
+  <div class="couples-spotlight-inner">
+    <div class="couples-spotlight-copy">
+      <div class="couples-eyebrow">Upcoming Course</div>
+      <h2 class="couples-title">Couples in Entrepreneurship</h2>
+      <p class="couples-desc">Build and grow together without losing yourselves or each other. A program for couples navigating business, money, and partnership at the same time.</p>
+      <a href="https://www.mirajoco.org/25daysand25nights#waitlist" class="couples-cta">Notify Me When It Opens →</a>
+    </div>
+    <div class="couples-video-wrap">
+      <iframe src="https://www.youtube.com/embed/w6FAkbjuB-w?rel=0" title="Couples in Entrepreneurship" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ COMING SOON ═══ -->
 <section class="coming-section">
   <div class="coming-eyebrow">What's Coming</div>
@@ -352,8 +380,8 @@
   <div class="coming-grid">
 
     <div class="coming-card" data-aos="fade-up">
-      <div class="coming-card-visual coming-card-video">
-        <iframe src="https://www.youtube.com/embed/w6FAkbjuB-w?rel=0" title="Couples in Entrepreneurship" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="coming-card-visual">
+        <span class="coming-card-visual-num">01</span>
       </div>
       <div class="coming-card-body">
         <span class="coming-card-badge">Coming Soon</span>
