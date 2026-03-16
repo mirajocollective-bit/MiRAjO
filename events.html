@@ -530,6 +530,16 @@
       max-height: 220px;
     }
     .past-img:first-child img { min-height: 220px; max-height: 280px; }
+    .past-img--portrait {
+      grid-column: 3;
+      grid-row: 1 / 3;
+    }
+    .past-img--portrait img {
+      object-position: top;
+      min-height: 100%;
+      max-height: none;
+      height: 100%;
+    }
     .past-img:hover img { transform: scale(1.03); }
     .past-img-label {
       position: absolute;
@@ -651,6 +661,8 @@
       .featured-inner { grid-template-columns: 1fr; gap: 40px; }
       .past-grid { grid-template-columns: 1fr 1fr; }
       .past-img:first-child { grid-column: 1 / 3; }
+      .past-img--portrait { grid-column: auto; grid-row: auto; }
+      .past-img--portrait img { min-height: 220px; max-height: 280px; height: 100%; }
       .testimonials-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
     }
     @media (max-width: 768px) {
@@ -658,18 +670,27 @@
       .nav-links, .nav-cta-wrap { display: none; }
       .nav-hamburger { display: block; }
       .nav-logo img { height: 104px; }
-      .events-hero { padding: 64px 24px 56px; }
-      .countdown-wrap { padding: 20px 24px; gap: 0; }
-      .countdown-item { min-width: 60px; padding: 0 14px; }
-      .countdown-num { font-size: 32px; }
-      .featured-event { padding: 64px 24px; }
-      .filter-bar { padding: 16px 20px; }
-      .events-section { padding: 48px 20px; }
+      .events-hero { padding: 48px 20px 40px; }
+      .countdown-wrap { padding: 16px 20px; gap: 0; }
+      .countdown-item { min-width: 56px; padding: 0 10px; }
+      .countdown-num { font-size: 28px; }
+      .countdown-label { font-size: 9px; }
+      .featured-event { padding: 48px 20px; }
+      .featured-img-wrap { aspect-ratio: 16/9; }
+      .filter-bar { padding: 14px 16px; gap: 8px; }
+      .filter-btn { font-size: 11px; padding: 8px 16px; }
+      .events-section { padding: 40px 16px; }
       .events-grid { grid-template-columns: 1fr; }
-      .past-section { padding: 72px 24px; }
-      .past-grid { grid-template-columns: 1fr; }
-      .past-img:first-child { grid-column: auto; }
-      .events-cta { padding: 64px 24px; }
+      .event-card-img, .event-card-img-placeholder { aspect-ratio: 16/9; }
+      .past-section { padding: 56px 16px; }
+      .past-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .past-img:first-child { grid-column: 1 / 3; }
+      .past-img--portrait { grid-column: auto; grid-row: auto; }
+      .past-img--portrait img { object-position: top; min-height: 180px; max-height: 240px; }
+      .past-img img { min-height: 130px; max-height: 180px; }
+      .past-img:first-child img { min-height: 180px; max-height: 220px; }
+      .testimonials-grid { grid-template-columns: 1fr; max-width: 100%; }
+      .events-cta { padding: 48px 20px; }
       .site-footer { padding: 40px 20px 20px; }
     }
     @media (min-width: 769px) and (max-width: 1024px) {
@@ -816,21 +837,21 @@
         <img src="img/Healthynetworkingatlanta.jpeg" alt="Healthy Networking Atlanta">
         <div class="past-img-label">Healthy Networking — Atlanta</div>
       </div>
-      <div class="past-img" data-aos="fade-up" data-aos-delay="80">
+      <div class="past-img past-img--portrait" data-aos="fade-up" data-aos-delay="80">
+        <img src="img/Miranda on stage.png" alt="Miranda on Stage — Vision Board Party">
+        <div class="past-img-label">Vision Board Party</div>
+      </div>
+      <div class="past-img" data-aos="fade-up" data-aos-delay="120">
         <img src="img/TBC team.jpg" alt="TBC Team">
         <div class="past-img-label">TBC Team</div>
       </div>
-      <div class="past-img" data-aos="fade-up" data-aos-delay="120">
+      <div class="past-img" data-aos="fade-up" data-aos-delay="160">
         <img src="img/Techstars.jpeg" alt="Techstars">
         <div class="past-img-label">Techstars</div>
       </div>
-      <div class="past-img" data-aos="fade-up" data-aos-delay="160">
+      <div class="past-img" data-aos="fade-up" data-aos-delay="200">
         <img src="img/Thinkbigforkids.jpeg" alt="Think Big For Kids">
         <div class="past-img-label">Think Big For Kids</div>
-      </div>
-      <div class="past-img" data-aos="fade-up" data-aos-delay="200">
-        <img src="img/Miranda on stage.png" alt="Miranda on Stage">
-        <div class="past-img-label">Vision Board Party</div>
       </div>
     </div>
 
