@@ -80,7 +80,7 @@
       width: 100%;
       max-width: 800px;
       position: relative;
-      background: linear-gradient(160deg, #2A1A52 0%, #1A1228 40%, #0F1A2E 100%);
+      background: linear-gradient(160deg, #3D2B72 0%, #2A1A52 25%, #1A1228 60%, #0F1A2E 100%);
       border-radius: 6px;
       overflow: hidden;
       box-shadow:
@@ -144,7 +144,7 @@
     .cert-logo img {
       height: 80px;
       width: auto;
-      filter: brightness(1.1);
+      filter: brightness(1.4) contrast(1.1);
     }
 
     .cert-title-line {
@@ -548,7 +548,8 @@
     const { data: { session } } = await db.auth.getSession();
     if (!session) { window.location.href = '/programs/login'; return; }
 
-    const user = session.user;
+    // Use getUser() for fresh metadata (not cached session)
+    const { data: { user } } = await db.auth.getUser();
     const meta = user.user_metadata || {};
     const firstName = meta.first_name || '';
     const lastName = meta.last_name || '';
