@@ -119,12 +119,25 @@
     .course-thumb {
       width: 100%;
       aspect-ratio: 16/9;
-      background: linear-gradient(135deg, var(--p-deep), var(--p-mid));
+      background: linear-gradient(135deg, #6B45B8 0%, #5A3A9A 50%, #3A2275 100%);
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
-    .course-thumb img { width: 60px; height: auto; }
+    .course-thumb::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(ellipse, rgba(200,180,255,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .course-thumb img { width: 100px; height: auto; filter: brightness(1.5); position: relative; z-index: 1; }
     .course-card-body { padding: 24px; }
     .course-card-tag {
       font-size: 10px;
