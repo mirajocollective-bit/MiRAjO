@@ -913,7 +913,14 @@
       : getMotivationalMessage();
 
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3500);
+
+    if (isCourseComplete) {
+      setTimeout(() => {
+        window.location.href = `/programs/certificate?course=${slug}`;
+      }, 3500);
+    } else {
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
   }
 
   async function triggerEmail(tag) {
