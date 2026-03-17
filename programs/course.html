@@ -279,8 +279,10 @@
     .video-wrap {
       background: #000;
       width: 100%;
+      max-width: 720px;
       position: relative;
-      padding-top: 56.25%;
+      padding-top: min(56.25%, 405px);
+      margin: 0 auto;
     }
     .video-wrap iframe {
       position: absolute;
