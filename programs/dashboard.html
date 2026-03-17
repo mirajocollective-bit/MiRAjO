@@ -279,6 +279,117 @@
     }
     .empty-btn:hover { background: var(--text-body-light); }
 
+    /* ═══ COACHING CTA ═══ */
+    .coaching-cta {
+      background: var(--deep-forest);
+      border-radius: 16px;
+      padding: 48px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 64px;
+      flex-wrap: wrap;
+    }
+    .coaching-cta-text { flex: 1; min-width: 240px; }
+    .coaching-cta-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .coaching-cta-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 400;
+      color: var(--warm-parchment);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .coaching-cta-title span { font-style: italic; color: var(--new-growth); }
+    .coaching-cta-sub {
+      font-size: 14px;
+      color: var(--text-muted-dark);
+      line-height: 1.7;
+    }
+    .coaching-cta-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--living-green), var(--forest-mid));
+      color: var(--warm-parchment);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(37,107,66,0.35);
+    }
+    .coaching-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,107,66,0.45); }
+
+    /* ═══ EXPLORE GRID ═══ */
+    .explore-section { margin-bottom: 64px; }
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .explore-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 28px 24px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .explore-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(42,58,42,0.08); }
+    .explore-card-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .explore-card-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--deep-forest);
+      line-height: 1.2;
+    }
+    .explore-card-sub {
+      font-size: 12px;
+      color: var(--text-muted-light);
+      line-height: 1.5;
+    }
+
+    /* ═══ SUPPORT STRIP ═══ */
+    .support-strip {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 64px;
+      flex-wrap: wrap;
+    }
+    .support-strip-text { font-size: 14px; color: var(--text-muted-light); line-height: 1.6; }
+    .support-strip-text strong { color: var(--text-body-light); }
+    .support-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--living-green);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .support-link:hover { color: var(--deep-forest); }
+
     /* ═══ LOADING ═══ */
     .loading {
       display: flex;
@@ -303,6 +414,10 @@
       .dash-header { padding: 40px 24px 32px; }
       .dash-content { padding: 40px 24px; }
       .courses-grid { grid-template-columns: 1fr; }
+      .coaching-cta { padding: 32px 24px; }
+      .coaching-cta-btn { width: 100%; text-align: center; }
+      .explore-grid { grid-template-columns: 1fr 1fr; }
+      .support-strip { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
   </style>
 </head>
@@ -342,6 +457,50 @@
   <div id="courses-container">
     <div class="loading"><div class="loading-spinner"></div></div>
   </div>
+
+  <!-- COACHING CTA -->
+  <div class="coaching-cta">
+    <div class="coaching-cta-text">
+      <div class="coaching-cta-eyebrow">Go Further</div>
+      <h2 class="coaching-cta-title">Ready to work with <span>Miranda</span> directly?</h2>
+      <p class="coaching-cta-sub">Coaching is available for those who want to go deeper — one-on-one support tailored to where you are and where you're going.</p>
+    </div>
+    <a href="https://www.mirajoco.org/coaching" class="coaching-cta-btn">Explore Coaching</a>
+  </div>
+
+  <!-- EXPLORE -->
+  <div class="explore-section">
+    <div class="dash-section-label">Explore MiRAjO</div>
+    <div class="explore-grid">
+      <a href="https://www.mirajoco.org/programs" class="explore-card">
+        <div class="explore-card-icon">📚</div>
+        <div class="explore-card-title">All Programs</div>
+        <div class="explore-card-sub">Browse everything available on the MiRAjO platform.</div>
+      </a>
+      <a href="https://www.mirajoco.org/events" class="explore-card">
+        <div class="explore-card-icon">📅</div>
+        <div class="explore-card-title">Events</div>
+        <div class="explore-card-sub">Live workshops, gatherings, and experiences with Miranda.</div>
+      </a>
+      <a href="https://www.directory.mirajoco.org" class="explore-card">
+        <div class="explore-card-icon">🌿</div>
+        <div class="explore-card-title">Community</div>
+        <div class="explore-card-sub">Join the MiRAjO directory and connect with the collective.</div>
+      </a>
+      <a href="https://www.mirajoco.org/blog" class="explore-card">
+        <div class="explore-card-icon">✍️</div>
+        <div class="explore-card-title">Writing</div>
+        <div class="explore-card-sub">Essays and reflections from Miranda on leadership and life.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SUPPORT -->
+  <div class="support-strip">
+    <p class="support-strip-text"><strong>Need help with your account or course access?</strong> We're here for you.</p>
+    <a href="mailto:programs@mirajoco.org" class="support-link">programs@mirajoco.org →</a>
+  </div>
+
 </div>
 
 <script src="/api/config"></script>
