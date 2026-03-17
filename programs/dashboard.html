@@ -165,6 +165,25 @@
     .thumb-ring-pct { font-size: 20px; font-weight: 700; color: #fff; line-height: 1; }
     .thumb-ring-label { font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
 
+    .thumb-start-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: #fff;
+      padding-left: 4px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .course-card:hover .thumb-start-icon {
+      background: rgba(245,200,66,0.2);
+      border-color: rgba(245,200,66,0.5);
+      transform: scale(1.08);
+    }
+
     .thumb-status {
       font-size: 12px;
       color: rgba(255,255,255,0.55);
@@ -385,25 +404,27 @@
 
       const circumference = 226;
       const offset = circumference - (progress / 100) * circumference;
-      const statusText = progress === 0 ? 'Ready to begin' : progress === 100 ? 'Completed' : `${progress}% complete`;
+
+      const thumbHTML = progress === 0
+        ? `<div class="thumb-start-icon">▶</div>
+           <div class="thumb-status">Ready when you are</div>`
+        : `<div class="thumb-ring-wrap">
+             <svg class="thumb-ring" width="90" height="90" viewBox="0 0 90 90">
+               <circle class="thumb-ring-bg" cx="45" cy="45" r="36"/>
+               <circle class="thumb-ring-fill" cx="45" cy="45" r="36"
+                 stroke-dasharray="${circumference}"
+                 stroke-dashoffset="${offset}"/>
+             </svg>
+             <div class="thumb-ring-text">
+               <span class="thumb-ring-pct">${progress}%</span>
+               <span class="thumb-ring-label">done</span>
+             </div>
+           </div>
+           <div class="thumb-status">${progress === 100 ? 'Completed' : `${progress}% complete`}</div>`;
 
       grid.innerHTML += `
         <a href="/programs/course/${course.slug}" class="course-card">
-          <div class="course-thumb">
-            <div class="thumb-ring-wrap">
-              <svg class="thumb-ring" width="90" height="90" viewBox="0 0 90 90">
-                <circle class="thumb-ring-bg" cx="45" cy="45" r="36"/>
-                <circle class="thumb-ring-fill" cx="45" cy="45" r="36"
-                  stroke-dasharray="${circumference}"
-                  stroke-dashoffset="${offset}"/>
-              </svg>
-              <div class="thumb-ring-text">
-                <span class="thumb-ring-pct">${progress}%</span>
-                <span class="thumb-ring-label">done</span>
-              </div>
-            </div>
-            <div class="thumb-status">${statusText}</div>
-          </div>
+          <div class="course-thumb">${thumbHTML}</div>
           <div class="course-card-body">
             <h3 class="course-card-title">${course.title}</h3>
             <span class="course-btn">${progress === 0 ? 'Begin Your Journey' : progress === 100 ? 'View Certificate' : 'Continue Where You Left Off'}</span>
