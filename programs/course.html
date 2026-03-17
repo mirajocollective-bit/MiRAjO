@@ -612,7 +612,7 @@
     state.user = session.user;
 
     // Load course
-    const { data: course } = await supabase
+    const { data: course } = await db
       .from('courses')
       .select('*')
       .eq('slug', slug)
@@ -622,7 +622,7 @@
     state.course = course;
 
     // Check enrollment
-    const { data: enrollment } = await supabase
+    const { data: enrollment } = await db
       .from('enrollments')
       .select('id')
       .eq('user_id', state.user.id)
@@ -635,7 +635,7 @@
     document.getElementById('sidebar-course-name').textContent = course.title;
 
     // Load modules and lessons
-    const { data: modules } = await supabase
+    const { data: modules } = await db
       .from('modules')
       .select('*')
       .eq('course_id', course.id)
@@ -644,7 +644,7 @@
     state.modules = modules || [];
 
     for (const mod of state.modules) {
-      const { data: lessons } = await supabase
+      const { data: lessons } = await db
         .from('lessons')
         .select('*')
         .eq('module_id', mod.id)
@@ -656,7 +656,7 @@
     // Load progress
     if (state.allLessons.length > 0) {
       const lessonIds = state.allLessons.map(l => l.id);
-      const { data: progress } = await supabase
+      const { data: progress } = await db
         .from('progress')
         .select('lesson_id')
         .eq('user_id', state.user.id)
@@ -799,7 +799,7 @@
     btn.disabled = true;
     btn.textContent = 'Saving...';
 
-    const { error } = await supabase
+    const { error } = await db
       .from('progress')
       .upsert({ user_id: state.user.id, lesson_id: lessonId, completed: true, completed_at: new Date().toISOString() },
                { onConflict: 'user_id,lesson_id' });
