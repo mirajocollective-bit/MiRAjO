@@ -9,16 +9,28 @@ const supabase = createClient(
 
 export const config = { api: { bodyParser: false } };
 
-async function tagSubscriber(email, tag) {
+async function tagSubscriber(email, tag, { firstName, lastName, phone, city, country } = {}) {
   const apiSecret = process.env.CONVERTKIT_API_SECRET;
+
   const tagsRes = await fetch(`https://api.convertkit.com/v3/tags?api_secret=${apiSecret}`);
   const tagsData = await tagsRes.json();
   const tagObj = tagsData.tags?.find(t => t.name === tag);
   if (!tagObj) return;
+
   await fetch(`https://api.convertkit.com/v3/tags/${tagObj.id}/subscribe`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ api_secret: apiSecret, email }),
+    body: JSON.stringify({
+      api_secret: apiSecret,
+      email,
+      first_name: firstName || '',
+      fields: {
+        last_name: lastName || '',
+        phone: phone || '',
+        city: city || '',
+        country: country || '',
+      },
+    }),
   });
 }
 
@@ -49,12 +61,21 @@ export default async function handler(req, res) {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    const email = session.customer_email;
+    const email = session.customer_details?.email || session.customer_email;
     const courseSlug = session.metadata?.course_slug;
 
     if (!email || !courseSlug) {
       return res.status(400).json({ error: 'Missing email or course slug' });
     }
+
+    // Extract name and contact details from Stripe billing info
+    const fullName = session.customer_details?.name || '';
+    const nameParts = fullName.trim().split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+    const phone = session.customer_details?.phone || '';
+    const city = session.customer_details?.address?.city || '';
+    const country = session.customer_details?.address?.country || '';
 
     // Look up the course by slug
     const { data: course, error: courseError } = await supabase
@@ -68,17 +89,27 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Course not found' });
     }
 
-    // Look up or create the user
-    const { data: { users }, error: userError } = await supabase.auth.admin.listUsers();
-    const user = users?.find(u => u.email === email);
+    // Look up user — create if they don't exist
+    const { data: { users } } = await supabase.auth.admin.listUsers();
+    let user = users?.find(u => u.email === email);
 
     if (!user) {
-      console.error('User not found for email:', email);
-      // Still return 200 — we'll handle this edge case manually
-      return res.status(200).json({ received: true, note: 'User not found, enroll manually' });
+      const { data: created, error: createError } = await supabase.auth.admin.createUser({
+        email,
+        email_confirm: true,
+        user_metadata: { first_name: firstName, last_name: lastName },
+      });
+
+      if (createError || !created?.user) {
+        console.error('Failed to create user:', createError);
+        return res.status(500).json({ error: 'Failed to create user account' });
+      }
+
+      user = created.user;
+      console.log(`Created new Supabase account for ${email}`);
     }
 
-    // Create enrollment (ignore if already exists)
+    // Enroll in course (ignore if already enrolled)
     const { error: enrollError } = await supabase
       .from('enrollments')
       .upsert(
@@ -91,10 +122,10 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to enroll user' });
     }
 
-    // Tag in Kit → triggers welcome email automation
-    await tagSubscriber(email, 'enrolled-25d25n');
+    // Tag in Kit with full profile data
+    await tagSubscriber(email, 'enrolled-25d25n', { firstName, lastName, phone, city, country });
 
-    console.log(`Enrolled ${email} in course ${courseSlug}`);
+    console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);
   }
 
   res.status(200).json({ received: true });
