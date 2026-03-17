@@ -226,11 +226,13 @@
     }
     .cert-course-name {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(24px, 4vw, 38px);
+      font-size: clamp(26px, 4vw, 40px);
       font-weight: 400;
-      color: var(--p-light);
+      color: #fff;
       line-height: 1.2;
       margin-bottom: 6px;
+      text-shadow: 0 2px 20px rgba(245,200,66,0.2);
+      letter-spacing: 0.5px;
     }
     .cert-course-tag {
       font-size: 10px;
@@ -269,6 +271,25 @@
       text-transform: uppercase;
       color: rgba(200,196,220,0.35);
       font-weight: 500;
+    }
+
+    /* ═══ QUOTE ═══ */
+    .cert-quote {
+      text-align: center;
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(13px, 1.8vw, 16px);
+      color: rgba(245,200,66,0.75);
+      line-height: 1.7;
+      padding: 0 24px 36px;
+      letter-spacing: 0.3px;
+    }
+    .cert-quote-mark {
+      font-size: 1.4em;
+      line-height: 0;
+      vertical-align: -0.2em;
+      opacity: 0.6;
+      margin: 0 2px;
     }
 
     /* ═══ FOOTER ═══ */
@@ -504,6 +525,11 @@
           <div class="cert-stat-value" id="cert-xp">1850</div>
           <div class="cert-stat-label">XP Earned</div>
         </div>
+      </div>
+
+      <!-- QUOTE -->
+      <div class="cert-quote">
+        <span class="cert-quote-mark">"</span>You are entitled to 10% of your own day — thank you for mastering you.<span class="cert-quote-mark">"</span>
       </div>
 
       <!-- FOOTER -->
