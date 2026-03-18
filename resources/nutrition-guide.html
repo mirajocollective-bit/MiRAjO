@@ -181,6 +181,11 @@
   <div class="section-title">Mindful Nutrition</div>
   <div class="section-intro">This is not a diet and not a fast. It is a daily ritual to make sure your body gets what it needs to function at its best. Focus on fuel, not restriction. You are doing physical and mental work every day — your nutrition must match that.</div>
 
+  <div style="background:rgba(61,43,114,0.05);border:1px solid rgba(61,43,114,0.15);border-left:3px solid var(--p-light);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:28px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--p-mid);margin-bottom:4px">Medical Disclaimer</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.7">The nutrition guidance in this program is intended for general wellness support and does not constitute medical advice. Before making significant changes to your diet or beginning any new exercise program, please consult your physician or a qualified healthcare provider — especially if you have an existing health condition, are pregnant, or are taking medication. Listen to your body and always prioritize your individual health needs.</div>
+  </div>
+
   <div class="principles">
     <div class="principle-card">
       <div class="principle-icon">🎯</div>
@@ -206,30 +211,63 @@
 
   <div class="plate-section">
     <div class="plate-title">Build Your Plate</div>
-    <div class="plate-grid">
-      <div class="plate-item">
-        <div class="plate-color" style="background:#6DC48A"></div>
-        <div class="plate-pct">40%</div>
-        <div class="plate-name">Vegetables</div>
-        <div class="plate-examples">Leafy greens, broccoli, peppers, carrots</div>
+    <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;margin-bottom:20px">
+
+      <!-- SVG PLATE DIAGRAM -->
+      <div style="flex-shrink:0">
+        <svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Plate rim -->
+          <circle cx="110" cy="110" r="108" fill="#f0edf8" stroke="#d4cee8" stroke-width="2"/>
+          <!-- Plate surface -->
+          <circle cx="110" cy="110" r="96" fill="#fff" stroke="#e8e4f4" stroke-width="1"/>
+
+          <!-- Slices using path arcs -->
+          <!-- 40% Vegetables: 0° to 144° (top, going clockwise) -->
+          <path d="M110,110 L110,14 A96,96 0 0,1 193.5,158 Z" fill="#6DC48A" opacity="0.9"/>
+          <!-- 30% Protein: 144° to 252° -->
+          <path d="M110,110 L193.5,158 A96,96 0 0,1 26.5,158 Z" fill="#5A3F9A" opacity="0.9"/>
+          <!-- 20% Carbs: 252° to 324° -->
+          <path d="M110,110 L26.5,158 A96,96 0 0,1 62,22.5 Z" fill="#C9A84C" opacity="0.9"/>
+          <!-- 10% Fats: 324° to 360° -->
+          <path d="M110,110 L62,22.5 A96,96 0 0,1 110,14 Z" fill="#8B72C8" opacity="0.9"/>
+
+          <!-- Divider lines -->
+          <line x1="110" y1="110" x2="110" y2="14" stroke="#fff" stroke-width="2"/>
+          <line x1="110" y1="110" x2="193.5" y2="158" stroke="#fff" stroke-width="2"/>
+          <line x1="110" y1="110" x2="26.5" y2="158" stroke="#fff" stroke-width="2"/>
+          <line x1="110" y1="110" x2="62" y2="22.5" stroke="#fff" stroke-width="2"/>
+
+          <!-- Center circle -->
+          <circle cx="110" cy="110" r="22" fill="#fff" stroke="#e8e4f4" stroke-width="1.5"/>
+          <text x="110" y="106" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#3D2B72">YOUR</text>
+          <text x="110" y="118" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#3D2B72">PLATE</text>
+
+          <!-- Percentage labels -->
+          <text x="138" y="72" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#fff">40%</text>
+          <text x="168" y="138" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#fff">30%</text>
+          <text x="62" y="152" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#fff">20%</text>
+          <text x="80" y="58" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#fff">10%</text>
+        </svg>
       </div>
-      <div class="plate-item">
-        <div class="plate-color" style="background:#5A3F9A"></div>
-        <div class="plate-pct">30%</div>
-        <div class="plate-name">Protein</div>
-        <div class="plate-examples">Chicken, fish, eggs, beans, lentils, tofu</div>
-      </div>
-      <div class="plate-item">
-        <div class="plate-color" style="background:#C9A84C"></div>
-        <div class="plate-pct">20%</div>
-        <div class="plate-name">Complex Carbs</div>
-        <div class="plate-examples">Brown rice, sweet potato, oats, quinoa</div>
-      </div>
-      <div class="plate-item">
-        <div class="plate-color" style="background:#8B72C8"></div>
-        <div class="plate-pct">10%</div>
-        <div class="plate-name">Healthy Fats</div>
-        <div class="plate-examples">Avocado, olive oil, nuts, seeds</div>
+
+      <!-- LEGEND -->
+      <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:14px;height:14px;border-radius:3px;background:#6DC48A;flex-shrink:0"></div>
+          <div><div style="font-size:13px;font-weight:700;color:var(--text)">40% Vegetables</div><div style="font-size:11px;color:var(--muted)">Leafy greens, broccoli, peppers, carrots</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:14px;height:14px;border-radius:3px;background:#5A3F9A;flex-shrink:0"></div>
+          <div><div style="font-size:13px;font-weight:700;color:var(--text)">30% Protein</div><div style="font-size:11px;color:var(--muted)">Chicken, fish, eggs, beans, lentils, tofu</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:14px;height:14px;border-radius:3px;background:#C9A84C;flex-shrink:0"></div>
+          <div><div style="font-size:13px;font-weight:700;color:var(--text)">20% Complex Carbs</div><div style="font-size:11px;color:var(--muted)">Brown rice, sweet potato, oats, quinoa</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:14px;height:14px;border-radius:3px;background:#8B72C8;flex-shrink:0"></div>
+          <div><div style="font-size:13px;font-weight:700;color:var(--text)">10% Healthy Fats</div><div style="font-size:11px;color:var(--muted)">Avocado, olive oil, nuts, seeds</div></div>
+        </div>
       </div>
     </div>
   </div>
