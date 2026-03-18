@@ -114,9 +114,10 @@
       overflow-y: auto;
       z-index: 100;
     }
-    .sidebar::-webkit-scrollbar { width: 4px; }
-    .sidebar::-webkit-scrollbar-track { background: transparent; }
-    .sidebar::-webkit-scrollbar-thumb { background: rgba(139,114,200,0.3); border-radius: 2px; }
+    .sidebar::-webkit-scrollbar { width: 6px; }
+    .sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--dry-sage); border-radius: 3px; }
+    .sidebar::-webkit-scrollbar-thumb:hover { background: #d4b455; }
 
     /* Progress ring in sidebar */
     .sidebar-progress {
@@ -314,6 +315,107 @@
       font-weight: 600;
     }
     .current-link:hover { color: var(--new-growth); text-decoration-style: solid; }
+
+    /* Quick Review Drawer */
+    .review-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 500;
+    }
+    .review-overlay.open { display: block; }
+    .review-drawer {
+      position: fixed;
+      top: 0;
+      right: -520px;
+      width: min(500px, 100vw);
+      height: 100vh;
+      background: #1a0f3a;
+      border-left: 1px solid rgba(139,114,200,0.25);
+      z-index: 501;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s ease;
+      overflow: hidden;
+    }
+    .review-drawer.open { right: 0; }
+    .review-drawer-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(139,114,200,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .review-drawer-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dry-sage);
+      font-weight: 600;
+    }
+    .review-drawer-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: #fff;
+      margin-top: 4px;
+    }
+    .review-drawer-close {
+      background: rgba(139,114,200,0.15);
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .review-drawer-close:hover { background: rgba(139,114,200,0.35); }
+    .review-drawer-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+      color: rgba(255,255,255,0.82);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .review-drawer-body::-webkit-scrollbar { width: 6px; }
+    .review-drawer-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    .review-drawer-body::-webkit-scrollbar-thumb { background: var(--dry-sage); border-radius: 3px; }
+    .review-drawer-footer {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(139,114,200,0.15);
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .review-btn-close {
+      flex: 1;
+      padding: 10px;
+      background: rgba(139,114,200,0.15);
+      border: 1px solid rgba(139,114,200,0.3);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .review-btn-go {
+      flex: 1;
+      padding: 10px;
+      background: var(--p-mid);
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .review-btn-go:hover { background: var(--p-light); }
 
     /* Lesson body */
     .lesson-body {
@@ -516,6 +618,23 @@
   <div>
     <div class="xp-toast-title" id="xp-toast-title">+50 XP Earned!</div>
     <div class="xp-toast-sub" id="xp-toast-sub">Lesson complete. Keep going!</div>
+  </div>
+</div>
+
+<!-- QUICK REVIEW DRAWER -->
+<div class="review-overlay" id="review-overlay" onclick="closeReviewDrawer()"></div>
+<div class="review-drawer" id="review-drawer">
+  <div class="review-drawer-header">
+    <div>
+      <div class="review-drawer-label">Quick Review</div>
+      <div class="review-drawer-title" id="review-drawer-title"></div>
+    </div>
+    <button class="review-drawer-close" onclick="closeReviewDrawer()">✕</button>
+  </div>
+  <div class="review-drawer-body" id="review-drawer-body"></div>
+  <div class="review-drawer-footer">
+    <button class="review-btn-close" onclick="closeReviewDrawer()">← Back to Day</button>
+    <button class="review-btn-go" id="review-btn-go">Go to Lesson →</button>
   </div>
 </div>
 
@@ -867,12 +986,26 @@
     return state.lessons[mod.id].every(l => state.completed.has(l.id));
   }
 
-  // ═══ LESSON JUMP (used by current-link anchors in day content) ═══
+  // ═══ QUICK REVIEW DRAWER (used by current-link anchors in day content) ═══
   function jumpToLesson(modulePos, lessonPos) {
     const mod = state.modules.find(m => m.position === modulePos);
     if (!mod) return;
     const lesson = (state.lessons[mod.id] || []).find(l => l.position === lessonPos);
-    if (lesson) loadLesson(lesson.id);
+    if (!lesson) return;
+
+    document.getElementById('review-drawer-title').textContent = lesson.title;
+    document.getElementById('review-drawer-body').innerHTML = lesson.content || '<p>Content coming soon.</p>';
+    document.getElementById('review-btn-go').onclick = () => { closeReviewDrawer(); loadLesson(lesson.id); };
+
+    document.getElementById('review-overlay').classList.add('open');
+    document.getElementById('review-drawer').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReviewDrawer() {
+    document.getElementById('review-overlay').classList.remove('open');
+    document.getElementById('review-drawer').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   // ═══ PROGRESS RING ═══
