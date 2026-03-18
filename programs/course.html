@@ -305,6 +305,16 @@
     .video-placeholder-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
     .video-placeholder-text { font-size: 14px; opacity: 0.5; }
 
+    /* Current links in day content */
+    .current-link {
+      color: var(--p-light);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .current-link:hover { color: var(--new-growth); text-decoration-style: solid; }
+
     /* Lesson body */
     .lesson-body {
       max-width: 800px;
@@ -855,6 +865,14 @@
     const mod = state.modules.find(m => state.lessons[m.id]?.some(l => l.id === lessonId));
     if (!mod) return false;
     return state.lessons[mod.id].every(l => state.completed.has(l.id));
+  }
+
+  // ═══ LESSON JUMP (used by current-link anchors in day content) ═══
+  function jumpToLesson(modulePos, lessonPos) {
+    const mod = state.modules.find(m => m.position === modulePos);
+    if (!mod) return;
+    const lesson = (state.lessons[mod.id] || []).find(l => l.position === lessonPos);
+    if (lesson) loadLesson(lesson.id);
   }
 
   // ═══ PROGRESS RING ═══
