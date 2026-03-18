@@ -1,6 +1,12 @@
 {
   "buildCommand": null,
   "outputDirectory": ".",
+  "crons": [
+    {
+      "path": "/api/inactive-nudge",
+      "schedule": "0 14 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
