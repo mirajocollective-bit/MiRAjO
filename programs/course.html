@@ -1512,18 +1512,20 @@
 
   // ═══ NON-NEGOTIABLES DRAWER ═══
   function openNonNeg() {
-    const mod = state.modules.find(m => m.position === 2);
-    const lesson = mod ? (state.lessons[mod.id] || []).find(l => l.position === 8) : null;
-    if (lesson?.content) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(lesson.content, 'text/html');
-      let html = '';
-      doc.querySelectorAll('ol').forEach(l => { html += l.outerHTML; });
-      if (!html) doc.querySelectorAll('ul').forEach(l => { html += l.outerHTML; });
-      document.getElementById('nonneg-body').innerHTML = html || '<p style="opacity:0.6;color:#fff">Content loading...</p>';
-    } else {
-      document.getElementById('nonneg-body').innerHTML = '<p style="opacity:0.6;color:#fff">Loading...</p>';
-    }
+    const items = [
+      'Cardio 3×30 — Move your body 3 times per day, 30 minutes each.',
+      'Planks 3×1 Minute — 3 sessions daily. Each session: 3 planks, 1 minute each.',
+      'Strength Training — One session daily. Legs, arms, or both. 15–20 focused minutes.',
+      'Morning Meditation — 30 minutes. Set your intention before the world begins.',
+      'Evening Meditation — 30 minutes. Release the day. Return to yourself.',
+      'Stretch or Yoga — 5 to 15 minutes. Give back to the body that carried you.',
+      'Mindful Nutrition — Eat for fullness. Protein, fiber, color. Hydrate throughout.',
+      'No Alcohol or Recreational Drugs — 25 days of full clarity. No exceptions.',
+      'Sleep in Silence — 7 to 9 hours. Dark, quiet room. Same time every night.',
+      'No Television and No Social Media — Work exceptions only. Reclaim your focus.',
+    ];
+    document.getElementById('nonneg-body').innerHTML =
+      '<ol>' + items.map(i => `<li>${i}</li>`).join('') + '</ol>';
     document.getElementById('nonneg-btn-go').onclick = () => { closeNonNeg(); jumpToLesson(2, 8); };
     document.getElementById('nonneg-overlay').classList.add('open');
     document.getElementById('nonneg-drawer').classList.add('open');
