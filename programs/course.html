@@ -994,12 +994,54 @@
     if (!lesson) return;
 
     document.getElementById('review-drawer-title').textContent = lesson.title;
-    document.getElementById('review-drawer-body').innerHTML = lesson.content || '<p>Content coming soon.</p>';
+    document.getElementById('review-drawer-body').innerHTML = buildReviewContent(lesson);
     document.getElementById('review-btn-go').onclick = () => { closeReviewDrawer(); loadLesson(lesson.id); };
 
     document.getElementById('review-overlay').classList.add('open');
     document.getElementById('review-drawer').classList.add('open');
     document.body.style.overflow = 'hidden';
+  }
+
+  function buildReviewContent(lesson) {
+    let html = '';
+
+    // Video embed
+    if (lesson.video_url) {
+      const match = lesson.video_url.match(/youtu\.be\/([^?]+)|youtube\.com\/watch\?v=([^&]+)/);
+      const id = match?.[1] || match?.[2];
+      if (id) {
+        html += `<div style="position:relative;padding-bottom:56.25%;height:0;margin-bottom:24px;border-radius:10px;overflow:hidden">
+          <iframe src="https://www.youtube.com/embed/${id}" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allowfullscreen></iframe>
+        </div>`;
+      }
+    }
+
+    // Extract "Points to Remember" section
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(lesson.content || '', 'text/html');
+    const headings = doc.querySelectorAll('h3');
+    let recap = null;
+    for (const h of headings) {
+      if (h.textContent.toLowerCase().includes('points to remember')) {
+        recap = h.outerHTML;
+        let next = h.nextElementSibling;
+        while (next && next.tagName !== 'H3') {
+          recap += next.outerHTML;
+          next = next.nextElementSibling;
+        }
+        break;
+      }
+    }
+
+    if (recap) {
+      html += recap;
+    } else {
+      // Fallback: first two paragraphs
+      const paras = doc.querySelectorAll('p');
+      Array.from(paras).slice(0, 2).forEach(p => html += p.outerHTML);
+    }
+
+    return html || '<p>Content coming soon.</p>';
   }
 
   function closeReviewDrawer() {
