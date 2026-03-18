@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
-import { addTag, addToSequence } from './_kit.js';
+import { addTag } from './_kit.js';
+import { queueSequence } from './_emails.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const supabase = createClient(
@@ -99,12 +100,12 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to enroll user' });
     }
 
-    // Tag in Kit and add to welcome sequence
+    // Tag in Kit and queue welcome email sequence
     await addTag(email, 'enrolled-25d25n', {
       first_name: firstName,
       fields: { last_name: lastName, phone, city, country },
     });
-    await addToSequence(email, '25D25N Welcome', firstName);
+    await queueSequence(supabase, email, 'enrolled-25d25n', firstName);
 
     console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);
   }

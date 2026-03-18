@@ -1,8 +1,15 @@
-import { addTag, addToSequence } from './_kit.js';
+import { createClient } from '@supabase/supabase-js';
+import { addTag } from './_kit.js';
+import { queueSequence } from './_emails.js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 const SEQUENCE_MAP = {
-  'module-1-complete':      '25D25N Module 1',
-  'course-25d25n-complete': '25D25N Complete',
+  'module-1-complete':      'module-1-complete',
+  'course-25d25n-complete': 'course-25d25n-complete',
 };
 
 const ALLOWED_TAGS = [
@@ -23,7 +30,7 @@ export default async function handler(req, res) {
 
   const sequenceName = SEQUENCE_MAP[tag];
   if (sequenceName) {
-    await addToSequence(email, sequenceName, firstName || '');
+    await queueSequence(supabase, email, sequenceName, firstName || '');
   }
 
   res.status(200).json({ success: true });
