@@ -30,7 +30,7 @@ AND module_id = (SELECT m.id FROM modules m JOIN courses c ON m.course_id = c.id
 -- Step 3: prepend the screen-style quote box
 UPDATE lessons SET content =
 $$<div style="background:#1a0a2e;border-radius:14px;padding:40px 36px;margin-bottom:32px;text-align:center;border:1px solid rgba(255,255,255,0.08);box-shadow:0 0 40px rgba(90,63,154,0.3),inset 0 1px 0 rgba(255,255,255,0.05)">
-  <p style="font-family:'Dancing Script',cursive;font-size:38px;color:#ffffff;line-height:1.75;margin:0;max-width:500px;display:inline-block">"You only needed to begin, and you did. Stay here. Stay present. Let today count all by itself."</p>
+  <p style="font-family:'Dancing Script',cursive;font-size:32px;color:#ffffff;line-height:1.75;margin:0;max-width:500px;display:inline-block">"You only needed to begin, and you did. Stay here. Stay present. Let today count all by itself."</p>
 </div>$$ || content
 WHERE position = 1
 AND module_id = (SELECT m.id FROM modules m JOIN courses c ON m.course_id = c.id WHERE c.slug = '25-days-and-25-nights' AND m.position = 4);
