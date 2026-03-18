@@ -891,13 +891,11 @@
     const videoWrap = document.getElementById('video-wrap');
     if (lesson.video_url) {
       const embedUrl = toEmbedUrl(lesson.video_url);
+      videoWrap.style.display = '';
       videoWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen allow="autoplay; fullscreen"></iframe>`;
     } else {
-      videoWrap.innerHTML = `
-        <div class="video-placeholder">
-          <div class="video-placeholder-icon">▶</div>
-          <div class="video-placeholder-text">No video for this lesson</div>
-        </div>`;
+      videoWrap.style.display = 'none';
+      videoWrap.innerHTML = '';
     }
 
     // Find prev/next
