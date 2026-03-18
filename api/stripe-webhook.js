@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { addTag, addToSequence } from './_kit.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const supabase = createClient(
@@ -9,30 +10,6 @@ const supabase = createClient(
 
 export const config = { api: { bodyParser: false } };
 
-async function tagSubscriber(email, tag, { firstName, lastName, phone, city, country } = {}) {
-  const apiSecret = process.env.CONVERTKIT_API_SECRET;
-
-  const tagsRes = await fetch(`https://api.convertkit.com/v3/tags?api_secret=${apiSecret}`);
-  const tagsData = await tagsRes.json();
-  const tagObj = tagsData.tags?.find(t => t.name === tag);
-  if (!tagObj) return;
-
-  await fetch(`https://api.convertkit.com/v3/tags/${tagObj.id}/subscribe`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      api_secret: apiSecret,
-      email,
-      first_name: firstName || '',
-      fields: {
-        last_name: lastName || '',
-        phone: phone || '',
-        city: city || '',
-        country: country || '',
-      },
-    }),
-  });
-}
 
 async function getRawBody(req) {
   return new Promise((resolve, reject) => {
@@ -122,8 +99,12 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to enroll user' });
     }
 
-    // Tag in Kit with full profile data
-    await tagSubscriber(email, 'enrolled-25d25n', { firstName, lastName, phone, city, country });
+    // Tag in Kit and add to welcome sequence
+    await addTag(email, 'enrolled-25d25n', {
+      first_name: firstName,
+      fields: { last_name: lastName, phone, city, country },
+    });
+    await addToSequence(email, '25D25N Welcome', firstName);
 
     console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);
   }
