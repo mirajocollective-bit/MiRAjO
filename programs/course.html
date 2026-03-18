@@ -545,6 +545,48 @@
     .xp-toast-title { font-size: 14px; font-weight: 700; color: var(--xp-gold); }
     .xp-toast-sub { font-size: 12px; color: var(--p-silver); }
 
+    /* ═══ DAY COMPLETE OVERLAY ═══ */
+    .day-complete-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13, 5, 26, 0.94);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .day-complete-overlay.show { opacity: 1; pointer-events: auto; }
+    .day-complete-check {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--p-mid), var(--p-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px; color: #fff;
+      margin-bottom: 28px;
+      animation: checkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes checkPop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .day-complete-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 6vw, 64px);
+      color: var(--warm-parchment);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .day-complete-msg {
+      font-size: 17px;
+      color: var(--p-silver);
+      max-width: 380px;
+      text-align: center;
+      line-height: 1.7;
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+    }
+
     /* ═══ CONFETTI ═══ */
     .confetti-container {
       position: fixed;
@@ -929,6 +971,13 @@
 
 <!-- CONFETTI CONTAINER -->
 <div class="confetti-container" id="confetti-container"></div>
+
+<!-- DAY COMPLETE OVERLAY -->
+<div class="day-complete-overlay" id="day-complete-overlay">
+  <div class="day-complete-check">✓</div>
+  <div class="day-complete-title" id="day-complete-title">Day 1 Complete</div>
+  <div class="day-complete-msg" id="day-complete-msg"></div>
+</div>
 
 <!-- XP TOAST -->
 <div class="xp-toast" id="xp-toast">
@@ -1414,6 +1463,12 @@
       document.getElementById('day-counter-num').textContent = `Day ${day}`;
     }
 
+    // Day complete overlay
+    const mod = state.modules.find(m => state.lessons[m.id]?.some(l => l.id === lessonId));
+    const isDayLesson = mod?.position === 4;
+    const lesson = state.lessons[mod?.id]?.find(l => l.id === lessonId);
+    if (isDayLesson && lesson?.position) showDayComplete(lesson.position);
+
     // Toast
     const isModuleComplete = checkModuleComplete(lessonId);
     const isCourseComplete = state.allLessons.every(l => state.completed.has(l.id));
@@ -1430,10 +1485,10 @@
       triggerEmail(`module-${modIdx + 1}-complete`);
     }
 
-    // Auto-advance after 1.5s
+    // Auto-advance — give overlay time to show on day lessons
     const idx = state.allLessons.findIndex(l => l.id === lessonId);
     const next = state.allLessons[idx + 1];
-    if (next) setTimeout(() => loadLesson(next.id), 1500);
+    if (next) setTimeout(() => loadLesson(next.id), isDayLesson ? 3200 : 1500);
   }
 
   function checkModuleComplete(lessonId) {
@@ -1546,6 +1601,43 @@
       localStorage.setItem(key, JSON.stringify({ count: state.streak, lastDate: today }));
       document.getElementById('streak-value').textContent = state.streak;
     }
+  }
+
+  // ═══ DAY COMPLETE OVERLAY ═══
+  const DAY_MSGS = [
+    "The seed is planted. Keep showing up.",
+    "Day two. You came back. That's the whole game.",
+    "Three days. That's a pattern forming.",
+    "Four days. Most people are already gone. You're not.",
+    "Five days. You're building something real.",
+    "Rest day earned. You showed up all week.",
+    "Back in. No explanation needed.",
+    "Eight days of work. It's adding up.",
+    "Nine days. You're past the easy quitting point.",
+    "Ten days. A third of the way through.",
+    "Eleven days in. Stay honest with yourself.",
+    "Rest day. Use it well.",
+    "Past the halfway to halfway. Keep going.",
+    "Fourteen days. Two weeks of showing up.",
+    "Halfway. Most people quit here. You didn't.",
+    "Sixteen days. The momentum is real now.",
+    "Seventeen days. You're not the same person who started.",
+    "Rest day. Come back tomorrow.",
+    "Nineteen days. The end is in sight.",
+    "Twenty days. Five left.",
+    "Twenty-one days. You built a habit.",
+    "Rest day. You earned it.",
+    "Twenty-three days. Almost there.",
+    "Twenty-four days. One more.",
+    "You finished all 25. That's everything.",
+  ];
+
+  function showDayComplete(dayNum) {
+    const overlay = document.getElementById('day-complete-overlay');
+    document.getElementById('day-complete-title').textContent = `Day ${dayNum} Complete`;
+    document.getElementById('day-complete-msg').textContent = DAY_MSGS[dayNum - 1] || 'Keep going.';
+    overlay.classList.add('show');
+    setTimeout(() => overlay.classList.remove('show'), 3000);
   }
 
   // ═══ TOAST ═══
