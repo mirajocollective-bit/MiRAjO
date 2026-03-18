@@ -582,6 +582,137 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ═══ NON-NEG CHECKLIST (in lesson) ═══ */
+    .nonneg-checklist-section {
+      margin-top: 40px;
+      padding: 24px 28px;
+      background: rgba(61,43,114,0.04);
+      border: 1px solid rgba(61,43,114,0.1);
+      border-radius: 12px;
+    }
+    .nonneg-checklist-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .nonneg-checklist-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--p-light);
+    }
+    .nonneg-counter {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--p-mid);
+      background: var(--p-pale);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .nonneg-checklist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .nonneg-check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .nonneg-check-item:hover { background: rgba(61,43,114,0.06); }
+    .nonneg-check-item.checked { background: rgba(76,175,125,0.08); }
+    .nonneg-check-box {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(61,43,114,0.25);
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: transparent;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    .nonneg-check-item.checked .nonneg-check-box {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+    .nonneg-check-name {
+      font-size: 12px;
+      color: var(--text-body);
+      line-height: 1.3;
+    }
+    .nonneg-check-item.checked .nonneg-check-name {
+      color: var(--success);
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    /* ═══ CHECK-IN FIELDS ═══ */
+    .checkin-fields-section {
+      margin-top: 32px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .checkin-fields-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      margin-bottom: 16px;
+    }
+    .checkin-field {
+      margin-bottom: 16px;
+    }
+    .checkin-field-q {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-body);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .checkin-field textarea {
+      width: 100%;
+      min-height: 68px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-body);
+      line-height: 1.65;
+      resize: vertical;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .checkin-field textarea:focus {
+      border-color: var(--p-light);
+      box-shadow: 0 0 0 3px rgba(139,114,200,0.08);
+    }
+    .checkin-field textarea::placeholder { color: rgba(122,122,154,0.4); }
+
+    /* Complete gate hint */
+    .complete-gate-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      text-align: right;
+      min-height: 16px;
+      transition: opacity 0.2s;
+    }
+    .complete-gate-hint.ready { color: var(--success); }
+
     /* ═══ JOURNAL INPUT ═══ */
     .journal-section {
       margin-top: 40px;
@@ -1171,18 +1302,65 @@
     const nextLesson = idx < state.allLessons.length - 1 ? state.allLessons[idx + 1] : null;
     const isDone = state.completed.has(lessonId);
 
+    // Is this a Day lesson? (Module 4)
+    const isDayLesson = mod?.position === 4;
+    const dayData = isDayLesson ? DAY_DATA[lesson.position] : null;
+
+    // Build non-neg checklist HTML (Day lessons only)
+    const nonnegHTML = isDayLesson ? `
+      <div class="nonneg-checklist-section">
+        <div class="nonneg-checklist-header">
+          <div class="nonneg-checklist-label">Today's Non-Negotiables</div>
+          <div class="nonneg-counter" id="nonneg-counter">0 / 10</div>
+        </div>
+        <div class="nonneg-checklist-grid">
+          ${NONNEG_NAMES.map((name, i) => `
+            <div class="nonneg-check-item" id="nonneg-item-${i}" onclick="toggleNonNeg(${i})">
+              <div class="nonneg-check-box" id="nonneg-box-${i}">✓</div>
+              <div class="nonneg-check-name">${name}</div>
+            </div>`).join('')}
+        </div>
+      </div>` : '';
+
+    // Build check-in fields HTML (Day lessons with known questions)
+    const checkinHTML = dayData?.checkin ? `
+      <div class="checkin-fields-section">
+        <div class="checkin-fields-label">Check-In</div>
+        ${dayData.checkin.map((q, i) => `
+          <div class="checkin-field">
+            <div class="checkin-field-q">${q}</div>
+            <textarea id="checkin-field-${i}" placeholder="Your response..."
+              oninput="onJournalInput()"></textarea>
+          </div>`).join('')}
+      </div>` : '';
+
+    // Build journal section
+    const promptLabel = dayData?.prompt
+      ? `<div style="background:var(--p-pale);border-left:3px solid var(--p-light);border-radius:0 6px 6px 0;padding:10px 14px;margin-bottom:10px;font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:var(--p-deep)">${dayData.prompt}</div>`
+      : '';
+
+    const journalPlaceholder = isDayLesson
+      ? 'Write your full response here...'
+      : 'What are you thinking, feeling, or noticing?';
+
+    // Complete button gated for incomplete Day lessons
+    const gated = isDayLesson && !isDone;
+
     // Render body
     document.getElementById('lesson-body').innerHTML = `
       <div class="lesson-eyebrow">${mod?.title || ''}</div>
       <h1 class="lesson-heading">${lesson.title}</h1>
       <div class="lesson-content">${lesson.content || '<p style="color:var(--text-muted)">Content coming soon.</p>'}</div>
+      ${nonnegHTML}
+      ${checkinHTML}
       <div class="journal-section">
-        <div class="journal-label">Your Journal</div>
-        <div class="journal-desc">Write your reflections here. Your entry saves automatically and will be here when you return.</div>
+        <div class="journal-label">${isDayLesson ? 'Journal Prompt' : 'Your Journal'}</div>
+        ${promptLabel}
         <textarea class="journal-textarea" id="journal-textarea"
-          placeholder="What are you thinking, feeling, or noticing today?"
+          placeholder="${journalPlaceholder}"
           oninput="onJournalInput()"></textarea>
         <div class="journal-status" id="journal-status"></div>
+        ${gated ? '<div class="complete-gate-hint" id="gate-hint">Write at least a few words to unlock completion</div>' : ''}
       </div>
       <div class="lesson-footer">
         <div style="display:flex;gap:12px;flex-wrap:wrap">
@@ -1190,13 +1368,15 @@
           ${nextLesson ? `<button class="btn-nav btn-nav-next" onclick="loadLesson('${nextLesson.id}')">Next Lesson →</button>` : ''}
         </div>
         <button class="btn-complete ${isDone ? 'done' : ''}" id="complete-btn"
-          onclick="markComplete('${lessonId}')" ${isDone ? 'disabled' : ''}>
+          onclick="markComplete('${lessonId}')"
+          ${isDone ? 'disabled' : (gated ? 'disabled data-gated="true"' : '')}>
           ${isDone ? '✓ Completed' : '✦ Mark Complete'}
         </button>
       </div>`;
 
-    // Load saved journal entry for this lesson
+    // Load saved journal + non-neg data
     loadJournalEntry(lessonId);
+    if (isDayLesson) loadNonNegCompletion(lessonId);
   }
 
   // ═══ MARK COMPLETE ═══
@@ -1447,6 +1627,41 @@
     return url;
   }
 
+  // ═══ DAY DATA — check-in questions & journal prompts ═══
+  const NONNEG_NAMES = [
+    'Cardio 3×30', 'Planks 3×1 min', 'Strength Training',
+    'Morning Meditation', 'Evening Meditation', 'Stretch / Yoga',
+    'Mindful Nutrition', 'No Alcohol / Drugs', 'Sleep 7–9 hrs', 'No TV / Social Media'
+  ];
+
+  const DAY_DATA = {
+    1:  { checkin: ['What did I notice when I slowed down?', 'Where did silence feel uncomfortable?', 'What did I reach for when I felt the urge to fill the quiet?'], prompt: 'When was the last time I let myself pause long enough to actually hear my own thoughts?' },
+    2:  { checkin: ['What distracted me most today?', 'How did I react when my peace was interrupted?', 'Where did I notice my energy flowing without intention?'], prompt: 'What noise in my life do I keep calling normal, even though it drains me?' },
+    3:  { checkin: ['When did I catch myself judging today?', 'Was that judgment toward myself, someone else, or both?', 'What truth might exist underneath that judgment?'], prompt: 'If I looked at myself and others with full compassion today, what would change?' },
+    4:  { checkin: ['What am I still trying to control?', 'What have I convinced myself I need that may be holding me back?', 'How did it feel to release even one small thing today?'], prompt: 'Where in my life have I confused control with care?' },
+    5:  { checkin: ['Which Current felt most natural this week?', 'Which Current challenged me most?', 'What habits or thoughts need adjustment going forward?'], prompt: 'Stillness: What did I hear beneath the noise? Flowing Energy: What did I give and receive? Choice: What decision shapes tomorrow? Release: What do I need to release next?' },
+    6:  { checkin: ['How did it feel to truly stop today?'], prompt: 'If I gave myself full permission to rest without guilt, what would that look like?' },
+    7:  { checkin: ['Where did I respond instead of react today?', 'Where did I choose peace over proving a point?', 'Who or what felt safe to lean on today?'], prompt: 'What does leaning look like for me when I stop trying to carry it all?' },
+    8:  { checkin: ['Where did ease show up in my body today?', 'What conversation could I have handled with more ease?', 'What am I still holding that deserves to be put down?'], prompt: 'Where in my life do I still believe struggle proves my worth?' },
+    9:  { checkin: ['What gave me energy today?', 'What drained me?', 'Did I allow anyone or anything to pour back into me?', 'Where did I try to control the flow instead of trusting it?'], prompt: 'Where in my life am I holding too tightly to energy that needs to move?' },
+    10: { checkin: ['What do I keep circling back to, no matter how many times I stop?', 'When was the last time I felt truly alive — what was I doing?', 'What truth keeps following me even when I try to walk away?'], prompt: 'If I stopped listening to fear or opinion, what would I admit I am meant to do?' },
+    11: { checkin: ['What feels easier today than it used to?', 'Which Current comes most naturally to me now?', 'How does my energy feel compared to when I started?'], prompt: 'If I am more aware today than yesterday, what truth am I finally ready to accept?' },
+    12: { checkin: ['How did it feel to give yourself permission to rest?'], prompt: 'What has this week shown me about myself that surprised me?' },
+    13: { checkin: ['Where did I keep calm when I normally would not?', 'What helped me hold stillness in the middle of motion?', 'What moment am I proud of for handling differently today?'], prompt: 'Where did I bring calm today instead of waiting to find it?' },
+    14: { checkin: ['What did I do today with full awareness?', 'What words shaped my energy today?', 'What area still runs on autopilot?', 'Did I act and speak like the person I am becoming?'], prompt: 'If every word and action builds my future, what am I building today?' },
+    15: { checkin: ['Where did I give my energy freely today?', 'What or who gave something back to me?', 'Where did I notice a leak in my energy?', 'What changed when I stopped forcing it?'], prompt: 'Where does my energy flow easily, and where does it feel stuck?' },
+    16: { checkin: ['What am I still holding that no longer fits?', 'What am I afraid will happen if I let go?', 'What space has opened because I began to release?', 'What peace came when I stopped forcing?'], prompt: 'What would freedom look like if I stopped trying to control everything?' },
+    17: { checkin: ['What threw me off today and how did I respond?', 'What helped me return to calm?', 'What area of my life feels most aligned right now?'], prompt: 'What does staying aligned look like in real time, not just in reflection?' },
+    18: { checkin: ['How did it feel to rest with Day 25 in mind?'], prompt: 'If I could design exactly how Day 25 feels, what would that look like?' },
+    19: { checkin: ['What gives my day meaning, even when it is hard?', 'What do I keep returning to no matter how much I try to avoid it?', 'What feels steady and natural when I do it?'], prompt: 'If purpose is already in me, what part of my life proves it?' },
+    20: { checkin: ['What choice today supports who I am becoming?', 'What did I agree to that I already knew was a no?', 'How did my decisions affect my peace today?'], prompt: 'If every decision is a seed, what am I planting today?' },
+    21: { checkin: ['What felt simple and natural today?', 'What flowed because I trusted it to?', 'Where did I interrupt my own peace?'], prompt: 'What does ease look like when I stop expecting it to end?' },
+    22: { checkin: ['What received most of my energy today?', 'Did I feel drained or fulfilled at the end of it?', 'What deserves my energy tomorrow?'], prompt: 'What would change if I treated my energy like a limited resource?' },
+    23: { checkin: ['What did I handle today with calm instead of urgency?', 'What habit feels natural that once felt difficult?', 'What moment confirmed I have changed?'], prompt: 'What truth about myself feels undeniable today?' },
+    24: { checkin: ['How did it feel to rest knowing Day 25 is tomorrow?'], prompt: 'What have these 24 days built in me that cannot be undone?' },
+    25: { checkin: ['What truth about myself did I carry into today?', 'What did I do that proves I have changed?', 'Who did I show up as — the old version or the new?'], prompt: 'What was the thing I did today that belongs on the other side of my old self? How did it feel to finally do it?' },
+  };
+
   // ═══ JOURNAL ═══
   let journalDebounce = null;
   let journalLessonId = null;
@@ -1465,24 +1680,69 @@
       .single();
 
     if (data?.content) {
-      textarea.value = data.content;
+      // Detect structured JSON (Day lessons) vs plain text
+      let parsed = null;
+      try { parsed = JSON.parse(data.content); } catch (e) {}
+
+      if (parsed?.journal !== undefined) {
+        // Structured: populate check-in fields + journal
+        textarea.value = parsed.journal || '';
+        if (parsed.checkin) {
+          Object.entries(parsed.checkin).forEach(([i, val]) => {
+            const el = document.getElementById(`checkin-field-${i}`);
+            if (el) el.value = val;
+          });
+        }
+      } else {
+        // Plain text (older entries)
+        textarea.value = data.content;
+      }
       status.textContent = '✓ Saved';
       status.className = 'journal-status saved';
+      checkCompleteGate();
     }
   }
 
   function onJournalInput() {
     const status = document.getElementById('journal-status');
     if (status) { status.textContent = 'Unsaved…'; status.className = 'journal-status'; }
+    checkCompleteGate();
     clearTimeout(journalDebounce);
     journalDebounce = setTimeout(saveJournalEntry, 1500);
+  }
+
+  function checkCompleteGate() {
+    const btn = document.getElementById('complete-btn');
+    if (!btn || !btn.dataset.gated) return;
+    const textarea = document.getElementById('journal-textarea');
+    const hint = document.getElementById('gate-hint');
+    const hasContent = textarea && textarea.value.trim().length >= 50;
+    btn.disabled = !hasContent;
+    if (hint) {
+      hint.textContent = hasContent ? '✓ Ready to mark complete' : 'Write at least a few words to unlock completion';
+      hint.className = hasContent ? 'complete-gate-hint ready' : 'complete-gate-hint';
+    }
   }
 
   async function saveJournalEntry() {
     const textarea = document.getElementById('journal-textarea');
     const status = document.getElementById('journal-status');
     if (!textarea || !journalLessonId) return;
-    const content = textarea.value;
+
+    // Build content — structured for Day lessons, plain for others
+    let content;
+    const mod = state.modules.find(m => state.lessons[m.id]?.some(l => l.id === journalLessonId));
+    if (mod?.position === 4) {
+      const checkin = {};
+      document.querySelectorAll('[id^="checkin-field-"]').forEach(el => {
+        const i = el.id.replace('checkin-field-', '');
+        checkin[i] = el.value;
+      });
+      content = JSON.stringify({ checkin, journal: textarea.value });
+    } else {
+      content = textarea.value;
+    }
+
     if (status) { status.textContent = 'Saving…'; status.className = 'journal-status'; }
     const { error } = await db
       .from('journal_entries')
@@ -1494,6 +1754,52 @@
       status.textContent = error ? 'Save failed — check connection' : '✓ Saved';
       status.className = error ? 'journal-status' : 'journal-status saved';
     }
+  }
+
+  // ═══ NON-NEG CHECKLIST ═══
+  let nonnegState = [];
+
+  async function loadNonNegCompletion(lessonId) {
+    nonnegState = [];
+    const { data } = await db
+      .from('nonneg_completions')
+      .select('completed_items')
+      .eq('user_id', state.user.id)
+      .eq('lesson_id', lessonId)
+      .single();
+    if (data?.completed_items) {
+      nonnegState = data.completed_items;
+      nonnegState.forEach(i => applyNonNegCheck(i, true));
+      updateNonNegCounter();
+    }
+  }
+
+  function applyNonNegCheck(idx, checked) {
+    const item = document.getElementById(`nonneg-item-${idx}`);
+    const box = document.getElementById(`nonneg-box-${idx}`);
+    if (!item || !box) return;
+    item.classList.toggle('checked', checked);
+  }
+
+  function updateNonNegCounter() {
+    const el = document.getElementById('nonneg-counter');
+    if (el) el.textContent = `${nonnegState.length} / 10`;
+  }
+
+  async function toggleNonNeg(idx) {
+    const isChecked = nonnegState.includes(idx);
+    if (isChecked) {
+      nonnegState = nonnegState.filter(i => i !== idx);
+    } else {
+      nonnegState = [...nonnegState, idx];
+    }
+    applyNonNegCheck(idx, !isChecked);
+    updateNonNegCounter();
+
+    await db.from('nonneg_completions').upsert(
+      { user_id: state.user.id, lesson_id: journalLessonId, completed_items: nonnegState, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id,lesson_id' }
+    );
   }
 
   // ═══ CONTENT TABS ═══
