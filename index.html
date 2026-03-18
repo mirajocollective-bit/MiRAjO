@@ -1001,7 +1001,7 @@
       .hero h1 { max-width: 100%; font-size: clamp(32px, 8vw, 48px); }
       .hero-sub { font-size: 15px; max-width: 100%; }
       .hero-actions { flex-direction: column; gap: 12px; }
-      .hero-btn-primary, .hero-btn-secondary { text-align: center; padding: 16px 28px; }
+      .hero-btn-primary, .hero-btn-secondary { text-align: center; padding: 16px 24px; width: 100%; display: block; box-sizing: border-box; }
 
       .parchment-section, .dark-section, .blog-section, .newsletter-section, .events-section {
         padding: 60px 20px;
@@ -1010,6 +1010,23 @@
         grid-template-columns: 1fr;
       }
       .site-footer { padding: 40px 20px 20px; }
+      .footer-links { gap: 16px; }
+      .footer-social { flex-wrap: wrap; gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-eyebrow { letter-spacing: 3px; font-size: 10px; }
+      .section-eyebrow { letter-spacing: 2px; }
+      .hero-image { height: 80vw; }
+      .miranda-photo { height: 75vw; }
+      .miranda-letter { padding: 40px 20px 56px; }
+      .miranda-heading { font-size: clamp(24px, 7vw, 36px); }
+      .miranda-body { font-size: 15px; line-height: 1.85; }
+      .books-title { font-size: clamp(24px, 7vw, 36px); }
+      .book-cover { max-width: 180px; }
+      .dark-section .dark-title { font-size: clamp(22px, 6vw, 28px); }
+      .offer-card { padding: 24px 20px; }
+      .newsletter-kit-section { padding: 56px 20px !important; }
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
@@ -1395,7 +1412,7 @@
     .offer-25-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
     .offer-25-grid a { display: block; text-align: center; }
     .offer-25-video-wrap { order: -1; }
-    .offer-25-video-frame { max-width: 200px; margin: 0 auto; }
+    .offer-25-video-frame { max-width: 260px; margin: 0 auto; }
   }
 </style>
 <section class="offer-25-section" data-aos="fade-up">
@@ -1436,13 +1453,14 @@
 <!-- ═══ WATCH THIS ═══ -->
 <style>
   .watch-section { background: var(--deep-forest); padding: 80px 40px; text-align: center; }
-  @media (max-width: 768px) { .watch-section { padding: 56px 20px; } }
+  .watch-video-wrap { position:relative;width:100%;max-width:320px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.55); }
+  @media (max-width: 768px) { .watch-section { padding: 56px 20px; } .watch-video-wrap { max-width: 100%; border-radius: 12px; } }
 </style>
 <section class="watch-section" data-aos="fade-up">
   <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--new-growth);font-weight:600;margin-bottom:16px;">Before You Go Any Further</div>
   <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,34px);color:var(--warm-parchment);font-weight:400;margin-bottom:12px;">Watch this. Two minutes.</h2>
   <p style="font-size:15px;color:var(--text-muted-dark);margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">This is what a weak mind costs you. Miranda breaks it down plainly.</p>
-  <div style="position:relative;width:100%;max-width:320px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.55);">
+  <div class="watch-video-wrap">
     <div style="padding-bottom:177.78%;"></div>
     <iframe
       src="https://www.youtube.com/embed/UsJMXwNqns0?rel=0&modestbranding=1"
@@ -1682,7 +1700,7 @@
 </script>
 
 <!-- ═══ NEWSLETTER ═══ -->
-<section style="background:var(--deep-forest);padding:80px 40px;text-align:center;">
+<section class="newsletter-kit-section" style="background:var(--deep-forest);padding:80px 40px;text-align:center;">
   <div style="max-width:560px;margin:0 auto;">
     <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--new-growth);font-weight:600;margin-bottom:16px;">Stay Connected</div>
     <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(26px,3.5vw,40px);color:var(--warm-parchment);font-weight:400;line-height:1.2;margin-bottom:16px;">Words worth reading. Delivered with intention.</h2>
