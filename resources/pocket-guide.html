@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pocket Guide — 25 Days & 25 Nights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: letter; margin: 0.75in; }
+
+    :root {
+      --p-deep: #3D2B72;
+      --p-mid: #5A3F9A;
+      --p-light: #8B72C8;
+      --p-pale: #EDE8F8;
+      --gold: #C9A84C;
+      --text: #1a1228;
+      --muted: #6B6080;
+      --border: rgba(61,43,114,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      background: #fff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--p-mid);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 16px rgba(90,63,154,0.3);
+      z-index: 100;
+    }
+    .print-btn:hover { background: var(--p-light); }
+
+    @media print { .print-btn { display: none; } }
+
+    /* ── COVER ── */
+    .cover {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--p-deep) 0%, #1A0A2E 60%, #0D071C 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      page-break-after: always;
+    }
+    .cover-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 14px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 48px;
+    }
+    .cover-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(42px, 6vw, 64px);
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .cover-subtitle {
+      font-size: 15px;
+      color: rgba(200,196,220,0.7);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 60px;
+    }
+    .cover-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 60px;
+    }
+    .cover-tagline {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: rgba(200,196,220,0.6);
+      max-width: 400px;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 64px 48px;
+      page-break-inside: avoid;
+    }
+    .section + .section {
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      color: var(--p-deep);
+      margin-bottom: 32px;
+    }
+
+    /* ── 7 CURRENTS ── */
+    .currents-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .current-card {
+      background: var(--p-pale);
+      border-left: 3px solid var(--p-light);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+    }
+    .current-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--p-light);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    .current-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 17px;
+      color: var(--p-deep);
+      margin-bottom: 6px;
+    }
+    .current-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .current-card.full-width { grid-column: 1 / -1; }
+
+    /* ── 10 NON-NEGOTIABLES ── */
+    .nonneg-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .nonneg-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .nonneg-item-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--gold);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 28px;
+    }
+    .nonneg-item-body {}
+    .nonneg-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--p-deep);
+      margin-bottom: 2px;
+    }
+    .nonneg-item-detail {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── DAY GUIDE TABLE ── */
+    .day-guide-intro {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .day-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .day-table th {
+      background: var(--p-deep);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 11px;
+    }
+    .day-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(61,43,114,0.08);
+      vertical-align: top;
+      line-height: 1.45;
+    }
+    .day-table tr:nth-child(even) td { background: rgba(61,43,114,0.03); }
+    .day-table tr.rest-day td {
+      background: rgba(201,168,76,0.08);
+      font-style: italic;
+      color: var(--muted);
+    }
+    .day-table tr.rest-day .day-num { color: var(--gold); font-weight: 700; }
+    .day-num { font-weight: 700; color: var(--p-mid); }
+    .current-tag {
+      display: inline-block;
+      background: var(--p-pale);
+      color: var(--p-mid);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .rest-tag {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      color: #A07B20;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    /* ── MANTRA SECTION ── */
+    .mantra-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .mantra-card {
+      background: linear-gradient(135deg, var(--p-deep), #2D1F50);
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+    .mantra-current {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(200,196,220,0.5);
+      margin-bottom: 8px;
+    }
+    .mantra-text {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: #fff;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">↓ Save as PDF</button>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-logo">MiRAjO</div>
+  <div class="cover-title">25 Days<br>&amp; 25 Nights</div>
+  <div class="cover-subtitle">Pocket Guide</div>
+  <div class="cover-divider"></div>
+  <div class="cover-tagline">"There is no Opportunity without Unity."</div>
+</div>
+
+<!-- THE 7 CURRENTS -->
+<div class="section">
+  <div class="section-label">Module 2 Resources</div>
+  <div class="section-title">The 7 Currents</div>
+  <div class="currents-grid">
+    <div class="current-card">
+      <div class="current-num">01</div>
+      <div class="current-name">Silence &amp; Potential</div>
+      <div class="current-desc">Potential does not rise in noise — it rises in silence. Release judgment of self and others. Let stillness be your strength.</div>
+    </div>
+    <div class="current-card">
+      <div class="current-num">02</div>
+      <div class="current-name">Flowing Energy</div>
+      <div class="current-desc">Energy is designed to move. Give and receive in balance. Withholding, over-giving, and refusing to receive all block the flow.</div>
+    </div>
+    <div class="current-card">
+      <div class="current-num">03</div>
+      <div class="current-name">Choice</div>
+      <div class="current-desc">Every choice creates an outcome. Life is structured in levels — crawl, walk, run, fly. Progress is not based on time; it is based on choice.</div>
+    </div>
+    <div class="current-card">
+      <div class="current-num">04</div>
+      <div class="current-name">Ease</div>
+      <div class="current-desc">Ease is alignment, not avoidance. The tongue commands the mind. Not every fight is yours — not every thought deserves your energy.</div>
+    </div>
+    <div class="current-card">
+      <div class="current-num">05</div>
+      <div class="current-name">Intention</div>
+      <div class="current-desc">Everything begins with intention. It starts in thought, is spoken through words, and proven by action. Once released, life responds.</div>
+    </div>
+    <div class="current-card">
+      <div class="current-num">06</div>
+      <div class="current-name">Release</div>
+      <div class="current-desc">Release means to set free, relieve, and make space. It is not loss — it is freedom. Each act of release creates room for what is next.</div>
+    </div>
+    <div class="current-card full-width">
+      <div class="current-num">07</div>
+      <div class="current-name">Purpose</div>
+      <div class="current-desc">Purpose is natural — it is already in you. It cannot be stolen. Signs of living in purpose: energy, clarity, peace, and direction. Purpose requires action. Without movement, it stays thought.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 NON-NEGOTIABLES -->
+<div class="section">
+  <div class="section-label">Your Daily Foundation</div>
+  <div class="section-title">The 10 Non-Negotiables</div>
+  <ul class="nonneg-list">
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">1</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Cardio 3×30</div>
+        <div class="nonneg-item-detail">Move your body 3 times per day, 30 min each. Morning, afternoon, before bed.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">2</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Planks 3×1 Minute</div>
+        <div class="nonneg-item-detail">3 sessions daily. Each session: 3 planks, 1 minute each. Build core and focus.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">3</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Strength Training</div>
+        <div class="nonneg-item-detail">One session daily. Legs, arms, or both. 15–20 focused minutes is enough.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">4</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Morning Meditation</div>
+        <div class="nonneg-item-detail">30 min. Set your intention for the day. Sit in silence before the world begins.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">5</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Evening Meditation</div>
+        <div class="nonneg-item-detail">30 min. Release the day. Return to yourself. Prepare to dream and reset.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">6</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Stretch or Yoga</div>
+        <div class="nonneg-item-detail">5–15 min daily. Release tension. Give back to the body that carried you.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">7</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Mindful Nutrition</div>
+        <div class="nonneg-item-detail">Eat for fullness, not craving. Protein, fiber, color. Hydrate throughout the day.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">8</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">No Alcohol or Drugs</div>
+        <div class="nonneg-item-detail">25 days, full clarity. Replace with mocktails, sparkling water, or fresh juice.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">9</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">Sleep in Silence</div>
+        <div class="nonneg-item-detail">7–9 hours. Dark, quiet room. Consistent bedtime. This is where you rebuild.</div>
+      </div>
+    </li>
+    <li class="nonneg-item">
+      <div class="nonneg-item-num">10</div>
+      <div class="nonneg-item-body">
+        <div class="nonneg-item-title">No TV / No Social Media</div>
+        <div class="nonneg-item-detail">Work exceptions only — go in, do the task, log out. Reclaim your focus and time.</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- DAY-BY-DAY GUIDE -->
+<div class="section">
+  <div class="section-label">Your Journey</div>
+  <div class="section-title">Day-by-Day at a Glance</div>
+  <p class="day-guide-intro">Each day is anchored to a Current. Rest days are your system updates — non-negotiables are still in effect.</p>
+  <table class="day-table">
+    <thead>
+      <tr>
+        <th style="width:60px">Day</th>
+        <th style="width:160px">Current</th>
+        <th>Focus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="day-num">1</td><td><span class="current-tag">Stillness</span></td><td>Creating space for silence and awareness</td></tr>
+      <tr><td class="day-num">2</td><td><span class="current-tag">Flowing Energy</span></td><td>Recognizing distractions — notice where energy goes</td></tr>
+      <tr><td class="day-num">3</td><td><span class="current-tag">Choice</span></td><td>Stepping out of judgment — toward yourself and others</td></tr>
+      <tr><td class="day-num">4</td><td><span class="current-tag">Release</span></td><td>Letting go of attachments that control your peace</td></tr>
+      <tr><td class="day-num">5</td><td><span class="current-tag">Integration</span></td><td>Connecting Currents 1–4 and preparing for realignment</td></tr>
+      <tr class="rest-day"><td class="day-num">6</td><td><span class="rest-tag">Rest Day 1</span></td><td>Stop. Do nothing productive. Let the work settle.</td></tr>
+      <tr><td class="day-num">7</td><td><span class="current-tag">Ease</span></td><td>Silence in motion — peace becomes power</td></tr>
+      <tr><td class="day-num">8</td><td><span class="current-tag">Ease</span></td><td>Keep your peace when life gets loud</td></tr>
+      <tr><td class="day-num">9</td><td><span class="current-tag">Flowing Energy</span></td><td>Give one thing with intention. Receive without apologizing.</td></tr>
+      <tr><td class="day-num">10</td><td><span class="current-tag">Purpose</span></td><td>Reconnect to what drives you from within</td></tr>
+      <tr><td class="day-num">11</td><td><span class="current-tag">Integration</span></td><td>All 7 Currents — notice what feels natural now</td></tr>
+      <tr class="rest-day"><td class="day-num">12</td><td><span class="rest-tag">Rest Day 2</span></td><td>Real rest. Your body is doing the work now.</td></tr>
+      <tr><td class="day-num">13</td><td><span class="current-tag">Stillness</span></td><td>Carry stillness into motion — grace under pressure</td></tr>
+      <tr><td class="day-num">14</td><td><span class="current-tag">Intention</span></td><td>Move and speak with purpose, not habit</td></tr>
+      <tr><td class="day-num">15</td><td><span class="current-tag">Flowing Energy</span></td><td>Check your balance — pause before you give</td></tr>
+      <tr><td class="day-num">16</td><td><span class="current-tag">Release</span></td><td>Trust the space that release creates</td></tr>
+      <tr><td class="day-num">17</td><td><span class="current-tag">Alignment</span></td><td>What drains your peace vs. what supports it</td></tr>
+      <tr class="rest-day"><td class="day-num">18</td><td><span class="rest-tag">Rest Day 3</span></td><td>Dream. Let Day 25 begin to take shape.</td></tr>
+      <tr><td class="day-num">19</td><td><span class="current-tag">Purpose</span></td><td>See purpose in what you already do</td></tr>
+      <tr><td class="day-num">20</td><td><span class="current-tag">Choice</span></td><td>Make choices from awareness, not reaction</td></tr>
+      <tr><td class="day-num">21</td><td><span class="current-tag">Ease</span></td><td>Allow life to move with you, not against you</td></tr>
+      <tr><td class="day-num">22</td><td><span class="current-tag">Flowing Energy</span></td><td>Direct your energy toward what matters most</td></tr>
+      <tr><td class="day-num">23</td><td><span class="current-tag">Alignment</span></td><td>Move like someone who trusts where they are going</td></tr>
+      <tr class="rest-day"><td class="day-num">24</td><td><span class="rest-tag">Rest Day 4</span></td><td>Everything is developing. Nothing is paused.</td></tr>
+      <tr style="background:rgba(61,43,114,0.06)"><td class="day-num" style="color:var(--gold)">25</td><td><span class="current-tag" style="background:rgba(201,168,76,0.15);color:#8B6B10">Expression</span></td><td><strong>Do the thing.</strong> This is proof, not practice.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MANTRAS -->
+<div class="section">
+  <div class="section-label">Carry These With You</div>
+  <div class="section-title">Mantras &amp; Reminders</div>
+  <div class="mantra-grid">
+    <div class="mantra-card">
+      <div class="mantra-current">Silence &amp; Potential</div>
+      <div class="mantra-text">"My potential is here. I carry what I need to grow."</div>
+    </div>
+    <div class="mantra-card">
+      <div class="mantra-current">Ease</div>
+      <div class="mantra-text">"Not every fight is mine. Not every thought deserves my energy."</div>
+    </div>
+    <div class="mantra-card">
+      <div class="mantra-current">Release</div>
+      <div class="mantra-text">"I will not live at the bottom when I was meant to rise."</div>
+    </div>
+    <div class="mantra-card">
+      <div class="mantra-current">Intention</div>
+      <div class="mantra-text">"Are you going to drift on someone else's current, or set your own?"</div>
+    </div>
+    <div class="mantra-card">
+      <div class="mantra-current">Choice</div>
+      <div class="mantra-text">"The controller never leaves your hands. Your choices decide whether you advance or restart."</div>
+    </div>
+    <div class="mantra-card">
+      <div class="mantra-current">Day 25</div>
+      <div class="mantra-text">"I did not come this far to stay the same."</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

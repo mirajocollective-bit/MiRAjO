@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Schedule — 25 Days & 25 Nights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: letter; margin: 0.75in; }
+
+    :root {
+      --p-deep: #3D2B72;
+      --p-mid: #5A3F9A;
+      --p-light: #8B72C8;
+      --p-pale: #EDE8F8;
+      --gold: #C9A84C;
+      --text: #1a1228;
+      --muted: #6B6080;
+      --border: rgba(61,43,114,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      background: #fff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .print-btn {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--p-mid); color: #fff; border: none;
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 16px rgba(90,63,154,0.3); z-index: 100;
+    }
+    .print-btn:hover { background: var(--p-light); }
+    @media print { .print-btn { display: none; } }
+
+    .cover {
+      height: 100vh;
+      background: linear-gradient(160deg, var(--p-deep) 0%, #1A0A2E 60%, #0D071C 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 60px 40px;
+      page-break-after: always;
+    }
+    .cover-logo { font-family: 'Instrument Serif', serif; font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 48px; }
+    .cover-title { font-family: 'Instrument Serif', serif; font-size: 52px; color: #fff; line-height: 1.1; margin-bottom: 12px; }
+    .cover-sub { font-size: 14px; letter-spacing: 4px; text-transform: uppercase; color: rgba(200,196,220,0.6); margin-bottom: 60px; }
+    .cover-divider { width: 50px; height: 2px; background: var(--gold); margin: 0 auto 60px; }
+    .cover-quote { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 18px; color: rgba(200,196,220,0.6); max-width: 380px; }
+
+    .page { padding: 52px 48px; page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--p-light); margin-bottom: 8px; }
+    .section-title { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--p-deep); margin-bottom: 8px; }
+    .section-intro { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+
+    /* TIME BLOCK SCHEDULE */
+    .schedule-header {
+      display: grid;
+      grid-template-columns: 100px 1fr 180px;
+      gap: 0;
+      background: var(--p-deep);
+      padding: 10px 16px;
+      border-radius: 8px 8px 0 0;
+    }
+    .schedule-header span { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(200,196,220,0.7); }
+
+    .schedule-block {
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .schedule-block:last-child { border-radius: 0 0 8px 8px; }
+
+    .time-slot {
+      display: grid;
+      grid-template-columns: 100px 1fr 180px;
+      border-bottom: 1px solid var(--border);
+      min-height: 44px;
+    }
+    .time-slot:last-child { border-bottom: none; }
+
+    .ts-time {
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--p-mid);
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .ts-activity {
+      padding: 10px 16px;
+      font-size: 12px;
+      color: var(--text);
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      line-height: 1.4;
+    }
+    .ts-nonneg {
+      padding: 10px 14px;
+      font-size: 10px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+    }
+    .nonneg-pill {
+      display: inline-block;
+      background: var(--p-pale);
+      color: var(--p-mid);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .phase-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .phase-morning { background: rgba(201,168,76,0.1); color: #7A5500; }
+    .phase-midday { background: rgba(61,43,114,0.06); color: var(--p-mid); }
+    .phase-evening { background: rgba(26,10,46,0.06); color: var(--p-deep); }
+
+    .write-line { border-bottom: 1px solid var(--border); height: 22px; }
+
+    /* CUSTOM SCHEDULE */
+    .custom-schedule {
+      margin-top: 32px;
+    }
+    .custom-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--p-deep); margin-bottom: 8px; }
+    .custom-intro { font-size: 12px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+    .custom-table { width: 100%; border-collapse: collapse; }
+    .custom-table th {
+      background: var(--p-deep); color: #fff;
+      padding: 8px 12px; text-align: left; font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .custom-table td {
+      border-bottom: 1px solid var(--border);
+      height: 32px;
+      padding: 0 12px;
+      font-size: 11px;
+      color: var(--muted);
+      vertical-align: middle;
+    }
+    .custom-table td:first-child { width: 120px; font-weight: 600; color: var(--p-mid); }
+    .custom-table td:last-child { width: 120px; }
+
+    /* WEEKLY OVERVIEW */
+    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .day-col { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .day-col-header {
+      background: var(--p-deep); color: rgba(255,255,255,0.85);
+      text-align: center; padding: 8px 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    }
+    .day-col-body { padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+    .day-check { display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--muted); }
+    .mini-box { width: 10px; height: 10px; border: 1px solid rgba(61,43,114,0.2); border-radius: 2px; flex-shrink: 0; }
+
+    /* NOTES */
+    .notes-section { margin-top: 32px; }
+    .notes-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--p-light); margin-bottom: 12px; }
+    .notes-lines { display: flex; flex-direction: column; gap: 4px; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">↓ Save as PDF</button>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-logo">MiRAjO</div>
+  <div class="cover-title">25 Days<br>&amp; 25 Nights</div>
+  <div class="cover-sub">Daily Schedule</div>
+  <div class="cover-divider"></div>
+  <div class="cover-quote">"Structure creates power. These disciplines are the anchors that will steady your mind, sharpen your body, and open your spirit."</div>
+</div>
+
+<!-- PAGE 1: TEMPLATE DAY -->
+<div class="page">
+  <div class="section-label">The Framework</div>
+  <div class="section-title">Your Day, Structured</div>
+  <div class="section-intro">This schedule places all 10 Non-Negotiables into a logical flow. Times are a starting template — adjust to your life. What matters is that every Non-Negotiable happens. Move the time. Never skip the practice.</div>
+
+  <div class="schedule-header">
+    <span>Time</span>
+    <span>Activity</span>
+    <span>Non-Negotiable</span>
+  </div>
+
+  <div class="schedule-block">
+
+    <div class="time-slot phase-morning">
+      <div style="grid-column:1/-1;padding:6px 16px" class="phase-label phase-morning">☀ Morning Block</div>
+    </div>
+
+    <div class="time-slot">
+      <div class="ts-time">5:30 – 6:00</div>
+      <div class="ts-activity">Wake up. Glass of water. Dress for how you want to feel.</div>
+      <div class="ts-nonneg"></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">6:00 – 6:30</div>
+      <div class="ts-activity"><strong>Morning Meditation</strong> — Set intention. Sit in silence. Let the day come to you.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#4 Morning Meditation</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">6:30 – 7:00</div>
+      <div class="ts-activity">Breakfast — Protein + fiber. Hydrate. Fuel for movement.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#7 Nutrition</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">7:00 – 7:30</div>
+      <div class="ts-activity"><strong>Cardio Session 1</strong> — Walk, bike, elliptical, water aerobics. 30 minutes.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#1 Cardio 3×30</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">7:30 – 7:45</div>
+      <div class="ts-activity"><strong>Plank Set 1</strong> — 3 planks × 1 min each. Rest 30 sec between. Hydrate after.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#2 Planks</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">7:45 – 8:00</div>
+      <div class="ts-activity"><strong>Stretch / Yoga</strong> — 5–15 minutes. Lengthen. Breathe. Release.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#6 Stretch/Yoga</span></div>
+    </div>
+
+    <div class="time-slot phase-midday">
+      <div style="grid-column:1/-1" class="phase-label phase-midday">◆ Midday Block</div>
+    </div>
+
+    <div class="time-slot">
+      <div class="ts-time">12:00 – 12:30</div>
+      <div class="ts-activity"><strong>Cardio Session 2</strong> — Walk outside if possible. Move the body, clear the mind.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#1 Cardio 3×30</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">12:30 – 12:45</div>
+      <div class="ts-activity"><strong>Plank Set 2</strong> — 3 planks × 1 min each. Focus on form and breath.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#2 Planks</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">12:45 – 1:30</div>
+      <div class="ts-activity">Lunch — Color your plate. Eat sitting down, slowly, without screens.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#7 Nutrition</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">3:00 – 4:00</div>
+      <div class="ts-activity"><strong>Strength Training</strong> — 15–20 min minimum. Legs, arms, or full body. Use what you have.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#3 Strength</span></div>
+    </div>
+
+    <div class="time-slot phase-evening">
+      <div style="grid-column:1/-1" class="phase-label phase-evening">🌙 Evening Block</div>
+    </div>
+
+    <div class="time-slot">
+      <div class="ts-time">6:00 – 6:30</div>
+      <div class="ts-activity">Dinner — Recovery meal. Protein, veg, complex carbs. Eat with presence.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#7 Nutrition</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">7:00 – 7:30</div>
+      <div class="ts-activity"><strong>Cardio Session 3</strong> — Gentle walk, light bike. Wind the body down.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#1 Cardio 3×30</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">7:30 – 7:45</div>
+      <div class="ts-activity"><strong>Plank Set 3</strong> — Final set. 3 planks × 1 min. Finish strong.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#2 Planks</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">8:30 – 9:00</div>
+      <div class="ts-activity"><strong>Evening Meditation</strong> — Release the day. Release the people. Return to yourself.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#5 Evening Meditation</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">9:00 – 9:15</div>
+      <div class="ts-activity">Journaling — Check-in questions. Today's prompt. Honest reflection.</div>
+      <div class="ts-nonneg"></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">9:15 – 9:30</div>
+      <div class="ts-activity">Wind down. Dark room. No screens. Signal your body it is time to repair.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#10 No TV/Social</span></div>
+    </div>
+    <div class="time-slot">
+      <div class="ts-time">10:00 PM</div>
+      <div class="ts-activity"><strong>Lights out.</strong> 7–9 hours of sleep in a quiet, dark space.</div>
+      <div class="ts-nonneg"><span class="nonneg-pill">#9 Sleep</span></div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:16px;padding:12px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:8px;font-size:12px;color:#7A5500">
+    <strong>Non-Negotiable #8</strong> — No alcohol or recreational drugs applies all day, every day. This is your baseline, not a reminder.
+  </div>
+</div>
+
+<!-- PAGE 2: CUSTOM SCHEDULE + WEEKLY TRACKER -->
+<div class="page">
+  <div class="section-label">Make It Yours</div>
+  <div class="section-title">Your Custom Schedule</div>
+  <div class="section-intro">The template works. But your life has its own rhythm. Use this blank schedule to map your 10 Non-Negotiables into your actual day. Fill it in on Day 1 and keep it visible.</div>
+
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Activity</th>
+        <th>Non-Negotiable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+      <tr><td>___:___</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="custom-schedule" style="margin-top:36px">
+    <div class="section-label">25-Day Non-Negotiables Tracker</div>
+    <div class="custom-intro">One row per day. Check off each Non-Negotiable as you complete it. Print and post somewhere visible.</div>
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th style="width:50px">Day</th>
+          <th style="width:30px">#1</th>
+          <th style="width:30px">#2</th>
+          <th style="width:30px">#3</th>
+          <th style="width:30px">#4</th>
+          <th style="width:30px">#5</th>
+          <th style="width:30px">#6</th>
+          <th style="width:30px">#7</th>
+          <th style="width:30px">#8</th>
+          <th style="width:30px">#9</th>
+          <th style="width:30px">#10</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(61,43,114,0.04)">
+          <td colspan="12" style="font-size:9px;color:var(--muted);padding:4px 12px;font-style:italic">
+            #1 Cardio&nbsp;&nbsp; #2 Planks&nbsp;&nbsp; #3 Strength&nbsp;&nbsp; #4 AM Meditation&nbsp;&nbsp; #5 PM Meditation&nbsp;&nbsp; #6 Stretch&nbsp;&nbsp; #7 Nutrition&nbsp;&nbsp; #8 No Substances&nbsp;&nbsp; #9 Sleep&nbsp;&nbsp; #10 No Screen
+          </td>
+        </tr>
+        <script>
+          for (let i = 1; i <= 25; i++) {
+            const rest = [6,12,18,24].includes(i);
+            document.write(`<tr${rest ? ' style="background:rgba(201,168,76,0.05)"' : ''}>
+              <td style="color:${rest ? 'var(--gold)' : 'var(--p-mid)'}"><strong>${i}</strong>${rest ? ' ★' : ''}</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td></td>
+            </tr>`);
+          }
+        </script>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-size:10px;color:var(--muted);font-style:italic">★ Rest days — Non-Negotiables still apply. Adjust intensity as needed.</div>
+  </div>
+
+  <div class="notes-section">
+    <div class="notes-label">Schedule Notes &amp; Adjustments</div>
+    <div class="notes-lines">
+      <div class="write-line"></div>
+      <div class="write-line"></div>
+      <div class="write-line"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

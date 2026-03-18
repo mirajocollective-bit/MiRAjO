@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrition Guide — 25 Days & 25 Nights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: letter; margin: 0.75in; }
+
+    :root {
+      --p-deep: #3D2B72;
+      --p-mid: #5A3F9A;
+      --p-light: #8B72C8;
+      --p-pale: #EDE8F8;
+      --gold: #C9A84C;
+      --green: #256B42;
+      --green-light: #6DC48A;
+      --text: #1a1228;
+      --muted: #6B6080;
+      --border: rgba(61,43,114,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      background: #fff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .print-btn {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--p-mid); color: #fff; border: none;
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 16px rgba(90,63,154,0.3); z-index: 100;
+    }
+    .print-btn:hover { background: var(--p-light); }
+    @media print { .print-btn { display: none; } }
+
+    .cover {
+      height: 100vh;
+      background: linear-gradient(160deg, var(--p-deep) 0%, #1A0A2E 60%, #0D071C 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 60px 40px;
+      page-break-after: always;
+    }
+    .cover-logo { font-family: 'Instrument Serif', serif; font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 48px; }
+    .cover-title { font-family: 'Instrument Serif', serif; font-size: 52px; color: #fff; line-height: 1.1; margin-bottom: 12px; }
+    .cover-sub { font-size: 14px; letter-spacing: 4px; text-transform: uppercase; color: rgba(200,196,220,0.6); margin-bottom: 60px; }
+    .cover-divider { width: 50px; height: 2px; background: var(--gold); margin: 0 auto 60px; }
+    .cover-quote { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 18px; color: rgba(200,196,220,0.6); max-width: 360px; }
+
+    .page { padding: 56px 48px; page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--p-light); margin-bottom: 8px; }
+    .section-title { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--p-deep); margin-bottom: 8px; }
+    .section-intro { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+
+    /* PRINCIPLE CARDS */
+    .principles { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+    .principle-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .principle-icon { font-size: 24px; margin-bottom: 10px; }
+    .principle-title { font-size: 14px; font-weight: 700; color: var(--p-deep); margin-bottom: 6px; }
+    .principle-text { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+    /* PLATE VISUAL */
+    .plate-section {
+      background: var(--p-pale);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+    .plate-title { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--p-deep); margin-bottom: 20px; }
+    .plate-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .plate-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+    .plate-color {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+    }
+    .plate-pct { font-size: 18px; font-weight: 700; color: var(--p-deep); }
+    .plate-name { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .plate-examples { font-size: 10px; color: var(--p-light); margin-top: 4px; line-height: 1.4; }
+
+    /* MEAL IDEAS */
+    .meal-section { margin-bottom: 32px; }
+    .meal-time { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--p-mid); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .meal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .meal-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .meal-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .meal-detail { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+    /* HYDRATION */
+    .hydration-bar {
+      background: linear-gradient(135deg, var(--p-deep), #1a0a2e);
+      border-radius: 12px;
+      padding: 24px 28px;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .hydration-title { font-family: 'Instrument Serif', serif; font-size: 20px; margin-bottom: 16px; }
+    .hydration-glasses { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .glass { font-size: 22px; }
+    .hydration-tips { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hydration-tip { font-size: 12px; color: rgba(200,196,220,0.8); padding-left: 14px; position: relative; line-height: 1.5; }
+    .hydration-tip::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+
+    /* FOODS TO LIMIT */
+    .limit-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+    .limit-box, .include-box {
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+    .limit-box { background: rgba(200,50,50,0.05); border: 1px solid rgba(200,50,50,0.15); }
+    .include-box { background: rgba(37,107,66,0.05); border: 1px solid rgba(37,107,66,0.15); }
+    .limit-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+    .limit-box .limit-title { color: #8B3030; }
+    .include-box .limit-title { color: var(--green); }
+    .limit-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .limit-item { font-size: 12px; color: var(--muted); padding-left: 16px; position: relative; }
+    .limit-item::before { content: '✕'; position: absolute; left: 0; font-size: 10px; color: #C05050; }
+    .include-item::before { content: '✓'; position: absolute; left: 0; font-size: 10px; color: var(--green); }
+
+    /* MEAL TRACKER */
+    .tracker-section { margin-top: 32px; }
+    .tracker-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--p-light); margin-bottom: 16px; }
+    .tracker-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .tracker-table th { background: var(--p-deep); color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; }
+    .tracker-table td { border-bottom: 1px solid var(--border); padding: 0; height: 28px; }
+    .tracker-table td:first-child { padding: 0 12px; color: var(--p-mid); font-weight: 600; width: 80px; }
+    .tracker-note { font-size: 11px; color: var(--muted); margin-top: 8px; font-style: italic; }
+
+    /* MINDFUL EATING */
+    .mindful-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .mindful-card {
+      background: var(--p-pale);
+      border-radius: 10px;
+      padding: 18px 16px;
+    }
+    .mindful-num { font-family: 'Instrument Serif', serif; font-size: 28px; color: var(--p-light); line-height: 1; margin-bottom: 8px; }
+    .mindful-title { font-size: 13px; font-weight: 700; color: var(--p-deep); margin-bottom: 6px; }
+    .mindful-text { font-size: 11px; color: var(--muted); line-height: 1.55; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">↓ Save as PDF</button>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-logo">MiRAjO</div>
+  <div class="cover-title">25 Days<br>&amp; 25 Nights</div>
+  <div class="cover-sub">Nutrition Guide</div>
+  <div class="cover-divider"></div>
+  <div class="cover-quote">"Treat your body like a plant. Give it water, give it nutrients, and it will grow stronger."</div>
+</div>
+
+<!-- PAGE 1: FOUNDATION -->
+<div class="page">
+  <div class="section-label">Non-Negotiable 7</div>
+  <div class="section-title">Mindful Nutrition</div>
+  <div class="section-intro">This is not a diet and not a fast. It is a daily ritual to make sure your body gets what it needs to function at its best. Focus on fuel, not restriction. You are doing physical and mental work every day — your nutrition must match that.</div>
+
+  <div class="principles">
+    <div class="principle-card">
+      <div class="principle-icon">🎯</div>
+      <div class="principle-title">Eat for Fullness</div>
+      <div class="principle-text">Choose foods with protein and fiber to keep you satisfied, not just filled. Craving-driven eating depletes your energy and focus.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🌈</div>
+      <div class="principle-title">Color Your Plate</div>
+      <div class="principle-text">A variety of colors means a variety of nutrients. Think of it as feeding your body the full spectrum — not just one lane.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">💧</div>
+      <div class="principle-title">Hydration First</div>
+      <div class="principle-text">Hydration is a core part of nutrition. Your brain, muscles, and recovery all depend on water. Start every meal with a glass.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🧘</div>
+      <div class="principle-title">Slow Down</div>
+      <div class="principle-text">Notice how food makes you feel afterward, not just in the moment. Eating slowly improves digestion and helps you recognize true fullness.</div>
+    </div>
+  </div>
+
+  <div class="plate-section">
+    <div class="plate-title">Build Your Plate</div>
+    <div class="plate-grid">
+      <div class="plate-item">
+        <div class="plate-color" style="background:#6DC48A"></div>
+        <div class="plate-pct">40%</div>
+        <div class="plate-name">Vegetables</div>
+        <div class="plate-examples">Leafy greens, broccoli, peppers, carrots</div>
+      </div>
+      <div class="plate-item">
+        <div class="plate-color" style="background:#5A3F9A"></div>
+        <div class="plate-pct">30%</div>
+        <div class="plate-name">Protein</div>
+        <div class="plate-examples">Chicken, fish, eggs, beans, lentils, tofu</div>
+      </div>
+      <div class="plate-item">
+        <div class="plate-color" style="background:#C9A84C"></div>
+        <div class="plate-pct">20%</div>
+        <div class="plate-name">Complex Carbs</div>
+        <div class="plate-examples">Brown rice, sweet potato, oats, quinoa</div>
+      </div>
+      <div class="plate-item">
+        <div class="plate-color" style="background:#8B72C8"></div>
+        <div class="plate-pct">10%</div>
+        <div class="plate-name">Healthy Fats</div>
+        <div class="plate-examples">Avocado, olive oil, nuts, seeds</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="limit-section">
+    <div class="limit-box">
+      <div class="limit-title">Limit During 25 Days</div>
+      <ul class="limit-list">
+        <li class="limit-item">Alcohol (Non-Negotiable #8)</li>
+        <li class="limit-item">Processed and packaged snacks</li>
+        <li class="limit-item">Refined sugar (desserts, soda)</li>
+        <li class="limit-item">Fried foods</li>
+        <li class="limit-item">Excess caffeine (after 2pm)</li>
+        <li class="limit-item">Eating while distracted or scrolling</li>
+      </ul>
+    </div>
+    <div class="include-box">
+      <div class="limit-title">Prioritize Every Day</div>
+      <ul class="limit-list">
+        <li class="limit-item include-item">Water — minimum 8 glasses</li>
+        <li class="limit-item include-item">Protein with every meal</li>
+        <li class="limit-item include-item">Fiber-rich vegetables</li>
+        <li class="limit-item include-item">Whole, unprocessed foods</li>
+        <li class="limit-item include-item">A full breakfast before training</li>
+        <li class="limit-item include-item">Post-workout recovery meal</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: MEAL IDEAS + HYDRATION -->
+<div class="page">
+  <div class="section-label">Fuel Guide</div>
+  <div class="section-title">Meal Ideas</div>
+  <div class="section-intro">Simple, balanced options to keep your body fueled across the day. Adjust portions to your size and activity level.</div>
+
+  <div class="meal-section">
+    <div class="meal-time">Morning — Before or after your first cardio session</div>
+    <div class="meal-grid">
+      <div class="meal-card">
+        <div class="meal-name">Protein Oats</div>
+        <div class="meal-detail">Rolled oats + protein powder + banana + almond butter. Fiber, slow carbs, sustained energy.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Egg & Veggie Bowl</div>
+        <div class="meal-detail">3 eggs scrambled with spinach, peppers, onion. High protein, iron, vitamins.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Green Smoothie</div>
+        <div class="meal-detail">Spinach + frozen berries + banana + Greek yogurt + water. Fast, nutrient-dense.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="meal-section">
+    <div class="meal-time">Midday — Fuel your afternoon session</div>
+    <div class="meal-grid">
+      <div class="meal-card">
+        <div class="meal-name">Power Salad</div>
+        <div class="meal-detail">Mixed greens + grilled chicken + chickpeas + quinoa + olive oil dressing.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Rice & Protein Bowl</div>
+        <div class="meal-detail">Brown rice + salmon or tofu + roasted veg + avocado slices.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Lentil Soup</div>
+        <div class="meal-detail">Red lentils + tomatoes + cumin + spinach. Filling, high fiber, anti-inflammatory.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="meal-section">
+    <div class="meal-time">Evening — Recovery and repair before sleep</div>
+    <div class="meal-grid">
+      <div class="meal-card">
+        <div class="meal-name">Baked Salmon & Greens</div>
+        <div class="meal-detail">Salmon + steamed broccoli + sweet potato. Omega-3s for muscle recovery and sleep quality.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Stir-Fry</div>
+        <div class="meal-detail">Lean protein + mixed vegetables + brown rice + low-sodium soy sauce. Fast, filling, balanced.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Turkey & Veg Wrap</div>
+        <div class="meal-detail">Whole grain wrap + turkey + hummus + cucumber + tomato. Light protein before bed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="meal-section">
+    <div class="meal-time">Snacks — Between sessions when needed</div>
+    <div class="meal-grid">
+      <div class="meal-card">
+        <div class="meal-name">Apple + Nut Butter</div>
+        <div class="meal-detail">Natural sugars + healthy fat. Sustains energy without crashing.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Greek Yogurt</div>
+        <div class="meal-detail">High protein, probiotics. Add berries and seeds for extra nutrients.</div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-name">Boiled Eggs + Veg</div>
+        <div class="meal-detail">2 boiled eggs + carrot sticks + hummus. Portable, filling, protein-forward.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hydration-bar">
+    <div class="hydration-title">Hydration: 8 Glasses a Day, Minimum</div>
+    <div class="hydration-glasses">
+      <span class="glass">🥛</span><span class="glass">🥛</span><span class="glass">🥛</span><span class="glass">🥛</span>
+      <span class="glass">🥛</span><span class="glass">🥛</span><span class="glass">🥛</span><span class="glass">🥛</span>
+    </div>
+    <ul class="hydration-tips">
+      <li class="hydration-tip">Drink a full glass first thing every morning</li>
+      <li class="hydration-tip">Carry a water bottle through your sessions</li>
+      <li class="hydration-tip">Drink before, during, and after workouts</li>
+      <li class="hydration-tip">Herbal tea counts — avoid sugary drinks</li>
+      <li class="hydration-tip">If thirsty, you are already behind</li>
+      <li class="hydration-tip">Sparkling water with lime as an alcohol alternative</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PAGE 3: MINDFUL EATING + TRACKER -->
+<div class="page">
+  <div class="section-label">The Practice</div>
+  <div class="section-title">Mindful Eating in 6 Steps</div>
+  <div class="section-intro" style="margin-bottom:24px">Nutrition is not only what you eat — it is how you eat. These habits will help your body absorb more and your mind stay connected to your fuel.</div>
+
+  <div class="mindful-grid" style="margin-bottom:36px">
+    <div class="mindful-card">
+      <div class="mindful-num">01</div>
+      <div class="mindful-title">Sit Down to Eat</div>
+      <div class="mindful-text">No screens. No rushing. Eating standing or distracted breaks the mind-body connection and leads to overeating.</div>
+    </div>
+    <div class="mindful-card">
+      <div class="mindful-num">02</div>
+      <div class="mindful-title">Breathe Before You Begin</div>
+      <div class="mindful-text">One deep breath before you eat signals your nervous system to shift into rest-and-digest mode. Your body absorbs more.</div>
+    </div>
+    <div class="mindful-card">
+      <div class="mindful-num">03</div>
+      <div class="mindful-title">Chew Slowly</div>
+      <div class="mindful-text">Digestion begins in the mouth. Slowing down reduces bloating, improves absorption, and helps you recognize fullness.</div>
+    </div>
+    <div class="mindful-card">
+      <div class="mindful-num">04</div>
+      <div class="mindful-title">Stop at 80%</div>
+      <div class="mindful-text">Fullness signals arrive 15–20 minutes after you are actually full. Eat to 80% and pause. Your body will catch up.</div>
+    </div>
+    <div class="mindful-card">
+      <div class="mindful-num">05</div>
+      <div class="mindful-title">Notice How You Feel After</div>
+      <div class="mindful-text">Energized or heavy? Clear or foggy? Track what certain foods do to your performance and mood. Adjust accordingly.</div>
+    </div>
+    <div class="mindful-card">
+      <div class="mindful-num">06</div>
+      <div class="mindful-title">Plan Ahead</div>
+      <div class="mindful-text">When time is short, prepare simple balanced meals you can grab quickly. Hunger leads to poor choices. Plan to stay on track.</div>
+    </div>
+  </div>
+
+  <div class="tracker-section">
+    <div class="tracker-label">Daily Nutrition Tracker — Photocopy or fill daily</div>
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Meal</th>
+          <th>What I Ate</th>
+          <th style="width:100px">Protein?</th>
+          <th style="width:100px">Veggies?</th>
+          <th style="width:80px">Water oz</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Morning</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Snack</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Midday</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Snack</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Evening</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Total</td><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="tracker-note">How did your body feel today? Note energy levels, digestion, cravings:</div>
+    <div style="border-bottom:1px solid var(--border);height:28px;margin-top:8px"></div>
+    <div style="border-bottom:1px solid var(--border);height:28px;margin-top:8px"></div>
+  </div>
+</div>
+
+</body>
+</html>

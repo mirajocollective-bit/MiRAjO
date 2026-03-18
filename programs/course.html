@@ -582,6 +582,188 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ═══ JOURNAL INPUT ═══ */
+    .journal-section {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .journal-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .journal-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .journal-textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.75;
+      resize: vertical;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .journal-textarea:focus {
+      border-color: var(--p-light);
+      box-shadow: 0 0 0 3px rgba(139,114,200,0.1);
+    }
+    .journal-textarea::placeholder { color: rgba(122,122,154,0.45); }
+    .journal-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      min-height: 18px;
+      transition: opacity 0.3s;
+    }
+    .journal-status.saved { color: var(--success); }
+
+    /* ═══ CONTENT TABS ═══ */
+    .content-tabs-bar {
+      display: flex;
+      background: var(--soft-white);
+      border-bottom: 2px solid rgba(90,63,154,0.1);
+      position: sticky;
+      top: 60px;
+      z-index: 50;
+      padding: 0 40px;
+    }
+    .content-tab {
+      padding: 16px 24px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .content-tab:hover { color: var(--p-mid); }
+    .content-tab.active { color: var(--p-mid); border-bottom-color: var(--p-mid); }
+
+    /* Resources panel */
+    .resources-body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 40px 120px;
+    }
+    .resource-section { margin-bottom: 52px; }
+    .resource-section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--text-body);
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .resource-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .resource-card {
+      background: #fff;
+      border: 1px solid rgba(90,63,154,0.1);
+      border-radius: 12px;
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .resource-card:hover { border-color: rgba(90,63,154,0.25); box-shadow: 0 4px 20px rgba(90,63,154,0.08); }
+    .resource-icon { font-size: 26px; }
+    .resource-name { font-size: 14px; font-weight: 600; color: var(--text-body); line-height: 1.3; }
+    .resource-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; flex: 1; }
+    .resource-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: linear-gradient(135deg, var(--p-mid), var(--p-light));
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      align-self: flex-start;
+      transition: opacity 0.2s;
+    }
+    .resource-btn:hover { opacity: 0.85; }
+
+    /* 10 Non-Negotiables highlight card */
+    .nonneg-highlight {
+      background: linear-gradient(135deg, var(--p-deep), #2D1F50);
+      border-radius: 14px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(61,43,114,0.2);
+    }
+    .nonneg-highlight:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(61,43,114,0.3); }
+    .nonneg-num { font-family: 'Instrument Serif', serif; font-size: 52px; color: var(--xp-gold); line-height: 1; flex-shrink: 0; }
+    .nonneg-text { flex: 1; }
+    .nonneg-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(200,196,220,0.55); margin-bottom: 4px; }
+    .nonneg-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: #fff; line-height: 1.2; }
+    .nonneg-sub { font-size: 13px; color: rgba(200,196,220,0.65); margin-top: 6px; }
+    .nonneg-arrow { font-size: 22px; color: rgba(200,196,220,0.35); flex-shrink: 0; }
+
+    /* Non-Neg drawer list styling */
+    #nonneg-body ol {
+      padding-left: 0;
+      list-style: none;
+      counter-reset: nonneg-counter;
+    }
+    #nonneg-body ol li {
+      counter-increment: nonneg-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(139,114,200,0.1);
+      color: rgba(255,255,255,0.85);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+    #nonneg-body ol li::before {
+      content: counter(nonneg-counter);
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--xp-gold);
+      line-height: 1;
+      min-width: 28px;
+      padding-top: 3px;
+      flex-shrink: 0;
+    }
+
     /* ═══ MOBILE ═══ */
     .sidebar-toggle {
       display: none;
@@ -604,6 +786,11 @@
       .nav-course-title { display: none; }
       .lesson-footer { flex-direction: column; align-items: stretch; }
       .btn-complete, .btn-nav { width: 100%; justify-content: center; }
+      .content-tabs-bar { padding: 0 20px; }
+      .resources-body { padding: 32px 20px 100px; }
+      .resource-cards { grid-template-columns: 1fr 1fr; }
+      .nonneg-highlight { padding: 20px; gap: 16px; }
+      .nonneg-num { font-size: 40px; }
     }
   </style>
 </head>
@@ -635,6 +822,25 @@
   <div class="review-drawer-footer">
     <button class="review-btn-close" onclick="closeReviewDrawer()">← Back to Day</button>
     <button class="review-btn-go" id="review-btn-go">Go to Lesson →</button>
+  </div>
+</div>
+
+<!-- NON-NEGOTIABLES DRAWER -->
+<div class="review-overlay" id="nonneg-overlay" onclick="closeNonNeg()"></div>
+<div class="review-drawer" id="nonneg-drawer">
+  <div class="review-drawer-header">
+    <div>
+      <div class="review-drawer-label">Quick Reference</div>
+      <div class="review-drawer-title">The 10 Non-Negotiables</div>
+    </div>
+    <button class="review-drawer-close" onclick="closeNonNeg()">✕</button>
+  </div>
+  <div class="review-drawer-body" id="nonneg-body">
+    <div class="loading"><div class="loading-spinner"></div></div>
+  </div>
+  <div class="review-drawer-footer">
+    <button class="review-btn-close" onclick="closeNonNeg()">← Close</button>
+    <button class="review-btn-go" id="nonneg-btn-go">View Full Lesson →</button>
   </div>
 </div>
 
@@ -710,8 +916,63 @@
       </div>
     </div>
 
-    <div class="lesson-body" id="lesson-body">
-      <div class="loading"><div class="loading-spinner"></div></div>
+    <div class="content-tabs-bar">
+      <button class="content-tab active" id="tab-btn-lesson" onclick="switchTab('lesson')">Lesson</button>
+      <button class="content-tab" id="tab-btn-resources" onclick="switchTab('resources')">Resources</button>
+    </div>
+
+    <div id="tab-panel-lesson">
+      <div class="lesson-body" id="lesson-body">
+        <div class="loading"><div class="loading-spinner"></div></div>
+      </div>
+    </div>
+
+    <div id="tab-panel-resources" style="display:none">
+      <div class="resources-body">
+
+        <div class="resource-section">
+          <div class="nonneg-highlight" onclick="openNonNeg()">
+            <div class="nonneg-num">10</div>
+            <div class="nonneg-text">
+              <div class="nonneg-eyebrow">Quick Reference</div>
+              <div class="nonneg-title">The Non-Negotiables</div>
+              <div class="nonneg-sub">Your daily anchors for 25 days.</div>
+            </div>
+            <div class="nonneg-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="resource-section">
+          <div class="resource-section-title">Downloads</div>
+          <div class="resource-cards">
+            <div class="resource-card">
+              <div class="resource-icon">📋</div>
+              <div class="resource-name">Pocket Guide</div>
+              <div class="resource-desc">Your condensed field manual for the 25 days.</div>
+              <a href="/resources/pocket-guide" target="_blank" class="resource-btn">↓ Download</a>
+            </div>
+            <div class="resource-card">
+              <div class="resource-icon">📓</div>
+              <div class="resource-name">Journal</div>
+              <div class="resource-desc">Guided prompts and reflection pages for each day.</div>
+              <a href="/resources/journal" target="_blank" class="resource-btn">↓ Download</a>
+            </div>
+            <div class="resource-card">
+              <div class="resource-icon">🥗</div>
+              <div class="resource-name">Nutrition Guide</div>
+              <div class="resource-desc">Fueling your body to match the work.</div>
+              <a href="/resources/nutrition-guide" target="_blank" class="resource-btn">↓ Download</a>
+            </div>
+            <div class="resource-card">
+              <div class="resource-icon">🗓</div>
+              <div class="resource-name">Daily Schedule</div>
+              <div class="resource-desc">Structure your day around the program.</div>
+              <a href="/resources/daily-schedule" target="_blank" class="resource-btn">↓ Download</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </main>
 
@@ -871,6 +1132,7 @@
     const lesson = state.allLessons.find(l => l.id === lessonId);
     if (!lesson) return;
     state.currentLesson = lesson;
+    switchTab('lesson');
 
     // Update active state in sidebar
     document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
@@ -909,6 +1171,14 @@
       <div class="lesson-eyebrow">${mod?.title || ''}</div>
       <h1 class="lesson-heading">${lesson.title}</h1>
       <div class="lesson-content">${lesson.content || '<p style="color:var(--text-muted)">Content coming soon.</p>'}</div>
+      <div class="journal-section">
+        <div class="journal-label">Your Journal</div>
+        <div class="journal-desc">Write your reflections here. Your entry saves automatically and will be here when you return.</div>
+        <textarea class="journal-textarea" id="journal-textarea"
+          placeholder="What are you thinking, feeling, or noticing today?"
+          oninput="onJournalInput()"></textarea>
+        <div class="journal-status" id="journal-status"></div>
+      </div>
       <div class="lesson-footer">
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           ${prevLesson ? `<button class="btn-nav" onclick="loadLesson('${prevLesson.id}')">← Previous</button>` : ''}
@@ -919,6 +1189,9 @@
           ${isDone ? '✓ Completed' : '✦ Mark Complete'}
         </button>
       </div>`;
+
+    // Load saved journal entry for this lesson
+    loadJournalEntry(lessonId);
   }
 
   // ═══ MARK COMPLETE ═══
@@ -1167,6 +1440,95 @@
     if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
     // Already embed URL
     return url;
+  }
+
+  // ═══ JOURNAL ═══
+  let journalDebounce = null;
+  let journalLessonId = null;
+
+  async function loadJournalEntry(lessonId) {
+    journalLessonId = lessonId;
+    const textarea = document.getElementById('journal-textarea');
+    const status = document.getElementById('journal-status');
+    if (!textarea) return;
+
+    const { data } = await db
+      .from('journal_entries')
+      .select('content')
+      .eq('user_id', state.user.id)
+      .eq('lesson_id', lessonId)
+      .single();
+
+    if (data?.content) {
+      textarea.value = data.content;
+      status.textContent = '✓ Saved';
+      status.className = 'journal-status saved';
+    }
+  }
+
+  function onJournalInput() {
+    const status = document.getElementById('journal-status');
+    if (status) { status.textContent = 'Unsaved…'; status.className = 'journal-status'; }
+    clearTimeout(journalDebounce);
+    journalDebounce = setTimeout(saveJournalEntry, 1500);
+  }
+
+  async function saveJournalEntry() {
+    const textarea = document.getElementById('journal-textarea');
+    const status = document.getElementById('journal-status');
+    if (!textarea || !journalLessonId) return;
+    const content = textarea.value;
+    if (status) { status.textContent = 'Saving…'; status.className = 'journal-status'; }
+    const { error } = await db
+      .from('journal_entries')
+      .upsert(
+        { user_id: state.user.id, lesson_id: journalLessonId, content, updated_at: new Date().toISOString() },
+        { onConflict: 'user_id,lesson_id' }
+      );
+    if (status) {
+      status.textContent = error ? 'Save failed — check connection' : '✓ Saved';
+      status.className = error ? 'journal-status' : 'journal-status saved';
+    }
+  }
+
+  // ═══ CONTENT TABS ═══
+  function switchTab(tab) {
+    document.getElementById('tab-panel-lesson').style.display = tab === 'lesson' ? '' : 'none';
+    document.getElementById('tab-panel-resources').style.display = tab === 'resources' ? '' : 'none';
+    document.getElementById('tab-btn-lesson').classList.toggle('active', tab === 'lesson');
+    document.getElementById('tab-btn-resources').classList.toggle('active', tab === 'resources');
+    const vw = document.getElementById('video-wrap');
+    if (tab === 'resources') {
+      vw.style.display = 'none';
+    } else {
+      vw.style.display = state.currentLesson?.video_url ? '' : 'none';
+    }
+  }
+
+  // ═══ NON-NEGOTIABLES DRAWER ═══
+  function openNonNeg() {
+    const mod = state.modules.find(m => m.position === 2);
+    const lesson = mod ? (state.lessons[mod.id] || []).find(l => l.position === 8) : null;
+    if (lesson?.content) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(lesson.content, 'text/html');
+      let html = '';
+      doc.querySelectorAll('ol').forEach(l => { html += l.outerHTML; });
+      if (!html) doc.querySelectorAll('ul').forEach(l => { html += l.outerHTML; });
+      document.getElementById('nonneg-body').innerHTML = html || '<p style="opacity:0.6;color:#fff">Content loading...</p>';
+    } else {
+      document.getElementById('nonneg-body').innerHTML = '<p style="opacity:0.6;color:#fff">Loading...</p>';
+    }
+    document.getElementById('nonneg-btn-go').onclick = () => { closeNonNeg(); jumpToLesson(2, 8); };
+    document.getElementById('nonneg-overlay').classList.add('open');
+    document.getElementById('nonneg-drawer').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeNonNeg() {
+    document.getElementById('nonneg-overlay').classList.remove('open');
+    document.getElementById('nonneg-drawer').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   // ═══ MOBILE SIDEBAR ═══
