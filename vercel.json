@@ -52,6 +52,7 @@
     { "source": "/resources/pocket-guide",       "destination": "/resources/pocket-guide.html" },
     { "source": "/resources/journal",            "destination": "/resources/journal.html" },
     { "source": "/resources/nutrition-guide",    "destination": "/resources/nutrition-guide.html" },
-    { "source": "/resources/daily-schedule",     "destination": "/resources/daily-schedule.html" }
+    { "source": "/resources/daily-schedule",     "destination": "/resources/daily-schedule.html" },
+    { "source": "/test-checkout",                "destination": "/test-checkout.html" }
   ]
 }
