@@ -976,7 +976,7 @@
     <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
     <li><a href="https://www.mirajoco.org/events">Events</a></li>
   </ul>
-  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+  <a href="#enroll" class="nav-cta">Enroll Now</a>
   <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -989,7 +989,7 @@
     <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 25 Days &amp; 25 Nights</a>
     <a href="https://www.mirajoco.org/blog">Writing</a>
     <a href="https://www.mirajoco.org/events">Events</a>
-    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    <a href="#enroll" class="nav-cta">Enroll Now</a>
   </div>
 </nav>
 
@@ -1016,7 +1016,7 @@
     </span>
     Watch Miranda explain it — 1 min
   </button>
-  <a href="#waitlist" class="btn-primary" data-aos="fade-up" data-aos-delay="350">That's good enough — Let's Go!</a>
+  <a href="#enroll" class="btn-primary" data-aos="fade-up" data-aos-delay="350">That's good enough — Let's Go!</a>
 </section>
 
 <!-- ═══ STATS BAR ═══ -->
@@ -1063,7 +1063,7 @@
       <span class="video-thumb-label">Watch Miranda explain it — 1 min</span>
     </div>
   </div>
-  <a href="#waitlist" class="btn-primary">Sign me up, Now!</a>
+  <a href="#enroll" class="btn-primary">Sign me up, Now!</a>
 </section>
 
 <!-- ═══ THIS IS FOR YOU ═══ -->
@@ -1098,7 +1098,7 @@
       </div>
     </div>
     <div style="margin-top:48px;">
-      <a href="#waitlist" class="btn-primary">That's me — I'm in</a>
+      <a href="#enroll" class="btn-primary">That's me — I'm in</a>
     </div>
   </div>
 </section>
@@ -1141,7 +1141,7 @@
           <li>Energy that lasts instead of crashing mid-afternoon</li>
           <li>Sleep that feels earned and actually restores you</li>
         </ul>
-        <a href="#waitlist" class="pillar-btn">I'm in</a>
+        <a href="#enroll" class="pillar-btn">I'm in</a>
       </div>
 
       <!-- Nutrition -->
@@ -1158,7 +1158,7 @@
           <li>Structure that supports you without shame</li>
         </ul>
         <p style="font-size:14px;color:rgba(237,232,223,0.55);margin-bottom:24px;line-height:1.7">Feed it like you plan to win.</p>
-        <a href="#waitlist" class="pillar-btn">I'm in</a>
+        <a href="#enroll" class="pillar-btn">I'm in</a>
       </div>
 
       <!-- Silence & Purpose -->
@@ -1175,7 +1175,7 @@
           <li>Morning and evening rituals that anchor you</li>
           <li>A commitment to your purpose — written, spoken, lived</li>
         </ul>
-        <a href="#waitlist" class="pillar-btn">I'm ready</a>
+        <a href="#enroll" class="pillar-btn">I'm ready</a>
       </div>
 
     </div>
@@ -1347,19 +1347,17 @@
   </div>
 </section>
 
-<!-- ═══ WAITLIST ═══ -->
-<section class="waitlist-section" id="waitlist">
+<!-- ═══ ENROLL ═══ -->
+<section class="waitlist-section" id="enroll">
   <div class="waitlist-inner">
     <div class="section-eyebrow" style="color:var(--gold)">You've Read This Far</div>
-    <h2 class="section-title" style="color:var(--warm-parchment)">That means something.<br>Don't walk away from it.</h2>
-    <p class="waitlist-sub">Be the first to know when enrollment opens. Put your name on the list. That's the first step — take it.</p>
-    <form class="waitlist-form" id="waitlist-form">
-      <input type="text" name="first_name" placeholder="First name" class="waitlist-input">
-      <input type="email" name="email" placeholder="Your email address" class="waitlist-input" required>
-      <button type="submit" class="waitlist-btn">I'm Ready — Notify Me</button>
-    </form>
-    <p class="waitlist-msg" id="waitlist-msg"></p>
-    <p style="font-size:12px;color:rgba(200,196,220,0.4);margin-top:20px;">No spam. No pressure. Just the signal when doors open.</p>
+    <h2 class="section-title" style="color:var(--warm-parchment)">That means something.<br>Doors are open. Step through.</h2>
+    <p class="waitlist-sub">25 days. 25 nights. One decision. The work is ready — and so are you.</p>
+    <div style="margin:32px 0 16px;">
+      <button class="waitlist-btn" id="enroll-btn" onclick="startCheckout()">Enroll Now — $497</button>
+    </div>
+    <p class="waitlist-msg" id="enroll-msg"></p>
+    <p style="font-size:12px;color:rgba(200,196,220,0.4);margin-top:20px;">Secure checkout. Instant access. 25 days starts when you're ready.</p>
   </div>
 </section>
 
@@ -1487,5 +1485,34 @@
 <script src="/nav-login-dropdown.js"></script>
 <script src="/cookie-consent.js"></script>
 <script src="/js/social-bar.js"></script>
+<script>
+  async function startCheckout() {
+    const btn = document.getElementById('enroll-btn');
+    const msg = document.getElementById('enroll-msg');
+    btn.textContent = 'Redirecting to checkout...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        msg.textContent = 'Something went wrong. Please try again.';
+        msg.style.color = '#E88080';
+        btn.textContent = 'Enroll Now — $497';
+        btn.disabled = false;
+      }
+    } catch {
+      msg.textContent = 'Something went wrong. Please try again.';
+      msg.style.color = '#E88080';
+      btn.textContent = 'Enroll Now — $497';
+      btn.disabled = false;
+    }
+  }
+</script>
 </body>
 </html>

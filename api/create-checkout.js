@@ -7,16 +7,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ error: 'Email is required' });
-  }
+  const { email } = req.body || {};
 
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      customer_email: email,
+      ...(email ? { customer_email: email } : {}),
       billing_address_collection: 'required',
       phone_number_collection: { enabled: true },
       line_items: [
