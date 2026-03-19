@@ -1392,8 +1392,8 @@
       ? 'Write your full response here...'
       : 'What are you thinking, feeling, or noticing?';
 
-    // Complete button gated for incomplete Day lessons
-    const gated = isDayLesson && !isDone;
+    // No gate — Mark Complete always available
+    const gated = false;
 
     // Render body
     document.getElementById('lesson-body').innerHTML = `
