@@ -518,7 +518,8 @@
       return;
     }
 
-    document.getElementById('user-email').textContent = session.user.email;
+    const firstName = session.user.user_metadata?.first_name;
+    document.getElementById('user-email').textContent = firstName || session.user.email;
 
     document.getElementById('logout-btn').addEventListener('click', async () => {
       await db.auth.signOut();
