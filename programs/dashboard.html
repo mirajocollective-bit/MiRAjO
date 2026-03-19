@@ -512,11 +512,15 @@
   );
 
   async function init() {
-    const { data: { session } } = await db.auth.getSession();
+    let { data: { session } } = await db.auth.getSession();
     if (!session) {
       window.location.href = '/programs/login';
       return;
     }
+
+    // Refresh to pick up latest user metadata
+    const { data: refreshed } = await db.auth.refreshSession();
+    if (refreshed?.session) session = refreshed.session;
 
     const firstName = session.user.user_metadata?.first_name;
     document.getElementById('user-email').textContent = firstName || session.user.email;
