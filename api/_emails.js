@@ -3,18 +3,21 @@
 
 const LOGIN = 'https://www.mirajoco.org/programs/login';
 const CERT  = 'https://www.mirajoco.org/programs/certificate';
+const LOGO  = 'https://www.mirajoco.org/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png';
 
 function wrap(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#ffffff;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-<tr><td align="center" style="padding:40px 20px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
-<tr><td>
-<p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9DC4A8;margin:0 0 40px;font-family:sans-serif;">MiRAjO</p>
+<body style="margin:0;padding:0;background:#F9F6F0;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F9F6F0;">
+<tr><td align="center" style="padding:48px 20px 40px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 24px rgba(18,32,18,0.07);">
+<tr><td style="padding:40px 48px 0;text-align:left;">
+<img src="${LOGO}" alt="MiRAjO" width="160" style="display:block;width:160px;height:auto;margin-bottom:36px;" />
+</td></tr>
+<tr><td style="padding:0 48px 48px;">
 ${content}
-<p style="margin:40px 0 4px;font-size:17px;color:#122012;font-family:Georgia,serif;font-style:italic;">Miranda J</p>
-<p style="margin:0 0 40px;font-size:12px;color:#888;font-family:sans-serif;">MiRAjO Collective &nbsp;|&nbsp; <a href="https://www.mirajoco.org" style="color:#888;text-decoration:none;">mirajoco.org</a></p>
+<p style="margin:36px 0 4px;font-size:17px;color:#122012;font-family:Georgia,serif;font-style:italic;">Miranda J</p>
+<p style="margin:0 0 0;font-size:12px;color:#999;font-family:sans-serif;">MiRAjO Collective &nbsp;|&nbsp; <a href="https://www.mirajoco.org" style="color:#999;text-decoration:none;">mirajoco.org</a></p>
 </td></tr>
 </table>
 </td></tr>
@@ -39,14 +42,24 @@ export const SEQUENCES = {
   'enrolled-25d25n': [
     {
       step: 1, delayDays: 0,
-      subject: "You're in. Here's what happens next.",
+      subject: "You're in. Welcome to the work.",
       body: (n) => wrap(
         greet(n) +
-        p(`You made a decision. That already puts you ahead of most people.`) +
-        p(`Your 25 Days &amp; 25 Nights course is ready.`) +
+        p(`Something happened the moment you hit purchase. You said yes to yourself — and that's not nothing. In a world where it's become genuinely easier to scroll for two hours than to sit with one honest question, making that decision is actually kind of remarkable.`) +
+        p(`So, welcome. Let's get into it.`) +
+        p(`<strong style="color:#122012;">What you've got waiting for you:</strong><br>25 Days &amp; 25 Nights is structured simply. Each day: a lesson, a journal prompt, and your 10 Non-Negotiables. The nights are yours to reflect. Repeat for 25 days. The work is not complicated — it just asks you to actually do it. (I know. Revolutionary.)`) +
+        p(`Inside you'll find video, written content, and the kind of questions that have a way of following you around long after you close the tab. That's a feature, not a bug.`) +
+        p(`<strong style="color:#122012;">How to get in:</strong><br>We don't use passwords here — passwords are overrated and nobody remembers them anyway. We use magic links instead. Here's how it works:`) +
+        `<table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px;"><tr><td style="padding:0;">` +
+        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">1. Click the button below — it takes you to the login page.</p>` +
+        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">2. Enter the email address you used to purchase.</p>` +
+        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">3. Check your inbox for an email from Miranda J — click that link.</p>` +
+        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 0;font-family:Georgia,serif;">4. You're in your dashboard. That's it.</p>` +
+        `</td></tr></table>` +
         btn('Start Day 1', LOGIN) +
-        p(`Each day has a lesson, a journal prompt, and your 10 Non-Negotiables to track. The work is not optional. That's the whole point.`) +
-        p(`Day 1 is waiting. Start today.`)
+        p(`<strong style="color:#122012;">One thing to know:</strong> Magic links are single-use and expire quickly, so keep this email open when you click through. Once you're logged in, your session stays active — so as long as you don't clear your browser, you won't need to log in again for a good while.`) +
+        p(`The only question worth asking today is: <em>what am I actually here for?</em>`) +
+        p(`Day 1 has the beginning of that answer. Go find it.`)
       ),
     },
     {

@@ -70,6 +70,55 @@
       text-decoration: none;
     }
     .confirm-link:hover { text-decoration: underline; }
+    .resend-form {
+      display: none;
+      margin-top: 28px;
+      text-align: left;
+    }
+    .resend-note {
+      font-size: 13px;
+      color: var(--text-muted-dark);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .resend-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(242,235,217,0.06);
+      border: 1px solid rgba(109,196,138,0.2);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--warm-parchment);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+    .resend-input:focus { border-color: var(--new-growth); }
+    .resend-input::placeholder { color: rgba(143,170,138,0.4); }
+    .resend-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--new-growth);
+      color: var(--deep-forest);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .resend-btn:hover { opacity: 0.88; }
+    .resend-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .resend-success {
+      display: none;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--new-growth);
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -80,7 +129,15 @@
   <h1 class="confirm-title" id="confirm-title">Signing you in...</h1>
   <p class="confirm-sub" id="confirm-sub">Just a moment while we verify your link.</p>
   <p class="confirm-error" id="confirm-error"></p>
-  <a href="/programs/login" class="confirm-link" id="confirm-link" style="display:none">← Try logging in again</a>
+
+  <div class="resend-form" id="resend-form">
+    <p class="resend-note">No stress — links expire after a short while. Enter your email below and we'll send a fresh one right now.</p>
+    <input type="email" class="resend-input" id="resend-email" placeholder="Your email address" />
+    <button class="resend-btn" id="resend-btn" onclick="resendLink()">Send a New Link</button>
+    <p class="resend-success" id="resend-success">Done — check your inbox. The link is on its way.</p>
+  </div>
+
+  <a href="/programs/login" class="confirm-link" id="confirm-link" style="display:none">← Back to login</a>
 </div>
 
 <script src="/api/config"></script>
@@ -144,11 +201,42 @@
 
   function showError(msg) {
     document.getElementById('spinner').style.display = 'none';
-    document.getElementById('confirm-title').textContent = 'Link expired';
-    document.getElementById('confirm-sub').textContent = '';
-    document.getElementById('confirm-error').textContent = msg;
-    document.getElementById('confirm-error').style.display = 'block';
+    document.getElementById('confirm-title').textContent = 'That link has expired';
+    document.getElementById('confirm-sub').textContent = "These links are single-use and don't last long — totally normal. Let's get you a new one.";
+    document.getElementById('confirm-error').textContent = '';
+    document.getElementById('confirm-error').style.display = 'none';
+    document.getElementById('resend-form').style.display = 'block';
     document.getElementById('confirm-link').style.display = 'inline-block';
+  }
+
+  async function resendLink() {
+    const emailInput = document.getElementById('resend-email');
+    const btn = document.getElementById('resend-btn');
+    const success = document.getElementById('resend-success');
+    const email = emailInput.value.trim();
+    if (!email) { emailInput.focus(); return; }
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('/api/auth-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (res.ok) {
+        emailInput.style.display = 'none';
+        btn.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        btn.textContent = 'Try Again';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Try Again';
+      btn.disabled = false;
+    }
   }
 
   handleConfirm().catch(err => {
