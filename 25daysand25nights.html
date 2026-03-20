@@ -1477,13 +1477,13 @@
       if (data.url) {
         window.location.href = data.url;
       } else {
-        msg.textContent = 'Something went wrong. Please try again.';
+        msg.textContent = `Error: ${data.error || 'No URL returned'} (status ${res.status})`;
         msg.style.color = '#E88080';
         btn.textContent = 'Enroll Now — $597';
         btn.disabled = false;
       }
-    } catch {
-      msg.textContent = 'Something went wrong. Please try again.';
+    } catch (err) {
+      msg.textContent = `Error: ${err.message}`;
       msg.style.color = '#E88080';
       btn.textContent = 'Enroll Now — $597';
       btn.disabled = false;
