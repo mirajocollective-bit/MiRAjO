@@ -1392,8 +1392,8 @@
       ? 'Write your full response here...'
       : 'What are you thinking, feeling, or noticing?';
 
-    // No gate — Mark Complete always available
-    const gated = false;
+    // Gate for day lessons: journal entry OR at least one Non-Negotiable checked
+    const gated = isDayLesson && !isDone;
 
     // Render body
     document.getElementById('lesson-body').innerHTML = `
@@ -1808,11 +1808,13 @@
     if (!btn || !btn.dataset.gated) return;
     const textarea = document.getElementById('journal-textarea');
     const hint = document.getElementById('gate-hint');
-    const hasContent = textarea && textarea.value.trim().length >= 50;
-    btn.disabled = !hasContent;
+    const hasJournal = textarea && textarea.value.trim().length > 0;
+    const hasNonNeg = nonnegState && nonnegState.length > 0;
+    const ready = hasJournal || hasNonNeg;
+    btn.disabled = !ready;
     if (hint) {
-      hint.textContent = hasContent ? '✓ Ready to mark complete' : 'Write at least a few words to unlock completion';
-      hint.className = hasContent ? 'complete-gate-hint ready' : 'complete-gate-hint';
+      hint.textContent = ready ? '✓ Ready to mark complete' : 'Write something or check off a Non-Negotiable to unlock completion';
+      hint.className = ready ? 'complete-gate-hint ready' : 'complete-gate-hint';
     }
   }
 
@@ -1887,6 +1889,7 @@
     }
     applyNonNegCheck(idx, !isChecked);
     updateNonNegCounter();
+    checkCompleteGate();
 
     await db.from('nonneg_completions').upsert(
       { user_id: state.user.id, lesson_id: journalLessonId, completed_items: nonnegState, updated_at: new Date().toISOString() },
