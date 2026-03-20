@@ -976,7 +976,7 @@
     <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
     <li><a href="https://www.mirajoco.org/events">Events</a></li>
   </ul>
-  <a href="#enroll" class="nav-cta">Enroll Now</a>
+  <button class="nav-cta" onclick="startCheckout()">Enroll Now</button>
   <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -989,7 +989,7 @@
     <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 25 Days &amp; 25 Nights</a>
     <a href="https://www.mirajoco.org/blog">Writing</a>
     <a href="https://www.mirajoco.org/events">Events</a>
-    <a href="#enroll" class="nav-cta">Enroll Now</a>
+    <button class="nav-cta" onclick="startCheckout()">Enroll Now</button>
   </div>
 </nav>
 
@@ -1462,6 +1462,12 @@
 <script src="/cookie-consent.js"></script>
 <script src="/js/social-bar.js"></script>
 <script>
+  // Reset button if user navigates back
+  window.addEventListener('pageshow', function() {
+    const btn = document.getElementById('enroll-btn');
+    if (btn) { btn.textContent = 'Enroll Now — $597'; btn.disabled = false; }
+  });
+
   async function startCheckout() {
     const btn = document.getElementById('enroll-btn');
     const msg = document.getElementById('enroll-msg');
