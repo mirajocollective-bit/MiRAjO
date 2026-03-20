@@ -620,12 +620,16 @@
         .in('lesson_id', lessonIds)
         .order('completed_at', { ascending: false });
 
-      if (completedProgress && completedProgress.length > 0) {
-        xpEarned = completedProgress.length * 50;
-        completionDate = new Date(completedProgress[0].completed_at).toLocaleDateString('en-US', {
-          year: 'numeric', month: 'long', day: 'numeric'
-        });
+      // Gate: must have completed all lessons
+      if (!completedProgress || completedProgress.length < lessonIds.length) {
+        window.location.href = '/programs/dashboard';
+        return;
       }
+
+      xpEarned = completedProgress.length * 50;
+      completionDate = new Date(completedProgress[0].completed_at).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
     }
 
     document.getElementById('cert-name').textContent = displayName;
