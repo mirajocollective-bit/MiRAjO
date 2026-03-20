@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       phone_number_collection: { enabled: true },
       line_items: [
         {
-          price: 'price_1T9cHGGUBsX8ruvFASRYGY3F',
+          price: 'price_1TCtXJGUBsX8ruvFuVwKGXwD',
           quantity: 1,
         },
       ],
