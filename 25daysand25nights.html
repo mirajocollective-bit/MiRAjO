@@ -1445,39 +1445,6 @@
   const statsBar = document.querySelector('.stats-bar');
   if (statsBar) statsObserver.observe(statsBar);
 
-  // Waitlist form
-  document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = this.querySelector('.waitlist-btn');
-    const msg = document.getElementById('waitlist-msg');
-    const email = this.email.value;
-    const first_name = this.first_name.value;
-    btn.textContent = 'Submitting...';
-    btn.disabled = true;
-    try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, first_name })
-      });
-      if (res.ok) {
-        msg.textContent = "You're on the list. We'll be in touch.";
-        msg.style.color = '#A8C5A0';
-        this.reset();
-        btn.textContent = 'You\'re In';
-      } else {
-        msg.textContent = "Something went wrong. Please try again.";
-        msg.style.color = '#E88080';
-        btn.textContent = 'Notify Me';
-        btn.disabled = false;
-      }
-    } catch {
-      msg.textContent = "Something went wrong. Please try again.";
-      msg.style.color = '#E88080';
-      btn.textContent = 'Notify Me';
-      btn.disabled = false;
-    }
-  });
 
   // FAQ accordion
   document.querySelectorAll('.faq-question').forEach(btn => {
