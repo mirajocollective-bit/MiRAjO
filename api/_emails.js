@@ -122,6 +122,116 @@ export const SEQUENCES = {
     },
   ],
 
+  // ── COUPLES IN ENTREPRENEURSHIP ──────────────────────────────
+
+  'enrolled-couples-cie': [
+    {
+      step: 1, delayDays: 0,
+      subject: "You're in. Now let's get your partner in too.",
+      body: (n, d) => wrap(
+        greet(n) +
+        p(`You just made a decision most couples never make. You said: we are going to look at this honestly, together. That takes courage and it takes love.`) +
+        p(`Here is what happens next.`) +
+        p(`<strong style="color:#122012;">Step 1: Log in and get your bearings.</strong><br>Use the button below to access your dashboard. You will find The Partnership Diagnostic waiting for you. Complete your side privately. Your partner will not see your answers.`) +
+        p(`<strong style="color:#122012;">Step 2: Invite your partner.</strong><br>After you log in, you will be prompted to enter your partner's email. They will receive their own invite and complete the diagnostic separately.`) +
+        p(`<strong style="color:#122012;">Step 3: See your Partnership Report together.</strong><br>Once both of you have finished, your report generates automatically. That is where the real work begins.`) +
+        btn('Log In and Get Started', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-confirm`) +
+        p(`If you have any questions at all, reply to this email. I read every one.`)
+      ),
+    },
+    {
+      step: 2, delayDays: 2,
+      subject: "Your partner hasn't joined yet.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`You enrolled two days ago and your partner has not joined yet. That is okay. But the course cannot begin until both of you are in.`) +
+        p(`If you have not sent the invite, log in now and enter their email. It takes less than a minute.`) +
+        p(`If you already sent it, it might be worth a gentle nudge their way.`) +
+        btn('Log In to Invite Your Partner', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-confirm`)
+      ),
+    },
+    {
+      step: 3, delayDays: 5,
+      subject: "Still waiting on your partner.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Five days in and your partner has not yet accepted their invite. The course is ready. The work is ready. The only thing missing is the two of you inside it together.`) +
+        p(`Sometimes one partner moves faster than the other. That is not a problem. It is information. Talk to them about why you signed up and what you are hoping this does for you both.`) +
+        p(`When they are ready, their invite link is still active. Log in to resend it if needed.`) +
+        btn('Log In', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/login`)
+      ),
+    },
+  ],
+
+  'invited-couples-cie': [
+    {
+      step: 1, delayDays: 0,
+      subject: (d) => `${d?.partner_name || 'Your partner'} invited you to something important.`,
+      body: (n, d) => wrap(
+        greet(n) +
+        p(`${d?.partner_name || 'Your partner'} just enrolled in Couples in Entrepreneurship and they want you in it with them.`) +
+        p(`That is not a small thing. They did not just buy a course. They said: I want us to be better at this together. Together being the operative word.`) +
+        p(`Here is what the course is:`) +
+        p(`You each complete The Partnership Diagnostic privately. No shared answers, no pressure. Then the system generates your Partnership Report which shows you exactly where you are aligned and where you are not across four areas: Money, Business, Family, and Relationship.`) +
+        p(`From there, a joint course path opens up built specifically around your gaps. Not a generic program. Yours.`) +
+        p(`It is not therapy. It is infrastructure for couples who are building something serious.`) +
+        btn('Accept Your Invite', d?.invite_url || `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-join`) +
+        p(`If you have questions before you jump in, reply here. I am happy to talk through what this looks like for you both.`)
+      ),
+    },
+    {
+      step: 2, delayDays: 2,
+      subject: "A quick reminder from your partner.",
+      body: (n, d) => wrap(
+        greet(n) +
+        p(`${d?.partner_name || 'Your partner'} is waiting on the other side of this.`) +
+        p(`They enrolled in Couples in Entrepreneurship and invited you two days ago. The course cannot generate your Partnership Report until both of you are in.`) +
+        p(`It takes less than five minutes to set up your account and get started on your side of the diagnostic. Everything else moves at your pace.`) +
+        btn('Join Now', d?.invite_url || `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-join`)
+      ),
+    },
+  ],
+
+  'report-ready-cie': [
+    {
+      step: 1, delayDays: 0,
+      subject: "Your Partnership Report is ready.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Both of you have completed The Partnership Diagnostic. Your Partnership Report is ready.`) +
+        p(`This is the moment. Find time to open it together, not separately. What you are about to see is where you align, where you do not, and what the course is going to help you build between those two things.`) +
+        p(`Do not read it and then summarize it to each other later. Sit down together. Open it together. That is the beginning of the work.`) +
+        btn('View Your Partnership Report', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-dashboard`)
+      ),
+    },
+  ],
+
+  'couples-cie-complete': [
+    {
+      step: 1, delayDays: 0,
+      subject: "You built something together.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`You finished. Both of you.`) +
+        p(`That matters more than it sounds. Most couples who feel the friction of building a business together never look at it directly. They manage around it, they avoid the hard conversations, they hope the business gets easier before the relationship gets harder.`) +
+        p(`You did the opposite. You looked at it. You named it. You worked through it together.`) +
+        p(`That does not mean every tension is resolved. But you now have a shared language for it, a framework to return to, and proof that you can do hard things as a team.`) +
+        p(`If you want to go deeper, one-on-one coaching with me is the next step. It is not for everyone. But if you are serious about what you are building and who you are building it with, it might be for you.`) +
+        btn('Learn About Coaching', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/coaching`)
+      ),
+    },
+    {
+      step: 2, delayDays: 4,
+      subject: "Four days out. What changed?",
+      body: (n) => wrap(
+        greet(n) +
+        p(`It has been four days since you finished the course. I want to ask you something honest.`) +
+        p(`What is actually different? Not what you planned to change. Not what you talked about changing. What has genuinely shifted in how you and your partner are showing up for each other and for the business?`) +
+        p(`Reply to this email and tell me one thing. I read every reply.`)
+      ),
+    },
+  ],
+
   'course-25d25n-complete': [
     {
       step: 1, delayDays: 0,
@@ -151,7 +261,7 @@ export const SEQUENCES = {
 };
 
 // Insert a full sequence into the email_queue for a subscriber
-export async function queueSequence(supabase, email, sequenceName, firstName = '') {
+export async function queueSequence(supabase, email, sequenceName, firstName = '', extraData = {}) {
   const steps = SEQUENCES[sequenceName];
   if (!steps) { console.error(`[email-queue] Unknown sequence: ${sequenceName}`); return; }
 
@@ -159,7 +269,7 @@ export async function queueSequence(supabase, email, sequenceName, firstName = '
   const rows = steps.map(({ step, delayDays }) => {
     const sendAfter = new Date(now);
     sendAfter.setDate(sendAfter.getDate() + delayDays);
-    return { email, first_name: firstName, sequence: sequenceName, step, send_after: sendAfter.toISOString() };
+    return { email, first_name: firstName, sequence: sequenceName, step, send_after: sendAfter.toISOString(), extra_data: extraData };
   });
 
   const { error } = await supabase

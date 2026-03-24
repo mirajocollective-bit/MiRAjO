@@ -4,6 +4,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { addTag } from './_kit.js';
+import { queueSequence } from './_emails.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -50,15 +51,21 @@ export default async function handler(req, res) {
 
   const inviteUrl = `${process.env.SITE_URL}/programs/couples-join?token=${invite.token}`;
 
-  // Tag partner B in Kit — triggers their invite email sequence
-  await addTag(partner_b_email.toLowerCase().trim(), 'invited-couples-cie', {
+  const partnerBEmail = partner_b_email.toLowerCase().trim();
+  const partnerName = partner_a_first_name || 'Your partner';
+
+  // Tag partner B in Kit
+  await addTag(partnerBEmail, 'invited-couples-cie', {
     first_name: '',
-    fields: {
-      partner_name: partner_a_first_name || 'Your partner',
-      invite_url: inviteUrl,
-    },
+    fields: { partner_name: partnerName, invite_url: inviteUrl },
   });
 
-  console.log(`Invite sent to ${partner_b_email} for couple ${couple.id}`);
+  // Queue invite email sequence for Partner B
+  await queueSequence(supabase, partnerBEmail, 'invited-couples-cie', '', {
+    partner_name: partnerName,
+    invite_url: inviteUrl,
+  });
+
+  console.log(`Invite sent to ${partnerBEmail} for couple ${couple.id}`);
   res.status(200).json({ success: true });
 }

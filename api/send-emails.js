@@ -51,7 +51,9 @@ export default async function handler(req, res) {
       const step = steps?.find(s => s.step === item.step);
       if (!step) continue;
 
-      const ok = await sendEmail(item.email, step.subject, step.body(item.first_name || ''));
+      const extraData = item.extra_data || {};
+      const subject = typeof step.subject === 'function' ? step.subject(extraData) : step.subject;
+      const ok = await sendEmail(item.email, subject, step.body(item.first_name || '', extraData));
       if (ok) {
         await supabase
           .from('email_queue')

@@ -116,6 +116,9 @@ export default async function handler(req, res) {
         fields: { last_name: lastName, phone, city, country },
       });
 
+      // Queue welcome email sequence for Partner A
+      await queueSequence(supabase, email, 'enrolled-couples-cie', firstName);
+
       console.log(`Couples enrollment: Partner A (${email}) enrolled, couple record created`);
     } else {
       // 25D25N flow
