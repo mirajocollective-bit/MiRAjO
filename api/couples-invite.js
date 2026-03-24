@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to create invite' });
   }
 
-  const inviteUrl = `${process.env.SITE_URL}/programs/couples-join?token=${invite.token}`;
+  const inviteUrl = `${process.env.SITE_URL}/programs/couples-join?token=${invite.token}&from=${encodeURIComponent(partner_a_first_name || '')}`;
 
   const partnerBEmail = partner_b_email.toLowerCase().trim();
   const partnerName = partner_a_first_name || 'Your partner';

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You've Been Invited — Couples in Entrepreneurship | MiRAjO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cie-dark:  #0F1729;
+      --cie-mid:   #1C2B4A;
+      --cie-gold:  #C4A245;
+      --cie-cream: #F5EDD8;
+      --cie-muted: #8A9BB8;
+      --cie-border: rgba(196,162,69,0.2);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--cie-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+    .logo {
+      height: 56px;
+      width: auto;
+      margin: 0 auto 44px;
+      display: block;
+    }
+
+    .state { display: none; }
+    .state.active { display: block; }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(196,162,69,0.15);
+      border-top-color: var(--cie-gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 32px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 34px;
+      font-weight: 400;
+      color: var(--cie-cream);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    h1 em { font-style: italic; color: var(--cie-gold); }
+    .sub {
+      font-size: 15px;
+      color: var(--cie-muted);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .invite-from {
+      display: inline-block;
+      background: rgba(196,162,69,0.1);
+      border: 1px solid var(--cie-border);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      color: var(--cie-cream);
+      margin-bottom: 32px;
+    }
+    .invite-from span { color: var(--cie-gold); font-weight: 600; }
+
+    .course-card {
+      background: rgba(245,237,216,0.04);
+      border: 1px solid var(--cie-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .course-card-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .course-card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--cie-cream);
+      margin-bottom: 8px;
+    }
+    .course-card p {
+      font-size: 13.5px;
+      color: var(--cie-muted);
+      line-height: 1.65;
+    }
+
+    .form-group { text-align: left; margin-bottom: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cie-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 15px 18px;
+      background: rgba(245,237,216,0.05);
+      border: 1px solid rgba(196,162,69,0.2);
+      border-radius: 8px;
+      font-size: 15px;
+      color: var(--cie-cream);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: var(--cie-gold); }
+    input::placeholder { color: rgba(138,155,184,0.4); }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--cie-gold);
+      color: var(--cie-dark);
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s;
+      margin-top: 8px;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .msg-error {
+      display: none;
+      margin-top: 16px;
+      font-size: 13.5px;
+      color: #E08080;
+      line-height: 1.65;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(196,162,69,0.1);
+      margin: 28px 0;
+    }
+
+    /* Success ring */
+    .success-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(196,162,69,0.1);
+      border: 2px solid var(--cie-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+    .success-ring svg { width: 32px; height: 32px; stroke: var(--cie-gold); fill: none; stroke-width: 2; }
+
+    /* Error ring */
+    .error-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(224,128,128,0.1);
+      border: 2px solid rgba(224,128,128,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+    .error-ring svg { width: 32px; height: 32px; stroke: #E08080; fill: none; stroke-width: 2; }
+
+    .help-link {
+      font-size: 13px;
+      color: var(--cie-muted);
+      text-decoration: none;
+    }
+    .help-link:hover { color: var(--cie-cream); }
+    .privacy-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: rgba(138,155,184,0.5);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <img src="/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png" alt="MiRAjO" class="logo">
+
+  <!-- STATE: Loading -->
+  <div class="state active" id="state-loading">
+    <div class="spinner"></div>
+    <h1>Just a moment...</h1>
+    <p class="sub">Validating your invite.</p>
+  </div>
+
+  <!-- STATE: Join form -->
+  <div class="state" id="state-join">
+    <h1>You've been<br><em>invited.</em></h1>
+    <p class="sub" id="invite-sub">Your partner has invited you to join them in Couples in Entrepreneurship.</p>
+
+    <div class="invite-from" id="invite-from" style="display:none">
+      Invited by <span id="partner-name"></span>
+    </div>
+
+    <div class="course-card">
+      <p class="course-card-label">You're joining</p>
+      <h3>Couples in Entrepreneurship</h3>
+      <p>Take The Partnership Diagnostic privately, reveal your alignment report together, and work through a course built around your real gaps.</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group" style="margin-bottom:0">
+        <label>First name</label>
+        <input type="text" id="first-name" placeholder="First">
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label>Last name</label>
+        <input type="text" id="last-name" placeholder="Last">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Your email</label>
+      <input type="email" id="join-email" placeholder="you@email.com" readonly>
+    </div>
+
+    <button class="btn" id="join-btn" onclick="acceptInvite()">Create My Account</button>
+    <p class="msg-error" id="join-error"></p>
+    <p class="privacy-note">Your diagnostic answers are private. Your partner will not see your individual responses.</p>
+  </div>
+
+  <!-- STATE: Success -->
+  <div class="state" id="state-success">
+    <div class="success-ring">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h1>You're in.</h1>
+    <p class="sub">Your account is set up. Check your email for a login link from Miranda J. Click it and you will land straight in your dashboard.</p>
+    <p class="sub" style="margin-bottom:0;">Once both of you complete The Partnership Diagnostic, your Partnership Report generates automatically.</p>
+    <hr class="divider">
+    <a href="mailto:programs@mirajoco.org" class="help-link">Questions? programs@mirajoco.org</a>
+  </div>
+
+  <!-- STATE: Invalid or expired -->
+  <div class="state" id="state-error">
+    <div class="error-ring">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+    <h1>This link has<br>expired.</h1>
+    <p class="sub">Invite links are valid for 7 days. Ask your partner to log in and resend the invite, or email us and we will sort it out.</p>
+    <hr class="divider">
+    <a href="mailto:programs@mirajoco.org" class="help-link">programs@mirajoco.org</a>
+  </div>
+
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  const fromName = params.get('from') || '';
+
+  function show(id) {
+    document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  async function init() {
+    if (!token) { show('state-error'); return; }
+
+    // Pre-fill partner name if passed in URL
+    if (fromName) {
+      document.getElementById('partner-name').textContent = fromName;
+      document.getElementById('invite-from').style.display = 'inline-block';
+      document.getElementById('invite-sub').textContent = `${fromName} has invited you to join them in Couples in Entrepreneurship.`;
+    }
+
+    // We will validate the token on submit — show the form now
+    // Pre-fill email from token lookup would require a server call;
+    // instead let the user confirm their email on the form
+    document.getElementById('join-email').removeAttribute('readonly');
+    show('state-join');
+  }
+
+  async function acceptInvite() {
+    const firstName = document.getElementById('first-name').value.trim();
+    const lastName  = document.getElementById('last-name').value.trim();
+    const email     = document.getElementById('join-email').value.trim();
+    const btn       = document.getElementById('join-btn');
+    const errorEl   = document.getElementById('join-error');
+
+    if (!firstName) { document.getElementById('first-name').focus(); return; }
+    if (!email)     { document.getElementById('join-email').focus(); return; }
+
+    btn.textContent = 'Creating your account...';
+    btn.disabled = true;
+    errorEl.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/couples-accept-invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, first_name: firstName, last_name: lastName }),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 404) { show('state-error'); return; }
+      if (res.status === 400 && data.error?.includes('expired')) { show('state-error'); return; }
+
+      if (res.ok) {
+        // If we got a direct login URL, redirect straight in
+        if (data.login_url) {
+          window.location.href = data.login_url;
+        } else {
+          show('state-success');
+        }
+      } else {
+        errorEl.textContent = data.error || 'Something went wrong. Email programs@mirajoco.org.';
+        errorEl.style.display = 'block';
+        btn.textContent = 'Create My Account';
+        btn.disabled = false;
+      }
+    } catch {
+      errorEl.textContent = 'Something went wrong. Email programs@mirajoco.org.';
+      errorEl.style.display = 'block';
+      btn.textContent = 'Create My Account';
+      btn.disabled = false;
+    }
+  }
+
+  init();
+</script>
+
+</body>
+</html>
