@@ -100,14 +100,33 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to enroll user' });
     }
 
-    // Tag in Kit and queue welcome email sequence
-    await addTag(email, 'enrolled-25d25n', {
-      first_name: firstName,
-      fields: { last_name: lastName, phone, city, country },
-    });
-    await queueSequence(supabase, email, 'enrolled-25d25n', firstName);
+    if (courseSlug === 'couples-in-entrepreneurship') {
+      // Create the couple record (partner B linked later via invite)
+      await supabase
+        .from('couples')
+        .insert({
+          course_id: course.id,
+          partner_a_user_id: user.id,
+          stripe_session_id: session.id,
+        });
 
-    console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);
+      // Tag Partner A in Kit
+      await addTag(email, 'enrolled-couples-cie', {
+        first_name: firstName,
+        fields: { last_name: lastName, phone, city, country },
+      });
+
+      console.log(`Couples enrollment: Partner A (${email}) enrolled, couple record created`);
+    } else {
+      // 25D25N flow
+      await addTag(email, 'enrolled-25d25n', {
+        first_name: firstName,
+        fields: { last_name: lastName, phone, city, country },
+      });
+      await queueSequence(supabase, email, 'enrolled-25d25n', firstName);
+
+      console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);
+    }
   }
 
   res.status(200).json({ received: true });
