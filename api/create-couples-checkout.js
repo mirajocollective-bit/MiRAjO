@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       phone_number_collection: { enabled: true },
       line_items: [
         {
-          price: process.env.STRIPE_COUPLES_PRICE_ID,
+          price: 'price_1TEKuWGUBsX8ruvFcGLbB5FK',
           quantity: 1,
         },
       ],
