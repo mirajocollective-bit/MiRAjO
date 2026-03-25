@@ -59,29 +59,22 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:    #14090F;
-      --cie-plum:    #1E0F1C;
-      --cie-navy:    #1B2A4A;
-      --cie-navy-mid:#243356;
-      --cie-crimson: #B82038;
-      --cie-crimson-lt:#D43A56;
-      --cie-rose:    #D4607A;
-      --cie-rose-lt: #E8879A;
-      --cie-blush:   #FBE8EE;
-      --cie-blush-lt:#FDF3F6;
+      --cie-dark:    #0F1729;
+      --cie-mid:     #1C2B4A;
+      --cie-navy:    #243356;
       --cie-gold:    #C4A245;
       --cie-gold-lt: #D9B96A;
-      --cie-cream:   #FDF6F8;
-      --cie-warm:    #F2E4E8;
-      --cie-muted:   #7A6B74;
-      --cie-muted-lt:#B8A0A8;
-      --cie-border:  rgba(184,32,56,0.15);
+      --cie-rose:    #A8685E;
+      --cie-cream:   #F5EDD8;
+      --cie-warm:    #EDE0C8;
+      --cie-muted:   #8A9BB8;
+      --cie-border:  rgba(196,162,69,0.18);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #ffffff;
-      color: var(--cie-dark);
+      background: var(--cie-dark);
+      color: var(--cie-cream);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 16px;
       line-height: 1.7;
@@ -95,8 +88,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 18px 40px;
-      background: #ffffff;
-      border-bottom: 1px solid rgba(184,32,56,0.12);
+      background: var(--cie-mid);
+      border-bottom: 1px solid var(--cie-border);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -106,8 +99,8 @@
       display: inline-block;
       font-size: 13px;
       padding: 10px 24px;
-      background: var(--cie-crimson);
-      color: #ffffff;
+      background: var(--cie-gold);
+      color: var(--cie-dark);
       border-radius: 6px;
       font-weight: 700;
       letter-spacing: 0.4px;
@@ -116,15 +109,15 @@
       cursor: pointer;
       border: none;
     }
-    .nav-cta:hover { background: var(--cie-crimson-lt); }
+    .nav-cta:hover { background: var(--cie-gold-lt); }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--cie-navy); }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--cie-cream); }
     .mobile-menu {
       display: none;
       position: absolute;
       top: 100%; left: 0; right: 0;
-      background: #ffffff;
-      border-bottom: 1px solid rgba(184,32,56,0.12);
+      background: var(--cie-mid);
+      border-bottom: 1px solid var(--cie-border);
       padding: 20px;
       flex-direction: column;
       gap: 16px;
@@ -135,7 +128,7 @@
 
     /* ═══ HERO ═══ */
     .hero {
-      background: linear-gradient(165deg, #14090F 0%, #1E0F1C 45%, #2A1020 100%);
+      background: linear-gradient(165deg, #0A1020 0%, #0F1729 45%, #1a1220 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -151,8 +144,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 30% 40%, rgba(184,32,56,0.18) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 65%, rgba(212,96,122,0.14) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 40%, rgba(196,162,69,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 65%, rgba(168,104,94,0.07) 0%, transparent 50%);
       pointer-events: none;
     }
     .hero-eyebrow {
@@ -168,7 +161,7 @@
       font-family: 'Instrument Serif', serif;
       font-size: clamp(42px, 6vw, 80px);
       font-weight: 400;
-      color: #F5EDD8;
+      color: var(--cie-cream);
       line-height: 1.1;
       max-width: 820px;
       margin-bottom: 28px;
@@ -176,11 +169,11 @@
     }
     .hero h1 em {
       font-style: italic;
-      color: var(--cie-rose-lt);
+      color: var(--cie-gold);
     }
     .hero-sub {
       font-size: clamp(17px, 2vw, 20px);
-      color: var(--cie-muted-lt);
+      color: var(--cie-muted);
       max-width: 580px;
       line-height: 1.7;
       margin-bottom: 48px;
@@ -198,7 +191,7 @@
     .hero-img img { width: 100%; display: block; }
     .hero-price-line {
       font-size: 14px;
-      color: var(--cie-muted-lt);
+      color: var(--cie-muted);
       margin-top: 16px;
       position: relative;
     }
@@ -206,8 +199,8 @@
     .btn-primary {
       display: inline-block;
       padding: 18px 44px;
-      background: var(--cie-crimson);
-      color: #ffffff;
+      background: var(--cie-gold);
+      color: var(--cie-dark);
       font-size: 15px;
       font-weight: 700;
       letter-spacing: 0.4px;
@@ -218,7 +211,7 @@
       border: none;
       position: relative;
     }
-    .btn-primary:hover { background: var(--cie-rose-lt); transform: translateY(-2px); }
+    .btn-primary:hover { background: var(--cie-gold-lt); transform: translateY(-2px); }
     .btn-outline {
       display: inline-block;
       padding: 16px 40px;
@@ -243,31 +236,27 @@
       font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--cie-crimson);
+      color: var(--cie-gold);
       font-weight: 600;
       margin-bottom: 16px;
     }
-    /* Gold eyebrows on dark sections */
-    .truth .section-eyebrow,
-    .modules .section-eyebrow,
-    .final-cta .section-eyebrow { color: var(--cie-gold); }
-    .hero .hero-eyebrow { color: var(--cie-rose-lt); }
     .section-title {
       font-family: 'Instrument Serif', serif;
       font-size: clamp(32px, 4vw, 52px);
       font-weight: 400;
       line-height: 1.15;
       margin-bottom: 20px;
+      color: var(--cie-cream);
     }
     .section-body {
       font-size: 17px;
       line-height: 1.85;
-      color: #3A4A5A;
+      color: var(--cie-muted);
     }
 
     /* ═══ PAIN SECTION ═══ */
     .pain {
-      background: #fff;
+      background: var(--cie-mid);
     }
     .pain-grid {
       display: grid;
@@ -276,27 +265,28 @@
       margin-top: 48px;
     }
     .pain-card {
-      background: var(--cie-blush);
+      background: rgba(255,255,255,0.04);
       border-radius: 12px;
       padding: 28px 32px;
-      border-left: 3px solid var(--cie-crimson);
+      border: 1px solid var(--cie-border);
+      border-left: 3px solid var(--cie-gold);
     }
     .pain-card p {
       font-size: 16px;
       line-height: 1.75;
-      color: #2A3545;
+      color: var(--cie-cream);
       font-style: italic;
       font-family: 'Instrument Serif', serif;
     }
 
     /* ═══ TRUTH SECTION ═══ */
     .truth {
-      background: var(--cie-navy);
+      background: var(--cie-dark);
       color: var(--cie-cream);
       text-align: center;
     }
     .truth .section-title { color: var(--cie-cream); }
-    .truth .section-body { color: rgba(245,237,216,0.72); max-width: 660px; margin: 0 auto 0; }
+    .truth .section-body { color: var(--cie-muted); max-width: 660px; margin: 0 auto 0; }
     .truth-stat {
       display: flex;
       justify-content: center;
@@ -313,14 +303,14 @@
     }
     .truth-stat-item .label {
       font-size: 14px;
-      color: rgba(253,246,248,0.78);
+      color: rgba(245,237,216,0.75);
       margin-top: 8px;
       letter-spacing: 0.3px;
     }
 
     /* ═══ HOW IT WORKS ═══ */
     .how {
-      background: var(--cie-blush-lt);
+      background: var(--cie-mid);
     }
     .how-steps {
       display: grid;
@@ -336,7 +326,7 @@
       left: calc(16.66% + 16px);
       right: calc(16.66% + 16px);
       height: 2px;
-      background: linear-gradient(90deg, var(--cie-crimson), var(--cie-rose), var(--cie-crimson));
+      background: linear-gradient(90deg, var(--cie-gold), var(--cie-rose), var(--cie-gold));
       opacity: 0.3;
     }
     .how-step { text-align: center; }
@@ -344,7 +334,7 @@
       width: 88px;
       height: 88px;
       border-radius: 50%;
-      background: var(--cie-navy);
+      background: var(--cie-dark);
       color: var(--cie-gold);
       font-family: 'Instrument Serif', serif;
       font-size: 32px;
@@ -352,24 +342,24 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto 24px;
-      border: 2px solid rgba(196,162,69,0.25);
+      border: 2px solid var(--cie-border);
     }
     .how-step h3 {
       font-family: 'Instrument Serif', serif;
       font-size: 22px;
       font-weight: 400;
       margin-bottom: 12px;
-      color: var(--cie-dark);
+      color: var(--cie-cream);
     }
     .how-step p {
       font-size: 15px;
-      color: #4A5A6A;
+      color: var(--cie-muted);
       line-height: 1.7;
     }
 
     /* ═══ DOMAINS ═══ */
     .domains {
-      background: #fff;
+      background: var(--cie-dark);
     }
     .domains-grid {
       display: grid;
@@ -380,8 +370,8 @@
     .domain-card {
       border-radius: 16px;
       padding: 36px;
-      background: var(--cie-cream);
-      border: 1px solid rgba(196,162,69,0.2);
+      background: var(--cie-mid);
+      border: 1px solid var(--cie-border);
       position: relative;
       overflow: hidden;
     }
@@ -394,32 +384,33 @@
     .domain-card.money::before   { background: linear-gradient(90deg, #7AAF8A, #4A8A64); }
     .domain-card.business::before { background: linear-gradient(90deg, #6A80C0, #4A5FA0); }
     .domain-card.family::before  { background: linear-gradient(90deg, #C09070, #A07050); }
-    .domain-card.relationship::before { background: linear-gradient(90deg, var(--cie-crimson), var(--cie-rose)); }
+    .domain-card.relationship::before { background: linear-gradient(90deg, #B57870, #956050); }
     .domain-icon {
       font-size: 28px;
       margin-bottom: 16px;
+      color: var(--cie-gold);
     }
     .domain-card h3 {
       font-family: 'Instrument Serif', serif;
       font-size: 24px;
       font-weight: 400;
       margin-bottom: 12px;
-      color: var(--cie-dark);
+      color: var(--cie-cream);
     }
     .domain-card p {
       font-size: 15px;
-      color: #4A5A6A;
+      color: var(--cie-muted);
       line-height: 1.75;
     }
     .domain-questions {
       margin-top: 16px;
       padding-top: 16px;
-      border-top: 1px solid rgba(196,162,69,0.2);
+      border-top: 1px solid var(--cie-border);
       list-style: none;
     }
     .domain-questions li {
       font-size: 13.5px;
-      color: #5A6A7A;
+      color: rgba(245,237,216,0.65);
       padding: 5px 0;
       padding-left: 16px;
       position: relative;
@@ -433,18 +424,18 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: var(--cie-crimson);
+      background: var(--cie-gold);
     }
 
     /* ═══ MODULES ═══ */
     .modules {
-      background: var(--cie-navy);
+      background: var(--cie-mid);
       color: var(--cie-cream);
     }
     .modules .section-title { color: var(--cie-cream); }
     .modules-note {
       font-size: 15px;
-      color: rgba(253,246,248,0.70);
+      color: rgba(245,237,216,0.70);
       margin-top: 12px;
       max-width: 620px;
     }
@@ -480,7 +471,7 @@
     }
     .module-info p {
       font-size: 15px;
-      color: rgba(253,246,248,0.72);
+      color: rgba(245,237,216,0.72);
       line-height: 1.65;
     }
     .module-tag {
@@ -499,7 +490,7 @@
 
     /* ═══ WHATS INCLUDED ═══ */
     .included {
-      background: #fff;
+      background: var(--cie-dark);
     }
     .included-grid {
       display: grid;
@@ -512,14 +503,15 @@
       gap: 18px;
       align-items: flex-start;
       padding: 24px;
-      background: var(--cie-blush);
+      background: var(--cie-mid);
+      border: 1px solid var(--cie-border);
       border-radius: 12px;
     }
     .included-icon {
       width: 44px;
       height: 44px;
       border-radius: 10px;
-      background: var(--cie-navy);
+      background: var(--cie-dark);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -529,27 +521,27 @@
     .included-item h4 {
       font-size: 15px;
       font-weight: 600;
-      color: var(--cie-dark);
+      color: var(--cie-cream);
       margin-bottom: 5px;
     }
     .included-item p {
       font-size: 13.5px;
-      color: #5A6A7A;
+      color: var(--cie-muted);
       line-height: 1.65;
     }
 
     /* ═══ PRICING ═══ */
     .pricing {
-      background: var(--cie-blush-lt);
+      background: var(--cie-mid);
       text-align: center;
     }
     .pricing-card {
       max-width: 540px;
       margin: 52px auto 0;
-      background: var(--cie-navy);
+      background: var(--cie-dark);
       border-radius: 20px;
       padding: 56px 48px;
-      border: 1px solid rgba(196,162,69,0.2);
+      border: 1px solid var(--cie-border);
       position: relative;
       overflow: hidden;
     }
@@ -558,7 +550,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--cie-crimson), var(--cie-rose), var(--cie-crimson));
+      background: linear-gradient(90deg, var(--cie-gold), var(--cie-rose), var(--cie-gold));
     }
     .pricing-badge {
       display: inline-block;
@@ -621,7 +613,7 @@
 
     /* ═══ MIRANDA ═══ */
     .miranda {
-      background: #fff;
+      background: var(--cie-dark);
     }
     .miranda-inner {
       display: grid;
@@ -632,7 +624,7 @@
     .miranda-photo {
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(15,23,41,0.15);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
     }
     .miranda-photo img { width: 100%; display: block; }
     .miranda-content .section-eyebrow { margin-bottom: 20px; }
@@ -640,21 +632,21 @@
     .miranda-content p {
       font-size: 16px;
       line-height: 1.85;
-      color: #3A4A5A;
+      color: var(--cie-muted);
       margin-bottom: 18px;
     }
     .miranda-content p:last-child { margin-bottom: 0; }
 
     /* ═══ FAQ ═══ */
     .faq {
-      background: var(--cie-blush-lt);
+      background: var(--cie-mid);
     }
     .faq-list {
       margin-top: 52px;
       max-width: 720px;
     }
     .faq-item {
-      border-bottom: 1px solid rgba(15,23,41,0.12);
+      border-bottom: 1px solid var(--cie-border);
     }
     .faq-q {
       width: 100%;
@@ -664,7 +656,7 @@
       padding: 24px 0;
       font-size: 17px;
       font-weight: 600;
-      color: var(--cie-dark);
+      color: var(--cie-cream);
       cursor: pointer;
       display: flex;
       justify-content: space-between;
@@ -672,32 +664,32 @@
       gap: 20px;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .faq-q svg { width: 18px; height: 18px; stroke: var(--cie-crimson); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-q svg { width: 18px; height: 18px; stroke: var(--cie-gold); flex-shrink: 0; transition: transform 0.2s; }
     .faq-q.open svg { transform: rotate(45deg); }
     .faq-a {
       display: none;
       padding: 0 0 24px;
       font-size: 15.5px;
       line-height: 1.8;
-      color: #4A5A6A;
+      color: var(--cie-muted);
     }
     .faq-a.open { display: block; }
 
     /* ═══ FINAL CTA ═══ */
     .final-cta {
-      background: linear-gradient(160deg, #14090F 0%, #1E0F1C 60%, #2A1020 100%);
+      background: linear-gradient(160deg, #0A1020 0%, #0F1729 100%);
       text-align: center;
       color: var(--cie-cream);
     }
     .final-cta .section-title { color: var(--cie-cream); max-width: 680px; margin: 0 auto 24px; }
-    .final-cta .section-body { color: var(--cie-muted-lt); max-width: 520px; margin: 0 auto 48px; }
+    .final-cta .section-body { color: var(--cie-muted); max-width: 520px; margin: 0 auto 48px; }
 
     /* ═══ FOOTER ═══ */
     footer {
-      background: var(--cie-navy);
+      background: var(--cie-mid);
       padding: 40px;
       text-align: center;
-      border-top: 1px solid rgba(196,162,69,0.1);
+      border-top: 1px solid var(--cie-border);
     }
     footer p { font-size: 13px; color: var(--cie-muted); }
     footer a { color: var(--cie-muted); text-decoration: none; }
