@@ -8,19 +8,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:    #14090F;
-      --cie-mid:     #1E1530;
-      --cie-navy:    #243356;
-      --cie-gold:    #C4A245;
-      --cie-gold-lt: #D9B96A;
-      --cie-cream:   #F5EDD8;
-      --cie-warm:    #EDE0C8;
-      --cie-muted:   #8A9BB8;
-      --cie-border:  rgba(196,162,69,0.18);
-      --cie-success: #5DBE8A;
-      --sidebar-w:   300px;
-      --text-body:   #1a2030;
-      --text-muted:  #6A7A9A;
+      --cie-dark:      #14090F;
+      --cie-crimson:   #B82038;
+      --cie-crimson-lt:#D43A56;
+      --cie-rose:      #D4607A;
+      --cie-blush:     #FBE8EE;
+      --cie-blush-lt:  #FDF3F6;
+      --cie-gold:      #C4A245;
+      --cie-gold-lt:   #D9B96A;
+      --cie-cream:     #FDF3F6;
+      --cie-muted:     #7A6B74;
+      --cie-border:    rgba(184,32,56,0.15);
+      --cie-success:   #5DBE8A;
+      --sidebar-w:     300px;
+      --text-body:     #14090F;
+      --text-muted:    #7A6B74;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -70,7 +72,7 @@
       font-size: 12px;
       color: var(--cie-muted);
     }
-    .nav-progress-text strong { color: var(--cie-gold); }
+    .nav-progress-text strong { color: var(--cie-crimson); }
 
     /* ═══ LAYOUT ═══ */
     .layout {
@@ -93,7 +95,7 @@
     }
     .sidebar::-webkit-scrollbar { width: 5px; }
     .sidebar::-webkit-scrollbar-track { background: transparent; }
-    .sidebar::-webkit-scrollbar-thumb { background: rgba(196,162,69,0.25); border-radius: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(184,32,56,0.3); border-radius: 3px; }
 
     /* Module header in sidebar */
     .sidebar-module-header {
@@ -104,7 +106,7 @@
       font-size: 9px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
       font-weight: 700;
       margin-bottom: 8px;
     }
@@ -130,10 +132,10 @@
       flex-shrink: 0;
     }
     .ring-svg { transform: rotate(-90deg); }
-    .ring-bg { fill: none; stroke: rgba(196,162,69,0.1); stroke-width: 5; }
+    .ring-bg { fill: none; stroke: rgba(184,32,56,0.15); stroke-width: 5; }
     .ring-fill {
       fill: none;
-      stroke: url(#cieGold);
+      stroke: url(#cieCrimson);
       stroke-width: 5;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.6s ease;
@@ -146,7 +148,7 @@
       justify-content: center;
       font-size: 13px;
       font-weight: 700;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
     }
     .ring-label-text {
       font-size: 12px;
@@ -159,8 +161,8 @@
     .partner-progress {
       margin: 12px 20px 0;
       padding: 10px 14px;
-      background: rgba(196,162,69,0.05);
-      border: 1px solid rgba(196,162,69,0.1);
+      background: rgba(184,32,56,0.06);
+      border: 1px solid rgba(184,32,56,0.1);
       border-radius: 8px;
       font-size: 11px;
       color: var(--cie-muted);
@@ -178,18 +180,18 @@
       gap: 10px;
       padding: 12px 20px;
       cursor: pointer;
-      border-bottom: 1px solid rgba(196,162,69,0.05);
+      border-bottom: 1px solid rgba(184,32,56,0.08);
       transition: background 0.15s;
     }
-    .lesson-item:hover { background: rgba(196,162,69,0.05); }
+    .lesson-item:hover { background: rgba(184,32,56,0.06); }
     .lesson-item.active {
-      background: rgba(196,162,69,0.08);
-      border-left: 2px solid var(--cie-gold);
+      background: rgba(184,32,56,0.1);
+      border-left: 2px solid var(--cie-crimson);
     }
     .lesson-check {
       width: 20px; height: 20px;
       border-radius: 50%;
-      border: 1.5px solid rgba(196,162,69,0.25);
+      border: 1.5px solid rgba(184,32,56,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -206,12 +208,12 @@
     .lesson-num {
       font-size: 10px;
       font-weight: 700;
-      color: rgba(196,162,69,0.4);
+      color: rgba(184,32,56,0.4);
       width: 18px;
       flex-shrink: 0;
       letter-spacing: 0.5px;
     }
-    .lesson-item.active .lesson-num { color: var(--cie-gold); }
+    .lesson-item.active .lesson-num { color: var(--cie-crimson); }
     .lesson-title-text {
       font-size: 12px;
       color: var(--cie-muted);
@@ -219,7 +221,7 @@
       flex: 1;
     }
     .lesson-item.active .lesson-title-text { color: var(--cie-cream); font-weight: 600; }
-    .lesson-check.done ~ .lesson-title-text { color: rgba(245,237,216,0.5); }
+    .lesson-check.done ~ .lesson-title-text { color: rgba(253,243,246,0.5); }
 
     /* ═══ MAIN ═══ */
     .main {
@@ -255,7 +257,7 @@
       font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
       font-weight: 600;
       margin-bottom: 12px;
     }
@@ -285,21 +287,21 @@
     }
     .lesson-content li { margin-bottom: 8px; }
     .lesson-content blockquote {
-      border-left: 3px solid var(--cie-gold);
+      border-left: 3px solid var(--cie-crimson);
       padding: 16px 24px;
-      background: rgba(196,162,69,0.05);
+      background: rgba(184,32,56,0.04);
       border-radius: 0 8px 8px 0;
       margin: 24px 0;
       font-style: italic;
-      color: var(--cie-mid);
+      color: var(--cie-dark);
     }
 
     /* ═══ TOGETHER WORK ═══ */
     .together-work-section {
       margin-top: 40px;
       padding: 28px 32px;
-      background: linear-gradient(135deg, rgba(28,43,74,0.06) 0%, rgba(196,162,69,0.04) 100%);
-      border: 1px solid rgba(196,162,69,0.2);
+      background: linear-gradient(135deg, rgba(184,32,56,0.04) 0%, rgba(251,232,238,0.6) 100%);
+      border: 1px solid rgba(184,32,56,0.2);
       border-radius: 14px;
     }
     .together-work-label {
@@ -307,7 +309,7 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       font-weight: 700;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
       margin-bottom: 8px;
       display: flex;
       align-items: center;
@@ -318,13 +320,13 @@
       display: inline-block;
       width: 16px;
       height: 2px;
-      background: var(--cie-gold);
+      background: var(--cie-crimson);
       border-radius: 1px;
     }
     .together-work-title {
       font-family: 'Instrument Serif', serif;
       font-size: 20px;
-      color: var(--cie-mid);
+      color: var(--cie-dark);
       font-weight: 400;
       margin-bottom: 12px;
     }
@@ -346,7 +348,7 @@
       gap: 16px;
       margin-top: 56px;
       padding-top: 32px;
-      border-top: 1px solid rgba(196,162,69,0.15);
+      border-top: 1px solid rgba(184,32,56,0.15);
       flex-wrap: wrap;
     }
     .btn-complete {
@@ -354,8 +356,8 @@
       align-items: center;
       gap: 10px;
       padding: 14px 32px;
-      background: linear-gradient(135deg, var(--cie-mid), var(--cie-navy));
-      color: var(--cie-cream);
+      background: linear-gradient(135deg, var(--cie-crimson), #8A1828);
+      color: #ffffff;
       border: none;
       border-radius: 10px;
       font-size: 15px;
@@ -363,10 +365,10 @@
       cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 6px 24px rgba(15,23,41,0.2);
+      box-shadow: 0 6px 24px rgba(184,32,56,0.25);
       border: 1px solid var(--cie-border);
     }
-    .btn-complete:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(15,23,41,0.3); }
+    .btn-complete:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(184,32,56,0.35); }
     .btn-complete.done {
       background: linear-gradient(135deg, #4aaa78, #3a8f63);
       border-color: rgba(93,190,138,0.3);
@@ -380,7 +382,7 @@
       gap: 6px;
       padding: 12px 20px;
       background: transparent;
-      border: 1px solid rgba(196,162,69,0.2);
+      border: 1px solid rgba(184,32,56,0.2);
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
@@ -389,7 +391,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       transition: all 0.2s;
     }
-    .btn-nav:hover { border-color: var(--cie-gold); color: var(--cie-mid); }
+    .btn-nav:hover { border-color: var(--cie-crimson); color: var(--cie-dark); }
     .btn-nav:disabled { opacity: 0.3; cursor: default; }
 
     /* ═══ MODULE COMPLETE OVERLAY ═══ */
@@ -412,8 +414,8 @@
     .mc-check {
       width: 72px; height: 72px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--cie-mid), var(--cie-navy));
-      border: 2px solid var(--cie-gold);
+      background: linear-gradient(135deg, var(--cie-crimson), #8A1828);
+      border: 2px solid rgba(184,32,56,0.5);
       display: flex; align-items: center; justify-content: center;
       font-size: 32px;
       margin-bottom: 32px;
@@ -424,7 +426,7 @@
       font-size: 10px;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
       font-weight: 600;
       margin-bottom: 16px;
     }
@@ -444,20 +446,20 @@
     .mc-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
     .mc-btn-primary {
       padding: 14px 32px;
-      background: var(--cie-gold);
-      color: var(--cie-dark);
+      background: var(--cie-crimson);
+      color: #ffffff;
       border-radius: 8px;
       font-size: 15px;
       font-weight: 700;
       text-decoration: none;
       transition: background 0.2s;
     }
-    .mc-btn-primary:hover { background: var(--cie-gold-lt); }
+    .mc-btn-primary:hover { background: var(--cie-crimson-lt); }
     .mc-btn-outline {
       padding: 14px 32px;
       background: transparent;
-      color: var(--cie-gold);
-      border: 1px solid var(--cie-border);
+      color: rgba(253,243,246,0.7);
+      border: 1px solid rgba(184,32,56,0.3);
       border-radius: 8px;
       font-size: 15px;
       font-weight: 600;
@@ -466,7 +468,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       transition: all 0.2s;
     }
-    .mc-btn-outline:hover { background: rgba(196,162,69,0.08); }
+    .mc-btn-outline:hover { background: rgba(184,32,56,0.15); }
 
     /* ═══ LOADING ═══ */
     .loading {
@@ -474,8 +476,8 @@
     }
     .loading-spinner {
       width: 36px; height: 36px;
-      border: 3px solid rgba(196,162,69,0.12);
-      border-top-color: var(--cie-gold);
+      border: 3px solid rgba(184,32,56,0.12);
+      border-top-color: var(--cie-crimson);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -486,12 +488,12 @@
       display: none;
       align-items: center;
       gap: 8px;
-      background: rgba(196,162,69,0.1);
+      background: rgba(184,32,56,0.1);
       border: 1px solid var(--cie-border);
       border-radius: 6px;
       padding: 7px 14px;
       font-size: 12px;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
       cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
@@ -526,9 +528,9 @@
 <!-- SVG defs for gradient -->
 <svg width="0" height="0" style="position:absolute">
   <defs>
-    <linearGradient id="cieGold" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#C4A245"/>
-      <stop offset="100%" stop-color="#D9B96A"/>
+    <linearGradient id="cieCrimson" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B82038"/>
+      <stop offset="100%" stop-color="#D43A56"/>
     </linearGradient>
   </defs>
 </svg>
@@ -914,9 +916,9 @@ function showError(msg) {
   document.getElementById('main').innerHTML = `
     <div style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 60px);padding:40px;">
       <div style="text-align:center;">
-        <p style="font-family:'Instrument Serif',serif;font-size:24px;color:var(--cie-mid);margin-bottom:12px;">Something went wrong</p>
+        <p style="font-family:'Instrument Serif',serif;font-size:24px;color:var(--cie-dark);margin-bottom:12px;">Something went wrong</p>
         <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px;">${escHtml(msg)}</p>
-        <a href="/programs/couples-dashboard" style="font-size:14px;color:var(--cie-gold);font-weight:600;">← Back to Dashboard</a>
+        <a href="/programs/couples-dashboard" style="font-size:14px;color:var(--cie-crimson);font-weight:600;">← Back to Dashboard</a>
       </div>
     </div>`;
 }

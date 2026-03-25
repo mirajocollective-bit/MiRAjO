@@ -7,16 +7,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:  #14090F;
-      --cie-mid:   #1E1530;
-      --cie-gold:  #C4A245;
-      --cie-cream: #F5EDD8;
-      --cie-muted: #8A9BB8;
-      --cie-border: rgba(196,162,69,0.2);
+      --cie-dark:      #14090F;
+      --cie-crimson:   #B82038;
+      --cie-crimson-lt:#D43A56;
+      --cie-rose:      #D4607A;
+      --cie-blush:     #FBE8EE;
+      --cie-blush-lt:  #FDF3F6;
+      --cie-gold:      #C4A245;
+      --cie-muted:     #7A6B74;
+      --cie-border:    rgba(184,32,56,0.15);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--cie-dark);
+      background: var(--cie-blush-lt);
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       display: flex;
@@ -24,6 +27,7 @@
       justify-content: center;
       padding: 40px 24px;
       -webkit-font-smoothing: antialiased;
+      color: var(--cie-dark);
     }
     .card {
       width: 100%;
@@ -43,8 +47,8 @@
     .spinner {
       width: 44px;
       height: 44px;
-      border: 3px solid rgba(196,162,69,0.15);
-      border-top-color: var(--cie-gold);
+      border: 3px solid rgba(184,32,56,0.15);
+      border-top-color: var(--cie-crimson);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       margin: 0 auto 32px;
@@ -55,11 +59,11 @@
       font-family: 'Instrument Serif', serif;
       font-size: 34px;
       font-weight: 400;
-      color: var(--cie-cream);
+      color: var(--cie-dark);
       margin-bottom: 14px;
       line-height: 1.2;
     }
-    h1 em { font-style: italic; color: var(--cie-gold); }
+    h1 em { font-style: italic; color: var(--cie-crimson); }
     .sub {
       font-size: 15px;
       color: var(--cie-muted);
@@ -69,18 +73,18 @@
 
     .invite-from {
       display: inline-block;
-      background: rgba(196,162,69,0.1);
+      background: rgba(184,32,56,0.06);
       border: 1px solid var(--cie-border);
       border-radius: 8px;
       padding: 12px 20px;
       font-size: 14px;
-      color: var(--cie-cream);
+      color: var(--cie-dark);
       margin-bottom: 32px;
     }
-    .invite-from span { color: var(--cie-gold); font-weight: 600; }
+    .invite-from span { color: var(--cie-crimson); font-weight: 600; }
 
     .course-card {
-      background: rgba(245,237,216,0.04);
+      background: #ffffff;
       border: 1px solid var(--cie-border);
       border-radius: 12px;
       padding: 24px;
@@ -91,7 +95,7 @@
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
       font-weight: 600;
       margin-bottom: 8px;
     }
@@ -99,7 +103,7 @@
       font-family: 'Instrument Serif', serif;
       font-size: 20px;
       font-weight: 400;
-      color: var(--cie-cream);
+      color: var(--cie-dark);
       margin-bottom: 8px;
     }
     .course-card p {
@@ -123,23 +127,23 @@
     input[type="email"] {
       width: 100%;
       padding: 15px 18px;
-      background: rgba(245,237,216,0.05);
-      border: 1px solid rgba(196,162,69,0.2);
+      background: #ffffff;
+      border: 1px solid rgba(184,32,56,0.2);
       border-radius: 8px;
       font-size: 15px;
-      color: var(--cie-cream);
+      color: var(--cie-dark);
       font-family: 'Plus Jakarta Sans', sans-serif;
       outline: none;
       transition: border-color 0.2s;
     }
-    input:focus { border-color: var(--cie-gold); }
-    input::placeholder { color: rgba(138,155,184,0.4); }
+    input:focus { border-color: var(--cie-crimson); }
+    input::placeholder { color: rgba(122,107,116,0.4); }
 
     .btn {
       width: 100%;
       padding: 16px;
-      background: var(--cie-gold);
-      color: var(--cie-dark);
+      background: var(--cie-crimson);
+      color: #ffffff;
       border: none;
       border-radius: 8px;
       font-size: 15px;
@@ -162,7 +166,7 @@
 
     .divider {
       border: none;
-      border-top: 1px solid rgba(196,162,69,0.1);
+      border-top: 1px solid rgba(184,32,56,0.1);
       margin: 28px 0;
     }
 
@@ -171,14 +175,14 @@
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: rgba(196,162,69,0.1);
-      border: 2px solid var(--cie-gold);
+      background: rgba(184,32,56,0.08);
+      border: 2px solid var(--cie-crimson);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 28px;
     }
-    .success-ring svg { width: 32px; height: 32px; stroke: var(--cie-gold); fill: none; stroke-width: 2; }
+    .success-ring svg { width: 32px; height: 32px; stroke: var(--cie-crimson); fill: none; stroke-width: 2; }
 
     /* Error ring */
     .error-ring {
@@ -199,11 +203,11 @@
       color: var(--cie-muted);
       text-decoration: none;
     }
-    .help-link:hover { color: var(--cie-cream); }
+    .help-link:hover { color: var(--cie-dark); }
     .privacy-note {
       margin-top: 20px;
       font-size: 12px;
-      color: rgba(138,155,184,0.5);
+      color: rgba(122,107,116,0.5);
       line-height: 1.6;
     }
   </style>
