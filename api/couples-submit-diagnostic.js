@@ -130,7 +130,7 @@ export default async function handler(req, res) {
   for (const row of (allResponses || [])) {
     if (!report_data[row.domain]) report_data[row.domain] = {};
     if (!report_data[row.domain][row.question_key]) report_data[row.domain][row.question_key] = {};
-    const who = row.user_id === couple.partner_a_id ? 'partner_a' : 'partner_b';
+    const who = row.user_id === couple.partner_a_user_id ? 'partner_a' : 'partner_b';
     report_data[row.domain][row.question_key][who] = row.response_text;
   }
 
