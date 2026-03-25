@@ -1,9 +1,8 @@
 // POST /api/couples-invite
 // Called after purchase when Partner A submits Partner B's email
-// Creates invite token and sends Partner B an invite email via Kit
+// Creates invite token and queues invite email sequence via Resend
 
 import { createClient } from '@supabase/supabase-js';
-import { addTag } from './_kit.js';
 import { queueSequence } from './_emails.js';
 
 const supabase = createClient(
@@ -53,12 +52,6 @@ export default async function handler(req, res) {
 
   const partnerBEmail = partner_b_email.toLowerCase().trim();
   const partnerName = partner_a_first_name || 'Your partner';
-
-  // Tag partner B in Kit
-  await addTag(partnerBEmail, 'invited-couples-cie', {
-    first_name: '',
-    fields: { partner_name: partnerName, invite_url: inviteUrl },
-  });
 
   // Queue invite email sequence for Partner B
   await queueSequence(supabase, partnerBEmail, 'invited-couples-cie', '', {

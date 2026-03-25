@@ -3,7 +3,6 @@
 // Validates token, creates Supabase account, links couple, enrolls Partner B
 
 import { createClient } from '@supabase/supabase-js';
-import { addTag } from './_kit.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -97,12 +96,6 @@ export default async function handler(req, res) {
       { user_id: partnerB.id, course_id: couple.course_id },
       { onConflict: 'user_id,course_id' }
     );
-
-  // Tag Partner B in Kit
-  await addTag(invite.partner_b_email, 'enrolled-couples-cie', {
-    first_name: first_name || '',
-    fields: { last_name: last_name || '' },
-  });
 
   // Generate magic link so Partner B can log straight in
   const { data: magicLink } = await supabase.auth.admin.generateLink({
