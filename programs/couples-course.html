@@ -653,7 +653,7 @@ async function init() {
   // Load module by slug
   const { data: mod } = await db
     .from('modules')
-    .select('id, title, order_index, unlock_domain, course_id, courses!inner(slug)')
+    .select('id, title, position, unlock_domain, course_id, courses!inner(slug)')
     .eq('courses.slug', 'couples-in-entrepreneurship')
     .eq('slug', moduleSlug)
     .single();
@@ -662,8 +662,8 @@ async function init() {
 
   // Lock check (module 1 always open, module 8 open if report exists, others check unlocked_domains)
   const unlocked = report?.unlocked_domains || [];
-  const isFoundation = mod.order_index === 1;
-  const isWin = mod.order_index === 8;
+  const isFoundation = mod.position === 1;
+  const isWin = mod.position === 8;
   const domainUnlocked = unlocked.includes(mod.unlock_domain) || unlocked.includes('all');
 
   if (!isFoundation && !isWin && !domainUnlocked && !report) {
@@ -796,7 +796,7 @@ function openLesson(lessonId) {
 
   // Lesson body
   html += `<div class="lesson-body">
-    <div class="lesson-eyebrow">Module ${currentModule.order_index} · Lesson ${idx + 1} of ${allLessons.length}</div>
+    <div class="lesson-eyebrow">Module ${currentModule.position} · Lesson ${idx + 1} of ${allLessons.length}</div>
     <h1 class="lesson-heading">${escHtml(lesson.title)}</h1>`;
 
   if (lesson.content) {

@@ -555,9 +555,9 @@ async function renderDashboard(user) {
   // Load modules with lesson counts
   const { data: dbModules } = await db
     .from('modules')
-    .select('id, unlock_domain, order_index, lessons(count)')
+    .select('id, unlock_domain, position, lessons(count)')
     .eq('course_id', courseEnrollment?.course_id || '')
-    .order('order_index');
+    .order('position');
 
   const unlockedDomains = report?.unlocked_domains || [];
   const reportReady     = !!report;
@@ -630,7 +630,7 @@ async function renderDashboard(user) {
     else unlocked = reportReady && (unlockedDomains.includes(mod.unlock_domain) || unlockedDomains.includes('all'));
 
     // Match to DB module for progress
-    const dbMod = dbModules?.find(m => m.order_index === mod.num);
+    const dbMod = dbModules?.find(m => m.position === mod.num);
     const lessonCount = dbMod?.lessons?.[0]?.count || 0;
     const completedCount = dbMod ? (moduleProgress[dbMod.id] || 0) : 0;
     const pct = lessonCount > 0 ? Math.round((completedCount / lessonCount) * 100) : 0;
