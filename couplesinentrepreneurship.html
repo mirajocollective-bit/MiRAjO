@@ -59,21 +59,28 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:    #0F1729;
-      --cie-mid:     #1C2B4A;
-      --cie-navy:    #243356;
+      --cie-dark:    #14090F;
+      --cie-plum:    #1E0F1C;
+      --cie-navy:    #1B2A4A;
+      --cie-navy-mid:#243356;
+      --cie-crimson: #B82038;
+      --cie-crimson-lt:#D43A56;
+      --cie-rose:    #D4607A;
+      --cie-rose-lt: #E8879A;
+      --cie-blush:   #FBE8EE;
+      --cie-blush-lt:#FDF3F6;
       --cie-gold:    #C4A245;
       --cie-gold-lt: #D9B96A;
-      --cie-rose:    #A8685E;
-      --cie-cream:   #F5EDD8;
-      --cie-warm:    #EDE0C8;
-      --cie-muted:   #8A9BB8;
-      --cie-border:  rgba(196,162,69,0.18);
+      --cie-cream:   #FDF6F8;
+      --cie-warm:    #F2E4E8;
+      --cie-muted:   #7A6B74;
+      --cie-muted-lt:#B8A0A8;
+      --cie-border:  rgba(184,32,56,0.15);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--cie-cream);
+      background: #ffffff;
       color: var(--cie-dark);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 16px;
@@ -88,7 +95,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 18px 40px;
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       border-bottom: 1px solid rgba(196,162,69,0.15);
       position: sticky;
       top: 0;
@@ -99,8 +106,8 @@
       display: inline-block;
       font-size: 13px;
       padding: 10px 24px;
-      background: var(--cie-gold);
-      color: #0F1729;
+      background: var(--cie-crimson);
+      color: #ffffff;
       border-radius: 6px;
       font-weight: 700;
       letter-spacing: 0.4px;
@@ -109,14 +116,14 @@
       cursor: pointer;
       border: none;
     }
-    .nav-cta:hover { background: var(--cie-gold-lt); }
+    .nav-cta:hover { background: var(--cie-crimson-lt); }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
     .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--cie-cream); }
     .mobile-menu {
       display: none;
       position: absolute;
       top: 100%; left: 0; right: 0;
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       border-bottom: 1px solid rgba(196,162,69,0.15);
       padding: 20px;
       flex-direction: column;
@@ -128,7 +135,7 @@
 
     /* ═══ HERO ═══ */
     .hero {
-      background: linear-gradient(165deg, #0A1020 0%, #0F1729 45%, #1a1220 100%);
+      background: linear-gradient(165deg, #14090F 0%, #1E0F1C 45%, #2A1020 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -144,8 +151,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 30% 40%, rgba(196,162,69,0.08) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 65%, rgba(168,104,94,0.07) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 40%, rgba(184,32,56,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 65%, rgba(212,96,122,0.14) 0%, transparent 50%);
       pointer-events: none;
     }
     .hero-eyebrow {
@@ -169,11 +176,11 @@
     }
     .hero h1 em {
       font-style: italic;
-      color: var(--cie-gold);
+      color: var(--cie-rose-lt);
     }
     .hero-sub {
       font-size: clamp(17px, 2vw, 20px);
-      color: var(--cie-muted);
+      color: var(--cie-muted-lt);
       max-width: 580px;
       line-height: 1.7;
       margin-bottom: 48px;
@@ -191,7 +198,7 @@
     .hero-img img { width: 100%; display: block; }
     .hero-price-line {
       font-size: 14px;
-      color: var(--cie-muted);
+      color: var(--cie-muted-lt);
       margin-top: 16px;
       position: relative;
     }
@@ -199,8 +206,8 @@
     .btn-primary {
       display: inline-block;
       padding: 18px 44px;
-      background: var(--cie-gold);
-      color: #0F1729;
+      background: var(--cie-crimson);
+      color: #ffffff;
       font-size: 15px;
       font-weight: 700;
       letter-spacing: 0.4px;
@@ -211,7 +218,7 @@
       border: none;
       position: relative;
     }
-    .btn-primary:hover { background: var(--cie-gold-lt); transform: translateY(-2px); }
+    .btn-primary:hover { background: var(--cie-crimson-lt); transform: translateY(-2px); }
     .btn-outline {
       display: inline-block;
       padding: 16px 40px;
@@ -236,10 +243,15 @@
       font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--cie-crimson);
       font-weight: 600;
       margin-bottom: 16px;
     }
+    /* Gold eyebrows on dark sections */
+    .truth .section-eyebrow,
+    .modules .section-eyebrow,
+    .final-cta .section-eyebrow { color: var(--cie-gold); }
+    .hero .hero-eyebrow { color: var(--cie-rose-lt); }
     .section-title {
       font-family: 'Instrument Serif', serif;
       font-size: clamp(32px, 4vw, 52px);
@@ -264,10 +276,10 @@
       margin-top: 48px;
     }
     .pain-card {
-      background: var(--cie-cream);
+      background: var(--cie-blush);
       border-radius: 12px;
       padding: 28px 32px;
-      border-left: 3px solid var(--cie-rose);
+      border-left: 3px solid var(--cie-crimson);
     }
     .pain-card p {
       font-size: 16px;
@@ -279,12 +291,12 @@
 
     /* ═══ TRUTH SECTION ═══ */
     .truth {
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       color: var(--cie-cream);
       text-align: center;
     }
     .truth .section-title { color: var(--cie-cream); }
-    .truth .section-body { color: var(--cie-muted); max-width: 660px; margin: 0 auto 0; }
+    .truth .section-body { color: rgba(245,237,216,0.72); max-width: 660px; margin: 0 auto 0; }
     .truth-stat {
       display: flex;
       justify-content: center;
@@ -308,7 +320,7 @@
 
     /* ═══ HOW IT WORKS ═══ */
     .how {
-      background: var(--cie-cream);
+      background: var(--cie-blush-lt);
     }
     .how-steps {
       display: grid;
@@ -324,7 +336,7 @@
       left: calc(16.66% + 16px);
       right: calc(16.66% + 16px);
       height: 2px;
-      background: linear-gradient(90deg, var(--cie-gold), var(--cie-rose), var(--cie-gold));
+      background: linear-gradient(90deg, var(--cie-crimson), var(--cie-rose), var(--cie-crimson));
       opacity: 0.3;
     }
     .how-step { text-align: center; }
@@ -332,7 +344,7 @@
       width: 88px;
       height: 88px;
       border-radius: 50%;
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       color: var(--cie-gold);
       font-family: 'Instrument Serif', serif;
       font-size: 32px;
@@ -340,7 +352,7 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto 24px;
-      border: 2px solid var(--cie-border);
+      border: 2px solid rgba(196,162,69,0.25);
     }
     .how-step h3 {
       font-family: 'Instrument Serif', serif;
@@ -382,7 +394,7 @@
     .domain-card.money::before   { background: linear-gradient(90deg, #7AAF8A, #4A8A64); }
     .domain-card.business::before { background: linear-gradient(90deg, #6A80C0, #4A5FA0); }
     .domain-card.family::before  { background: linear-gradient(90deg, #C09070, #A07050); }
-    .domain-card.relationship::before { background: linear-gradient(90deg, #B57870, #956050); }
+    .domain-card.relationship::before { background: linear-gradient(90deg, var(--cie-crimson), var(--cie-rose)); }
     .domain-icon {
       font-size: 28px;
       margin-bottom: 16px;
@@ -421,12 +433,12 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: var(--cie-gold);
+      background: var(--cie-crimson);
     }
 
     /* ═══ MODULES ═══ */
     .modules {
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       color: var(--cie-cream);
     }
     .modules .section-title { color: var(--cie-cream); }
@@ -500,14 +512,14 @@
       gap: 18px;
       align-items: flex-start;
       padding: 24px;
-      background: var(--cie-cream);
+      background: var(--cie-blush);
       border-radius: 12px;
     }
     .included-icon {
       width: 44px;
       height: 44px;
       border-radius: 10px;
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -528,13 +540,13 @@
 
     /* ═══ PRICING ═══ */
     .pricing {
-      background: var(--cie-cream);
+      background: var(--cie-blush-lt);
       text-align: center;
     }
     .pricing-card {
       max-width: 540px;
       margin: 52px auto 0;
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       border-radius: 20px;
       padding: 56px 48px;
       border: 1px solid rgba(196,162,69,0.2);
@@ -546,7 +558,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--cie-gold), var(--cie-rose), var(--cie-gold));
+      background: linear-gradient(90deg, var(--cie-crimson), var(--cie-rose), var(--cie-crimson));
     }
     .pricing-badge {
       display: inline-block;
@@ -635,7 +647,7 @@
 
     /* ═══ FAQ ═══ */
     .faq {
-      background: var(--cie-cream);
+      background: var(--cie-blush-lt);
     }
     .faq-list {
       margin-top: 52px;
@@ -660,7 +672,7 @@
       gap: 20px;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .faq-q svg { width: 18px; height: 18px; stroke: var(--cie-gold); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-q svg { width: 18px; height: 18px; stroke: var(--cie-crimson); flex-shrink: 0; transition: transform 0.2s; }
     .faq-q.open svg { transform: rotate(45deg); }
     .faq-a {
       display: none;
@@ -673,16 +685,16 @@
 
     /* ═══ FINAL CTA ═══ */
     .final-cta {
-      background: linear-gradient(160deg, #0A1020 0%, #0F1729 100%);
+      background: linear-gradient(160deg, #14090F 0%, #1E0F1C 60%, #2A1020 100%);
       text-align: center;
       color: var(--cie-cream);
     }
     .final-cta .section-title { color: var(--cie-cream); max-width: 680px; margin: 0 auto 24px; }
-    .final-cta .section-body { color: var(--cie-muted); max-width: 520px; margin: 0 auto 48px; }
+    .final-cta .section-body { color: var(--cie-muted-lt); max-width: 520px; margin: 0 auto 48px; }
 
     /* ═══ FOOTER ═══ */
     footer {
-      background: var(--cie-dark);
+      background: var(--cie-navy);
       padding: 40px;
       text-align: center;
       border-top: 1px solid rgba(196,162,69,0.1);
