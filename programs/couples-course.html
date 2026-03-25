@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Couples in Entrepreneurship — MiRAjO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cie-dark:    #0F1729;
+      --cie-mid:     #1C2B4A;
+      --cie-navy:    #243356;
+      --cie-gold:    #C4A245;
+      --cie-gold-lt: #D9B96A;
+      --cie-cream:   #F5EDD8;
+      --cie-warm:    #EDE0C8;
+      --cie-muted:   #8A9BB8;
+      --cie-border:  rgba(196,162,69,0.18);
+      --cie-success: #5DBE8A;
+      --sidebar-w:   300px;
+      --text-body:   #1a2030;
+      --text-muted:  #6A7A9A;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #F5F2EC;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ═══ TOP NAV ═══ */
+    .top-nav {
+      background: var(--cie-dark);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      border-bottom: 1px solid var(--cie-border);
+    }
+    .top-nav-left { display: flex; align-items: center; gap: 16px; }
+    .nav-back {
+      color: var(--cie-muted);
+      font-size: 13px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--cie-cream); }
+    .nav-divider { color: rgba(138,155,184,0.3); font-size: 14px; }
+    .nav-module-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--cie-cream);
+      max-width: 280px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .top-nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-progress-text {
+      font-size: 12px;
+      color: var(--cie-muted);
+    }
+    .nav-progress-text strong { color: var(--cie-gold); }
+
+    /* ═══ LAYOUT ═══ */
+    .layout {
+      display: flex;
+      padding-top: 60px;
+      min-height: 100vh;
+    }
+
+    /* ═══ SIDEBAR ═══ */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--cie-dark);
+      border-right: 1px solid var(--cie-border);
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .sidebar::-webkit-scrollbar { width: 5px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(196,162,69,0.25); border-radius: 3px; }
+
+    /* Module header in sidebar */
+    .sidebar-module-header {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid var(--cie-border);
+    }
+    .sidebar-eyebrow {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .sidebar-module-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 17px;
+      color: var(--cie-cream);
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+
+    /* Progress ring */
+    .sidebar-ring-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ring-container {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+    }
+    .ring-svg { transform: rotate(-90deg); }
+    .ring-bg { fill: none; stroke: rgba(196,162,69,0.1); stroke-width: 5; }
+    .ring-fill {
+      fill: none;
+      stroke: url(#cieGold);
+      stroke-width: 5;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.6s ease;
+    }
+    .ring-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cie-gold);
+    }
+    .ring-label-text {
+      font-size: 12px;
+      color: var(--cie-muted);
+      line-height: 1.5;
+    }
+    .ring-label-text strong { color: var(--cie-cream); font-size: 13px; }
+
+    /* Partner progress strip */
+    .partner-progress {
+      margin: 12px 20px 0;
+      padding: 10px 14px;
+      background: rgba(196,162,69,0.05);
+      border: 1px solid rgba(196,162,69,0.1);
+      border-radius: 8px;
+      font-size: 11px;
+      color: var(--cie-muted);
+      line-height: 1.5;
+    }
+    .partner-progress strong { color: var(--cie-cream); }
+
+    /* Lesson list */
+    .lesson-list {
+      padding: 8px 0 80px;
+    }
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(196,162,69,0.05);
+      transition: background 0.15s;
+    }
+    .lesson-item:hover { background: rgba(196,162,69,0.05); }
+    .lesson-item.active {
+      background: rgba(196,162,69,0.08);
+      border-left: 2px solid var(--cie-gold);
+    }
+    .lesson-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(196,162,69,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 9px;
+      color: transparent;
+      transition: all 0.3s;
+    }
+    .lesson-check.done {
+      background: var(--cie-success);
+      border-color: var(--cie-success);
+      color: #fff;
+    }
+    .lesson-num {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(196,162,69,0.4);
+      width: 18px;
+      flex-shrink: 0;
+      letter-spacing: 0.5px;
+    }
+    .lesson-item.active .lesson-num { color: var(--cie-gold); }
+    .lesson-title-text {
+      font-size: 12px;
+      color: var(--cie-muted);
+      line-height: 1.4;
+      flex: 1;
+    }
+    .lesson-item.active .lesson-title-text { color: var(--cie-cream); font-weight: 600; }
+    .lesson-check.done ~ .lesson-title-text { color: rgba(245,237,216,0.5); }
+
+    /* ═══ MAIN ═══ */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* Video */
+    .video-section {
+      background: var(--cie-dark);
+    }
+    .video-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      padding-top: min(56.25%, 450px);
+    }
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* Lesson body */
+    .lesson-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 40px 120px;
+    }
+    .lesson-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .lesson-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 400;
+      color: var(--text-body);
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .lesson-content {
+      font-size: 16px;
+      color: #3A4060;
+      line-height: 1.9;
+    }
+    .lesson-content p { margin-bottom: 20px; }
+    .lesson-content h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--text-body);
+      margin: 32px 0 12px;
+    }
+    .lesson-content ul, .lesson-content ol {
+      padding-left: 24px;
+      margin-bottom: 20px;
+    }
+    .lesson-content li { margin-bottom: 8px; }
+    .lesson-content blockquote {
+      border-left: 3px solid var(--cie-gold);
+      padding: 16px 24px;
+      background: rgba(196,162,69,0.05);
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      font-style: italic;
+      color: var(--cie-mid);
+    }
+
+    /* ═══ TOGETHER WORK ═══ */
+    .together-work-section {
+      margin-top: 40px;
+      padding: 28px 32px;
+      background: linear-gradient(135deg, rgba(28,43,74,0.06) 0%, rgba(196,162,69,0.04) 100%);
+      border: 1px solid rgba(196,162,69,0.2);
+      border-radius: 14px;
+    }
+    .together-work-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--cie-gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .together-work-label::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 2px;
+      background: var(--cie-gold);
+      border-radius: 1px;
+    }
+    .together-work-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--cie-mid);
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .together-work-body {
+      font-size: 15px;
+      color: #3A4060;
+      line-height: 1.8;
+    }
+    .together-work-body p { margin-bottom: 14px; }
+    .together-work-body p:last-child { margin-bottom: 0; }
+    .together-work-body ul { padding-left: 20px; }
+    .together-work-body li { margin-bottom: 6px; }
+
+    /* ═══ LESSON FOOTER ═══ */
+    .lesson-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(196,162,69,0.15);
+      flex-wrap: wrap;
+    }
+    .btn-complete {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--cie-mid), var(--cie-navy));
+      color: var(--cie-cream);
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(15,23,41,0.2);
+      border: 1px solid var(--cie-border);
+    }
+    .btn-complete:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(15,23,41,0.3); }
+    .btn-complete.done {
+      background: linear-gradient(135deg, #4aaa78, #3a8f63);
+      border-color: rgba(93,190,138,0.3);
+      box-shadow: 0 6px 24px rgba(93,190,138,0.25);
+    }
+    .btn-complete:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .lesson-nav-buttons { display: flex; gap: 10px; }
+    .btn-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 20px;
+      background: transparent;
+      border: 1px solid rgba(196,162,69,0.2);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { border-color: var(--cie-gold); color: var(--cie-mid); }
+    .btn-nav:disabled { opacity: 0.3; cursor: default; }
+
+    /* ═══ MODULE COMPLETE OVERLAY ═══ */
+    .module-complete-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,16,32,0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      text-align: center;
+      padding: 40px;
+    }
+    .module-complete-overlay.show { opacity: 1; pointer-events: auto; }
+    .mc-check {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cie-mid), var(--cie-navy));
+      border: 2px solid var(--cie-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      margin-bottom: 32px;
+      animation: checkPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes checkPop { from { transform:scale(0);opacity:0; } to { transform:scale(1);opacity:1; } }
+    .mc-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .mc-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 5vw, 54px);
+      color: var(--cie-cream);
+      margin-bottom: 16px;
+    }
+    .mc-sub {
+      font-size: 16px;
+      color: var(--cie-muted);
+      max-width: 400px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    .mc-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .mc-btn-primary {
+      padding: 14px 32px;
+      background: var(--cie-gold);
+      color: var(--cie-dark);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .mc-btn-primary:hover { background: var(--cie-gold-lt); }
+    .mc-btn-outline {
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--cie-gold);
+      border: 1px solid var(--cie-border);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .mc-btn-outline:hover { background: rgba(196,162,69,0.08); }
+
+    /* ═══ LOADING ═══ */
+    .loading {
+      display: flex; align-items: center; justify-content: center; min-height: 300px;
+    }
+    .loading-spinner {
+      width: 36px; height: 36px;
+      border: 3px solid rgba(196,162,69,0.12);
+      border-top-color: var(--cie-gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ═══ MOBILE ═══ */
+    .mobile-sidebar-toggle {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,162,69,0.1);
+      border: 1px solid var(--cie-border);
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 12px;
+      color: var(--cie-gold);
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 99;
+    }
+    .sidebar-overlay.open { display: block; }
+
+    @media (max-width: 860px) {
+      .sidebar {
+        left: -var(--sidebar-w);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 150;
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main { margin-left: 0; }
+      .mobile-sidebar-toggle { display: flex; }
+      .nav-module-title { max-width: 160px; }
+      .lesson-body { padding: 32px 24px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SVG defs for gradient -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="cieGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C4A245"/>
+      <stop offset="100%" stop-color="#D9B96A"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- MODULE COMPLETE OVERLAY -->
+<div class="module-complete-overlay" id="mc-overlay">
+  <div class="mc-check">✓</div>
+  <div class="mc-eyebrow">Module Complete</div>
+  <div class="mc-title" id="mc-title">Well done.</div>
+  <p class="mc-sub" id="mc-sub">Keep going — your next module is ready.</p>
+  <div class="mc-actions" id="mc-actions"></div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="top-nav-left">
+    <a href="/programs/couples-dashboard" class="nav-back">← Dashboard</a>
+    <span class="nav-divider">/</span>
+    <span class="nav-module-title" id="nav-module-title">Loading...</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="nav-progress-text" id="nav-progress"></span>
+    <button class="mobile-sidebar-toggle" id="sidebar-toggle">☰ Lessons</button>
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-module-header">
+      <div class="sidebar-eyebrow">Couples in Entrepreneurship</div>
+      <div class="sidebar-module-name" id="sidebar-module-name">Loading...</div>
+      <div class="sidebar-ring-wrap">
+        <div class="ring-container">
+          <svg class="ring-svg" width="52" height="52" viewBox="0 0 52 52">
+            <circle class="ring-bg" cx="26" cy="26" r="21"/>
+            <circle class="ring-fill" cx="26" cy="26" r="21"
+              id="sidebar-ring"
+              stroke-dasharray="132"
+              stroke-dashoffset="132"/>
+          </svg>
+          <div class="ring-text" id="sidebar-ring-pct">0%</div>
+        </div>
+        <div class="ring-label-text">
+          <strong id="sidebar-done-count">0</strong> of <span id="sidebar-total-count">0</span> lessons complete
+        </div>
+      </div>
+      <div class="partner-progress" id="partner-progress" style="display:none;"></div>
+    </div>
+    <div class="lesson-list" id="lesson-list">
+      <div class="loading"><div class="loading-spinner"></div></div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- MAIN -->
+  <div class="main" id="main">
+    <div class="loading" style="min-height:calc(100vh - 60px)"><div class="loading-spinner"></div></div>
+  </div>
+
+</div>
+
+<script src="/api/config"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+// State
+let userId        = null;
+let coupleId      = null;
+let partnerId     = null;
+let currentModule = null;
+let allLessons    = [];
+let completedSet  = new Set(); // lesson IDs user has completed
+let partnerDoneSet = new Set(); // lesson IDs partner has completed
+let activeLessonId = null;
+let saving = false;
+
+// Extract module slug from URL path
+const pathParts = window.location.pathname.split('/').filter(Boolean);
+const moduleSlug = pathParts[pathParts.length - 1];
+const lessonParam = new URLSearchParams(window.location.search).get('lesson');
+
+// Mobile sidebar toggle
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+});
+document.getElementById('sidebar-overlay').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+});
+
+async function init() {
+  let { data: { session } } = await db.auth.getSession();
+  if (!session) { window.location.href = '/programs/login'; return; }
+  const { data: refreshed } = await db.auth.refreshSession();
+  if (refreshed?.session) session = refreshed.session;
+  userId = session.user.id;
+
+  // Get couple record
+  const { data: couple } = await db
+    .from('couples')
+    .select('id, partner_a_id, partner_b_id')
+    .or(`partner_a_id.eq.${userId},partner_b_id.eq.${userId}`)
+    .single();
+
+  if (!couple) { showError('No couple record found.'); return; }
+  coupleId  = couple.id;
+  partnerId = userId === couple.partner_a_id ? couple.partner_b_id : couple.partner_a_id;
+
+  // Check module is unlocked
+  const { data: report } = await db
+    .from('partnership_reports')
+    .select('unlocked_domains')
+    .eq('couple_id', coupleId)
+    .single();
+
+  // Load module by slug
+  const { data: mod } = await db
+    .from('modules')
+    .select('id, title, order_index, unlock_domain, course_id, courses!inner(slug)')
+    .eq('courses.slug', 'couples-in-entrepreneurship')
+    .eq('slug', moduleSlug)
+    .single();
+
+  if (!mod) { showError('Module not found.'); return; }
+
+  // Lock check (module 1 always open, module 8 open if report exists, others check unlocked_domains)
+  const unlocked = report?.unlocked_domains || [];
+  const isFoundation = mod.order_index === 1;
+  const isWin = mod.order_index === 8;
+  const domainUnlocked = unlocked.includes(mod.unlock_domain) || unlocked.includes('all');
+
+  if (!isFoundation && !isWin && !domainUnlocked && !report) {
+    window.location.href = '/programs/couples-dashboard';
+    return;
+  }
+
+  currentModule = mod;
+  document.getElementById('nav-module-title').textContent = mod.title;
+  document.getElementById('sidebar-module-name').textContent = mod.title;
+
+  // Load lessons
+  const { data: lessons } = await db
+    .from('lessons')
+    .select('id, title, order_index, video_url, content, together_work')
+    .eq('module_id', mod.id)
+    .order('order_index');
+
+  allLessons = lessons || [];
+
+  // Load my progress
+  if (allLessons.length > 0) {
+    const lessonIds = allLessons.map(l => l.id);
+    const { data: myProgress } = await db
+      .from('progress')
+      .select('lesson_id')
+      .eq('user_id', userId)
+      .eq('completed', true)
+      .in('lesson_id', lessonIds);
+    (myProgress || []).forEach(p => completedSet.add(p.lesson_id));
+
+    // Load partner's progress
+    if (partnerId) {
+      const { data: partnerProgress } = await db
+        .from('progress')
+        .select('lesson_id')
+        .eq('user_id', partnerId)
+        .eq('completed', true)
+        .in('lesson_id', lessonIds);
+      (partnerProgress || []).forEach(p => partnerDoneSet.add(p.lesson_id));
+    }
+  }
+
+  renderSidebar();
+
+  // Pick which lesson to open
+  let startLesson = null;
+  if (lessonParam) {
+    startLesson = allLessons.find(l => l.id === lessonParam);
+  }
+  if (!startLesson) {
+    // First incomplete lesson, or last if all done
+    startLesson = allLessons.find(l => !completedSet.has(l.id)) || allLessons[0];
+  }
+  if (startLesson) openLesson(startLesson.id);
+}
+
+function renderSidebar() {
+  const done  = completedSet.size;
+  const total = allLessons.length;
+  const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
+  const circ  = 132;
+  const offset = circ - (pct / 100) * circ;
+
+  document.getElementById('sidebar-ring').setAttribute('stroke-dashoffset', offset);
+  document.getElementById('sidebar-ring-pct').textContent = pct + '%';
+  document.getElementById('sidebar-done-count').textContent  = done;
+  document.getElementById('sidebar-total-count').textContent = total;
+  document.getElementById('nav-progress').innerHTML = `<strong>${done}/${total}</strong> lessons`;
+
+  // Partner progress strip
+  const partnerDone = partnerDoneSet.size;
+  if (partnerDone > 0) {
+    const el = document.getElementById('partner-progress');
+    el.style.display = '';
+    el.innerHTML = `Your partner: <strong>${partnerDone}/${total} lessons done</strong>`;
+  }
+
+  // Lesson list
+  const list = document.getElementById('lesson-list');
+  list.innerHTML = '';
+  allLessons.forEach((l, i) => {
+    const isDone   = completedSet.has(l.id);
+    const isActive = l.id === activeLessonId;
+    const item = document.createElement('div');
+    item.className = `lesson-item${isActive ? ' active' : ''}`;
+    item.dataset.id = l.id;
+    item.innerHTML = `
+      <div class="lesson-check${isDone ? ' done' : ''}">✓</div>
+      <div class="lesson-num">${String(i + 1).padStart(2, '0')}</div>
+      <div class="lesson-title-text">${escHtml(l.title)}</div>`;
+    item.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebar-overlay').classList.remove('open');
+      openLesson(l.id);
+    });
+    list.appendChild(item);
+  });
+}
+
+function openLesson(lessonId) {
+  activeLessonId = lessonId;
+  const lesson = allLessons.find(l => l.id === lessonId);
+  if (!lesson) return;
+
+  // Update URL without reload
+  const newUrl = `/programs/couples-course/${moduleSlug}?lesson=${lessonId}`;
+  window.history.replaceState({}, '', newUrl);
+
+  // Update active state in sidebar
+  document.querySelectorAll('.lesson-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === lessonId);
+  });
+
+  const idx   = allLessons.findIndex(l => l.id === lessonId);
+  const isDone = completedSet.has(lessonId);
+  const prevLesson = allLessons[idx - 1] || null;
+  const nextLesson = allLessons[idx + 1] || null;
+
+  let html = '';
+
+  // Video
+  if (lesson.video_url) {
+    html += `<div class="video-section">
+      <div class="video-wrap">
+        <iframe src="${escAttr(lesson.video_url)}" allowfullscreen allow="autoplay; fullscreen"></iframe>
+      </div>
+    </div>`;
+  }
+
+  // Lesson body
+  html += `<div class="lesson-body">
+    <div class="lesson-eyebrow">Module ${currentModule.order_index} · Lesson ${idx + 1} of ${allLessons.length}</div>
+    <h1 class="lesson-heading">${escHtml(lesson.title)}</h1>`;
+
+  if (lesson.content) {
+    html += `<div class="lesson-content">${lesson.content}</div>`;
+  } else {
+    html += `<div class="lesson-content"><p style="color:var(--text-muted);font-style:italic;">Content coming soon.</p></div>`;
+  }
+
+  // Together Work
+  if (lesson.together_work) {
+    html += `<div class="together-work-section">
+      <div class="together-work-label">Together Work</div>
+      <div class="together-work-title">Do this one together</div>
+      <div class="together-work-body">${lesson.together_work}</div>
+    </div>`;
+  }
+
+  // Footer
+  html += `<div class="lesson-footer">
+    <button class="btn-complete${isDone ? ' done' : ''}" id="btn-complete"
+      onclick="markComplete('${lessonId}', ${idx})"
+      ${isDone ? 'disabled' : ''}>
+      ${isDone ? '✓ Lesson Complete' : 'Mark Complete'}
+    </button>
+    <div class="lesson-nav-buttons">
+      <button class="btn-nav" onclick="openLesson('${prevLesson?.id}')" ${!prevLesson ? 'disabled' : ''}>← Prev</button>
+      <button class="btn-nav" onclick="openLesson('${nextLesson?.id}')" ${!nextLesson ? 'disabled' : ''}>Next →</button>
+    </div>
+  </div>`;
+
+  html += `</div>`; // lesson-body
+
+  document.getElementById('main').innerHTML = html;
+  document.getElementById('main').scrollTop = 0;
+  window.scrollTo({ top: 0 });
+}
+
+async function markComplete(lessonId, lessonIdx) {
+  if (saving || completedSet.has(lessonId)) return;
+  saving = true;
+
+  const btn = document.getElementById('btn-complete');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+  const { error } = await db
+    .from('progress')
+    .upsert({ user_id: userId, lesson_id: lessonId, completed: true, completed_at: new Date().toISOString() },
+             { onConflict: 'user_id,lesson_id' });
+
+  saving = false;
+
+  if (error) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Mark Complete'; }
+    console.error('Progress save error:', error);
+    return;
+  }
+
+  completedSet.add(lessonId);
+  renderSidebar();
+
+  // Update button
+  if (btn) { btn.classList.add('done'); btn.textContent = '✓ Lesson Complete'; }
+
+  const allDone = allLessons.every(l => completedSet.has(l.id));
+
+  if (allDone) {
+    // Module complete
+    setTimeout(() => showModuleComplete(), 600);
+  } else {
+    // Auto-advance to next lesson after a beat
+    const next = allLessons[lessonIdx + 1];
+    if (next) setTimeout(() => openLesson(next.id), 800);
+  }
+}
+
+function showModuleComplete() {
+  const overlay = document.getElementById('mc-overlay');
+  document.getElementById('mc-title').textContent = currentModule.title + ' — Done.';
+  document.getElementById('mc-sub').textContent = 'You\'ve completed this module. Keep going — the work compounds.';
+
+  const actions = document.getElementById('mc-actions');
+  actions.innerHTML = `
+    <a href="/programs/couples-dashboard" class="mc-btn-primary">Back to Dashboard</a>
+    <button class="mc-btn-outline" onclick="document.getElementById('mc-overlay').classList.remove('show')">Stay Here</button>`;
+
+  overlay.classList.add('show');
+
+  // Gold confetti
+  spawnConfetti();
+}
+
+function spawnConfetti() {
+  const colors = ['#C4A245','#D9B96A','#F5EDD8','#8A9BB8','#5DBE8A'];
+  const container = document.createElement('div');
+  container.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:999;overflow:hidden;';
+  document.body.appendChild(container);
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size  = 6 + Math.random() * 6;
+    const left  = Math.random() * 100;
+    const dur   = 1.8 + Math.random() * 1.4;
+    const delay = Math.random() * 0.8;
+    p.style.cssText = `position:absolute;width:${size}px;height:${size}px;background:${color};top:-10px;left:${left}%;border-radius:2px;animation:confettiFall ${dur}s ${delay}s linear forwards;opacity:0.9;`;
+    container.appendChild(p);
+  }
+  const style = document.createElement('style');
+  style.textContent = `@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:.9}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}`;
+  document.head.appendChild(style);
+  setTimeout(() => container.remove(), 4000);
+}
+
+function showError(msg) {
+  document.getElementById('main').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 60px);padding:40px;">
+      <div style="text-align:center;">
+        <p style="font-family:'Instrument Serif',serif;font-size:24px;color:var(--cie-mid);margin-bottom:12px;">Something went wrong</p>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px;">${escHtml(msg)}</p>
+        <a href="/programs/couples-dashboard" style="font-size:14px;color:var(--cie-gold);font-weight:600;">← Back to Dashboard</a>
+      </div>
+    </div>`;
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return String(s||'').replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+
+<script src="/js/social-bar.js"></script>
+</body>
+</html>
