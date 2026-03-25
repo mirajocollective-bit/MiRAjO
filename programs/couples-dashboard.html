@@ -400,6 +400,67 @@
     .support-link { font-size: 14px; font-weight: 600; color: var(--cie-gold); text-decoration: none; white-space: nowrap; }
     .support-link:hover { color: var(--cie-gold-lt); }
 
+    /* ═══ INVITE BANNER ═══ */
+    .invite-banner {
+      background: linear-gradient(135deg, var(--cie-mid), var(--cie-navy));
+      border: 1px solid rgba(196,162,69,0.35);
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .invite-banner-text { flex: 1; min-width: 220px; }
+    .invite-banner-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .invite-banner-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--cie-cream);
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .invite-banner-sub {
+      font-size: 13px;
+      color: var(--cie-muted);
+      line-height: 1.65;
+    }
+    .invite-banner-form {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .invite-banner-form input[type="email"] {
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(196,162,69,0.25);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--cie-cream);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none;
+      width: 240px;
+      transition: border-color 0.2s;
+    }
+    .invite-banner-form input:focus { border-color: var(--cie-gold); }
+    .invite-banner-form input::placeholder { color: rgba(138,155,184,0.45); }
+    @media (max-width: 768px) {
+      .invite-banner { flex-direction: column; padding: 24px; }
+      .invite-banner-form { width: 100%; }
+      .invite-banner-form input { width: 100%; }
+      .invite-banner-form .btn-gold { width: 100%; text-align: center; }
+    }
+
     /* ═══ LOADING ═══ */
     .loading {
       display: flex;
@@ -463,6 +524,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+let _currentUser = null;
 
 const MODULES = [
   { num: 1, slug: 'the-cost-of-misalignment',  title: 'The Cost of Misalignment',  desc: 'Understand what misalignment is costing your business — and your relationship. Every couple starts here.', unlock_domain: null },
@@ -483,6 +545,7 @@ async function init() {
   if (refreshed?.session) session = refreshed.session;
 
   const user = session.user;
+  _currentUser = user;
   const firstName = user.user_metadata?.first_name || user.email;
   document.getElementById('user-name').textContent = firstName;
 
@@ -569,6 +632,23 @@ async function renderDashboard(user) {
   const partnerLabel = 'Your Partner';
 
   let html = '';
+
+  // ── INVITE BANNER (partner B not yet joined) ──
+  const partnerLinked = !!coupleRow.partner_b_user_id;
+  if (!partnerLinked) {
+    html += `<div class="invite-banner" id="invite-banner">
+      <div class="invite-banner-text">
+        <div class="invite-banner-label">Partner Not Yet Joined</div>
+        <div class="invite-banner-title">Invite your partner to get started</div>
+        <div class="invite-banner-sub">The diagnostic, report, and course all require both partners. Enter their email below and we'll send them everything they need.</div>
+      </div>
+      <div class="invite-banner-form">
+        <input type="email" id="invite-email-input" placeholder="partner@email.com">
+        <button class="btn-gold" id="invite-send-btn" onclick="sendInvite()">Send Invite</button>
+      </div>
+      <div id="invite-msg" style="font-size:13px;margin-top:12px;display:none;"></div>
+    </div>`;
+  }
 
   // ── DIAGNOSTIC STATUS CARD ──
   html += `<div class="section-label">Step 1 — The Partnership Diagnostic</div>`;
@@ -682,6 +762,51 @@ async function renderDashboard(user) {
   </div>`;
 
   content.innerHTML = html;
+}
+
+async function sendInvite() {
+  const input = document.getElementById('invite-email-input');
+  const btn   = document.getElementById('invite-send-btn');
+  const msg   = document.getElementById('invite-msg');
+  const email = input?.value?.trim();
+
+  if (!email || !email.includes('@')) {
+    msg.style.display = 'block';
+    msg.style.color   = '#E07070';
+    msg.textContent   = 'Please enter a valid email address.';
+    return;
+  }
+
+  btn.disabled    = true;
+  btn.textContent = 'Sending…';
+  msg.style.display = 'none';
+
+  try {
+    const firstName = _currentUser?.user_metadata?.first_name || '';
+    const resp = await fetch('/api/couples-invite', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        partner_a_user_id:    _currentUser?.id,
+        partner_b_email:      email,
+        partner_a_first_name: firstName,
+      }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Failed to send invite');
+
+    msg.style.display = 'block';
+    msg.style.color   = '#5DBE8A';
+    msg.textContent   = `Invite sent to ${email}. They'll receive an email with their login link.`;
+    input.value = '';
+    btn.textContent = 'Sent!';
+  } catch (err) {
+    msg.style.display = 'block';
+    msg.style.color   = '#E07070';
+    msg.textContent   = err.message || 'Something went wrong. Please try again.';
+    btn.disabled    = false;
+    btn.textContent = 'Send Invite';
+  }
 }
 
 function errorState(msg, showSupport = false) {
