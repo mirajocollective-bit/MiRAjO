@@ -499,8 +499,8 @@ async function renderDashboard(user) {
   // Load couple record
   const { data: coupleRow } = await db
     .from('couples')
-    .select('id, partner_a_id, partner_b_id')
-    .or(`partner_a_id.eq.${user.id},partner_b_id.eq.${user.id}`)
+    .select('id, partner_a_user_id, partner_b_user_id')
+    .or(`partner_a_user_id.eq.${user.id},partner_b_user_id.eq.${user.id}`)
     .single();
 
   if (!coupleRow) {
@@ -509,7 +509,7 @@ async function renderDashboard(user) {
   }
 
   const coupleId = coupleRow.id;
-  const partnerId = user.id === coupleRow.partner_a_id ? coupleRow.partner_b_id : coupleRow.partner_a_id;
+  const partnerId = user.id === coupleRow.partner_a_user_id ? coupleRow.partner_b_user_id : coupleRow.partner_a_user_id;
 
   // Load diagnostic completion for both partners
   const { data: completions } = await db

@@ -27,11 +27,11 @@ export default async function handler(req, res) {
   // Verify the user belongs to this couple
   const { data: couple } = await supabase
     .from('couples')
-    .select('id, partner_a_id, partner_b_id')
+    .select('id, partner_a_user_id, partner_b_user_id')
     .eq('id', couple_id)
     .single();
 
-  if (!couple || (couple.partner_a_id !== user_id && couple.partner_b_id !== user_id)) {
+  if (!couple || (couple.partner_a_user_id !== user_id && couple.partner_b_user_id !== user_id)) {
     return res.status(403).json({ error: 'Unauthorized' });
   }
 
@@ -93,7 +93,7 @@ export default async function handler(req, res) {
   }
 
   // Load both partners' alignment ratings
-  const partnerId = user_id === couple.partner_a_id ? couple.partner_b_id : couple.partner_a_id;
+  const partnerId = user_id === couple.partner_a_user_id ? couple.partner_b_user_id : couple.partner_a_user_id;
   const DOMAINS = ['business', 'finances', 'family', 'relationship'];
 
   const { data: allRatings } = await supabase
@@ -111,8 +111,8 @@ export default async function handler(req, res) {
   // Determine unlocked domains
   const unlocked_domains = [];
   for (const domain of DOMAINS) {
-    const rA = ratings[domain]?.[couple.partner_a_id];
-    const rB = ratings[domain]?.[couple.partner_b_id];
+    const rA = ratings[domain]?.[couple.partner_a_user_id];
+    const rB = ratings[domain]?.[couple.partner_b_user_id];
     if (shouldUnlock(rA, rB)) unlocked_domains.push(domain);
   }
 
@@ -145,8 +145,8 @@ export default async function handler(req, res) {
   }
 
   // Queue report-ready emails to both partners
-  const { data: partnerAProfile } = await supabase.auth.admin.getUserById(couple.partner_a_id);
-  const { data: partnerBProfile } = await supabase.auth.admin.getUserById(couple.partner_b_id);
+  const { data: partnerAProfile } = await supabase.auth.admin.getUserById(couple.partner_a_user_id);
+  const { data: partnerBProfile } = await supabase.auth.admin.getUserById(couple.partner_b_user_id);
 
   const aEmail = partnerAProfile?.user?.email;
   const bEmail = partnerBProfile?.user?.email;

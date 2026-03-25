@@ -566,8 +566,8 @@ async function init() {
   // Load couple
   const { data: couple } = await db
     .from('couples')
-    .select('id, partner_a_id, partner_b_id')
-    .or(`partner_a_id.eq.${user.id},partner_b_id.eq.${user.id}`)
+    .select('id, partner_a_user_id, partner_b_user_id')
+    .or(`partner_a_user_id.eq.${user.id},partner_b_user_id.eq.${user.id}`)
     .single();
 
   if (!couple) { showError('No couple record found. Please contact support.'); return; }
@@ -584,7 +584,7 @@ async function init() {
     return;
   }
 
-  const isPartnerA = user.id === couple.partner_a_id;
+  const isPartnerA = user.id === couple.partner_a_user_id;
   const youLabel     = firstName || 'You';
   const partnerLabel = 'Your Partner';
 

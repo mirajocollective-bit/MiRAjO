@@ -635,13 +635,13 @@ async function init() {
   // Get couple record
   const { data: couple } = await db
     .from('couples')
-    .select('id, partner_a_id, partner_b_id')
-    .or(`partner_a_id.eq.${userId},partner_b_id.eq.${userId}`)
+    .select('id, partner_a_user_id, partner_b_user_id')
+    .or(`partner_a_user_id.eq.${userId},partner_b_user_id.eq.${userId}`)
     .single();
 
   if (!couple) { showError('No couple record found.'); return; }
   coupleId  = couple.id;
-  partnerId = userId === couple.partner_a_id ? couple.partner_b_id : couple.partner_a_id;
+  partnerId = userId === couple.partner_a_user_id ? couple.partner_b_user_id : couple.partner_a_user_id;
 
   // Check module is unlocked
   const { data: report } = await db

@@ -494,7 +494,7 @@ async function init() {
   const { data: couple } = await db
     .from('couples')
     .select('id')
-    .or(`partner_a_id.eq.${userId},partner_b_id.eq.${userId}`)
+    .or(`partner_a_user_id.eq.${userId},partner_b_user_id.eq.${userId}`)
     .single();
 
   if (!couple) {
