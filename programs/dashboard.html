@@ -564,6 +564,24 @@
       const course = enrollment.courses;
       if (!course) continue;
 
+      const isCIE = course.slug === 'couples-in-entrepreneurship';
+
+      if (isCIE) {
+        // CIE has its own dashboard — render a distinct card
+        grid.innerHTML += `
+          <a href="/programs/couples-dashboard" class="course-card">
+            <div class="course-thumb" style="background:linear-gradient(135deg,#1C2B4A 0%,#0F1729 100%);">
+              <div class="thumb-start-icon" style="border-color:rgba(196,162,69,0.4);font-size:22px;">♦</div>
+              <div class="thumb-status" style="color:rgba(196,162,69,0.7);">Partner Dashboard</div>
+            </div>
+            <div class="course-card-body">
+              <h3 class="course-card-title">${course.title}</h3>
+              <span class="course-btn" style="background:#1C2B4A;">Go to Partner Dashboard</span>
+            </div>
+          </a>`;
+        continue;
+      }
+
       const progress = await getCourseProgress(userId, course.id);
 
       const circumference = 226;
