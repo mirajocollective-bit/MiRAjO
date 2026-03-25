@@ -110,12 +110,6 @@ export default async function handler(req, res) {
           stripe_session_id: session.id,
         });
 
-      // Tag Partner A in Kit
-      await addTag(email, 'enrolled-couples-cie', {
-        first_name: firstName,
-        fields: { last_name: lastName, phone, city, country },
-      });
-
       // Queue welcome email sequence for Partner A
       await queueSequence(supabase, email, 'enrolled-couples-cie', firstName);
 
