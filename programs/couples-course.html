@@ -679,9 +679,9 @@ async function init() {
   // Load lessons
   const { data: lessons } = await db
     .from('lessons')
-    .select('id, title, order_index, video_url, content, together_work')
+    .select('id, title, position, video_url, content, together_work')
     .eq('module_id', mod.id)
-    .order('order_index');
+    .order('position');
 
   allLessons = lessons || [];
 
