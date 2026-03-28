@@ -1,47 +1,110 @@
 -- CIE MODULE 4: Who Runs What (unlocks: business gap)
 
+DELETE FROM lessons WHERE module_id = 'df656a1c-79d8-4d31-8944-b89f1e63e615';
+
 INSERT INTO lessons (module_id, title, content, position) VALUES
 
 ('df656a1c-79d8-4d31-8944-b89f1e63e615', 'The Role Problem in Couples'' Businesses',
-'In most couples'' businesses, roles were never decided. They evolved.
+'<p>In most couples'' businesses, roles were never decided. They evolved.</p>
 
-One partner was better at something so they took it over. The other filled in everywhere else. It worked well enough at first. Then the business grew and the informal arrangement stopped working, but nobody formally changed it.
+<p>One partner was better at something so they took it over. The other filled in everywhere else. It worked well enough at first. Then the business grew, the informal arrangement stopped working, but nobody formally changed it.</p>
 
-Now there is overlap in some areas and nobody owning others. There are decisions that feel like they should be yours but your partner weighs in anyway. And decisions that feel like they should be a shared call but only one of you is actually making them.
+<p>What that typically looks like:</p>
 
-The frustration this creates is real, but the source of it is not the people. It is the absence of a clear structure. This module is about building that structure.',
+<ul>
+  <li>Overlap in some areas — both of you making the same calls, second-guessing each other without meaning to</li>
+  <li>Gaps in others — things that belong to nobody falling through</li>
+  <li>Decisions that feel like they should be yours, but your partner weighs in anyway</li>
+  <li>Decisions that feel like they should be shared, but only one of you is actually making them</li>
+</ul>
+
+<blockquote>The frustration this creates is real, but the source is not the people. It is the absence of a clear structure. This module is about building that structure.</blockquote>
+
+<h3>For Your Journal</h3>
+<p>Name one area in the business where you feel like you do not have full ownership — even though you should. What would change if you did?</p>',
 1),
 
 ('df656a1c-79d8-4d31-8944-b89f1e63e615', 'Mapping What Actually Happens',
-'Before you can fix your roles, you need to know what they actually are. Not what you agreed to in some earlier conversation. What actually happens day to day.
+'<p>Before you can fix your roles, you need to know what they actually are. Not what you agreed to in some earlier conversation. What actually happens day to day.</p>
 
-Who makes the calls about the product or service? Who handles client relationships? Who manages the money? Who hires and fires? Who sets the strategy and who executes it? Who handles the things nobody put on a list?
+<p>Go through the core functions of your business and write down who actually owns each one:</p>
 
-Write it down as it is right now, not as you think it should be. Then compare your lists. The places where you each wrote your own name are probably working. The places where you both wrote your own name are where the friction is. The places where neither of you wrote anything are where things are falling through.',
+<ul>
+  <li>Product or service delivery — who makes the final calls?</li>
+  <li>Client relationships — who is the primary contact?</li>
+  <li>Financial decisions — who manages cash, approves spending?</li>
+  <li>Hiring and team management — who owns this?</li>
+  <li>Strategy and direction — who sets it, who executes it?</li>
+  <li>Operations and admin — who handles the things nobody put on a list?</li>
+</ul>
+
+<blockquote>Write it down as it is right now, not as you think it should be. The places where you both wrote your own name are where the friction is. The places where neither of you wrote anything are where things are falling through.</blockquote>
+
+<h3>Take Action</h3>
+<p>Each of you complete the list above separately — write your own name next to what you actually own. Then compare. Do not negotiate yet. Just see the map clearly. The gaps and overlaps are the agenda for your next roles conversation.</p>',
 2),
 
 ('df656a1c-79d8-4d31-8944-b89f1e63e615', 'Deciding Who Decides',
-'There are decisions that one partner should own completely. There are decisions that belong to both of you. And there are decisions that belong to whoever holds that function, regardless of title or seniority.
+'<p>Not every decision needs both of you. That might sound obvious. In a couples'' business, it is surprisingly hard to implement.</p>
 
-Getting clear on which is which removes a lot of the daily friction in a couples'' business. You stop asking permission for things you should own. You stop being left out of things you should be part of.
+<p>Three categories every decision falls into:</p>
 
-The rule is simple. Define the decisions, define the decider, and do not revisit it unless something meaningful changes. This does not mean one partner has more power than the other. It means both partners know where their authority starts and ends, which is the only way either of you can do your best work.',
+<ul>
+  <li><strong>One partner owns it completely</strong> — they can move without checking in, and the other partner does not override it after the fact</li>
+  <li><strong>Both partners decide together</strong> — typically anything that affects overall direction, finances above a set threshold, or the relationship</li>
+  <li><strong>Function owner decides</strong> — whoever holds that area makes the call, regardless of who has stronger opinions about it</li>
+</ul>
+
+<blockquote>Getting clear on which is which removes a lot of the daily friction. You stop asking permission for things you should own. You stop being left out of things you should be part of.</blockquote>
+
+<p>The rule: define the decisions, define the decider, and do not revisit it unless something meaningful changes. This is not about power. It is about both of you being able to do your best work without waiting on each other for everything.</p>
+
+<h3>Take Action</h3>
+<p>Go back to your roles map from the last lesson. For each area, decide: does this person own it and decide alone, or does this require a joint conversation? Write "solo" or "together" next to each. If you disagree about which category something falls into — that is a high-value conversation to have.</p>',
 3),
 
 ('df656a1c-79d8-4d31-8944-b89f1e63e615', 'When You Disagree on Direction',
-'You will disagree. That is not the problem. The problem is not having a way to resolve it that does not require one of you to back down or the decision to get avoided entirely.
+'<p>You will disagree. That is not the problem. The problem is not having a way to resolve it that does not require one of you to back down or the decision to get avoided entirely.</p>
 
-When two equal partners disagree and there is no process, the decision goes to whoever is more persistent or whoever is louder. Neither of those is a good outcome for the business or the relationship.
+<p>What happens without a process:</p>
 
-Decide now how you handle genuine disagreement. Maybe one partner has final say in their domain. Maybe you bring in a third perspective above a certain threshold. Maybe you have a rule about sleeping on it before deciding. The mechanism matters less than having one. Agree on it when you are not in the middle of a disagreement.',
+<ul>
+  <li>The decision goes to whoever is more persistent — not whoever is right</li>
+  <li>The decision goes to whoever is louder — which damages the relationship</li>
+  <li>The decision gets avoided entirely — which damages the business</li>
+</ul>
+
+<p>Options for your disagreement process:</p>
+
+<ul>
+  <li><strong>Domain authority:</strong> In their lane, one partner has final say after both have been heard</li>
+  <li><strong>Third perspective:</strong> For decisions above a certain threshold, you bring in an outside voice (advisor, mentor, board member)</li>
+  <li><strong>The pause rule:</strong> No major decision gets made during a disagreement — you sleep on it and come back in 24 hours</li>
+  <li><strong>Timeboxed debate:</strong> 30 minutes to make the case, then a decision — no extending the conversation indefinitely</li>
+</ul>
+
+<blockquote>Agree on your process when you are not in the middle of a disagreement. That is the only time you can choose it clearly.</blockquote>
+
+<h3>Take Action</h3>
+<p>Decide now: what is your disagreement protocol? Write it down in one or two sentences. It does not have to cover every scenario — it has to cover the most common ones. Having it written down means you can point to it instead of arguing about the process during the actual disagreement.</p>',
 4),
 
 ('df656a1c-79d8-4d31-8944-b89f1e63e615', 'Protecting Each Other''s Lanes',
-'Once roles are defined, protect them. If your partner owns a function, let them own it.
+'<p>Once roles are defined, protect them. If your partner owns a function, let them own it.</p>
 
-Do not offer corrections in public. Do not override their decisions without a conversation first. Do not take back what you delegated because you are nervous about the outcome.
+<p>What lane protection looks like in practice:</p>
 
-Couples'' businesses fail at role clarity not because the roles were never defined but because one or both partners could not let go once they were. Delegating and then hovering is not delegating. It is the illusion of trust.
+<ul>
+  <li>You do not offer corrections in public — if you have feedback, it happens privately</li>
+  <li>You do not override their decisions without a conversation first</li>
+  <li>You do not take back what you delegated because you are nervous about the outcome</li>
+  <li>You trust the decision even when you would have made it differently</li>
+</ul>
 
-Respecting your partner''s lane is not just good business practice. It is a form of trust that shows up in the relationship long after the meeting ends. Your partner needs to know that your agreement means something.',
+<blockquote>Couples'' businesses fail at role clarity not because the roles were never defined but because one or both partners could not let go once they were. Delegating and then hovering is not delegating. It is the illusion of trust.</blockquote>
+
+<p>Respecting your partner''s lane is not just good business practice. It is a form of trust that shows up in the relationship long after the meeting ends. Your partner needs to know that your agreement means something.</p>
+
+<h3>For Your Journal</h3>
+<p>Is there a lane you have technically handed over but still find yourself stepping into? What is driving that — is it a concern about outcomes, a trust issue, a habit? Name it honestly. You cannot fix a pattern you are not willing to see.</p>',
 5);

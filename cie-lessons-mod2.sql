@@ -1,59 +1,131 @@
 -- CIE MODULE 2: The Financial Playbook (unlocks: finances gap)
 
+DELETE FROM lessons WHERE module_id = '29f3f2ac-a852-4de5-bb15-f80b76a0543a';
+
 INSERT INTO lessons (module_id, title, content, position) VALUES
 
 ('29f3f2ac-a852-4de5-bb15-f80b76a0543a', 'Money and What It Means to Each of You',
-'Money means different things to different people. This is not philosophical. It is practical.
+'<p>Money means different things to different people. This is not philosophical. It is practical.</p>
 
-For one partner, money means security. The number in the account is what lets them sleep. For the other, money means possibility. It is fuel. The more you make, the more you can do. Neither of these is a flaw. But when you are making financial decisions together and running a business together, these two worldviews will collide.
+<p>For one partner, money means security — the number in the account is what lets them sleep. For the other, money means possibility — it is fuel, and the more you make, the more you can do. Neither of these is a flaw. But when you are making financial decisions together and running a business together, these two worldviews will collide.</p>
 
-They will collide around how much to reinvest. How much to pay yourselves. What counts as enough. What counts as reckless. What a slow month means. What a good month means.
+<p>They collide around:</p>
 
-Getting your financial worldviews out in the open is not about changing each other. It is about understanding where the friction actually comes from so you can make decisions without the same argument on repeat.',
+<ul>
+  <li>How much to reinvest versus hold in reserve</li>
+  <li>How much to pay yourselves — and when it is okay to take more</li>
+  <li>What a slow month means (danger signal vs. normal variance)</li>
+  <li>What a good month means (time to invest vs. time to stabilize)</li>
+</ul>
+
+<blockquote>Getting your financial worldviews out in the open is not about changing each other. It is about understanding where the friction actually comes from so you can make decisions without the same argument on repeat.</blockquote>
+
+<h3>For Your Journal</h3>
+<p>Complete this sentence privately, then share: <em>"To me, money primarily represents __________."</em> Then: where do you think your financial worldview came from? What did you grow up watching?</p>',
 1),
 
 ('29f3f2ac-a852-4de5-bb15-f80b76a0543a', 'Separating Business Money from Personal Money',
-'One of the most common pressure points for couples in business is not having a clean line between what belongs to the business and what belongs to the household.
+'<p>One of the most common pressure points for couples in business is not having a clean line between what belongs to the business and what belongs to the household.</p>
 
-When the business is tight, do you cover it from personal savings? When it does well, does the household spend more? If the answer to either is sometimes, the line is blurry. And blurry lines create resentment.
+<p>The warning signs that the line is blurry:</p>
 
-One partner starts feeling like the business is taking from the family. The other feels like the household is strangling the business. Both feelings make complete sense. The line is what resolves it, not the feelings.
+<ul>
+  <li>Covering a slow business month with personal savings — without a formal agreement</li>
+  <li>Spending more at home when the business has a good month</li>
+  <li>One partner feeling like the business is taking from the family</li>
+  <li>The other feeling like the household is strangling the business</li>
+</ul>
 
-A separate business account is the start. A written agreement about what moves between them and when is what makes it real. You do not need a CFO to do this. You need an agreement and the discipline to keep it.',
+<p>Both of those feelings make complete sense. The line is what resolves them, not the feelings.</p>
+
+<blockquote>A separate business account is the start. A written agreement about what moves between them and when is what makes it real. You do not need a CFO to do this. You need an agreement and the discipline to keep it.</blockquote>
+
+<h3>Take Action</h3>
+<p>Answer these together out loud, then write down your agreed answers:</p>
+<ul>
+  <li>Do we have a dedicated business account that is separate from personal accounts?</li>
+  <li>Is there a written rule for when (and how much) money can move between business and household?</li>
+  <li>If either answer is no — what needs to change, and by when?</li>
+</ul>',
 2),
 
 ('29f3f2ac-a852-4de5-bb15-f80b76a0543a', 'What Are You Each Taking Out',
-'Compensation is one of the most avoided conversations in couples'' businesses. Nobody wants to feel like they are asking for money from their partner. Nobody wants to feel like they are placing a different value on their own time. So the conversation does not happen and both partners silently keep score.
+'<p>Compensation is one of the most avoided conversations in couples'' businesses. Nobody wants to feel like they are asking for money from their partner. Nobody wants to feel like they are placing a different value on their own time. So the conversation does not happen and both partners silently keep score.</p>
 
-What are you each drawing from the business? Is it equal? Should it be? Is it based on contribution, need, or something that was never actually decided?
+<p>The questions most couples have never answered out loud:</p>
 
-There is no universal right answer. But there has to be an answer you both agreed on out loud. If there is not one right now, that is the first thing to fix. Not because it is the most important issue, but because it will sit underneath every other financial conversation you try to have until it is resolved.',
+<ul>
+  <li>What is each of us drawing from the business right now?</li>
+  <li>Is it equal? Should it be?</li>
+  <li>Is it based on contribution, need, or something that was never actually decided?</li>
+  <li>What would change if the business doubled? If it had a hard quarter?</li>
+</ul>
+
+<blockquote>There is no universal right answer. But there has to be an answer you both agreed on out loud. If there is not one right now, that is the first thing to fix — not because it is the most important issue, but because it will sit underneath every other financial conversation you try to have until it is resolved.</blockquote>
+
+<h3>Take Action</h3>
+<p>Write down what each of you is currently drawing — salary, owner draws, informal pulls, whatever applies. Put it side by side. Then answer: is this what we consciously decided, or is this just what happened? If it is the latter, schedule a conversation this week to decide it on purpose.</p>',
 3),
 
 ('29f3f2ac-a852-4de5-bb15-f80b76a0543a', 'Reinvestment and Risk',
-'How much goes back into the business? This question sounds simple. It is not.
+'<p>How much goes back into the business? This question sounds simple. It is not.</p>
 
-One partner sees reinvestment as growth. The other sees it as risk. One wants to hire now. The other wants six months of runway first. One is thinking about where the business can be in three years. The other is thinking about what happens if this month is slow.
+<p>One partner sees reinvestment as growth. The other sees it as risk. One wants to hire now. The other wants six months of runway first. These are not incompatible positions — but they need to be negotiated before the invoice arrives, not during it.</p>
 
-These are not incompatible positions. But they need to be negotiated before the invoice arrives, not during it.
+<p>To build your reinvestment framework, you need to agree on three things:</p>
 
-Define what reinvestment means to your business right now. Define the risk threshold you can both actually live with, not the one that sounds responsible. Write it down. Call it your reinvestment framework. It will resolve more arguments than any financial tool you buy.',
+<ul>
+  <li><strong>The reinvestment percentage.</strong> What share of revenue goes back into the business before anything else is calculated?</li>
+  <li><strong>The risk threshold.</strong> What is the minimum cash reserve that both of you can actually live with — not the one that sounds responsible, the real one?</li>
+  <li><strong>The approval process.</strong> What level of spend requires a conversation? What can each partner decide alone?</li>
+</ul>
+
+<blockquote>Define what reinvestment means to your business right now. Write it down. That document will resolve more arguments than any financial tool you buy.</blockquote>
+
+<h3>Take Action</h3>
+<p>Draft your reinvestment framework — even rough numbers are better than none. Set a reinvestment percentage, a minimum reserve floor, and a spend approval threshold. Write it down somewhere you both have access to. You can refine it. You cannot act on it until it exists.</p>',
 4),
 
 ('29f3f2ac-a852-4de5-bb15-f80b76a0543a', 'What Financial Security Looks Like to Both of You',
-'What number would make you feel okay? Not rich. Not set for life. Just okay.
+'<p>What number would make you feel okay? Not rich. Not set for life. Just okay.</p>
 
-Ask your partner the same question privately before you compare answers. The numbers will probably be different. So will the reasons behind them.
+<p>Ask your partner the same question privately before you compare answers. The numbers will probably be different. So will the reasons behind them.</p>
 
-Security is not a number. It is a feeling, and that feeling is shaped by everything that came before this business. Before this relationship. What each of you grew up watching. What each of you has survived financially. What each of you is protecting against without always saying it out loud.
+<p>Security is not a number. It is a feeling — shaped by:</p>
 
-Knowing what makes each of you feel financially safe changes how you make decisions together. You stop treating every financial conversation as a negotiation and start treating it as a shared problem with two people who both want to get it right.',
+<ul>
+  <li>What each of you grew up watching</li>
+  <li>What each of you has survived financially before this business</li>
+  <li>What you are each quietly protecting against, even if you have never said it out loud</li>
+</ul>
+
+<blockquote>Knowing what makes each of you feel financially safe changes how you make decisions together. You stop treating every financial conversation as a negotiation and start treating it as a shared problem with two people who both want to get it right.</blockquote>
+
+<h3>For Your Journal</h3>
+<p>Write your answers separately before sharing: <em>"I feel financially secure when __________."</em> Then: what is one financial fear you carry into this business that your partner may not fully know about? Share it with each other. Not to fix it — just to make it visible.</p>',
 5),
 
 ('29f3f2ac-a852-4de5-bb15-f80b76a0543a', 'Your Financial Framework',
-'You need three things. A number you both agree on for personal draws. A reinvestment percentage you both commit to. And a reserve amount that neither of you touches without a conversation first.
+'<p>You need three things documented and agreed on. Not perfect — agreed on.</p>
 
-These do not have to be perfect. They have to be agreed on. Put them somewhere you can both see them. Review them every quarter. Change them when the business changes. They will change.
+<ul>
+  <li><strong>Personal draws:</strong> What each of you takes out of the business, on what schedule, and how that changes as revenue changes</li>
+  <li><strong>Reinvestment commitment:</strong> The percentage or dollar amount that goes back into the business before distributions happen</li>
+  <li><strong>The reserve floor:</strong> The minimum cash balance that neither of you touches without a formal conversation first</li>
+</ul>
 
-A financial framework is not a budget. It is a shared agreement that removes a recurring argument from your relationship and puts it into a document you can both point to when the pressure is on. That document is worth more than any amount of goodwill in the moment.',
+<p>Put these in a shared document — a Google Doc, a note, wherever you both have access. Review it every quarter. Update it when the business changes. It will change. That is expected.</p>
+
+<blockquote>A financial framework is not a budget. It is a shared agreement that removes a recurring argument from your relationship and puts it into a document you can both point to when the pressure is on.</blockquote>
+
+<p>The couples who avoid financial conflict are not the ones with the most money. They are the ones who had the conversation before the crisis did it for them.</p>
+
+<h3>Take Action — Build Your Framework Now</h3>
+<p>Open a shared document and fill in these three lines before you move on:</p>
+<ul>
+  <li>Our personal draw agreement: __________</li>
+  <li>Our reinvestment commitment: __________</li>
+  <li>Our reserve floor (do not touch without a conversation): __________</li>
+</ul>
+<p>Sign it. Date it. Set a calendar reminder to review it in 90 days.</p>',
 6);
