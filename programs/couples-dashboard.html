@@ -635,6 +635,12 @@ async function renderDashboard(user) {
   const reportReady     = !!report;
   const bothComplete    = !!(myCompletion && partnerCompletion);
 
+  // Gate diagnostic behind Module 1 completion
+  const dbMod1            = dbModules?.find(m => m.position === 1);
+  const mod1LessonCount   = dbMod1?.lessons?.[0]?.count || 0;
+  const mod1CompletedCount = dbMod1 ? (moduleProgress[dbMod1.id] || 0) : 0;
+  const mod1Complete      = mod1LessonCount > 0 && mod1CompletedCount >= mod1LessonCount;
+
   // Partner names
   const firstName  = (await db.auth.getUser()).data?.user?.user_metadata?.first_name || 'You';
   const partnerLabel = 'Your Partner';
@@ -685,8 +691,14 @@ async function renderDashboard(user) {
     </div>
     <div class="diagnostic-actions">
       ${!myCompletion
-        ? `<a href="/programs/couples-diagnostic" class="btn-gold">Take the Diagnostic</a>`
-        : `<span class="btn-outline" style="cursor:default;opacity:0.6;">Diagnostic Complete</span>`
+        ? mod1Complete
+          ? `<a href="/programs/couples-diagnostic" class="btn-gold">Take the Diagnostic</a>`
+          : `<span class="btn-outline" style="cursor:default;opacity:0.55;">&#128274; Complete Module 1 first</span>`
+        : `<span class="btn-outline" style="cursor:default;opacity:0.6;">&#10003; Diagnostic Complete</span>`
+      }
+      ${!myCompletion && !mod1Complete
+        ? `<span style="font-size:13px;color:var(--cie-muted);line-height:1.5;">Finish Module 1 — The Cost of Misalignment — to unlock the diagnostic.</span>`
+        : ''
       }
       ${myCompletion && !partnerCompletion
         ? `<span style="font-size:13px;color:var(--cie-muted);line-height:1.5;">Waiting for your partner to complete theirs. We'll email you both when the report is ready.</span>`
