@@ -139,9 +139,9 @@
 
     /* ── TICKER ── */
     .ticker-wrap {
-      background: #F2EBD9;
-      border-top: 1px solid rgba(18,32,18,0.1);
-      border-bottom: 1px solid rgba(18,32,18,0.1);
+      background: #C41E3A;
+      border-top: none;
+      border-bottom: none;
       padding: 20px 0;
       overflow: hidden;
       white-space: nowrap;
@@ -161,7 +161,7 @@
       font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #000000;
+      color: #FFFFFF;
       transform-origin: center center;
       transition: transform 0.15s ease, opacity 0.15s ease;
       will-change: transform;
@@ -171,38 +171,18 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: rgba(18,32,18,0.3);
+      background: rgba(255,255,255,0.4);
       flex-shrink: 0;
     }
-    /* logos with colored content on white/light bg — multiply removes white bg */
-    .ticker-logo {
-      height: 52px;
-      width: auto;
-      max-width: 124px;
+    /* all logos rendered as white silhouettes on red */
+    .ticker-logo, .ticker-logo-lg, .ticker-logo-inv {
       object-fit: contain;
       flex-shrink: 0;
-      mix-blend-mode: multiply;
-      filter: contrast(1.2) saturate(1.15);
+      filter: brightness(0) invert(1);
     }
-    .ticker-logo-lg {
-      height: 66px;
-      width: auto;
-      max-width: 150px;
-      object-fit: contain;
-      flex-shrink: 0;
-      mix-blend-mode: multiply;
-      filter: contrast(1.2) saturate(1.15);
-    }
-    /* white/light logos — invert to dark then multiply removes bg */
-    .ticker-logo-inv {
-      height: 52px;
-      width: auto;
-      max-width: 124px;
-      object-fit: contain;
-      flex-shrink: 0;
-      filter: invert(1) contrast(1.2);
-      mix-blend-mode: multiply;
-    }
+    .ticker-logo     { height: 52px; width: auto; max-width: 124px; }
+    .ticker-logo-lg  { height: 66px; width: auto; max-width: 150px; }
+    .ticker-logo-inv { height: 52px; width: auto; max-width: 124px; }
     @keyframes ticker {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
