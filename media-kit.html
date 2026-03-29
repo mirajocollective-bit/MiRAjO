@@ -139,14 +139,16 @@
 
     /* ── TICKER ── */
     .ticker-wrap {
-      background: var(--amber);
-      padding: 18px 0;
+      background: var(--white);
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 16px 0;
       overflow: hidden;
       white-space: nowrap;
     }
     .ticker-track {
       display: inline-flex;
-      animation: ticker 28s linear infinite;
+      animation: ticker 32s linear infinite;
     }
     .ticker-track:hover { animation-play-state: paused; }
     .ticker-item {
@@ -154,29 +156,40 @@
       align-items: center;
       gap: 10px;
       padding: 0 40px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--black);
-    }
-    .ticker-logo {
-      height: 28px;
-      width: auto;
-      max-width: 72px;
-      object-fit: contain;
-      filter: brightness(0);
-      opacity: 0.75;
-      flex-shrink: 0;
+      color: #1A1A1A;
     }
     .ticker-dot {
       display: inline-block;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
-      background: var(--black);
-      opacity: 0.35;
+      background: #C0C0C0;
       margin-left: 40px;
+    }
+    /* colored logos on light/white backgrounds — multiply removes the white bg */
+    .ticker-logo {
+      height: 34px;
+      width: auto;
+      max-width: 80px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      flex-shrink: 0;
+    }
+    /* white logos need a dark pill so they show on the white ticker */
+    .ticker-logo-dark {
+      height: 34px;
+      width: auto;
+      max-width: 80px;
+      object-fit: contain;
+      flex-shrink: 0;
+      background: #1A1A1A;
+      border-radius: 6px;
+      padding: 4px 8px;
+      box-sizing: content-box;
     }
     @keyframes ticker {
       0%   { transform: translateX(0); }
@@ -484,24 +497,24 @@
 <div class="ticker-wrap" aria-label="Speaking history">
   <div class="ticker-track">
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo">Power Women Expo 2026</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-local-stories-live.jpeg" alt="" class="ticker-logo">Local Stories Live</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo">Tampa Bay Connects</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo">Voyage Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo">Voyage Houston</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-dark">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-dark">Voyage Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-dark">Voyage Houston</span><span class="ticker-dot"></span>
     <!-- duplicate for seamless loop -->
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo">Power Women Expo 2026</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-local-stories-live.jpeg" alt="" class="ticker-logo">Local Stories Live</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo">Tampa Bay Connects</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo">Voyage Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo">Voyage Houston</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-dark">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-dark">Voyage Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-dark">Voyage Houston</span><span class="ticker-dot"></span>
   </div>
 </div>
 
