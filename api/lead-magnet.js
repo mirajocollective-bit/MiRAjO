@@ -3,10 +3,11 @@
 //   type = 'couples-scorecard'  → CIE nurture sequence
 //   type = 'alignment-audit'    → 25D25N nurture sequence
 //
-// Queues a 3-email Resend sequence via Supabase email_queue (same
-// system used for enrolled-25d25n, CIE, etc.)
+// Queues a 3-email Resend sequence via Supabase email_queue and
+// sends a lead notification to programs@mirajoco.org
 
 import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
 import { queueSequence } from './_emails.js';
 
 const supabase = createClient(
@@ -14,9 +15,16 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const SEQUENCE_MAP = {
   'couples-scorecard': 'lead-couples-scorecard',
   'alignment-audit':   'lead-alignment-audit',
+};
+
+const MAGNET_LABELS = {
+  'couples-scorecard': 'Couples Alignment Scorecard',
+  'alignment-audit':   'Alignment Audit',
 };
 
 export default async function handler(req, res) {
@@ -51,6 +59,33 @@ export default async function handler(req, res) {
       (firstName || '').trim(),
       { result, score: String(score || ''), type }
     );
+
+    // Notify Miranda
+    resend.emails.send({
+      from: 'MiRAjO <programs@mirajoco.org>',
+      to: 'programs@mirajoco.org',
+      subject: `New lead — ${MAGNET_LABELS[type]}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;">
+          <h2 style="color:#122012;margin-bottom:4px;">New Lead</h2>
+          <p style="color:#888;font-size:13px;margin-bottom:28px;">${MAGNET_LABELS[type]}</p>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#888;width:30%;">Name</td>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:15px;color:#122012;">${firstName || '—'}</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#888;">Email</td>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:15px;color:#122012;">${email.trim().toLowerCase()}</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#888;">Result</td>
+              <td style="padding:10px 0;font-size:15px;color:#122012;text-transform:capitalize;">${result} ${score ? '(score: ' + score + ')' : ''}</td>
+            </tr>
+          </table>
+        </div>
+      `,
+    }).catch(err => console.error('[lead-magnet] Notify error:', err.message));
 
     return res.status(200).json({ ok: true, result });
 
