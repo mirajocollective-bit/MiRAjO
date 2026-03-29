@@ -232,6 +232,133 @@ export const SEQUENCES = {
     },
   ],
 
+  // ── LEAD MAGNETS ─────────────────────────────────────────────────
+
+  'lead-couples-scorecard': [
+    {
+      step: 1, delayDays: 0,
+      subject: (d) => d?.result === 'red' ? 'Your score says: Critical. Here is what that means.' : d?.result === 'yellow' ? 'Your score says: Caution. Here is what that means.' : 'Your score says: Aligned. Here is what that means.',
+      body: (n, d) => {
+        const result = d?.result || 'yellow';
+        const copies = {
+          red: {
+            headline: 'Critical — The gap is real.',
+            body: `You are not imagining it. Something is off — in how you make decisions, how you talk about money, how connected you feel, or all of it. The distance between you did not happen overnight. But you named it today, and that is more than most couples ever do.`,
+            next: `The next step is not a conversation with your partner. It is this: <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#8B1A2B;">Couples in Entrepreneurship</a> was built for exactly where you are. Eight modules across Business, Finances, Family, and Relationship — built for couples in business who are tired of managing the gap and ready to close it.`,
+          },
+          yellow: {
+            headline: 'Caution — You are drifting.',
+            body: `You are not in crisis. But you are not as aligned as you need to be either. The kind of drift you are in tends to get slower and quieter — until one day it is not. You have time to close the gap. But it will not close on its own.`,
+            next: `<a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#8B1A2B;">Couples in Entrepreneurship</a> gives you the conversations, the frameworks, and the shared agreements to get back in sync before the distance becomes harder to cross.`,
+          },
+          green: {
+            headline: 'Aligned — And worth protecting.',
+            body: `You are in a strong place. That does not happen by accident — it takes two people actively choosing it. The couples who stay aligned are the ones who work at it intentionally, not the ones who assume it will hold.`,
+            next: `<a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#8B1A2B;">Couples in Entrepreneurship</a> is not just for couples in trouble. It is for couples who want to stay where you are and keep building from it.`,
+          },
+        };
+        const c = copies[result];
+        return wrap(
+          greet(n) +
+          p(`You took the Couples Alignment Scorecard today. Here is what your results actually mean.`) +
+          p(`<strong style="color:#122012;">${c.headline}</strong>`) +
+          p(c.body) +
+          p(c.next) +
+          btn('Learn About Couples in Entrepreneurship', 'https://www.mirajoco.org/couplesinentrepreneurship') +
+          p(`If you have questions about whether this is right for you and your partner, reply to this email. I read every one.`)
+        );
+      },
+    },
+    {
+      step: 2, delayDays: 3,
+      subject: 'The one thing couples in business avoid most.',
+      body: (n) => wrap(
+        greet(n) +
+        p(`You took the scorecard a few days ago. I want to share something I have seen again and again working with couples in business.`) +
+        p(`The thing that creates the most distance between partners is not fighting. It is the conversations they keep almost having and then not having. The thing that stays unsaid because the timing is never right, or because they are not sure how to say it, or because they are afraid of what it will open up.`) +
+        p(`Those almost-conversations accumulate. And the weight of them is heavier than the conversation itself ever would have been.`) +
+        p(`Couples in Entrepreneurship is built to give you the structure for those conversations — so they finally happen, in the right order, with the right framework underneath them.`) +
+        btn('See What Is Inside', 'https://www.mirajoco.org/couplesinentrepreneurship')
+      ),
+    },
+    {
+      step: 3, delayDays: 7,
+      subject: 'One week since your scorecard. Still thinking about it?',
+      body: (n) => wrap(
+        greet(n) +
+        p(`If you are still here, you are still thinking about it.`) +
+        p(`That is how it works. The scorecard surfaced something you already knew was there. The question is what you do with it.`) +
+        p(`Couples in Entrepreneurship is $997 for both of you — one purchase, two accounts, lifetime access. It is not cheap. But a single session with a couples therapist who understands business costs more than that and gives you nothing to take home.`) +
+        p(`This gives you eight modules, a shared diagnostic, a Partnership Report built on your actual answers, and a course path designed around your specific gaps. Not a generic program. Yours.`) +
+        btn('Enroll in Couples in Entrepreneurship', 'https://www.mirajoco.org/couplesinentrepreneurship') +
+        p(`If it is not the right time, that is okay. But if it is — do not wait until the gap is wider.`)
+      ),
+    },
+  ],
+
+  'lead-alignment-audit': [
+    {
+      step: 1, delayDays: 0,
+      subject: (d) => d?.result === 'red' ? 'Your score says: Disconnected. Here is what that means.' : d?.result === 'yellow' ? 'Your score says: Drifting. Here is what that means.' : 'Your score says: Connected. Here is what that means.',
+      body: (n, d) => {
+        const result = d?.result || 'yellow';
+        const copies = {
+          red: {
+            headline: 'Disconnected — You have been running on empty.',
+            body: `This feeling has a name. It is not a personality flaw and it is not permanent — but it is real, and it has been real for a while. You are not lost. You just have not had the structure to find your way back to yourself.`,
+            next: `<a href="https://www.mirajoco.org/25daysand25nights" style="color:#5A3F9A;">25 Days and 25 Nights</a> was built for exactly this. One day at a time, one practice at a time — reconnecting to the life that is actually yours.`,
+          },
+          yellow: {
+            headline: 'Drifting — You know something feels off.',
+            body: `You have moments of clarity. You know what you want in theory. But the gap between where you are and where you want to be feels wider than it should. That gap does not close by itself.`,
+            next: `<a href="https://www.mirajoco.org/25daysand25nights" style="color:#5A3F9A;">25 Days and 25 Nights</a> gives you the daily structure to stop drifting and start moving with intention.`,
+          },
+          green: {
+            headline: 'Connected — And ready to go deeper.',
+            body: `You are self-aware, intentional, and moving in the right direction. The question is whether you are building with the same intentionality you live with.`,
+            next: `<a href="https://www.mirajoco.org/25daysand25nights" style="color:#5A3F9A;">25 Days and 25 Nights</a> will push you further. This is for people who are ready to stop settling for good and start building great.`,
+          },
+        };
+        const c = copies[result];
+        return wrap(
+          greet(n) +
+          p(`You took the Alignment Audit today. Here is what your results actually mean.`) +
+          p(`<strong style="color:#122012;">${c.headline}</strong>`) +
+          p(c.body) +
+          p(c.next) +
+          btn('Learn About 25 Days and 25 Nights', 'https://www.mirajoco.org/25daysand25nights') +
+          p(`If you have questions before you jump in, reply to this email. I am happy to talk through what this looks like for you.`)
+        );
+      },
+    },
+    {
+      step: 2, delayDays: 3,
+      subject: 'Why you feel like you are living someone else\'s life.',
+      body: (n) => wrap(
+        greet(n) +
+        p(`You took the Alignment Audit a few days ago. I want to tell you something I did not put in the results page.`) +
+        p(`The disconnection you are feeling is rarely about not knowing what you want. It is about not trusting what you know.`) +
+        p(`You outsourced your own awareness — maybe gradually, maybe all at once. To other people's opinions. To what makes sense on paper. To what you are supposed to want at this stage of your life. And now there is a gap between the life you are living and the one that actually fits you.`) +
+        p(`That gap closes one day at a time. Not in a weekend. Not in a single breakthrough moment. One day at a time, with the right structure underneath you.`) +
+        p(`That is what 25 Days and 25 Nights is built to give you.`) +
+        btn('See What Is Inside', 'https://www.mirajoco.org/25daysand25nights')
+      ),
+    },
+    {
+      step: 3, delayDays: 7,
+      subject: 'One week since your audit. What has changed?',
+      body: (n) => wrap(
+        greet(n) +
+        p(`It has been a week since your Alignment Audit. I am curious — has anything shifted for you since then?`) +
+        p(`Sometimes just naming the disconnection is enough to start the movement. Sometimes it sits there and nothing changes until something pushes you to actually do something about it.`) +
+        p(`If you are in the second group, here is the push: 25 Days and 25 Nights is $597. One time. Lifetime access. Daily video lessons, journal prompts, and the Non-Negotiables practice that will actually change your daily defaults — not just your awareness of them.`) +
+        p(`Awareness without structure is just discomfort with better vocabulary. This gives you both.`) +
+        btn('Enroll in 25 Days and 25 Nights', 'https://www.mirajoco.org/25daysand25nights') +
+        p(`If it is not the right time, that is okay. But if the audit hit something real — this is the next step.`)
+      ),
+    },
+  ],
+
   'course-25d25n-complete': [
     {
       step: 1, delayDays: 0,
