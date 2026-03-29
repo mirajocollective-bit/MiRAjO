@@ -11,7 +11,7 @@
 
 (function () {
   var GA4_ID = 'G-GMJHN44YJN';        // GA4 Measurement ID
-  var META_PIXEL_ID = 'XXXXXXXXXXXXXXX'; // ← replace with your Meta Pixel ID
+  var META_PIXEL_ID = '1285636286878751'; // Meta Pixel ID
 
   var isProd = window.location.hostname === 'www.mirajoco.org' ||
                window.location.hostname === 'mirajoco.org';
