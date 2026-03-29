@@ -142,25 +142,29 @@
       background: var(--white);
       border-top: 1px solid rgba(0,0,0,0.08);
       border-bottom: 1px solid rgba(0,0,0,0.08);
-      padding: 16px 0;
+      padding: 18px 0;
       overflow: hidden;
       white-space: nowrap;
     }
     .ticker-track {
       display: inline-flex;
-      animation: ticker 32s linear infinite;
+      align-items: center;
+      animation: ticker 60s linear infinite;
     }
     .ticker-track:hover { animation-play-state: paused; }
     .ticker-item {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 0 40px;
+      padding: 0 44px;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #1A1A1A;
+      transform-origin: center center;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      will-change: transform;
     }
     .ticker-dot {
       display: inline-block;
@@ -168,28 +172,35 @@
       height: 5px;
       border-radius: 50%;
       background: #C0C0C0;
-      margin-left: 40px;
+      flex-shrink: 0;
     }
-    /* colored logos on light/white backgrounds — multiply removes the white bg */
+    /* colored logos — multiply removes white bg */
     .ticker-logo {
       height: 34px;
       width: auto;
-      max-width: 80px;
+      max-width: 90px;
       object-fit: contain;
       mix-blend-mode: multiply;
       flex-shrink: 0;
     }
-    /* white logos need a dark pill so they show on the white ticker */
-    .ticker-logo-dark {
+    /* larger variant for WIN and TBLC */
+    .ticker-logo-lg {
+      height: 46px;
+      width: auto;
+      max-width: 110px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      flex-shrink: 0;
+    }
+    /* white-on-dark logos: invert to dark-on-white, then multiply removes white bg */
+    .ticker-logo-inv {
       height: 34px;
       width: auto;
-      max-width: 80px;
+      max-width: 90px;
       object-fit: contain;
+      filter: invert(1);
+      mix-blend-mode: multiply;
       flex-shrink: 0;
-      background: #1A1A1A;
-      border-radius: 6px;
-      padding: 4px 8px;
-      box-sizing: content-box;
     }
     @keyframes ticker {
       0%   { transform: translateX(0); }
@@ -496,25 +507,25 @@
 <!-- SPEAKING HISTORY TICKER -->
 <div class="ticker-wrap" aria-label="Speaking history">
   <div class="ticker-track">
-    <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo">Power Women Expo 2026</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-inv">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-local-stories-live.jpeg" alt="" class="ticker-logo">Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-inv">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-dark">Tampa Bay Connects</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-dark">Voyage Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-dark">Voyage Houston</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-inv">Voyage Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-inv">Voyage Houston</span><span class="ticker-dot"></span>
     <!-- duplicate for seamless loop -->
-    <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo">Power Women Expo 2026</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-inv">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-local-stories-live.jpeg" alt="" class="ticker-logo">Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-dark">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo-inv">Summer Business Expo &mdash; Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-dark">Tampa Bay Connects</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-dark">Voyage Tampa</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-dark">Voyage Houston</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-inv">Voyage Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-inv">Voyage Houston</span><span class="ticker-dot"></span>
   </div>
 </div>
 
@@ -663,5 +674,34 @@
 </div>
 
 <script src="/analytics.js"></script>
+<script>
+  // Spotlight: items scale up as they pass through the center of the screen
+  (function() {
+    const track = document.querySelector('.ticker-track');
+    const items = document.querySelectorAll('.ticker-item');
+    if (!track || !items.length) return;
+
+    function update() {
+      const cx = window.innerWidth / 2;
+      items.forEach(function(item) {
+        const r = item.getBoundingClientRect();
+        const ic = r.left + r.width / 2;
+        const dist = Math.abs(ic - cx);
+        const radius = 220;
+        if (dist < radius) {
+          const t = 1 - dist / radius;
+          const scale = 1 + t * 0.28;
+          item.style.transform = 'scale(' + scale + ')';
+          item.style.opacity = (0.5 + t * 0.5).toString();
+        } else {
+          item.style.transform = 'scale(1)';
+          item.style.opacity = '0.5';
+        }
+      });
+      requestAnimationFrame(update);
+    }
+    update();
+  })();
+</script>
 </body>
 </html>
