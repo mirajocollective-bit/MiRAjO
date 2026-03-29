@@ -10,7 +10,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 (function () {
-  var GA4_ID = 'G-XXXXXXXXXX';        // ← replace with your GA4 Measurement ID
+  var GA4_ID = 'G-GMJHN44YJN';        // GA4 Measurement ID
   var META_PIXEL_ID = 'XXXXXXXXXXXXXXX'; // ← replace with your Meta Pixel ID
 
   var isProd = window.location.hostname === 'www.mirajoco.org' ||
