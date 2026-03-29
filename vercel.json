@@ -62,6 +62,7 @@
     { "source": "/resources/daily-schedule",     "destination": "/resources/daily-schedule.html" },
     { "source": "/test-checkout",                "destination": "/test-checkout.html" },
     { "source": "/couples-scorecard",            "destination": "/couples-scorecard.html" },
-    { "source": "/alignment-audit",              "destination": "/alignment-audit.html" }
+    { "source": "/alignment-audit",              "destination": "/alignment-audit.html" },
+    { "source": "/media-kit",                    "destination": "/media-kit.html" }
   ]
 }

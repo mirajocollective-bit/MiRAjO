@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miranda Johnson — Media Kit | Speaker, Author, Entrepreneur</title>
+  <meta name="description" content="Media kit for Miranda Johnson — speaker, author, and CEO of MiRAjO Collective. Book Miranda for your podcast, event, or conference.">
+  <link rel="canonical" href="https://www.mirajoco.org/media-kit">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest:    #122012;
+      --forest-mid:#1E4226;
+      --green:     #256B42;
+      --new-growth:#6DC48A;
+      --gold:      #C4A245;
+      --gold-lt:   #D9B96A;
+      --parchment: #F2EBD9;
+      --cream:     #FAF7F2;
+      --muted:     #5A6E58;
+      --border:    rgba(18,32,18,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--cream);
+      color: var(--forest);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PRINT BUTTON BAR ── */
+    .print-bar {
+      background: var(--forest);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .print-bar-note {
+      font-size: 13px;
+      color: rgba(242,235,217,0.6);
+    }
+    .print-btn {
+      background: var(--gold);
+      color: var(--forest);
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .print-btn:hover { background: var(--gold-lt); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--forest);
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      min-height: 560px;
+    }
+    .hero-left {
+      padding: 72px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--new-growth);
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(44px, 5vw, 72px);
+      color: var(--parchment);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .hero-tagline {
+      font-size: 18px;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 32px;
+      line-height: 1.4;
+    }
+    .hero-roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .hero-role {
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(242,235,217,0.65);
+      background: rgba(242,235,217,0.07);
+      border: 1px solid rgba(242,235,217,0.12);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-weight: 500;
+    }
+    .hero-contact {
+      font-size: 14px;
+      color: rgba(242,235,217,0.5);
+    }
+    .hero-contact a {
+      color: var(--new-growth);
+      text-decoration: none;
+    }
+    .hero-contact a:hover { text-decoration: underline; }
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      background: linear-gradient(to right, var(--forest), transparent);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 72px 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-of-type { border-bottom: none; }
+    .section-alt { background: var(--parchment); }
+    .section-dark { background: var(--forest); }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+    .section-dark .section-label { color: var(--new-growth); }
+
+    /* ── BIO ── */
+    .bio-text p {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #3A4E38;
+      margin-bottom: 18px;
+    }
+    .bio-text p:last-child { margin-bottom: 0; }
+
+    /* ── TALKS ── */
+    .talks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .talk-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px;
+      border: 1px solid var(--border);
+    }
+    .talk-num {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .talk-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--forest);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .talk-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .talk-card:last-child {
+      grid-column: span 1;
+    }
+
+    /* ── SPEAKING HISTORY ── */
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .history-item {
+      background: rgba(242,235,217,0.06);
+      border: 1px solid rgba(242,235,217,0.1);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+    .history-item-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--parchment);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .history-item-type {
+      font-size: 12px;
+      color: rgba(242,235,217,0.4);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── BOOKS ── */
+    .books-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .book-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .book-cover {
+      width: 100px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      box-shadow: 0 8px 32px rgba(18,32,18,0.18);
+    }
+    .book-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--forest);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .book-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── WHAT SHE BRINGS ── */
+    .brings-quote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 3vw, 36px);
+      color: var(--parchment);
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 800px;
+      border-left: 3px solid var(--gold);
+      padding-left: 32px;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 8px;
+    }
+    .contact-item-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .contact-item-value {
+      font-size: 15px;
+      color: var(--forest);
+      font-weight: 500;
+    }
+    .contact-item-value a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    /* ── FOOTER ── */
+    .kit-footer {
+      background: var(--forest);
+      padding: 32px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .kit-footer-brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px;
+      color: var(--parchment);
+    }
+    .kit-footer-note {
+      font-size: 12px;
+      color: rgba(242,235,217,0.35);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      .print-bar { display: none; }
+      body { background: #fff; font-size: 13px; }
+      .hero { min-height: auto; grid-template-columns: 1fr 320px; }
+      .hero-left { padding: 48px; }
+      .hero-name { font-size: 48px; }
+      .section { padding: 48px; }
+      .talks-grid { grid-template-columns: 1fr 1fr; }
+      .history-grid { grid-template-columns: repeat(3,1fr); }
+      .contact-grid { grid-template-columns: repeat(3,1fr); }
+      a { color: inherit; text-decoration: none; }
+      .kit-footer { padding: 24px 48px; }
+      @page { margin: 0; size: A4; }
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 60vw; }
+      .hero-right::after { display: none; }
+      .hero-left { padding: 48px 28px; }
+      .section { padding: 56px 28px; }
+      .talks-grid { grid-template-columns: 1fr; }
+      .history-grid { grid-template-columns: 1fr; }
+      .books-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+      .kit-footer { padding: 28px; flex-direction: column; gap: 12px; text-align: center; }
+      .print-bar { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRINT BAR -->
+<div class="print-bar">
+  <span class="print-bar-note">Miranda Johnson — Media Kit 2026</span>
+  <button class="print-btn" onclick="window.print()">Download as PDF</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Media Kit 2026</div>
+    <h1 class="hero-name">Miranda<br>Johnson</h1>
+    <p class="hero-tagline">"Authenticity is the new Blue Check."</p>
+    <div class="hero-roles">
+      <span class="hero-role">Speaker</span>
+      <span class="hero-role">Author</span>
+      <span class="hero-role">Entrepreneur</span>
+      <span class="hero-role">CEO, MiRAjO Collective</span>
+      <span class="hero-role">COO, Tampa Business Club</span>
+      <span class="hero-role">St. Petersburg, FL</span>
+    </div>
+    <div class="hero-contact">
+      <a href="mailto:miranda@mirajoco.org">miranda@mirajoco.org</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://www.mirajoco.org">mirajoco.org</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="img/miranda-standing.jpeg" alt="Miranda Johnson">
+  </div>
+</div>
+
+<!-- BIO -->
+<section class="section">
+  <div class="section-label">Biography</div>
+  <div class="bio-text">
+    <p>Miranda Johnson has spent 20 years building businesses, raising five children, and learning the hard way that performance is not the same as progress. She has worked across logistics, real estate, and residential construction. She founded MiRAjO Collective to help entrepreneurs stop shrinking and start leading from who they actually are. She currently serves as COO of Tampa Business Club and Events Chair for the Tampa Bay Latin Chamber of Commerce.</p>
+    <p>She is the author of two books: The Pain Principle, which explores how suffering becomes the sharpest teacher, and LeadLoud: 11 Commandments of the Next-Gen Leader, a framework for entrepreneurs who refuse to lead small. Her courses, 25 Days and 25 Nights and Couples in Entrepreneurship, help individuals and business partners reset, realign, and move forward together.</p>
+    <p>Miranda is based in St. Petersburg, FL. Her faith is not a footnote. She does not come to rooms to impress. She comes to be useful.</p>
+  </div>
+</section>
+
+<!-- TALKS -->
+<section class="section section-alt">
+  <div class="section-label">Signature Talk Topics</div>
+  <div class="talks-grid">
+    <div class="talk-card">
+      <div class="talk-num">01</div>
+      <div class="talk-title">The Pain Principle</div>
+      <p class="talk-desc">How your hardest chapter is your most credible asset, and how to stop hiding it. For audiences who need permission to use what they have been through.</p>
+    </div>
+    <div class="talk-card">
+      <div class="talk-num">02</div>
+      <div class="talk-title">Authenticity is the New Blue Check</div>
+      <p class="talk-desc">Why entrepreneurs who perform for approval are losing, and what leading from identity actually looks like in a world of curated everything.</p>
+    </div>
+    <div class="talk-card">
+      <div class="talk-num">03</div>
+      <div class="talk-title">Seedtime and Harvest</div>
+      <p class="talk-desc">A framework for entrepreneurs in the messy middle. The season before the result, and how to stay faithful to the work when the harvest is not visible yet.</p>
+    </div>
+    <div class="talk-card">
+      <div class="talk-num">04</div>
+      <div class="talk-title">Couples in the Trenches</div>
+      <p class="talk-desc">What happens when your business partner is also your life partner, and how to build something serious without losing each other in the process.</p>
+    </div>
+    <div class="talk-card">
+      <div class="talk-num">05</div>
+      <div class="talk-title">Tech Without Losing Yourself</div>
+      <p class="talk-desc">How small business owners can use AI, automation, and modern tools to grow without turning into someone they do not recognize.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKING HISTORY -->
+<section class="section section-dark">
+  <div class="section-label">Speaking History and Press</div>
+  <div class="history-grid">
+    <div class="history-item">
+      <div class="history-item-name">Power Women Expo</div>
+      <div class="history-item-type">Conference &middot; 2026</div>
+    </div>
+    <div class="history-item">
+      <div class="history-item-name">Tampa Bay Business Expo</div>
+      <div class="history-item-type">Conference &middot; 2024</div>
+    </div>
+    <div class="history-item">
+      <div class="history-item-name">Local Stories Live</div>
+      <div class="history-item-type">Speaking Event</div>
+    </div>
+    <div class="history-item">
+      <div class="history-item-name">Summer Business Expo</div>
+      <div class="history-item-type">Conference &middot; Tampa</div>
+    </div>
+    <div class="history-item">
+      <div class="history-item-name">Fail Forward 2026</div>
+      <div class="history-item-type">Tampa Bay Latin Chamber</div>
+    </div>
+    <div class="history-item">
+      <div class="history-item-name">Plastiq Magazine</div>
+      <div class="history-item-type">Press &middot; Financial Independence</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKS -->
+<section class="section">
+  <div class="section-label">Published Books</div>
+  <div class="books-grid">
+    <div class="book-item">
+      <img src="img/pain principle front cover.jpg" alt="The Pain Principle" class="book-cover">
+      <div>
+        <div class="book-title">The Pain Principle</div>
+        <p class="book-desc">Pain is not a detour. It is the credential. This book explores how suffering becomes the sharpest teacher for leaders who are willing to learn from it instead of perform around it.</p>
+      </div>
+    </div>
+    <div class="book-item">
+      <img src="img/leadloud front book cover.png" alt="LeadLoud" class="book-cover">
+      <div>
+        <div class="book-title">LeadLoud: 11 Commandments of the Next-Gen Leader</div>
+        <p class="book-desc">A framework for the next generation of entrepreneurs who refuse to lead small. Eleven principles for building with identity, not performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT SHE BRINGS -->
+<section class="section section-dark">
+  <div class="section-label">What She Brings to the Room</div>
+  <p class="brings-quote">Miranda does not deliver a keynote. She starts a conversation your audience has needed to have for years. The people in your room who are tired of performing, who are halfway through something hard, who need permission to lead loudly -- they will feel seen. That is the point.</p>
+</section>
+
+<!-- CONTACT -->
+<section class="section section-alt">
+  <div class="section-label">Book Miranda</div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-item-label">Email</div>
+      <div class="contact-item-value"><a href="mailto:miranda@mirajoco.org">miranda@mirajoco.org</a></div>
+    </div>
+    <div>
+      <div class="contact-item-label">Website</div>
+      <div class="contact-item-value"><a href="https://www.mirajoco.org">mirajoco.org</a></div>
+    </div>
+    <div>
+      <div class="contact-item-label">Coaching and Speaking</div>
+      <div class="contact-item-value"><a href="https://www.mirajoco.org/coaching">mirajoco.org/coaching</a></div>
+    </div>
+    <div>
+      <div class="contact-item-label">LinkedIn</div>
+      <div class="contact-item-value"><a href="https://www.linkedin.com/in/miranda-johnson-mirajocollective">linkedin.com/in/miranda-johnson-mirajocollective</a></div>
+    </div>
+    <div>
+      <div class="contact-item-label">Instagram</div>
+      <div class="contact-item-value"><a href="https://www.instagram.com/mirajocollective">@mirajocollective</a></div>
+    </div>
+    <div>
+      <div class="contact-item-label">YouTube</div>
+      <div class="contact-item-value"><a href="https://www.youtube.com/@MirandaJohnson-MiRAjO">@MirandaJohnson-MiRAjO</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="kit-footer">
+  <div class="kit-footer-brand">Miranda Johnson &middot; MiRAjO Collective</div>
+  <div class="kit-footer-note">mirajoco.org/media-kit &middot; 2026</div>
+</div>
+
+<script src="/analytics.js"></script>
+</body>
+</html>
