@@ -139,10 +139,10 @@
 
     /* ── TICKER ── */
     .ticker-wrap {
-      background: #141414;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding: 18px 0;
+      background: #F2EBD9;
+      border-top: 1px solid rgba(18,32,18,0.1);
+      border-bottom: 1px solid rgba(18,32,18,0.1);
+      padding: 20px 0;
       overflow: hidden;
       white-space: nowrap;
     }
@@ -155,13 +155,13 @@
     .ticker-item {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      padding: 0 44px;
+      gap: 14px;
+      padding: 0 48px;
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--amber);
+      color: #122012;
       transform-origin: center center;
       transition: transform 0.15s ease, opacity 0.15s ease;
       will-change: transform;
@@ -171,42 +171,37 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.25);
+      background: rgba(18,32,18,0.3);
       flex-shrink: 0;
     }
-    /* colored logos with their own white bg — white pill so colors show true */
+    /* logos with colored content on white/light bg — multiply removes white bg */
     .ticker-logo {
-      height: 36px;
+      height: 44px;
       width: auto;
-      max-width: 95px;
+      max-width: 110px;
       object-fit: contain;
       flex-shrink: 0;
-      background: #FFFFFF;
-      border-radius: 8px;
-      padding: 5px 10px;
-      filter: contrast(1.25) saturate(1.2);
+      mix-blend-mode: multiply;
+      filter: contrast(1.2) saturate(1.15);
     }
     .ticker-logo-lg {
-      height: 48px;
+      height: 56px;
       width: auto;
-      max-width: 115px;
+      max-width: 130px;
       object-fit: contain;
       flex-shrink: 0;
-      background: #FFFFFF;
-      border-radius: 8px;
-      padding: 6px 12px;
-      filter: contrast(1.25) saturate(1.2);
+      mix-blend-mode: multiply;
+      filter: contrast(1.2) saturate(1.15);
     }
-    /* white logos — dark charcoal pill so white is actually visible */
+    /* white/light logos — invert to dark then multiply removes bg */
     .ticker-logo-inv {
-      height: 36px;
+      height: 44px;
       width: auto;
-      max-width: 95px;
+      max-width: 110px;
       object-fit: contain;
       flex-shrink: 0;
-      background: #2A2A2A;
-      border-radius: 8px;
-      padding: 5px 10px;
+      filter: invert(1) contrast(1.2);
+      mix-blend-mode: multiply;
     }
     @keyframes ticker {
       0%   { transform: translateX(0); }
@@ -698,10 +693,10 @@
           const t = 1 - dist / radius;
           const scale = 1 + t * 0.3;
           item.style.transform = 'scale(' + scale + ')';
-          item.style.opacity = (0.78 + t * 0.22).toString();
+          item.style.opacity = (0.6 + t * 0.4).toString();
         } else {
           item.style.transform = 'scale(1)';
-          item.style.opacity = '0.78';
+          item.style.opacity = '0.6';
         }
       });
       requestAnimationFrame(update);
