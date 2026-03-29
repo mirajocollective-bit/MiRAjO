@@ -966,6 +966,8 @@
       .nonneg-num { font-size: 40px; }
     }
   </style>
+  <!-- Site Analytics -->
+  <script src="/analytics.js"></script>
 </head>
 <body>
 
@@ -1414,7 +1416,7 @@
       <div class="lesson-footer">
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           ${prevLesson ? `<button class="btn-nav" onclick="loadLesson('${prevLesson.id}')">← Previous</button>` : ''}
-          ${nextLesson ? `<button class="btn-nav btn-nav-next" onclick="loadLesson('${nextLesson.id}')">Next Lesson →</button>` : ''}
+          ${nextLesson ? `<button class="btn-nav btn-nav-next" id="next-btn" onclick="loadLesson('${nextLesson.id}')" ${isDayLesson && !isDone ? 'disabled title="Mark this day complete to continue"' : ''}>Next Lesson →</button>` : ''}
         </div>
         <button class="btn-complete ${isDone ? 'done' : ''}" id="complete-btn"
           onclick="markComplete('${lessonId}')"
