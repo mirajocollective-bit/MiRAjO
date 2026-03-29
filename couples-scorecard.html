@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Couples Alignment Scorecard | MiRAjO</title>
+  <meta name="description" content="How aligned are you, really? Take this 5-minute scorecard to find out where you and your partner are drifting — and what to do about it.">
+  <link rel="canonical" href="https://www.mirajoco.org/couples-scorecard">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cie-deep:   #2A1215;
+      --cie-dark:   #5C1A28;
+      --cie-mid:    #8B1A2B;
+      --cie-rose:   #C4546A;
+      --cie-blush:  #F5E6EA;
+      --cie-cream:  #FDF6F8;
+      --cie-gold:   #C9A86C;
+      --muted:      #7A6B74;
+      --gauge-red:  #C4546A;
+      --gauge-yel:  #D4A22A;
+      --gauge-grn:  #3A7D52;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--cie-cream);
+      color: var(--cie-deep);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ─────────────────────────────── */
+    .site-header {
+      background: var(--cie-deep);
+      padding: 16px 24px;
+      text-align: center;
+    }
+    .site-header a { display: inline-block; }
+    .site-header img { height: 36px; }
+    .site-header .header-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      margin-top: 6px;
+    }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, var(--cie-dark) 0%, var(--cie-mid) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 64px 24px 56px;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 6vw, 52px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.82);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ── ASSESSMENT ─────────────────────────── */
+    .assessment-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .progress-bar-wrap {
+      background: var(--cie-blush);
+      border-radius: 8px;
+      height: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--cie-rose);
+      border-radius: 8px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      text-align: right;
+    }
+
+    .domain-section { margin-bottom: 44px; }
+    .domain-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-rose);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--cie-blush);
+    }
+
+    .question-card {
+      background: #fff;
+      border: 1px solid var(--cie-blush);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .question-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--cie-deep);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+    .scale-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .scale-option {
+      position: relative;
+    }
+    .scale-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .scale-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px 6px;
+      border: 1.5px solid #E8D8DC;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.3;
+      min-height: 48px;
+    }
+    .scale-option input:checked + label {
+      background: var(--cie-mid);
+      border-color: var(--cie-mid);
+      color: #fff;
+    }
+    .scale-option label:hover {
+      border-color: var(--cie-rose);
+      color: var(--cie-dark);
+    }
+    .question-card.answered {
+      border-color: rgba(196, 84, 106, 0.3);
+      background: #FFFAFC;
+    }
+
+    /* ── SUBMIT BUTTON ──────────────────────── */
+    .submit-wrap {
+      text-align: center;
+      margin-top: 48px;
+    }
+    .btn-submit {
+      background: var(--cie-mid);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 18px 48px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-block;
+    }
+    .btn-submit:disabled {
+      background: #C4A0A8;
+      cursor: not-allowed;
+    }
+    .btn-submit:not(:disabled):hover {
+      background: var(--cie-dark);
+      transform: translateY(-1px);
+    }
+    .submit-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    /* ── EMAIL GATE MODAL ───────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(42, 18, 21, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .modal-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-rose);
+      margin-bottom: 16px;
+    }
+    .modal-card h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 30px;
+      color: var(--cie-deep);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .modal-card p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .modal-form { display: flex; flex-direction: column; gap: 12px; }
+    .modal-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #E8D8DC;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      color: var(--cie-deep);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .modal-input:focus { border-color: var(--cie-rose); }
+    .btn-modal-submit {
+      background: var(--cie-mid);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 4px;
+    }
+    .btn-modal-submit:hover { background: var(--cie-dark); }
+    .btn-modal-submit:disabled { background: #C4A0A8; cursor: not-allowed; }
+    .modal-fine-print {
+      font-size: 12px;
+      color: #B8A0A6;
+      margin-top: 12px;
+    }
+    .modal-error {
+      font-size: 13px;
+      color: var(--cie-rose);
+      display: none;
+    }
+
+    /* ── RESULTS ────────────────────────────── */
+    .results-section {
+      display: none;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .results-section.visible { display: block; }
+
+    .result-header {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--cie-blush);
+      margin-bottom: 40px;
+    }
+    .result-score-label {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .result-score-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 56px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .result-score-num.red  { color: var(--gauge-red); }
+    .result-score-num.yellow { color: var(--gauge-yel); }
+    .result-score-num.green { color: var(--gauge-grn); }
+
+    .result-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .result-badge.red    { background: #FAE8EC; color: var(--cie-mid); }
+    .result-badge.yellow { background: #FDF4E0; color: #8A6010; }
+    .result-badge.green  { background: #E6F4EC; color: #235E3A; }
+
+    /* Gauge */
+    .gauge-wrap { margin: 0 auto 28px; max-width: 400px; }
+    .gauge-bar {
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      background: linear-gradient(to right, var(--gauge-red) 0%, var(--gauge-red) 33%, var(--gauge-yel) 33%, var(--gauge-yel) 66%, var(--gauge-grn) 66%, var(--gauge-grn) 100%);
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .gauge-indicator {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--cie-deep);
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 2px 8px rgba(42,18,21,0.25);
+      transition: left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .gauge-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .result-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--cie-deep);
+      margin-bottom: 12px;
+    }
+    .result-body {
+      font-size: 16px;
+      color: #5C3D44;
+      line-height: 1.75;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* Domain breakdown */
+    .domain-breakdown {
+      background: #fff;
+      border: 1px solid var(--cie-blush);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 40px;
+    }
+    .breakdown-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-rose);
+      margin-bottom: 24px;
+    }
+    .breakdown-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .breakdown-row:last-child { margin-bottom: 0; }
+    .breakdown-domain {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--cie-deep);
+      min-width: 110px;
+    }
+    .breakdown-bar-wrap {
+      flex: 1;
+      height: 10px;
+      background: var(--cie-blush);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .breakdown-bar-fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: width 1s ease;
+    }
+    .breakdown-score {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* CTA */
+    .result-cta {
+      text-align: center;
+      background: linear-gradient(160deg, var(--cie-dark), var(--cie-mid));
+      border-radius: 20px;
+      padding: 48px 32px;
+      color: #fff;
+      margin-bottom: 32px;
+    }
+    .result-cta h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .result-cta p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .btn-cta {
+      display: inline-block;
+      background: var(--cie-gold);
+      color: var(--cie-deep);
+      text-decoration: none;
+      padding: 16px 40px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+    .cta-price {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 14px;
+    }
+
+    /* Share / invite */
+    .share-card {
+      background: #fff;
+      border: 1px solid var(--cie-blush);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+    .share-card h4 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--cie-deep);
+      margin-bottom: 8px;
+    }
+    .share-card p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .btn-copy {
+      background: var(--cie-blush);
+      color: var(--cie-dark);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-copy:hover { background: #EDD0D8; }
+    .copy-confirm { font-size: 13px; color: var(--gauge-grn); margin-top: 10px; display: none; }
+
+    /* ── MOBILE ─────────────────────────────── */
+    @media (max-width: 600px) {
+      .modal-card { padding: 36px 24px; }
+      .scale-options { grid-template-columns: repeat(2, 1fr); }
+      .breakdown-domain { min-width: 80px; font-size: 13px; }
+      .result-cta { padding: 36px 20px; }
+    }
+  </style>
+  <!-- Site Analytics -->
+  <script src="/analytics.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="/"><img src="/img/MiRAjO Collective Logo - White.png" alt="MiRAjO Collective" onerror="this.style.display='none'"></a>
+  <div class="header-label">Couples Alignment Scorecard</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Free Assessment</div>
+  <h1>How aligned are you,<br>really?</h1>
+  <p>You've been building a business together. But are you actually moving in the same direction? This scorecard shows you where you stand — and where the gap might be quietly growing.</p>
+  <div class="hero-meta">
+    <span>12 questions</span>
+    <span>·</span>
+    <span>4 areas</span>
+    <span>·</span>
+    <span>5 minutes</span>
+  </div>
+</section>
+
+<!-- ASSESSMENT -->
+<div class="assessment-wrap" id="assessmentWrap">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 of 12 answered</div>
+
+  <!-- BUSINESS -->
+  <div class="domain-section">
+    <div class="domain-label">Business</div>
+    <div class="question-card" id="qcard-0">
+      <div class="question-text">We share the same vision for where our business is headed.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q0" id="q0a" value="4"><label for="q0a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q0" id="q0b" value="3"><label for="q0b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q0" id="q0c" value="2"><label for="q0c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q0" id="q0d" value="1"><label for="q0d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-1">
+      <div class="question-text">We make decisions together without it consistently creating conflict.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q1" id="q1a" value="4"><label for="q1a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q1" id="q1b" value="3"><label for="q1b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q1" id="q1c" value="2"><label for="q1c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q1" id="q1d" value="1"><label for="q1d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-2">
+      <div class="question-text">We each have clearly defined roles in the business and we respect each other's lanes.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q2" id="q2a" value="4"><label for="q2a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q2" id="q2b" value="3"><label for="q2b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q2" id="q2c" value="2"><label for="q2c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q2" id="q2d" value="1"><label for="q2d">Rarely</label></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCES -->
+  <div class="domain-section">
+    <div class="domain-label">Finances</div>
+    <div class="question-card" id="qcard-3">
+      <div class="question-text">We agree on how money is managed and distributed in our business.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q3" id="q3a" value="4"><label for="q3a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q3" id="q3b" value="3"><label for="q3b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q3" id="q3c" value="2"><label for="q3c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q3" id="q3d" value="1"><label for="q3d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-4">
+      <div class="question-text">Conversations about money stay productive rather than turning into tension.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q4" id="q4a" value="4"><label for="q4a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q4" id="q4b" value="3"><label for="q4b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q4" id="q4c" value="2"><label for="q4c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q4" id="q4d" value="1"><label for="q4d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-5">
+      <div class="question-text">We are both equally informed about the financial health of our business.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q5" id="q5a" value="4"><label for="q5a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q5" id="q5b" value="3"><label for="q5b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q5" id="q5c" value="2"><label for="q5c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q5" id="q5d" value="1"><label for="q5d">Rarely</label></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAMILY -->
+  <div class="domain-section">
+    <div class="domain-label">Family</div>
+    <div class="question-card" id="qcard-6">
+      <div class="question-text">Our business has boundaries that genuinely protect our family time.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q6" id="q6a" value="4"><label for="q6a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q6" id="q6b" value="3"><label for="q6b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q6" id="q6c" value="2"><label for="q6c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q6" id="q6d" value="1"><label for="q6d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-7">
+      <div class="question-text">The people we love feel like a priority even when the business is demanding.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q7" id="q7a" value="4"><label for="q7a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q7" id="q7b" value="3"><label for="q7b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q7" id="q7c" value="2"><label for="q7c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q7" id="q7d" value="1"><label for="q7d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-8">
+      <div class="question-text">We don't regularly bring unresolved business tension into our home life.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q8" id="q8a" value="4"><label for="q8a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q8" id="q8b" value="3"><label for="q8b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q8" id="q8c" value="2"><label for="q8c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q8" id="q8d" value="1"><label for="q8d">Rarely</label></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATIONSHIP -->
+  <div class="domain-section">
+    <div class="domain-label">Relationship</div>
+    <div class="question-card" id="qcard-9">
+      <div class="question-text">I feel genuinely valued by my partner — not just as a co-founder but as a person.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q9" id="q9a" value="4"><label for="q9a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q9" id="q9b" value="3"><label for="q9b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q9" id="q9c" value="2"><label for="q9c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q9" id="q9d" value="1"><label for="q9d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-10">
+      <div class="question-text">We have a relationship outside of the business that still feels alive.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q10" id="q10a" value="4"><label for="q10a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q10" id="q10b" value="3"><label for="q10b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q10" id="q10c" value="2"><label for="q10c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q10" id="q10d" value="1"><label for="q10d">Rarely</label></div>
+      </div>
+    </div>
+    <div class="question-card" id="qcard-11">
+      <div class="question-text">Running this business together has brought us closer, not quietly pulled us apart.</div>
+      <div class="scale-options">
+        <div class="scale-option"><input type="radio" name="q11" id="q11a" value="4"><label for="q11a">Always</label></div>
+        <div class="scale-option"><input type="radio" name="q11" id="q11b" value="3"><label for="q11b">Usually</label></div>
+        <div class="scale-option"><input type="radio" name="q11" id="q11c" value="2"><label for="q11c">Sometimes</label></div>
+        <div class="scale-option"><input type="radio" name="q11" id="q11d" value="1"><label for="q11d">Rarely</label></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <button class="btn-submit" id="submitBtn" disabled onclick="openModal()">See My Results</button>
+    <div class="submit-note">Answer all 12 questions to unlock your score.</div>
+  </div>
+</div>
+
+<!-- EMAIL GATE MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <div class="modal-eyebrow">Your results are ready</div>
+    <h2>Where do we send your scorecard?</h2>
+    <p>Enter your details to see your alignment score and what it means for your partnership.</p>
+    <div class="modal-form">
+      <input class="modal-input" type="text" id="firstName" placeholder="First name" autocomplete="given-name">
+      <input class="modal-input" type="email" id="emailInput" placeholder="Email address" autocomplete="email">
+      <div class="modal-error" id="modalError">Please enter a valid email address.</div>
+      <button class="btn-modal-submit" id="modalSubmitBtn" onclick="submitAndReveal()">Show me my results</button>
+    </div>
+    <div class="modal-fine-print">No spam. Your answers stay private. Unsubscribe anytime.</div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="results-section" id="resultsSection">
+
+  <div class="result-header">
+    <div class="result-score-label">Your Alignment Score</div>
+    <div class="result-score-num" id="resultScoreNum"></div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">out of 48</div>
+    <div class="result-badge" id="resultBadge"></div>
+
+    <div class="gauge-wrap">
+      <div class="gauge-bar">
+        <div class="gauge-indicator" id="gaugeIndicator"></div>
+      </div>
+      <div class="gauge-labels">
+        <span>Critical</span>
+        <span>Caution</span>
+        <span>Aligned</span>
+      </div>
+    </div>
+
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-body" id="resultBody"></div>
+  </div>
+
+  <!-- Domain Breakdown -->
+  <div class="domain-breakdown">
+    <div class="breakdown-title">Your Score by Area</div>
+    <div class="breakdown-row">
+      <div class="breakdown-domain">Business</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar-fill" id="bar-business"></div></div>
+      <div class="breakdown-score" id="score-business"></div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-domain">Finances</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar-fill" id="bar-finances"></div></div>
+      <div class="breakdown-score" id="score-finances"></div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-domain">Family</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar-fill" id="bar-family"></div></div>
+      <div class="breakdown-score" id="score-family"></div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-domain">Relationship</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar-fill" id="bar-relationship"></div></div>
+      <div class="breakdown-score" id="score-relationship"></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-cta" id="resultCta">
+    <h3 id="ctaHeadline"></h3>
+    <p id="ctaBody"></p>
+    <a href="/couplesinentrepreneurship" class="btn-cta">Learn about Couples in Entrepreneurship</a>
+    <div class="cta-price">$997 · One-time · Both partners included</div>
+  </div>
+
+  <!-- Share -->
+  <div class="share-card">
+    <h4>Want the full picture?</h4>
+    <p>Invite your partner to take the scorecard too. Compare where you each stand — separately and honestly.</p>
+    <button class="btn-copy" onclick="copyLink()">Copy link to share</button>
+    <div class="copy-confirm" id="copyConfirm">Link copied to clipboard.</div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL_QUESTIONS = 12;
+  const answers = {};
+
+  // ── Track answers ─────────────────────────
+  document.querySelectorAll('.scale-options input[type="radio"]').forEach(input => {
+    input.addEventListener('change', function() {
+      const qIndex = parseInt(this.name.replace('q', ''));
+      answers[qIndex] = parseInt(this.value);
+      document.getElementById('qcard-' + qIndex).classList.add('answered');
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const answered = Object.keys(answers).length;
+    const pct = (answered / TOTAL_QUESTIONS) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = answered + ' of ' + TOTAL_QUESTIONS + ' answered';
+    document.getElementById('submitBtn').disabled = answered < TOTAL_QUESTIONS;
+    if (answered >= TOTAL_QUESTIONS) {
+      document.getElementById('submitBtn').textContent = 'See My Results';
+      document.querySelector('.submit-note').style.display = 'none';
+    }
+  }
+
+  // ── Modal ────────────────────────────────
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('firstName').focus();
+  }
+
+  // ── Submit + reveal ──────────────────────
+  async function submitAndReveal() {
+    const email = document.getElementById('emailInput').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const errorEl = document.getElementById('modalError');
+    const btn = document.getElementById('modalSubmitBtn');
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+
+    const score = Object.values(answers).reduce((s, v) => s + v, 0);
+    const result = score >= 37 ? 'green' : score >= 25 ? 'yellow' : 'red';
+
+    btn.disabled = true;
+    btn.textContent = 'Loading...';
+
+    try {
+      await fetch('/api/lead-magnet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, firstName, result, score, type: 'couples-scorecard' })
+      });
+    } catch (e) {
+      // Don't block results on API error
+    }
+
+    document.getElementById('modalOverlay').classList.remove('active');
+    showResults(score, result);
+
+    if (window.gtag) gtag('event', 'lead_magnet_complete', { type: 'couples-scorecard', result });
+    if (window.fbq) fbq('track', 'Lead');
+  }
+
+  // ── Build results ────────────────────────
+  function showResults(score, result) {
+    const section = document.getElementById('resultsSection');
+    section.classList.add('visible');
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Score number
+    const scoreEl = document.getElementById('resultScoreNum');
+    scoreEl.textContent = score;
+    scoreEl.className = 'result-score-num ' + result;
+
+    // Badge
+    const badge = document.getElementById('resultBadge');
+    const labels = { red: 'Critical', yellow: 'Caution', green: 'Aligned' };
+    badge.textContent = labels[result];
+    badge.className = 'result-badge ' + result;
+
+    // Gauge indicator position (5% – 95% range)
+    const pct = Math.min(95, Math.max(5, ((score - 12) / (48 - 12)) * 100));
+    setTimeout(() => {
+      document.getElementById('gaugeIndicator').style.left = pct + '%';
+    }, 100);
+
+    // Result copy
+    const copies = {
+      red: {
+        title: 'Critical — The gap is real.',
+        body: 'You\'re not imagining it. Something is off — in how you make decisions, how you talk about money, how connected you feel, or all of it. The distance between you didn\'t happen overnight. But naming it is the first step, and you just took it.',
+        ctaH: 'Couples in Entrepreneurship was built for exactly where you are.',
+        ctaB: 'Eight modules. Four domains. Built for the couples who are tired of managing the gap and ready to close it. You don\'t need more time — you need the right framework.'
+      },
+      yellow: {
+        title: 'Caution — You\'re drifting.',
+        body: 'You\'re not in crisis. But you\'re not as aligned as you need to be either. The kind of drift you\'re in tends to get slower and quieter — until one day it isn\'t. You have time to close the gap. But it won\'t close on its own.',
+        ctaH: 'Drifting is easier to stop now than it will be later.',
+        ctaB: 'Couples in Entrepreneurship gives you the conversations, the frameworks, and the shared agreements to get back in sync before the distance becomes harder to cross.'
+      },
+      green: {
+        title: 'Aligned — And worth protecting.',
+        body: 'You\'re in a strong place. That doesn\'t happen by accident — it takes two people actively choosing it. The couples who stay aligned are the ones who work at it intentionally, not the ones who assume it will hold.',
+        ctaH: 'Couples in Entrepreneurship isn\'t just for couples in trouble.',
+        ctaB: 'It\'s for couples who want to stay where you are and build from it. The tools inside will sharpen what\'s already working and close any gaps before they widen.'
+      }
+    };
+
+    const c = copies[result];
+    document.getElementById('resultTitle').textContent = c.title;
+    document.getElementById('resultBody').textContent = c.body;
+    document.getElementById('ctaHeadline').textContent = c.ctaH;
+    document.getElementById('ctaBody').textContent = c.ctaB;
+
+    // Domain breakdown
+    const domains = [
+      { id: 'business', label: 'Business', start: 0 },
+      { id: 'finances', label: 'Finances', start: 3 },
+      { id: 'family',   label: 'Family',   start: 6 },
+      { id: 'relationship', label: 'Relationship', start: 9 }
+    ];
+
+    const colors = { red: '#C4546A', yellow: '#D4A22A', green: '#3A7D52' };
+
+    domains.forEach(d => {
+      let domainScore = 0;
+      for (let i = d.start; i < d.start + 3; i++) domainScore += (answers[i] || 0);
+      const domainPct = (domainScore / 12) * 100;
+      const domainResult = domainScore >= 10 ? 'green' : domainScore >= 7 ? 'yellow' : 'red';
+
+      document.getElementById('bar-' + d.id).style.width = domainPct + '%';
+      document.getElementById('bar-' + d.id).style.background = colors[domainResult];
+      document.getElementById('score-' + d.id).textContent = domainScore + '/12';
+    });
+  }
+
+  // ── Copy link ────────────────────────────
+  function copyLink() {
+    navigator.clipboard.writeText('https://www.mirajoco.org/couples-scorecard').then(() => {
+      document.getElementById('copyConfirm').style.display = 'block';
+    });
+  }
+</script>
+
+</body>
+</html>

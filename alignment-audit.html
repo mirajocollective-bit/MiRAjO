@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Alignment Audit | MiRAjO</title>
+  <meta name="description" content="You're not lost. You're just not listening to yourself. Take this free 5-minute audit to find out where the disconnection is showing up — and what to do about it.">
+  <link rel="canonical" href="https://www.mirajoco.org/alignment-audit">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --p-deep:     #3D2B72;
+      --p-mid:      #5A3F9A;
+      --p-light:    #8B72C8;
+      --p-lavender: #EDE8F8;
+      --p-cream:    #FAF8FF;
+      --text:       #1A1530;
+      --muted:      #6B5F8A;
+      --gauge-red:  #C4546A;
+      --gauge-yel:  #D4A22A;
+      --gauge-grn:  #3A7D52;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--p-cream);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ─────────────────────────────── */
+    .site-header {
+      background: var(--p-deep);
+      padding: 16px 24px;
+      text-align: center;
+    }
+    .site-header a { display: inline-block; }
+    .site-header img { height: 36px; }
+    .site-header .header-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #A990E8;
+      margin-top: 6px;
+    }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, var(--p-deep) 0%, var(--p-mid) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 64px 24px 56px;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #A990E8;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(30px, 6vw, 52px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: #C4B8F0;
+    }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.82);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ── ASSESSMENT ─────────────────────────── */
+    .assessment-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .progress-bar-wrap {
+      background: var(--p-lavender);
+      border-radius: 8px;
+      height: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--p-mid);
+      border-radius: 8px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      text-align: right;
+    }
+
+    .question-card {
+      background: #fff;
+      border: 1px solid var(--p-lavender);
+      border-radius: 14px;
+      padding: 26px 24px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    .question-card.answered {
+      border-color: rgba(90, 63, 154, 0.3);
+      background: #FDFCFF;
+    }
+    .question-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      margin-bottom: 8px;
+    }
+    .question-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 18px;
+      line-height: 1.55;
+    }
+    .scale-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .scale-option { position: relative; }
+    .scale-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .scale-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px 6px;
+      border: 1.5px solid #DDD8F0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.3;
+      min-height: 52px;
+    }
+    .scale-option input:checked + label {
+      background: var(--p-mid);
+      border-color: var(--p-mid);
+      color: #fff;
+    }
+    .scale-option label:hover {
+      border-color: var(--p-light);
+      color: var(--p-deep);
+    }
+
+    /* ── SUBMIT ─────────────────────────────── */
+    .submit-wrap { text-align: center; margin-top: 48px; }
+    .btn-submit {
+      background: var(--p-mid);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 18px 48px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-submit:disabled { background: #A898CC; cursor: not-allowed; }
+    .btn-submit:not(:disabled):hover { background: var(--p-deep); transform: translateY(-1px); }
+    .submit-note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+
+    /* ── MODAL ──────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(29, 20, 60, 0.78);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .modal-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      margin-bottom: 16px;
+    }
+    .modal-card h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 30px;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .modal-card p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+    .modal-form { display: flex; flex-direction: column; gap: 12px; }
+    .modal-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #DDD8F0;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .modal-input:focus { border-color: var(--p-mid); }
+    .btn-modal-submit {
+      background: var(--p-mid);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 4px;
+    }
+    .btn-modal-submit:hover { background: var(--p-deep); }
+    .btn-modal-submit:disabled { background: #A898CC; cursor: not-allowed; }
+    .modal-fine-print { font-size: 12px; color: #B0A8CC; margin-top: 12px; }
+    .modal-error { font-size: 13px; color: #C4546A; display: none; }
+
+    /* ── RESULTS ────────────────────────────── */
+    .results-section {
+      display: none;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .results-section.visible { display: block; }
+
+    .result-header {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--p-lavender);
+      margin-bottom: 40px;
+    }
+    .result-score-label {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .result-score-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 64px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .result-score-num.red    { color: var(--gauge-red); }
+    .result-score-num.yellow { color: var(--gauge-yel); }
+    .result-score-num.green  { color: var(--gauge-grn); }
+
+    .result-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .result-badge.red    { background: #FAE8EC; color: #8B1A2B; }
+    .result-badge.yellow { background: #FDF4E0; color: #8A6010; }
+    .result-badge.green  { background: #E6F4EC; color: #235E3A; }
+
+    .gauge-wrap { margin: 0 auto 28px; max-width: 400px; }
+    .gauge-bar {
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      background: linear-gradient(to right, var(--gauge-red) 0%, var(--gauge-red) 33%, var(--gauge-yel) 33%, var(--gauge-yel) 66%, var(--gauge-grn) 66%, var(--gauge-grn) 100%);
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .gauge-indicator {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--text);
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 2px 8px rgba(29,20,60,0.25);
+      transition: left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .gauge-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .result-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .result-body {
+      font-size: 16px;
+      color: #4A3D6B;
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* Highlight areas */
+    .highlight-card {
+      background: #fff;
+      border: 1px solid var(--p-lavender);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    .highlight-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      margin-bottom: 16px;
+    }
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--p-lavender);
+    }
+    .highlight-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .highlight-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .highlight-dot.red    { background: var(--gauge-red); }
+    .highlight-dot.yellow { background: var(--gauge-yel); }
+    .highlight-dot.green  { background: var(--gauge-grn); }
+    .highlight-q { font-size: 14px; color: var(--text); line-height: 1.5; flex: 1; }
+
+    /* CTA */
+    .result-cta {
+      text-align: center;
+      background: linear-gradient(160deg, var(--p-deep), var(--p-mid));
+      border-radius: 20px;
+      padding: 48px 32px;
+      color: #fff;
+      margin-bottom: 0;
+    }
+    .result-cta h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .result-cta p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .btn-cta {
+      display: inline-block;
+      background: #C9A86C;
+      color: #1A1530;
+      text-decoration: none;
+      padding: 16px 40px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+    .cta-price {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .modal-card { padding: 36px 24px; }
+      .scale-options { grid-template-columns: repeat(2, 1fr); }
+      .result-cta { padding: 36px 20px; }
+    }
+  </style>
+  <!-- Site Analytics -->
+  <script src="/analytics.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="/"><img src="/img/MiRAjO Collective Logo - White.png" alt="MiRAjO Collective" onerror="this.style.display='none'"></a>
+  <div class="header-label">The Alignment Audit</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Free Assessment</div>
+  <h1>You're not lost.<br><em>You're just not listening<br>to yourself.</em></h1>
+  <p>Something feels off but you can't quite name it. This 5-minute audit shows you exactly where the disconnection is showing up — and gives you a clear starting point to change it.</p>
+  <div class="hero-meta">
+    <span>10 questions</span>
+    <span>·</span>
+    <span>5 minutes</span>
+    <span>·</span>
+    <span>honest answers only</span>
+  </div>
+</section>
+
+<!-- ASSESSMENT -->
+<div class="assessment-wrap" id="assessmentWrap">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 of 10 answered</div>
+
+  <div class="question-card" id="qcard-0">
+    <div class="question-number">01</div>
+    <div class="question-text">I know what I want and I am actively building toward it.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q0" id="q0a" value="4"><label for="q0a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q0" id="q0b" value="3"><label for="q0b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q0" id="q0c" value="2"><label for="q0c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q0" id="q0d" value="1"><label for="q0d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-1">
+    <div class="question-number">02</div>
+    <div class="question-text">I feel genuinely connected to the people in my life.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q1" id="q1a" value="4"><label for="q1a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q1" id="q1b" value="3"><label for="q1b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q1" id="q1c" value="2"><label for="q1c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q1" id="q1d" value="1"><label for="q1d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-2">
+    <div class="question-number">03</div>
+    <div class="question-text">My daily choices reflect what actually matters to me.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q2" id="q2a" value="4"><label for="q2a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q2" id="q2b" value="3"><label for="q2b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q2" id="q2c" value="2"><label for="q2c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q2" id="q2d" value="1"><label for="q2d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-3">
+    <div class="question-number">04</div>
+    <div class="question-text">I feel a sense of purpose in the work I do.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q3" id="q3a" value="4"><label for="q3a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q3" id="q3b" value="3"><label for="q3b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q3" id="q3c" value="2"><label for="q3c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q3" id="q3d" value="1"><label for="q3d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-4">
+    <div class="question-number">05</div>
+    <div class="question-text">I can sit with my own thoughts without needing to reach for a distraction.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q4" id="q4a" value="4"><label for="q4a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q4" id="q4b" value="3"><label for="q4b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q4" id="q4c" value="2"><label for="q4c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q4" id="q4d" value="1"><label for="q4d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-5">
+    <div class="question-number">06</div>
+    <div class="question-text">I feel like I belong — in my relationships, my work, my everyday life.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q5" id="q5a" value="4"><label for="q5a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q5" id="q5b" value="3"><label for="q5b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q5" id="q5c" value="2"><label for="q5c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q5" id="q5d" value="1"><label for="q5d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-6">
+    <div class="question-number">07</div>
+    <div class="question-text">I make choices for myself — not for approval or validation from others.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q6" id="q6a" value="4"><label for="q6a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q6" id="q6b" value="3"><label for="q6b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q6" id="q6c" value="2"><label for="q6c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q6" id="q6d" value="1"><label for="q6d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-7">
+    <div class="question-number">08</div>
+    <div class="question-text">I feel present in my life rather than just going through the motions.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q7" id="q7a" value="4"><label for="q7a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q7" id="q7b" value="3"><label for="q7b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q7" id="q7c" value="2"><label for="q7c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q7" id="q7d" value="1"><label for="q7d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-8">
+    <div class="question-number">09</div>
+    <div class="question-text">I am at peace with who I am right now.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q8" id="q8a" value="4"><label for="q8a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q8" id="q8b" value="3"><label for="q8b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q8" id="q8c" value="2"><label for="q8c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q8" id="q8d" value="1"><label for="q8d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="qcard-9">
+    <div class="question-number">10</div>
+    <div class="question-text">I believe my best chapter is still ahead of me and I am moving toward it.</div>
+    <div class="scale-options">
+      <div class="scale-option"><input type="radio" name="q9" id="q9a" value="4"><label for="q9a">Almost Always</label></div>
+      <div class="scale-option"><input type="radio" name="q9" id="q9b" value="3"><label for="q9b">Sometimes</label></div>
+      <div class="scale-option"><input type="radio" name="q9" id="q9c" value="2"><label for="q9c">Rarely</label></div>
+      <div class="scale-option"><input type="radio" name="q9" id="q9d" value="1"><label for="q9d">Almost Never</label></div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <button class="btn-submit" id="submitBtn" disabled onclick="openModal()">See My Results</button>
+    <div class="submit-note">Answer all 10 questions to unlock your score.</div>
+  </div>
+</div>
+
+<!-- EMAIL GATE MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <div class="modal-eyebrow">Your results are ready</div>
+    <h2>Where do we send your audit?</h2>
+    <p>Enter your details to see your alignment score and your clearest next step.</p>
+    <div class="modal-form">
+      <input class="modal-input" type="text" id="firstName" placeholder="First name" autocomplete="given-name">
+      <input class="modal-input" type="email" id="emailInput" placeholder="Email address" autocomplete="email">
+      <div class="modal-error" id="modalError">Please enter a valid email address.</div>
+      <button class="btn-modal-submit" id="modalSubmitBtn" onclick="submitAndReveal()">Show me my results</button>
+    </div>
+    <div class="modal-fine-print">No spam. Your answers stay private. Unsubscribe anytime.</div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="results-section" id="resultsSection">
+
+  <div class="result-header">
+    <div class="result-score-label">Your Alignment Score</div>
+    <div class="result-score-num" id="resultScoreNum"></div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">out of 40</div>
+    <div class="result-badge" id="resultBadge"></div>
+
+    <div class="gauge-wrap">
+      <div class="gauge-bar">
+        <div class="gauge-indicator" id="gaugeIndicator"></div>
+      </div>
+      <div class="gauge-labels">
+        <span>Disconnected</span>
+        <span>Drifting</span>
+        <span>Connected</span>
+      </div>
+    </div>
+
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-body" id="resultBody"></div>
+  </div>
+
+  <!-- Where disconnection shows up -->
+  <div class="highlight-card" id="highlightCard">
+    <div class="highlight-title">Where It's Showing Up For You</div>
+    <div id="highlightList"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-cta">
+    <h3 id="ctaHeadline"></h3>
+    <p id="ctaBody"></p>
+    <a href="/25daysand25nights" class="btn-cta">Learn about 25 Days and 25 Nights</a>
+    <div class="cta-price">$597 · One-time · Lifetime access</div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 10;
+  const answers = {};
+
+  const questionTexts = [
+    'I know what I want and I am actively building toward it.',
+    'I feel genuinely connected to the people in my life.',
+    'My daily choices reflect what actually matters to me.',
+    'I feel a sense of purpose in the work I do.',
+    'I can sit with my own thoughts without needing a distraction.',
+    'I feel like I belong — in my relationships, my work, my life.',
+    'I make choices for myself, not for approval from others.',
+    'I feel present in my life rather than going through the motions.',
+    'I am at peace with who I am right now.',
+    'I believe my best chapter is still ahead of me.'
+  ];
+
+  // ── Track answers ─────────────────────────
+  document.querySelectorAll('.scale-options input[type="radio"]').forEach(input => {
+    input.addEventListener('change', function() {
+      const qIndex = parseInt(this.name.replace('q', ''));
+      answers[qIndex] = parseInt(this.value);
+      document.getElementById('qcard-' + qIndex).classList.add('answered');
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const answered = Object.keys(answers).length;
+    const pct = (answered / TOTAL) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = answered + ' of ' + TOTAL + ' answered';
+    document.getElementById('submitBtn').disabled = answered < TOTAL;
+    if (answered >= TOTAL) {
+      document.querySelector('.submit-note').style.display = 'none';
+    }
+  }
+
+  // ── Modal ────────────────────────────────
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('firstName').focus();
+  }
+
+  // ── Submit + reveal ──────────────────────
+  async function submitAndReveal() {
+    const email = document.getElementById('emailInput').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const errorEl = document.getElementById('modalError');
+    const btn = document.getElementById('modalSubmitBtn');
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+
+    const score = Object.values(answers).reduce((s, v) => s + v, 0);
+    const result = score >= 31 ? 'green' : score >= 21 ? 'yellow' : 'red';
+
+    btn.disabled = true;
+    btn.textContent = 'Loading...';
+
+    try {
+      await fetch('/api/lead-magnet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, firstName, result, score, type: 'alignment-audit' })
+      });
+    } catch (e) {
+      // Don't block results on API error
+    }
+
+    document.getElementById('modalOverlay').classList.remove('active');
+    showResults(score, result);
+
+    if (window.gtag) gtag('event', 'lead_magnet_complete', { type: 'alignment-audit', result });
+    if (window.fbq) fbq('track', 'Lead');
+  }
+
+  // ── Build results ────────────────────────
+  function showResults(score, result) {
+    const section = document.getElementById('resultsSection');
+    section.classList.add('visible');
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const scoreEl = document.getElementById('resultScoreNum');
+    scoreEl.textContent = score;
+    scoreEl.className = 'result-score-num ' + result;
+
+    const badge = document.getElementById('resultBadge');
+    const labels = { red: 'Disconnected', yellow: 'Drifting', green: 'Connected' };
+    badge.textContent = labels[result];
+    badge.className = 'result-badge ' + result;
+
+    // Gauge indicator
+    const pct = Math.min(95, Math.max(5, ((score - 10) / (40 - 10)) * 100));
+    setTimeout(() => {
+      document.getElementById('gaugeIndicator').style.left = pct + '%';
+    }, 100);
+
+    // Copy
+    const copies = {
+      red: {
+        title: 'Disconnected — You\'ve been running on empty.',
+        body: 'This feeling has a name. It\'s not a personality flaw and it\'s not permanent — but it is real, and it\'s been real for a while. You\'re not lost. You just haven\'t had the structure to find your way back to yourself.',
+        ctaH: '25 Days and 25 Nights was built for exactly this.',
+        ctaB: 'One day at a time, one practice at a time — reconnecting to the life that\'s actually yours. Not a quick fix. A real one.'
+      },
+      yellow: {
+        title: 'Drifting — You know something feels off.',
+        body: 'You have moments of clarity. You know what you want in theory. But the gap between where you are and where you want to be feels wider than it should. That gap doesn\'t close by itself.',
+        ctaH: 'Stop drifting. Start moving with intention.',
+        ctaB: '25 Days and 25 Nights gives you the daily structure to close the gap between who you are and who you know you\'re supposed to be.'
+      },
+      green: {
+        title: 'Connected — And ready to go deeper.',
+        body: 'You\'re self-aware, intentional, and moving in the right direction. You\'re not stuck. You\'re ready. The question is whether you\'re building with the same intentionality you live with.',
+        ctaH: 'Stop settling for good when great is available.',
+        ctaB: '25 Days and 25 Nights will push you further. This isn\'t for people who are lost — it\'s for people who are ready to stop coasting and start compounding.'
+      }
+    };
+
+    const c = copies[result];
+    document.getElementById('resultTitle').textContent = c.title;
+    document.getElementById('resultBody').textContent = c.body;
+    document.getElementById('ctaHeadline').textContent = c.ctaH;
+    document.getElementById('ctaBody').textContent = c.ctaB;
+
+    // Show lowest-scoring areas
+    const sorted = Object.keys(answers)
+      .map(i => ({ index: parseInt(i), score: answers[i] }))
+      .sort((a, b) => a.score - b.score)
+      .slice(0, 3);
+
+    const list = document.getElementById('highlightList');
+    list.innerHTML = '';
+    const dotColor = { 1: 'red', 2: 'red', 3: 'yellow', 4: 'green' };
+
+    sorted.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'highlight-item';
+      div.innerHTML = `
+        <div class="highlight-dot ${dotColor[item.score] || 'yellow'}"></div>
+        <div class="highlight-q">${questionTexts[item.index]}</div>
+      `;
+      list.appendChild(div);
+    });
+  }
+</script>
+
+</body>
+</html>
