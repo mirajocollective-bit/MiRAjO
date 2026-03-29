@@ -385,41 +385,26 @@
     }
     .uni-name { font-size: 15px; color: #444; font-weight: 500; }
 
-    /* ── LOGO GRID ── */
-    .logos-grid {
+    /* ── AS SEEN IN ── */
+    .press-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 24px;
       align-items: center;
-      justify-content: flex-start;
     }
-    .logo-pill {
+    .press-logo {
       background: var(--white);
       border-radius: 12px;
-      padding: 16px 24px;
+      padding: 20px 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 80px;
-      min-width: 140px;
-      max-width: 200px;
-      flex: 1 1 140px;
+      height: 96px;
+      min-width: 160px;
+      flex: 1 1 160px;
+      max-width: 220px;
     }
-    .logo-pill img { max-height: 48px; max-width: 160px; object-fit: contain; }
-    .logo-pill-dark {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 80px;
-      min-width: 140px;
-      max-width: 200px;
-      flex: 1 1 140px;
-    }
-    .logo-pill-dark img { max-height: 48px; max-width: 160px; object-fit: contain; }
+    .press-logo img { max-height: 56px; max-width: 180px; object-fit: contain; }
 
     /* ── PRINT ── */
     @media print {
@@ -486,27 +471,23 @@
 </div>
 
 <!-- SPEAKING HISTORY TICKER -->
-<div class="ticker-wrap" aria-label="Speaking history">
+<div class="ticker-wrap" aria-label="Speaking engagements">
   <div class="ticker-track">
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-inv">Voyage Tampa</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-inv">Voyage Houston</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
+    <span class="ticker-item">St. Pete Housing Authority @ SPC The Epicenter</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
     <!-- duplicate for seamless loop -->
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo-inv">Voyage Tampa</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo-inv">Voyage Houston</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
+    <span class="ticker-item">St. Pete Housing Authority @ SPC The Epicenter</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
   </div>
 </div>
 
@@ -549,6 +530,11 @@
       <div class="talk-num">05</div>
       <div class="talk-title">Tech Without Losing Yourself</div>
       <p class="talk-desc">How small business owners can use AI, automation, and modern tools to grow without turning into someone they do not recognize.</p>
+    </div>
+    <div class="talk-card">
+      <div class="talk-num">06</div>
+      <div class="talk-title">Affordable Housing and the Leaders Who Lead the Way</div>
+      <p class="talk-desc">The effects of the affordable housing crisis are not abstract. They show up in families, businesses, and communities. This talk explores what it looks like when leaders stop waiting for policy and start building solutions.</p>
     </div>
   </div>
 </section>
@@ -595,6 +581,22 @@
   </div>
 </section>
 
+<!-- AS SEEN IN -->
+<section class="section section-dark2">
+  <div class="section-label">As Seen In</div>
+  <div class="press-grid">
+    <div class="press-logo">
+      <img src="img/logo-plastiq.png" alt="Plastiq Magazine">
+    </div>
+    <div class="press-logo">
+      <img src="img/logo-voyage-tampa.png" alt="Voyage Tampa">
+    </div>
+    <div class="press-logo">
+      <img src="img/logo-voyage-houston.png" alt="Voyage Houston">
+    </div>
+  </div>
+</section>
+
 <!-- PRESS PHOTOS -->
 <section class="section">
   <div class="section-label">Press Photos</div>
@@ -614,7 +616,7 @@
 <!-- WHAT SHE BRINGS -->
 <section class="section section-dark2">
   <div class="section-label">What She Brings to the Room</div>
-  <p class="brings-quote">Miranda does not deliver a keynote. She starts a conversation your audience has needed to have for years. The people in your room who are tired of performing, who are halfway through something hard, who need permission to lead loudly -- they will feel seen. That is the point.</p>
+  <p class="brings-quote">Miranda does not deliver a keynote. She starts a conversation your audience has needed to have for years. The people in your room who are tired of performing, who are halfway through something hard, who need permission to lead loudly. They will feel seen. That is the point.</p>
 </section>
 
 <!-- CONTACT -->
