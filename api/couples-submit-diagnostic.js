@@ -75,7 +75,9 @@ export default async function handler(req, res) {
     .select('user_id')
     .eq('couple_id', couple_id);
 
-  const bothDone = completions?.length === 2;
+  const partnerADone = completions?.some(c => c.user_id === couple.partner_a_user_id);
+  const partnerBDone = completions?.some(c => c.user_id === couple.partner_b_user_id);
+  const bothDone = !!(partnerADone && partnerBDone);
 
   if (!bothDone) {
     return res.status(200).json({ success: true, report_ready: false });

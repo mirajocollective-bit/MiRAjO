@@ -654,7 +654,7 @@ async function renderDashboard(user) {
       <div class="invite-banner-text">
         <div class="invite-banner-label">Partner Not Yet Joined</div>
         <div class="invite-banner-title">Invite your partner to get started</div>
-        <div class="invite-banner-sub">The diagnostic, report, and course all require both partners. Enter their email below and we'll send them everything they need.</div>
+        <div class="invite-banner-sub">The diagnostic, report, and most of the course require both partners. Enter their email below and we'll send them everything they need.<br><br><strong>You can start Module 1 now</strong> while you wait for them to accept the invite.</div>
       </div>
       <div class="invite-banner-form">
         <input type="email" id="invite-email-input" placeholder="partner@email.com">
@@ -664,8 +664,11 @@ async function renderDashboard(user) {
     </div>`;
   }
 
+  // ── STEP 1 LABEL ──
+  html += `<div class="section-label">Step 1 — Begin With Module 1</div>`;
+
   // ── DIAGNOSTIC STATUS CARD ──
-  html += `<div class="section-label">Step 1 — The Partnership Diagnostic</div>`;
+  html += `<div class="section-label" style="margin-top:8px;">Step 2 — The Partnership Diagnostic</div>`;
   html += `<div class="diagnostic-card">
     <div class="diagnostic-card-header">
       <div>
@@ -693,7 +696,7 @@ async function renderDashboard(user) {
       ${!myCompletion
         ? mod1Complete
           ? `<a href="/programs/couples-diagnostic" class="btn-gold">Take the Diagnostic</a>`
-          : `<span class="btn-outline" style="cursor:default;opacity:0.55;">&#128274; Complete Module 1 first</span>`
+          : `<a href="/programs/couples-course/the-cost-of-misalignment" class="btn-outline">&#128274; Complete Module 1 first →</a>`
         : `<span class="btn-outline" style="cursor:default;opacity:0.6;">&#10003; Diagnostic Complete</span>`
       }
       ${!myCompletion && !mod1Complete
@@ -720,7 +723,7 @@ async function renderDashboard(user) {
   }
 
   // ── MODULES ──
-  html += `<div class="section-label" style="margin-top:8px;">Step 2 — Your Course Path</div>`;
+  html += `<div class="section-label" style="margin-top:8px;">Step 3 — Your Course Path</div>`;
   html += `<div class="modules-grid">`;
 
   for (const mod of MODULES) {
@@ -831,7 +834,7 @@ async function sendInvite() {
 
 function errorState(msg, showSupport = false) {
   return `<div style="text-align:center;padding:80px 40px;">
-    <p style="font-family:'Instrument Serif',serif;font-size:26px;color:var(--cie-cream);margin-bottom:12px;">Something went wrong</p>
+    <p style="font-family:'Instrument Serif',serif;font-size:26px;color:var(--cie-dark);margin-bottom:12px;">Something went wrong</p>
     <p style="font-size:14px;color:var(--cie-muted);margin-bottom:${showSupport ? '24px' : '0'}">${msg}</p>
     ${showSupport ? `<a href="mailto:programs@mirajoco.org" style="font-size:14px;color:var(--cie-gold);">programs@mirajoco.org</a>` : ''}
   </div>`;

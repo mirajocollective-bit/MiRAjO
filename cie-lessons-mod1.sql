@@ -23,10 +23,10 @@ INSERT INTO lessons (module_id, title, content, position) VALUES
 
 <blockquote>The couples who get the most from this course are not the ones with the biggest problems. They are the ones who are honest enough to name what is real and committed enough to work on it together.</blockquote>
 
-<p>The diagnostic is next. Take it privately. Be honest. Your partner will not see your individual answers — only the shared picture they create together.</p>
+<p>The diagnostic comes at the end of this module. Take it privately. Be honest. Your partner will not see your individual answers — only the shared picture they create together.</p>
 
 <h3>Before You Move On</h3>
-<p>Each of you: take 60 seconds and write down one thing you are hoping to walk away from this course with. Do not share it with each other yet. Hold it. You will come back to it.</p>',
+<p>Write down one thing you are hoping to walk away from this course with. Do not share it yet. Hold it. You will come back to it.</p>',
 1),
 
 ('7da97dc1-3004-4072-bc19-009482600d36', 'What Misalignment Actually Is',

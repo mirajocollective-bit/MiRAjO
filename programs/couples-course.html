@@ -508,7 +508,7 @@
 
     @media (max-width: 860px) {
       .sidebar {
-        left: -var(--sidebar-w);
+        left: -300px;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
         z-index: 150;
@@ -669,7 +669,7 @@ async function init() {
   const isWin = mod.position === 8;
   const domainUnlocked = unlocked.includes(mod.unlock_domain) || unlocked.includes('all');
 
-  if (!isFoundation && !isWin && !domainUnlocked && !report) {
+  if (!isFoundation && !(isWin && report) && !domainUnlocked) {
     window.location.href = '/programs/couples-dashboard';
     return;
   }
@@ -869,16 +869,20 @@ async function markComplete(lessonId, lessonIdx) {
     // Module complete
     setTimeout(() => showModuleComplete(), 600);
   } else {
-    // Auto-advance to next lesson after a beat
+    // Auto-advance only if lesson has no together_work (don't interrupt mid-reading)
+    const currentLesson = allLessons[lessonIdx];
     const next = allLessons[lessonIdx + 1];
-    if (next) setTimeout(() => openLesson(next.id), 800);
+    if (next && !currentLesson?.together_work) setTimeout(() => openLesson(next.id), 800);
   }
 }
 
 function showModuleComplete() {
   const overlay = document.getElementById('mc-overlay');
   document.getElementById('mc-title').textContent = currentModule.title + ' — Done.';
-  document.getElementById('mc-sub').textContent = 'You\'ve completed this module. Keep going — the work compounds.';
+  const mcSubText = currentModule.position === 1
+    ? 'You\'ve finished Module 1. Head to your dashboard to take the Partnership Diagnostic — that\'s your next step.'
+    : 'You\'ve completed this module. Keep going — the work compounds.';
+  document.getElementById('mc-sub').textContent = mcSubText;
 
   const actions = document.getElementById('mc-actions');
   actions.innerHTML = `
