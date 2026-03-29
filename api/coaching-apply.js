@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     // Notify Miranda
     await resend.emails.send({
       from: 'MiRAjO <programs@mirajoco.org>',
-      to: 'miranda@mirajoco.org',
+      to: 'mirandaj@mirajoco.org',
       subject: `New 90 Days to Clear Application — ${name}`,
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px;">
@@ -64,7 +64,7 @@ export default async function handler(req, res) {
 
     // Send acknowledgement to applicant
     await resend.emails.send({
-      from: 'Miranda Johnson <miranda@mirajoco.org>',
+      from: 'Miranda Johnson <mirandaj@mirajoco.org>',
       to: email,
       subject: 'I received your application — Miranda Johnson',
       html: `
