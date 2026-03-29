@@ -33,8 +33,8 @@
       "address": { "@type": "PostalAddress", "addressLocality": "St. Petersburg", "addressRegion": "FL", "addressCountry": "US" }
     },
     "offers": [
-      { "@type": "Offer", "name": "30-Minute Session", "price": "75", "priceCurrency": "USD" },
-      { "@type": "Offer", "name": "60-Minute Session", "price": "150", "priceCurrency": "USD" }
+      { "@type": "Offer", "name": "The Download — 60-Minute Session", "price": "250", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "90 Days to Clear — Founding Rate", "price": "2500", "priceCurrency": "USD" }
     ],
     "areaServed": { "@type": "Place", "name": "United States" }
   }
@@ -781,6 +781,139 @@
     .cta-strip-btn:hover { background: var(--forest-mid); transform: translateY(-2px); }
     .cta-strip-note { margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.65); letter-spacing: 0.3px; }
 
+    /* APPLICATION SECTION */
+    .apply-section {
+      background: var(--warm-parchment);
+      padding: 100px 40px;
+    }
+    .apply-inner { max-width: 1100px; margin: 0 auto; }
+    .apply-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--coral);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .apply-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 400;
+      color: var(--deep-forest);
+      margin-bottom: 20px;
+      line-height: 1.15;
+    }
+    .apply-sub {
+      font-size: 17px;
+      color: var(--text-body-light);
+      max-width: 720px;
+      line-height: 1.75;
+      margin-bottom: 64px;
+    }
+    .apply-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .apply-left-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--deep-forest);
+      margin-bottom: 28px;
+    }
+    .apply-includes { list-style: none; margin-bottom: 32px; }
+    .apply-includes li {
+      font-size: 15px;
+      color: var(--text-body-light);
+      padding: 12px 0 12px 32px;
+      border-bottom: 1px solid rgba(18,32,18,0.08);
+      position: relative;
+      line-height: 1.5;
+    }
+    .apply-includes li:last-child { border-bottom: none; }
+    .apply-includes li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--coral);
+      font-size: 13px;
+    }
+    .apply-note {
+      font-size: 13px;
+      color: var(--text-muted-light);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .apply-form { display: flex; flex-direction: column; gap: 20px; }
+    .apply-field { display: flex; flex-direction: column; gap: 8px; }
+    .apply-field label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-muted-light);
+      text-transform: uppercase;
+    }
+    .apply-field input,
+    .apply-field textarea {
+      background: #fff;
+      border: 1.5px solid rgba(18,32,18,0.12);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-on-light);
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .apply-field input:focus,
+    .apply-field textarea:focus {
+      outline: none;
+      border-color: var(--coral);
+    }
+    .apply-submit-btn {
+      background: var(--deep-forest);
+      color: var(--warm-parchment);
+      border: none;
+      border-radius: 8px;
+      padding: 17px 32px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      align-self: flex-start;
+    }
+    .apply-submit-btn:hover { background: var(--forest-mid); transform: translateY(-2px); }
+    .apply-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .apply-form-note {
+      font-size: 12px;
+      color: var(--text-muted-light);
+      margin-top: -8px;
+    }
+    .apply-success {
+      text-align: center;
+      padding: 64px 32px;
+      background: #fff;
+      border-radius: 16px;
+    }
+    .apply-success-icon {
+      font-size: 48px;
+      color: var(--living-green);
+      margin-bottom: 20px;
+    }
+    .apply-success-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--deep-forest);
+      line-height: 1.5;
+    }
+    @media (max-width: 900px) {
+      .apply-grid { grid-template-columns: 1fr; gap: 40px; }
+      .apply-section { padding: 72px 24px; }
+    }
+
     /* FOOTER */
     .site-footer { background: var(--deep-forest); padding: 48px 40px 24px; border-top: 1px solid var(--border-dark); }
     .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 24px; }
@@ -880,59 +1013,50 @@
 <!-- HERO SPLIT -->
 <section class="hero-split">
   <div class="hero-left">
-    <div class="hero-eyebrow" data-aos="fade-down">1:1 with Miranda Johnson</div>
+    <div class="hero-eyebrow" data-aos="fade-down">1:1 Coaching with Miranda Johnson</div>
     <h1 class="hero-title" data-aos="fade-up" data-aos-delay="80">
-      Download what<br>you've been<br><em>carrying alone.</em>
+      You don't need<br>another strategy.<br><em>You need clarity.</em>
     </h1>
     <p class="hero-sub" data-aos="fade-up" data-aos-delay="160">
-      One call. Real talk. You leave with clarity you can actually move on.
+      90 days. One framework. Built on 20 years of seeds planted in hard ground — and the faith that every single one of them has a harvest.
     </p>
-    <div class="hero-prices" data-aos="fade-up" data-aos-delay="220">
-      <div class="hero-price-pill">
-        <span class="hero-price-amount">$75</span>
-        <span class="hero-price-label">30 Minutes</span>
-      </div>
-      <div class="hero-price-pill">
-        <span class="hero-price-amount">$150</span>
-        <span class="hero-price-label">60 Minutes</span>
-      </div>
-    </div>
     <div class="hero-cta-row" data-aos="fade-up" data-aos-delay="280">
-      <a href="#book" class="hero-cta-primary">Book Your Session Now</a>
-      <a href="#what" class="hero-cta-ghost">Learn more &darr;</a>
+      <a href="#apply" class="hero-cta-primary">Apply for 90 Days to Clear</a>
+      <a href="#book" class="hero-cta-ghost">Book a single session &darr;</a>
     </div>
   </div>
   <div class="hero-right">
     <img src="img/miranda polkadot.jpeg" alt="Miranda Johnson">
     <div class="hero-right-overlay"></div>
     <div class="hero-right-badge">
-      <div class="hero-right-badge-text">"You know the answer,<br>you just want confirmation."</div>
+      <div class="hero-right-badge-text">"Inside of me is Him."</div>
       <div class="hero-right-badge-name">Miranda Johnson</div>
     </div>
   </div>
 </section>
 
-<!-- WHAT THIS IS SPLIT -->
+<!-- WHO MIRANDA IS SPLIT -->
 <section class="what-split" id="what">
   <div class="what-left-panel" data-aos="fade-right">
-    <div class="panel-eyebrow">What this is</div>
-    <h2 class="panel-title">A direct line.<br><em>Not a package.<br>Not a program.</em></h2>
+    <div class="panel-eyebrow">Who Miranda is</div>
+    <h2 class="panel-title">20 years of seeds<br><em>planted in hard ground.<br>All of them growing.</em></h2>
     <div class="panel-body">
-      <p>A 1:1 call with Miranda Johnson for the moment you're in, the decision you're facing, the clarity you need right now.</p>
-      <p>You bring what's been weighing on you. Miranda brings a framework, a witness, and a way through. No fluff, no filler. Just the real conversation your situation requires.</p>
-      <p>This is for the introspective moments. The ones where you need to be heard first, and then receive something worth taking with you.</p>
+      <p>Miranda Johnson didn't arrive here through a smooth path. She grew up navigating environments that required resilience before she even knew the word. She built businesses, lost businesses, and rebuilt — not because it was easy, but because stopping wasn't an option she was willing to take.</p>
+      <p>She's the author of <em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>. A speaker. A community builder. One of Tampa Bay's most trusted voices in entrepreneurship and leadership development.</p>
+      <p>Her framework — <strong>Seedtime and Harvest</strong> — is built on a foundational truth: everything you've planted, every sacrifice, every hard season, every thing you thought was lost — it has a harvest. The work is stopping the avoidance and starting the tending.</p>
+      <p>Her anchor: <em>"Inside of me is Him."</em> That's not a tagline. That's the foundation she coaches from — and the thing people feel in the room.</p>
     </div>
   </div>
   <div class="what-right-panel" data-aos="fade-left">
-    <div class="panel-eyebrow">This call is for you if</div>
+    <div class="panel-eyebrow">This is for you if</div>
     <ul class="for-you-list">
-      <li>You're at a crossroads and need to think out loud</li>
-      <li>You have a decision that keeps circling without resolution</li>
-      <li>You want clarity, not just comfort</li>
-      <li>You need to be heard before you can move forward</li>
-      <li>You're in a deep introspective moment and need a guide</li>
-      <li>You want someone who will receive what you're carrying, not just reflect it back</li>
-      <li>You want to stay anonymous. No problem.</li>
+      <li>You're in the second half of something and can't see the path forward</li>
+      <li>You have history — experience, loss, pivots — and don't know what to do with it</li>
+      <li>You've built before and keep getting in your own way</li>
+      <li>You're not sure if it's a strategy problem or a you problem</li>
+      <li>You need someone who won't just validate you — who will tell you the truth</li>
+      <li>You want clarity from someone who has actually lived through what you're facing</li>
+      <li>You're ready to stop circling and start moving</li>
     </ul>
   </div>
 </section>
@@ -944,33 +1068,33 @@
 
     <div class="question-row" data-aos="fade-up" data-aos-delay="0">
       <span class="question-num">01</span>
-      <p class="question-text">Should I?</p>
+      <p class="question-text">What am I supposed to do with the second half?</p>
     </div>
     <div class="question-row" data-aos="fade-up" data-aos-delay="50">
       <span class="question-num">02</span>
-      <p class="question-text">Am I reading this right?</p>
+      <p class="question-text">How do I start over when I have so much history?</p>
     </div>
     <div class="question-row" data-aos="fade-up" data-aos-delay="100">
       <span class="question-num">03</span>
-      <p class="question-text">Do I need to download my thoughts before I can build?</p>
+      <p class="question-text">Why do I keep sabotaging what I say I want?</p>
     </div>
     <div class="question-row" data-aos="fade-up" data-aos-delay="150">
       <span class="question-num">04</span>
-      <p class="question-text">What if this decision isn't about the options — it's about what I keep avoiding?</p>
+      <p class="question-text">Is this a money problem or a me problem?</p>
     </div>
     <div class="question-row" data-aos="fade-up" data-aos-delay="200">
       <span class="question-num">05</span>
-      <p class="question-text">What does it cost me to keep carrying this alone?</p>
+      <p class="question-text">Can I actually trust myself to build something again?</p>
     </div>
     <div class="question-row" data-aos="fade-up" data-aos-delay="250">
       <span class="question-num">06</span>
-      <p class="question-text">Am I building from clarity, or from fear?</p>
+      <p class="question-text">What if I've already wasted too much time?</p>
     </div>
 
     <div class="questions-close-row" data-aos="fade-up">
       <p class="questions-close-text">
         These aren't small questions.<br>
-        <strong>They deserve a real conversation.</strong>
+        <strong>Miranda has lived most of them. She can help you answer yours.</strong>
       </p>
     </div>
   </div>
@@ -1010,56 +1134,97 @@
 <section class="price-section">
   <div class="price-section-inner">
     <div class="price-section-eyebrow" data-aos="fade-up">Investment</div>
-    <h2 class="price-section-title" data-aos="fade-up" data-aos-delay="60">Your time. Your terms. Pick your session.</h2>
+    <h2 class="price-section-title" data-aos="fade-up" data-aos-delay="60">One call. Or ninety days.<br>You decide what you need.</h2>
 
     <div class="price-cards-grid">
       <div class="price-card" data-aos="fade-up" data-aos-delay="80">
         <div class="price-card-top">
           <div class="price-card-tag">The Download</div>
-          <div class="price-card-amount">$75</div>
-          <div class="price-card-duration">30 Minutes</div>
+          <div class="price-card-amount">$250</div>
+          <div class="price-card-duration">60 Minutes</div>
         </div>
         <div class="price-card-body">
-          <p class="price-card-desc">One question, one decision, one moment of clarity. Enough time to go deep. Not enough time to circle.</p>
-          <a href="#book-30" class="price-card-btn">Book 30 Min &rarr;</a>
+          <p class="price-card-desc">One session. The conversation your situation actually requires. You bring what's been weighing on you. Miranda brings a framework, a witness, and a way through. No fluff. No filler. You leave with something you can move on.</p>
+          <a href="#book" class="price-card-btn">Book a Session &rarr;</a>
         </div>
       </div>
       <div class="price-card" data-aos="fade-up" data-aos-delay="160">
         <div class="price-card-top">
-          <div class="price-card-tag">The Download</div>
-          <div class="price-card-amount">$150</div>
-          <div class="price-card-duration">60 Minutes</div>
+          <div class="price-card-tag">90 Days to Clear &nbsp;·&nbsp; Founding Rate</div>
+          <div class="price-card-amount">$2,500</div>
+          <div class="price-card-duration">90-Day Engagement</div>
         </div>
         <div class="price-card-body">
-          <p class="price-card-desc">For the conversation that needs room to breathe. Complex decisions, life transitions, or the thoughts you've never said out loud, fully unpacked.</p>
-          <a href="#book-60" class="price-card-btn">Book 60 Min &rarr;</a>
+          <p class="price-card-desc">This isn't a course. It's a working relationship. Miranda's Seedtime and Harvest framework applied directly to your life, your business, and the decisions in front of you. Four sessions. Real-time access between sessions. One outcome: Clear.</p>
+          <a href="#apply" class="price-card-btn">Apply Now &rarr;</a>
         </div>
       </div>
     </div>
 
-    <p class="price-note" data-aos="fade-up">Paid at booking &middot; No subscription &middot; Anonymous welcome &middot; Calendar confirmation sent instantly</p>
+    <p class="price-note" data-aos="fade-up">Founding rate &middot; Limited spots &middot; Paid at booking &middot; No subscription &middot; Calendar confirmation sent instantly</p>
+  </div>
+</section>
+
+<!-- APPLICATION -->
+<section class="apply-section" id="apply">
+  <div class="apply-inner">
+    <div class="apply-eyebrow" data-aos="fade-up">90 Days to Clear</div>
+    <h2 class="apply-title" data-aos="fade-up" data-aos-delay="60">Apply for the founding cohort</h2>
+    <p class="apply-sub" data-aos="fade-up" data-aos-delay="100">This is a 90-day working relationship — Miranda's framework applied directly to your life, your business, and the decisions in front of you right now. Founding rate is $2,500. Spots are limited and Miranda personally reviews every application.</p>
+
+    <div class="apply-grid">
+      <div class="apply-left" data-aos="fade-right" data-aos-delay="80">
+        <h3 class="apply-left-title">What 90 Days to Clear includes</h3>
+        <ul class="apply-includes">
+          <li>4 deep-dive coaching sessions (90 days)</li>
+          <li>Seedtime and Harvest framework applied to your specific situation</li>
+          <li>Voice/text access between sessions for real-time clarity</li>
+          <li>Personalized action map built from session one</li>
+          <li>An honest mirror — someone who tells you the truth, not just what you want to hear</li>
+        </ul>
+        <p class="apply-note">Miranda personally reviews every application. You'll hear back within 48 hours.</p>
+      </div>
+      <div class="apply-right" data-aos="fade-left" data-aos-delay="80">
+        <form class="apply-form" id="coachingApplyForm">
+          <div class="apply-field">
+            <label for="applyName">Your name</label>
+            <input type="text" id="applyName" name="name" placeholder="First and last name" required>
+          </div>
+          <div class="apply-field">
+            <label for="applyEmail">Email address</label>
+            <input type="email" id="applyEmail" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="apply-field">
+            <label for="applySituation">What are you navigating right now?</label>
+            <textarea id="applySituation" name="situation" rows="4" placeholder="Be direct. What's the actual problem?" required></textarea>
+          </div>
+          <div class="apply-field">
+            <label for="applyWhyNow">Why now?</label>
+            <textarea id="applyWhyNow" name="whynow" rows="3" placeholder="What made you reach out today specifically?" required></textarea>
+          </div>
+          <button type="submit" class="apply-submit-btn">Submit Application &rarr;</button>
+          <p class="apply-form-note">No commitment required to apply. Miranda will reach out directly.</p>
+        </form>
+        <div class="apply-success" id="applySuccess" style="display:none">
+          <p class="apply-success-icon">&#10003;</p>
+          <p class="apply-success-text">Application received.<br>Miranda will be in touch within 48 hours.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- BOOKING -->
 <section class="booking-section" id="book">
   <div class="booking-inner">
-    <div class="booking-eyebrow" data-aos="fade-up">Reserve Your Time</div>
-    <h2 class="booking-title" data-aos="fade-up" data-aos-delay="60">Pick your session and book directly below</h2>
+    <div class="booking-eyebrow" data-aos="fade-up">Book Your Session</div>
+    <h2 class="booking-title" data-aos="fade-up" data-aos-delay="60">The Download &mdash; pick a time below</h2>
 
-    <div class="booking-grid">
-      <div class="booking-col" id="book-30" data-aos="fade-up" data-aos-delay="80">
-        <div class="booking-col-header">
-          <span class="booking-col-name">The Download &mdash; 30 min</span>
-          <span class="booking-col-price">$75</span>
-        </div>
-        <div class="booking-col-embed" id="my-cal-inline-30min"></div>
-      </div>
-
-      <div class="booking-col" id="book-60" data-aos="fade-up" data-aos-delay="160">
+    <div class="booking-grid" style="grid-template-columns: 1fr; max-width: 680px; margin: 0 auto;">
+      <div class="booking-col" id="book-60" data-aos="fade-up" data-aos-delay="80">
         <div class="booking-col-header">
           <span class="booking-col-name">The Download &mdash; 60 min</span>
-          <span class="booking-col-price">$150</span>
+          <span class="booking-col-price">$250</span>
         </div>
         <div class="booking-col-embed" id="my-cal-inline-60min"></div>
       </div>
@@ -1070,13 +1235,13 @@
 <!-- CTA STRIP -->
 <section class="cta-strip">
   <h2 class="cta-strip-title" data-aos="fade-up">
-    The conversation you've been needing<br><em>is one click away.</em>
+    Every seed you've planted<br><em>has a harvest.</em>
   </h2>
   <p class="cta-strip-sub" data-aos="fade-up" data-aos-delay="80">
-    No intake form. No waitlist. Come as you are, with exactly what you're carrying.
+    The next 90 days don't have to look like the last 90. One real conversation changes everything.
   </p>
-  <a href="#book" class="cta-strip-btn" data-aos="fade-up" data-aos-delay="160">Book Your Session</a>
-  <p class="cta-strip-note" data-aos="fade-up" data-aos-delay="240">Secure booking &middot; Paid at checkout &middot; Your information stays with you</p>
+  <a href="#apply" class="cta-strip-btn" data-aos="fade-up" data-aos-delay="160">Apply for 90 Days to Clear</a>
+  <p class="cta-strip-note" data-aos="fade-up" data-aos-delay="240">Or <a href="#book" style="color:rgba(255,255,255,0.85);text-decoration:underline">book a single session</a> &middot; No commitment required to apply</p>
 </section>
 
 <!-- FOOTER -->
@@ -1120,24 +1285,6 @@
 <script type="text/javascript">
   (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
 
-  Cal("init", "30min", {origin:"https://app.cal.com"});
-  Cal.ns["30min"]("inline", {
-    elementOrSelector:"#my-cal-inline-30min",
-    config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
-    calLink: "miranda-johnson/30min",
-  });
-  Cal.ns["30min"]("ui", {
-    "hideEventTypeDetails": false,
-    "layout": "month_view",
-    "cssVarsPerTheme": {
-      "light": {
-        "--cal-brand": "#C4724A",
-        "--cal-brand-emphasis": "#A85C38",
-        "--cal-brand-text": "#ffffff"
-      }
-    }
-  });
-
   Cal("init", "60min", {origin:"https://app.cal.com"});
   Cal.ns["60min"]("inline", {
     elementOrSelector:"#my-cal-inline-60min",
@@ -1153,6 +1300,41 @@
         "--cal-brand-emphasis": "#A85C38",
         "--cal-brand-text": "#ffffff"
       }
+    }
+  });
+</script>
+
+<script>
+  document.getElementById('coachingApplyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.apply-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    const data = {
+      name: this.name.value.trim(),
+      email: this.email.value.trim(),
+      situation: this.situation.value.trim(),
+      whynow: this.whynow.value.trim()
+    };
+    try {
+      const res = await fetch('/api/coaching-apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('applySuccess').style.display = 'block';
+        if (typeof trackLead === 'function') trackLead('coaching_apply', { email: data.email });
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Submit Application →';
+        alert('Something went wrong. Please try again or email miranda@mirajoco.org directly.');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application →';
+      alert('Something went wrong. Please try again or email miranda@mirajoco.org directly.');
     }
   });
 </script>
