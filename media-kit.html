@@ -170,15 +170,22 @@
       background: rgba(18,32,18,0.3);
       flex-shrink: 0;
     }
-    /* black silhouettes on mint green — clean and sharp */
-    .ticker-logo, .ticker-logo-lg, .ticker-logo-inv {
+    /* colored logos — multiply removes white bg, colors show on mint */
+    .ticker-logo, .ticker-logo-lg {
       object-fit: contain;
       flex-shrink: 0;
-      filter: brightness(0);
+      mix-blend-mode: multiply;
     }
-    .ticker-logo     { height: 44px; width: auto; max-width: 110px; }
-    .ticker-logo-lg  { height: 56px; width: auto; max-width: 130px; }
-    .ticker-logo-inv { height: 44px; width: auto; max-width: 110px; }
+    .ticker-logo    { height: 44px; width: auto; max-width: 110px; }
+    .ticker-logo-lg { height: 56px; width: auto; max-width: 130px; }
+    /* white logos — invert to show on mint */
+    .ticker-logo-inv {
+      object-fit: contain;
+      flex-shrink: 0;
+      height: 44px; width: auto; max-width: 110px;
+      filter: brightness(0);
+      opacity: 0.6;
+    }
     @keyframes ticker {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
@@ -483,18 +490,16 @@
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item">St. Pete Housing Authority @ SPC The Epicenter</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
     <!-- duplicate for seamless loop -->
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item">St. Pete Housing Authority @ SPC The Epicenter</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
   </div>
 </div>
 
@@ -502,7 +507,7 @@
 <section class="section">
   <div class="section-label">Biography</div>
   <div class="bio-text">
-    <p>Miranda Johnson has spent 20 years building businesses, raising five children, and learning the hard way that performance is not the same as progress. She has worked across logistics, real estate, and residential construction. She founded MiRAjO Collective to help entrepreneurs stop shrinking and start leading from who they actually are. She currently serves as COO of Tampa Business Club and Events Chair for the Tampa Bay Latin Chamber of Commerce.</p>
+    <p>Miranda Johnson has spent 20 years building businesses, raising five children, and learning the hard way that performance is not the same as progress. She has worked across logistics, real estate, and residential construction. She founded MiRAjO Collective to help entrepreneurs stop shrinking and start leading from who they actually are. She currently serves as COO of Tampa Business Club and Events Chair for the Tampa Bay Latin Chamber of Commerce. She has been invited to speak on affordable housing and leadership by the St. Pete Housing Authority at SPC The Epicenter in Clearwater, FL.</p>
     <div class="bio-highlight">"I do not come to rooms to impress. I come to be useful."</div>
     <p>She is the author of two books: The Pain Principle, which explores how suffering becomes the sharpest teacher, and LeadLoud: 11 Commandments of the Next-Gen Leader, a framework for entrepreneurs who refuse to lead small. Her courses, 25 Days and 25 Nights and Couples in Entrepreneurship, help individuals and business partners reset, realign, and move forward together.</p>
     <p>Miranda is based in St. Petersburg, FL. Her faith is not a footnote. Her slogan is "Authenticity is the new Blue Check."</p>
