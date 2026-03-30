@@ -92,7 +92,7 @@
       if (accessToken) {
         const { error: setErr } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
         if (setErr) return showError();
-        return redirect();
+        return afterSession();
       }
 
       // PKCE / code flow
@@ -101,12 +101,37 @@
       if (code) {
         const { error: exchErr } = await supabase.auth.exchangeCodeForSession(code);
         if (exchErr) return showError();
-        return redirect();
+        return afterSession();
       }
 
       return showError();
     }
 
+    afterSession();
+  }
+
+  async function afterSession() {
+    // Activate invited household members (no-op for owners/returning users)
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        const r = await fetch('/api/mm-activate-member', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        });
+        const result = await r.json();
+        if (result.activated) {
+          // This is a family invite — show a distinct welcome
+          document.getElementById('title').textContent = 'You\'re in!';
+          document.getElementById('sub').textContent = 'You have joined the household. Taking you to your dashboard...';
+          setTimeout(() => { window.location.href = '/tools/money-moves/dashboard?welcome=member'; }, 1800);
+          return;
+        }
+      }
+    } catch (e) {
+      // Non-critical — continue to redirect even if activation check fails
+      console.warn('[confirm] Activation check failed:', e.message);
+    }
     redirect();
   }
 

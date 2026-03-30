@@ -450,8 +450,8 @@
   <!-- Welcome banner -->
   <div class="welcome-banner" id="welcome-banner" style="display:none">
     <div class="welcome-text">
-      <h2>Welcome to Money Moves!</h2>
-      <p>Add your accounts and first transactions to get started.</p>
+      <h2 id="welcome-title">Welcome to Money Moves!</h2>
+      <p id="welcome-sub">Add your accounts and first transactions to get started.</p>
     </div>
     <button class="welcome-close" onclick="document.getElementById('welcome-banner').style.display='none'">✕</button>
   </div>
@@ -679,7 +679,12 @@
   document.getElementById('nav-greeting').textContent = `Hi, ${firstName}`;
 
   const params = new URLSearchParams(window.location.search);
-  if (params.get('welcome') === '1' && !sessionStorage.getItem('mm_welcomed')) {
+  if (params.get('welcome') && !sessionStorage.getItem('mm_welcomed')) {
+    const isMember = params.get('welcome') === 'member';
+    document.getElementById('welcome-title').textContent = isMember ? 'You joined the household!' : 'Welcome to Money Moves!';
+    document.getElementById('welcome-sub').textContent   = isMember
+      ? 'You now have access to the shared household budget and calendar.'
+      : 'Add your accounts and first transactions to get started.';
     document.getElementById('welcome-banner').style.display = 'flex';
     sessionStorage.setItem('mm_welcomed', '1');
   }
