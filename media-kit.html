@@ -533,16 +533,83 @@
     }
     .kit-footer-note { font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; }
 
+    /* ── PRINT-ONLY ELEMENTS ── */
+    .print-speaking { display: none; }
+
     /* ── PRINT ── */
     @media print {
-      .print-bar { display: none; }
-      .ticker-wrap { overflow: visible; white-space: normal; }
-      .ticker-track { animation: none; display: block; }
-      .ticker-item { display: inline-block; }
-      body { background: #fff; }
-      .section { padding: 48px; }
-      .section-forest { background: #1a4a2a; }
-      @page { margin: 0; size: A4; }
+      @page { margin: 16mm 14mm; size: A4; }
+
+      /* hide web-only elements */
+      .print-bar,
+      .ticker-wrap,
+      .inquiry-wrap,
+      .photo-item { display: none !important; }
+
+      /* show print-only speaking list */
+      .print-speaking { display: block !important; }
+
+      body {
+        background: #fff;
+        color: #122012;
+        font-size: 11pt;
+      }
+
+      /* hero */
+      .hero {
+        grid-template-columns: 1fr 260px;
+        min-height: auto;
+        border-bottom: 2px solid #6DC48A;
+        padding-bottom: 0;
+      }
+      .hero-left { padding: 32px 40px; }
+      .hero-name { font-size: 52pt; }
+      .hero-right { max-height: 220px; }
+      .hero-right img { object-position: center 15%; }
+      .hero-right::before { display: none; }
+
+      /* sections */
+      .section { padding: 28px 40px; break-inside: avoid; }
+      .section-mint { background: #EBF7F0 !important; }
+      .section-forest { background: #122012 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .section-white { background: #fff !important; }
+
+      /* section labels */
+      .section-label { color: #339158 !important; }
+      .section-forest .section-label { color: #6DC48A !important; }
+
+      /* talks grid — 2 cols on print */
+      .talks-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .talk-card { padding: 16px 20px; border: 1px solid #d0e8d8; break-inside: avoid; }
+      .talk-num { color: #6DC48A !important; }
+
+      /* books */
+      .books-grid { gap: 28px; }
+      .book-cover { width: 72px; }
+
+      /* university */
+      .uni-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .uni-card { padding: 24px 20px; break-inside: avoid; }
+      .uni-logo-wrap img { mix-blend-mode: multiply; }
+
+      /* contact */
+      .contact-grid { grid-template-columns: 1fr 1fr 1fr; }
+
+      /* brings quote */
+      .brings-quote { font-size: 18pt; color: #F2EBD9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      /* footer */
+      .kit-footer {
+        background: #256B42 !important;
+        padding: 16px 40px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .kit-footer-brand { color: #fff !important; }
+      .kit-footer-note { color: rgba(255,255,255,0.6) !important; }
+
+      /* page breaks */
+      .section-forest { break-before: avoid; }
     }
 
     @media (max-width: 900px) {
@@ -620,6 +687,27 @@
     <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo">Voyage Tampa</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo">Voyage Houston</span>
+  </div>
+</div>
+
+<!-- PRINT-ONLY SPEAKING HISTORY -->
+<div class="print-speaking" style="background:#EBF7F0;padding:24px 40px;border-top:3px solid #6DC48A;">
+  <div style="font-size:9pt;letter-spacing:4px;text-transform:uppercase;color:#339158;font-weight:700;margin-bottom:14px;">Speaking History &amp; Press</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px 0;font-size:10pt;color:#122012;">
+    <span style="margin-right:18px;">Power Women Expo 2026</span>
+    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
+    <span style="margin-right:18px;">Tampa Bay Latin Chamber of Commerce — Fail Forward 2026</span>
+    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
+    <span style="margin-right:18px;">Tampa Bay Business Expo 2024</span>
+    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
+    <span style="margin-right:18px;">Tampa Bay Connects</span>
+    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
+    <span style="margin-right:18px;">Hillsborough County — Local Stories Live</span>
+    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
+    <span style="margin-right:18px;">Hillsborough County — Summer Business Expo</span>
+  </div>
+  <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(18,32,18,0.1);font-size:10pt;color:#5A6E58;">
+    <strong style="color:#339158;">As Seen In:</strong>&nbsp; Plastiq Magazine &nbsp;&middot;&nbsp; Voyage Tampa &nbsp;&middot;&nbsp; Voyage Houston
   </div>
 </div>
 
