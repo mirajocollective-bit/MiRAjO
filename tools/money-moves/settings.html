@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Money Moves by MiRAjO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-forest:    #122012;
+      --forest-mid:     #1E4226;
+      --living-green:   #256B42;
+      --new-growth:     #6DC48A;
+      --dry-sage:       #C4A245;
+      --warm-parchment: #F2EBD9;
+      --soft-white:     #FAF7F2;
+      --neutral:        #6b7280;
+      --border:         rgba(18,32,18,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--soft-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .nav-logo { height: 40px; width: auto; }
+    .nav-product { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dry-sage); }
+    .nav-back {
+      font-size: 13px; color: rgba(242,235,217,0.7); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--warm-parchment); }
+
+    /* ── Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 28px 80px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Sidebar nav ── */
+    .settings-nav {
+      position: sticky;
+      top: 88px;
+    }
+    .settings-nav-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--neutral); margin-bottom: 12px;
+      padding-left: 12px;
+    }
+    .settings-nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 10px;
+      font-size: 14px; font-weight: 500; color: var(--forest-mid);
+      text-decoration: none; transition: background 0.15s, color 0.15s;
+      margin-bottom: 2px;
+    }
+    .settings-nav a:hover { background: rgba(37,107,66,0.07); color: var(--deep-forest); }
+    .settings-nav a.active { background: rgba(37,107,66,0.1); color: var(--living-green); font-weight: 700; }
+    .settings-nav .nav-icon { font-size: 16px; }
+
+    /* ── Sections ── */
+    .settings-sections { display: flex; flex-direction: column; gap: 28px; }
+
+    .section {
+      background: #fff;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(18,32,18,0.04);
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px; font-weight: 400; color: var(--deep-forest);
+      margin-bottom: 4px;
+    }
+    .section-desc { font-size: 13px; color: var(--neutral); }
+    .section-body { padding: 24px 28px; }
+
+    /* ── Personality Mode ── */
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .mode-card {
+      border: 2px solid var(--border);
+      border-radius: 14px; padding: 20px;
+      cursor: pointer; transition: all 0.2s;
+      position: relative;
+    }
+    .mode-card:hover { border-color: var(--new-growth); background: rgba(109,196,138,0.04); }
+    .mode-card.selected { border-color: var(--living-green); background: rgba(37,107,66,0.05); }
+    .mode-card.selected::after {
+      content: '✓';
+      position: absolute; top: 12px; right: 14px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--living-green); color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .mode-emoji { font-size: 28px; margin-bottom: 8px; }
+    .mode-label { font-size: 15px; font-weight: 700; color: var(--deep-forest); margin-bottom: 4px; }
+    .mode-preview { font-size: 12px; color: var(--neutral); line-height: 1.5; font-style: italic; }
+
+    /* ── Alert threshold ── */
+    .threshold-row {
+      display: flex; align-items: center; gap: 16px; margin-top: 20px;
+      padding-top: 20px; border-top: 1px solid var(--border);
+    }
+    .threshold-label { font-size: 14px; font-weight: 600; color: var(--deep-forest); flex: 1; }
+    .threshold-sub { font-size: 12px; color: var(--neutral); margin-top: 2px; }
+    .threshold-select {
+      padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #fff; outline: none;
+      cursor: pointer; transition: border-color 0.2s;
+    }
+    .threshold-select:focus { border-color: var(--living-green); }
+
+    /* ── Toggle row ── */
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .toggle-row:first-child { padding-top: 0; }
+    .toggle-info { flex: 1; }
+    .toggle-title { font-size: 14px; font-weight: 600; color: var(--deep-forest); }
+    .toggle-sub   { font-size: 12px; color: var(--neutral); margin-top: 2px; }
+
+    .toggle {
+      position: relative; width: 44px; height: 24px;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .toggle input { display: none; }
+    .toggle-track {
+      position: absolute; inset: 0;
+      background: rgba(18,32,18,0.12); border-radius: 99px; transition: background 0.2s;
+    }
+    .toggle input:checked + .toggle-track { background: var(--living-green); }
+    .toggle-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; transition: transform 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .toggle input:checked ~ .toggle-thumb { transform: translateX(20px); }
+
+    /* ── Categories / Budget ── */
+    .cat-list { display: flex; flex-direction: column; gap: 0; }
+
+    .cat-section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--neutral);
+      padding: 16px 0 8px;
+    }
+    .cat-section-label:first-child { padding-top: 0; }
+
+    .cat-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .cat-row:last-child { border-bottom: none; }
+    .cat-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .cat-name { font-size: 14px; font-weight: 500; flex: 1; color: var(--deep-forest); }
+    .cat-budget-input {
+      width: 100px; padding: 8px 12px; text-align: right;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); outline: none; transition: border-color 0.2s;
+    }
+    .cat-budget-input:focus { border-color: var(--living-green); }
+    .cat-budget-prefix {
+      font-size: 13px; color: var(--neutral); margin-right: -4px;
+    }
+
+    .add-cat-row {
+      display: flex; gap: 10px; margin-top: 16px;
+      padding-top: 16px; border-top: 1px solid var(--border);
+    }
+    .add-cat-input {
+      flex: 1; padding: 10px 14px; border: 1px solid var(--border);
+      border-radius: 10px; font-size: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif; outline: none;
+      transition: border-color 0.2s; color: var(--deep-forest);
+    }
+    .add-cat-input:focus { border-color: var(--living-green); }
+    .add-cat-select {
+      padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #fff; outline: none;
+    }
+    .add-cat-btn {
+      padding: 10px 18px; background: var(--living-green); color: #fff;
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .add-cat-btn:hover { opacity: 0.85; }
+
+    /* ── Goals ── */
+    .goal-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .goal-row {
+      border: 1px solid var(--border); border-radius: 14px; padding: 18px;
+    }
+    .goal-row-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px;
+    }
+    .goal-row-name { font-size: 15px; font-weight: 700; color: var(--deep-forest); }
+    .goal-delete-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 13px; color: var(--neutral); padding: 4px 8px;
+      border-radius: 6px; transition: background 0.2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .goal-delete-btn:hover { background: rgba(192,57,43,0.08); color: #c0392b; }
+
+    .goal-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .goal-field label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--neutral); display: block; margin-bottom: 4px;
+    }
+    .goal-field input {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); outline: none; transition: border-color 0.2s;
+    }
+    .goal-field input:focus { border-color: var(--living-green); }
+
+    .new-goal-form {
+      border: 2px dashed rgba(37,107,66,0.2); border-radius: 14px;
+      padding: 20px; margin-top: 4px;
+    }
+    .new-goal-title {
+      font-size: 14px; font-weight: 700; color: var(--living-green); margin-bottom: 14px;
+    }
+    .new-goal-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .new-goal-fields.full { grid-template-columns: 1fr; }
+    .form-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--neutral); display: block; margin-bottom: 4px;
+    }
+    .form-input {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); outline: none; transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--living-green); }
+    .form-select {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #fff; outline: none;
+    }
+
+    /* ── Family ── */
+    .member-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 20px; }
+    .member-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .member-row:last-child { border-bottom: none; }
+    .member-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--new-growth); color: var(--deep-forest);
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .member-info { flex: 1; }
+    .member-name { font-size: 14px; font-weight: 600; color: var(--deep-forest); }
+    .member-email { font-size: 12px; color: var(--neutral); }
+    .member-badge {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 6px;
+    }
+    .member-badge.owner   { background: rgba(37,107,66,0.1);  color: var(--living-green); }
+    .member-badge.invited { background: rgba(196,162,69,0.12); color: var(--dry-sage); }
+    .member-badge.member  { background: rgba(18,32,18,0.06);   color: var(--neutral); }
+
+    .invite-row { display: flex; gap: 10px; }
+    .invite-input {
+      flex: 1; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); outline: none; transition: border-color 0.2s;
+    }
+    .invite-input:focus { border-color: var(--living-green); }
+    .invite-btn {
+      padding: 12px 20px; background: var(--living-green); color: #fff;
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      white-space: nowrap; transition: opacity 0.2s;
+    }
+    .invite-btn:hover { opacity: 0.85; }
+    .invite-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .plan-note {
+      margin-top: 16px; padding: 12px 16px;
+      background: rgba(196,162,69,0.08); border-radius: 10px;
+      border-left: 3px solid var(--dry-sage);
+      font-size: 13px; color: var(--forest-mid); line-height: 1.6;
+    }
+
+    /* ── Account ── */
+    .account-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .acct-field label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--neutral); display: block; margin-bottom: 6px;
+    }
+    .acct-input, .acct-select {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #fff; outline: none; transition: border-color 0.2s;
+    }
+    .acct-input:focus, .acct-select:focus { border-color: var(--living-green); }
+    .acct-input:disabled { background: var(--soft-white); color: var(--neutral); cursor: not-allowed; }
+
+    .sub-info {
+      padding: 16px; background: var(--soft-white); border-radius: 12px;
+      margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .sub-plan  { font-size: 14px; font-weight: 700; color: var(--deep-forest); }
+    .sub-renew { font-size: 12px; color: var(--neutral); margin-top: 3px; }
+    .sub-manage {
+      font-size: 13px; font-weight: 600; color: var(--living-green);
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .sub-manage:hover { opacity: 0.7; }
+
+    /* ── Buttons ── */
+    .save-btn {
+      padding: 14px 28px; background: var(--deep-forest); color: var(--warm-parchment);
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s; box-shadow: 0 4px 16px rgba(18,32,18,0.15);
+    }
+    .save-btn:hover { opacity: 0.85; }
+
+    .danger-zone {
+      margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);
+    }
+    .danger-title { font-size: 13px; font-weight: 700; color: #c0392b; margin-bottom: 12px; }
+    .danger-btn {
+      padding: 10px 20px; background: transparent;
+      border: 1px solid rgba(192,57,43,0.3); border-radius: 10px;
+      font-size: 13px; font-weight: 600; color: #c0392b;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .danger-btn:hover { background: rgba(192,57,43,0.06); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--deep-forest); color: var(--warm-parchment);
+      padding: 14px 24px; border-radius: 12px; font-size: 14px; font-weight: 600;
+      box-shadow: 0 8px 32px rgba(18,32,18,0.2); transition: transform 0.3s; z-index: 500;
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      .settings-nav { position: static; display: flex; gap: 6px; flex-wrap: wrap; }
+      .settings-nav-title { display: none; }
+      .mode-grid { grid-template-columns: 1fr 1fr; }
+      .account-grid, .new-goal-fields { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .layout { padding: 16px 16px 60px; gap: 16px; }
+      .mode-grid { grid-template-columns: 1fr; }
+      .goal-fields { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script src="/analytics.js"></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="https://www.mirajoco.org">
+      <img src="/img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" class="nav-logo">
+    </a>
+    <span class="nav-product">Money Moves</span>
+  </div>
+  <a href="/tools/money-moves/dashboard" class="nav-back">← Back to Dashboard</a>
+</nav>
+
+<div class="layout">
+
+  <!-- Sidebar nav -->
+  <nav class="settings-nav">
+    <div class="settings-nav-title">Settings</div>
+    <a href="#mode"     class="active"><span class="nav-icon">🎭</span> Your Mode</a>
+    <a href="#budget"          ><span class="nav-icon">📊</span> Budget</a>
+    <a href="#goals"           ><span class="nav-icon">🎯</span> Goals</a>
+    <a href="#family"          ><span class="nav-icon">👨‍👩‍👧</span> Family</a>
+    <a href="#notifications"   ><span class="nav-icon">🔔</span> Notifications</a>
+    <a href="#account"         ><span class="nav-icon">👤</span> Account</a>
+  </nav>
+
+  <!-- Settings sections -->
+  <div class="settings-sections">
+
+    <!-- ── Personality Mode ── -->
+    <div class="section" id="mode">
+      <div class="section-header">
+        <div class="section-title">Your Personality Mode</div>
+        <div class="section-desc">Choose how Money Moves talks to you. You can change this any time.</div>
+      </div>
+      <div class="section-body">
+        <div class="mode-grid">
+          <div class="mode-card" data-mode="mom" onclick="selectMode('mom')">
+            <div class="mode-emoji">🤱</div>
+            <div class="mode-label">Mom Mode</div>
+            <div class="mode-preview">"Baby, you're getting close to your limit. We need to talk about these choices."</div>
+          </div>
+          <div class="mode-card" data-mode="dad" onclick="selectMode('dad')">
+            <div class="mode-emoji">👨</div>
+            <div class="mode-label">Dad Mode</div>
+            <div class="mode-preview">"You're at 80%. Watch it."</div>
+          </div>
+          <div class="mode-card" data-mode="spiritual" onclick="selectMode('spiritual')">
+            <div class="mode-emoji">🙏</div>
+            <div class="mode-label">Spiritual Guide</div>
+            <div class="mode-preview">"Your spending energy is approaching its boundary. Realign with your intention."</div>
+          </div>
+          <div class="mode-card" data-mode="wrestling" onclick="selectMode('wrestling')">
+            <div class="mode-emoji">🤼</div>
+            <div class="mode-label">Wrestling Mode</div>
+            <div class="mode-preview">"YOU'RE AT 80%! THE CROWD IS WATCHING! HOLD YOUR GROUND!"</div>
+          </div>
+        </div>
+
+        <div class="threshold-row">
+          <div>
+            <div class="threshold-label">Alert me when I reach</div>
+            <div class="threshold-sub">% of monthly budget used</div>
+          </div>
+          <select class="threshold-select" id="alert-threshold">
+            <option value="60">60%</option>
+            <option value="70">70%</option>
+            <option value="80" selected>80%</option>
+            <option value="90">90%</option>
+          </select>
+        </div>
+
+        <div style="margin-top:20px">
+          <button class="save-btn" onclick="saveMode()">Save Mode</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Budget by Category ── -->
+    <div class="section" id="budget">
+      <div class="section-header">
+        <div class="section-title">Monthly Budget by Category</div>
+        <div class="section-desc">Set a monthly spending cap for each category. Leave blank for no limit.</div>
+      </div>
+      <div class="section-body">
+        <div class="cat-list" id="cat-list">
+          <p style="font-size:13px;color:var(--neutral)">Loading categories...</p>
+        </div>
+
+        <div class="add-cat-row">
+          <input type="text" class="add-cat-input" id="new-cat-name" placeholder="New category name">
+          <select class="add-cat-select" id="new-cat-type">
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+          <button class="add-cat-btn" onclick="addCategory()">Add</button>
+        </div>
+
+        <div style="margin-top:20px">
+          <button class="save-btn" onclick="saveBudgets()">Save Budgets</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Goals ── -->
+    <div class="section" id="goals">
+      <div class="section-header">
+        <div class="section-title">Savings Goals</div>
+        <div class="section-desc">Set what you're saving toward — and what you'll do to celebrate.</div>
+      </div>
+      <div class="section-body">
+        <div class="goal-list" id="goal-list">
+          <p style="font-size:13px;color:var(--neutral)">Loading goals...</p>
+        </div>
+
+        <div class="new-goal-form" id="new-goal-form">
+          <div class="new-goal-title">+ New Goal</div>
+          <div class="new-goal-fields full">
+            <div>
+              <label class="form-label">Goal Name</label>
+              <input type="text" class="form-input" id="ng-name" placeholder="e.g. Emergency Fund, Dream Vacation, New MacBook">
+            </div>
+          </div>
+          <div class="new-goal-fields">
+            <div>
+              <label class="form-label">Target Amount ($)</label>
+              <input type="number" class="form-input" id="ng-target" placeholder="5000" min="1">
+            </div>
+            <div>
+              <label class="form-label">Target Date (optional)</label>
+              <input type="date" class="form-input" id="ng-date">
+            </div>
+          </div>
+          <div class="new-goal-fields">
+            <div>
+              <label class="form-label">Current Savings ($)</label>
+              <input type="number" class="form-input" id="ng-current" placeholder="0" min="0">
+            </div>
+            <div>
+              <label class="form-label">Celebration Type</label>
+              <select class="form-select" id="ng-celebration">
+                <option value="confetti">Confetti moment</option>
+                <option value="message">Personal message</option>
+                <option value="purchase">Treat yourself</option>
+                <option value="badge">Achievement badge</option>
+              </select>
+            </div>
+          </div>
+          <div class="new-goal-fields full" id="celebration-note-row">
+            <div>
+              <label class="form-label">Celebration Note (optional)</label>
+              <input type="text" class="form-input" id="ng-note" placeholder="e.g. Book that spa day!">
+            </div>
+          </div>
+          <button class="save-btn" onclick="addGoal()">Add Goal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Family ── -->
+    <div class="section" id="family">
+      <div class="section-header">
+        <div class="section-title">Family Members</div>
+        <div class="section-desc">Share your household with a partner or family members.</div>
+      </div>
+      <div class="section-body">
+        <div class="member-list" id="member-list">
+          <p style="font-size:13px;color:var(--neutral)">Loading members...</p>
+        </div>
+
+        <div class="invite-row" id="invite-row">
+          <input type="email" class="invite-input" id="invite-email" placeholder="Enter their email address">
+          <button class="invite-btn" id="invite-btn" onclick="sendInvite()">Send Invite</button>
+        </div>
+
+        <div class="plan-note" id="plan-note" style="display:none">
+          Family invites require a Family plan. <a href="#account" style="color:var(--dry-sage);font-weight:600">Upgrade your plan →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Notifications ── -->
+    <div class="section" id="notifications">
+      <div class="section-header">
+        <div class="section-title">Notifications</div>
+        <div class="section-desc">Choose what you hear about and when.</div>
+      </div>
+      <div class="section-body">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-title">Budget alerts</div>
+            <div class="toggle-sub">Email when you hit your alert threshold</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="notif-budget" checked>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-title">Weekly summary</div>
+            <div class="toggle-sub">A snapshot of your week every Sunday</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="notif-weekly" checked>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-title">Goal milestones</div>
+            <div class="toggle-sub">Celebrate when you hit 25%, 50%, 75%, and 100%</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="notif-goals" checked>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div style="margin-top:20px">
+          <button class="save-btn" onclick="saveNotifications()">Save Notifications</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Account ── -->
+    <div class="section" id="account">
+      <div class="section-header">
+        <div class="section-title">Account</div>
+        <div class="section-desc">Your profile and subscription details.</div>
+      </div>
+      <div class="section-body">
+
+        <div class="sub-info" id="sub-info">
+          <div>
+            <div class="sub-plan" id="sub-plan-text">Loading plan...</div>
+            <div class="sub-renew" id="sub-renew-text"></div>
+          </div>
+          <a href="#" class="sub-manage" id="sub-manage-link">Manage billing →</a>
+        </div>
+
+        <div class="account-grid">
+          <div class="acct-field">
+            <label>First Name</label>
+            <input type="text" class="acct-input" id="acct-first" placeholder="Your first name">
+          </div>
+          <div class="acct-field">
+            <label>Last Name</label>
+            <input type="text" class="acct-input" id="acct-last" placeholder="Your last name">
+          </div>
+          <div class="acct-field" style="grid-column:1/-1">
+            <label>Email</label>
+            <input type="email" class="acct-input" id="acct-email" disabled>
+          </div>
+          <div class="acct-field" style="grid-column:1/-1">
+            <label>Timezone</label>
+            <select class="acct-select" id="acct-timezone">
+              <option value="America/New_York">Eastern Time (ET)</option>
+              <option value="America/Chicago">Central Time (CT)</option>
+              <option value="America/Denver">Mountain Time (MT)</option>
+              <option value="America/Los_Angeles">Pacific Time (PT)</option>
+              <option value="America/Anchorage">Alaska Time (AKT)</option>
+              <option value="Pacific/Honolulu">Hawaii Time (HT)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="save-btn" onclick="saveAccount()">Save Account</button>
+
+        <div class="danger-zone">
+          <div class="danger-title">Danger Zone</div>
+          <button class="danger-btn" onclick="signOut()">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="/js/social-bar.js"></script>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  const supabase = createClient(
+    'https://YOUR_SUPABASE_URL.supabase.co',
+    'YOUR_SUPABASE_ANON_KEY'
+  );
+
+  // ── Auth guard ──────────────────────────────────────────────────────────────
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) { window.location.href = '/tools/money-moves/login'; }
+
+  const user = session.user;
+
+  let householdId = null;
+  let categories  = [];
+  let goals       = [];
+  let prefs       = {};
+  let sub         = {};
+  let currentMode = 'mom';
+
+  // ── Load all ────────────────────────────────────────────────────────────────
+  async function loadAll() {
+    const { data: members } = await supabase
+      .from('mm_members').select('household_id').eq('user_id', user.id).eq('status','active').limit(1);
+    if (!members?.length) return;
+    householdId = members[0].household_id;
+
+    const [catRes, goalRes, prefRes, subRes, memberRes] = await Promise.all([
+      supabase.from('mm_categories').select('*').eq('household_id', householdId),
+      supabase.from('mm_goals').select('*').eq('household_id', householdId).neq('status','abandoned'),
+      supabase.from('mm_preferences').select('*').eq('user_id', user.id).single(),
+      supabase.from('mm_subscriptions').select('*').eq('user_id', user.id).single(),
+      supabase.from('mm_members').select('*').eq('household_id', householdId),
+    ]);
+
+    categories = catRes.data  || [];
+    goals      = goalRes.data || [];
+    prefs      = prefRes.data || { personality_mode: 'mom', alert_threshold: 80, email_alerts: true, weekly_summary: true, goal_alerts: true };
+    sub        = subRes.data  || {};
+
+    // Handle anchor from dashboard goals redirect
+    if (window.location.hash === '#goals') {
+      document.getElementById('goals').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    renderMode();
+    renderCategories();
+    renderGoals();
+    renderMembers(memberRes.data || []);
+    renderNotifications();
+    renderAccount();
+    renderSubscription();
+    highlightNavOnScroll();
+  }
+
+  // ── Mode ────────────────────────────────────────────────────────────────────
+  function renderMode() {
+    currentMode = prefs.personality_mode || 'mom';
+    document.querySelectorAll('.mode-card').forEach(c => {
+      c.classList.toggle('selected', c.dataset.mode === currentMode);
+    });
+    const thresh = document.getElementById('alert-threshold');
+    thresh.value = prefs.alert_threshold || 80;
+  }
+
+  window.selectMode = function (mode) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-card').forEach(c => {
+      c.classList.toggle('selected', c.dataset.mode === mode);
+    });
+  };
+
+  window.saveMode = async function () {
+    const threshold = parseInt(document.getElementById('alert-threshold').value);
+    const { error } = await supabase.from('mm_preferences').upsert({
+      user_id: user.id,
+      personality_mode: currentMode,
+      alert_threshold: threshold,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'user_id' });
+    if (error) return toast('Error saving. Try again.', true);
+    prefs.personality_mode = currentMode;
+    prefs.alert_threshold  = threshold;
+    toast('Mode saved!');
+  };
+
+  // ── Categories ──────────────────────────────────────────────────────────────
+  function renderCategories() {
+    const list = document.getElementById('cat-list');
+    const income  = categories.filter(c => c.type === 'income');
+    const expense = categories.filter(c => c.type === 'expense');
+    list.innerHTML = '';
+
+    if (income.length) {
+      list.innerHTML += `<div class="cat-section-label">Income</div>`;
+      income.forEach(c => list.innerHTML += catRow(c));
+    }
+    if (expense.length) {
+      list.innerHTML += `<div class="cat-section-label">Expenses</div>`;
+      expense.forEach(c => list.innerHTML += catRow(c));
+    }
+  }
+
+  function catRow(c) {
+    const color = c.type === 'income' ? '#256B42' : '#C4A245';
+    return `
+      <div class="cat-row" data-cat-id="${c.id}">
+        <div class="cat-dot" style="background:${color}"></div>
+        <span class="cat-name">${c.name}</span>
+        ${c.type === 'expense' ? `
+          <span class="cat-budget-prefix">$</span>
+          <input type="number" class="cat-budget-input" data-cat-id="${c.id}"
+            value="${c.budget_amount > 0 ? Number(c.budget_amount).toFixed(0) : ''}"
+            placeholder="no limit" min="0">
+        ` : '<span style="font-size:12px;color:var(--neutral)">Income</span>'}
+      </div>`;
+  }
+
+  window.addCategory = async function () {
+    const name = document.getElementById('new-cat-name').value.trim();
+    const type = document.getElementById('new-cat-type').value;
+    if (!name) return;
+
+    const { data, error } = await supabase.from('mm_categories')
+      .insert({ household_id: householdId, name, type, color: type === 'income' ? '#6DC48A' : '#C4A245' })
+      .select().single();
+    if (error) return toast('Error adding category.', true);
+    categories.push(data);
+    document.getElementById('new-cat-name').value = '';
+    renderCategories();
+    toast('Category added!');
+  };
+
+  window.saveBudgets = async function () {
+    const inputs = document.querySelectorAll('.cat-budget-input');
+    const updates = [];
+    inputs.forEach(inp => {
+      const id  = inp.dataset.catId;
+      const val = parseFloat(inp.value) || 0;
+      updates.push(supabase.from('mm_categories').update({ budget_amount: val }).eq('id', id));
+    });
+    await Promise.all(updates);
+    toast('Budgets saved!');
+  };
+
+  // ── Goals ───────────────────────────────────────────────────────────────────
+  function renderGoals() {
+    const list = document.getElementById('goal-list');
+    if (!goals.length) { list.innerHTML = ''; return; }
+    list.innerHTML = goals.map(g => `
+      <div class="goal-row" data-goal-id="${g.id}">
+        <div class="goal-row-top">
+          <div class="goal-row-name">${g.name}</div>
+          <button class="goal-delete-btn" onclick="deleteGoal('${g.id}')">Remove</button>
+        </div>
+        <div class="goal-fields">
+          <div class="goal-field">
+            <label>Saved So Far ($)</label>
+            <input type="number" value="${Number(g.current_amount).toFixed(0)}" min="0"
+              onchange="updateGoalAmount('${g.id}', this.value)">
+          </div>
+          <div class="goal-field">
+            <label>Target ($)</label>
+            <input type="number" value="${Number(g.target_amount).toFixed(0)}" min="1" disabled>
+          </div>
+        </div>
+        ${g.celebration_note ? `<div style="font-size:12px;color:var(--neutral);margin-top:8px;font-style:italic">When you hit it: ${g.celebration_note}</div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  window.addGoal = async function () {
+    const name    = document.getElementById('ng-name').value.trim();
+    const target  = parseFloat(document.getElementById('ng-target').value);
+    const current = parseFloat(document.getElementById('ng-current').value) || 0;
+    const date    = document.getElementById('ng-date').value || null;
+    const celType = document.getElementById('ng-celebration').value;
+    const celNote = document.getElementById('ng-note').value.trim() || null;
+
+    if (!name || !target) return toast('Name and target amount required.', true);
+
+    const { data: memberRows } = await supabase
+      .from('mm_members').select('id').eq('user_id', user.id).limit(1);
+    const memberId = memberRows?.[0]?.id || null;
+
+    const { data, error } = await supabase.from('mm_goals').insert({
+      household_id: householdId, member_id: memberId,
+      name, target_amount: target, current_amount: current,
+      target_date: date, celebration_type: celType, celebration_note: celNote, status: 'active',
+    }).select().single();
+
+    if (error) return toast('Error adding goal.', true);
+    goals.push(data);
+    ['ng-name','ng-target','ng-current','ng-date','ng-note'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    renderGoals();
+    toast('Goal added!');
+  };
+
+  window.deleteGoal = async function (id) {
+    await supabase.from('mm_goals').update({ status: 'abandoned' }).eq('id', id);
+    goals = goals.filter(g => g.id !== id);
+    renderGoals();
+    toast('Goal removed.');
+  };
+
+  window.updateGoalAmount = async function (id, val) {
+    const amount = parseFloat(val) || 0;
+    await supabase.from('mm_goals').update({ current_amount: amount }).eq('id', id);
+    const g = goals.find(g => g.id === id);
+    if (g) g.current_amount = amount;
+
+    // Check for completion
+    const goal = goals.find(g => g.id === id);
+    if (goal && amount >= Number(goal.target_amount)) {
+      await supabase.from('mm_goals').update({ status: 'completed', completed_at: new Date().toISOString() }).eq('id', id);
+      toast(`Goal "${goal.name}" completed! Time to celebrate!`);
+    }
+  };
+
+  // ── Family members ──────────────────────────────────────────────────────────
+  function renderMembers(members) {
+    const list = document.getElementById('member-list');
+    list.innerHTML = members.map(m => {
+      const initials = (m.display_name || m.email).substring(0, 2).toUpperCase();
+      return `
+        <div class="member-row">
+          <div class="member-avatar">${initials}</div>
+          <div class="member-info">
+            <div class="member-name">${m.display_name || m.email.split('@')[0]}</div>
+            <div class="member-email">${m.email}</div>
+          </div>
+          <span class="member-badge ${m.role === 'owner' ? 'owner' : m.status === 'invited' ? 'invited' : 'member'}">
+            ${m.role === 'owner' ? 'Owner' : m.status === 'invited' ? 'Invited' : 'Member'}
+          </span>
+        </div>`;
+    }).join('');
+
+    // Show upgrade note if not on family plan
+    if (sub.plan !== 'family') {
+      document.getElementById('invite-row').style.display = 'none';
+      document.getElementById('plan-note').style.display  = 'block';
+    }
+  }
+
+  window.sendInvite = async function () {
+    const email = document.getElementById('invite-email').value.trim();
+    if (!email) return;
+    const btn = document.getElementById('invite-btn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+
+    const res = await fetch('/api/mm-invite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, householdId }),
+    });
+
+    btn.disabled = false; btn.textContent = 'Send Invite';
+    if (res.ok) {
+      document.getElementById('invite-email').value = '';
+      toast('Invite sent!');
+      await loadAll();
+    } else {
+      toast('Error sending invite. Try again.', true);
+    }
+  };
+
+  // ── Notifications ───────────────────────────────────────────────────────────
+  function renderNotifications() {
+    document.getElementById('notif-budget').checked = prefs.email_alerts     !== false;
+    document.getElementById('notif-weekly').checked = prefs.weekly_summary   !== false;
+    document.getElementById('notif-goals').checked  = prefs.goal_alerts      !== false;
+  }
+
+  window.saveNotifications = async function () {
+    const { error } = await supabase.from('mm_preferences').upsert({
+      user_id:        user.id,
+      email_alerts:   document.getElementById('notif-budget').checked,
+      weekly_summary: document.getElementById('notif-weekly').checked,
+      goal_alerts:    document.getElementById('notif-goals').checked,
+      updated_at:     new Date().toISOString(),
+    }, { onConflict: 'user_id' });
+    if (error) return toast('Error saving. Try again.', true);
+    toast('Notification settings saved!');
+  };
+
+  // ── Account ─────────────────────────────────────────────────────────────────
+  function renderAccount() {
+    const meta = user.user_metadata || {};
+    document.getElementById('acct-first').value    = meta.first_name || '';
+    document.getElementById('acct-last').value     = meta.last_name  || '';
+    document.getElementById('acct-email').value    = user.email || '';
+    document.getElementById('acct-timezone').value = prefs.timezone || 'America/New_York';
+  }
+
+  function renderSubscription() {
+    const planMap = {
+      individual_monthly: 'Individual Plan — $7/month',
+      individual_annual:  'Individual Plan — $59/year',
+      family_monthly:     'Family Plan — $10/month',
+      family_annual:      'Family Plan — $84/year',
+    };
+    const key  = `${sub.plan || 'individual'}_${sub.billing || 'monthly'}`;
+    const end  = sub.period_end ? new Date(sub.period_end).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+
+    document.getElementById('sub-plan-text').textContent  = planMap[key] || 'Active Plan';
+    document.getElementById('sub-renew-text').textContent = end ? `Renews ${end}` : '';
+  }
+
+  window.saveAccount = async function () {
+    const first = document.getElementById('acct-first').value.trim();
+    const last  = document.getElementById('acct-last').value.trim();
+    const tz    = document.getElementById('acct-timezone').value;
+
+    const [authRes, prefRes] = await Promise.all([
+      supabase.auth.updateUser({ data: { first_name: first, last_name: last } }),
+      supabase.from('mm_preferences').upsert({ user_id: user.id, timezone: tz, updated_at: new Date().toISOString() }, { onConflict: 'user_id' }),
+    ]);
+
+    if (authRes.error || prefRes.error) return toast('Error saving. Try again.', true);
+    toast('Account saved!');
+  };
+
+  window.signOut = async function () {
+    await supabase.auth.signOut();
+    window.location.href = '/tools/money-moves/login';
+  };
+
+  // ── Nav highlight on scroll ──────────────────────────────────────────────────
+  function highlightNavOnScroll() {
+    const sections = ['mode','budget','goals','family','notifications','account'];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          document.querySelectorAll('.settings-nav a').forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === `#${e.target.id}`);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+
+  // ── Toast ────────────────────────────────────────────────────────────────────
+  function toast(msg, isError = false) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.style.background = isError ? '#c0392b' : 'var(--deep-forest)';
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+
+  // ── Init ─────────────────────────────────────────────────────────────────────
+  loadAll();
+</script>
+</body>
+</html>
