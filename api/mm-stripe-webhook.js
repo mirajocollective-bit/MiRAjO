@@ -7,6 +7,12 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+// Default accounts seeded for every new household
+const DEFAULT_ACCOUNTS = [
+  { name: 'Checking', type: 'checking', current_balance: 0, color: '#256B42', sort_order: 0 },
+  { name: 'Savings',  type: 'savings',  current_balance: 0, color: '#C4A245', sort_order: 1 },
+];
+
 // Default categories seeded for every new household
 const DEFAULT_CATEGORIES = [
   { name: 'Salary',            type: 'income',  color: '#6DC48A' },
@@ -128,6 +134,10 @@ export default async function handler(req, res) {
       role:   'owner',
       status: 'active',
     });
+
+    // Seed default accounts (Checking + Savings)
+    const accountRows = DEFAULT_ACCOUNTS.map(a => ({ ...a, household_id: householdId }));
+    await supabase.from('mm_accounts').insert(accountRows);
 
     // Seed default categories
     const categoryRows = DEFAULT_CATEGORIES.map(c => ({ ...c, household_id: householdId }));
