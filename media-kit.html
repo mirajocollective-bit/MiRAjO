@@ -650,9 +650,10 @@
       }
 
       .pop-bio {
-        font-size: 8.5pt;
+        font-family: 'Instrument Serif', Georgia, serif;
+        font-size: 9pt;
         color: #1a2a1a;
-        line-height: 1.65;
+        line-height: 1.7;
         margin: 0 0 8pt;
       }
 
@@ -671,10 +672,11 @@
 
       .pop-topics { margin: 0; }
       .pop-topic {
-        font-size: 8pt;
+        font-family: 'Instrument Serif', Georgia, serif;
+        font-size: 9pt;
         color: #122012;
         line-height: 1.5;
-        margin-bottom: 3pt;
+        margin-bottom: 3.5pt;
         padding-left: 8pt;
         border-left: 2px solid #6DC48A;
       }
@@ -685,16 +687,46 @@
         gap: 3pt 10pt;
       }
       .pop-event-name {
-        font-size: 7.5pt;
-        font-weight: 600;
+        font-family: 'Instrument Serif', Georgia, serif;
+        font-size: 9pt;
+        font-weight: normal;
         color: #122012;
         line-height: 1.3;
       }
       .pop-event-org {
-        font-size: 7pt;
+        font-size: 7.5pt;
         color: #5A6E58;
         line-height: 1.2;
-        margin-bottom: 3pt;
+        margin-bottom: 4pt;
+      }
+
+      .pop-uni-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 5pt;
+      }
+      .pop-uni {
+        display: flex;
+        align-items: center;
+        gap: 8pt;
+      }
+      .pop-uni-logo {
+        width: 36pt;
+        height: auto;
+        object-fit: contain;
+        mix-blend-mode: multiply;
+        flex-shrink: 0;
+      }
+      .pop-uni-class {
+        font-family: 'Instrument Serif', Georgia, serif;
+        font-size: 8.5pt;
+        color: #122012;
+        line-height: 1.3;
+      }
+      .pop-uni-name {
+        font-size: 7pt;
+        color: #5A6E58;
+        margin-top: 1pt;
       }
 
       .pop-press {
@@ -1045,7 +1077,7 @@
     <hr class="pop-divider">
 
     <div class="pop-bio">
-      Miranda Johnson has spent 20 years building businesses, raising five children, and learning the hard way that performance is not the same as progress. She founded MiRAjO Collective to help entrepreneurs stop shrinking and start leading from who they actually are. She serves as COO of Tampa Business Club and Events Chair for the Tampa Bay Latin Chamber of Commerce. She is the author of <em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>.
+      Miranda Johnson has spent 20 years building businesses, raising five children, and learning the hard way that performance is not the same as progress. She has worked across logistics, real estate, and residential construction. She founded MiRAjO Collective to help entrepreneurs stop shrinking and start leading from who they actually are. She serves as COO of Tampa Business Club and Events Chair for the Tampa Bay Latin Chamber of Commerce. She is the author of <em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>, and her courses &mdash; 25 Days and 25 Nights and Couples in Entrepreneurship &mdash; help individuals and couples reset, realign, and build forward. Her faith is not a footnote. Her slogan: &ldquo;Authenticity is the new Blue Check.&rdquo;
     </div>
 
     <div class="pop-section">
@@ -1070,6 +1102,26 @@
         <div><div class="pop-event-name">Tampa Bay Connects</div><div class="pop-event-org">Tampa Bay Connects</div></div>
       </div>
       <div class="pop-press">As seen in: Plastiq Magazine &nbsp;&middot;&nbsp; Voyage Tampa &nbsp;&middot;&nbsp; Voyage Houston</div>
+    </div>
+
+    <div class="pop-section">
+      <div class="pop-label">University Engagements</div>
+      <div class="pop-uni-grid">
+        <div class="pop-uni">
+          <img src="img/logo-schiller.png" alt="Schiller International University" class="pop-uni-logo">
+          <div>
+            <div class="pop-uni-class">Unleash Your Inner Sales Person: The Power of YOU</div>
+            <div class="pop-uni-name">Schiller International University</div>
+          </div>
+        </div>
+        <div class="pop-uni">
+          <img src="img/logo-usf.png" alt="University of South Florida" class="pop-uni-logo">
+          <div>
+            <div class="pop-uni-class">How to Pivot in Business</div>
+            <div class="pop-uni-name">University of South Florida</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="pop-contact-bar">
