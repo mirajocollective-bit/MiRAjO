@@ -543,8 +543,7 @@
       /* hide web-only elements */
       .print-bar,
       .ticker-wrap,
-      .inquiry-wrap,
-      .photo-item { display: none !important; }
+      .inquiry-wrap { display: none !important; }
 
       /* show print-only speaking list */
       .print-speaking { display: block !important; }
@@ -592,8 +591,12 @@
       .uni-card { padding: 24px 20px; break-inside: avoid; }
       .uni-logo-wrap img { mix-blend-mode: multiply; }
 
+      /* photos — smaller on print */
+      .photos-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .photo-item img { max-height: 180px; object-fit: cover; border-radius: 8px; }
+
       /* contact */
-      .contact-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
 
       /* brings quote */
       .brings-quote { font-size: 18pt; color: #F2EBD9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -691,24 +694,33 @@
 </div>
 
 <!-- PRINT-ONLY SPEAKING HISTORY -->
-<div class="print-speaking" style="background:#EBF7F0;padding:24px 40px;border-top:3px solid #6DC48A;">
-  <div style="font-size:9pt;letter-spacing:4px;text-transform:uppercase;color:#339158;font-weight:700;margin-bottom:14px;">Speaking History &amp; Press</div>
-  <div style="display:flex;flex-wrap:wrap;gap:6px 0;font-size:10pt;color:#122012;">
-    <span style="margin-right:18px;">Power Women Expo 2026</span>
-    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
-    <span style="margin-right:18px;">Tampa Bay Latin Chamber of Commerce — Fail Forward 2026</span>
-    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
-    <span style="margin-right:18px;">Tampa Bay Business Expo 2024</span>
-    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
-    <span style="margin-right:18px;">Tampa Bay Connects</span>
-    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
-    <span style="margin-right:18px;">Hillsborough County — Local Stories Live</span>
-    <span style="color:#6DC48A;margin-right:18px;">&#9679;</span>
-    <span style="margin-right:18px;">Hillsborough County — Summer Business Expo</span>
-  </div>
-  <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(18,32,18,0.1);font-size:10pt;color:#5A6E58;">
-    <strong style="color:#339158;">As Seen In:</strong>&nbsp; Plastiq Magazine &nbsp;&middot;&nbsp; Voyage Tampa &nbsp;&middot;&nbsp; Voyage Houston
-  </div>
+<div class="print-speaking" style="background:#EBF7F0;padding:28px 40px;border-top:3px solid #6DC48A;border-bottom:1px solid #d0e8d8;">
+  <table style="width:100%;border-collapse:collapse;">
+    <tr>
+      <td style="width:50%;vertical-align:top;padding-right:32px;">
+        <div style="font-size:8pt;letter-spacing:4px;text-transform:uppercase;color:#339158;font-weight:700;margin-bottom:12px;">Speaking Engagements</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="font-size:10pt;color:#122012;padding:5px 0;border-bottom:1px solid rgba(18,32,18,0.08);display:flex;align-items:center;gap:8px;"><span style="color:#6DC48A;font-size:8pt;">&#9679;</span> Power Women Expo 2026</li>
+          <li style="font-size:10pt;color:#122012;padding:5px 0;border-bottom:1px solid rgba(18,32,18,0.08);display:flex;align-items:center;gap:8px;"><span style="color:#6DC48A;font-size:8pt;">&#9679;</span> TBLC &mdash; Fail Forward 2026</li>
+          <li style="font-size:10pt;color:#122012;padding:5px 0;border-bottom:1px solid rgba(18,32,18,0.08);display:flex;align-items:center;gap:8px;"><span style="color:#6DC48A;font-size:8pt;">&#9679;</span> Tampa Bay Business Expo 2024</li>
+        </ul>
+      </td>
+      <td style="width:50%;vertical-align:top;padding-left:32px;border-left:1px solid #d0e8d8;">
+        <div style="font-size:8pt;letter-spacing:4px;text-transform:uppercase;color:#339158;font-weight:700;margin-bottom:12px;">&nbsp;</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="font-size:10pt;color:#122012;padding:5px 0;border-bottom:1px solid rgba(18,32,18,0.08);display:flex;align-items:center;gap:8px;"><span style="color:#6DC48A;font-size:8pt;">&#9679;</span> Tampa Bay Connects</li>
+          <li style="font-size:10pt;color:#122012;padding:5px 0;border-bottom:1px solid rgba(18,32,18,0.08);display:flex;align-items:center;gap:8px;"><span style="color:#6DC48A;font-size:8pt;">&#9679;</span> Hillsborough County &mdash; Local Stories Live</li>
+          <li style="font-size:10pt;color:#122012;padding:5px 0;border-bottom:1px solid rgba(18,32,18,0.08);display:flex;align-items:center;gap:8px;"><span style="color:#6DC48A;font-size:8pt;">&#9679;</span> Hillsborough County &mdash; Summer Business Expo</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="padding-top:14px;">
+        <span style="font-size:8pt;letter-spacing:3px;text-transform:uppercase;color:#339158;font-weight:700;">As Seen In&nbsp;&nbsp;</span>
+        <span style="font-size:10pt;color:#5A6E58;">Plastiq Magazine &nbsp;&nbsp;&middot;&nbsp;&nbsp; Voyage Tampa &nbsp;&nbsp;&middot;&nbsp;&nbsp; Voyage Houston</span>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <!-- BIO -->
@@ -841,10 +853,6 @@
     <div>
       <div class="contact-label">Instagram</div>
       <div class="contact-value"><a href="https://www.instagram.com/mirajocollective">@mirajocollective</a></div>
-    </div>
-    <div>
-      <div class="contact-label">YouTube</div>
-      <div class="contact-value"><a href="https://www.youtube.com/@MirandaJohnson-MiRAjO">@MirandaJohnson-MiRAjO</a></div>
     </div>
   </div>
 </section>
