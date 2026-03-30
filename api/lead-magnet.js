@@ -8,7 +8,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
-import { queueSequence } from './_emails.js';
+import { queueSequence, SEQUENCES } from './_emails.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -51,14 +51,32 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Unknown lead magnet type' });
   }
 
+  const cleanEmail = email.trim().toLowerCase();
+  const cleanName  = (firstName || '').trim();
+  const extraData  = { result, score: String(score || ''), type };
+
   try {
-    await queueSequence(
-      supabase,
-      email.trim().toLowerCase(),
-      sequenceName,
-      (firstName || '').trim(),
-      { result, score: String(score || ''), type }
-    );
+    await queueSequence(supabase, cleanEmail, sequenceName, cleanName, extraData);
+
+    // Send step 1 immediately — don't wait for the 9am cron
+    const step1 = SEQUENCES[sequenceName]?.[0];
+    if (step1) {
+      const subject = typeof step1.subject === 'function' ? step1.subject(extraData) : step1.subject;
+      const html    = step1.body(cleanName, extraData);
+      await resend.emails.send({
+        from:    'Miranda Johnson <mirandaj@mirajoco.org>',
+        to:      cleanEmail,
+        subject,
+        html,
+      });
+      // Mark step 1 as sent so the cron doesn't send it again
+      await supabase
+        .from('email_queue')
+        .update({ sent_at: new Date().toISOString() })
+        .eq('email', cleanEmail)
+        .eq('sequence', sequenceName)
+        .eq('step', 1);
+    }
 
     // Notify Miranda
     resend.emails.send({
@@ -76,7 +94,7 @@ export default async function handler(req, res) {
             </tr>
             <tr>
               <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#888;">Email</td>
-              <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:15px;color:#122012;">${email.trim().toLowerCase()}</td>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:15px;color:#122012;">${cleanEmail}</td>
             </tr>
             <tr>
               <td style="padding:10px 0;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#888;">Result</td>
