@@ -64,7 +64,7 @@ export default async function handler(req, res) {
       const subject = typeof step1.subject === 'function' ? step1.subject(extraData) : step1.subject;
       const html    = step1.body(cleanName, extraData);
       await resend.emails.send({
-        from:    'Miranda Johnson <info@mirajoco.org>',
+        from:    'Miranda Johnson <mirandaj@mirajoco.org>',
         to:      cleanEmail,
         subject,
         html,
@@ -80,8 +80,8 @@ export default async function handler(req, res) {
 
     // Notify Miranda
     resend.emails.send({
-      from: 'Miranda Johnson <info@mirajoco.org>',
-      to: 'info@mirajoco.org',
+      from: 'Miranda Johnson <mirandaj@mirajoco.org>',
+      to: 'mirandaj@mirajoco.org',
       subject: `New lead — ${MAGNET_LABELS[type]}`,
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;">
