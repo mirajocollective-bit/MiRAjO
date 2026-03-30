@@ -732,18 +732,24 @@
       .pop-press-logos {
         display: flex;
         align-items: center;
-        gap: 14pt;
+        gap: 12pt;
         margin: 6pt 0 0;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
       }
       .pop-press-logo {
-        height: 22pt;
+        height: 26pt;
         width: auto;
         object-fit: contain;
         mix-blend-mode: multiply;
-        opacity: 0.85;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+      }
+      .pop-press-logo-wide {
+        height: 28pt;
+      }
+      .pop-press-logo-circle {
+        height: 26pt;
+        border-radius: 50%;
       }
 
       .pop-contact-bar {
@@ -1112,10 +1118,10 @@
         <div><div class="pop-event-name">Local Stories Live</div><div class="pop-event-org">Hillsborough County</div></div>
       </div>
       <div class="pop-press-logos">
-        <img src="img/logo-plastiq.png" alt="Plastiq Magazine" class="pop-press-logo">
-        <img src="img/logo-voyage-tampa.png" alt="Voyage Tampa" class="pop-press-logo">
-        <img src="img/logo-voyage-houston.png" alt="Voyage Houston" class="pop-press-logo">
-        <img src="img/logo-tampa-bay-connects.png" alt="Tampa Bay Connects" class="pop-press-logo">
+        <img src="img/logo-tbc-color.jpg" alt="Tampa Bay Connects" class="pop-press-logo pop-press-logo-wide">
+        <img src="img/logo-plastiq-new.png" alt="Plastiq Magazine" class="pop-press-logo">
+        <img src="img/logo-voyage-tampa-new.png" alt="Voyage Tampa" class="pop-press-logo pop-press-logo-circle">
+        <img src="img/logo-voyage-houston-new.png" alt="Voyage Houston" class="pop-press-logo pop-press-logo-circle">
       </div>
     </div>
 
