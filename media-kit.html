@@ -422,13 +422,17 @@
     .contact-value a { color: var(--green-lt); text-decoration: none; }
     .contact-value a:hover { text-decoration: underline; }
 
-    /* ── BOOK ME CTA ── */
-    .book-cta {
+    /* ── INQUIRY FORM ── */
+    .inquiry-wrap {
       background: var(--green);
       padding: 80px;
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
     }
-    .book-cta-eyebrow {
+    .inquiry-left {}
+    .inquiry-eyebrow {
       font-size: 11px;
       letter-spacing: 6px;
       text-transform: uppercase;
@@ -436,31 +440,59 @@
       font-weight: 700;
       margin-bottom: 20px;
     }
-    .book-cta-heading {
+    .inquiry-heading {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(32px, 4vw, 52px);
+      font-size: clamp(32px, 3.5vw, 48px);
       color: var(--white);
       font-weight: 400;
       line-height: 1.15;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
-    .book-cta-heading em { color: var(--gold-lt); font-style: italic; }
-    .book-cta-sub {
-      font-size: 16px;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 40px;
-      max-width: 520px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.7;
+    .inquiry-heading em { color: var(--gold-lt); font-style: italic; }
+    .inquiry-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+      margin-bottom: 32px;
     }
-    .book-cta-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .inquiry-contact {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
     }
-    .btn-primary {
+    .inquiry-contact a { color: var(--mint); text-decoration: none; }
+
+    .inquiry-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-size: 14px;
+      color: var(--white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--mint); }
+    .form-group select option { background: #256B42; color: #fff; }
+    .form-group textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+    .form-submit {
       background: var(--gold);
       color: var(--forest);
       border: none;
@@ -469,25 +501,21 @@
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      text-decoration: none;
-      display: inline-block;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
     }
-    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); }
-    .btn-secondary {
-      background: transparent;
-      color: var(--white);
-      border: 2px solid rgba(255,255,255,0.4);
-      border-radius: 8px;
-      padding: 16px 36px;
+    .form-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .form-message {
       font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      display: inline-block;
-      transition: border-color 0.2s, transform 0.2s;
+      padding: 14px 18px;
+      border-radius: 8px;
+      display: none;
     }
-    .btn-secondary:hover { border-color: var(--white); transform: translateY(-1px); }
+    .form-message.success { background: rgba(109,196,138,0.15); color: var(--mint); border: 1px solid rgba(109,196,138,0.3); }
+    .form-message.error   { background: rgba(255,100,100,0.1); color: #ff9999; border: 1px solid rgba(255,100,100,0.2); }
 
     /* ── FOOTER ── */
     .kit-footer {
@@ -518,6 +546,7 @@
     }
 
     @media (max-width: 900px) {
+      .inquiry-wrap { grid-template-columns: 1fr; gap: 40px; padding: 56px 28px; }
       .hero { grid-template-columns: 1fr; }
       .hero-right { height: 65vw; }
       .hero-right::before { display: none; }
@@ -737,14 +766,56 @@
   </div>
 </section>
 
-<!-- BOOK ME CTA -->
-<div class="book-cta">
-  <div class="book-cta-eyebrow">Ready to Book Miranda?</div>
-  <h2 class="book-cta-heading">Let's bring the right<br><em>conversation</em> to your room.</h2>
-  <p class="book-cta-sub">Whether it's a keynote, panel, podcast, or corporate event — Miranda shows up prepared, present, and purposeful.</p>
-  <div class="book-cta-buttons">
-    <a href="https://www.mirajoco.org/coaching" class="btn-primary">Set Up a Call</a>
-    <a href="mailto:mirandaj@mirajoco.org" class="btn-secondary">Email Miranda Directly</a>
+<!-- SPEAKING INQUIRY -->
+<div class="inquiry-wrap">
+  <div class="inquiry-left">
+    <div class="inquiry-eyebrow">Book Miranda</div>
+    <h2 class="inquiry-heading">Let's bring the right<br><em>conversation</em> to your room.</h2>
+    <p class="inquiry-sub">Whether it's a keynote, panel, podcast, or corporate event — Miranda shows up prepared, present, and purposeful. Fill out the form and she'll be in touch within 48 hours.</p>
+    <p class="inquiry-contact">Prefer email? <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a></p>
+  </div>
+  <div class="inquiry-right">
+    <form class="inquiry-form" id="speakingForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inq-name">Your Name *</label>
+          <input type="text" id="inq-name" name="name" placeholder="Jane Smith" required>
+        </div>
+        <div class="form-group">
+          <label for="inq-email">Email *</label>
+          <input type="email" id="inq-email" name="email" placeholder="jane@company.com" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inq-org">Organization</label>
+          <input type="text" id="inq-org" name="organization" placeholder="Company or event name">
+        </div>
+        <div class="form-group">
+          <label for="inq-date">Event Date</label>
+          <input type="text" id="inq-date" name="eventDate" placeholder="Month, Year or TBD">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inq-type">Event Type *</label>
+        <select id="inq-type" name="eventType" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="Keynote">Keynote</option>
+          <option value="Panel">Panel</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Podcast">Podcast</option>
+          <option value="Corporate Event">Corporate Event</option>
+          <option value="Conference">Conference</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inq-message">Tell me about your event *</label>
+        <textarea id="inq-message" name="message" placeholder="Audience, theme, what you're hoping Miranda will bring to the room..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="speakingSubmit">Send Inquiry</button>
+      <div class="form-message" id="speakingMsg"></div>
+    </form>
   </div>
 </div>
 
@@ -755,6 +826,49 @@
 </div>
 
 <script src="/analytics.js"></script>
+<script>
+  // Speaking inquiry form
+  document.getElementById('speakingForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('speakingSubmit');
+    const msg = document.getElementById('speakingMsg');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    msg.style.display = 'none';
+
+    const data = {
+      name:         document.getElementById('inq-name').value.trim(),
+      email:        document.getElementById('inq-email').value.trim(),
+      organization: document.getElementById('inq-org').value.trim(),
+      eventDate:    document.getElementById('inq-date').value.trim(),
+      eventType:    document.getElementById('inq-type').value,
+      message:      document.getElementById('inq-message').value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/speaking-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        msg.className = 'form-message success';
+        msg.textContent = 'Inquiry sent. Miranda will be in touch within 48 hours.';
+        msg.style.display = 'block';
+        e.target.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      msg.className = 'form-message error';
+      msg.textContent = 'Something went wrong. Please email mirandaj@mirajoco.org directly.';
+      msg.style.display = 'block';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send Inquiry';
+  });
+</script>
 <script>
   // Spotlight: items scale up as they pass through the center of the screen
   (function() {
