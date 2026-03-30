@@ -628,9 +628,10 @@
       .uni-card { padding: 24px 20px; break-inside: avoid; }
       .uni-logo-wrap img { mix-blend-mode: multiply; }
 
-      /* photos — smaller on print */
+      /* photos — portrait on print, face at top */
       .photos-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .photo-item img { max-height: 180px; object-fit: cover; border-radius: 8px; }
+      .photo-item img { height: 280px; width: 100%; object-fit: cover; object-position: top; border-radius: 8px; }
+      .photo-caption { display: none; }
 
       /* contact */
       .contact-grid { grid-template-columns: 1fr 1fr; }
@@ -874,11 +875,9 @@
   <div class="photos-grid">
     <div class="photo-item">
       <img src="img/miranda-seated.jpeg" alt="Miranda Johnson">
-      <p class="photo-caption">Miranda Johnson</p>
     </div>
     <div class="photo-item">
       <img src="img/miranda-painprinciple.jpeg" alt="Miranda Johnson with The Pain Principle">
-      <p class="photo-caption">Miranda Johnson with The Pain Principle</p>
     </div>
   </div>
 </section>
