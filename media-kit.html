@@ -60,6 +60,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; }
     body {
       background: var(--soft-white);
       color: var(--forest);
@@ -67,6 +68,7 @@
       font-size: 15px;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* ── PRINT BAR ── */
@@ -664,6 +666,11 @@
       .contact-grid { grid-template-columns: 1fr; gap: 20px; }
       .kit-footer { padding: 24px 28px; flex-direction: column; gap: 10px; text-align: center; }
       .print-bar { padding: 12px 20px; }
+    }
+    @media (max-width: 600px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 70vw; }
+      .form-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>

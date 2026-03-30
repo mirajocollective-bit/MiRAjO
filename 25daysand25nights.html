@@ -81,6 +81,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; }
     body {
       background: var(--soft-white);
       color: var(--text-on-light);
@@ -746,6 +747,7 @@
 
       .testimonials-grid { grid-template-columns: 1fr; }
       .founding-grid { grid-template-columns: 1fr !important; }
+      .who-grid { grid-template-columns: 1fr !important; }
 
       .pricing-card { padding: 40px 28px; }
 
@@ -940,7 +942,7 @@
       border: 1px solid rgba(189,176,224,0.12);
       border-radius: 10px;
       padding: 8px 0;
-      min-width: 210px;
+      min-width: 180px;
       z-index: 200;
       box-shadow: 0 12px 40px rgba(0,0,0,0.35);
     }
@@ -1075,7 +1077,7 @@
   <div style="max-width:860px;margin:0 auto;text-align:center;">
     <div class="section-eyebrow" style="color:var(--gold);">Who This Is For</div>
     <h2 class="section-title" style="color:var(--warm-parchment);">You've been doing the work.<br>Just not <em style="color:var(--gold-light);font-style:italic;">this</em> work.</h2>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;text-align:left;">
+    <div class="who-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;text-align:left;">
       <div style="background:rgba(240,248,242,0.04);border:1px solid rgba(189,176,224,0.16);border-radius:16px;padding:28px 24px;" data-aos="fade-right" data-aos-delay="0">
         <div style="color:var(--gold);font-size:22px;margin-bottom:10px;">→</div>
         <p style="color:rgba(237,232,223,0.65);font-size:15px;line-height:1.8;">You've tried motivation, accountability partners, and discipline. None of it fully stuck.</p>

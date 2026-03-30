@@ -81,6 +81,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; }
     body {
       background: #ffffff;
       color: var(--cie-dark);
@@ -745,6 +746,14 @@
       .pricing-card { padding: 40px 28px; }
       .pricing-amount { font-size: 56px; }
       .social-bar { right: 12px; bottom: 20px; }
+    }
+    @media (max-width: 600px) {
+      .pain-grid { grid-template-columns: 1fr; }
+      .how-steps { grid-template-columns: 1fr; }
+      .domains-grid { grid-template-columns: 1fr; }
+      .included-grid { grid-template-columns: 1fr; }
+      .miranda-inner { grid-template-columns: 1fr; }
+      .founding-creds { grid-template-columns: 1fr !important; }
     }
   </style>
   <!-- Site Analytics -->
