@@ -9,24 +9,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --black:   #0D0D0D;
-      --dark:    #141414;
-      --dark2:   #1C1C1C;
-      --amber:   #F0A500;
-      --amber-lt:#FFB829;
-      --coral:   #E85C35;
-      --coral-lt:#FF7A52;
-      --cream:   #F5EDD8;
-      --white:   #FFFFFF;
-      --muted:   #888888;
-      --border-dark: rgba(255,255,255,0.08);
-      --border-light: rgba(13,13,13,0.1);
+      --forest:     #122012;
+      --green:      #256B42;
+      --green-lt:   #339158;
+      --mint:       #6DC48A;
+      --mint-tint:  #EBF7F0;
+      --gold:       #C4A245;
+      --gold-lt:    #E8C96A;
+      --parchment:  #F2EBD9;
+      --soft-white: #FAF7F2;
+      --white:      #FFFFFF;
+      --muted:      #5A6E58;
+      --border:     rgba(18,32,18,0.1);
+      --border-lt:  rgba(18,32,18,0.06);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--black);
-      color: var(--cream);
+      background: var(--soft-white);
+      color: var(--forest);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 15px;
       line-height: 1.65;
@@ -35,16 +36,16 @@
 
     /* ── PRINT BAR ── */
     .print-bar {
-      background: var(--amber);
+      background: var(--green);
       padding: 12px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .print-bar-note { font-size: 13px; color: var(--black); font-weight: 600; letter-spacing: 0.3px; }
+    .print-bar-note { font-size: 13px; color: var(--white); font-weight: 600; letter-spacing: 0.3px; }
     .print-btn {
-      background: var(--black);
-      color: var(--amber);
+      background: var(--white);
+      color: var(--green);
       border: none;
       border-radius: 6px;
       padding: 10px 24px;
@@ -55,43 +56,43 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       transition: background 0.2s;
     }
-    .print-btn:hover { background: #222; }
+    .print-btn:hover { background: var(--parchment); }
 
     /* ── HERO ── */
     .hero {
       display: grid;
       grid-template-columns: 1fr 400px;
       min-height: 620px;
-      background: var(--black);
+      background: var(--soft-white);
     }
     .hero-left {
       padding: 80px 64px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      border-right: 1px solid var(--border-dark);
+      border-right: 1px solid var(--border);
     }
     .hero-eyebrow {
       font-size: 11px;
       letter-spacing: 6px;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--green-lt);
       font-weight: 700;
       margin-bottom: 28px;
     }
     .hero-name {
       font-family: 'Instrument Serif', serif;
       font-size: clamp(52px, 6vw, 88px);
-      color: var(--white);
+      color: var(--forest);
       font-weight: 400;
       line-height: 0.95;
       margin-bottom: 28px;
       letter-spacing: -1px;
     }
-    .hero-name em { color: var(--amber); font-style: italic; }
+    .hero-name em { color: var(--green); font-style: italic; }
     .hero-tagline {
       font-size: 17px;
-      color: rgba(245,237,216,0.7);
+      color: var(--muted);
       font-style: italic;
       margin-bottom: 40px;
       line-height: 1.5;
@@ -107,18 +108,15 @@
       font-size: 11px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: rgba(245,237,216,0.55);
-      background: rgba(245,237,216,0.06);
-      border: 1px solid rgba(245,237,216,0.1);
+      color: var(--green);
+      background: rgba(37,107,66,0.07);
+      border: 1px solid rgba(37,107,66,0.2);
       border-radius: 4px;
       padding: 6px 14px;
       font-weight: 600;
     }
-    .hero-contact {
-      font-size: 14px;
-      color: rgba(245,237,216,0.45);
-    }
-    .hero-contact a { color: var(--amber); text-decoration: none; }
+    .hero-contact { font-size: 14px; color: var(--muted); }
+    .hero-contact a { color: var(--green-lt); text-decoration: none; }
     .hero-contact a:hover { text-decoration: underline; }
     .hero-right { position: relative; overflow: hidden; }
     .hero-right img {
@@ -133,15 +131,13 @@
       position: absolute;
       left: 0; top: 0; bottom: 0;
       width: 60px;
-      background: linear-gradient(to right, var(--black), transparent);
+      background: linear-gradient(to right, var(--soft-white), transparent);
       z-index: 1;
     }
 
     /* ── TICKER ── */
     .ticker-wrap {
-      background: #C41E3A;
-      border-top: none;
-      border-bottom: none;
+      background: var(--mint);
       padding: 20px 0;
       overflow: hidden;
       white-space: nowrap;
@@ -161,7 +157,7 @@
       font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #FFFFFF;
+      color: var(--forest);
       transform-origin: center center;
       transition: transform 0.15s ease, opacity 0.15s ease;
       will-change: transform;
@@ -171,53 +167,56 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.4);
+      background: rgba(18,32,18,0.3);
       flex-shrink: 0;
     }
-    /* all logos rendered as white silhouettes on red */
+    /* black silhouettes on mint green — clean and sharp */
     .ticker-logo, .ticker-logo-lg, .ticker-logo-inv {
       object-fit: contain;
       flex-shrink: 0;
-      filter: brightness(0) invert(1);
+      filter: brightness(0);
     }
-    .ticker-logo     { height: 52px; width: auto; max-width: 124px; }
-    .ticker-logo-lg  { height: 66px; width: auto; max-width: 150px; }
-    .ticker-logo-inv { height: 52px; width: auto; max-width: 124px; }
+    .ticker-logo     { height: 44px; width: auto; max-width: 110px; }
+    .ticker-logo-lg  { height: 56px; width: auto; max-width: 130px; }
+    .ticker-logo-inv { height: 44px; width: auto; max-width: 110px; }
     @keyframes ticker {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
 
     /* ── SECTIONS ── */
-    .section { padding: 80px; }
-    .section-light { background: var(--white); color: var(--black); }
-    .section-dark2 { background: var(--dark2); }
+    .section { padding: 80px; background: var(--soft-white); }
+    .section-mint  { background: var(--mint-tint); }
+    .section-white { background: var(--white); }
+    .section-forest {
+      background: var(--forest);
+      color: var(--parchment);
+    }
 
     .section-label {
       font-size: 10px;
       letter-spacing: 6px;
       text-transform: uppercase;
       font-weight: 700;
+      color: var(--green-lt);
       margin-bottom: 36px;
     }
-    .section-dark .section-label,
-    .section-dark2 .section-label { color: var(--amber); }
-    .section-light .section-label { color: var(--coral); }
+    .section-forest .section-label { color: var(--mint); }
 
     /* ── BIO ── */
     .bio-text p {
       font-size: 16px;
       line-height: 1.9;
-      color: rgba(245,237,216,0.82);
+      color: rgba(18,32,18,0.78);
       margin-bottom: 20px;
     }
     .bio-text p:last-child { margin-bottom: 0; }
     .bio-highlight {
       font-family: 'Instrument Serif', serif;
       font-size: clamp(20px, 2.5vw, 28px);
-      color: var(--amber);
+      color: var(--green);
       font-style: italic;
-      border-left: 3px solid var(--coral);
+      border-left: 3px solid var(--gold);
       padding-left: 28px;
       margin: 40px 0;
       line-height: 1.5;
@@ -230,17 +229,20 @@
       gap: 16px;
     }
     .talk-card {
-      background: var(--dark2);
+      background: var(--white);
       border-radius: 12px;
       padding: 32px;
-      border: 1px solid var(--border-dark);
-      transition: border-color 0.2s;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .talk-card:hover { border-color: rgba(240,165,0,0.3); }
+    .talk-card:hover {
+      border-color: var(--mint);
+      box-shadow: 0 4px 20px rgba(109,196,138,0.15);
+    }
     .talk-num {
       font-size: 11px;
       letter-spacing: 2px;
-      color: var(--amber);
+      color: var(--mint);
       font-weight: 700;
       margin-bottom: 12px;
     }
@@ -248,7 +250,7 @@
       font-family: 'Instrument Serif', serif;
       font-size: 22px;
       font-weight: 400;
-      color: var(--white);
+      color: var(--forest);
       margin-bottom: 12px;
       line-height: 1.25;
     }
@@ -266,95 +268,23 @@
       width: 110px;
       flex-shrink: 0;
       border-radius: 6px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 40px rgba(18,32,18,0.15);
     }
     .book-title {
       font-family: 'Instrument Serif', serif;
       font-size: 20px;
       font-weight: 400;
-      color: var(--black);
+      color: var(--forest);
       margin-bottom: 10px;
       line-height: 1.3;
     }
-    .book-desc { font-size: 13.5px; color: #555; line-height: 1.7; }
+    .book-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
 
-    /* ── PRESS PHOTOS ── */
-    .photos-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .photo-item img {
-      width: 100%;
-      border-radius: 12px;
-      display: block;
-      transition: transform 0.4s;
-    }
-    .photo-item:hover img { transform: scale(1.01); }
-    .photo-caption {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 12px;
-      text-align: center;
-      letter-spacing: 0.5px;
-    }
-
-    /* ── BRINGS ── */
-    .brings-quote {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(24px, 3vw, 40px);
-      color: var(--white);
-      font-style: italic;
-      line-height: 1.5;
-      max-width: 860px;
-      padding-left: 36px;
-      border-left: 4px solid var(--coral);
-    }
-
-    /* ── CONTACT ── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 28px;
-    }
-    .contact-label {
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #999;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .contact-value {
-      font-size: 15px;
-      color: var(--black);
-      font-weight: 500;
-    }
-    .contact-value a { color: var(--coral); text-decoration: none; }
-    .contact-value a:hover { text-decoration: underline; }
-
-    /* ── FOOTER ── */
-    .kit-footer {
-      background: var(--amber);
-      padding: 28px 80px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .kit-footer-brand {
-      font-family: 'Instrument Serif', serif;
-      font-size: 20px;
-      color: var(--black);
-      font-weight: 400;
-    }
-    .kit-footer-note { font-size: 12px; color: rgba(13,13,13,0.55); letter-spacing: 0.5px; }
-
-    /* ── UNIVERSITY SECTION ── */
-    .uni-section { background: var(--cream); color: var(--black); }
+    /* ── UNIVERSITY ── */
     .uni-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 32px;
     }
     .uni-card {
       display: flex;
@@ -364,8 +294,8 @@
       padding: 40px 32px;
       background: var(--white);
       border-radius: 16px;
-      border: 1px solid rgba(13,13,13,0.08);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(18,32,18,0.05);
     }
     .uni-logo-wrap {
       height: 80px;
@@ -374,16 +304,22 @@
       justify-content: center;
       margin-bottom: 20px;
     }
-    .uni-logo-wrap img { max-height: 80px; max-width: 200px; object-fit: contain; }
+    .uni-logo-wrap img {
+      max-height: 80px;
+      max-width: 200px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
     .uni-class {
-      font-size: 13px;
+      font-size: 12px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: var(--coral);
+      color: var(--green-lt);
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      line-height: 1.5;
     }
-    .uni-name { font-size: 15px; color: #444; font-weight: 500; }
+    .uni-name { font-size: 15px; color: var(--muted); font-weight: 500; }
 
     /* ── AS SEEN IN ── */
     .press-grid {
@@ -403,22 +339,92 @@
       min-width: 160px;
       flex: 1 1 160px;
       max-width: 220px;
+      border: 1px solid var(--border-lt);
     }
-    .press-logo img { max-height: 56px; max-width: 180px; object-fit: contain; }
+    .press-logo img {
+      max-height: 56px;
+      max-width: 180px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    /* ── PRESS PHOTOS ── */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .photo-item img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      transition: transform 0.4s;
+      box-shadow: 0 8px 32px rgba(18,32,18,0.1);
+    }
+    .photo-item:hover img { transform: scale(1.01); }
+    .photo-caption {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── WHAT SHE BRINGS ── */
+    .brings-quote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 40px);
+      color: var(--parchment);
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 860px;
+      padding-left: 36px;
+      border-left: 4px solid var(--gold);
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 28px;
+    }
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .contact-value { font-size: 15px; color: var(--forest); font-weight: 500; }
+    .contact-value a { color: var(--green-lt); text-decoration: none; }
+    .contact-value a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    .kit-footer {
+      background: var(--green);
+      padding: 28px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .kit-footer-brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--white);
+      font-weight: 400;
+    }
+    .kit-footer-note { font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; }
 
     /* ── PRINT ── */
     @media print {
       .print-bar { display: none; }
-      .ticker-wrap { animation: none; overflow: visible; white-space: normal; }
+      .ticker-wrap { overflow: visible; white-space: normal; }
       .ticker-track { animation: none; display: block; }
       .ticker-item { display: inline-block; }
-      body { background: #fff; color: #111; }
-      .hero { min-height: auto; }
+      body { background: #fff; }
       .section { padding: 48px; }
-      .talk-card { background: #f5f5f5; border-color: #ddd; }
-      .talk-title { color: #111; }
-      .brings-quote { color: #111; }
-      .bio-text p { color: #333; }
+      .section-forest { background: #1a4a2a; }
       @page { margin: 0; size: A4; }
     }
 
@@ -426,10 +432,11 @@
       .hero { grid-template-columns: 1fr; }
       .hero-right { height: 65vw; }
       .hero-right::before { display: none; }
-      .hero-left { padding: 56px 28px; border-right: none; border-bottom: 1px solid var(--border-dark); }
+      .hero-left { padding: 56px 28px; border-right: none; border-bottom: 1px solid var(--border); }
       .section { padding: 56px 28px; }
       .talks-grid { grid-template-columns: 1fr; }
       .books-grid { grid-template-columns: 1fr; }
+      .uni-grid { grid-template-columns: 1fr; }
       .photos-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; gap: 20px; }
       .kit-footer { padding: 24px 28px; flex-direction: column; gap: 10px; text-align: center; }
@@ -476,7 +483,7 @@
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo">Tampa Bay Connects</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
     <span class="ticker-item">St. Pete Housing Authority @ SPC The Epicenter</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
@@ -484,7 +491,7 @@
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Latin Chamber Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo">Tampa Bay Connects</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
     <span class="ticker-item">St. Pete Housing Authority @ SPC The Epicenter</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
@@ -503,7 +510,7 @@
 </section>
 
 <!-- TALK TOPICS -->
-<section class="section section-dark2">
+<section class="section section-mint">
   <div class="section-label">Signature Talk Topics</div>
   <div class="talks-grid">
     <div class="talk-card">
@@ -540,7 +547,7 @@
 </section>
 
 <!-- BOOKS -->
-<section class="section section-light">
+<section class="section section-white">
   <div class="section-label">Published Books</div>
   <div class="books-grid">
     <div class="book-item">
@@ -561,8 +568,8 @@
 </section>
 
 <!-- UNIVERSITY ENGAGEMENTS -->
-<section class="section uni-section">
-  <div class="section-label" style="color:var(--coral);">University Engagements</div>
+<section class="section section-mint">
+  <div class="section-label">University Engagements</div>
   <div class="uni-grid">
     <div class="uni-card">
       <div class="uni-logo-wrap">
@@ -582,7 +589,7 @@
 </section>
 
 <!-- AS SEEN IN -->
-<section class="section section-dark2">
+<section class="section section-white">
   <div class="section-label">As Seen In</div>
   <div class="press-grid">
     <div class="press-logo">
@@ -598,7 +605,7 @@
 </section>
 
 <!-- PRESS PHOTOS -->
-<section class="section">
+<section class="section section-mint">
   <div class="section-label">Press Photos</div>
   <p style="font-size:13px;color:var(--muted);margin-bottom:32px;">Right-click any photo to save. Free to use for editorial and promotional purposes when featuring Miranda Johnson.</p>
   <div class="photos-grid">
@@ -614,13 +621,13 @@
 </section>
 
 <!-- WHAT SHE BRINGS -->
-<section class="section section-dark2">
+<section class="section section-forest">
   <div class="section-label">What She Brings to the Room</div>
   <p class="brings-quote">Miranda does not deliver a keynote. She starts a conversation your audience has needed to have for years. The people in your room who are tired of performing, who are halfway through something hard, who need permission to lead loudly. They will feel seen. That is the point.</p>
 </section>
 
 <!-- CONTACT -->
-<section class="section section-light">
+<section class="section section-mint">
   <div class="section-label">Book Miranda</div>
   <div class="contact-grid">
     <div>
@@ -660,10 +667,8 @@
 <script>
   // Spotlight: items scale up as they pass through the center of the screen
   (function() {
-    const track = document.querySelector('.ticker-track');
     const items = document.querySelectorAll('.ticker-item');
-    if (!track || !items.length) return;
-
+    if (!items.length) return;
     function update() {
       const cx = window.innerWidth / 2;
       items.forEach(function(item) {
@@ -673,12 +678,11 @@
         const radius = 220;
         if (dist < radius) {
           const t = 1 - dist / radius;
-          const scale = 1 + t * 0.3;
-          item.style.transform = 'scale(' + scale + ')';
-          item.style.opacity = (0.6 + t * 0.4).toString();
+          item.style.transform = 'scale(' + (1 + t * 0.28) + ')';
+          item.style.opacity = (0.65 + t * 0.35).toString();
         } else {
           item.style.transform = 'scale(1)';
-          item.style.opacity = '0.6';
+          item.style.opacity = '0.65';
         }
       });
       requestAnimationFrame(update);
