@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — MiRAjO</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-forest:   #122012;
+      --forest-mid:    #1E4226;
+      --living-green:  #256B42;
+      --living-light:  #339158;
+      --new-growth:    #6DC48A;
+      --dry-sage:      #C4A245;
+      --parchment:     #F2EBD9;
+      --soft-white:    #FAF7F2;
+      --muted:         #6B7B6B;
+      --border:        rgba(18,32,18,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #F4F6F4;
+      color: var(--deep-forest);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── LOGIN ─────────────────────────────────────── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--deep-forest);
+    }
+    .login-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .login-logo {
+      height: 44px;
+      width: auto;
+      margin: 0 auto 32px;
+      display: block;
+    }
+    .login-card h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .login-card p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .login-input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest);
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .login-input:focus { border-color: var(--living-green); }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--living-green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .login-btn:hover { opacity: 0.88; }
+    .login-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .login-error {
+      display: none;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #c0392b;
+    }
+
+    /* ── DASHBOARD ─────────────────────────────────── */
+    #dashboard { display: none; }
+
+    .top-bar {
+      background: var(--deep-forest);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .top-bar img { height: 36px; width: auto; }
+    .top-bar-right { display: flex; align-items: center; gap: 20px; }
+    .top-bar-time { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .logout-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .logout-btn:hover { background: rgba(255,255,255,0.18); }
+
+    .content { padding: 32px; max-width: 1400px; margin: 0 auto; }
+
+    /* ── CARDS ─────────────────────────────────────── */
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px 24px;
+      border: 1px solid var(--border);
+    }
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .card-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px;
+      color: var(--deep-forest);
+      line-height: 1;
+    }
+    .card-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── HEALTH ────────────────────────────────────── */
+    .health-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .health-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .health-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .health-dot.ok     { background: #27AE60; }
+    .health-dot.error  { background: #E74C3C; }
+    .health-dot.warn   { background: #F39C12; }
+    .health-dot.checking { background: #ccc; }
+
+    /* ── GRID ──────────────────────────────────────── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .grid-full { margin-bottom: 24px; }
+
+    /* ── PANELS ────────────────────────────────────── */
+    .panel {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .panel-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--deep-forest);
+    }
+    .panel-count {
+      font-size: 12px;
+      color: var(--muted);
+      background: #F4F6F4;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── TABLES ────────────────────────────────────── */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 24px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      font-weight: 600;
+      background: #FAFAFA;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 24px;
+      border-bottom: 1px solid #F0F0F0;
+      color: var(--deep-forest);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #FAFDF9; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-sent     { background: #E8F5EE; color: #1E7E44; }
+    .badge-pending  { background: #FFF8E6; color: #A0720A; }
+    .badge-overdue  { background: #FDECEA; color: #B71C1C; }
+    .badge-red      { background: #FDECEA; color: #B71C1C; }
+    .badge-yellow   { background: #FFF8E6; color: #A0720A; }
+    .badge-green    { background: #E8F5EE; color: #1E7E44; }
+    .badge-scorecard { background: #EEF2FF; color: #3949AB; }
+    .badge-audit     { background: #F3E5F5; color: #6A1B9A; }
+
+    .empty-state {
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── ANALYTICS EMBED ───────────────────────────── */
+    .analytics-panel .panel-body {
+      padding: 0;
+    }
+    .analytics-iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+    .analytics-placeholder {
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .analytics-placeholder h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .analytics-placeholder p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+    .analytics-steps {
+      text-align: left;
+      max-width: 480px;
+      margin: 0 auto;
+      background: #F4F6F4;
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+    .analytics-steps ol {
+      padding-left: 18px;
+    }
+    .analytics-steps li {
+      font-size: 13.5px;
+      color: var(--deep-forest);
+      line-height: 1.8;
+      margin-bottom: 4px;
+    }
+    .analytics-steps a {
+      color: var(--living-green);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .analytics-steps code {
+      background: #e8ede8;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .loading-row {
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1100px) {
+      .cards-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .content { padding: 16px; }
+      .cards-row { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+      .top-bar { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-card">
+    <img src="/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png" alt="MiRAjO" class="login-logo">
+    <h1>Admin Dashboard</h1>
+    <p>Enter your password to continue.</p>
+    <input type="password" id="pw-input" class="login-input" placeholder="Password" autocomplete="current-password">
+    <button class="login-btn" id="login-btn" onclick="login()">Sign In</button>
+    <p class="login-error" id="login-error">Incorrect password.</p>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ──────────────────────────────────────── -->
+<div id="dashboard">
+
+  <div class="top-bar">
+    <img src="/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png" alt="MiRAjO">
+    <div class="top-bar-right">
+      <span class="top-bar-time" id="last-updated"></span>
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Summary cards -->
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-label">Total Leads</div>
+        <div class="card-value" id="stat-total-leads">—</div>
+        <div class="card-sub">all time</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Leads This Week</div>
+        <div class="card-value" id="stat-leads-week">—</div>
+        <div class="card-sub">last 7 days</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Enrollments</div>
+        <div class="card-value" id="stat-enrollments">—</div>
+        <div class="card-sub">total courses</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Emails Sent Today</div>
+        <div class="card-value" id="stat-sent-today">—</div>
+        <div class="card-sub">all sequences</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Emails Pending</div>
+        <div class="card-value" id="stat-pending">—</div>
+        <div class="card-sub">scheduled</div>
+      </div>
+    </div>
+
+    <!-- Health -->
+    <div class="health-row" id="health-row">
+      <div class="health-chip"><span class="health-dot checking" id="h-supabase-dot"></span><span id="h-supabase-label">Supabase — checking</span></div>
+      <div class="health-chip"><span class="health-dot checking" id="h-resend-dot"></span><span id="h-resend-label">Resend — checking</span></div>
+      <div class="health-chip"><span class="health-dot checking" id="h-stripe-dot"></span><span id="h-stripe-label">Stripe — checking</span></div>
+    </div>
+
+    <!-- Leads + Enrollments -->
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Recent Leads</span>
+          <span class="panel-count" id="leads-count">—</span>
+        </div>
+        <div class="table-wrap">
+          <div class="loading-row" id="leads-loading">Loading...</div>
+          <table id="leads-table" style="display:none">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Magnet</th>
+                <th>Result</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="leads-body"></tbody>
+          </table>
+          <div class="empty-state" id="leads-empty" style="display:none">No leads yet.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Course Enrollments</span>
+          <span class="panel-count" id="enrollments-count">—</span>
+        </div>
+        <div class="table-wrap">
+          <div class="loading-row" id="enrollments-loading">Loading...</div>
+          <table id="enrollments-table" style="display:none">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Course</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="enrollments-body"></tbody>
+          </table>
+          <div class="empty-state" id="enrollments-empty" style="display:none">No enrollments yet.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Queue -->
+    <div class="panel grid-full">
+      <div class="panel-header">
+        <span class="panel-title">Email Queue</span>
+        <span class="panel-count" id="queue-count">—</span>
+      </div>
+      <div class="table-wrap">
+        <div class="loading-row" id="queue-loading">Loading...</div>
+        <table id="queue-table" style="display:none">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Sequence</th>
+              <th>Step</th>
+              <th>Scheduled</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="queue-body"></tbody>
+        </table>
+        <div class="empty-state" id="queue-empty" style="display:none">No emails in queue.</div>
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="panel grid-full analytics-panel">
+      <div class="panel-header">
+        <span class="panel-title">Traffic Analytics — Google Analytics 4</span>
+      </div>
+      <div class="panel-body" id="analytics-body">
+        <div class="analytics-placeholder">
+          <h3>Connect your Looker Studio report</h3>
+          <p>Set up a free Looker Studio report connected to your GA4, then paste the embed URL below to see your traffic data here.</p>
+          <div class="analytics-steps">
+            <ol>
+              <li>Go to <a href="https://lookerstudio.google.com" target="_blank">lookerstudio.google.com</a></li>
+              <li>Create → Report → add Google Analytics data source</li>
+              <li>Choose your GA4 property (<code>G-GMJHN44YJN</code>)</li>
+              <li>Design your report (pages, sessions, top sources)</li>
+              <li>File → Embed Report → copy the embed URL</li>
+              <li>Paste it below and save</li>
+            </ol>
+          </div>
+          <div style="margin-top:24px;display:flex;gap:10px;justify-content:center;max-width:480px;margin-left:auto;margin-right:auto;">
+            <input type="text" id="looker-url-input" placeholder="Paste Looker Studio embed URL here" style="flex:1;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;">
+            <button onclick="saveLookerUrl()" style="padding:12px 20px;background:var(--living-green);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const API = '';
+  let authToken = '';
+
+  // ── AUTH ──────────────────────────────────────────────
+  async function login() {
+    const pw = document.getElementById('pw-input').value;
+    const btn = document.getElementById('login-btn');
+    const errEl = document.getElementById('login-error');
+
+    if (!pw) return;
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+    errEl.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/admin-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw }),
+      });
+
+      if (res.ok) {
+        authToken = pw;
+        sessionStorage.setItem('mj_admin_token', pw);
+        showDashboard();
+      } else {
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      }
+    } catch {
+      errEl.textContent = 'Connection error. Try again.';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem('mj_admin_token');
+    authToken = '';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pw-input').value = '';
+  }
+
+  document.getElementById('pw-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+  });
+
+  // ── INIT ──────────────────────────────────────────────
+  function showDashboard() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadData();
+    loadLookerUrl();
+  }
+
+  window.addEventListener('load', () => {
+    const saved = sessionStorage.getItem('mj_admin_token');
+    if (saved) { authToken = saved; showDashboard(); }
+  });
+
+  // ── DATA ──────────────────────────────────────────────
+  async function loadData() {
+    try {
+      const res = await fetch('/api/admin-data', {
+        headers: { 'Authorization': 'Bearer ' + authToken },
+      });
+
+      if (res.status === 401) { logout(); return; }
+
+      const data = await res.json();
+
+      updateStats(data.summary);
+      updateHealth(data.health);
+      renderLeads(data.leads);
+      renderEnrollments(data.enrollments);
+      renderQueue(data.emailQueue);
+
+      const ts = new Date(data.timestamp);
+      document.getElementById('last-updated').textContent =
+        'Updated ' + ts.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    } catch (err) {
+      console.error('Failed to load data:', err);
+    }
+  }
+
+  // ── STATS ─────────────────────────────────────────────
+  function updateStats(s) {
+    document.getElementById('stat-total-leads').textContent  = s.totalLeads;
+    document.getElementById('stat-leads-week').textContent   = s.leadsThisWeek;
+    document.getElementById('stat-enrollments').textContent  = s.totalEnrollments;
+    document.getElementById('stat-sent-today').textContent   = s.emailsSentToday;
+    document.getElementById('stat-pending').textContent      = s.emailsPending;
+  }
+
+  // ── HEALTH ────────────────────────────────────────────
+  function updateHealth(h) {
+    const services = [
+      { key: 'supabase', label: 'Supabase' },
+      { key: 'resend',   label: 'Resend' },
+      { key: 'stripe',   label: 'Stripe' },
+    ];
+    services.forEach(({ key, label }) => {
+      const status = h[key] || 'unknown';
+      const dot = document.getElementById('h-' + key + '-dot');
+      const lbl = document.getElementById('h-' + key + '-label');
+      dot.className = 'health-dot ' + (status === 'ok' ? 'ok' : 'error');
+      lbl.textContent = label + ' — ' + (status === 'ok' ? 'Connected' : status);
+    });
+  }
+
+  // ── LEADS ─────────────────────────────────────────────
+  function renderLeads(leads) {
+    document.getElementById('leads-loading').style.display = 'none';
+    document.getElementById('leads-count').textContent = leads.length + ' total';
+
+    if (!leads.length) {
+      document.getElementById('leads-empty').style.display = 'block';
+      return;
+    }
+
+    const tbody = document.getElementById('leads-body');
+    tbody.innerHTML = leads.map(l => {
+      const isScorecard = l.sequence === 'lead-couples-scorecard';
+      const magnetLabel = isScorecard ? 'Couples Scorecard' : 'Alignment Audit';
+      const magnetBadge = isScorecard ? 'badge-scorecard' : 'badge-audit';
+      const result = l.extra_data?.result || '';
+      const score  = l.extra_data?.score  || '';
+      const resultBadge = result === 'red' ? 'badge-red' : result === 'yellow' ? 'badge-yellow' : result === 'green' ? 'badge-green' : '';
+      const date = new Date(l.send_after).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+      return `<tr>
+        <td>${l.first_name || '—'}</td>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.email}</td>
+        <td><span class="badge ${magnetBadge}">${magnetLabel}</span></td>
+        <td>${result ? `<span class="badge ${resultBadge}">${result}${score ? ' (' + score + ')' : ''}</span>` : '—'}</td>
+        <td style="color:var(--muted)">${date}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('leads-table').style.display = 'table';
+  }
+
+  // ── ENROLLMENTS ───────────────────────────────────────
+  function renderEnrollments(enrollments) {
+    document.getElementById('enrollments-loading').style.display = 'none';
+    document.getElementById('enrollments-count').textContent = enrollments.length + ' total';
+
+    if (!enrollments.length) {
+      document.getElementById('enrollments-empty').style.display = 'block';
+      return;
+    }
+
+    const courseNames = {
+      '25-days-and-25-nights': '25 Days and 25 Nights',
+      'couples-in-entrepreneurship': 'Couples in Entrepreneurship',
+    };
+
+    const tbody = document.getElementById('enrollments-body');
+    tbody.innerHTML = enrollments.map(e => {
+      const courseName = courseNames[e.course_slug] || e.course_slug;
+      const date = e.enrolled_at
+        ? new Date(e.enrolled_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : '—';
+
+      return `<tr>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e.email}</td>
+        <td>${courseName}</td>
+        <td style="color:var(--muted)">${date}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('enrollments-table').style.display = 'table';
+  }
+
+  // ── EMAIL QUEUE ───────────────────────────────────────
+  function renderQueue(queue) {
+    document.getElementById('queue-loading').style.display = 'none';
+    document.getElementById('queue-count').textContent = queue.length + ' rows';
+
+    if (!queue.length) {
+      document.getElementById('queue-empty').style.display = 'block';
+      return;
+    }
+
+    const now = new Date();
+    const seqNames = {
+      'lead-couples-scorecard':  'Scorecard Lead',
+      'lead-alignment-audit':    'Alignment Audit Lead',
+      'enrolled-25d25n':         '25D25N Enrolled',
+      'module-1-complete':       'Module 1 Complete',
+      'course-25d25n-complete':  '25D25N Complete',
+      'enrolled-couples-cie':    'CIE Enrolled',
+      'invited-couples-cie':     'CIE Invited',
+      'report-ready-cie':        'CIE Report Ready',
+      'couples-cie-complete':    'CIE Complete',
+    };
+
+    const tbody = document.getElementById('queue-body');
+    tbody.innerHTML = queue.map(e => {
+      const isSent = !!e.sent_at;
+      const schedDate = new Date(e.send_after);
+      const isOverdue = !isSent && schedDate < now;
+      const statusBadge = isSent ? 'badge-sent' : isOverdue ? 'badge-overdue' : 'badge-pending';
+      const statusLabel = isSent ? 'Sent' : isOverdue ? 'Overdue' : 'Pending';
+      const dateStr = (isSent ? new Date(e.sent_at) : schedDate)
+        .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+      return `<tr>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e.email}</td>
+        <td>${e.first_name || '—'}</td>
+        <td style="color:var(--muted)">${seqNames[e.sequence] || e.sequence}</td>
+        <td style="text-align:center">${e.step}</td>
+        <td style="color:var(--muted)">${dateStr}</td>
+        <td><span class="badge ${statusBadge}">${statusLabel}</span></td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('queue-table').style.display = 'table';
+  }
+
+  // ── LOOKER STUDIO ─────────────────────────────────────
+  function loadLookerUrl() {
+    const saved = localStorage.getItem('mj_looker_url');
+    if (saved) renderLookerEmbed(saved);
+  }
+
+  function saveLookerUrl() {
+    const url = document.getElementById('looker-url-input').value.trim();
+    if (!url) return;
+    localStorage.setItem('mj_looker_url', url);
+    renderLookerEmbed(url);
+  }
+
+  function renderLookerEmbed(url) {
+    document.getElementById('analytics-body').innerHTML =
+      `<iframe src="${url}" class="analytics-iframe" allowfullscreen></iframe>`;
+  }
+</script>
+
+</body>
+</html>
