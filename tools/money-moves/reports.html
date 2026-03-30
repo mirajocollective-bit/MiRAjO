@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports — Money Moves by MiRAjO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --deep-forest:    #122012;
+      --forest-mid:     #1E4226;
+      --living-green:   #256B42;
+      --new-growth:     #6DC48A;
+      --dry-sage:       #C4A245;
+      --warm-parchment: #F2EBD9;
+      --soft-white:     #FAF7F2;
+      --income-color:   #256B42;
+      --expense-color:  #C0392B;
+      --neutral:        #6b7280;
+      --border:         rgba(18,32,18,0.07);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--soft-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      padding: 0 32px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .nav-logo  { height: 40px; width: auto; }
+    .nav-product { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dry-sage); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-back { font-size: 13px; color: rgba(242,235,217,0.7); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--warm-parchment); }
+    .export-btn {
+      font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px;
+      border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .export-btn:hover { opacity: 0.8; }
+    .export-csv { background: var(--dry-sage); color: var(--deep-forest); }
+    .export-pdf { background: var(--warm-parchment); color: var(--deep-forest); }
+
+    /* ── Filters bar ── */
+    .filters-bar {
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 14px 32px; display: flex; align-items: center; gap: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--neutral); }
+    .filter-select {
+      padding: 8px 14px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #fff; outline: none; cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .filter-select:focus { border-color: var(--living-green); }
+    .filter-divider { width: 1px; height: 24px; background: var(--border); }
+
+    /* ── Layout ── */
+    .layout {
+      max-width: 1200px; margin: 0 auto; padding: 28px 28px 80px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+
+    /* ── Cards ── */
+    .report-card {
+      background: #fff; border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(18,32,18,0.04);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 20px 28px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-title { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--deep-forest); }
+    .card-sub   { font-size: 13px; color: var(--neutral); margin-top: 2px; }
+    .card-body  { padding: 24px 28px; }
+
+    /* ── Summary row ── */
+    .summary-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px;
+    }
+    .summary-tile {
+      background: var(--soft-white); border-radius: 14px; padding: 18px 20px;
+      border: 1px solid var(--border);
+    }
+    .tile-label  { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--neutral); margin-bottom: 8px; }
+    .tile-amount { font-family: 'Instrument Serif', serif; font-size: 30px; line-height: 1; }
+    .tile-amount.income  { color: var(--income-color); }
+    .tile-amount.expense { color: var(--expense-color); }
+    .tile-amount.net     { color: var(--deep-forest); }
+    .tile-sub { font-size: 12px; color: var(--neutral); margin-top: 6px; }
+
+    /* ── P&L Table ── */
+    .pl-table { width: 100%; border-collapse: collapse; }
+    .pl-table th {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--neutral); padding: 10px 16px; text-align: left;
+      border-bottom: 2px solid var(--border); background: var(--soft-white);
+    }
+    .pl-table th:not(:first-child) { text-align: right; }
+    .pl-table td {
+      padding: 11px 16px; font-size: 13px; border-bottom: 1px solid var(--border);
+    }
+    .pl-table td:not(:first-child) { text-align: right; font-weight: 600; }
+    .pl-table tr:last-child td { border-bottom: none; }
+    .pl-table tr:hover td { background: rgba(18,32,18,0.015); }
+
+    .pl-section-header td {
+      background: rgba(18,32,18,0.03); font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--neutral);
+      padding: 8px 16px;
+    }
+    .pl-total-row td {
+      background: rgba(18,32,18,0.03); font-weight: 700; font-size: 14px;
+      border-top: 2px solid var(--border);
+    }
+    .pl-net-row td {
+      background: var(--deep-forest); color: var(--warm-parchment);
+      font-weight: 700; font-size: 15px;
+    }
+    .pl-net-row td:not(:first-child) { text-align: right; }
+
+    .positive { color: var(--income-color); }
+    .negative { color: var(--expense-color); }
+
+    /* ── Category breakdown ── */
+    .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .cat-item { padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; }
+    .cat-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .cat-item-name { font-size: 13px; font-weight: 600; }
+    .cat-item-amt  { font-size: 13px; font-weight: 700; }
+    .cat-item-amt.income  { color: var(--income-color); }
+    .cat-item-amt.expense { color: var(--expense-color); }
+    .cat-item-bar { height: 4px; background: rgba(18,32,18,0.07); border-radius: 99px; overflow: hidden; }
+    .cat-item-fill { height: 100%; border-radius: 99px; }
+    .cat-item-pct { font-size: 11px; color: var(--neutral); margin-top: 4px; }
+
+    /* ── Monthly trend ── */
+    .trend-table { width: 100%; border-collapse: collapse; }
+    .trend-table th {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--neutral); padding: 8px 12px; text-align: right; border-bottom: 2px solid var(--border);
+    }
+    .trend-table th:first-child { text-align: left; }
+    .trend-table td { padding: 10px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid var(--border); }
+    .trend-table td:first-child { text-align: left; font-weight: 600; }
+    .trend-table tr:last-child td { border-bottom: none; }
+    .trend-table tr:hover td { background: rgba(18,32,18,0.015); }
+    .trend-bar-cell { width: 120px; padding: 10px 12px; }
+    .trend-bar { height: 6px; background: rgba(18,32,18,0.07); border-radius: 99px; overflow: hidden; }
+    .trend-bar-fill { height: 100%; border-radius: 99px; background: var(--living-green); }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center; padding: 48px 24px;
+      font-size: 14px; color: var(--neutral);
+    }
+    .empty-icon { font-size: 36px; margin-bottom: 12px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .nav { padding: 0 16px; }
+      .filters-bar { padding: 12px 16px; }
+      .layout { padding: 16px 16px 60px; }
+      .summary-row { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: 1fr; }
+      .card-body { padding: 16px; }
+    }
+  </style>
+  <script src="/analytics.js"></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="https://www.mirajoco.org">
+      <img src="/img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" class="nav-logo">
+    </a>
+    <span class="nav-product">Money Moves</span>
+  </div>
+  <div class="nav-right">
+    <button class="export-btn export-csv" onclick="exportCSV()">Export CSV</button>
+    <button class="export-btn export-pdf" onclick="exportPDF()">Export PDF</button>
+    <a href="/tools/money-moves/dashboard" class="nav-back">← Dashboard</a>
+  </div>
+</nav>
+
+<!-- Filters -->
+<div class="filters-bar">
+  <span class="filter-label">Account</span>
+  <select class="filter-select" id="filter-account" onchange="applyFilters()">
+    <option value="all">All Accounts</option>
+  </select>
+  <div class="filter-divider"></div>
+  <span class="filter-label">Period</span>
+  <select class="filter-select" id="filter-period" onchange="applyFilters()">
+    <option value="this_month">This Month</option>
+    <option value="last_month">Last Month</option>
+    <option value="this_quarter">This Quarter</option>
+    <option value="last_quarter">Last Quarter</option>
+    <option value="this_year" selected>This Year</option>
+    <option value="last_year">Last Year</option>
+    <option value="all_time">All Time</option>
+  </select>
+  <div class="filter-divider"></div>
+  <span class="filter-label">View</span>
+  <select class="filter-select" id="filter-view" onchange="applyFilters()">
+    <option value="pl">P&amp;L Statement</option>
+    <option value="categories">By Category</option>
+    <option value="monthly">Monthly Trend</option>
+  </select>
+</div>
+
+<!-- Main content -->
+<div class="layout" id="report-layout">
+  <div class="empty-state">
+    <div class="empty-icon">📊</div>
+    Loading your reports...
+  </div>
+</div>
+
+<script src="/api/config"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+(async function () {
+  const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+  // ── Auth guard ──────────────────────────────────────────────────────────────
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) { window.location.href = '/tools/money-moves/login'; return; }
+  const user = session.user;
+
+  let householdId  = null;
+  let accounts     = [];
+  let transactions = [];
+  let categories   = [];
+  let filtered     = [];
+
+  // ── Load ────────────────────────────────────────────────────────────────────
+  async function loadAll() {
+    const { data: members } = await supabase
+      .from('mm_members').select('household_id').eq('user_id', user.id).eq('status','active').limit(1);
+    if (!members?.length) return;
+    householdId = members[0].household_id;
+
+    const [acctRes, txnRes, catRes] = await Promise.all([
+      supabase.from('mm_accounts').select('*').eq('household_id', householdId).eq('is_active', true),
+      supabase.from('mm_transactions').select('*').eq('household_id', householdId).order('date'),
+      supabase.from('mm_categories').select('*').eq('household_id', householdId),
+    ]);
+
+    accounts     = acctRes.data || [];
+    transactions = txnRes.data  || [];
+    categories   = catRes.data  || [];
+
+    // Populate account filter
+    const sel = document.getElementById('filter-account');
+    accounts.forEach(a => {
+      const opt = document.createElement('option');
+      opt.value = a.id; opt.textContent = a.name;
+      sel.appendChild(opt);
+    });
+
+    applyFilters();
+  }
+
+  // ── Date range helper ────────────────────────────────────────────────────────
+  function getDateRange(period) {
+    const now   = new Date();
+    const y     = now.getFullYear();
+    const m     = now.getMonth();
+    const q     = Math.floor(m / 3);
+
+    switch (period) {
+      case 'this_month':    return [new Date(y, m, 1),        new Date(y, m + 1, 0)];
+      case 'last_month':    return [new Date(y, m - 1, 1),    new Date(y, m, 0)];
+      case 'this_quarter':  return [new Date(y, q * 3, 1),    new Date(y, q * 3 + 3, 0)];
+      case 'last_quarter':  return [new Date(y, (q-1)*3, 1),  new Date(y, q * 3, 0)];
+      case 'this_year':     return [new Date(y, 0, 1),        new Date(y, 11, 31)];
+      case 'last_year':     return [new Date(y-1, 0, 1),      new Date(y-1, 11, 31)];
+      default:              return [null, null]; // all time
+    }
+  }
+
+  function fmt(n) {
+    return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  // ── Apply filters ────────────────────────────────────────────────────────────
+  window.applyFilters = function () {
+    const accountId = document.getElementById('filter-account').value;
+    const period    = document.getElementById('filter-period').value;
+    const view      = document.getElementById('filter-view').value;
+    const [start, end] = getDateRange(period);
+
+    filtered = transactions.filter(t => {
+      if (accountId !== 'all' && t.account_id !== accountId) return false;
+      if (t.type === 'transfer') return false;
+      if (start && new Date(t.date) < start) return false;
+      if (end   && new Date(t.date) > end)   return false;
+      return true;
+    });
+
+    if      (view === 'pl')         renderPL(period);
+    else if (view === 'categories') renderCategories();
+    else if (view === 'monthly')    renderMonthly();
+  };
+
+  // ── P&L Statement ────────────────────────────────────────────────────────────
+  function renderPL(period) {
+    const incomes  = filtered.filter(t => t.type === 'income');
+    const expenses = filtered.filter(t => t.type === 'expense');
+
+    const totalIncome  = incomes.reduce((s, t)  => s + Number(t.amount), 0);
+    const totalExpense = expenses.reduce((s, t) => s + Number(t.amount), 0);
+    const net          = totalIncome - totalExpense;
+
+    // Group by category
+    const incomeCats  = groupByCategory(incomes);
+    const expenseCats = groupByCategory(expenses);
+
+    const layout = document.getElementById('report-layout');
+    layout.innerHTML = `
+      <div class="summary-row">
+        <div class="summary-tile">
+          <div class="tile-label">Total Income</div>
+          <div class="tile-amount income">${fmt(totalIncome)}</div>
+          <div class="tile-sub">${incomes.length} transactions</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">Total Expenses</div>
+          <div class="tile-amount expense">${fmt(totalExpense)}</div>
+          <div class="tile-sub">${expenses.length} transactions</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">Net ${net >= 0 ? 'Profit' : 'Loss'}</div>
+          <div class="tile-amount net ${net >= 0 ? 'positive' : 'negative'}">${net >= 0 ? '' : '-'}${fmt(net)}</div>
+          <div class="tile-sub">${Math.round((totalIncome > 0 ? (net / totalIncome) : 0) * 100)}% margin</div>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Profit & Loss Statement</div>
+            <div class="card-sub" id="pl-period-label"></div>
+          </div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div style="overflow-x:auto">
+            <table class="pl-table" id="pl-table">
+              <thead>
+                <tr>
+                  <th style="width:60%">Description</th>
+                  <th>Amount</th>
+                  <th>% of Total</th>
+                </tr>
+              </thead>
+              <tbody id="pl-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>`;
+
+    // Build P&L rows
+    const body = document.getElementById('pl-body');
+
+    // Income section
+    body.innerHTML += `<tr class="pl-section-header"><td colspan="3">INCOME</td></tr>`;
+    incomeCats.forEach(c => {
+      const pct = totalIncome > 0 ? ((c.total / totalIncome) * 100).toFixed(1) : '0.0';
+      body.innerHTML += `<tr>
+        <td style="padding-left:28px">${c.name}</td>
+        <td class="positive">${fmt(c.total)}</td>
+        <td>${pct}%</td>
+      </tr>`;
+    });
+    body.innerHTML += `<tr class="pl-total-row">
+      <td>Total Income</td>
+      <td class="positive">${fmt(totalIncome)}</td>
+      <td>100%</td>
+    </tr>`;
+
+    // Expense section
+    body.innerHTML += `<tr class="pl-section-header"><td colspan="3">EXPENSES</td></tr>`;
+    expenseCats.forEach(c => {
+      const pct = totalExpense > 0 ? ((c.total / totalExpense) * 100).toFixed(1) : '0.0';
+      body.innerHTML += `<tr>
+        <td style="padding-left:28px">${c.name}</td>
+        <td class="negative">${fmt(c.total)}</td>
+        <td>${pct}%</td>
+      </tr>`;
+    });
+    body.innerHTML += `<tr class="pl-total-row">
+      <td>Total Expenses</td>
+      <td class="negative">${fmt(totalExpense)}</td>
+      <td>100%</td>
+    </tr>`;
+
+    // Net row
+    body.innerHTML += `<tr class="pl-net-row">
+      <td>NET ${net >= 0 ? 'PROFIT' : 'LOSS'}</td>
+      <td>${net >= 0 ? '' : '-'}${fmt(net)}</td>
+      <td>${totalIncome > 0 ? Math.round((net / totalIncome) * 100) : 0}%</td>
+    </tr>`;
+  }
+
+  function groupByCategory(txns) {
+    const map = {};
+    txns.forEach(t => {
+      const cat = categories.find(c => c.id === t.category_id);
+      const key = cat ? cat.id : 'uncategorized';
+      const name = cat ? cat.name : 'Uncategorized';
+      if (!map[key]) map[key] = { name, total: 0 };
+      map[key].total += Number(t.amount);
+    });
+    return Object.values(map).sort((a, b) => b.total - a.total);
+  }
+
+  // ── Category Breakdown ────────────────────────────────────────────────────────
+  function renderCategories() {
+    const incomes  = filtered.filter(t => t.type === 'income');
+    const expenses = filtered.filter(t => t.type === 'expense');
+    const totalIn  = incomes.reduce((s,t)  => s + Number(t.amount), 0);
+    const totalOut = expenses.reduce((s,t) => s + Number(t.amount), 0);
+    const net      = totalIn - totalOut;
+
+    const incomeCats  = groupByCategory(incomes);
+    const expenseCats = groupByCategory(expenses);
+    const maxIncome   = incomeCats[0]?.total  || 1;
+    const maxExpense  = expenseCats[0]?.total || 1;
+
+    const layout = document.getElementById('report-layout');
+    layout.innerHTML = `
+      <div class="summary-row">
+        <div class="summary-tile">
+          <div class="tile-label">Total Income</div>
+          <div class="tile-amount income">${fmt(totalIn)}</div>
+          <div class="tile-sub">${incomeCats.length} categories</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">Total Expenses</div>
+          <div class="tile-amount expense">${fmt(totalOut)}</div>
+          <div class="tile-sub">${expenseCats.length} categories</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">Net</div>
+          <div class="tile-amount net ${net >= 0 ? 'positive' : 'negative'}">${net >= 0 ? '' : '-'}${fmt(net)}</div>
+          <div class="tile-sub">&nbsp;</div>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="card-header">
+          <div><div class="card-title">Income by Category</div></div>
+        </div>
+        <div class="card-body">
+          <div class="cat-grid" id="income-cats"></div>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="card-header">
+          <div><div class="card-title">Expenses by Category</div></div>
+        </div>
+        <div class="card-body">
+          <div class="cat-grid" id="expense-cats"></div>
+        </div>
+      </div>`;
+
+    function renderCatGrid(containerId, cats, total, max, type) {
+      const el = document.getElementById(containerId);
+      if (!cats.length) { el.innerHTML = '<p style="font-size:13px;color:var(--neutral)">No transactions in this period.</p>'; return; }
+      el.innerHTML = cats.map(c => {
+        const pct   = total > 0 ? ((c.total / total) * 100).toFixed(1) : '0.0';
+        const width = max > 0 ? ((c.total / max) * 100) : 0;
+        const color = type === 'income' ? 'var(--living-green)' : 'var(--expense-color)';
+        return `
+          <div class="cat-item">
+            <div class="cat-item-top">
+              <span class="cat-item-name">${c.name}</span>
+              <span class="cat-item-amt ${type}">${fmt(c.total)}</span>
+            </div>
+            <div class="cat-item-bar">
+              <div class="cat-item-fill" style="width:${width}%;background:${color}"></div>
+            </div>
+            <div class="cat-item-pct">${pct}% of total ${type}</div>
+          </div>`;
+      }).join('');
+    }
+
+    renderCatGrid('income-cats',  incomeCats,  totalIn,  maxIncome,  'income');
+    renderCatGrid('expense-cats', expenseCats, totalOut, maxExpense, 'expense');
+  }
+
+  // ── Monthly Trend ─────────────────────────────────────────────────────────────
+  function renderMonthly() {
+    const now  = new Date();
+    const rows = [];
+    const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    // Last 12 months
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const prefix = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2,'0')}`;
+      const monthTxns = transactions.filter(t => {
+        const accountId = document.getElementById('filter-account').value;
+        if (accountId !== 'all' && t.account_id !== accountId) return false;
+        return t.type !== 'transfer' && t.date?.startsWith(prefix);
+      });
+      const income  = monthTxns.filter(t => t.type === 'income').reduce((s,t)  => s + Number(t.amount), 0);
+      const expense = monthTxns.filter(t => t.type === 'expense').reduce((s,t) => s + Number(t.amount), 0);
+      rows.push({ label: `${monthNames[d.getMonth()]} ${d.getFullYear()}`, income, expense, net: income - expense });
+    }
+
+    const maxVal = Math.max(...rows.map(r => Math.max(r.income, r.expense)), 1);
+    const totalIncome  = rows.reduce((s,r) => s + r.income,  0);
+    const totalExpense = rows.reduce((s,r) => s + r.expense, 0);
+    const totalNet     = totalIncome - totalExpense;
+
+    const layout = document.getElementById('report-layout');
+    layout.innerHTML = `
+      <div class="summary-row">
+        <div class="summary-tile">
+          <div class="tile-label">12-Month Income</div>
+          <div class="tile-amount income">${fmt(totalIncome)}</div>
+          <div class="tile-sub">avg ${fmt(totalIncome / 12)}/month</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">12-Month Expenses</div>
+          <div class="tile-amount expense">${fmt(totalExpense)}</div>
+          <div class="tile-sub">avg ${fmt(totalExpense / 12)}/month</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">12-Month Net</div>
+          <div class="tile-amount net ${totalNet >= 0 ? 'positive' : 'negative'}">${totalNet >= 0 ? '' : '-'}${fmt(totalNet)}</div>
+          <div class="tile-sub">avg ${fmt(totalNet / 12)}/month</div>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="card-header">
+          <div><div class="card-title">Monthly Trend — Last 12 Months</div></div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div style="overflow-x:auto">
+            <table class="trend-table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Income</th>
+                  <th>Expenses</th>
+                  <th>Net</th>
+                  <th class="trend-bar-cell">Visual</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(r => `
+                  <tr>
+                    <td>${r.label}</td>
+                    <td class="positive">${fmt(r.income)}</td>
+                    <td class="negative">${fmt(r.expense)}</td>
+                    <td class="${r.net >= 0 ? 'positive' : 'negative'}">${r.net >= 0 ? '+' : '-'}${fmt(r.net)}</td>
+                    <td class="trend-bar-cell">
+                      <div class="trend-bar">
+                        <div class="trend-bar-fill" style="width:${(r.income / maxVal) * 100}%"></div>
+                      </div>
+                    </td>
+                  </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ── CSV Export ────────────────────────────────────────────────────────────────
+  window.exportCSV = function () {
+    const accountId = document.getElementById('filter-account').value;
+    const period    = document.getElementById('filter-period').value;
+    const [start, end] = getDateRange(period);
+
+    const rows = transactions.filter(t => {
+      if (accountId !== 'all' && t.account_id !== accountId) return false;
+      if (start && new Date(t.date) < start) return false;
+      if (end   && new Date(t.date) > end)   return false;
+      return true;
+    });
+
+    const headers = ['Date','Description','Type','Amount','Category','Account','Notes'];
+    const lines = [headers.join(',')];
+
+    rows.forEach(t => {
+      const cat   = categories.find(c => c.id === t.category_id)?.name || '';
+      const acct  = accounts.find(a => a.id === t.account_id)?.name   || '';
+      const amt   = t.type === 'expense' ? `-${Number(t.amount).toFixed(2)}` : Number(t.amount).toFixed(2);
+      lines.push([
+        t.date,
+        `"${(t.description || '').replace(/"/g, '""')}"`,
+        t.type,
+        amt,
+        `"${cat}"`,
+        `"${acct}"`,
+        `"${(t.notes || '').replace(/"/g, '""')}"`,
+      ].join(','));
+    });
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `money-moves-${period}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // ── PDF Export ─────────────────────────────────────────────────────────────────
+  window.exportPDF = function () {
+    const { jsPDF } = window.jspdf;
+    const doc   = new jsPDF();
+    const period = document.getElementById('filter-period').value;
+
+    const incomes  = filtered.filter(t => t.type === 'income');
+    const expenses = filtered.filter(t => t.type === 'expense');
+    const totalIn  = incomes.reduce((s,t)  => s + Number(t.amount), 0);
+    const totalOut = expenses.reduce((s,t) => s + Number(t.amount), 0);
+    const net      = totalIn - totalOut;
+
+    const incomeCats  = groupByCategory(incomes);
+    const expenseCats = groupByCategory(expenses);
+
+    // Header
+    doc.setFillColor(18, 32, 18);
+    doc.rect(0, 0, 210, 28, 'F');
+    doc.setTextColor(242, 235, 217);
+    doc.setFontSize(16); doc.setFont('helvetica', 'bold');
+    doc.text('Money Moves by MiRAjO', 14, 12);
+    doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+    doc.text(`Profit & Loss Statement — ${period.replace(/_/g,' ').toUpperCase()}`, 14, 20);
+    doc.text(`Generated ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`, 140, 20);
+
+    // Summary boxes
+    doc.setTextColor(18, 32, 18);
+    let y = 38;
+    const boxes = [
+      { label: 'TOTAL INCOME',  value: `$${totalIn.toFixed(2)}`,  color: [37,107,66] },
+      { label: 'TOTAL EXPENSES', value: `$${totalOut.toFixed(2)}`, color: [192,57,43] },
+      { label: `NET ${net >= 0 ? 'PROFIT' : 'LOSS'}`, value: `${net >= 0 ? '' : '-'}$${Math.abs(net).toFixed(2)}`, color: [18,32,18] },
+    ];
+    boxes.forEach((b, i) => {
+      const x = 14 + i * 62;
+      doc.setFillColor(248, 246, 242);
+      doc.roundedRect(x, y, 58, 20, 2, 2, 'F');
+      doc.setFontSize(7); doc.setFont('helvetica', 'bold');
+      doc.setTextColor(107, 114, 128);
+      doc.text(b.label, x + 4, y + 7);
+      doc.setFontSize(12); doc.setTextColor(...b.color);
+      doc.text(b.value, x + 4, y + 16);
+    });
+
+    y = 68;
+
+    // Income section
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(107, 114, 128);
+    doc.text('INCOME', 14, y); y += 5;
+    doc.setDrawColor(200, 200, 200); doc.line(14, y, 196, y); y += 5;
+
+    incomeCats.forEach(c => {
+      doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(18,32,18);
+      doc.text(c.name, 22, y);
+      doc.setTextColor(37,107,66); doc.setFont('helvetica','bold');
+      doc.text(`$${c.total.toFixed(2)}`, 160, y, { align: 'right' });
+      y += 6;
+    });
+    doc.setFont('helvetica','bold'); doc.setTextColor(18,32,18);
+    doc.text('Total Income', 14, y);
+    doc.setTextColor(37,107,66);
+    doc.text(`$${totalIn.toFixed(2)}`, 160, y, { align: 'right' });
+    y += 10;
+
+    // Expense section
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(107, 114, 128);
+    doc.text('EXPENSES', 14, y); y += 5;
+    doc.setDrawColor(200,200,200); doc.line(14, y, 196, y); y += 5;
+
+    expenseCats.forEach(c => {
+      if (y > 265) { doc.addPage(); y = 20; }
+      doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(18,32,18);
+      doc.text(c.name, 22, y);
+      doc.setTextColor(192,57,43); doc.setFont('helvetica','bold');
+      doc.text(`$${c.total.toFixed(2)}`, 160, y, { align: 'right' });
+      y += 6;
+    });
+    doc.setFont('helvetica','bold'); doc.setTextColor(18,32,18);
+    doc.text('Total Expenses', 14, y);
+    doc.setTextColor(192,57,43);
+    doc.text(`$${totalOut.toFixed(2)}`, 160, y, { align: 'right' });
+    y += 10;
+
+    // Net row
+    doc.setFillColor(18,32,18);
+    doc.rect(14, y, 182, 10, 'F');
+    doc.setTextColor(242,235,217); doc.setFontSize(10); doc.setFont('helvetica','bold');
+    doc.text(`NET ${net >= 0 ? 'PROFIT' : 'LOSS'}`, 18, y + 7);
+    doc.text(`${net >= 0 ? '' : '-'}$${Math.abs(net).toFixed(2)}`, 192, y + 7, { align: 'right' });
+
+    // Footer
+    doc.setFontSize(8); doc.setTextColor(150,150,150); doc.setFont('helvetica','normal');
+    doc.text('Money Moves by MiRAjO · mirajoco.org', 105, 290, { align: 'center' });
+
+    doc.save(`money-moves-pl-${period}.pdf`);
+  };
+
+  // ── Init ─────────────────────────────────────────────────────────────────────
+  loadAll();
+})();
+</script>
+</body>
+</html>
