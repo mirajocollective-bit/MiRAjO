@@ -573,84 +573,148 @@
     /* ── PRINT-ONLY ELEMENTS ── */
     .print-speaking { display: none; }
 
+    /* ── ONE-PAGER (hidden on screen, shown on print) ── */
+    .pop { display: none; }
+
     /* ── PRINT ── */
     @media print {
-      @page { margin: 16mm 14mm; size: A4; }
+      @page { size: A4 portrait; margin: 0; }
 
-      /* hide web-only elements */
-      .print-bar,
-      .ticker-wrap,
-      .inquiry-wrap { display: none !important; }
+      /* hide entire web page */
+      nav, .print-bar, .hero, .ticker-wrap, .print-speaking,
+      section, .inquiry-wrap, .kit-footer { display: none !important; }
 
-      /* show print-only speaking list */
-      .print-speaking { display: block !important; }
+      body { margin: 0; padding: 0; background: #fff; }
 
-      body {
-        background: #fff;
-        color: #122012;
-        font-size: 11pt;
-      }
-
-      /* hero */
-      .hero {
-        grid-template-columns: 1fr 260px;
-        min-height: auto;
-        border-bottom: 2px solid #6DC48A;
-        padding-bottom: 0;
-      }
-      .hero-left { padding: 32px 40px; }
-      .hero-name { font-size: 52pt; }
-      .hero-right { max-height: 220px; }
-      .hero-right img { object-position: center 15%; }
-      .hero-right::before { display: none; }
-
-      /* sections */
-      .section { padding: 28px 40px; break-inside: avoid; }
-      .section-mint { background: #EBF7F0 !important; }
-      .section-forest { background: #122012 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .section-white { background: #fff !important; }
-
-      /* section labels */
-      .section-label { color: #339158 !important; }
-      .section-forest .section-label { color: #6DC48A !important; }
-
-      /* talks grid — 2 cols on print */
-      .talks-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .talk-card { padding: 16px 20px; border: 1px solid #d0e8d8; break-inside: avoid; }
-      .talk-num { color: #6DC48A !important; }
-
-      /* books */
-      .books-grid { gap: 28px; }
-      .book-cover { width: 72px; }
-
-      /* university */
-      .uni-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .uni-card { padding: 24px 20px; break-inside: avoid; }
-      .uni-logo-wrap img { mix-blend-mode: multiply; }
-
-      /* photos — portrait on print, face at top */
-      .photos-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .photo-item img { height: 280px; width: 100%; object-fit: cover; object-position: top; border-radius: 8px; }
-      .photo-caption { display: none; }
-
-      /* contact */
-      .contact-grid { grid-template-columns: 1fr 1fr; }
-
-      /* brings quote */
-      .brings-quote { font-size: 18pt; color: #F2EBD9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-      /* footer */
-      .kit-footer {
-        background: #256B42 !important;
-        padding: 16px 40px;
+      /* show one-pager */
+      .pop {
+        display: flex !important;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
-      .kit-footer-brand { color: #fff !important; }
-      .kit-footer-note { color: rgba(255,255,255,0.6) !important; }
 
-      /* page breaks */
-      .section-forest { break-before: avoid; }
+      .pop-photo {
+        width: 38%;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .pop-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+
+      .pop-body {
+        width: 62%;
+        padding: 18mm 12mm 14mm 13mm;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .pop-name {
+        font-family: 'Instrument Serif', Georgia, serif;
+        font-size: 34pt;
+        font-weight: normal;
+        color: #122012;
+        line-height: 1.0;
+        margin: 0 0 5pt;
+      }
+      .pop-name em { font-style: italic; color: #256B42; }
+
+      .pop-roles {
+        font-size: 8pt;
+        color: #256B42;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin: 0 0 3pt;
+      }
+
+      .pop-sub {
+        font-size: 7.5pt;
+        color: #5A6E58;
+        margin: 0 0 8pt;
+      }
+
+      .pop-divider {
+        border: none;
+        border-top: 1.5px solid #6DC48A;
+        margin: 0 0 8pt;
+      }
+
+      .pop-bio {
+        font-size: 8.5pt;
+        color: #1a2a1a;
+        line-height: 1.65;
+        margin: 0 0 8pt;
+      }
+
+      .pop-section { margin: 0 0 8pt; }
+
+      .pop-label {
+        font-size: 6.5pt;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #339158;
+        font-weight: 700;
+        margin: 0 0 5pt;
+        border-top: 1px solid #d0e8d8;
+        padding-top: 6pt;
+      }
+
+      .pop-topics { margin: 0; }
+      .pop-topic {
+        font-size: 8pt;
+        color: #122012;
+        line-height: 1.5;
+        margin-bottom: 3pt;
+        padding-left: 8pt;
+        border-left: 2px solid #6DC48A;
+      }
+
+      .pop-events-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3pt 10pt;
+      }
+      .pop-event-name {
+        font-size: 7.5pt;
+        font-weight: 600;
+        color: #122012;
+        line-height: 1.3;
+      }
+      .pop-event-org {
+        font-size: 7pt;
+        color: #5A6E58;
+        line-height: 1.2;
+        margin-bottom: 3pt;
+      }
+
+      .pop-press {
+        font-size: 7.5pt;
+        color: #5A6E58;
+        margin: 6pt 0 0;
+        font-style: italic;
+      }
+
+      .pop-contact-bar {
+        margin-top: auto;
+        padding-top: 8pt;
+        border-top: 2px solid #256B42;
+        display: flex;
+        gap: 20pt;
+        font-size: 8pt;
+        color: #256B42;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+      }
     }
 
     @media (max-width: 900px) {
@@ -965,6 +1029,54 @@
       <button type="submit" class="form-submit" id="speakingSubmit">Send Inquiry</button>
       <div class="form-message" id="speakingMsg"></div>
     </form>
+  </div>
+</div>
+
+<!-- PRINT ONE-PAGER (hidden on screen) -->
+<div class="pop">
+  <div class="pop-photo">
+    <img src="img/miranda-standing.jpeg" alt="Miranda Johnson">
+  </div>
+  <div class="pop-body">
+
+    <div class="pop-name">Miranda<br><em>Johnson</em></div>
+    <div class="pop-roles">Speaker &nbsp;&middot;&nbsp; Author &nbsp;&middot;&nbsp; Entrepreneur</div>
+    <div class="pop-sub">Founder &amp; CEO, MiRAjO Collective &nbsp;&middot;&nbsp; COO, Tampa Business Club &nbsp;&middot;&nbsp; St. Petersburg, FL</div>
+    <hr class="pop-divider">
+
+    <div class="pop-bio">
+      Miranda Johnson has spent 20 years building businesses, raising five children, and learning the hard way that performance is not the same as progress. She founded MiRAjO Collective to help entrepreneurs stop shrinking and start leading from who they actually are. She serves as COO of Tampa Business Club and Events Chair for the Tampa Bay Latin Chamber of Commerce. She is the author of <em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>.
+    </div>
+
+    <div class="pop-section">
+      <div class="pop-label">Signature Talk Topics</div>
+      <div class="pop-topics">
+        <div class="pop-topic"><strong>The Pain Principle</strong> &mdash; How your hardest chapter is your most credible asset</div>
+        <div class="pop-topic"><strong>Authenticity is the New Blue Check</strong> &mdash; Leading from identity in a world of curated everything</div>
+        <div class="pop-topic"><strong>Seedtime and Harvest</strong> &mdash; Staying faithful to the work in the season before the result</div>
+        <div class="pop-topic"><strong>Couples in the Trenches</strong> &mdash; Building a business without losing each other</div>
+        <div class="pop-topic"><strong>LeadLoud</strong> &mdash; The 11 commandments of the next-generation leader</div>
+      </div>
+    </div>
+
+    <div class="pop-section">
+      <div class="pop-label">Speaking Engagements</div>
+      <div class="pop-events-grid">
+        <div><div class="pop-event-name">Power Women Expo 2026</div><div class="pop-event-org">WIN &mdash; Women Impact Network</div></div>
+        <div><div class="pop-event-name">Fail Forward 2026</div><div class="pop-event-org">Tampa Bay Latin Chamber of Commerce</div></div>
+        <div><div class="pop-event-name">Tampa Bay Business Expo 2024</div><div class="pop-event-org">Tampa Business Club</div></div>
+        <div><div class="pop-event-name">Summer Business Expo</div><div class="pop-event-org">Tampa Business Club</div></div>
+        <div><div class="pop-event-name">Local Stories Live</div><div class="pop-event-org">Hillsborough County</div></div>
+        <div><div class="pop-event-name">Tampa Bay Connects</div><div class="pop-event-org">Tampa Bay Connects</div></div>
+      </div>
+      <div class="pop-press">As seen in: Plastiq Magazine &nbsp;&middot;&nbsp; Voyage Tampa &nbsp;&middot;&nbsp; Voyage Houston</div>
+    </div>
+
+    <div class="pop-contact-bar">
+      <span>mirandaj@mirajoco.org</span>
+      <span>www.mirajoco.org/media-kit</span>
+    </div>
+
   </div>
 </div>
 
