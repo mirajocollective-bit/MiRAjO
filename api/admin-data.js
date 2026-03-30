@@ -43,11 +43,11 @@ export default async function handler(req, res) {
       .order('send_after', { ascending: false })
       .limit(150);
 
-    // Enrollments
+    // Enrollments — join courses to get slug
     const { data: enrollments } = await supabase
       .from('enrollments')
-      .select('user_id, course_slug, enrolled_at')
-      .order('enrolled_at', { ascending: false })
+      .select('user_id, course_id, created_at, courses(slug, title)')
+      .order('created_at', { ascending: false })
       .limit(50);
 
     // Try to get user emails for enrollments
@@ -107,8 +107,10 @@ export default async function handler(req, res) {
       leads: leads || [],
       emailQueue: emailQueue || [],
       enrollments: (enrollments || []).map(e => ({
-        ...e,
-        email: userEmails[e.user_id] || e.user_id,
+        user_id:    e.user_id,
+        course_slug: e.courses?.slug || e.course_id,
+        enrolled_at: e.created_at,
+        email:       userEmails[e.user_id] || e.user_id,
       })),
       health,
       timestamp: now.toISOString(),
