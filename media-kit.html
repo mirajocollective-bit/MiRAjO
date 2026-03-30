@@ -170,6 +170,21 @@
       background: rgba(18,32,18,0.3);
       flex-shrink: 0;
     }
+    .ticker-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 48px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--forest);
+      opacity: 0.5;
+      border-left: 2px solid rgba(18,32,18,0.25);
+      border-right: 2px solid rgba(18,32,18,0.25);
+      margin: 0 24px;
+      white-space: nowrap;
+    }
     /* colored logos — multiply removes white bg, colors show on mint */
     .ticker-logo, .ticker-logo-lg {
       object-fit: contain;
@@ -407,6 +422,73 @@
     .contact-value a { color: var(--green-lt); text-decoration: none; }
     .contact-value a:hover { text-decoration: underline; }
 
+    /* ── BOOK ME CTA ── */
+    .book-cta {
+      background: var(--green);
+      padding: 80px;
+      text-align: center;
+    }
+    .book-cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--mint);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .book-cta-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--white);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .book-cta-heading em { color: var(--gold-lt); font-style: italic; }
+    .book-cta-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 40px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .book-cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--forest);
+      border: none;
+      border-radius: 8px;
+      padding: 16px 36px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 8px;
+      padding: 16px 36px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--white); transform: translateY(-1px); }
+
     /* ── FOOTER ── */
     .kit-footer {
       background: var(--green);
@@ -492,14 +574,23 @@
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Hillsborough County &mdash; Summer Business Expo</span>
+    <span class="ticker-label">As Seen In</span>
+    <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo">Voyage Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo">Voyage Houston</span>
     <!-- duplicate for seamless loop -->
+    <span class="ticker-label">As Seen In</span>
     <span class="ticker-item"><img src="img/logo-win.png" alt="" class="ticker-logo-lg">Power Women Expo 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tblc.png" alt="" class="ticker-logo-lg">Tampa Bay Latin Chamber of Commerce &mdash; Fail Forward 2026</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Tampa Bay Business Expo 2024</span><span class="ticker-dot"></span>
     <span class="ticker-item"><img src="img/logo-tampa-bay-connects.png" alt="" class="ticker-logo-inv">Tampa Bay Connects</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hillsborough County &mdash; Local Stories Live</span><span class="ticker-dot"></span>
-    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Hillsborough County &mdash; Summer Business Expo</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-tampa-business-club.png" alt="" class="ticker-logo">Hillsborough County &mdash; Summer Business Expo</span>
+    <span class="ticker-label">As Seen In</span>
+    <span class="ticker-item"><img src="img/logo-plastiq.png" alt="" class="ticker-logo">Plastiq Magazine</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-tampa.png" alt="" class="ticker-logo">Voyage Tampa</span><span class="ticker-dot"></span>
+    <span class="ticker-item"><img src="img/logo-voyage-houston.png" alt="" class="ticker-logo">Voyage Houston</span>
   </div>
 </div>
 
@@ -593,22 +684,6 @@
   </div>
 </section>
 
-<!-- AS SEEN IN -->
-<section class="section section-white">
-  <div class="section-label">As Seen In</div>
-  <div class="press-grid">
-    <div class="press-logo">
-      <img src="img/logo-plastiq.png" alt="Plastiq Magazine">
-    </div>
-    <div class="press-logo">
-      <img src="img/logo-voyage-tampa.png" alt="Voyage Tampa">
-    </div>
-    <div class="press-logo">
-      <img src="img/logo-voyage-houston.png" alt="Voyage Houston">
-    </div>
-  </div>
-</section>
-
 <!-- PRESS PHOTOS -->
 <section class="section section-mint">
   <div class="section-label">Press Photos</div>
@@ -661,6 +736,17 @@
     </div>
   </div>
 </section>
+
+<!-- BOOK ME CTA -->
+<div class="book-cta">
+  <div class="book-cta-eyebrow">Ready to Book Miranda?</div>
+  <h2 class="book-cta-heading">Let's bring the right<br><em>conversation</em> to your room.</h2>
+  <p class="book-cta-sub">Whether it's a keynote, panel, podcast, or corporate event — Miranda shows up prepared, present, and purposeful.</p>
+  <div class="book-cta-buttons">
+    <a href="https://www.mirajoco.org/coaching" class="btn-primary">Set Up a Call</a>
+    <a href="mailto:mirandaj@mirajoco.org" class="btn-secondary">Email Miranda Directly</a>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <div class="kit-footer">
