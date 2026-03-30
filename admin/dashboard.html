@@ -751,7 +751,15 @@
 
   function renderLookerEmbed(url) {
     document.getElementById('analytics-body').innerHTML =
-      `<iframe src="${url}" class="analytics-iframe" allowfullscreen></iframe>`;
+      `<div style="position:relative;">
+        <iframe src="${url}" class="analytics-iframe" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        <button onclick="editLookerUrl()" style="position:absolute;top:12px;right:12px;padding:7px 14px;background:rgba(255,255,255,0.9);border:1px solid var(--border);border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Change URL</button>
+      </div>`;
+  }
+
+  function editLookerUrl() {
+    localStorage.removeItem('mj_looker_url');
+    location.reload();
   }
 </script>
 
