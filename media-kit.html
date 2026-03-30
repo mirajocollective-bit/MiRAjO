@@ -739,12 +739,12 @@
       .pop-press-logos {
         display: flex;
         align-items: center;
-        gap: 10pt;
+        gap: 6pt;
         flex-wrap: nowrap;
       }
       .pop-press-logo-wrap {
-        width: 60pt;
-        height: 28pt;
+        width: 80pt;
+        height: 40pt;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -759,6 +759,13 @@
         height: auto;
         object-fit: contain;
         mix-blend-mode: multiply;
+      }
+      /* Force Voyage logos to same fixed size */
+      .pop-press-logo-wrap.voyage img {
+        width: 40pt;
+        height: 40pt;
+        object-fit: cover;
+        border-radius: 50%;
       }
 
       .pop-contact-bar {
@@ -1130,8 +1137,8 @@
       <div class="pop-press-logos">
         <div class="pop-press-logo-wrap"><img src="img/logo-tbc-color.jpg" alt="Tampa Bay Connects"></div>
         <div class="pop-press-logo-wrap"><img src="img/logo-plastiq-new.png" alt="Plastiq Magazine"></div>
-        <div class="pop-press-logo-wrap"><img src="img/logo-voyage-tampa-new.png" alt="Voyage Tampa"></div>
-        <div class="pop-press-logo-wrap"><img src="img/logo-voyage-houston-new.png" alt="Voyage Houston"></div>
+        <div class="pop-press-logo-wrap voyage"><img src="img/logo-voyage-tampa-new.png" alt="Voyage Tampa"></div>
+        <div class="pop-press-logo-wrap voyage"><img src="img/logo-voyage-houston-new.png" alt="Voyage Houston"></div>
       </div>
     </div>
 
