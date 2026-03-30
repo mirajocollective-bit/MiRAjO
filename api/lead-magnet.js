@@ -81,7 +81,7 @@ export default async function handler(req, res) {
     // Notify Miranda
     resend.emails.send({
       from: 'MiRAjO <programs@mirajoco.org>',
-      to: 'mirandaj@mirajoco.org',
+      to: 'programs@mirajoco.org',
       subject: `New lead — ${MAGNET_LABELS[type]}`,
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;">
