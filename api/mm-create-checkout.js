@@ -8,10 +8,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // Family Monthly:     $10/month
 // Family Annual:      $84/year
 const PRICES = {
-  individual_monthly: 'price_MM_IND_MONTHLY',
-  individual_annual:  'price_MM_IND_ANNUAL',
-  family_monthly:     'price_MM_FAM_MONTHLY',
-  family_annual:      'price_MM_FAM_ANNUAL',
+  individual_monthly: 'price_1TGgwMGUBsX8ruvFGZpjrl3u',
+  individual_annual:  'price_1TGgzBGUBsX8ruvFDk9UWIdF',
+  family_monthly:     'price_1TGh0nGUBsX8ruvFcw29adRP',
+  family_annual:      'price_1TGh21GUBsX8ruvF52usNHWK',
 };
 
 export default async function handler(req, res) {

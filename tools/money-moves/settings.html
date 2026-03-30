@@ -685,15 +685,13 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<script src="/api/config"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/social-bar.js"></script>
 
-<script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-  const supabase = createClient(
-    'https://YOUR_SUPABASE_URL.supabase.co',
-    'YOUR_SUPABASE_ANON_KEY'
-  );
+<script>
+(async function() {
+  const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
   // ── Auth guard ──────────────────────────────────────────────────────────────
   const { data: { session } } = await supabase.auth.getSession();
@@ -1046,6 +1044,7 @@
 
   // ── Init ─────────────────────────────────────────────────────────────────────
   loadAll();
+})();
 </script>
 </body>
 </html>
