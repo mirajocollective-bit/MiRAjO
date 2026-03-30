@@ -729,27 +729,36 @@
         margin-top: 1pt;
       }
 
+      .pop-press-label {
+        font-size: 8pt;
+        font-weight: 700;
+        color: #122012;
+        letter-spacing: 1px;
+        margin: 6pt 0 5pt;
+      }
       .pop-press-logos {
         display: flex;
         align-items: center;
-        gap: 12pt;
-        margin: 6pt 0 0;
+        gap: 10pt;
         flex-wrap: nowrap;
       }
-      .pop-press-logo {
-        height: 26pt;
-        width: auto;
-        object-fit: contain;
-        mix-blend-mode: multiply;
+      .pop-press-logo-wrap {
+        width: 60pt;
+        height: 28pt;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
-      .pop-press-logo-wide {
-        height: 28pt;
-      }
-      .pop-press-logo-circle {
-        height: 26pt;
-        border-radius: 50%;
+      .pop-press-logo-wrap img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        mix-blend-mode: multiply;
       }
 
       .pop-contact-bar {
@@ -1117,11 +1126,12 @@
         <div><div class="pop-event-name">Summer Business Expo</div><div class="pop-event-org">Tampa Business Club</div></div>
         <div><div class="pop-event-name">Local Stories Live</div><div class="pop-event-org">Hillsborough County</div></div>
       </div>
+      <div class="pop-press-label">As Seen In</div>
       <div class="pop-press-logos">
-        <img src="img/logo-tbc-color.jpg" alt="Tampa Bay Connects" class="pop-press-logo pop-press-logo-wide">
-        <img src="img/logo-plastiq-new.png" alt="Plastiq Magazine" class="pop-press-logo">
-        <img src="img/logo-voyage-tampa-new.png" alt="Voyage Tampa" class="pop-press-logo pop-press-logo-circle">
-        <img src="img/logo-voyage-houston-new.png" alt="Voyage Houston" class="pop-press-logo pop-press-logo-circle">
+        <div class="pop-press-logo-wrap"><img src="img/logo-tbc-color.jpg" alt="Tampa Bay Connects"></div>
+        <div class="pop-press-logo-wrap"><img src="img/logo-plastiq-new.png" alt="Plastiq Magazine"></div>
+        <div class="pop-press-logo-wrap"><img src="img/logo-voyage-tampa-new.png" alt="Voyage Tampa"></div>
+        <div class="pop-press-logo-wrap"><img src="img/logo-voyage-houston-new.png" alt="Voyage Houston"></div>
       </div>
     </div>
 
