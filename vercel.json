@@ -3,7 +3,8 @@
   "outputDirectory": ".",
   "crons": [
     { "path": "/api/send-emails",    "schedule": "0 9 * * *" },
-    { "path": "/api/inactive-nudge", "schedule": "0 14 * * *" }
+    { "path": "/api/inactive-nudge", "schedule": "0 14 * * *" },
+    { "path": "/api/mm-notify",      "schedule": "0 8 * * *" }
   ],
   "headers": [
     {
@@ -63,6 +64,12 @@
     { "source": "/test-checkout",                "destination": "/test-checkout.html" },
     { "source": "/couples-scorecard",            "destination": "/couples-scorecard.html" },
     { "source": "/alignment-audit",              "destination": "/alignment-audit.html" },
-    { "source": "/media-kit",                    "destination": "/media-kit.html" }
+    { "source": "/media-kit",                    "destination": "/media-kit.html" },
+    { "source": "/tools/money-moves",           "destination": "/tools/money-moves/login.html" },
+    { "source": "/tools/money-moves/login",     "destination": "/tools/money-moves/login.html" },
+    { "source": "/tools/money-moves/confirm",   "destination": "/tools/money-moves/confirm.html" },
+    { "source": "/tools/money-moves/dashboard", "destination": "/tools/money-moves/dashboard.html" },
+    { "source": "/tools/money-moves/settings",  "destination": "/tools/money-moves/settings.html" },
+    { "source": "/tools/money-moves/reports",   "destination": "/tools/money-moves/reports.html" }
   ]
 }
