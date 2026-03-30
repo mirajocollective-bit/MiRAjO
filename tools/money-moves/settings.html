@@ -385,6 +385,50 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
 
+    /* ── Debts ── */
+    .debt-row {
+      border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 12px;
+    }
+    .debt-row:last-child { margin-bottom: 0; }
+    .debt-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .debt-row-name { display: flex; align-items: center; gap: 10px; }
+    .debt-type-icon { font-size: 20px; }
+    .debt-name-text { font-size: 15px; font-weight: 700; color: var(--deep-forest); }
+    .debt-balance-badge {
+      font-size: 13px; font-weight: 700; color: var(--expense-color);
+      background: rgba(192,57,43,0.08); padding: 4px 10px; border-radius: 8px;
+    }
+    .debt-fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .debt-field label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--neutral); display: block; margin-bottom: 4px;
+    }
+    .debt-field input, .debt-field select {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); outline: none; transition: border-color 0.2s; background: #fff;
+    }
+    .debt-field input:focus, .debt-field select:focus { border-color: var(--living-green); }
+    .debt-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+    .debt-save-btn {
+      padding: 8px 16px; background: var(--living-green); color: #fff; border: none;
+      border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s;
+    }
+    .debt-save-btn:hover { opacity: 0.85; }
+    .debt-delete-btn {
+      padding: 8px 14px; background: transparent; border: 1px solid rgba(192,57,43,0.2);
+      border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--expense-color);
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s;
+    }
+    .debt-delete-btn:hover { background: rgba(192,57,43,0.06); }
+    .debt-payoff-bar { margin-top: 12px; }
+    .debt-payoff-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--neutral); margin-bottom: 4px; }
+    .new-debt-form {
+      border: 2px dashed rgba(192,57,43,0.2); border-radius: 14px; padding: 20px; margin-top: 4px;
+    }
+    .new-debt-title { font-size: 14px; font-weight: 700; color: var(--expense-color); margin-bottom: 14px; }
+
     /* ── Responsive ── */
     @media (max-width: 800px) {
       .layout { grid-template-columns: 1fr; }
@@ -423,6 +467,7 @@
     <a href="#budget"          ><span class="nav-icon">📊</span> Budget</a>
     <a href="#goals"           ><span class="nav-icon">🎯</span> Goals</a>
     <a href="#family"          ><span class="nav-icon">👨‍👩‍👧</span> Family</a>
+    <a href="#debts"           ><span class="nav-icon">💳</span> Debts</a>
     <a href="#notifications"   ><span class="nav-icon">🔔</span> Notifications</a>
     <a href="#account"         ><span class="nav-icon">👤</span> Account</a>
   </nav>
@@ -582,6 +627,67 @@
       </div>
     </div>
 
+    <!-- ── Debts ── -->
+    <div class="section" id="debts">
+      <div class="section-header">
+        <div class="section-title">Debt Tracker</div>
+        <div class="section-desc">Track loans, credit cards, and other debts. See balances and payoff progress on your dashboard.</div>
+      </div>
+      <div class="section-body">
+        <div id="debt-list"></div>
+
+        <div class="new-debt-form" id="new-debt-form">
+          <div class="new-debt-title">+ Add a Debt</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div>
+              <label class="form-label">Debt Name</label>
+              <input type="text" class="form-input" id="nd-name" placeholder="e.g. Chase Visa, Car Loan">
+            </div>
+            <div>
+              <label class="form-label">Debt Type</label>
+              <select class="form-select" id="nd-type">
+                <option value="credit_card">Credit Card</option>
+                <option value="loan">Personal Loan</option>
+                <option value="mortgage">Mortgage</option>
+                <option value="student">Student Loan</option>
+                <option value="medical">Medical</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
+            <div>
+              <label class="form-label">Current Balance ($)</label>
+              <input type="number" class="form-input" id="nd-balance" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div>
+              <label class="form-label">Original Amount ($)</label>
+              <input type="number" class="form-input" id="nd-original" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div>
+              <label class="form-label">Interest Rate (APR %)</label>
+              <input type="number" class="form-input" id="nd-apr" placeholder="e.g. 19.99" min="0" step="0.01">
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+            <div>
+              <label class="form-label">Minimum Payment ($)</label>
+              <input type="number" class="form-input" id="nd-minpay" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div>
+              <label class="form-label">Due Day of Month</label>
+              <input type="number" class="form-input" id="nd-dueday" placeholder="e.g. 15" min="1" max="31">
+            </div>
+            <div>
+              <label class="form-label">Payoff Goal Date</label>
+              <input type="date" class="form-input" id="nd-goaldate">
+            </div>
+          </div>
+          <button class="save-btn" onclick="addDebt()">Add Debt</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Notifications ── -->
     <div class="section" id="notifications">
       <div class="section-header">
@@ -702,6 +808,7 @@
   let householdId = null;
   let categories  = [];
   let goals       = [];
+  let debts       = [];
   let prefs       = {};
   let sub         = {};
   let currentMode = 'mom';
@@ -713,9 +820,10 @@
     if (!members?.length) return;
     householdId = members[0].household_id;
 
-    const [catRes, goalRes, prefRes, subRes, memberRes] = await Promise.all([
+    const [catRes, goalRes, debtRes, prefRes, subRes, memberRes] = await Promise.all([
       supabase.from('mm_categories').select('*').eq('household_id', householdId),
       supabase.from('mm_goals').select('*').eq('household_id', householdId).neq('status','abandoned'),
+      supabase.from('mm_debts').select('*').eq('household_id', householdId).eq('status','active').order('created_at'),
       supabase.from('mm_preferences').select('*').eq('user_id', user.id).single(),
       supabase.from('mm_subscriptions').select('*').eq('user_id', user.id).single(),
       supabase.from('mm_members').select('*').eq('household_id', householdId),
@@ -723,6 +831,7 @@
 
     categories = catRes.data  || [];
     goals      = goalRes.data || [];
+    debts      = debtRes.data || [];
     prefs      = prefRes.data || { personality_mode: 'mom', alert_threshold: 80, email_alerts: true, weekly_summary: true, goal_alerts: true };
     sub        = subRes.data  || {};
 
@@ -735,6 +844,7 @@
     renderCategories();
     renderGoals();
     renderMembers(memberRes.data || []);
+    renderDebts();
     renderNotifications();
     renderAccount();
     renderSubscription();
@@ -1015,9 +1125,131 @@
     window.location.href = '/tools/money-moves/login';
   };
 
+  // ── Debts ────────────────────────────────────────────────────────────────────
+  const DEBT_ICONS = { credit_card:'💳', loan:'🏦', mortgage:'🏠', student:'🎓', medical:'🏥', other:'📋' };
+  const DEBT_LABELS = { credit_card:'Credit Card', loan:'Personal Loan', mortgage:'Mortgage', student:'Student Loan', medical:'Medical', other:'Other' };
+
+  function renderDebts() {
+    const list = document.getElementById('debt-list');
+    if (!debts.length) { list.innerHTML = ''; return; }
+
+    list.innerHTML = debts.map(d => {
+      const pct = d.original_amount ? Math.max(0, Math.min(100, (1 - Number(d.current_balance) / Number(d.original_amount)) * 100)) : 0;
+      const goalDate = d.payoff_goal_date ? new Date(d.payoff_goal_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '';
+      return `
+        <div class="debt-row" data-debt-id="${d.id}">
+          <div class="debt-row-top">
+            <div class="debt-row-name">
+              <span class="debt-type-icon">${DEBT_ICONS[d.type] || '📋'}</span>
+              <span class="debt-name-text">${d.name}</span>
+              <span style="font-size:11px;color:var(--neutral);font-weight:500">${DEBT_LABELS[d.type] || 'Debt'}</span>
+            </div>
+            <div class="debt-balance-badge">$${Number(d.current_balance).toLocaleString('en-US', { minimumFractionDigits: 0 })}</div>
+          </div>
+          <div class="debt-fields">
+            <div class="debt-field">
+              <label>Current Balance ($)</label>
+              <input type="number" value="${Number(d.current_balance).toFixed(2)}" min="0" step="0.01"
+                onchange="updateDebtField('${d.id}', 'current_balance', this.value)">
+            </div>
+            <div class="debt-field">
+              <label>APR (%)</label>
+              <input type="number" value="${d.interest_rate || ''}" placeholder="—" min="0" step="0.01"
+                onchange="updateDebtField('${d.id}', 'interest_rate', this.value)">
+            </div>
+            <div class="debt-field">
+              <label>Min Payment ($)</label>
+              <input type="number" value="${d.minimum_payment || ''}" placeholder="—" min="0" step="0.01"
+                onchange="updateDebtField('${d.id}', 'minimum_payment', this.value)">
+            </div>
+            <div class="debt-field">
+              <label>Due Day</label>
+              <input type="number" value="${d.due_day || ''}" placeholder="—" min="1" max="31"
+                onchange="updateDebtField('${d.id}', 'due_day', this.value)">
+            </div>
+            <div class="debt-field">
+              <label>Payoff Goal</label>
+              <input type="date" value="${d.payoff_goal_date || ''}"
+                onchange="updateDebtField('${d.id}', 'payoff_goal_date', this.value)">
+            </div>
+            <div class="debt-field" style="display:flex;align-items:flex-end">
+              <button class="debt-delete-btn" onclick="markDebtPaid('${d.id}')">Mark Paid Off</button>
+            </div>
+          </div>
+          ${d.original_amount ? `
+          <div class="debt-payoff-bar" style="margin-top:12px">
+            <div class="debt-payoff-row">
+              <span>${Math.round(pct)}% paid off</span>
+              <span>$${Number(d.original_amount).toLocaleString('en-US', { minimumFractionDigits: 0 })} original${goalDate ? ` · Goal: ${goalDate}` : ''}</span>
+            </div>
+            <div style="height:5px;background:rgba(18,32,18,0.07);border-radius:99px;overflow:hidden">
+              <div style="height:100%;width:${pct}%;background:var(--living-green);border-radius:99px;transition:width 0.5s ease"></div>
+            </div>
+          </div>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  window.addDebt = async function () {
+    const name     = document.getElementById('nd-name').value.trim();
+    const type     = document.getElementById('nd-type').value;
+    const balance  = parseFloat(document.getElementById('nd-balance').value)  || 0;
+    const original = parseFloat(document.getElementById('nd-original').value) || null;
+    const apr      = parseFloat(document.getElementById('nd-apr').value)      || null;
+    const minpay   = parseFloat(document.getElementById('nd-minpay').value)   || null;
+    const dueday   = parseInt(document.getElementById('nd-dueday').value)     || null;
+    const goaldate = document.getElementById('nd-goaldate').value             || null;
+
+    if (!name || balance === null) return toast('Debt name and current balance are required.', true);
+
+    const { data, error } = await supabase.from('mm_debts').insert({
+      household_id:    householdId,
+      name, type,
+      current_balance: balance,
+      original_amount: original,
+      interest_rate:   apr,
+      minimum_payment: minpay,
+      due_day:         dueday,
+      payoff_goal_date: goaldate,
+      status: 'active',
+    }).select().single();
+
+    if (error) return toast('Error adding debt.', true);
+    debts.push(data);
+    ['nd-name','nd-balance','nd-original','nd-apr','nd-minpay','nd-dueday','nd-goaldate'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    renderDebts();
+    toast('Debt added!');
+  };
+
+  window.updateDebtField = async function (id, field, value) {
+    const parsed = ['current_balance','interest_rate','minimum_payment'].includes(field)
+      ? parseFloat(value) || 0
+      : field === 'due_day' ? parseInt(value) || null
+      : value || null;
+
+    await supabase.from('mm_debts').update({ [field]: parsed }).eq('id', id);
+    const d = debts.find(d => d.id === id);
+    if (d) d[field] = parsed;
+    // Re-render just the balance badge
+    const badge = document.querySelector(`[data-debt-id="${id}"] .debt-balance-badge`);
+    if (badge && field === 'current_balance') {
+      badge.textContent = `$${Number(parsed).toLocaleString('en-US', { minimumFractionDigits: 0 })}`;
+    }
+    toast('Saved.');
+  };
+
+  window.markDebtPaid = async function (id) {
+    await supabase.from('mm_debts').update({ status: 'paid_off', paid_off_at: new Date().toISOString() }).eq('id', id);
+    debts = debts.filter(d => d.id !== id);
+    renderDebts();
+    toast('Debt marked as paid off!');
+  };
+
   // ── Nav highlight on scroll ──────────────────────────────────────────────────
   function highlightNavOnScroll() {
-    const sections = ['mode','budget','goals','family','notifications','account'];
+    const sections = ['mode','budget','goals','family','debts','notifications','account'];
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
