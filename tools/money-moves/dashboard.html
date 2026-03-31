@@ -171,7 +171,7 @@
     }
     .cal-view-btn.active { background: #fff; color: var(--deep-forest); box-shadow: 0 1px 4px rgba(18,32,18,0.1); }
 
-    .cal-nav { display: flex; gap: 8px; }
+    .cal-nav { display: flex; gap: 6px; align-items: center; }
     .cal-nav-btn {
       width: 36px; height: 36px; border: 1px solid rgba(18,32,18,0.1);
       border-radius: 8px; background: transparent; cursor: pointer;
@@ -180,6 +180,34 @@
       transition: background 0.2s;
     }
     .cal-nav-btn:hover { background: var(--soft-white); }
+    .cal-nav-divider { width: 1px; height: 20px; background: rgba(18,32,18,0.1); margin: 0 2px; }
+    .cal-nav-year-label { font-size: 12px; font-weight: 700; color: var(--neutral); padding: 0 2px; }
+
+    /* ── Jump-to dropdown ── */
+    .cal-jump-wrap { position: relative; }
+    .cal-month { font-family: 'Instrument Serif', serif; font-size: 22px; cursor: pointer; user-select: none; }
+    .cal-month:hover { color: var(--living-green); }
+    .cal-month::after { content: ' ▾'; font-size: 12px; color: var(--neutral); vertical-align: middle; }
+    .cal-jump-dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0; z-index: 50;
+      background: #fff; border-radius: 14px; padding: 16px;
+      box-shadow: 0 8px 32px rgba(18,32,18,0.15); border: 1px solid var(--border);
+      min-width: 240px;
+    }
+    .cal-jump-dropdown.open { display: block; }
+    .cal-jump-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .cal-jump-select {
+      flex: 1; padding: 8px 10px; border: 1px solid rgba(18,32,18,0.15); border-radius: 8px;
+      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      background: var(--soft-white); outline: none; cursor: pointer;
+    }
+    .cal-jump-select:focus { border-color: var(--living-green); }
+    .cal-jump-btn {
+      width: 100%; padding: 10px; background: var(--deep-forest); color: var(--warm-parchment);
+      border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s;
+    }
+    .cal-jump-btn:hover { opacity: 0.85; }
 
     .cal-days-header {
       display: grid; grid-template-columns: repeat(7, 1fr);
@@ -560,15 +588,33 @@
   <div class="calendar-section">
     <div class="cal-header">
       <div class="cal-header-left">
-        <div class="cal-month" id="cal-month-label">—</div>
+        <div class="cal-jump-wrap">
+          <div class="cal-month" id="cal-month-label" onclick="toggleJump()">—</div>
+          <div class="cal-jump-dropdown" id="cal-jump-dropdown">
+            <div class="cal-jump-row">
+              <select class="cal-jump-select" id="jump-month">
+                <option value="0">January</option><option value="1">February</option>
+                <option value="2">March</option><option value="3">April</option>
+                <option value="4">May</option><option value="5">June</option>
+                <option value="6">July</option><option value="7">August</option>
+                <option value="8">September</option><option value="9">October</option>
+                <option value="10">November</option><option value="11">December</option>
+              </select>
+              <select class="cal-jump-select" id="jump-year"></select>
+            </div>
+            <button class="cal-jump-btn" onclick="applyJump()">Go to Date</button>
+          </div>
+        </div>
         <div class="cal-view-toggle">
           <button class="cal-view-btn active" id="btn-calendar" onclick="setView('calendar')">Calendar</button>
           <button class="cal-view-btn" id="btn-forecast" onclick="setView('forecast')">Forecast</button>
         </div>
       </div>
       <div class="cal-nav">
+        <button class="cal-nav-btn" title="Previous year" onclick="changeYear(-1)">&#171;</button>
         <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8592;</button>
         <button class="cal-nav-btn" onclick="changeMonth(1)">&#8594;</button>
+        <button class="cal-nav-btn" title="Next year" onclick="changeYear(1)">&#187;</button>
       </div>
     </div>
 
@@ -1287,7 +1333,7 @@
       color, sort_order: accounts.length,
     }).select().single();
 
-    if (error) { alert('Error adding account.'); return; }
+    if (error) { alert('Error adding account: ' + error.message); return; }
     closeAcctModal();
     document.getElementById('new-acct-name').value    = '';
     document.getElementById('new-acct-balance').value = '';
@@ -1319,7 +1365,56 @@
     renderMode();
   };
 
+  window.changeYear = function (dir) {
+    currentYear += dir;
+    renderCalendar();
+    renderSummary();
+    renderBudget();
+    renderMode();
+  };
+
+  // ── Jump-to dropdown ─────────────────────────────────────────────────────────
+  function initJumpDropdown() {
+    const yearSel = document.getElementById('jump-year');
+    const thisYear = new Date().getFullYear();
+    for (let y = thisYear - 5; y <= thisYear + 7; y++) {
+      const opt = document.createElement('option');
+      opt.value = y; opt.textContent = y;
+      if (y === thisYear) opt.selected = true;
+      yearSel.appendChild(opt);
+    }
+  }
+
+  window.toggleJump = function () {
+    const dd = document.getElementById('cal-jump-dropdown');
+    const isOpen = dd.classList.contains('open');
+    if (!isOpen) {
+      document.getElementById('jump-month').value = currentMonth;
+      document.getElementById('jump-year').value  = currentYear;
+    }
+    dd.classList.toggle('open');
+  };
+
+  window.applyJump = function () {
+    currentMonth = parseInt(document.getElementById('jump-month').value);
+    currentYear  = parseInt(document.getElementById('jump-year').value);
+    document.getElementById('cal-jump-dropdown').classList.remove('open');
+    renderCalendar();
+    renderSummary();
+    renderBudget();
+    renderMode();
+  };
+
+  // Close jump dropdown when clicking outside
+  document.addEventListener('click', function (e) {
+    const wrap = document.querySelector('.cal-jump-wrap');
+    if (wrap && !wrap.contains(e.target)) {
+      document.getElementById('cal-jump-dropdown')?.classList.remove('open');
+    }
+  });
+
   // ── Init ─────────────────────────────────────────────────────────────────────
+  initJumpDropdown();
   loadAll();
 })();
 </script>
