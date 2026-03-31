@@ -871,15 +871,17 @@
       .from('mm_members').select('household_id')
       .eq('user_id', user.id).eq('status', 'active').limit(1);
     if (!members?.length) {
-      // Auto-provision household for users who logged in before webhook ran
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.access_token) {
-        await fetch('/api/mm-provision', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        });
-        // Reload page so dashboard picks up the new household
-        window.location.reload();
+      // Auto-provision — only attempt once per session to prevent reload loop
+      if (!sessionStorage.getItem('mm_provision_attempted')) {
+        sessionStorage.setItem('mm_provision_attempted', '1');
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          await fetch('/api/mm-provision', {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${session.access_token}` },
+          });
+          window.location.reload();
+        }
       }
       return;
     }
