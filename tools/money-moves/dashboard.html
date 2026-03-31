@@ -786,6 +786,7 @@
     </div>
     <div class="modal-actions">
       <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button id="txn-delete-btn" onclick="deleteTransaction()" style="display:none;flex:1;padding:13px;background:#c0392b;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Delete</button>
       <button class="modal-save"   onclick="saveTransaction()">Save</button>
     </div>
   </div>
@@ -880,6 +881,7 @@
   let preferences  = {};
   let selectedAccountId = null;
   let currentType  = 'expense';
+  let editingTxnId = null;
 
   // Account type colors
   const ACCT_COLORS = {
@@ -1136,6 +1138,11 @@
         entry.className   = `cal-entry ${t.type}`;
         entry.textContent = `${t.type === 'income' ? '+' : t.type === 'transfer' ? '→' : '-'}$${Number(t.amount).toFixed(0)} ${t.description || ''}`;
         entry.setAttribute('draggable', 'true');
+        entry.title = 'Click to edit';
+        entry.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openEditModal(t);
+        });
         entry.addEventListener('dragstart', (e) => {
           e.stopPropagation();
           e.dataTransfer.setData('txnId', t.id);
@@ -1325,15 +1332,50 @@
   }
 
   window.openModal = function (dateStr) {
+    editingTxnId = null;
+    document.getElementById('modal-title').textContent = 'Add Transaction';
+    document.getElementById('txn-delete-btn').style.display = 'none';
     document.getElementById('txn-date').value = dateStr || new Date().toISOString().split('T')[0];
     document.getElementById('modal-overlay').classList.add('open');
     populateModalSelects();
   };
+
+  window.openEditModal = function (t) {
+    editingTxnId = t.id;
+    document.getElementById('modal-title').textContent = 'Edit Transaction';
+    document.getElementById('txn-delete-btn').style.display = 'block';
+    setType(t.type || 'expense');
+    document.getElementById('txn-date').value     = t.date || '';
+    document.getElementById('txn-amount').value   = t.amount || '';
+    document.getElementById('txn-desc').value     = t.description || '';
+    document.getElementById('txn-notes').value    = t.notes || '';
+    document.getElementById('txn-recurring').checked = !!t.is_recurring;
+    document.getElementById('recur-group').style.display = t.is_recurring ? 'block' : 'none';
+    if (t.is_recurring && t.recur_frequency) {
+      document.getElementById('txn-frequency').value = t.recur_frequency;
+      document.getElementById('recur-second-date-grp').style.display = t.recur_frequency === 'twice_monthly' ? 'block' : 'none';
+      if (t.recur_second_date) document.getElementById('recur-second-date').value = t.recur_second_date;
+    }
+    document.getElementById('recur-end-type').value = t.recur_end_type || '';
+    if (t.recur_end_date) document.getElementById('recur-end-date').value = t.recur_end_date;
+    if (t.recur_end_count) document.getElementById('recur-end-count').value = t.recur_end_count;
+    if (t.recur_end_amount) document.getElementById('recur-end-amount').value = t.recur_end_amount;
+    toggleRecurEnd();
+    document.getElementById('modal-overlay').classList.add('open');
+    populateModalSelects();
+    document.getElementById('txn-account').value  = t.account_id || '';
+    document.getElementById('txn-category').value = t.category_id || '';
+  };
+
   window.closeModal = function () {
+    editingTxnId = null;
     document.getElementById('modal-overlay').classList.remove('open');
-    ['txn-desc','txn-amount','txn-notes','recur-end-date','recur-end-count','recur-end-amount'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('modal-title').textContent = 'Add Transaction';
+    document.getElementById('txn-delete-btn').style.display = 'none';
+    ['txn-desc','txn-amount','txn-notes','recur-end-date','recur-end-count','recur-end-amount','recur-second-date'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('txn-recurring').checked = false;
     document.getElementById('recur-group').style.display = 'none';
+    document.getElementById('recur-second-date-grp').style.display = 'none';
     document.getElementById('recur-end-type').value = '';
     ['recur-end-date-grp','recur-end-count-grp','recur-end-amount-grp'].forEach(id => document.getElementById(id).style.display = 'none');
   };
@@ -1409,9 +1451,24 @@
     if (recurring && freq === 'twice_monthly' && secondDate) {
       txnPayload.recur_second_date = secondDate;
     }
-    const { error } = await supabase.from('mm_transactions').insert(txnPayload);
+
+    let error;
+    if (editingTxnId) {
+      ({ error } = await supabase.from('mm_transactions').update(txnPayload).eq('id', editingTxnId));
+    } else {
+      ({ error } = await supabase.from('mm_transactions').insert(txnPayload));
+    }
 
     if (error) { alert('Error saving: ' + error.message); return; }
+    closeModal();
+    await loadAll();
+  };
+
+  window.deleteTransaction = async function () {
+    if (!editingTxnId) return;
+    if (!confirm('Delete this transaction? This cannot be undone.')) return;
+    const { error } = await supabase.from('mm_transactions').delete().eq('id', editingTxnId);
+    if (error) { alert('Error deleting: ' + error.message); return; }
     closeModal();
     await loadAll();
   };
@@ -1436,6 +1493,23 @@
     }).select().single();
 
     if (error) { alert('Error adding account: ' + error.message); return; }
+
+    // If a starting balance was entered, record it as an Opening Balance transaction
+    if (balance > 0 && data) {
+      const today = new Date().toISOString().split('T')[0];
+      const { data: memberRows } = await supabase.from('mm_members').select('id').eq('user_id', user.id).limit(1);
+      await supabase.from('mm_transactions').insert({
+        household_id: householdId,
+        account_id:   data.id,
+        member_id:    memberRows?.[0]?.id || null,
+        type:         'income',
+        amount:       balance,
+        date:         today,
+        description:  'Opening Balance',
+        is_recurring: false,
+      });
+    }
+
     closeAcctModal();
     document.getElementById('new-acct-name').value    = '';
     document.getElementById('new-acct-balance').value = '';
