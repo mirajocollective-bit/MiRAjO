@@ -583,6 +583,7 @@
   </style>
   <!-- Site Analytics -->
   <script src="/analytics.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -757,6 +758,7 @@
       <input class="modal-input" type="text" id="firstName" placeholder="First name" autocomplete="given-name">
       <input class="modal-input" type="email" id="emailInput" placeholder="Email address" autocomplete="email">
       <div class="modal-error" id="modalError">Please enter a valid email address.</div>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACyf19GGVbAXiDCE" data-theme="light"></div>
       <button class="btn-modal-submit" id="modalSubmitBtn" onclick="submitAndReveal()">Show me my results</button>
     </div>
     <div class="modal-fine-print">No spam. Your answers stay private. Unsubscribe anytime.</div>
@@ -881,6 +883,13 @@
     }
     errorEl.style.display = 'none';
 
+    const turnstileToken = turnstile.getResponse();
+    if (!turnstileToken) {
+      errorEl.textContent = 'Please complete the security check.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
     const score = Object.values(answers).reduce((s, v) => s + v, 0);
     const result = score >= 37 ? 'green' : score >= 25 ? 'yellow' : 'red';
 
@@ -891,7 +900,7 @@
       await fetch('/api/lead-magnet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, firstName, result, score, type: 'couples-scorecard' })
+        body: JSON.stringify({ email, firstName, result, score, type: 'couples-scorecard', turnstileToken })
       });
     } catch (e) {
       // Don't block results on API error
