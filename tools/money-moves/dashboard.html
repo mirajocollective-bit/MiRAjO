@@ -1087,7 +1087,19 @@
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     document.getElementById('cal-month-label').textContent = `${months[currentMonth]} ${currentYear}`;
 
-    const grid  = document.getElementById('cal-grid');
+    // Gate: no accounts yet — show a prompt instead of an empty calendar
+    const grid = document.getElementById('cal-grid');
+    if (!accounts.length) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;gap:16px;">
+          <div style="font-size:40px;">🏦</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:22px;color:var(--deep-forest)">Start by adding an account</div>
+          <div style="font-size:14px;color:var(--neutral);max-width:300px;line-height:1.6">Your calendar unlocks once you add at least one account — checking, savings, or any account you track.</div>
+          <button onclick="openAccountModal()" style="margin-top:8px;padding:13px 28px;background:var(--deep-forest);color:var(--warm-parchment);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">+ Add Your First Account</button>
+        </div>`;
+      return;
+    }
+
     const today = new Date();
     const first = new Date(currentYear, currentMonth, 1);
     const last  = new Date(currentYear, currentMonth + 1, 0);
@@ -1528,9 +1540,10 @@
 
     // If a starting balance was entered, record it as an Opening Balance transaction
     if (balance > 0 && data) {
-      const today = new Date().toISOString().split('T')[0];
+      const now = new Date();
+      const today = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
       const { data: memberRows } = await supabase.from('mm_members').select('id').eq('user_id', user.id).limit(1);
-      await supabase.from('mm_transactions').insert({
+      const { error: balErr } = await supabase.from('mm_transactions').insert({
         household_id: householdId,
         account_id:   data.id,
         member_id:    memberRows?.[0]?.id || null,
@@ -1540,6 +1553,7 @@
         description:  'Opening Balance',
         is_recurring: false,
       });
+      if (balErr) alert('Account saved but opening balance failed: ' + balErr.message);
     }
 
     closeAcctModal();
