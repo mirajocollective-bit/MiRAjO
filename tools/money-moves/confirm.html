@@ -77,6 +77,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/api/config"></script>
 <script>
+(async function () {
   const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
   async function confirm() {
@@ -156,6 +157,7 @@
   }
 
   confirm();
+})();
 </script>
 </body>
 </html>
