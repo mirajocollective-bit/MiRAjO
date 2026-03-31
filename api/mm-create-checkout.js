@@ -36,6 +36,7 @@ export default async function handler(req, res) {
       line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
       subscription_data: {
+        trial_period_days: 30,
         metadata: { plan, billing },
       },
       success_url: `${process.env.SITE_URL}/tools/money-moves/confirm?checkout=success`,
