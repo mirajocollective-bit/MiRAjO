@@ -208,6 +208,8 @@
       if (res.ok) {
         msg.textContent = 'Check your email — your login link is on its way.';
         msg.style.color = '#256B42';
+        btn.textContent = 'Send My Login Link';
+        btn.disabled = false;
         this.reset();
       } else {
         throw new Error();
