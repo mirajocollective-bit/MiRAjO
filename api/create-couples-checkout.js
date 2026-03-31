@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email } = req.body || {};
+  const { email, couponId } = req.body || {};
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -22,6 +22,7 @@ export default async function handler(req, res) {
         },
       ],
       mode: 'payment',
+      ...(couponId ? { discounts: [{ coupon: couponId }] } : {}),
       success_url: `${process.env.SITE_URL}/programs/couples-confirm?checkout=success`,
       cancel_url: `${process.env.SITE_URL}/couplesinentrepreneurship`,
       metadata: {

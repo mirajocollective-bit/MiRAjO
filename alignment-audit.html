@@ -450,6 +450,51 @@
       color: rgba(255,255,255,0.5);
       margin-top: 14px;
     }
+    .discount-badge {
+      display: inline-block;
+      background: rgba(201,168,108,0.2);
+      border: 1px solid rgba(201,168,108,0.5);
+      color: #C9A86C;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .cta-prices {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .cta-original {
+      font-size: 16px;
+      color: rgba(255,255,255,0.35);
+      text-decoration: line-through;
+    }
+    .cta-discounted {
+      font-size: 28px;
+      font-weight: 700;
+      color: #C9A86C;
+    }
+    .cta-countdown {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 24px;
+    }
+    .cta-countdown span {
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .cta-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 12px;
+    }
 
     @media (max-width: 600px) {
       .modal-card { padding: 36px 24px; }
@@ -653,10 +698,16 @@
 
   <!-- CTA -->
   <div class="result-cta">
+    <div class="discount-badge">Quiz taker exclusive</div>
     <h3 id="ctaHeadline"></h3>
     <p id="ctaBody"></p>
-    <a href="/25daysand25nights" class="btn-cta">Learn about 25 Days and 25 Nights</a>
-    <div class="cta-price">$597 · One-time · Lifetime access</div>
+    <div class="cta-prices">
+      <span class="cta-original">$597</span>
+      <span class="cta-discounted">$497</span>
+    </div>
+    <div class="cta-countdown">Offer expires in <span id="audit-countdown">24:00:00</span></div>
+    <button class="btn-cta" onclick="enrollWithDiscount()">Enroll Now — Save $100</button>
+    <div class="cta-note">Discount applied automatically at checkout &nbsp;·&nbsp; One-time &nbsp;·&nbsp; Lifetime access</div>
   </div>
 
 </div>
@@ -810,6 +861,52 @@
       list.appendChild(div);
     });
   }
+
+  // ── Discount checkout ─────────────────────────────
+  async function enrollWithDiscount() {
+    const btn = document.querySelector('.btn-cta');
+    btn.textContent = 'Redirecting...';
+    btn.style.opacity = '0.7';
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ couponId: 'Ve6MHGlP' }),
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch {
+      btn.textContent = 'Enroll Now — Save $100';
+      btn.style.opacity = '1';
+    }
+  }
+
+  // ── Countdown timer (24h from first result view) ──
+  function startCountdown() {
+    const key = 'mj_audit_offer_expiry';
+    let expiry = parseInt(sessionStorage.getItem(key) || '0');
+    if (!expiry) {
+      expiry = Date.now() + 24 * 60 * 60 * 1000;
+      sessionStorage.setItem(key, expiry);
+    }
+    const el = document.getElementById('audit-countdown');
+    function tick() {
+      const diff = expiry - Date.now();
+      if (diff <= 0) {
+        el.textContent = 'Expired';
+        document.querySelector('.cta-countdown').textContent = 'This offer has expired.';
+        document.querySelector('.btn-cta').style.display = 'none';
+        return;
+      }
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      setTimeout(tick, 1000);
+    }
+    tick();
+  }
+  startCountdown();
 </script>
 
 </body>
