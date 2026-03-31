@@ -81,9 +81,13 @@ create table if not exists mm_transactions (
   date             date not null,
   description      text,
   notes            text,
-  is_recurring     boolean default false,
-  recur_frequency  text,                           -- daily | weekly | biweekly | monthly | yearly
-  recur_end_date   date,
+  is_recurring      boolean default false,
+  recur_frequency   text,                          -- weekly | biweekly | twice_monthly | monthly | yearly
+  recur_end_date    date,
+  recur_end_type    text,                          -- date | count | amount
+  recur_end_count   integer,
+  recur_end_amount  numeric(12,2),
+  recur_second_date integer,                       -- day-of-month for twice_monthly (e.g. 15)
   transfer_to_account_id uuid references mm_accounts(id) on delete set null,
   created_at       timestamptz default now()
 );
