@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Money Moves by MiRAjO — Budget Calendar That Works Like Your Brain</title>
+  <meta name="description" content="Money Moves is a visual budget calendar that shows your money by date — not category. Track income, expenses, and savings goals. See 7 years ahead. Start for $7/month.">
+  <link rel="canonical" href="https://www.mirajoco.org/tools/money-moves">
+  <meta property="og:title" content="Money Moves by MiRAjO — Budget Calendar That Works Like Your Brain">
+  <meta property="og:description" content="See every dollar by date. Track income, expenses, goals, and 7 years of cash flow — all in one calendar. Start for $7/month.">
+  <meta property="og:url" content="https://www.mirajoco.org/tools/money-moves">
+  <meta property="og:type" content="product">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --deep-forest:    #122012;
+      --forest-mid:     #1E4226;
+      --living-green:   #256B42;
+      --new-growth:     #6DC48A;
+      --dry-sage:       #C4A245;
+      --warm-parchment: #F2EBD9;
+      --soft-white:     #FAF7F2;
+      --page-bg:        #E8E4DC;
+      --income-color:   #256B42;
+      --expense-color:  #C0392B;
+      --neutral:        #6b7280;
+      --border:         rgba(18,32,18,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+    body {
+      background: var(--soft-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 14px; }
+    .nav-logo { height: 42px; width: auto; }
+    .nav-product { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dry-sage); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-link { font-size: 14px; color: rgba(242,235,217,0.7); text-decoration: none; transition: color 0.2s; }
+    .nav-link:hover { color: var(--warm-parchment); }
+    .nav-btn {
+      padding: 9px 20px; border-radius: 8px; border: none; cursor: pointer;
+      font-size: 13px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s, transform 0.2s; text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .nav-btn-outline { background: transparent; color: var(--warm-parchment); border: 1px solid rgba(242,235,217,0.3); }
+    .nav-btn-gold { background: var(--dry-sage); color: var(--deep-forest); }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(160deg, #0D1A0F 0%, #1E3A24 50%, #0A1A10 100%);
+      padding: 96px 40px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(109,196,138,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--new-growth); margin-bottom: 20px;
+      border: 1px solid rgba(109,196,138,0.3); border-radius: 99px;
+      padding: 6px 18px;
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 400; line-height: 1.1;
+      color: var(--warm-parchment);
+      max-width: 820px; margin: 0 auto 24px;
+    }
+    .hero h1 em { font-style: italic; color: var(--new-growth); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: rgba(242,235,217,0.65);
+      max-width: 560px; margin: 0 auto 44px;
+      line-height: 1.7;
+    }
+    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+    .btn-primary {
+      padding: 16px 36px; background: var(--new-growth); color: var(--deep-forest);
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; display: inline-block;
+      box-shadow: 0 8px 28px rgba(109,196,138,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(109,196,138,0.4); }
+    .btn-secondary {
+      padding: 16px 36px; background: transparent; color: var(--warm-parchment);
+      border: 1px solid rgba(242,235,217,0.25); border-radius: 10px; font-size: 15px; font-weight: 600;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.2s; text-decoration: none; display: inline-block;
+    }
+    .btn-secondary:hover { background: rgba(242,235,217,0.08); }
+
+    /* ── Hero mockup ── */
+    .hero-mockup {
+      max-width: 900px; margin: 0 auto;
+      background: #E8E4DC; border-radius: 20px;
+      padding: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    .mockup-bar {
+      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      border-radius: 10px 10px 0 0; height: 40px;
+      display: flex; align-items: center; padding: 0 14px; gap: 8px; margin-bottom: 10px;
+    }
+    .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .mockup-inner {
+      background: #fff; border-radius: 12px;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(18,32,18,0.12);
+    }
+    .mockup-cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-bottom: 1px solid rgba(18,32,18,0.07);
+    }
+    .mockup-month { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--deep-forest); }
+    .mockup-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      padding: 10px 12px; gap: 4px;
+    }
+    .mockup-day-name {
+      text-align: center; font-size: 9px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; color: var(--neutral); padding: 4px 0;
+    }
+    .mockup-cell {
+      min-height: 54px; border-radius: 7px; padding: 5px;
+      border: 1px solid transparent; font-size: 9px;
+    }
+    .mockup-cell.today { border-color: var(--new-growth); background: rgba(109,196,138,0.06); }
+    .mockup-cell.has-data { background: rgba(18,32,18,0.02); }
+    .mockup-date { font-size: 10px; font-weight: 600; color: var(--deep-forest); margin-bottom: 3px; }
+    .mockup-cell.today .mockup-date {
+      background: var(--living-green); color: #fff; border-radius: 50%;
+      width: 18px; height: 18px; display: flex; align-items: center; justify-content: center;
+    }
+    .mockup-entry {
+      font-size: 8px; font-weight: 700; border-radius: 3px;
+      padding: 1px 4px; margin-bottom: 2px; white-space: nowrap; overflow: hidden;
+    }
+    .mockup-entry.income  { background: rgba(37,107,66,0.12); color: var(--income-color); }
+    .mockup-entry.expense { background: rgba(192,57,43,0.10); color: var(--expense-color); }
+    .mockup-bal { font-size: 8px; font-weight: 700; color: var(--neutral); text-align: right; margin-top: 2px; }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      background: var(--deep-forest);
+      padding: 48px 40px;
+    }
+    .stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    }
+    .stat-item {
+      text-align: center; padding: 0 24px;
+      border-right: 1px solid rgba(242,235,217,0.1);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px; line-height: 1;
+      color: var(--new-growth); margin-bottom: 8px;
+    }
+    .stat-label { font-size: 13px; color: rgba(242,235,217,0.6); line-height: 1.5; }
+    .stat-label strong { color: var(--warm-parchment); display: block; }
+
+    /* ── Section base ── */
+    .section { padding: 96px 40px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--living-green); margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 4vw, 52px); font-weight: 400; line-height: 1.15;
+      color: var(--deep-forest); margin-bottom: 20px;
+    }
+    .section-title em { font-style: italic; color: var(--living-green); }
+    .section-sub { font-size: 17px; color: #4A5A48; line-height: 1.8; max-width: 560px; }
+
+    /* ── What you get ── */
+    .what-bg { background: var(--page-bg); }
+    .what-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px;
+    }
+    .what-card {
+      background: #fff; border-radius: 20px; padding: 32px;
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 8px 32px rgba(18,32,18,0.10), 0 2px 8px rgba(18,32,18,0.06);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .what-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(18,32,18,0.14); }
+    .what-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--living-green), var(--deep-forest));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 20px;
+    }
+    .what-card h3 { font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 10px; }
+    .what-card p { font-size: 14px; color: #4A5A48; line-height: 1.8; }
+    .what-card .what-stat {
+      display: inline-block; margin-top: 16px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      color: var(--dry-sage); text-transform: uppercase;
+    }
+
+    /* ── Snapshot ── */
+    .snapshot-section { background: var(--soft-white); }
+    .snapshot-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+      margin-bottom: 96px;
+    }
+    .snapshot-row:last-child { margin-bottom: 0; }
+    .snapshot-row.reverse { direction: rtl; }
+    .snapshot-row.reverse > * { direction: ltr; }
+    .snapshot-copy {}
+    .snapshot-copy h3 {
+      font-family: 'Instrument Serif', serif; font-size: 34px; margin-bottom: 16px; line-height: 1.2;
+    }
+    .snapshot-copy p { font-size: 16px; color: #4A5A48; line-height: 1.8; margin-bottom: 20px; }
+    .snapshot-copy ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .snapshot-copy ul li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: #4A5A48; line-height: 1.6;
+    }
+    .snapshot-copy ul li::before {
+      content: '✓'; color: var(--living-green); font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .snapshot-visual {
+      background: var(--page-bg); border-radius: 20px; padding: 20px;
+      box-shadow: 0 12px 40px rgba(18,32,18,0.14), 0 2px 8px rgba(18,32,18,0.07);
+    }
+
+    /* Mini UI mockups inside snapshots */
+    .mini-calendar {
+      background: #fff; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 16px rgba(18,32,18,0.10);
+    }
+    .mini-cal-header {
+      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .mini-cal-title { font-family: 'Instrument Serif', serif; font-size: 14px; color: var(--warm-parchment); }
+    .mini-cal-badge { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dry-sage); }
+    .mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; padding: 10px; }
+    .mini-cell {
+      border-radius: 5px; padding: 4px; min-height: 40px;
+      border: 1px solid transparent; font-size: 8px;
+    }
+    .mini-cell.today { border-color: var(--new-growth); background: rgba(109,196,138,0.08); }
+    .mini-date { font-size: 9px; font-weight: 600; margin-bottom: 2px; }
+    .mini-pill {
+      font-size: 7px; font-weight: 700; border-radius: 3px; padding: 1px 3px;
+      margin-bottom: 1px; display: block; white-space: nowrap; overflow: hidden;
+    }
+    .mini-pill.inc { background: rgba(37,107,66,0.12); color: var(--income-color); }
+    .mini-pill.exp { background: rgba(192,57,43,0.10); color: var(--expense-color); }
+
+    .mini-forecast {
+      background: #fff; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 16px rgba(18,32,18,0.10);
+    }
+    .mini-forecast-header { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+    .mini-forecast-title { font-family: 'Instrument Serif', serif; font-size: 15px; margin-bottom: 2px; }
+    .mini-forecast-sub { font-size: 10px; color: var(--neutral); }
+    .mini-forecast-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: 8px 16px; border-bottom: 1px solid rgba(18,32,18,0.05);
+      font-size: 10px; align-items: center;
+    }
+    .mini-forecast-row.head { font-weight: 700; color: var(--neutral); font-size: 9px; letter-spacing: 0.5px; }
+    .mini-forecast-row .pos { color: var(--income-color); font-weight: 700; }
+    .mini-forecast-row .neg { color: var(--expense-color); font-weight: 700; }
+    .mini-forecast-row .sage { color: var(--dry-sage); font-weight: 700; }
+
+    .mini-mode {
+      background: #fff; border-radius: 12px; padding: 16px;
+      box-shadow: 0 4px 16px rgba(18,32,18,0.10);
+    }
+    .mini-mode-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+    .mini-mode-icon { font-size: 24px; }
+    .mini-mode-name { font-family: 'Instrument Serif', serif; font-size: 15px; }
+    .mini-mode-msg {
+      font-size: 11px; color: var(--forest-mid); line-height: 1.6;
+      background: var(--soft-white); border-radius: 8px; padding: 10px 12px;
+      border-left: 3px solid var(--dry-sage); font-style: italic;
+    }
+    .mini-mode-tabs { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .mini-mode-tab {
+      font-size: 9px; font-weight: 700; padding: 4px 8px;
+      border-radius: 6px; border: 1px solid var(--border); color: var(--neutral);
+    }
+    .mini-mode-tab.active { background: var(--living-green); color: #fff; border-color: var(--living-green); }
+
+    .mini-goal {
+      background: #fff; border-radius: 12px; padding: 16px;
+      box-shadow: 0 4px 16px rgba(18,32,18,0.10);
+    }
+    .mini-goal-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--neutral); margin-bottom: 12px; }
+    .mini-goal-item { margin-bottom: 12px; }
+    .mini-goal-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+    .mini-goal-name { font-weight: 700; }
+    .mini-goal-pct { font-weight: 700; color: var(--dry-sage); }
+    .mini-progress { height: 5px; background: rgba(18,32,18,0.08); border-radius: 99px; overflow: hidden; }
+    .mini-progress-fill { height: 100%; border-radius: 99px; background: var(--living-green); }
+
+    /* ── Transformation ── */
+    .transform-bg { background: linear-gradient(160deg, #0D1A0F, #1A3020); }
+    .transform-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px;
+    }
+    .transform-col { padding: 36px; border-radius: 20px; }
+    .transform-col.before {
+      background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2);
+    }
+    .transform-col.after {
+      background: rgba(109,196,138,0.08); border: 1px solid rgba(109,196,138,0.2);
+    }
+    .transform-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      margin-bottom: 20px; display: block;
+    }
+    .transform-col.before .transform-label { color: #E88080; }
+    .transform-col.after  .transform-label { color: var(--new-growth); }
+    .transform-col h3 {
+      font-family: 'Instrument Serif', serif; font-size: 24px; line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    .transform-col.before h3 { color: rgba(242,235,217,0.85); }
+    .transform-col.after  h3 { color: var(--warm-parchment); }
+    .transform-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .transform-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; line-height: 1.6;
+    }
+    .transform-col.before .transform-list li { color: rgba(242,235,217,0.6); }
+    .transform-col.after  .transform-list li { color: rgba(242,235,217,0.8); }
+    .transform-list li::before { flex-shrink: 0; margin-top: 1px; }
+    .transform-col.before .transform-list li::before { content: '✗'; color: #E88080; }
+    .transform-col.after  .transform-list li::before { content: '✓'; color: var(--new-growth); }
+
+    /* ── Pricing ── */
+    .pricing-bg { background: var(--page-bg); }
+    .billing-toggle {
+      display: flex; align-items: center; gap: 12px; justify-content: center; margin: 32px 0 48px;
+    }
+    .billing-label { font-size: 14px; font-weight: 600; color: var(--deep-forest); }
+    .billing-label.muted { color: var(--neutral); }
+    .toggle-switch {
+      position: relative; width: 52px; height: 28px; cursor: pointer;
+    }
+    .toggle-switch input { display: none; }
+    .toggle-track {
+      position: absolute; inset: 0; background: var(--living-green); border-radius: 99px; transition: background 0.2s;
+    }
+    .toggle-thumb {
+      position: absolute; top: 4px; left: 4px; width: 20px; height: 20px;
+      background: #fff; border-radius: 50%; transition: transform 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .toggle-switch input:checked ~ .toggle-track { background: var(--dry-sage); }
+    .toggle-switch input:checked + .toggle-track + .toggle-thumb { transform: translateX(24px); }
+    .save-badge {
+      font-size: 11px; font-weight: 700; background: var(--dry-sage); color: var(--deep-forest);
+      border-radius: 99px; padding: 3px 10px;
+    }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 720px; margin: 0 auto;
+    }
+    .price-card {
+      background: #fff; border-radius: 24px; padding: 36px;
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 8px 32px rgba(18,32,18,0.10), 0 2px 8px rgba(18,32,18,0.06);
+      position: relative;
+    }
+    .price-card.featured {
+      background: linear-gradient(160deg, #1E3A24, #122012);
+      border-color: rgba(109,196,138,0.25);
+    }
+    .price-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--dry-sage); color: var(--deep-forest);
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 99px; white-space: nowrap;
+    }
+    .price-plan { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+    .price-card .price-plan { color: var(--neutral); }
+    .price-card.featured .price-plan { color: var(--new-growth); }
+    .price-amount {
+      font-family: 'Instrument Serif', serif; font-size: 52px; line-height: 1; margin-bottom: 4px;
+    }
+    .price-card .price-amount { color: var(--deep-forest); }
+    .price-card.featured .price-amount { color: var(--warm-parchment); }
+    .price-per { font-size: 13px; color: var(--neutral); margin-bottom: 6px; }
+    .price-card.featured .price-per { color: rgba(242,235,217,0.5); }
+    .price-annual-note { font-size: 12px; color: var(--dry-sage); font-weight: 600; min-height: 18px; margin-bottom: 24px; }
+    .price-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+    .price-card.featured .price-divider { background: rgba(242,235,217,0.1); }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .price-features li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; }
+    .price-card .price-features li { color: #4A5A48; }
+    .price-card.featured .price-features li { color: rgba(242,235,217,0.75); }
+    .price-features li::before { content: '✓'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .price-card .price-features li::before { color: var(--living-green); }
+    .price-card.featured .price-features li::before { color: var(--new-growth); }
+    .price-cta {
+      width: 100%; padding: 15px; border: none; border-radius: 10px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s, transform 0.2s;
+    }
+    .price-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+    .price-card .price-cta { background: var(--deep-forest); color: var(--warm-parchment); }
+    .price-card.featured .price-cta { background: var(--new-growth); color: var(--deep-forest); }
+
+    /* ── Final CTA ── */
+    .final-cta {
+      background: linear-gradient(160deg, #0D1A0F, #1A3020);
+      padding: 112px 40px; text-align: center;
+    }
+    .final-cta h2 {
+      font-family: 'Instrument Serif', serif; font-size: clamp(36px, 5vw, 60px);
+      color: var(--warm-parchment); margin-bottom: 20px; line-height: 1.2;
+    }
+    .final-cta h2 em { font-style: italic; color: var(--new-growth); }
+    .final-cta p { font-size: 18px; color: rgba(242,235,217,0.6); max-width: 480px; margin: 0 auto 44px; line-height: 1.7; }
+    .final-cta-note { font-size: 13px; color: rgba(242,235,217,0.4); margin-top: 20px; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--deep-forest); padding: 40px;
+      text-align: center; border-top: 1px solid rgba(242,235,217,0.07);
+    }
+    .footer a { color: rgba(242,235,217,0.5); font-size: 13px; text-decoration: none; margin: 0 12px; transition: color 0.2s; }
+    .footer a:hover { color: var(--warm-parchment); }
+    .footer-copy { font-size: 12px; color: rgba(242,235,217,0.3); margin-top: 16px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .stats-inner { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .stat-item { border-right: none; padding: 0; }
+      .what-grid { grid-template-columns: 1fr; }
+      .snapshot-row { grid-template-columns: 1fr; gap: 32px; }
+      .snapshot-row.reverse { direction: ltr; }
+      .transform-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .mockup-grid { display: none; }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 0 20px; }
+      .hero { padding: 64px 20px 48px; }
+      .section { padding: 64px 20px; }
+      .stats-bar { padding: 40px 20px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .final-cta { padding: 72px 20px; }
+      .footer { padding: 32px 20px; }
+    }
+  </style>
+  <script src="/analytics.js"></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="https://www.mirajoco.org">
+      <img src="/img/logo-horizontal.png" alt="MiRAjO" class="nav-logo">
+    </a>
+    <span class="nav-product">Money Moves</span>
+  </div>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="/tools/money-moves/login" class="nav-btn nav-btn-outline">Log In</a>
+    <a href="#pricing" class="nav-btn nav-btn-gold">Start Free Trial</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">Budget Calendar — Built for Real Life</div>
+  <h1>See your money the way<br>your <em>brain actually works</em></h1>
+  <p class="hero-sub">Every dollar. Every date. Every account. Money Moves puts your cash flow on a calendar so you always know what's coming — and what's left.</p>
+  <div class="hero-cta">
+    <a href="#pricing" class="btn-primary">Start for $7/month</a>
+    <a href="#features" class="btn-secondary">See how it works</a>
+  </div>
+
+  <!-- Calendar mockup -->
+  <div class="hero-mockup" data-aos="fade-up" data-aos-delay="200">
+    <div class="mockup-bar">
+      <div class="mockup-dot" style="background:#ff6b6b"></div>
+      <div class="mockup-dot" style="background:#ffd93d"></div>
+      <div class="mockup-dot" style="background:#6bcb77"></div>
+    </div>
+    <div class="mockup-inner">
+      <div class="mockup-cal-header">
+        <span class="mockup-month">April 2026</span>
+        <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dry-sage)">Money Moves</span>
+      </div>
+      <div class="mockup-grid">
+        <div class="mockup-day-name">Sun</div><div class="mockup-day-name">Mon</div><div class="mockup-day-name">Tue</div><div class="mockup-day-name">Wed</div><div class="mockup-day-name">Thu</div><div class="mockup-day-name">Fri</div><div class="mockup-day-name">Sat</div>
+        <!-- Row 1 -->
+        <div class="mockup-cell"></div>
+        <div class="mockup-cell"></div>
+        <div class="mockup-cell has-data"><div class="mockup-date">1</div><div class="mockup-entry income">+ Salary</div><div class="mockup-bal">$4,200</div></div>
+        <div class="mockup-cell"><div class="mockup-date">2</div></div>
+        <div class="mockup-cell"><div class="mockup-date">3</div></div>
+        <div class="mockup-cell has-data"><div class="mockup-date">4</div><div class="mockup-entry expense">- Rent</div><div class="mockup-bal">$2,400</div></div>
+        <div class="mockup-cell"><div class="mockup-date">5</div></div>
+        <!-- Row 2 -->
+        <div class="mockup-cell"><div class="mockup-date">6</div></div>
+        <div class="mockup-cell has-data"><div class="mockup-date">7</div><div class="mockup-entry expense">- Groceries</div></div>
+        <div class="mockup-cell"><div class="mockup-date">8</div></div>
+        <div class="mockup-cell"><div class="mockup-date">9</div></div>
+        <div class="mockup-cell has-data"><div class="mockup-date">10</div><div class="mockup-entry income">+ Freelance</div></div>
+        <div class="mockup-cell"><div class="mockup-date">11</div></div>
+        <div class="mockup-cell"><div class="mockup-date">12</div></div>
+        <!-- Row 3 -->
+        <div class="mockup-cell"><div class="mockup-date">13</div></div>
+        <div class="mockup-cell"><div class="mockup-date">14</div></div>
+        <div class="mockup-cell today"><div class="mockup-date" style="background:var(--living-green);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;">15</div><div class="mockup-entry income">+ Salary</div><div class="mockup-bal">$3,100</div></div>
+        <div class="mockup-cell"><div class="mockup-date">16</div></div>
+        <div class="mockup-cell has-data"><div class="mockup-date">17</div><div class="mockup-entry expense">- Car</div></div>
+        <div class="mockup-cell"><div class="mockup-date">18</div></div>
+        <div class="mockup-cell"><div class="mockup-date">19</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+      <div class="stat-number">7</div>
+      <div class="stat-label"><strong>Years ahead</strong>of cash flow forecasting</div>
+    </div>
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="80">
+      <div class="stat-number">$7</div>
+      <div class="stat-label"><strong>Per month</strong>to start — less than a coffee</div>
+    </div>
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="160">
+      <div class="stat-number">2</div>
+      <div class="stat-label"><strong>Minutes a day</strong>average time to stay on track</div>
+    </div>
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="240">
+      <div class="stat-number">4</div>
+      <div class="stat-label"><strong>Coaching voices</strong>to motivate you your way</div>
+    </div>
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="320">
+      <div class="stat-number">1</div>
+      <div class="stat-label"><strong>Dashboard</strong>for every account you own</div>
+    </div>
+  </div>
+</div>
+
+<!-- What You Get -->
+<section class="section what-bg" id="features">
+  <div class="section-inner">
+    <div data-aos="fade-up">
+      <div class="section-eyebrow">What You Get</div>
+      <h2 class="section-title">Every feature built for<br><em>clarity, not complexity</em></h2>
+      <p class="section-sub">No spreadsheets. No confusing charts. Just your money, on a calendar, working the way you think.</p>
+    </div>
+    <div class="what-grid">
+      <div class="what-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="what-icon">📅</div>
+        <h3>Budget Calendar</h3>
+        <p>See every transaction on the exact date it lands. Income in green. Expenses in red. Your running balance per day, right there in each cell.</p>
+        <span class="what-stat">The core feature — nothing like it</span>
+      </div>
+      <div class="what-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="what-icon">🔄</div>
+        <h3>Recurring Transactions</h3>
+        <p>Set up your rent, paycheck, subscriptions once. They auto-populate every month — and power your 7-Year Forecast automatically.</p>
+        <span class="what-stat">Set it once. Track it forever.</span>
+      </div>
+      <div class="what-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="what-icon">📈</div>
+        <h3>7-Year Forecast</h3>
+        <p>See a month-by-month cash flow projection 7 years into the future based on your recurring income and expenses. Spot shortfalls before they happen.</p>
+        <span class="what-stat">84 months of visibility</span>
+      </div>
+      <div class="what-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="what-icon">🏦</div>
+        <h3>Multiple Accounts</h3>
+        <p>Checking, savings, credit cards, or anything custom — each gets its own calendar view. Track your full net worth at a glance across all accounts.</p>
+        <span class="what-stat">Unlimited accounts</span>
+      </div>
+      <div class="what-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="what-icon">🎯</div>
+        <h3>Savings Goals</h3>
+        <p>Name your goal, set a target, track your progress with a visual bar. Dream vacation. Emergency fund. New car. See exactly how close you are.</p>
+        <span class="what-stat">Goal tracking built in</span>
+      </div>
+      <div class="what-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="what-icon">🎭</div>
+        <h3>Personality Coaching</h3>
+        <p>Choose the voice that motivates you — Mom Mode, Dad Mode, Spiritual Guide, or Wrestling Mode. Your budget coach speaks your language.</p>
+        <span class="what-stat">4 coaching personalities</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Snapshots -->
+<section class="section snapshot-section" id="snapshots">
+  <div class="section-inner">
+
+    <!-- Calendar -->
+    <div class="snapshot-row" data-aos="fade-up">
+      <div class="snapshot-copy">
+        <div class="section-eyebrow">The Calendar</div>
+        <h3>Your money,<br>mapped to every date</h3>
+        <p>Most budgeting apps show you categories and totals. Money Moves shows you <em>when</em> — so you know exactly what your account looks like on the 3rd, the 15th, the 28th.</p>
+        <ul>
+          <li>Color-coded income (green) and expenses (red)</li>
+          <li>Running daily balance in each cell</li>
+          <li>Drag and drop to reschedule any transaction</li>
+          <li>Click any day to instantly add a transaction</li>
+          <li>Today highlighted so you always know where you stand</li>
+        </ul>
+      </div>
+      <div class="snapshot-visual">
+        <div class="mini-calendar">
+          <div class="mini-cal-header">
+            <span class="mini-cal-title">April 2026</span>
+            <span class="mini-cal-badge">Money Moves</span>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-cell"><div class="mini-date" style="font-size:8px;color:var(--neutral);font-weight:700">Su</div></div>
+            <div class="mini-cell"><div class="mini-date" style="font-size:8px;color:var(--neutral);font-weight:700">Mo</div></div>
+            <div class="mini-cell"><div class="mini-date" style="font-size:8px;color:var(--neutral);font-weight:700">Tu</div></div>
+            <div class="mini-cell"><div class="mini-date" style="font-size:8px;color:var(--neutral);font-weight:700">We</div></div>
+            <div class="mini-cell"><div class="mini-date" style="font-size:8px;color:var(--neutral);font-weight:700">Th</div></div>
+            <div class="mini-cell"><div class="mini-date" style="font-size:8px;color:var(--neutral);font-weight:700">Fr</div></div>
+            <div class="mini-cell"><div class="mini-date" style="font-size:8px;color:var(--neutral);font-weight:700">Sa</div></div>
+            <div class="mini-cell"></div><div class="mini-cell"></div>
+            <div class="mini-cell"><div class="mini-date">1</div><div class="mini-pill inc">+Salary</div></div>
+            <div class="mini-cell"><div class="mini-date">2</div></div>
+            <div class="mini-cell"><div class="mini-date">3</div></div>
+            <div class="mini-cell"><div class="mini-date">4</div><div class="mini-pill exp">−Rent</div></div>
+            <div class="mini-cell"><div class="mini-date">5</div></div>
+            <div class="mini-cell"><div class="mini-date">6</div></div>
+            <div class="mini-cell"><div class="mini-date">7</div><div class="mini-pill exp">−Groc</div></div>
+            <div class="mini-cell"><div class="mini-date">8</div></div>
+            <div class="mini-cell"><div class="mini-date">9</div></div>
+            <div class="mini-cell"><div class="mini-date">10</div><div class="mini-pill inc">+Freelance</div></div>
+            <div class="mini-cell"><div class="mini-date">11</div></div>
+            <div class="mini-cell today"><div class="mini-date" style="background:var(--living-green);color:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:8px;">15</div><div class="mini-pill inc">+Pay</div></div>
+            <div class="mini-cell"><div class="mini-date">16</div></div>
+            <div class="mini-cell"><div class="mini-date">17</div></div>
+            <div class="mini-cell"><div class="mini-date">18</div><div class="mini-pill exp">−Car</div></div>
+            <div class="mini-cell"><div class="mini-date">19</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forecast -->
+    <div class="snapshot-row reverse" data-aos="fade-up">
+      <div class="snapshot-copy">
+        <div class="section-eyebrow">7-Year Forecast</div>
+        <h3>Stop being surprised.<br>Start seeing 84 months ahead.</h3>
+        <p>Turn your recurring transactions into a living forecast. See projected income, projected expenses, and your running balance — month by month, year by year.</p>
+        <ul>
+          <li>See exactly which months will be tight before they arrive</li>
+          <li>Plan big purchases around your cash flow, not against it</li>
+          <li>Update your recurring transactions, forecast updates instantly</li>
+          <li>Switch between accounts — each has its own 7-year view</li>
+        </ul>
+      </div>
+      <div class="snapshot-visual">
+        <div class="mini-forecast">
+          <div class="mini-forecast-header">
+            <div class="mini-forecast-title">7-Year Cash Flow Forecast</div>
+            <div class="mini-forecast-sub">Based on your recurring transactions — Checking</div>
+          </div>
+          <div class="mini-forecast-row head">
+            <div>Month</div><div>Income</div><div>Expenses</div><div>Balance</div>
+          </div>
+          <div class="mini-forecast-row">
+            <div>May 2026</div><div class="pos">$5,200</div><div class="neg">$3,840</div><div class="sage">$1,360</div>
+          </div>
+          <div class="mini-forecast-row">
+            <div>Jun 2026</div><div class="pos">$5,200</div><div class="neg">$3,840</div><div class="sage">$2,720</div>
+          </div>
+          <div class="mini-forecast-row">
+            <div>Jul 2026</div><div class="pos">$6,700</div><div class="neg">$3,840</div><div class="sage">$5,580</div>
+          </div>
+          <div class="mini-forecast-row">
+            <div>Aug 2026</div><div class="pos">$5,200</div><div class="neg">$4,120</div><div class="sage">$6,660</div>
+          </div>
+          <div class="mini-forecast-row">
+            <div>Sep 2026</div><div class="pos">$5,200</div><div class="neg">$3,840</div><div class="sage">$8,020</div>
+          </div>
+          <div class="mini-forecast-row" style="background:rgba(196,162,69,0.06)">
+            <div style="font-weight:700;color:var(--dry-sage)">2026 Total</div>
+            <div class="pos" style="font-weight:700">$62,400</div>
+            <div class="neg" style="font-weight:700">$46,080</div>
+            <div class="sage" style="font-weight:700">$16,320</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personality Mode -->
+    <div class="snapshot-row" data-aos="fade-up">
+      <div class="snapshot-copy">
+        <div class="section-eyebrow">Personality Coaching</div>
+        <h3>Your budget coach<br>in your language</h3>
+        <p>Budgeting feels different depending on who's talking to you. Money Moves gives you four distinct coaching voices — pick the one that actually gets you moving.</p>
+        <ul>
+          <li>🤱 <strong>Mom Mode</strong> — nurturing but firm. "You've got this, but let's talk about that spending."</li>
+          <li>💼 <strong>Dad Mode</strong> — direct, no-nonsense. Numbers first, feelings later.</li>
+          <li>🙏 <strong>Spiritual Guide</strong> — grounded and mindful. Your spending reflects your values.</li>
+          <li>🤼 <strong>Wrestling Mode</strong> — hyped, intense. "LET'S GO. YOUR MONEY DOESN'T SLEEP."</li>
+        </ul>
+      </div>
+      <div class="snapshot-visual">
+        <div class="mini-mode">
+          <div class="mini-mode-row">
+            <div class="mini-mode-icon">🤱</div>
+            <div class="mini-mode-name">Mom Mode</div>
+          </div>
+          <div class="mini-mode-msg">"You're at 72% of your budget this month. I'm proud of you — but watch those last few days, baby. Don't let the weekend undo the week."</div>
+          <div class="mini-mode-tabs">
+            <div class="mini-mode-tab active">🤱 Mom</div>
+            <div class="mini-mode-tab">💼 Dad</div>
+            <div class="mini-mode-tab">🙏 Spiritual</div>
+            <div class="mini-mode-tab">🤼 Wrestling</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="mini-goal">
+            <div class="mini-goal-title">Savings Goals</div>
+            <div class="mini-goal-item">
+              <div class="mini-goal-row"><span class="mini-goal-name">Emergency Fund</span><span class="mini-goal-pct">64%</span></div>
+              <div class="mini-progress"><div class="mini-progress-fill" style="width:64%"></div></div>
+            </div>
+            <div class="mini-goal-item">
+              <div class="mini-goal-row"><span class="mini-goal-name">Dream Vacation</span><span class="mini-goal-pct">31%</span></div>
+              <div class="mini-progress"><div class="mini-progress-fill" style="width:31%;background:var(--dry-sage)"></div></div>
+            </div>
+            <div class="mini-goal-item" style="margin-bottom:0">
+              <div class="mini-goal-row"><span class="mini-goal-name">New Laptop</span><span class="mini-goal-pct">88%</span></div>
+              <div class="mini-progress"><div class="mini-progress-fill" style="width:88%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Transformation -->
+<section class="section transform-bg">
+  <div class="section-inner">
+    <div data-aos="fade-up" style="text-align:center; margin-bottom: 0;">
+      <div class="section-eyebrow" style="color:var(--new-growth); text-align:center">The Difference It Makes</div>
+      <h2 class="section-title" style="color:var(--warm-parchment); text-align:center; margin:0 auto 0">Without Money Moves vs. <em>with it</em></h2>
+    </div>
+    <div class="transform-grid">
+      <div class="transform-col before" data-aos="fade-right">
+        <span class="transform-label">Without</span>
+        <h3>You're always one surprise expense away from stress</h3>
+        <ul class="transform-list">
+          <li>Checking your account balance and hoping for the best</li>
+          <li>Forgetting bills are coming until they hit your account</li>
+          <li>No idea what your finances look like in 3 months, let alone 3 years</li>
+          <li>Spreadsheets you open once and abandon</li>
+          <li>Every big purchase feels like a gamble</li>
+          <li>Arguments about money because nobody has the full picture</li>
+        </ul>
+      </div>
+      <div class="transform-col after" data-aos="fade-left">
+        <span class="transform-label">With Money Moves</span>
+        <h3>You move with confidence because you can see what's coming</h3>
+        <ul class="transform-list">
+          <li>Open your calendar and know exactly what's hitting when</li>
+          <li>Recurring bills auto-populate — nothing sneaks up on you</li>
+          <li>See your projected balance 7 years out and plan accordingly</li>
+          <li>2 minutes a day keeps your finances in full view</li>
+          <li>Make big decisions backed by real numbers, not gut feel</li>
+          <li>The whole household on the same page — finally</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="section pricing-bg" id="pricing">
+  <div class="section-inner" style="text-align:center">
+    <div data-aos="fade-up">
+      <div class="section-eyebrow">Pricing</div>
+      <h2 class="section-title">Simple, honest pricing.<br><em>No surprises.</em></h2>
+      <p class="section-sub" style="margin: 0 auto;">Less than a coffee a week — and cheaper than every comparable tool on the market.</p>
+    </div>
+
+    <div class="billing-toggle" data-aos="fade-up">
+      <span class="billing-label muted" id="lbl-monthly">Monthly</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="billing-toggle" onchange="toggleBilling()">
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+      <span class="billing-label" id="lbl-annual">Annual <span class="save-badge">Save 30%</span></span>
+    </div>
+
+    <div class="pricing-grid" data-aos="fade-up">
+
+      <!-- Individual -->
+      <div class="price-card">
+        <div class="price-plan">Individual</div>
+        <div class="price-amount" id="ind-price">$7</div>
+        <div class="price-per">/month</div>
+        <div class="price-annual-note" id="ind-note"></div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Budget calendar (unlimited accounts)</li>
+          <li>Recurring transactions + auto-populate</li>
+          <li>7-Year Cash Flow Forecast</li>
+          <li>Savings goals tracker</li>
+          <li>4 personality coaching modes</li>
+          <li>Budget categories + alerts</li>
+          <li>Debt tracker</li>
+          <li>Income + expense reports</li>
+        </ul>
+        <button class="price-cta" onclick="startCheckout('individual')">Get Started</button>
+      </div>
+
+      <!-- Family -->
+      <div class="price-card featured">
+        <div class="price-badge">Best Value</div>
+        <div class="price-plan">Family</div>
+        <div class="price-amount" id="fam-price">$10</div>
+        <div class="price-per">/month</div>
+        <div class="price-annual-note" id="fam-note"></div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Everything in Individual</li>
+          <li>Shared household dashboard</li>
+          <li>Invite unlimited family members</li>
+          <li>Each member sees the full picture</li>
+          <li>One subscription for the whole house</li>
+        </ul>
+        <button class="price-cta" onclick="startCheckout('family')">Get Started</button>
+      </div>
+
+    </div>
+    <p style="font-size:13px;color:var(--neutral);margin-top:24px;" data-aos="fade-up">Cancel anytime. No long-term contracts. No hidden fees.</p>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+  <h2 data-aos="fade-up">Ready to see your money<br><em>move with purpose?</em></h2>
+  <p data-aos="fade-up">Start tracking in under 5 minutes. No spreadsheets. No confusion. Just clarity — finally.</p>
+  <div data-aos="fade-up">
+    <a href="#pricing" class="btn-primary" style="font-size:16px;padding:18px 44px;">Start for $7/month</a>
+    <p class="final-cta-note">Family plan available for just $10/month — no competitor offers this.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div>
+    <a href="https://www.mirajoco.org">MiRAjO Collective</a>
+    <a href="/tools/money-moves/login">Log In</a>
+    <a href="https://www.mirajoco.org/philosophy">About</a>
+    <a href="mailto:mirandaj@mirajoco.org">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 MiRAjO Collective. All rights reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+
+  // ── Billing toggle ─────────────────────────────────────────────────────────
+  let isAnnual = false;
+
+  function toggleBilling() {
+    isAnnual = document.getElementById('billing-toggle').checked;
+
+    document.getElementById('lbl-monthly').classList.toggle('muted', isAnnual);
+    document.getElementById('lbl-annual').classList.toggle('muted', !isAnnual);
+
+    if (isAnnual) {
+      document.getElementById('ind-price').textContent = '$59';
+      document.getElementById('ind-note').textContent  = '$4.92/mo — billed annually';
+      document.getElementById('fam-price').textContent = '$84';
+      document.getElementById('fam-note').textContent  = '$7/mo — billed annually';
+    } else {
+      document.getElementById('ind-price').textContent = '$7';
+      document.getElementById('ind-note').textContent  = '';
+      document.getElementById('fam-price').textContent = '$10';
+      document.getElementById('fam-note').textContent  = '';
+    }
+  }
+
+  // ── Checkout ───────────────────────────────────────────────────────────────
+  async function startCheckout(plan) {
+    const billing = isAnnual ? 'annual' : 'monthly';
+    try {
+      const res = await fetch('/api/mm-create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, billing }),
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch (err) {
+      alert('Something went wrong. Please try again.');
+    }
+  }
+</script>
+<script src="/js/social-bar.js"></script>
+</body>
+</html>

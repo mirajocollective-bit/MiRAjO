@@ -23,7 +23,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--soft-white);
+      background: #E8E4DC;
       font-family: 'Plus Jakarta Sans', sans-serif;
       color: var(--deep-forest);
       -webkit-font-smoothing: antialiased;
@@ -129,8 +129,8 @@
 
     .summary-card {
       background: #fff; border-radius: 16px; padding: 20px 24px;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 12px rgba(18,32,18,0.04);
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 6px 24px rgba(18,32,18,0.10), 0 1px 4px rgba(18,32,18,0.06);
     }
     .summary-label {
       font-size: 11px; font-weight: 600; letter-spacing: 2px;
@@ -148,8 +148,8 @@
     /* ── Calendar ── */
     .calendar-section {
       background: #fff; border-radius: 20px;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 12px rgba(18,32,18,0.04);
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 8px 32px rgba(18,32,18,0.13), 0 2px 8px rgba(18,32,18,0.07);
       overflow: hidden;
     }
 
@@ -263,8 +263,8 @@
 
     .sidebar-card {
       background: #fff; border-radius: 20px;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 12px rgba(18,32,18,0.04);
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 6px 24px rgba(18,32,18,0.10), 0 1px 4px rgba(18,32,18,0.06);
       padding: 22px;
     }
     .sidebar-title {
@@ -400,6 +400,77 @@
       width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
     }
 
+    /* ── Hint bar ── */
+    .hint-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px 12px;
+      border-top: 1px solid var(--border);
+      background: rgba(196,162,69,0.05);
+    }
+    .hint-icon { font-size: 15px; flex-shrink: 0; }
+    .hint-text { font-size: 12px; color: var(--forest-mid); line-height: 1.5; flex: 1; }
+    .hint-text strong { color: var(--dry-sage); font-weight: 700; }
+    .hint-dots { display: flex; gap: 4px; margin-left: auto; }
+    .hint-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(18,32,18,0.15); cursor: pointer; transition: background 0.2s;
+    }
+    .hint-dot.active { background: var(--dry-sage); }
+
+    /* ── FAQ modal ── */
+    .faq-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(18,32,18,0.55); z-index: 300;
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .faq-overlay.open { display: flex; }
+    .faq-modal {
+      background: #fff; border-radius: 24px;
+      width: 100%; max-width: 620px; max-height: 85vh;
+      overflow-y: auto; padding: 36px;
+      box-shadow: 0 24px 64px rgba(18,32,18,0.22);
+    }
+    .faq-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;
+    }
+    .faq-header h2 { font-family: 'Instrument Serif', serif; font-size: 26px; font-weight: 400; }
+    .faq-header p  { font-size: 13px; color: var(--neutral); margin-top: 4px; }
+    .faq-close {
+      width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border);
+      background: transparent; font-size: 18px; cursor: pointer; color: var(--neutral);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .faq-close:hover { background: var(--soft-white); }
+    .faq-section { margin-bottom: 28px; }
+    .faq-section-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--dry-sage); margin-bottom: 14px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item { margin-bottom: 16px; }
+    .faq-q {
+      font-size: 14px; font-weight: 700; color: var(--deep-forest);
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      padding: 13px 16px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--soft-white); transition: background 0.2s;
+      user-select: none;
+    }
+    .faq-q:hover { background: #ede9e0; }
+    .faq-q.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; background: #ede9e0; }
+    .faq-chevron { font-size: 12px; color: var(--neutral); transition: transform 0.2s; }
+    .faq-q.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      display: none; font-size: 13px; color: var(--forest-mid); line-height: 1.8;
+      padding: 14px 16px; border: 1px solid var(--border); border-top: none;
+      border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
+      background: #fff;
+    }
+    .faq-a.open { display: block; }
+    .faq-a ul { padding-left: 18px; margin-top: 6px; }
+    .faq-a li { margin-bottom: 4px; }
+    .faq-a strong { color: var(--deep-forest); }
+    .faq-nav-btn { background: transparent; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+
     /* ── Responsive ── */
     @media (max-width: 1024px) {
       .layout { grid-template-columns: 1fr; }
@@ -424,7 +495,7 @@
 <nav class="nav">
   <div class="nav-left">
     <a href="https://www.mirajoco.org">
-      <img src="/img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" class="nav-logo">
+      <img src="/img/logo-horizontal.png" alt="MiRAjO" class="nav-logo">
     </a>
     <span class="nav-product">Money Moves</span>
   </div>
@@ -434,6 +505,7 @@
     <button class="nav-btn nav-btn-add" onclick="openModal()">+ Add</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/reports'">Reports</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/settings'">Settings</button>
+    <button class="nav-btn nav-btn-settings" onclick="openFaq()" title="Help & FAQ" style="font-size:16px; padding:8px 12px;">?</button>
   </div>
 </nav>
 
@@ -511,6 +583,13 @@
         <div class="cal-day-name">Sat</div>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <!-- Hint bar -->
+    <div class="hint-bar" id="hint-bar">
+      <span class="hint-icon" id="hint-icon">💡</span>
+      <span class="hint-text" id="hint-text"></span>
+      <div class="hint-dots" id="hint-dots"></div>
     </div>
 
     <!-- Forecast table -->
@@ -1230,6 +1309,184 @@
   // ── Init ─────────────────────────────────────────────────────────────────────
   loadAll();
 })();
+</script>
+
+<!-- ── FAQ Modal ─────────────────────────────────────────────────────── -->
+<div class="faq-overlay" id="faq-overlay" onclick="if(event.target===this)closeFaq()">
+  <div class="faq-modal">
+    <div class="faq-header">
+      <div>
+        <h2>Help &amp; FAQ</h2>
+        <p>How to get the most out of Money Moves</p>
+      </div>
+      <button class="faq-close" onclick="closeFaq()">✕</button>
+    </div>
+
+    <!-- Getting Started -->
+    <div class="faq-section">
+      <div class="faq-section-title">Getting Started</div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I add my first account? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click <strong>+ Add Account</strong> in the account tab bar at the top. Give it a name (e.g. "Checking"), select the type, and enter your current balance. You can add as many accounts as you need — checking, savings, credit cards, or custom.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I log income or an expense? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Two ways:
+          <ul>
+            <li>Click <strong>+ Add</strong> in the top nav bar</li>
+            <li>Click any day on the calendar to open the add transaction form pre-filled with that date</li>
+          </ul>
+          Choose Income, Expense, or Transfer, fill in the details, and hit Save.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is a recurring transaction? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Recurring transactions repeat automatically — weekly, bi-weekly, monthly, etc. Toggle <strong>Recurring</strong> when adding a transaction, set the frequency, and optionally set an end date or count. These feed your 7-Year Forecast automatically.</div>
+      </div>
+    </div>
+
+    <!-- The Calendar -->
+    <div class="faq-section">
+      <div class="faq-section-title">The Calendar</div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What do the colors on the calendar mean? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">
+          <ul>
+            <li><strong style="color:var(--income-color)">Green entries</strong> = income</li>
+            <li><strong style="color:var(--expense-color)">Red entries</strong> = expenses</li>
+            <li><strong style="color:var(--neutral)">Grey entries</strong> = transfers between accounts</li>
+            <li>The small number in the bottom-right of each day = your running daily balance for that account</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I move a transaction to a different date? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Yes — just <strong>drag and drop</strong> any transaction pill to a new date on the calendar. The date updates automatically in your records.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I navigate between months? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Use the <strong>← →</strong> arrows in the top-right of the calendar to move back or forward one month at a time.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the Forecast view? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Switch to <strong>Forecast</strong> (tab next to Calendar) to see a 7-year month-by-month projection of your cash flow based on your recurring transactions. It's a powerful planning tool — great for spotting future shortfalls or surplus months before they happen.</div>
+      </div>
+    </div>
+
+    <!-- Accounts & Money -->
+    <div class="faq-section">
+      <div class="faq-section-title">Accounts &amp; Money</div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I switch between accounts on the calendar? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click any account tab in the bar below the nav. The calendar, summary cards, and balance will all update to show that account's transactions. Net Worth (top-right of the account bar) always reflects all accounts combined.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is Net Worth? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Net Worth is the total of all your account balances combined. It's always visible in the top-right of the account bar regardless of which account you're viewing.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do transfers work? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Select <strong>Transfer</strong> when adding a transaction. Choose the source account and destination account. The amount is deducted from one and added to the other — it won't count as income or expense in your monthly summary.</div>
+      </div>
+    </div>
+
+    <!-- Family Plan -->
+    <div class="faq-section">
+      <div class="faq-section-title">Family Plan</div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I add a family member? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Go to <strong>Settings → Household</strong>. Enter your family member's email and send an invite. They'll receive a link to create their account and join your shared household. All accounts, transactions, and goals are shared across the household.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can family members see everything? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Yes — all household members share the same view. This is intentional. Money Moves is designed for financial transparency within a household. Each member can add and edit transactions.</div>
+      </div>
+    </div>
+
+    <!-- Personality Modes -->
+    <div class="faq-section">
+      <div class="faq-section-title">Personality Modes</div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What are personality modes? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Personality modes change the tone of your budget coaching messages. Choose the voice that motivates you:
+          <ul>
+            <li>🤱 <strong>Mom Mode</strong> — nurturing but firm</li>
+            <li>💼 <strong>Dad Mode</strong> — direct, no-nonsense</li>
+            <li>🙏 <strong>Spiritual Guide</strong> — grounded and mindful</li>
+            <li>🤼 <strong>Wrestling Mode</strong> — hyped, intense, trash-talk motivation</li>
+          </ul>
+          Switch anytime in Settings.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── FAQ ────────────────────────────────────────────────────────────────────
+  window.openFaq  = function () { document.getElementById('faq-overlay').classList.add('open'); };
+  window.closeFaq = function () { document.getElementById('faq-overlay').classList.remove('open'); };
+  window.toggleFaq = function (qEl) {
+    const aEl = qEl.nextElementSibling;
+    const isOpen = qEl.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-q.open').forEach(el => { el.classList.remove('open'); el.nextElementSibling.classList.remove('open'); });
+    if (!isOpen) { qEl.classList.add('open'); aEl.classList.add('open'); }
+  };
+
+  // ── Hints ──────────────────────────────────────────────────────────────────
+  const HINTS = [
+    { icon: '💡', text: '<strong>Click any day</strong> on the calendar to quickly add a transaction on that date.' },
+    { icon: '🖱️', text: '<strong>Drag & drop</strong> any transaction to a different day to reschedule it instantly.' },
+    { icon: '🔄', text: 'Mark a transaction as <strong>Recurring</strong> and it will auto-populate future months — great for bills and paychecks.' },
+    { icon: '📊', text: 'Switch to <strong>Forecast view</strong> to see a 7-year projection of your cash flow based on recurring transactions.' },
+    { icon: '🏦', text: 'Use the <strong>account tabs</strong> at the top to view each account\'s calendar separately.' },
+    { icon: '🏆', text: 'Track your <strong>Savings Goals</strong> in the sidebar — add a goal and log progress with each transfer.' },
+    { icon: '👨‍👩‍👧', text: 'On a <strong>Family Plan?</strong> Invite your household members in Settings so everyone stays on the same page.' },
+    { icon: '🎭', text: 'Change your <strong>Personality Mode</strong> in Settings to get budget coaching in the voice that keeps you motivated.' },
+  ];
+
+  let hintIndex = 0;
+  let hintTimer;
+
+  function renderHint(idx) {
+    const h = HINTS[idx];
+    document.getElementById('hint-icon').textContent = h.icon;
+    document.getElementById('hint-text').innerHTML = h.text;
+    document.querySelectorAll('.hint-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  function initHints() {
+    const dotsEl = document.getElementById('hint-dots');
+    dotsEl.innerHTML = HINTS.map((_, i) =>
+      `<div class="hint-dot${i === 0 ? ' active' : ''}" onclick="goHint(${i})"></div>`
+    ).join('');
+    renderHint(0);
+    hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, 6000);
+  }
+
+  window.goHint = function (idx) {
+    clearInterval(hintTimer);
+    hintIndex = idx;
+    renderHint(idx);
+    hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, 6000);
+  };
+
+  document.addEventListener('DOMContentLoaded', initHints);
 </script>
 </body>
 </html>

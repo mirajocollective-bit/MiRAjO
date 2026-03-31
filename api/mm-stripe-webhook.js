@@ -78,15 +78,12 @@ export default async function handler(req, res) {
     }
 
     // Find or create Supabase auth user
-    const { data: existingUsers } = await supabase
-      .from('auth.users')
-      .select('id')
-      .eq('email', email)
-      .limit(1);
+    const { data: { users: existingUsers } } = await supabase.auth.admin.listUsers();
+    const existingUser = existingUsers?.find(u => u.email === email);
 
     let userId;
-    if (existingUsers && existingUsers.length > 0) {
-      userId = existingUsers[0].id;
+    if (existingUser) {
+      userId = existingUser.id;
     } else {
       // Invite user — they'll get a magic link to set up their account
       const { data: invited, error: inviteErr } = await supabase.auth.admin.inviteUserByEmail(email, {
