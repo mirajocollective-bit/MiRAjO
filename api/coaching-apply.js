@@ -13,10 +13,26 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name, email, situation, whynow } = req.body || {};
+  const { name, email, situation, whynow, turnstileToken } = req.body || {};
 
   if (!name || !email || !situation || !whynow) {
     return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  if (!turnstileToken) {
+    return res.status(400).json({ error: 'Security check required' });
+  }
+  try {
+    const tsRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: process.env.TURNSTILE_SECRET_KEY, response: turnstileToken }),
+    });
+    const tsData = await tsRes.json();
+    if (!tsData.success) return res.status(400).json({ error: 'Security check failed' });
+  } catch (err) {
+    console.error('[coaching-apply] Turnstile error:', err.message);
+    return res.status(400).json({ error: 'Security check error' });
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

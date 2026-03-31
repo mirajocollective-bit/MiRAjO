@@ -964,6 +964,7 @@
   </style>
   <!-- Site Analytics -->
   <script src="/analytics.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -1205,6 +1206,7 @@
             <label for="applyWhyNow">Why now?</label>
             <textarea id="applyWhyNow" name="whynow" rows="3" placeholder="What made you reach out today specifically?" required></textarea>
           </div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACyf19GGVbAXiDCE" data-theme="light"></div>
           <button type="submit" class="apply-submit-btn">Submit Application &rarr;</button>
           <p class="apply-form-note">No commitment required to apply. Miranda will reach out directly.</p>
         </form>
@@ -1313,11 +1315,19 @@
     const btn = this.querySelector('.apply-submit-btn');
     btn.disabled = true;
     btn.textContent = 'Sending…';
+    const turnstileToken = turnstile.getResponse();
+    if (!turnstileToken) {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application →';
+      alert('Please complete the security check.');
+      return;
+    }
     const data = {
       name: this.name.value.trim(),
       email: this.email.value.trim(),
       situation: this.situation.value.trim(),
-      whynow: this.whynow.value.trim()
+      whynow: this.whynow.value.trim(),
+      turnstileToken
     };
     try {
       const res = await fetch('/api/coaching-apply', {
