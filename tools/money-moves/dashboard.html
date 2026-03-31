@@ -997,11 +997,70 @@
     if (sel) sel.value = id;
   }
 
+  // ── Recurring expansion ──────────────────────────────────────────────────────
+  // Returns true if a recurring transaction should appear on a given day (d),
+  // month (mo, 0-indexed), year (yr). The transaction's own stored date is
+  // excluded here because it's already matched by t.date === dateStr.
+  function recurringMatchesDay(t, yr, mo, d) {
+    if (!t.is_recurring || !t.recur_frequency) return false;
+    const txnDate = new Date(t.date + 'T00:00:00');
+    const cellDate = new Date(yr, mo, d);
+    if (cellDate <= txnDate) return false;                          // before start
+    if (t.recur_end_date && cellDate > new Date(t.recur_end_date + 'T00:00:00')) return false;
+    switch (t.recur_frequency) {
+      case 'monthly':
+        return d === txnDate.getDate();
+      case 'twice_monthly':
+        return d === txnDate.getDate() || (t.recur_second_date && d === t.recur_second_date);
+      case 'yearly':
+        return mo === txnDate.getMonth() && d === txnDate.getDate();
+      case 'weekly': {
+        const diff = Math.round((cellDate - txnDate) / 86400000);
+        return diff % 7 === 0;
+      }
+      case 'biweekly': {
+        const diff = Math.round((cellDate - txnDate) / 86400000);
+        return diff % 14 === 0;
+      }
+      default: return false;
+    }
+  }
+
   // ── Summary ─────────────────────────────────────────────────────────────────
   function getMonthTransactions() {
     const m = String(currentMonth + 1).padStart(2, '0');
     const prefix = `${currentYear}-${m}`;
-    return transactions.filter(t => t.account_id === selectedAccountId && t.date?.startsWith(prefix));
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const result = [];
+    transactions.filter(t => t.account_id === selectedAccountId).forEach(t => {
+      if (t.date?.startsWith(prefix)) { result.push(t); return; }
+      // Expand recurring: find any day in this month where it should appear
+      for (let d = 1; d <= daysInMonth; d++) {
+        if (recurringMatchesDay(t, currentYear, currentMonth, d)) {
+          result.push({ ...t, date: `${prefix}-${String(d).padStart(2,'0')}` });
+          break; // only need to know it appears at least once for monthly; count properly below
+        }
+      }
+    });
+    // For twice_monthly, count can be 2 — add a second virtual entry if needed
+    transactions.filter(t => t.account_id === selectedAccountId && t.is_recurring && t.recur_frequency === 'twice_monthly').forEach(t => {
+      const txnDate = new Date(t.date + 'T00:00:00');
+      if (t.recur_second_date) {
+        const d2 = t.recur_second_date;
+        if (d2 >= 1 && d2 <= daysInMonth) {
+          const cellDate = new Date(currentYear, currentMonth, d2);
+          if (cellDate > txnDate && (!t.recur_end_date || cellDate <= new Date(t.recur_end_date + 'T00:00:00'))) {
+            const dateStr2 = `${prefix}-${String(d2).padStart(2,'0')}`;
+            // Only add if not already added (i.e., different from primary entry already in result)
+            const primaryDay = txnDate.getDate();
+            if (d2 !== primaryDay || !t.date?.startsWith(prefix)) {
+              result.push({ ...t, date: dateStr2 });
+            }
+          }
+        }
+      }
+    });
+    return result;
   }
 
   function renderSummary() {
@@ -1045,16 +1104,7 @@
       const dayTxns = transactions.filter(t => {
         if (t.account_id !== selectedAccountId) return false;
         if (t.date === dateStr) return true;
-        // Expand twice_monthly: show on the 2nd occurrence day each month
-        if (t.is_recurring && t.recur_frequency === 'twice_monthly' && t.recur_second_date === d) {
-          const txnDate = new Date(t.date + 'T00:00:00');
-          // Only show in same month or after the transaction was created
-          if (currentYear > txnDate.getFullYear() ||
-              (currentYear === txnDate.getFullYear() && (currentMonth + 1) > txnDate.getMonth() + 1)) {
-            return true;
-          }
-        }
-        return false;
+        return recurringMatchesDay(t, currentYear, currentMonth, d);
       });
 
       const income  = dayTxns.filter(t => t.type === 'income').reduce((s,t)  => s + Number(t.amount), 0);
