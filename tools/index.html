@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiRAjO Tools — Financial & Personal Development Tools by Miranda Johnson</title>
+  <meta name="description" content="MiRAjO Tools is a growing suite of practical tools built for people who are serious about growth — starting with Money Moves, a visual budget calendar that works the way your brain does.">
+  <link rel="canonical" href="https://www.mirajoco.org/tools">
+  <meta property="og:title" content="MiRAjO Tools — Built for People Serious About Growth">
+  <meta property="og:description" content="Practical tools for your money, your mindset, and your relationships. Built by Miranda Johnson and the MiRAjO Collective.">
+  <meta property="og:url" content="https://www.mirajoco.org/tools">
+  <meta property="og:type" content="website">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --deep-forest:    #122012;
+      --forest-mid:     #1E4226;
+      --living-green:   #256B42;
+      --new-growth:     #6DC48A;
+      --dry-sage:       #C4A245;
+      --warm-parchment: #F2EBD9;
+      --soft-white:     #FAF7F2;
+      --page-bg:        #E8E4DC;
+      --neutral:        #6b7280;
+      --border:         rgba(18,32,18,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+    body {
+      background: var(--soft-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      padding: 0 40px; display: flex; align-items: center; justify-content: space-between;
+      height: 68px; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 14px; }
+    .nav-logo  { height: 42px; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 28px; margin-left: 32px; }
+    .nav-link  { font-size: 14px; color: rgba(242,235,217,0.65); text-decoration: none; transition: color 0.2s; }
+    .nav-link:hover, .nav-link.active { color: var(--warm-parchment); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-btn {
+      padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; text-decoration: none;
+      display: inline-block; transition: opacity 0.2s, transform 0.2s; border: none;
+    }
+    .nav-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .nav-btn-ghost { background: transparent; color: var(--warm-parchment); border: 1px solid rgba(242,235,217,0.25); }
+    .nav-btn-gold  { background: var(--dry-sage); color: var(--deep-forest); }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(160deg, #0D1A0F 0%, #1E3A24 55%, #0A1A10 100%);
+      padding: 88px 40px 72px; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(109,196,138,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--new-growth); margin-bottom: 20px;
+      border: 1px solid rgba(109,196,138,0.3); border-radius: 99px; padding: 6px 18px;
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 5vw, 60px); font-weight: 400; line-height: 1.15;
+      color: var(--warm-parchment); max-width: 700px; margin: 0 auto 20px;
+    }
+    .hero h1 em { font-style: italic; color: var(--new-growth); }
+    .hero-sub {
+      font-size: 18px; color: rgba(242,235,217,0.6);
+      max-width: 520px; margin: 0 auto; line-height: 1.75;
+    }
+
+    /* ── Tools grid ── */
+    .tools-section { padding: 80px 40px; background: var(--page-bg); }
+    .tools-inner { max-width: 1060px; margin: 0 auto; }
+    .tools-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--living-green); margin-bottom: 40px; display: block;
+    }
+    .tools-grid { display: flex; flex-direction: column; gap: 32px; }
+
+    /* ── Tool card ── */
+    .tool-card {
+      background: #fff; border-radius: 24px;
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 8px 32px rgba(18,32,18,0.10), 0 2px 8px rgba(18,32,18,0.06);
+      overflow: hidden; display: grid; grid-template-columns: 1fr 380px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(18,32,18,0.15); }
+    .tool-card.coming-soon { opacity: 0.88; }
+
+    .tool-body { padding: 44px 48px; display: flex; flex-direction: column; justify-content: center; }
+
+    .tool-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 99px; margin-bottom: 20px; width: fit-content;
+    }
+    .tool-status.live   { background: rgba(37,107,66,0.1); color: var(--living-green); }
+    .tool-status.soon   { background: rgba(196,162,69,0.12); color: var(--dry-sage); }
+    .tool-status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .tool-status.live .tool-status-dot { background: var(--living-green); animation: pulse 2s infinite; }
+    .tool-status.soon .tool-status-dot { background: var(--dry-sage); }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+    }
+
+    .tool-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px; font-weight: 400; line-height: 1.1; margin-bottom: 6px;
+    }
+    .tool-tagline { font-size: 14px; color: var(--living-green); font-weight: 600; margin-bottom: 16px; }
+    .tool-desc { font-size: 15px; color: #4A5A48; line-height: 1.8; margin-bottom: 28px; max-width: 480px; }
+
+    .tool-features {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;
+    }
+    .tool-feature {
+      font-size: 12px; font-weight: 600; padding: 5px 12px;
+      border-radius: 8px; background: var(--soft-white);
+      border: 1px solid var(--border); color: var(--neutral);
+    }
+
+    .tool-price { margin-bottom: 24px; }
+    .tool-price-from { font-size: 12px; color: var(--neutral); margin-bottom: 2px; }
+    .tool-price-amount {
+      font-family: 'Instrument Serif', serif; font-size: 38px; line-height: 1; color: var(--deep-forest);
+    }
+    .tool-price-period { font-size: 13px; color: var(--neutral); }
+
+    .tool-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-tool-primary {
+      padding: 14px 28px; background: var(--deep-forest); color: var(--warm-parchment);
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s, transform 0.2s; text-decoration: none; display: inline-block;
+    }
+    .btn-tool-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+    .btn-tool-secondary {
+      padding: 14px 28px; background: transparent; color: var(--living-green);
+      border: 1px solid rgba(37,107,66,0.3); border-radius: 10px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.2s; text-decoration: none; display: inline-block;
+    }
+    .btn-tool-secondary:hover { background: rgba(37,107,66,0.06); }
+
+    .notify-form { display: flex; gap: 10px; max-width: 400px; }
+    .notify-input {
+      flex: 1; padding: 13px 16px; border: 1px solid rgba(37,107,66,0.25); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      background: var(--soft-white); outline: none; transition: border-color 0.2s;
+    }
+    .notify-input:focus { border-color: var(--living-green); }
+    .notify-input::placeholder { color: rgba(37,107,66,0.35); }
+    .notify-btn {
+      padding: 13px 20px; background: var(--dry-sage); color: var(--deep-forest);
+      border: none; border-radius: 10px; font-size: 13px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s; white-space: nowrap;
+    }
+    .notify-btn:hover { opacity: 0.85; }
+    .notify-success { font-size: 13px; color: var(--living-green); display: none; margin-top: 8px; font-weight: 600; }
+
+    /* ── Tool visual panel ── */
+    .tool-visual {
+      background: var(--page-bg); display: flex; align-items: center; justify-content: center;
+      padding: 36px 28px; position: relative; overflow: hidden;
+    }
+    .tool-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(109,196,138,0.08) 0%, transparent 70%);
+    }
+
+    /* Money Moves mini-dashboard */
+    .mm-preview {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 28px rgba(18,32,18,0.14); width: 100%; max-width: 320px; position: relative; z-index: 1;
+    }
+    .mm-prev-nav {
+      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .mm-prev-brand { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dry-sage); }
+    .mm-prev-add {
+      font-size: 9px; font-weight: 700; background: var(--dry-sage); color: var(--deep-forest);
+      border-radius: 5px; padding: 3px 8px;
+    }
+    .mm-prev-header {
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .mm-prev-month { font-family: 'Instrument Serif', serif; font-size: 14px; }
+    .mm-prev-bal { font-size: 10px; color: var(--living-green); font-weight: 700; }
+    .mm-prev-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; padding: 8px; }
+    .mm-prev-dn { font-size: 7px; font-weight: 700; text-align: center; color: var(--neutral); letter-spacing: 0.5px; text-transform: uppercase; padding: 2px 0; }
+    .mm-prev-cell { border-radius: 4px; padding: 3px; min-height: 32px; border: 1px solid transparent; }
+    .mm-prev-cell.today { border-color: var(--new-growth); background: rgba(109,196,138,0.08); }
+    .mm-prev-dn-num { font-size: 8px; font-weight: 600; color: var(--deep-forest); }
+    .mm-prev-pill {
+      font-size: 6px; font-weight: 700; border-radius: 2px; padding: 1px 3px;
+      margin-top: 1px; display: block; white-space: nowrap; overflow: hidden;
+    }
+    .mm-prev-pill.i { background: rgba(37,107,66,0.12); color: var(--income-color); }
+    .mm-prev-pill.e { background: rgba(192,57,43,0.10); color: #C0392B; }
+    .mm-prev-summary {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      padding: 8px; gap: 6px; background: var(--soft-white);
+    }
+    .mm-prev-sum-card {
+      background: #fff; border-radius: 6px; padding: 6px 8px;
+      border: 1px solid var(--border); text-align: center;
+    }
+    .mm-prev-sum-label { font-size: 7px; color: var(--neutral); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .mm-prev-sum-val { font-family: 'Instrument Serif', serif; font-size: 13px; margin-top: 2px; }
+    .mm-prev-sum-val.inc { color: var(--income-color); }
+    .mm-prev-sum-val.exp { color: #C0392B; }
+
+    /* DISC / Love Languages preview */
+    .disc-preview {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 28px rgba(18,32,18,0.14); width: 100%; max-width: 320px; position: relative; z-index: 1;
+    }
+    .disc-prev-header {
+      background: linear-gradient(135deg, #1B2A4A, #0D1A30);
+      padding: 16px; text-align: center;
+    }
+    .disc-prev-title { font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--warm-parchment); margin-bottom: 4px; }
+    .disc-prev-sub { font-size: 9px; color: rgba(242,235,217,0.5); letter-spacing: 2px; text-transform: uppercase; }
+    .disc-prev-body { padding: 16px; }
+    .disc-prev-q { font-size: 11px; font-weight: 600; color: var(--deep-forest); margin-bottom: 10px; }
+    .disc-prev-options { display: flex; flex-direction: column; gap: 6px; }
+    .disc-prev-opt {
+      padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+      font-size: 10px; color: #4A5A48; cursor: default;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .disc-prev-opt.selected { border-color: var(--dry-sage); background: rgba(196,162,69,0.08); }
+    .disc-prev-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid rgba(18,32,18,0.15); flex-shrink: 0; }
+    .disc-prev-opt.selected .disc-prev-dot { border-color: var(--dry-sage); background: var(--dry-sage); }
+    .disc-prev-progress { margin-top: 14px; }
+    .disc-prev-prog-label { font-size: 9px; color: var(--neutral); margin-bottom: 5px; display: flex; justify-content: space-between; }
+    .disc-prev-bar { height: 4px; background: rgba(18,32,18,0.08); border-radius: 99px; overflow: hidden; }
+    .disc-prev-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--dry-sage), var(--living-green)); }
+    .disc-prev-locked {
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      padding: 16px; gap: 6px; background: rgba(18,32,18,0.02);
+      border-top: 1px solid var(--border); text-align: center;
+    }
+    .disc-prev-lock { font-size: 22px; }
+    .disc-prev-lock-text { font-size: 10px; color: var(--neutral); }
+
+    /* ── Coming soon overlay ── */
+    .tool-coming-overlay {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: rgba(18,32,18,0.04); z-index: 2; border-radius: 24px;
+      backdrop-filter: blur(1px);
+    }
+
+    /* ── Why MiRAjO Tools ── */
+    .why-section { padding: 80px 40px; background: var(--soft-white); }
+    .why-inner { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .why-copy .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--living-green); margin-bottom: 16px; }
+    .why-copy h2 { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.2; margin-bottom: 20px; }
+    .why-copy h2 em { font-style: italic; color: var(--living-green); }
+    .why-copy p { font-size: 16px; color: #4A5A48; line-height: 1.8; }
+    .why-pillars { display: flex; flex-direction: column; gap: 20px; }
+    .why-pillar { display: flex; gap: 16px; align-items: flex-start; }
+    .why-pillar-icon {
+      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--living-green), var(--deep-forest));
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .why-pillar-copy h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .why-pillar-copy p  { font-size: 14px; color: #4A5A48; line-height: 1.7; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--deep-forest); padding: 40px; text-align: center;
+      border-top: 1px solid rgba(242,235,217,0.07);
+    }
+    .footer a { color: rgba(242,235,217,0.5); font-size: 13px; text-decoration: none; margin: 0 12px; transition: color 0.2s; }
+    .footer a:hover { color: var(--warm-parchment); }
+    .footer-copy { font-size: 12px; color: rgba(242,235,217,0.3); margin-top: 16px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .tool-card { grid-template-columns: 1fr; }
+      .tool-visual { min-height: 260px; }
+      .why-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 64px 20px 56px; }
+      .tools-section, .why-section { padding: 56px 20px; }
+      .tool-body { padding: 32px 28px; }
+      .notify-form { flex-direction: column; }
+    }
+  </style>
+  <script src="/analytics.js"></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="https://www.mirajoco.org">
+      <img src="/img/Where Authenticity is the new blue check (250 x 150 px) (800 x 312 px) (450 x 70 px) (Logo) (1).png" alt="MiRAjO" class="nav-logo">
+    </a>
+    <div class="nav-links">
+      <a href="https://www.mirajoco.org/programs" class="nav-link">Programs</a>
+      <a href="/tools" class="nav-link active">Tools</a>
+      <a href="https://www.mirajoco.org/coaching" class="nav-link">Coaching</a>
+      <a href="https://www.mirajoco.org/blog" class="nav-link">Writing</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="/tools/money-moves/login" class="nav-btn nav-btn-ghost">Log In</a>
+    <a href="/tools/money-moves" class="nav-btn nav-btn-gold">Get Money Moves</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">MiRAjO Tools</div>
+  <h1 data-aos="fade-up">Practical tools for people<br>serious about <em>real growth</em></h1>
+  <p class="hero-sub" data-aos="fade-up" data-aos-delay="100">Not hype. Not fluff. Tools that do actual work — on your money, your mindset, and your relationships.</p>
+</section>
+
+<!-- Tools -->
+<section class="tools-section">
+  <div class="tools-inner">
+    <span class="tools-label">The Suite</span>
+    <div class="tools-grid">
+
+      <!-- Money Moves -->
+      <div class="tool-card" data-aos="fade-up">
+        <div class="tool-body">
+          <div class="tool-status live">
+            <div class="tool-status-dot"></div>
+            Live Now
+          </div>
+          <h2 class="tool-name">Money Moves</h2>
+          <div class="tool-tagline">by MiRAjO — Budget Calendar</div>
+          <p class="tool-desc">See your money the way your brain works — by date. Every transaction on a calendar. Running balances per day. 7-year cash flow forecasting. Built for people who are done guessing where their money went.</p>
+          <div class="tool-features">
+            <span class="tool-feature">📅 Budget Calendar</span>
+            <span class="tool-feature">📈 7-Year Forecast</span>
+            <span class="tool-feature">🏦 Multiple Accounts</span>
+            <span class="tool-feature">🎯 Savings Goals</span>
+            <span class="tool-feature">🎭 Personality Coaching</span>
+            <span class="tool-feature">👨‍👩‍👧 Family Plan</span>
+          </div>
+          <div class="tool-price">
+            <div class="tool-price-from">Starting at</div>
+            <span class="tool-price-amount">$7</span><span class="tool-price-period">/month &nbsp;·&nbsp; Family plan $10/month</span>
+          </div>
+          <div class="tool-actions">
+            <a href="/tools/money-moves" class="btn-tool-primary">See Money Moves →</a>
+            <a href="/tools/money-moves/login" class="btn-tool-secondary">Log In</a>
+          </div>
+        </div>
+        <div class="tool-visual">
+          <!-- Mini Money Moves dashboard mockup -->
+          <div class="mm-preview">
+            <div class="mm-prev-nav">
+              <span class="mm-prev-brand">Money Moves</span>
+              <span class="mm-prev-add">+ Add</span>
+            </div>
+            <div class="mm-prev-header">
+              <span class="mm-prev-month">April 2026</span>
+              <span class="mm-prev-bal">Balance: $3,240</span>
+            </div>
+            <div class="mm-prev-grid">
+              <div class="mm-prev-dn">S</div><div class="mm-prev-dn">M</div><div class="mm-prev-dn">T</div><div class="mm-prev-dn">W</div><div class="mm-prev-dn">T</div><div class="mm-prev-dn">F</div><div class="mm-prev-dn">S</div>
+              <div class="mm-prev-cell"></div><div class="mm-prev-cell"></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">1</div><div class="mm-prev-pill i">+Pay</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">2</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">3</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">4</div><div class="mm-prev-pill e">−Rent</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">5</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">6</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">7</div><div class="mm-prev-pill e">−Groc</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">8</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">9</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">10</div><div class="mm-prev-pill i">+Side</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">11</div></div>
+              <div class="mm-prev-cell today"><div class="mm-prev-dn-num" style="background:var(--living-green);color:#fff;border-radius:50%;width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-size:7px;">15</div><div class="mm-prev-pill i">+Pay</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">16</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">17</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">18</div><div class="mm-prev-pill e">−Car</div></div>
+              <div class="mm-prev-cell"><div class="mm-prev-dn-num">19</div></div>
+            </div>
+            <div class="mm-prev-summary">
+              <div class="mm-prev-sum-card">
+                <div class="mm-prev-sum-label">Income</div>
+                <div class="mm-prev-sum-val inc">$5,200</div>
+              </div>
+              <div class="mm-prev-sum-card">
+                <div class="mm-prev-sum-label">Expenses</div>
+                <div class="mm-prev-sum-val exp">$3,840</div>
+              </div>
+              <div class="mm-prev-sum-card">
+                <div class="mm-prev-sum-label">Net</div>
+                <div class="mm-prev-sum-val" style="color:var(--dry-sage)">$1,360</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DISC + Love Languages -->
+      <div class="tool-card coming-soon" data-aos="fade-up">
+        <div class="tool-body">
+          <div class="tool-status soon">
+            <div class="tool-status-dot"></div>
+            Coming Soon
+          </div>
+          <h2 class="tool-name">Know Yourself First</h2>
+          <div class="tool-tagline">DISC &amp; 5 Love Languages — Combined</div>
+          <p class="tool-desc">Two of the most powerful self-awareness frameworks — DISC personality profiling and the 5 Love Languages — combined into one assessment. Know how you lead, how you love, and how others experience you.</p>
+          <div class="tool-features">
+            <span class="tool-feature">🧠 DISC Assessment</span>
+            <span class="tool-feature">❤️ Love Languages</span>
+            <span class="tool-feature">📊 Combined Report</span>
+            <span class="tool-feature">👥 Team &amp; Couple Mode</span>
+            <span class="tool-feature">🔍 Relationship Insights</span>
+          </div>
+          <p style="font-size:13px;color:var(--neutral);margin-bottom:20px;">Be the first to know when this launches — and get early access pricing.</p>
+          <form class="notify-form" id="disc-notify-form" onsubmit="notifyMe(event,'disc')">
+            <input type="email" class="notify-input" id="disc-email" placeholder="Your email address" required>
+            <button type="submit" class="notify-btn">Notify Me</button>
+          </form>
+          <p class="notify-success" id="disc-success">You're on the list! We'll email you first when it launches.</p>
+        </div>
+        <div class="tool-visual">
+          <!-- DISC tool mockup -->
+          <div class="disc-preview">
+            <div class="disc-prev-header">
+              <div class="disc-prev-title">Know Yourself First</div>
+              <div class="disc-prev-sub">DISC + 5 Love Languages</div>
+            </div>
+            <div class="disc-prev-body">
+              <div class="disc-prev-q">When facing a difficult decision, I tend to...</div>
+              <div class="disc-prev-options">
+                <div class="disc-prev-opt"><div class="disc-prev-dot"></div>Act quickly and decisively</div>
+                <div class="disc-prev-opt selected"><div class="disc-prev-dot"></div>Talk it through with others first</div>
+                <div class="disc-prev-opt"><div class="disc-prev-dot"></div>Analyze all the options carefully</div>
+                <div class="disc-prev-opt"><div class="disc-prev-dot"></div>Consider how it affects everyone</div>
+              </div>
+              <div class="disc-prev-progress">
+                <div class="disc-prev-prog-label"><span>Progress</span><span>Question 7 of 24</span></div>
+                <div class="disc-prev-bar"><div class="disc-prev-fill" style="width:29%"></div></div>
+              </div>
+            </div>
+            <div class="disc-prev-locked">
+              <div class="disc-prev-lock">🔒</div>
+              <div class="disc-prev-lock-text">Your full report unlocks after assessment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Why MiRAjO Tools -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-copy" data-aos="fade-right">
+      <div class="section-eyebrow">Why MiRAjO Tools</div>
+      <h2>Built on the belief that<br><em>clarity changes everything</em></h2>
+      <p>MiRAjO Collective has always been about real growth — not performance, not pretending, not shortcuts. The tools we build carry that same standard. Practical, honest, and designed for people who are actually doing the work.</p>
+    </div>
+    <div class="why-pillars" data-aos="fade-left">
+      <div class="why-pillar">
+        <div class="why-pillar-icon">🎯</div>
+        <div class="why-pillar-copy">
+          <h4>Built for real life, not demos</h4>
+          <p>Every feature exists because it solves an actual problem — not because it looks good in a screenshot.</p>
+        </div>
+      </div>
+      <div class="why-pillar">
+        <div class="why-pillar-icon">💬</div>
+        <div class="why-pillar-copy">
+          <h4>Rooted in how people actually think</h4>
+          <p>Money Moves uses a calendar because that's how your brain processes time. Our tools meet you where you are.</p>
+        </div>
+      </div>
+      <div class="why-pillar">
+        <div class="why-pillar-icon">🌱</div>
+        <div class="why-pillar-copy">
+          <h4>Part of a bigger ecosystem</h4>
+          <p>Each tool connects back to the same mission — Connected. Real. Growth. Ready. Built by MiRAjO, built for you.</p>
+        </div>
+      </div>
+      <div class="why-pillar">
+        <div class="why-pillar-icon">🔒</div>
+        <div class="why-pillar-copy">
+          <h4>Your data stays yours</h4>
+          <p>No selling your data, no hidden monetization. A fair subscription keeps the lights on — and your privacy intact.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div>
+    <a href="https://www.mirajoco.org">MiRAjO Collective</a>
+    <a href="https://www.mirajoco.org/programs">Programs</a>
+    <a href="/tools/money-moves">Money Moves</a>
+    <a href="https://www.mirajoco.org/coaching">Coaching</a>
+    <a href="mailto:mirandaj@mirajoco.org">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 MiRAjO Collective. All rights reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+
+  async function notifyMe(e, tool) {
+    e.preventDefault();
+    const email = document.getElementById(`${tool}-email`).value.trim();
+    if (!email) return;
+
+    const form    = document.getElementById(`${tool}-notify-form`);
+    const success = document.getElementById(`${tool}-success`);
+    const btn     = form.querySelector('.notify-btn');
+
+    btn.textContent = 'Saving...';
+    btn.disabled = true;
+
+    try {
+      await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: `tools-hub-${tool}-notify`, tool }),
+      });
+    } catch (_) { /* non-critical */ }
+
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }
+</script>
+<script src="/js/social-bar.js"></script>
+</body>
+</html>
