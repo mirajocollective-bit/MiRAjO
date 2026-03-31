@@ -1104,6 +1104,24 @@
 
     document.getElementById('sub-plan-text').textContent  = planMap[key] || 'Active Plan';
     document.getElementById('sub-renew-text').textContent = end ? `Renews ${end}` : '';
+
+    const manageLink = document.getElementById('sub-manage-link');
+    manageLink.onclick = async (e) => {
+      e.preventDefault();
+      manageLink.textContent = 'Loading...';
+      const res = await fetch('/api/mm-billing-portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id }),
+      });
+      if (res.ok) {
+        const { url } = await res.json();
+        window.location.href = url;
+      } else {
+        manageLink.textContent = 'Manage billing →';
+        toast('Could not open billing portal. Try again.', true);
+      }
+    };
   }
 
   window.saveAccount = async function () {
