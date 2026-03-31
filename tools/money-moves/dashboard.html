@@ -1337,7 +1337,7 @@
     const { data: memberRows } = await supabase.from('mm_members').select('id').eq('user_id', user.id).limit(1);
     const memberId = memberRows?.[0]?.id || null;
 
-    const { error } = await supabase.from('mm_transactions').insert({
+    const txnPayload = {
       household_id:           householdId,
       account_id:             accountId,
       member_id:              memberId,
@@ -1349,13 +1349,17 @@
       notes:                  notes || null,
       is_recurring:           recurring,
       recur_frequency:        recurring ? freq : null,
-      recur_second_date:      recurring && freq === 'twice_monthly' ? secondDate : null,
       recur_end_date:         recurring && endType === 'date'   ? endDate   : null,
       recur_end_type:         recurring && endType             ? endType   : null,
       recur_end_count:        recurring && endType === 'count'  ? endCount  : null,
       recur_end_amount:       recurring && endType === 'amount' ? endAmount : null,
       transfer_to_account_id: currentType === 'transfer' ? toAcct : null,
-    });
+    };
+    // Only include recur_second_date if the column exists (added via ALTER TABLE)
+    if (recurring && freq === 'twice_monthly' && secondDate) {
+      txnPayload.recur_second_date = secondDate;
+    }
+    const { error } = await supabase.from('mm_transactions').insert(txnPayload);
 
     if (error) { alert('Error saving. Please try again.'); return; }
     closeModal();
