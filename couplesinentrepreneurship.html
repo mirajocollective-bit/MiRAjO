@@ -1235,6 +1235,37 @@
       }
     }
 
+  // ── Discount pop-up ───────────────────────────────
+  (function() {
+    if (sessionStorage.getItem('mj_cie_popup_shown')) return;
+    setTimeout(function() {
+      document.getElementById('discount-popup').style.display = 'flex';
+      sessionStorage.setItem('mj_cie_popup_shown', '1');
+    }, 10000);
+  })();
+
+  function closePopup() {
+    document.getElementById('discount-popup').style.display = 'none';
+  }
+
+  async function enrollWithPopupDiscount() {
+    const btn = document.getElementById('popup-enroll-btn');
+    btn.textContent = 'Redirecting...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/create-couples-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ couponId: 'fVbGdG1L' }),
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch {
+      btn.textContent = 'Claim $150 Off';
+      btn.disabled = false;
+    }
+  }
+
     async function startCheckout() {
       const btns = document.querySelectorAll('[onclick="startCheckout()"], #navEnroll');
       btns.forEach(b => { b.disabled = true; b.textContent = 'Redirecting…'; });
@@ -1271,5 +1302,21 @@
 
     document.getElementById('navEnroll').addEventListener('click', startCheckout);
   </script>
+
+<!-- ═══ DISCOUNT POP-UP ═══ -->
+<div id="discount-popup" style="display:none;position:fixed;inset:0;background:rgba(20,9,15,0.8);z-index:9999;align-items:center;justify-content:center;padding:24px;">
+  <div style="background:linear-gradient(160deg,#14090F,#2A0F1A);border:1px solid rgba(184,32,56,0.25);border-radius:20px;padding:48px 40px;max-width:420px;width:100%;text-align:center;position:relative;">
+    <button onclick="closePopup()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;line-height:1;">&times;</button>
+    <div style="display:inline-block;background:rgba(196,162,69,0.15);border:1px solid rgba(196,162,69,0.4);color:#C4A245;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;">Limited Offer</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;color:#fff;margin-bottom:12px;line-height:1.3;">Build together for <em style="color:#C4A245;">$150 less.</em></h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:28px;">Couples in Entrepreneurship — one purchase, both partners included. Diagnostic, report, and adaptive course path built around your real gaps.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:24px;">
+      <span style="font-size:16px;color:rgba(255,255,255,0.3);text-decoration:line-through;">$997</span>
+      <span style="font-size:32px;font-weight:700;color:#C4A245;">$847</span>
+    </div>
+    <button id="popup-enroll-btn" onclick="enrollWithPopupDiscount()" style="width:100%;padding:16px;background:#B82038;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:opacity 0.2s;">Claim $150 Off</button>
+    <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:14px;">Discount applied automatically at checkout</p>
+  </div>
+</div>
 </body>
 </html>
