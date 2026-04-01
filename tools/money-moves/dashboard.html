@@ -1223,10 +1223,13 @@
       const cell = document.createElement('div');
       cell.className = `cal-cell${isToday ? ' today' : ''}`;
       cell.onclick   = () => openModal(dateStr);
-      cell.addEventListener('dragover',  (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; cell.classList.add('drag-over'); });
-      cell.addEventListener('dragleave', (e) => { if (!cell.contains(e.relatedTarget)) cell.classList.remove('drag-over'); });
+      let dragCount = 0;
+      cell.addEventListener('dragenter', (e) => { e.preventDefault(); dragCount++; cell.classList.add('drag-over'); });
+      cell.addEventListener('dragover',  (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; });
+      cell.addEventListener('dragleave', ()  => { dragCount--; if (dragCount <= 0) { dragCount = 0; cell.classList.remove('drag-over'); } });
       cell.addEventListener('drop', async (e) => {
         e.preventDefault();
+        dragCount = 0;
         cell.classList.remove('drag-over');
         const txnId    = e.dataTransfer.getData('txnId');
         const fromDate = e.dataTransfer.getData('fromDate');
@@ -1650,8 +1653,7 @@
       // Open the edit modal pre-filled — on save we'll write an exception instead of updating the row
       editingTxnId = null; // don't update the original row on save
       document.getElementById('modal-title').textContent = 'Edit This Occurrence';
-      document.getElementById('txn-delete-btn').style.display = 'block';
-      document.getElementById('txn-delete-btn').textContent   = 'Remove This Occurrence';
+      document.getElementById('txn-delete-btn').style.display = 'none';
       setType(t.type || 'expense');
       document.getElementById('txn-date').value   = date;
       document.getElementById('txn-amount').value = t.amount || '';
