@@ -792,6 +792,21 @@
   </div>
 </div>
 
+<!-- Day Detail Modal -->
+<div class="modal-overlay" id="day-detail-overlay" onclick="closeDayDetail(event)" style="display:none;align-items:flex-start;padding-top:80px;">
+  <div class="modal" style="max-width:460px;width:100%;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+      <div class="modal-title" id="day-detail-title" style="margin-bottom:0"></div>
+      <button onclick="document.getElementById('day-detail-overlay').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--neutral);">✕</button>
+    </div>
+    <div id="day-detail-list" style="display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto;"></div>
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <span id="day-detail-balance" style="font-size:13px;color:var(--neutral)"></span>
+      <button onclick="closeDayDetailAndAdd()" style="padding:10px 20px;background:var(--deep-forest);color:var(--warm-parchment);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">+ Add Transaction</button>
+    </div>
+  </div>
+</div>
+
 <!-- Add Account Modal -->
 <div class="modal-overlay" id="acct-modal-overlay" onclick="closeAcctModalOutside(event)">
   <div class="modal acct-modal">
@@ -1175,7 +1190,7 @@
       dateNum.textContent = d;
       cell.appendChild(dateNum);
 
-      dayTxns.slice(0, 2).forEach(t => {
+      dayTxns.slice(0, 4).forEach(t => {
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${t.type}`;
         entry.textContent = `${t.type === 'income' ? '+' : t.type === 'transfer' ? '→' : '-'}$${Number(t.amount).toFixed(0)} ${t.description || ''}`;
@@ -1196,11 +1211,13 @@
         cell.appendChild(entry);
       });
 
-      if (dayTxns.length > 2) {
+      if (dayTxns.length > 4) {
         const more = document.createElement('div');
         more.className   = 'cal-entry';
-        more.style.cssText = 'background:rgba(18,32,18,0.05);color:var(--neutral)';
-        more.textContent = `+${dayTxns.length - 2} more`;
+        more.style.cssText = 'background:rgba(18,32,18,0.08);color:var(--living-green);cursor:pointer;font-weight:600;text-align:center;';
+        more.textContent = `+${dayTxns.length - 4} more`;
+        more.title = 'Click to see all';
+        more.addEventListener('click', (e) => { e.stopPropagation(); openDayDetail(dateStr, dayTxns, runningBalance); });
         cell.appendChild(more);
       }
 
@@ -1377,6 +1394,41 @@
     catSel.innerHTML  = '<option value="">Select a category</option>' +
       categories.filter(c => c.type === currentType).map(c => `<option value="${c.id}">${c.name}</option>`).join('');
   }
+
+  let dayDetailDate = null;
+  window.openDayDetail = function (dateStr, dayTxns, balance) {
+    dayDetailDate = dateStr;
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const [y, m, d] = dateStr.split('-');
+    document.getElementById('day-detail-title').textContent = `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
+    const list = document.getElementById('day-detail-list');
+    list.innerHTML = dayTxns.map(t => `
+      <div onclick="closeDayDetailToEdit('${t.id}')" style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;background:${t.type==='income'?'rgba(109,196,138,0.1)':t.type==='expense'?'rgba(196,162,69,0.1)':'rgba(18,32,18,0.05)'};cursor:pointer;">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--deep-forest)">${t.description || '—'}</div>
+          <div style="font-size:11px;color:var(--neutral);margin-top:2px">${t.type}${t.is_recurring ? ' · recurring' : ''}</div>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:${t.type==='income'?'var(--income-color)':'var(--expense-color)'}">
+          ${t.type==='income'?'+':'-'}$${Number(t.amount).toLocaleString('en-US',{minimumFractionDigits:2})}
+        </div>
+      </div>`).join('');
+    document.getElementById('day-detail-balance').textContent = `Balance after: $${balance.toLocaleString('en-US',{minimumFractionDigits:2})}`;
+    document.getElementById('day-detail-overlay').style.display = 'flex';
+  };
+  window.closeDayDetail = function (e) {
+    if (!e || e.target === document.getElementById('day-detail-overlay')) {
+      document.getElementById('day-detail-overlay').style.display = 'none';
+    }
+  };
+  window.closeDayDetailToEdit = function (txnId) {
+    document.getElementById('day-detail-overlay').style.display = 'none';
+    const t = transactions.find(x => x.id === txnId);
+    if (t) openEditModal(t);
+  };
+  window.closeDayDetailAndAdd = function () {
+    document.getElementById('day-detail-overlay').style.display = 'none';
+    if (dayDetailDate) openModal(dayDetailDate);
+  };
 
   window.openModal = function (dateStr) {
     editingTxnId = null;
