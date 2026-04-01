@@ -1060,6 +1060,10 @@
     const prefix = `${currentYear}-${m}`;
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const result = [];
+    // Include incoming transfers to this account
+    transactions.filter(t => t.type === 'transfer' && t.transfer_to_account_id === selectedAccountId && t.date?.startsWith(prefix))
+      .forEach(t => result.push(t));
+
     transactions.filter(t => t.account_id === selectedAccountId).forEach(t => {
       if (t.date?.startsWith(prefix)) { result.push(t); return; }
       // Expand recurring: find any day in this month where it should appear
@@ -1159,13 +1163,19 @@
       const isToday = d === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
 
       const dayTxns = transactions.filter(t => {
-        if (t.account_id !== selectedAccountId) return false;
-        if (t.date === dateStr) return true;
-        return recurringMatchesDay(t, currentYear, currentMonth, d);
+        // Source account transactions (all types)
+        if (t.account_id === selectedAccountId) {
+          if (t.date === dateStr) return true;
+          return recurringMatchesDay(t, currentYear, currentMonth, d);
+        }
+        // Incoming transfers to this account
+        if (t.type === 'transfer' && t.transfer_to_account_id === selectedAccountId && t.date === dateStr) return true;
+        return false;
       });
 
-      const income  = dayTxns.filter(t => t.type === 'income').reduce((s,t)  => s + Number(t.amount), 0);
-      const expense = dayTxns.filter(t => t.type === 'expense').reduce((s,t) => s + Number(t.amount), 0);
+      const isIncoming = t => t.type === 'transfer' && t.transfer_to_account_id === selectedAccountId;
+      const income  = dayTxns.filter(t => t.type === 'income' || isIncoming(t)).reduce((s,t) => s + Number(t.amount), 0);
+      const expense = dayTxns.filter(t => t.type === 'expense' || (t.type === 'transfer' && !isIncoming(t))).reduce((s,t) => s + Number(t.amount), 0);
 
       // Advance running balance using all transactions on this day (stored + virtual recurring)
       runningBalance += income - expense;
@@ -1192,8 +1202,10 @@
 
       dayTxns.slice(0, 4).forEach(t => {
         const entry = document.createElement('div');
-        entry.className   = `cal-entry ${t.type}`;
-        entry.textContent = `${t.type === 'income' ? '+' : t.type === 'transfer' ? '→' : '-'}$${Number(t.amount).toFixed(0)} ${t.description || ''}`;
+        const incoming = t.type === 'transfer' && t.transfer_to_account_id === selectedAccountId;
+        entry.className   = `cal-entry ${incoming ? 'income' : t.type}`;
+        const prefix = t.type === 'income' ? '+' : incoming ? '←' : t.type === 'transfer' ? '→' : '-';
+        entry.textContent = `${prefix}$${Number(t.amount).toFixed(0)} ${t.description || ''}`;
         entry.setAttribute('draggable', 'true');
         entry.title = 'Click to edit';
         entry.addEventListener('click', (e) => {
@@ -1464,6 +1476,9 @@
     populateModalSelects();
     document.getElementById('txn-account').value  = t.account_id || '';
     document.getElementById('txn-category').value = t.category_id || '';
+    if (t.type === 'transfer' && t.transfer_to_account_id) {
+      document.getElementById('txn-transfer-to').value = t.transfer_to_account_id;
+    }
   };
 
   window.closeModal = function () {
