@@ -700,7 +700,10 @@
 <!-- Add Transaction Modal -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
   <div class="modal">
-    <div class="modal-title" id="modal-title">Add Transaction</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <div class="modal-title" id="modal-title" style="margin-bottom:0">Add Transaction</div>
+      <button onclick="confirmCloseModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--neutral);line-height:1;padding:0 4px;" title="Close">✕</button>
+    </div>
     <div class="type-tabs">
       <button class="type-tab active expense" id="tab-expense"  onclick="setType('expense')">Expense</button>
       <button class="type-tab income"          id="tab-income"   onclick="setType('income')">Income</button>
@@ -1564,6 +1567,13 @@
     }
   };
 
+  window.confirmCloseModal = function () {
+    const hasData = document.getElementById('txn-desc').value.trim() ||
+                    document.getElementById('txn-amount').value;
+    if (hasData && !confirm('You have unsaved changes. Close without saving?')) return;
+    closeModal();
+  };
+
   window.closeModal = function () {
     editingTxnId = null;
     editingTxn   = null;
@@ -1580,7 +1590,7 @@
     ['recur-end-date-grp','recur-end-count-grp','recur-end-amount-grp'].forEach(id => document.getElementById(id).style.display = 'none');
   };
   window.closeModalOutside = function (e) {
-    if (e.target === document.getElementById('modal-overlay')) closeModal();
+    if (e.target === document.getElementById('modal-overlay')) confirmCloseModal();
   };
   window.setType = function (type) {
     currentType = type;
