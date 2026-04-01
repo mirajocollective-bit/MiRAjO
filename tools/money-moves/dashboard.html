@@ -1529,8 +1529,8 @@
     editingTxn  = t;
     editingDate = calendarDate || t.date;
 
-    // If recurring and clicking a projected occurrence, show choice prompt first
-    if (t.is_recurring && calendarDate && calendarDate !== t.date) {
+    // Always show scope prompt for recurring transactions
+    if (t.is_recurring) {
       document.getElementById('recur-edit-overlay').style.display = 'flex';
       return;
     }
