@@ -806,6 +806,20 @@
   </div>
 </div>
 
+<!-- Recurring Delete Choice Modal -->
+<div class="modal-overlay" id="recur-delete-overlay" style="display:none;z-index:300">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-title">Remove Recurring Transaction</div>
+    <p style="font-size:14px;color:var(--neutral);margin-bottom:20px;line-height:1.6">This is a recurring transaction. What would you like to remove?</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button onclick="handleRecurDelete('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
+      <button onclick="handleRecurDelete('future')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">This and all future occurrences</button>
+      <button onclick="handleRecurDelete('all')" style="padding:13px;background:#c0392b;border:none;border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:#fff">Delete entirely (all occurrences)</button>
+    </div>
+    <button onclick="document.getElementById('recur-delete-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
+  </div>
+</div>
+
 <!-- Day Detail Modal -->
 <div class="modal-overlay" id="day-detail-overlay" onclick="closeDayDetail(event)" style="display:none;align-items:flex-start;padding-top:80px;">
   <div class="modal" style="max-width:460px;width:100%;">
@@ -1637,7 +1651,7 @@
       editingTxnId = null; // don't update the original row on save
       document.getElementById('modal-title').textContent = 'Edit This Occurrence';
       document.getElementById('txn-delete-btn').style.display = 'block';
-      document.getElementById('txn-delete-btn').textContent   = 'Skip This Date';
+      document.getElementById('txn-delete-btn').textContent   = 'Remove This Occurrence';
       setType(t.type || 'expense');
       document.getElementById('txn-date').value   = date;
       document.getElementById('txn-amount').value = t.amount || '';
@@ -1713,24 +1727,54 @@
   };
 
   window.deleteTransaction = async function () {
-    // "Skip This Date" for a single occurrence
+    // "Remove This Occurrence" button — already in single-occurrence edit mode
     if (!editingTxnId && editingTxn?.is_recurring) {
-      if (!confirm('Skip this occurrence? It will be removed from this date only.')) return;
-      const excs = Array.isArray(editingTxn.recur_exceptions) ? [...editingTxn.recur_exceptions] : [];
-      const idx = excs.findIndex(e => e.date === editingDate);
-      if (idx >= 0) excs[idx] = { date: editingDate, skip: true };
-      else excs.push({ date: editingDate, skip: true });
-      const { error } = await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', editingTxn.id);
-      if (error) { alert('Error: ' + error.message); return; }
-      window._recurExcSave = null;
-      closeModal();
-      await loadAll();
+      await handleRecurDelete('one');
       return;
     }
+    // Editing original recurring transaction — show scope prompt
+    if (editingTxnId && editingTxn?.is_recurring) {
+      closeModal();
+      document.getElementById('recur-delete-overlay').style.display = 'flex';
+      return;
+    }
+    // Non-recurring — straight delete
     if (!editingTxnId) return;
     if (!confirm('Delete this transaction? This cannot be undone.')) return;
     const { error } = await supabase.from('mm_transactions').delete().eq('id', editingTxnId);
     if (error) { alert('Error deleting: ' + error.message); return; }
+    closeModal();
+    await loadAll();
+  };
+
+  window.handleRecurDelete = async function (scope) {
+    document.getElementById('recur-delete-overlay').style.display = 'none';
+    const t    = editingTxn;
+    const date = editingDate;
+    if (!t) return;
+
+    if (scope === 'one') {
+      // Mark this date as removed in exceptions
+      const excs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+      const idx  = excs.findIndex(e => e.date === date);
+      if (idx >= 0) excs[idx] = { date, skip: true };
+      else excs.push({ date, skip: true });
+      const { error } = await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
+      if (error) { alert('Error: ' + error.message); return; }
+    } else if (scope === 'future') {
+      // End series the day before this date
+      const prev = new Date(date + 'T00:00:00');
+      prev.setDate(prev.getDate() - 1);
+      const endDate = `${prev.getFullYear()}-${String(prev.getMonth()+1).padStart(2,'0')}-${String(prev.getDate()).padStart(2,'0')}`;
+      const { error } = await supabase.from('mm_transactions').update({ recur_end_date: endDate }).eq('id', t.id);
+      if (error) { alert('Error: ' + error.message); return; }
+    } else if (scope === 'all') {
+      if (!confirm('Delete this recurring transaction entirely? This cannot be undone.')) return;
+      const { error } = await supabase.from('mm_transactions').delete().eq('id', t.id);
+      if (error) { alert('Error: ' + error.message); return; }
+    }
+
+    window._recurExcSave = null;
     closeModal();
     await loadAll();
   };
