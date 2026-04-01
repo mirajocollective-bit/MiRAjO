@@ -969,12 +969,15 @@
         <div class="account-tab-top">
           <div class="account-dot" style="background:${color}"></div>
           <div class="account-tab-name">${acct.name}</div>
+          <button class="acct-remove-btn" title="Remove account" onclick="removeAccount('${acct.id}','${acct.name.replace(/'/g,'\\\'')}')" style="margin-left:4px;background:none;border:none;cursor:pointer;color:#aaa;font-size:13px;line-height:1;padding:0 2px;display:none;">✕</button>
         </div>
         <div class="account-tab-type">${acct.type}</div>
         <div class="account-tab-balance ${balance >= 0 ? 'positive' : 'negative'}">
           ${balance >= 0 ? '' : '-'}$${Math.abs(balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </div>`;
       tab.onclick = () => selectAccount(acct.id);
+      tab.addEventListener('mouseenter', () => tab.querySelector('.acct-remove-btn').style.display = 'inline');
+      tab.addEventListener('mouseleave', () => tab.querySelector('.acct-remove-btn').style.display = 'none');
       bar.insertBefore(tab, addBtn);
     });
 
@@ -1561,6 +1564,15 @@
     document.getElementById('new-acct-balance').value = '';
     await loadAll();
     selectAccount(data.id);
+  };
+
+  window.removeAccount = async function (id, name) {
+    if (!confirm(`Remove "${name}"?\n\nThis will also delete all transactions for this account. This cannot be undone.`)) return;
+    // Soft-delete: set is_active = false so data is retained but account disappears
+    const { error } = await supabase.from('mm_accounts').update({ is_active: false }).eq('id', id);
+    if (error) { alert('Error removing account: ' + error.message); return; }
+    if (selectedAccountId === id) selectedAccountId = null;
+    await loadAll();
   };
 
   // ── View toggle ──────────────────────────────────────────────────────────────
