@@ -806,6 +806,19 @@
   </div>
 </div>
 
+<!-- Recurring Drag Scope Modal -->
+<div class="modal-overlay" id="recur-drag-overlay" style="display:none;z-index:300">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-title">Move Recurring Transaction</div>
+    <p style="font-size:14px;color:var(--neutral);margin-bottom:20px;line-height:1.6">Which occurrences do you want to move?</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button onclick="handleRecurDrag('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
+      <button onclick="handleRecurDrag('all')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">All occurrences</button>
+    </div>
+    <button onclick="document.getElementById('recur-drag-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
+  </div>
+</div>
+
 <!-- Recurring Delete Choice Modal -->
 <div class="modal-overlay" id="recur-delete-overlay" style="display:none;z-index:300">
   <div class="modal" style="max-width:380px">
@@ -1233,9 +1246,21 @@
         cell.classList.remove('drag-over');
         const txnId    = e.dataTransfer.getData('txnId');
         const fromDate = e.dataTransfer.getData('fromDate');
+        const isRec    = e.dataTransfer.getData('isRecurring') === '1';
         if (!txnId || fromDate === dateStr) return;
-        await supabase.from('mm_transactions').update({ date: dateStr }).eq('id', txnId);
-        await loadAll();
+        if (isRec) {
+          // Store pending drag info and show scope prompt
+          const t = transactions.find(x => x.id === txnId);
+          if (t) {
+            editingTxn  = t;
+            editingDate = fromDate;
+            window._dragTargetDate = dateStr;
+            document.getElementById('recur-drag-overlay').style.display = 'flex';
+          }
+        } else {
+          await supabase.from('mm_transactions').update({ date: dateStr }).eq('id', txnId);
+          await loadAll();
+        }
       });
 
       const dateNum = document.createElement('div');
@@ -1259,18 +1284,16 @@
           e.stopPropagation();
           openEditModal(displayT, dateStr);
         });
-        // Only allow drag on non-recurring transactions
-        if (!displayT.is_recurring) {
-          entry.setAttribute('draggable', 'true');
-          entry.addEventListener('dragstart', (e) => {
-            e.stopPropagation();
-            e.dataTransfer.setData('txnId', displayT.id);
-            e.dataTransfer.setData('fromDate', dateStr);
-            e.dataTransfer.effectAllowed = 'move';
-            entry.classList.add('dragging');
-          });
-          entry.addEventListener('dragend', () => entry.classList.remove('dragging'));
-        }
+        entry.setAttribute('draggable', 'true');
+        entry.addEventListener('dragstart', (e) => {
+          e.stopPropagation();
+          e.dataTransfer.setData('txnId', displayT.id);
+          e.dataTransfer.setData('fromDate', dateStr);
+          e.dataTransfer.setData('isRecurring', displayT.is_recurring ? '1' : '0');
+          e.dataTransfer.effectAllowed = 'move';
+          entry.classList.add('dragging');
+        });
+        entry.addEventListener('dragend', () => entry.classList.remove('dragging'));
         cell.appendChild(entry);
       });
 
@@ -1665,16 +1688,37 @@
       populateModalSelects();
       document.getElementById('txn-account').value  = t.account_id || '';
       document.getElementById('txn-category').value = t.category_id || '';
-      // Override save to write exception
+      // Override save to write exception or move to new date
       window._recurExcSave = async function () {
-        const amount = parseFloat(document.getElementById('txn-amount').value);
-        const desc   = document.getElementById('txn-desc').value.trim();
-        const excs   = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
-        const idx    = excs.findIndex(e => e.date === date);
-        const entry  = { date, amount, description: desc };
-        if (idx >= 0) excs[idx] = entry; else excs.push(entry);
-        const { error } = await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
-        if (error) { alert('Error saving: ' + error.message); return; }
+        const newDate = document.getElementById('txn-date').value;
+        const amount  = parseFloat(document.getElementById('txn-amount').value);
+        const desc    = document.getElementById('txn-desc').value.trim();
+        const excs    = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+
+        // Always skip the original occurrence date
+        const skipIdx = excs.findIndex(e => e.date === date);
+        if (skipIdx >= 0) excs[skipIdx] = { date, skip: true };
+        else excs.push({ date, skip: true });
+
+        if (newDate && newDate !== date) {
+          // Date changed — skip original and insert a one-time transaction on the new date
+          const { error: excErr } = await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
+          if (excErr) { alert('Error saving: ' + excErr.message); return; }
+          const { data: memberRows } = await supabase.from('mm_members').select('id').eq('user_id', user.id).limit(1);
+          const { error: insErr } = await supabase.from('mm_transactions').insert({
+            household_id: t.household_id, account_id: t.account_id,
+            member_id: memberRows?.[0]?.id || null, category_id: t.category_id,
+            type: t.type, amount, date: newDate, description: desc,
+            notes: t.notes || null, is_recurring: false,
+          });
+          if (insErr) { alert('Error saving: ' + insErr.message); return; }
+        } else {
+          // Same date — just update amount/description as exception
+          const entry = { date, amount, description: desc };
+          if (skipIdx >= 0) excs[skipIdx] = entry; else { excs.pop(); excs.push(entry); }
+          const { error } = await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
+          if (error) { alert('Error saving: ' + error.message); return; }
+        }
         window._recurExcSave = null;
         closeModal();
         await loadAll();
@@ -1746,6 +1790,36 @@
     const { error } = await supabase.from('mm_transactions').delete().eq('id', editingTxnId);
     if (error) { alert('Error deleting: ' + error.message); return; }
     closeModal();
+    await loadAll();
+  };
+
+  window.handleRecurDrag = async function (scope) {
+    document.getElementById('recur-drag-overlay').style.display = 'none';
+    const t          = editingTxn;
+    const fromDate   = editingDate;
+    const toDate     = window._dragTargetDate;
+    window._dragTargetDate = null;
+    if (!t || !toDate) return;
+
+    if (scope === 'one') {
+      // Skip original date, insert a one-time transaction on the new date
+      const excs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+      const idx  = excs.findIndex(e => e.date === fromDate);
+      if (idx >= 0) excs[idx] = { date: fromDate, skip: true };
+      else excs.push({ date: fromDate, skip: true });
+      await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
+      // Insert one-time copy at new date
+      const { data: memberRows } = await supabase.from('mm_members').select('id').eq('user_id', user.id).limit(1);
+      await supabase.from('mm_transactions').insert({
+        household_id: t.household_id, account_id: t.account_id,
+        member_id: memberRows?.[0]?.id || null, category_id: t.category_id,
+        type: t.type, amount: t.amount, date: toDate,
+        description: t.description, notes: t.notes, is_recurring: false,
+      });
+    } else {
+      // Move the entire series start date
+      await supabase.from('mm_transactions').update({ date: toDate }).eq('id', t.id);
+    }
     await loadAll();
   };
 
