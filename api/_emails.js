@@ -3,7 +3,7 @@
 
 const LOGIN = 'https://www.mirajoco.org/programs/login';
 const CERT  = 'https://www.mirajoco.org/programs/certificate';
-const LOGO  = 'https://www.mirajoco.org/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png';
+const LOGO  = 'https://www.mirajoco.org/img/logo-horizontal.png';
 
 function wrap(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
