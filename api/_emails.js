@@ -306,17 +306,17 @@ export const SEQUENCES = {
           red: {
             headline: 'Disconnected — You have been running on empty.',
             body: `This feeling has a name. It is not a personality flaw and it is not permanent — but it is real, and it has been real for a while. You are not lost. You just have not had the structure to find your way back to yourself.`,
-            next: `<a href="https://www.mirajoco.org/25daysand25nights" style="color:#5A3F9A;">25 Days and 25 Nights</a> was built for exactly this. One day at a time, one practice at a time — reconnecting to the life that is actually yours.`,
+            next: `<a href="https://www.mirajoco.org/25daysand25nights?offer=audit" style="color:#5A3F9A;">25 Days and 25 Nights</a> was built for exactly this. One day at a time, one practice at a time — reconnecting to the life that is actually yours.`,
           },
           yellow: {
             headline: 'Drifting — You know something feels off.',
             body: `You have moments of clarity. You know what you want in theory. But the gap between where you are and where you want to be feels wider than it should. That gap does not close by itself.`,
-            next: `<a href="https://www.mirajoco.org/25daysand25nights" style="color:#5A3F9A;">25 Days and 25 Nights</a> gives you the daily structure to stop drifting and start moving with intention.`,
+            next: `<a href="https://www.mirajoco.org/25daysand25nights?offer=audit" style="color:#5A3F9A;">25 Days and 25 Nights</a> gives you the daily structure to stop drifting and start moving with intention.`,
           },
           green: {
             headline: 'Connected — And ready to go deeper.',
             body: `You are self-aware, intentional, and moving in the right direction. The question is whether you are building with the same intentionality you live with.`,
-            next: `<a href="https://www.mirajoco.org/25daysand25nights" style="color:#5A3F9A;">25 Days and 25 Nights</a> will push you further. This is for people who are ready to stop settling for good and start building great.`,
+            next: `<a href="https://www.mirajoco.org/25daysand25nights?offer=audit" style="color:#5A3F9A;">25 Days and 25 Nights</a> will push you further. This is for people who are ready to stop settling for good and start building great.`,
           },
         };
         const c = copies[result];
@@ -326,7 +326,7 @@ export const SEQUENCES = {
           p(`<strong style="color:#122012;">${c.headline}</strong>`) +
           p(c.body) +
           p(c.next) +
-          btn('Learn About 25 Days and 25 Nights', 'https://www.mirajoco.org/25daysand25nights') +
+          btn('Learn About 25 Days and 25 Nights', 'https://www.mirajoco.org/25daysand25nights?offer=audit') +
           p(`If you have questions before you jump in, reply to this email. I am happy to talk through what this looks like for you.`)
         );
       },
@@ -341,7 +341,7 @@ export const SEQUENCES = {
         p(`You outsourced your own awareness — maybe gradually, maybe all at once. To other people's opinions. To what makes sense on paper. To what you are supposed to want at this stage of your life. And now there is a gap between the life you are living and the one that actually fits you.`) +
         p(`That gap closes one day at a time. Not in a weekend. Not in a single breakthrough moment. One day at a time, with the right structure underneath you.`) +
         p(`That is what 25 Days and 25 Nights is built to give you.`) +
-        btn('See What Is Inside', 'https://www.mirajoco.org/25daysand25nights')
+        btn('See What Is Inside', 'https://www.mirajoco.org/25daysand25nights?offer=audit')
       ),
     },
     {
@@ -353,7 +353,7 @@ export const SEQUENCES = {
         p(`Sometimes just naming the disconnection is enough to start the movement. Sometimes it sits there and nothing changes until something pushes you to actually do something about it.`) +
         p(`If you are in the second group, here is the push: 25 Days and 25 Nights is $597. One time. Lifetime access. Daily video lessons, journal prompts, and the Non-Negotiables practice that will actually change your daily defaults — not just your awareness of them.`) +
         p(`Awareness without structure is just discomfort with better vocabulary. This gives you both.`) +
-        btn('Enroll in 25 Days and 25 Nights', 'https://www.mirajoco.org/25daysand25nights') +
+        btn('Enroll in 25 Days and 25 Nights', 'https://www.mirajoco.org/25daysand25nights?offer=audit') +
         p(`If it is not the right time, that is okay. But if the audit hit something real — this is the next step.`)
       ),
     },

@@ -1508,6 +1508,12 @@
 
   // ── Discount pop-up ───────────────────────────────
   (function() {
+    const fromAudit = new URLSearchParams(window.location.search).get('offer') === 'audit';
+    if (fromAudit) {
+      document.getElementById('discount-popup').style.display = 'flex';
+      sessionStorage.setItem('mj_25d_popup_shown', '1');
+      return;
+    }
     if (sessionStorage.getItem('mj_25d_popup_shown')) return;
     setTimeout(function() {
       document.getElementById('discount-popup').style.display = 'flex';
