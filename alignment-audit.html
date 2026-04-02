@@ -110,63 +110,89 @@
 
     /* ── ASSESSMENT ─────────────────────────── */
     .assessment-wrap {
-      max-width: 680px;
+      max-width: 600px;
       margin: 0 auto;
       padding: 48px 24px 80px;
     }
 
-    .progress-bar-wrap {
+    /* Progress */
+    .quiz-progress {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .quiz-step-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--p-light);
+      margin-bottom: 14px;
+    }
+    .quiz-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .quiz-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
       background: var(--p-lavender);
-      border-radius: 8px;
-      height: 8px;
-      margin-bottom: 8px;
-      overflow: hidden;
+      transition: background 0.25s, transform 0.25s;
     }
-    .progress-bar-fill {
-      height: 100%;
+    .quiz-dot.done {
       background: var(--p-mid);
-      border-radius: 8px;
-      transition: width 0.3s ease;
-      width: 0%;
     }
-    .progress-label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 36px;
-      text-align: right;
+    .quiz-dot.current {
+      background: var(--p-light);
+      transform: scale(1.4);
+      box-shadow: 0 0 0 3px rgba(139,114,200,0.25);
     }
 
+    /* Card */
     .question-card {
+      display: none;
       background: #fff;
-      border: 1px solid var(--p-lavender);
-      border-radius: 14px;
-      padding: 26px 24px;
-      margin-bottom: 16px;
-      transition: border-color 0.2s;
+      border-radius: 24px;
+      padding: 44px 40px;
+      box-shadow: 0 24px 64px rgba(61,43,114,0.16), 0 4px 16px rgba(61,43,114,0.08);
+      margin-bottom: 28px;
     }
-    .question-card.answered {
-      border-color: rgba(90, 63, 154, 0.3);
-      background: #FDFCFF;
+    .question-card.active {
+      display: block;
+      animation: cardSlideIn 0.36s cubic-bezier(0.25,0.46,0.45,0.94) both;
     }
+    .question-card.active.slide-back {
+      animation: cardSlideInBack 0.36s cubic-bezier(0.25,0.46,0.45,0.94) both;
+    }
+    @keyframes cardSlideIn {
+      from { opacity: 0; transform: translateX(48px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes cardSlideInBack {
+      from { opacity: 0; transform: translateX(-48px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
     .question-number {
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--p-light);
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
     .question-text {
-      font-size: 16px;
-      font-weight: 500;
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
       color: var(--text);
-      margin-bottom: 18px;
-      line-height: 1.55;
+      margin-bottom: 32px;
+      line-height: 1.45;
     }
     .scale-options {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .scale-option { position: relative; }
     .scale-option input[type="radio"] {
@@ -178,46 +204,124 @@
     .scale-option label {
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10px 6px;
+      gap: 14px;
+      padding: 14px 18px;
       border: 1.5px solid #DDD8F0;
-      border-radius: 8px;
-      font-size: 12px;
+      border-radius: 12px;
+      font-size: 15px;
       font-weight: 500;
       color: var(--muted);
       cursor: pointer;
       transition: all 0.15s ease;
-      line-height: 1.3;
-      min-height: 52px;
+    }
+    .scale-option label::before {
+      content: '';
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #DDD8F0;
+      flex-shrink: 0;
+      transition: all 0.15s;
     }
     .scale-option input:checked + label {
       background: var(--p-mid);
       border-color: var(--p-mid);
       color: #fff;
     }
+    .scale-option input:checked + label::before {
+      background: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.6);
+    }
     .scale-option label:hover {
       border-color: var(--p-light);
       color: var(--p-deep);
+      background: var(--p-cream);
     }
 
-    /* ── SUBMIT ─────────────────────────────── */
-    .submit-wrap { text-align: center; margin-top: 48px; }
+    /* Navigation */
+    .quiz-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 52px;
+    }
+    .btn-back {
+      background: none;
+      border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 10px 0;
+      transition: color 0.15s;
+      visibility: hidden;
+    }
+    .btn-back.visible { visibility: visible; }
+    .btn-back:hover { color: var(--p-deep); }
+
     .btn-submit {
       background: var(--p-mid);
       color: #fff;
       border: none;
       border-radius: 10px;
-      padding: 18px 48px;
+      padding: 16px 40px;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s;
+      display: none;
+      margin-left: auto;
     }
-    .btn-submit:disabled { background: #A898CC; cursor: not-allowed; }
-    .btn-submit:not(:disabled):hover { background: var(--p-deep); transform: translateY(-1px); }
-    .submit-note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+    .btn-submit.visible { display: block; }
+    .btn-submit:hover { background: var(--p-deep); transform: translateY(-1px); }
+
+    /* Celebration overlay */
+    .celebration-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(29,20,60,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 9997;
+      align-items: center;
+      justify-content: center;
+    }
+    .celebration-overlay.active { display: flex; }
+    .celebration-card {
+      text-align: center;
+      padding: 24px;
+      animation: celebIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    .celebration-icon {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--p-mid);
+      border: 3px solid #C4B8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: #fff;
+      margin: 0 auto 24px;
+    }
+    .celebration-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      line-height: 1.3;
+      color: #fff;
+    }
+    .celebration-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 10px;
+    }
+    @keyframes celebIn {
+      from { opacity: 0; transform: scale(0.8) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
 
     /* ── MODAL ──────────────────────────────── */
     .modal-overlay {
@@ -499,7 +603,8 @@
 
     @media (max-width: 600px) {
       .modal-card { padding: 36px 24px; }
-      .scale-options { grid-template-columns: repeat(2, 1fr); }
+      .question-card { padding: 32px 24px; }
+      .question-text { font-size: 19px; }
       .result-cta { padding: 36px 20px; }
     }
   </style>
@@ -511,7 +616,7 @@
 
 <!-- HEADER -->
 <header class="site-header">
-  <a href="/"><img src="/img/MiRAjO Collective Logo - White.png" alt="MiRAjO Collective" onerror="this.style.display='none'"></a>
+  <a href="/"><img src="/img/logo-horizontal.png" alt="MiRAjO"></a>
   <div class="header-label">The Alignment Audit</div>
 </header>
 
@@ -531,10 +636,11 @@
 
 <!-- ASSESSMENT -->
 <div class="assessment-wrap" id="assessmentWrap">
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="progressFill"></div>
+
+  <div class="quiz-progress">
+    <div class="quiz-step-label">Question <span id="stepNum">1</span> of 10</div>
+    <div class="quiz-dots" id="quizDots"></div>
   </div>
-  <div class="progress-label" id="progressLabel">0 of 10 answered</div>
 
   <div class="question-card" id="qcard-0">
     <div class="question-number">01</div>
@@ -646,9 +752,19 @@
     </div>
   </div>
 
-  <div class="submit-wrap">
-    <button class="btn-submit" id="submitBtn" disabled onclick="openModal()">See My Results</button>
-    <div class="submit-note">Answer all 10 questions to unlock your score.</div>
+  <div class="quiz-nav">
+    <button class="btn-back" id="backBtn" onclick="prevCard()">← Back</button>
+    <button class="btn-submit" id="submitBtn" onclick="triggerCelebration()">See My Results</button>
+  </div>
+
+</div>
+
+<!-- CELEBRATION OVERLAY -->
+<div class="celebration-overlay" id="celebrationOverlay">
+  <div class="celebration-card">
+    <div class="celebration-icon">✓</div>
+    <div class="celebration-text">You showed up<br>for yourself.</div>
+    <div class="celebration-sub">That's where it starts.</div>
   </div>
 </div>
 
@@ -718,6 +834,8 @@
 <script>
   const TOTAL = 10;
   const answers = {};
+  let currentCard = 0;
+  let isAnimating = false;
 
   const questionTexts = [
     'I know what I want and I am actively building toward it.',
@@ -732,34 +850,125 @@
     'I believe my best chapter is still ahead of me.'
   ];
 
-  // ── Track answers ─────────────────────────
+  // ── Init: show first card + build dots ────────────
+  (function() {
+    document.getElementById('qcard-0').classList.add('active');
+    const container = document.getElementById('quizDots');
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.createElement('div');
+      d.className = 'quiz-dot' + (i === 0 ? ' current' : '');
+      d.id = 'dot-' + i;
+      container.appendChild(d);
+    }
+  })();
+
+  function updateDots() {
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.getElementById('dot-' + i);
+      d.className = 'quiz-dot';
+      if (i < currentCard) d.classList.add('done');
+      else if (i === currentCard) d.classList.add('current');
+    }
+  }
+
+  function updateNav() {
+    document.getElementById('backBtn').classList.toggle('visible', currentCard > 0);
+    if (currentCard === TOTAL - 1 && answers[TOTAL - 1] !== undefined) {
+      document.getElementById('submitBtn').classList.add('visible');
+    }
+  }
+
+  function goToCard(n, goingBack) {
+    if (isAnimating || n < 0 || n >= TOTAL) return;
+    isAnimating = true;
+
+    document.getElementById('qcard-' + currentCard).classList.remove('active', 'slide-back');
+    currentCard = n;
+
+    const newCard = document.getElementById('qcard-' + n);
+    newCard.classList.remove('active', 'slide-back');
+    if (goingBack) newCard.classList.add('slide-back');
+    newCard.classList.add('active');
+
+    document.getElementById('stepNum').textContent = n + 1;
+    updateDots();
+    updateNav();
+    setTimeout(() => { isAnimating = false; }, 380);
+  }
+
+  function prevCard() { goToCard(currentCard - 1, true); }
+
+  // ── Track answers + auto-advance ──────────────────
   document.querySelectorAll('.scale-options input[type="radio"]').forEach(input => {
     input.addEventListener('change', function() {
       const qIndex = parseInt(this.name.replace('q', ''));
       answers[qIndex] = parseInt(this.value);
-      document.getElementById('qcard-' + qIndex).classList.add('answered');
-      updateProgress();
+      if (qIndex === TOTAL - 1) {
+        document.getElementById('submitBtn').classList.add('visible');
+      } else {
+        setTimeout(() => goToCard(qIndex + 1, false), 280);
+      }
     });
   });
 
-  function updateProgress() {
-    const answered = Object.keys(answers).length;
-    const pct = (answered / TOTAL) * 100;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('progressLabel').textContent = answered + ' of ' + TOTAL + ' answered';
-    document.getElementById('submitBtn').disabled = answered < TOTAL;
-    if (answered >= TOTAL) {
-      document.querySelector('.submit-note').style.display = 'none';
+  // ── Confetti ──────────────────────────────────────
+  function launchConfetti() {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const colors = ['#5A3F9A','#C9A86C','#8B72C8','#3D2B72','#C4B8F0','#EDE8F8','#ffffff'];
+    const particles = Array.from({length: 130}, () => ({
+      x: Math.random() * canvas.width,
+      y: -10 - Math.random() * 160,
+      vx: (Math.random() - 0.5) * 5,
+      vy: 1.5 + Math.random() * 4,
+      rot: Math.random() * 360,
+      rotV: (Math.random() - 0.5) * 10,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      w: 7 + Math.random() * 9,
+      h: 3 + Math.random() * 5,
+      alpha: 1
+    }));
+    const start = Date.now(), dur = 3200;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const elapsed = Date.now() - start;
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.07; p.rot += p.rotV;
+        if (elapsed > dur - 1000) p.alpha = Math.max(0, 1 - (elapsed - (dur - 1000)) / 1000);
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      if (elapsed < dur) requestAnimationFrame(draw); else canvas.remove();
     }
+    requestAnimationFrame(draw);
   }
 
-  // ── Modal ────────────────────────────────
+  // ── Celebration → Modal ───────────────────────────
+  function triggerCelebration() {
+    launchConfetti();
+    const overlay = document.getElementById('celebrationOverlay');
+    overlay.classList.add('active');
+    setTimeout(() => {
+      overlay.classList.remove('active');
+      openModal();
+    }, 1800);
+  }
+
   function openModal() {
     document.getElementById('modalOverlay').classList.add('active');
     document.getElementById('firstName').focus();
   }
 
-  // ── Submit + reveal ──────────────────────
+  // ── Submit + reveal ───────────────────────────────
   async function submitAndReveal() {
     const email = document.getElementById('emailInput').value.trim();
     const firstName = document.getElementById('firstName').value.trim();
@@ -791,9 +1000,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, firstName, result, score, type: 'alignment-audit', turnstileToken })
       });
-    } catch (e) {
-      // Don't block results on API error
-    }
+    } catch (e) {}
 
     document.getElementById('modalOverlay').classList.remove('active');
     showResults(score, result);
@@ -802,8 +1009,9 @@
     if (window.fbq) fbq('track', 'Lead');
   }
 
-  // ── Build results ────────────────────────
+  // ── Build results ─────────────────────────────────
   function showResults(score, result) {
+    document.getElementById('assessmentWrap').style.display = 'none';
     const section = document.getElementById('resultsSection');
     section.classList.add('visible');
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -817,13 +1025,11 @@
     badge.textContent = labels[result];
     badge.className = 'result-badge ' + result;
 
-    // Gauge indicator
     const pct = Math.min(95, Math.max(5, ((score - 10) / (40 - 10)) * 100));
     setTimeout(() => {
       document.getElementById('gaugeIndicator').style.left = pct + '%';
     }, 100);
 
-    // Copy
     const copies = {
       red: {
         title: 'Disconnected. You\'ve been running on empty.',
@@ -851,7 +1057,6 @@
     document.getElementById('ctaHeadline').textContent = c.ctaH;
     document.getElementById('ctaBody').textContent = c.ctaB;
 
-    // Show lowest-scoring areas
     const sorted = Object.keys(answers)
       .map(i => ({ index: parseInt(i), score: answers[i] }))
       .sort((a, b) => a.score - b.score)
@@ -860,14 +1065,10 @@
     const list = document.getElementById('highlightList');
     list.innerHTML = '';
     const dotColor = { 1: 'red', 2: 'red', 3: 'yellow', 4: 'green' };
-
     sorted.forEach(item => {
       const div = document.createElement('div');
       div.className = 'highlight-item';
-      div.innerHTML = `
-        <div class="highlight-dot ${dotColor[item.score] || 'yellow'}"></div>
-        <div class="highlight-q">${questionTexts[item.index]}</div>
-      `;
+      div.innerHTML = `<div class="highlight-dot ${dotColor[item.score] || 'yellow'}"></div><div class="highlight-q">${questionTexts[item.index]}</div>`;
       list.appendChild(div);
     });
   }
