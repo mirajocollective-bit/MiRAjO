@@ -830,7 +830,7 @@
     <div style="display:flex;flex-direction:column;gap:10px">
       <button onclick="handleRecurDelete('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
       <button onclick="handleRecurDelete('future')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">This and all future occurrences</button>
-      <button onclick="handleRecurDelete('all')" style="padding:13px;background:#c0392b;border:none;border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:#fff">Delete entirely (all occurrences)</button>
+      <button onclick="handleRecurDelete('all')" style="padding:9px 13px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;text-align:left;color:var(--neutral)">Remove entirely (all occurrences)</button>
     </div>
     <button onclick="document.getElementById('recur-delete-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
   </div>
@@ -1223,7 +1223,16 @@
       const dayTxns = transactions.filter(t => {
         // Source account transactions (all types)
         if (t.account_id === selectedAccountId) {
-          if (t.date === dateStr) return true;
+          if (t.date === dateStr) {
+            if (t.is_recurring) {
+              // Don't show original date if it's been skipped via exception
+              const exc = getRecurException(t, dateStr);
+              if (exc?.skip) return false;
+              // Don't show original date if recur_end_date was set before it (series killed by "this & future" edit)
+              if (t.recur_end_date && new Date(dateStr + 'T00:00:00') > new Date(t.recur_end_date + 'T00:00:00')) return false;
+            }
+            return true;
+          }
           return recurringMatchesDay(t, currentYear, currentMonth, d);
         }
         // Incoming transfers to this account
@@ -1251,17 +1260,15 @@
         cell.classList.remove('drag-over');
         const txnId    = e.dataTransfer.getData('txnId');
         const fromDate = e.dataTransfer.getData('fromDate');
-        const isRec    = e.dataTransfer.getData('isRecurring') === '1';
         if (!txnId || fromDate === dateStr) return;
-        if (isRec) {
+        const t = transactions.find(x => x.id === txnId);
+        if (!t) return;
+        if (t.is_recurring) {
           // Store pending drag info and show scope prompt
-          const t = transactions.find(x => x.id === txnId);
-          if (t) {
-            editingTxn  = t;
-            editingDate = fromDate;
-            window._dragTargetDate = dateStr;
-            document.getElementById('recur-drag-overlay').style.display = 'flex';
-          }
+          editingTxn  = t;
+          editingDate = fromDate;
+          window._dragTargetDate = dateStr;
+          document.getElementById('recur-drag-overlay').style.display = 'flex';
         } else {
           await supabase.from('mm_transactions').update({ date: dateStr }).eq('id', txnId);
           await loadAll();
