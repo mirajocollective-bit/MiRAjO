@@ -74,41 +74,108 @@
 
     /* ── HERO ───────────────────────────────── */
     .hero {
-      background: linear-gradient(160deg, var(--p-deep) 0%, var(--p-mid) 100%);
+      background: linear-gradient(180deg, #0D0A1A 0%, #1C1040 100%);
       color: #fff;
       text-align: center;
-      padding: 64px 24px 56px;
+      padding: 100px 24px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(90,63,154,0.45) 0%, transparent 65%);
+      pointer-events: none;
     }
     .hero-eyebrow {
       font-size: 11px;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      color: #A990E8;
-      margin-bottom: 20px;
+      color: #8B72C8;
+      margin-bottom: 28px;
+      position: relative;
     }
     .hero h1 {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(30px, 6vw, 52px);
-      line-height: 1.15;
-      margin-bottom: 20px;
+      font-size: clamp(44px, 9vw, 82px);
+      line-height: 1.05;
+      margin-bottom: 24px;
+      position: relative;
     }
     .hero h1 em {
       font-style: italic;
       color: #C4B8F0;
+      display: block;
     }
-    .hero p {
-      font-size: 17px;
-      color: rgba(255,255,255,0.82);
-      max-width: 560px;
-      margin: 0 auto 28px;
-      line-height: 1.7;
+    .hero-sub {
+      font-size: 18px;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      margin: 0 auto 64px;
+      line-height: 1.75;
+      position: relative;
     }
-    .hero-meta {
+    .hero-stats {
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 24px;
-      font-size: 13px;
-      color: rgba(255,255,255,0.55);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero-stat {
+      flex: 1;
+      padding: 36px 16px;
+      text-align: center;
+    }
+    .hero-stat-num {
+      display: block;
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(48px, 8vw, 72px);
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .hero-stat-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .hero-stat-div {
+      width: 1px;
+      height: 56px;
+      background: rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
+
+    /* ── QUOTE STRIPS ───────────────────────── */
+    .quote-strip {
+      background: var(--p-deep);
+      padding: 52px 32px;
+      text-align: center;
+    }
+    .quote-strip blockquote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(19px, 3vw, 27px);
+      color: rgba(255,255,255,0.88);
+      font-style: italic;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    .quote-strip blockquote::before { content: '\201C'; }
+    .quote-strip blockquote::after  { content: '\201D'; }
+    .quote-attr {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-top: 18px;
     }
 
     /* ── ASSESSMENT ─────────────────────────── */
@@ -626,16 +693,30 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">Free Assessment</div>
-  <h1>You're not lost.<br><em>You're just not listening<br>to yourself.</em></h1>
-  <p>Something feels off but you can't quite name it. This 5-minute audit shows you exactly where the disconnection is showing up and gives you a clear starting point to change it.</p>
-  <div class="hero-meta">
-    <span>10 questions</span>
-    <span>·</span>
-    <span>5 minutes</span>
-    <span>·</span>
-    <span>honest answers only</span>
+  <h1>You already know<br><em>something is off.</em></h1>
+  <p class="hero-sub">This is where you find out what. Ten questions. No fluff. A score that shows you exactly where the gap is showing up and what to do about it.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">10</span>
+      <span class="hero-stat-label">Questions</span>
+    </div>
+    <div class="hero-stat-div"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">5</span>
+      <span class="hero-stat-label">Minutes</span>
+    </div>
+    <div class="hero-stat-div"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" style="font-size:clamp(22px,4vw,34px);letter-spacing:-0.5px;">Honest</span>
+      <span class="hero-stat-label">Answers Only</span>
+    </div>
   </div>
 </section>
+
+<!-- QUOTE STRIP 1 -->
+<div class="quote-strip">
+  <blockquote>Most people know something is off. The gap is never the mystery. The mystery is why we keep living in it.</blockquote>
+</div>
 
 <!-- ASSESSMENT -->
 <div class="assessment-wrap" id="assessmentWrap">
@@ -816,6 +897,11 @@
   <div class="highlight-card" id="highlightCard">
     <div class="highlight-title">Where It's Showing Up For You</div>
     <div id="highlightList"></div>
+  </div>
+
+  <!-- QUOTE STRIP 2 -->
+  <div class="quote-strip" style="border-radius:16px;margin-bottom:32px;">
+    <blockquote>Self-awareness without structure is just discomfort with better vocabulary.</blockquote>
   </div>
 
   <!-- CTA -->
