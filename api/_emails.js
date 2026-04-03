@@ -369,9 +369,11 @@ export const SEQUENCES = {
         greet(n) +
         p(`25 days. 25 nights. You did the work.`) +
         p(`That's not a small thing. Most people who buy programs like this never finish them. You're not most people.`) +
-        p(`The question now is: what are you going to do with what you know?`) +
-        p(`A seed has been planted. Water it. Protect it. Give it time.`) +
-        btn('Get Your Certificate', CERT)
+        p(`Grab your certificate. You earned it.`) +
+        btn('Get Your Certificate', CERT) +
+        p(`Now here is the real question: what happens next?`) +
+        p(`The 25 days gave you structure and a foundation. What coaching does is go into the specific places where the structure alone is not enough. The patterns that keep showing up. The decisions you keep circling. The version of yourself you know is there but haven't fully stepped into yet.`) +
+        p(`If that sounds like where you are, coaching is the next layer. It is not for everyone. But if the course moved something in you and you want to keep moving, reply to this email and tell me what you are working through. I will tell you honestly whether I think it is a fit.`)
       ),
     },
     {
@@ -381,8 +383,11 @@ export const SEQUENCES = {
         greet(n) +
         p(`Four days since you finished. What's actually different?`) +
         p(`Not what should be different. Not what you planned to change. What is actually different in how you're showing up?`) +
-        p(`If the answer is nothing, that's the work. Start there.`) +
-        p(`Reply to this email and tell me one thing you've done differently. I read every reply.`)
+        p(`If the answer is something, keep building on it. If the answer is not much, that is honest and it is worth sitting with.`) +
+        p(`Two ways to go deeper from here, depending on where you are:`) +
+        p(`<strong style="color:#122012;">If you want 1:1 support:</strong> Coaching is where we get into your specific situation. Not a program. A real conversation about what you are building and what is in the way. <a href="https://www.mirajoco.org/coaching" style="color:#256B42;">Learn more here.</a>`) +
+        p(`<strong style="color:#122012;">If you are building with a partner:</strong> Couples in Entrepreneurship takes everything you just did individually and brings it into the relationship and the business. Because the work does not stop at you. <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#256B42;">Learn more here.</a>`) +
+        p(`Reply and tell me one thing that has shifted. I read every one.`)
       ),
     },
   ],
