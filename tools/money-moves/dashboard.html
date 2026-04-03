@@ -1593,6 +1593,7 @@
     editingRecurScope = null;
     modalSnapshot     = null;
     window._recurExcSave = null;
+    window._recurFutureOriginal = null;
     document.getElementById('modal-overlay').classList.remove('open');
     document.getElementById('modal-title').textContent = 'Add Transaction';
     document.getElementById('txn-delete-btn').style.display = 'none';
@@ -1687,6 +1688,15 @@
     }
 
     if (error) { alert('Error saving: ' + error.message); return; }
+
+    // Apply deferred recur_end_date for "this & future" edits
+    if (window._recurFutureOriginal) {
+      const { id, endDate } = window._recurFutureOriginal;
+      window._recurFutureOriginal = null;
+      const { error: futErr } = await supabase.from('mm_transactions').update({ recur_end_date: endDate }).eq('id', id);
+      if (futErr) { alert('Error updating series: ' + futErr.message); return; }
+    }
+
     closeModal();
     await loadAll();
   };
@@ -1759,7 +1769,8 @@
       const prev = new Date(date + 'T00:00:00');
       prev.setDate(prev.getDate() - 1);
       const endDate = `${prev.getFullYear()}-${String(prev.getMonth()+1).padStart(2,'0')}-${String(prev.getDate()).padStart(2,'0')}`;
-      await supabase.from('mm_transactions').update({ recur_end_date: endDate }).eq('id', t.id);
+      // Defer the DB write until Save — if user cancels, original series stays intact
+      window._recurFutureOriginal = { id: t.id, endDate };
       // Open add modal pre-filled with same recurring settings, starting on this date
       editingTxnId = null;
       document.getElementById('modal-title').textContent = 'Edit From This Date Forward';
