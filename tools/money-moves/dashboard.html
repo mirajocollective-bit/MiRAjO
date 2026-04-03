@@ -338,37 +338,41 @@
     }
 
     .cal-cell {
-      min-height: 88px; border-radius: 10px; padding: 8px;
+      min-height: 72px; border-radius: 10px; padding: 7px;
       cursor: pointer; transition: background 0.15s;
       position: relative; border: 1px solid transparent;
     }
     .cal-cell:hover { background: rgba(18,32,18,0.03); }
-    .cal-cell.today { border-color: var(--new-growth); background: rgba(109,196,138,0.05); }
-    .cal-cell.other-month { opacity: 0.3; pointer-events: none; }
+    .cal-cell.today { border-color: var(--living-green); background: rgba(37,107,66,0.06); box-shadow: inset 0 0 0 1px rgba(37,107,66,0.15); }
+    .cal-cell.other-month { opacity: 0.25; pointer-events: none; }
 
     .cal-date-num {
-      font-size: 13px; font-weight: 600; color: var(--deep-forest); margin-bottom: 4px;
-      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: var(--deep-forest); margin-bottom: 3px;
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
     }
     .cal-cell.today .cal-date-num {
-      background: var(--living-green); color: #fff; border-radius: 50%;
+      background: var(--living-green); color: #fff; font-weight: 700;
+      box-shadow: 0 2px 6px rgba(37,107,66,0.35);
     }
 
     .cal-entry {
-      font-size: 10px; font-weight: 600; border-radius: 4px;
-      padding: 2px 5px; margin-bottom: 2px;
+      font-size: 10px; font-weight: 600; border-radius: 5px;
+      padding: 2px 6px; margin-bottom: 2px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+      display: flex; align-items: center; gap: 3px;
     }
-    .cal-entry.income  { background: rgba(37,107,66,0.1);  color: var(--income-color); }
-    .cal-entry.expense { background: rgba(192,57,43,0.1);  color: var(--expense-color); }
-    .cal-entry.transfer { background: rgba(107,114,128,0.1); color: var(--neutral); }
+    .cal-entry.income  { background: rgba(37,107,66,0.09);  color: var(--living-green); }
+    .cal-entry.expense { background: rgba(192,57,43,0.08);  color: #b03020; }
+    .cal-entry.transfer { background: rgba(107,114,128,0.08); color: var(--neutral); }
     .cal-entry[draggable] { cursor: grab; }
     .cal-entry.dragging { opacity: 0.3; cursor: grabbing; }
     .cal-cell.drag-over { background: rgba(37,107,66,0.08) !important; outline: 2px dashed var(--living-green); }
 
     .cal-day-balance {
-      position: absolute; bottom: 6px; right: 8px;
-      font-size: 10px; font-weight: 700;
+      position: absolute; bottom: 5px; right: 6px;
+      font-size: 9px; font-weight: 700; padding: 1px 4px;
+      border-radius: 4px; background: rgba(18,32,18,0.04);
     }
     .cal-day-balance.positive { color: var(--income-color); }
     .cal-day-balance.negative { color: var(--expense-color); }
@@ -402,33 +406,38 @@
     }
 
     /* ── Sidebar ── */
-    .sidebar { display: flex; flex-direction: column; gap: 20px; }
+    .sidebar { display: flex; flex-direction: column; gap: 12px; }
 
     .sidebar-card {
-      background: #fff; border-radius: 20px;
+      background: #fff; border-radius: 14px;
       border: 1px solid rgba(18,32,18,0.06);
-      box-shadow: 0 6px 24px rgba(18,32,18,0.10), 0 1px 4px rgba(18,32,18,0.06);
-      padding: 22px;
+      box-shadow: 0 2px 10px rgba(18,32,18,0.07);
+      padding: 14px 16px;
     }
     .sidebar-title {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--neutral); margin-bottom: 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral); margin-bottom: 10px;
     }
 
     /* Mode */
-    .mode-display { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .mode-icon { font-size: 26px; }
-    .mode-name { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--deep-forest); }
+    .sidebar-card.mode-card {
+      background: linear-gradient(145deg, #fff 60%, rgba(109,196,138,0.07));
+      border-color: rgba(37,107,66,0.12);
+    }
+    .mode-display { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .mode-icon { font-size: 28px; line-height: 1; }
+    .mode-name { font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--deep-forest); }
     .mode-msg {
-      font-size: 13px; color: var(--forest-mid); line-height: 1.6;
-      background: var(--soft-white); border-radius: 10px; padding: 12px 14px;
-      border-left: 3px solid var(--dry-sage); font-style: italic;
+      font-size: 12px; color: var(--deep-forest); line-height: 1.65;
+      background: rgba(37,107,66,0.05); border-radius: 10px; padding: 10px 12px;
+      border-left: 3px solid var(--new-growth);
     }
     .mode-change-btn {
-      margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--living-green);
+      margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--living-green);
       background: none; border: none; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif; padding: 0; opacity: 0.8;
     }
+    .mode-change-btn:hover { opacity: 1; }
 
     /* Budget */
     .budget-item { margin-bottom: 12px; }
@@ -814,6 +823,7 @@
       <div class="cal-nav">
         <button class="cal-nav-btn" title="Previous year" onclick="changeYear(-1)">&#171;</button>
         <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8592;</button>
+        <button class="cal-nav-btn" onclick="goToToday()" title="Jump to today" style="font-size:10px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;width:auto;padding:0 8px;color:var(--living-green);border-color:rgba(37,107,66,0.25);">Today</button>
         <button class="cal-nav-btn" onclick="changeMonth(1)">&#8594;</button>
         <button class="cal-nav-btn" title="Next year" onclick="changeYear(1)">&#187;</button>
       </div>
@@ -865,7 +875,7 @@
   <div class="sidebar">
 
     <!-- Personality mode -->
-    <div class="sidebar-card">
+    <div class="sidebar-card mode-card">
       <div class="sidebar-title">Your Mode</div>
       <div class="mode-display">
         <div class="mode-icon" id="mode-icon">🤱</div>
@@ -2493,6 +2503,13 @@
 
   window.toggleForecast = function () {
     setView(currentView === 'forecast' ? 'calendar' : 'forecast');
+  };
+
+  window.goToToday = function () {
+    const now = new Date();
+    currentMonth = now.getMonth();
+    currentYear  = now.getFullYear();
+    renderCalendar(); renderSummary(); renderBudget(); renderAnalytics(); renderMode();
   };
 
   window.changeMonth = function (dir) {
