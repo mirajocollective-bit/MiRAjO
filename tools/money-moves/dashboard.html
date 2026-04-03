@@ -113,12 +113,99 @@
     /* ── Main layout ── */
     .layout {
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: 240px 1fr 300px;
       gap: 24px;
-      max-width: 1320px;
+      max-width: 1440px;
       margin: 0 auto;
       padding: 24px 28px 60px;
+      transition: grid-template-columns 0.25s ease;
     }
+    .layout.analytics-collapsed { grid-template-columns: 44px 1fr 300px; }
+
+    /* ── Analytics Sidebar ── */
+    .analytics-sidebar {
+      align-self: start; position: sticky; top: 24px;
+      background: #fff; border-radius: 16px;
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 4px 16px rgba(18,32,18,0.08);
+      overflow: hidden;
+    }
+    .analytics-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 14px; cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .analytics-toggle-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral);
+    }
+    .analytics-toggle-icon {
+      font-size: 11px; color: var(--neutral); transition: transform 0.25s; flex-shrink: 0;
+    }
+    .analytics-collapsed .analytics-toggle-label { display: none; }
+    .analytics-collapsed .analytics-toggle-icon { transform: rotate(180deg); margin: 0 auto; }
+    .analytics-content { overflow: hidden; transition: opacity 0.2s; }
+    .analytics-collapsed .analytics-content { opacity: 0; height: 0; pointer-events: none; }
+
+    .analytics-section { border-bottom: 1px solid var(--border); }
+    .analytics-section:last-child { border-bottom: none; }
+    .analytics-section-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 14px 8px; cursor: pointer; user-select: none;
+    }
+    .analytics-section-left { display: flex; flex-direction: column; gap: 1px; }
+    .analytics-section-name {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral);
+    }
+    .analytics-section-total {
+      font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--deep-forest);
+    }
+    .analytics-section-arrow { font-size: 10px; color: var(--neutral); transition: transform 0.2s; }
+    .analytics-section-arrow.closed { transform: rotate(-90deg); }
+
+    .analytics-cat-list { padding: 0 12px 10px; display: flex; flex-direction: column; gap: 7px; overflow: hidden; }
+    .analytics-cat-list.hidden { display: none; }
+    .analytics-cat-row { display: flex; flex-direction: column; gap: 3px; }
+    .analytics-cat-top { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; }
+    .analytics-cat-name {
+      font-size: 12px; color: var(--deep-forest); font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;
+    }
+    .analytics-cat-amounts { display: flex; align-items: baseline; gap: 2px; white-space: nowrap; }
+    .analytics-cat-spent { font-size: 12px; font-weight: 600; color: var(--deep-forest); }
+    .analytics-cat-budget-lbl {
+      font-size: 10px; color: var(--neutral); cursor: pointer; text-decoration: underline dotted;
+    }
+    .analytics-cat-budget-lbl:hover { color: var(--living-green); }
+    .analytics-mini-bar { height: 3px; background: rgba(18,32,18,0.08); border-radius: 2px; overflow: hidden; }
+    .analytics-mini-fill { height: 100%; border-radius: 2px; background: var(--new-growth); transition: width 0.3s; }
+    .analytics-mini-fill.warning { background: var(--dry-sage); }
+    .analytics-mini-fill.over { background: #e67e22; }
+
+    .analytics-savings {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 11px 14px; background: rgba(18,32,18,0.02);
+    }
+    .analytics-savings-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--neutral); }
+    .analytics-savings-val { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--living-green); font-weight: 400; }
+    .analytics-savings-val.negative { color: var(--expense-color); }
+
+    /* ── Summary ratio bar ── */
+    .summary-ratio-wrap { grid-column: 1 / -1; }
+    .summary-ratio-track {
+      height: 6px; background: rgba(18,32,18,0.07); border-radius: 4px; overflow: hidden; margin-bottom: 6px;
+    }
+    .summary-ratio-fill {
+      height: 100%; border-radius: 4px; background: var(--new-growth); transition: width 0.4s;
+    }
+    .summary-ratio-fill.warning { background: var(--dry-sage); }
+    .summary-ratio-fill.over { background: #e67e22; }
+    .summary-ratio-labels { display: flex; justify-content: space-between; }
+    .summary-ratio-label { font-size: 11px; color: var(--neutral); }
+    .summary-ratio-rate { font-size: 11px; font-weight: 700; color: var(--living-green); }
+    .summary-ratio-rate.negative { color: var(--expense-color); }
 
     /* ── Summary bar ── */
     .summary-bar {
@@ -523,8 +610,13 @@
     .faq-nav-btn { background: transparent; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
 
     /* ── Responsive ── */
+    @media (max-width: 1200px) {
+      .layout { grid-template-columns: 44px 1fr 300px !important; }
+      .analytics-collapsed .analytics-toggle-label { display: none; }
+    }
     @media (max-width: 1024px) {
-      .layout { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: 1fr !important; }
+      .analytics-sidebar { display: none; }
       .sidebar { order: -1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     }
     @media (max-width: 700px) {
@@ -603,6 +695,56 @@
       <div class="summary-label">Month Balance</div>
       <div class="summary-amount balance" id="net-balance">$0.00</div>
       <div class="summary-sub">income minus expenses</div>
+    </div>
+    <div class="summary-ratio-wrap">
+      <div class="summary-ratio-track">
+        <div class="summary-ratio-fill" id="summary-ratio-fill" style="width:0%"></div>
+      </div>
+      <div class="summary-ratio-labels">
+        <span class="summary-ratio-label" id="summary-ratio-spent">0% of income spent</span>
+        <span class="summary-ratio-rate" id="summary-ratio-rate">0% saved</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Sidebar -->
+  <div class="analytics-sidebar" id="analytics-sidebar">
+    <div class="analytics-toggle" onclick="toggleAnalytics()">
+      <span class="analytics-toggle-label">Analytics</span>
+      <span class="analytics-toggle-icon">◀</span>
+    </div>
+    <div class="analytics-content" id="analytics-content">
+
+      <!-- Income section -->
+      <div class="analytics-section">
+        <div class="analytics-section-hdr" onclick="toggleAnalyticsSection('income')">
+          <div class="analytics-section-left">
+            <span class="analytics-section-name">Income</span>
+            <span class="analytics-section-total" id="analytics-income-total">$0</span>
+          </div>
+          <span class="analytics-section-arrow" id="analytics-income-arrow">▼</span>
+        </div>
+        <div class="analytics-cat-list" id="analytics-income-list"></div>
+      </div>
+
+      <!-- Expenses section -->
+      <div class="analytics-section">
+        <div class="analytics-section-hdr" onclick="toggleAnalyticsSection('expense')">
+          <div class="analytics-section-left">
+            <span class="analytics-section-name">Expenses</span>
+            <span class="analytics-section-total" id="analytics-expense-total">$0</span>
+          </div>
+          <span class="analytics-section-arrow" id="analytics-expense-arrow">▼</span>
+        </div>
+        <div class="analytics-cat-list" id="analytics-expense-list"></div>
+      </div>
+
+      <!-- Savings rate -->
+      <div class="analytics-savings">
+        <span class="analytics-savings-lbl">Savings Rate</span>
+        <span class="analytics-savings-val" id="analytics-savings-val">—</span>
+      </div>
+
     </div>
   </div>
 
@@ -1026,9 +1168,25 @@
     renderCalendar();
     renderMode();
     renderBudget();
+    renderAnalytics();
     renderGoals();
     renderDebts();
     populateModalSelects();
+
+    // Restore analytics sidebar state
+    const analyticsOpen = localStorage.getItem('mm_analytics_open');
+    if (analyticsOpen === '0') {
+      document.getElementById('analytics-sidebar').classList.add('collapsed');
+      document.querySelector('.layout').classList.add('analytics-collapsed');
+    }
+    if (localStorage.getItem('mm_analytics_income_open') === '0') {
+      document.getElementById('analytics-income-list').classList.add('hidden');
+      document.getElementById('analytics-income-arrow').classList.add('closed');
+    }
+    if (localStorage.getItem('mm_analytics_expense_open') === '0') {
+      document.getElementById('analytics-expense-list').classList.add('hidden');
+      document.getElementById('analytics-expense-arrow').classList.add('closed');
+    }
   }
 
   // ── Account tabs ────────────────────────────────────────────────────────────
@@ -1088,6 +1246,7 @@
     renderSummary();
     renderCalendar();
     renderBudget();
+    renderAnalytics();
     renderMode();
     if (currentView === 'forecast') renderForecast();
     // Pre-select in modal
@@ -1442,6 +1601,135 @@
     document.getElementById('mode-name').textContent = mode.name;
     document.getElementById('mode-msg').textContent  = msg;
   }
+
+  // ── Analytics Sidebar ────────────────────────────────────────────────────────
+  function renderAnalytics() {
+    const monthTx = getMonthTransactions();
+
+    // Income by category
+    const incomeMap = {};
+    monthTx.filter(t => t.type === 'income').forEach(t => {
+      const cat = categories.find(c => c.id === t.category_id);
+      const key = t.category_id || '__none__';
+      if (!incomeMap[key]) incomeMap[key] = { name: cat?.name || 'Uncategorized', amount: 0 };
+      incomeMap[key].amount += Number(t.amount);
+    });
+
+    // Expense by category
+    const expenseMap = {};
+    monthTx.filter(t => t.type === 'expense').forEach(t => {
+      const cat = categories.find(c => c.id === t.category_id);
+      const key = t.category_id || '__none__';
+      if (!expenseMap[key]) expenseMap[key] = {
+        name: cat?.name || 'Uncategorized',
+        amount: 0,
+        budget: cat ? Number(cat.budget_amount) || 0 : 0,
+        dbCatId: t.category_id || null,
+      };
+      expenseMap[key].amount += Number(t.amount);
+    });
+
+    const totalIncome  = Object.values(incomeMap).reduce((s, c) => s + c.amount, 0);
+    const totalExpense = Object.values(expenseMap).reduce((s, c) => s + c.amount, 0);
+    const savingsRate  = totalIncome > 0 ? ((totalIncome - totalExpense) / totalIncome * 100) : 0;
+
+    // Income list
+    const incomeSorted = Object.values(incomeMap).sort((a, b) => b.amount - a.amount);
+    document.getElementById('analytics-income-list').innerHTML = incomeSorted.length
+      ? incomeSorted.map(c => `
+          <div class="analytics-cat-row">
+            <div class="analytics-cat-top">
+              <span class="analytics-cat-name" title="${c.name}">${c.name}</span>
+              <span class="analytics-cat-spent income">+$${c.amount.toLocaleString('en-US', { maximumFractionDigits: 0 })}</span>
+            </div>
+          </div>`).join('')
+      : '<div style="font-size:12px;color:var(--neutral);padding:2px 0">No income this month</div>';
+    document.getElementById('analytics-income-total').textContent = `$${totalIncome.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+
+    // Expense list
+    const expSorted = Object.values(expenseMap).sort((a, b) => b.amount - a.amount);
+    document.getElementById('analytics-expense-list').innerHTML = expSorted.length
+      ? expSorted.map(c => {
+          const hasBudget = c.budget > 0;
+          const pct       = hasBudget ? Math.min((c.amount / c.budget) * 100, 120) : 0;
+          const fillClass = pct >= 100 ? 'over' : pct >= 80 ? 'warning' : '';
+          const budgetLbl = c.dbCatId
+            ? `<span class="analytics-cat-budget-lbl" onclick="editCategoryBudget('${c.dbCatId}', ${c.budget}, this)">${hasBudget ? '/$' + c.budget.toLocaleString('en-US', { maximumFractionDigits: 0 }) : '+ budget'}</span>`
+            : '';
+          return `
+            <div class="analytics-cat-row">
+              <div class="analytics-cat-top">
+                <span class="analytics-cat-name" title="${c.name}">${c.name}</span>
+                <span class="analytics-cat-amounts">
+                  <span class="analytics-cat-spent">$${c.amount.toLocaleString('en-US', { maximumFractionDigits: 0 })}</span>
+                  ${budgetLbl}
+                </span>
+              </div>
+              ${hasBudget ? `<div class="analytics-mini-bar"><div class="analytics-mini-fill ${fillClass}" style="width:${pct}%"></div></div>` : ''}
+            </div>`;
+        }).join('')
+      : '<div style="font-size:12px;color:var(--neutral);padding:2px 0">No expenses this month</div>';
+    document.getElementById('analytics-expense-total').textContent = `$${totalExpense.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+
+    // Savings rate
+    const savEl = document.getElementById('analytics-savings-val');
+    savEl.textContent = `${Math.round(savingsRate)}%`;
+    savEl.className   = `analytics-savings-val${savingsRate < 0 ? ' negative' : ''}`;
+
+    // Ratio bar
+    const spentPct = totalIncome > 0 ? Math.min((totalExpense / totalIncome) * 100, 100) : 0;
+    const fill = document.getElementById('summary-ratio-fill');
+    if (fill) {
+      fill.style.width = `${spentPct}%`;
+      fill.className   = `summary-ratio-fill${spentPct >= 100 ? ' over' : spentPct >= 80 ? ' warning' : ''}`;
+    }
+    const spentLbl = document.getElementById('summary-ratio-spent');
+    if (spentLbl) spentLbl.textContent = `${Math.round(spentPct)}% of income spent`;
+    const rateEl = document.getElementById('summary-ratio-rate');
+    if (rateEl) {
+      rateEl.textContent = `${Math.round(savingsRate)}% saved`;
+      rateEl.className   = `summary-ratio-rate${savingsRate < 0 ? ' negative' : ''}`;
+    }
+  }
+
+  window.toggleAnalytics = function () {
+    const sidebar   = document.getElementById('analytics-sidebar');
+    const layout    = document.querySelector('.layout');
+    const collapsed = sidebar.classList.toggle('collapsed');
+    layout.classList.toggle('analytics-collapsed', collapsed);
+    localStorage.setItem('mm_analytics_open', collapsed ? '0' : '1');
+  };
+
+  window.toggleAnalyticsSection = function (section) {
+    const list  = document.getElementById(`analytics-${section}-list`);
+    const arrow = document.getElementById(`analytics-${section}-arrow`);
+    list.classList.toggle('hidden');
+    arrow.classList.toggle('closed');
+    localStorage.setItem(`mm_analytics_${section}_open`, list.classList.contains('hidden') ? '0' : '1');
+  };
+
+  window.editCategoryBudget = async function (catId, current, el) {
+    const input = document.createElement('input');
+    input.type  = 'number'; input.min = '0'; input.step = '1';
+    input.value = current > 0 ? current : '';
+    input.placeholder = '0';
+    input.style.cssText = 'width:56px;font-size:11px;padding:2px 5px;border:1px solid var(--border);border-radius:4px;font-family:inherit;color:var(--deep-forest);outline:none;';
+    el.replaceWith(input);
+    input.focus(); input.select();
+    const save = async () => {
+      const val = parseFloat(input.value) || 0;
+      await supabase.from('mm_categories').update({ budget_amount: val > 0 ? val : null }).eq('id', catId);
+      const cat = categories.find(c => c.id === catId);
+      if (cat) cat.budget_amount = val > 0 ? val : null;
+      renderAnalytics();
+      renderBudget();
+    };
+    input.addEventListener('blur', save);
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') input.blur();
+      if (e.key === 'Escape') { renderAnalytics(); }
+    });
+  };
 
   // ── Budget ──────────────────────────────────────────────────────────────────
   function renderBudget() {
