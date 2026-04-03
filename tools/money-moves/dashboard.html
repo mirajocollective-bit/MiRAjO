@@ -410,6 +410,28 @@
     }
     .modal-save:hover { opacity: 0.85; }
 
+    /* ── Undo Toast ── */
+    .undo-toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--deep-forest); color: var(--warm-parchment);
+      display: flex; align-items: center; gap: 16px;
+      padding: 12px 18px; border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(18,32,18,0.25);
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+      opacity: 0; transition: opacity 0.25s, transform 0.25s; z-index: 9999;
+      pointer-events: none; white-space: nowrap;
+    }
+    .undo-toast.show {
+      opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all;
+    }
+    .undo-toast button {
+      background: none; border: 1px solid rgba(242,235,217,0.4); border-radius: 6px;
+      color: var(--new-growth); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 700; padding: 4px 10px; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .undo-toast button:hover { background: rgba(242,235,217,0.1); }
+
     /* ── Add Account Modal ── */
     .acct-modal { max-width: 420px; }
 
@@ -1272,6 +1294,9 @@
         } else {
           await supabase.from('mm_transactions').update({ date: dateStr }).eq('id', txnId);
           await loadAll();
+          showUndoToast('Transaction moved', async () => {
+            await supabase.from('mm_transactions').update({ date: fromDate }).eq('id', txnId);
+          });
         }
       });
 
@@ -1822,41 +1847,59 @@
     if (t?.is_recurring) {
       const scope = editingRecurScope;
       if (scope === 'one') {
-        // Remove just this occurrence via exception
-        const date = editingDate;
-        const excs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
-        const idx  = excs.findIndex(e => e.date === date);
+        const date    = editingDate;
+        const prevExcs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+        const excs    = [...prevExcs];
+        const idx     = excs.findIndex(e => e.date === date);
         if (idx >= 0) excs[idx] = { date, skip: true };
         else excs.push({ date, skip: true });
         const { error } = await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
         if (error) { alert('Error: ' + error.message); return; }
-        closeModal(); await loadAll(); return;
+        closeModal(); await loadAll();
+        showUndoToast('Occurrence removed', async () => {
+          await supabase.from('mm_transactions').update({ recur_exceptions: prevExcs }).eq('id', t.id);
+        });
+        return;
       }
       if (scope === 'future') {
-        // End series the day before this occurrence
-        const date = editingDate;
+        const date       = editingDate;
+        const prevEndDate = t.recur_end_date || null;
         const prev = new Date(date + 'T00:00:00');
         prev.setDate(prev.getDate() - 1);
         const endDate = `${prev.getFullYear()}-${String(prev.getMonth()+1).padStart(2,'0')}-${String(prev.getDate()).padStart(2,'0')}`;
         const { error } = await supabase.from('mm_transactions').update({ recur_end_date: endDate }).eq('id', t.id);
         if (error) { alert('Error: ' + error.message); return; }
-        closeModal(); await loadAll(); return;
+        closeModal(); await loadAll();
+        showUndoToast('Future occurrences removed', async () => {
+          await supabase.from('mm_transactions').update({ recur_end_date: prevEndDate }).eq('id', t.id);
+        });
+        return;
       }
-      // 'all' or no scope — delete the entire recurring row
+      // 'all' — delete the entire recurring row
       const id = t.id || editingTxnId;
       if (!id) { alert('Could not find transaction to delete.'); return; }
+      const snapshot = { ...t };
       const { error } = await supabase.from('mm_transactions').delete().eq('id', id);
       if (error) { alert('Error: ' + error.message); return; }
-      closeModal(); await loadAll(); return;
+      closeModal(); await loadAll();
+      showUndoToast('Recurring transaction removed', async () => {
+        const { id: _id, created_at, updated_at, ...rest } = snapshot;
+        await supabase.from('mm_transactions').insert(rest);
+      });
+      return;
     }
 
     // Non-recurring — straight delete
     const id = editingTxnId || t?.id;
     if (!id) { alert('Could not find transaction to delete.'); return; }
+    const snapshot = { ...t };
     const { error } = await supabase.from('mm_transactions').delete().eq('id', id);
     if (error) { alert('Error: ' + error.message); return; }
-    closeModal();
-    await loadAll();
+    closeModal(); await loadAll();
+    showUndoToast('Transaction removed', async () => {
+      const { id: _id, created_at, updated_at, ...rest } = snapshot;
+      await supabase.from('mm_transactions').insert(rest);
+    });
   };
 
   window.handleRecurDrag = async function (scope) {
@@ -1868,25 +1911,32 @@
     if (!t || !toDate) return;
 
     if (scope === 'one') {
-      // Skip original date, insert a one-time transaction on the new date
-      const excs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+      const prevExcs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+      const excs = [...prevExcs];
       const idx  = excs.findIndex(e => e.date === fromDate);
       if (idx >= 0) excs[idx] = { date: fromDate, skip: true };
       else excs.push({ date: fromDate, skip: true });
       await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
-      // Insert one-time copy at new date
       const { data: memberRows } = await supabase.from('mm_members').select('id').eq('user_id', user.id).limit(1);
-      await supabase.from('mm_transactions').insert({
+      const { data: inserted } = await supabase.from('mm_transactions').insert({
         household_id: t.household_id, account_id: t.account_id,
         member_id: memberRows?.[0]?.id || null, category_id: t.category_id,
         type: t.type, amount: t.amount, date: toDate,
         description: t.description, notes: t.notes, is_recurring: false,
+      }).select().single();
+      await loadAll();
+      showUndoToast('Transaction moved', async () => {
+        await supabase.from('mm_transactions').update({ recur_exceptions: prevExcs }).eq('id', t.id);
+        if (inserted?.id) await supabase.from('mm_transactions').delete().eq('id', inserted.id);
       });
     } else {
       // Move the entire series start date
       await supabase.from('mm_transactions').update({ date: toDate }).eq('id', t.id);
+      await loadAll();
+      showUndoToast('Transaction moved', async () => {
+        await supabase.from('mm_transactions').update({ date: fromDate }).eq('id', t.id);
+      });
     }
-    await loadAll();
   };
 
   window.handleRecurDelete = async function (scope) {
@@ -1896,23 +1946,40 @@
     if (!t) return;
 
     if (scope === 'one') {
-      // Mark this date as removed in exceptions
-      const excs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+      const prevExcs = Array.isArray(t.recur_exceptions) ? [...t.recur_exceptions] : [];
+      const excs = [...prevExcs];
       const idx  = excs.findIndex(e => e.date === date);
       if (idx >= 0) excs[idx] = { date, skip: true };
       else excs.push({ date, skip: true });
       const { error } = await supabase.from('mm_transactions').update({ recur_exceptions: excs }).eq('id', t.id);
       if (error) { alert('Error: ' + error.message); return; }
+      window._recurExcSave = null; closeModal(); await loadAll();
+      showUndoToast('Occurrence removed', async () => {
+        await supabase.from('mm_transactions').update({ recur_exceptions: prevExcs }).eq('id', t.id);
+      });
+      return;
     } else if (scope === 'future') {
-      // End series the day before this date
+      const prevEndDate = t.recur_end_date || null;
       const prev = new Date(date + 'T00:00:00');
       prev.setDate(prev.getDate() - 1);
       const endDate = `${prev.getFullYear()}-${String(prev.getMonth()+1).padStart(2,'0')}-${String(prev.getDate()).padStart(2,'0')}`;
       const { error } = await supabase.from('mm_transactions').update({ recur_end_date: endDate }).eq('id', t.id);
       if (error) { alert('Error: ' + error.message); return; }
+      window._recurExcSave = null; closeModal(); await loadAll();
+      showUndoToast('Future occurrences removed', async () => {
+        await supabase.from('mm_transactions').update({ recur_end_date: prevEndDate }).eq('id', t.id);
+      });
+      return;
     } else if (scope === 'all') {
+      const snapshot = { ...t };
       const { error } = await supabase.from('mm_transactions').delete().eq('id', t.id);
       if (error) { alert('Error: ' + error.message); return; }
+      window._recurExcSave = null; closeModal(); await loadAll();
+      showUndoToast('Recurring transaction removed', async () => {
+        const { id: _id, created_at, updated_at, ...rest } = snapshot;
+        await supabase.from('mm_transactions').insert(rest);
+      });
+      return;
     }
 
     window._recurExcSave = null;
@@ -2229,6 +2296,40 @@
   };
 
   document.addEventListener('DOMContentLoaded', initHints);
+
+  // ── Undo Toast ───────────────────────────────────────────────────────────────
+  let _undoFn    = null;
+  let _undoTimer = null;
+
+  function showUndoToast(msg, fn) {
+    clearTimeout(_undoTimer);
+    _undoFn = fn;
+    document.getElementById('undo-toast-msg').textContent = msg;
+    const toast = document.getElementById('undo-toast');
+    toast.classList.add('show');
+    _undoTimer = setTimeout(() => hideUndoToast(), 6000);
+  }
+
+  function hideUndoToast() {
+    document.getElementById('undo-toast').classList.remove('show');
+    _undoFn = null;
+  }
+
+  window.triggerUndo = async function () {
+    if (!_undoFn) return;
+    clearTimeout(_undoTimer);
+    const fn = _undoFn;
+    _undoFn = null;
+    hideUndoToast();
+    await fn();
+    await loadAll();
+  };
 </script>
+
+<!-- Undo Toast -->
+<div class="undo-toast" id="undo-toast">
+  <span id="undo-toast-msg"></span>
+  <button onclick="triggerUndo()">Undo</button>
+</div>
 </body>
 </html>
