@@ -396,16 +396,16 @@
     .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
     .toggle input:checked ~ .toggle-thumb { transform: translateX(18px); }
 
-    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .modal-actions { display: flex; gap: 8px; margin-top: 16px; }
     .modal-cancel {
-      flex: 1; padding: 13px; border: 1px solid var(--border); border-radius: 10px;
-      background: transparent; font-size: 14px; font-weight: 600; cursor: pointer;
+      flex: 1; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+      background: transparent; font-size: 13px; font-weight: 500; cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif; color: var(--neutral); transition: background 0.2s;
     }
     .modal-cancel:hover { background: var(--soft-white); }
     .modal-save {
-      flex: 2; padding: 13px; background: var(--deep-forest); color: var(--warm-parchment);
-      border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer;
+      flex: 2; padding: 9px 12px; background: var(--new-growth); color: #fff;
+      border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s;
     }
     .modal-save:hover { opacity: 0.85; }
@@ -789,7 +789,7 @@
     </div>
     <div class="modal-actions">
       <button class="modal-cancel" onclick="closeModal()">Cancel</button>
-      <button id="txn-delete-btn" onclick="deleteTransaction()" style="display:none;flex:1;padding:13px;background:#c0392b;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Delete</button>
+      <button id="txn-delete-btn" onclick="deleteTransaction()" style="display:none;flex:1;padding:9px 12px;background:none;color:var(--neutral);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Delete</button>
       <button class="modal-save"   onclick="saveTransaction()">Save</button>
     </div>
   </div>
