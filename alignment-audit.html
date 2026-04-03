@@ -722,12 +722,12 @@
   <p class="hero-sub">This is where you find out what. Ten questions. No fluff. A score that shows you exactly where the gap is showing up and what to do about it.</p>
   <div class="hero-stats">
     <div class="hero-stat">
-      <span class="hero-stat-num" data-count="10">0</span>
+      <span class="hero-stat-num">10</span>
       <span class="hero-stat-label">Questions</span>
     </div>
     <div class="hero-stat-div"></div>
     <div class="hero-stat">
-      <span class="hero-stat-num" data-count="5">0</span>
+      <span class="hero-stat-num">5</span>
       <span class="hero-stat-label">Minutes</span>
     </div>
     <div class="hero-stat-div"></div>
@@ -1233,29 +1233,6 @@
   }
   startCountdown();
 
-  // ── Counter animation on hero stats ──────────
-  function animateCounter(el, target, duration) {
-    const start = performance.now();
-    function step(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(eased * target);
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target;
-    }
-    requestAnimationFrame(step);
-  }
-
-  const statNums = document.querySelectorAll('.hero-stat-num[data-count]');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target, parseInt(entry.target.dataset.count), 1200);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  statNums.forEach(el => observer.observe(el));
 </script>
 
 </body>
