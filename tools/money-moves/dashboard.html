@@ -192,6 +192,33 @@
     .analytics-savings-val { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--living-green); font-weight: 400; }
     .analytics-savings-val.negative { color: var(--expense-color); }
 
+    /* ── Forecast Strip ── */
+    .forecast-strip {
+      grid-column: 1 / -1;
+      background: #fff; border-radius: 16px;
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 4px 16px rgba(18,32,18,0.08);
+      padding: 16px 20px 12px; overflow: hidden;
+    }
+    .forecast-strip-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    }
+    .forecast-strip-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral);
+    }
+    .forecast-strip-balance {
+      font-family: 'Instrument Serif', serif; font-size: 15px; color: var(--deep-forest);
+    }
+    .forecast-strip-svg { width: 100%; display: block; }
+    .forecast-tooltip {
+      position: absolute; background: var(--deep-forest); color: var(--warm-parchment);
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600;
+      padding: 5px 9px; border-radius: 7px; pointer-events: none;
+      white-space: nowrap; display: none; z-index: 50;
+      transform: translate(-50%, -100%); margin-top: -6px;
+    }
+
     /* ── Summary ratio bar ── */
     .summary-ratio-wrap { grid-column: 1 / -1; }
     .summary-ratio-track {
@@ -707,6 +734,16 @@
     </div>
   </div>
 
+  <!-- Forecast Strip -->
+  <div class="forecast-strip" id="forecast-strip" style="position:relative">
+    <div class="forecast-strip-header">
+      <span class="forecast-strip-title">12-Month Balance Forecast</span>
+      <span class="forecast-strip-balance" id="forecast-strip-acct"></span>
+    </div>
+    <svg class="forecast-strip-svg" id="forecast-strip-svg" height="90" viewBox="0 0 1000 90" preserveAspectRatio="none"></svg>
+    <div class="forecast-tooltip" id="forecast-tooltip"></div>
+  </div>
+
   <!-- Analytics Sidebar -->
   <div class="analytics-sidebar" id="analytics-sidebar">
     <div class="analytics-toggle" onclick="toggleAnalytics()">
@@ -1169,6 +1206,7 @@
     renderMode();
     renderBudget();
     renderAnalytics();
+    renderForecastStrip();
     renderGoals();
     renderDebts();
     populateModalSelects();
@@ -1247,6 +1285,7 @@
     renderCalendar();
     renderBudget();
     renderAnalytics();
+    renderForecastStrip();
     renderMode();
     if (currentView === 'forecast') renderForecast();
     // Pre-select in modal
@@ -1600,6 +1639,118 @@
     document.getElementById('mode-icon').textContent = mode.icon;
     document.getElementById('mode-name').textContent = mode.name;
     document.getElementById('mode-msg').textContent  = msg;
+  }
+
+  // ── Forecast Strip ───────────────────────────────────────────────────────────
+  function renderForecastStrip() {
+    const acct = accounts.find(a => a.id === selectedAccountId);
+    if (!acct) return;
+
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const recurring = transactions.filter(t => t.account_id === selectedAccountId && t.is_recurring && t.recur_frequency);
+    const monthlyIncome  = sumMonthly(recurring.filter(t => t.type === 'income'));
+    const monthlyExpense = sumMonthly(recurring.filter(t => t.type === 'expense'));
+    const net = monthlyIncome - monthlyExpense;
+
+    // Build 13 data points: current month (actual running balance) + 12 forward
+    const acctBalance = transactions
+      .filter(t => t.account_id === selectedAccountId)
+      .reduce((s, t) => s + (t.type === 'income' ? Number(t.amount) : t.type === 'expense' ? -Number(t.amount) : 0), 0);
+
+    const points = [];
+    const now = new Date();
+    for (let i = 0; i <= 12; i++) {
+      const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+      points.push({
+        label: MONTHS[d.getMonth()] + (i === 0 || d.getMonth() === 0 ? ' ' + d.getFullYear().toString().slice(2) : ''),
+        balance: acctBalance + net * i,
+        isNow: i === 0,
+      });
+    }
+
+    const balances  = points.map(p => p.balance);
+    const minBal    = Math.min(...balances);
+    const maxBal    = Math.max(...balances);
+    const range     = maxBal - minBal || 1;
+
+    // SVG dimensions (viewBox 1000x90)
+    const W = 1000, H = 90, PAD_L = 8, PAD_R = 8, PAD_T = 10, PAD_B = 24;
+    const chartW = W - PAD_L - PAD_R;
+    const chartH = H - PAD_T - PAD_B;
+    const step   = chartW / 12;
+
+    const toX = i  => PAD_L + i * step;
+    const toY = b  => PAD_T + chartH - ((b - minBal) / range) * chartH;
+
+    // Build polyline coords
+    const coords = points.map((p, i) => `${toX(i).toFixed(1)},${toY(p.balance).toFixed(1)}`).join(' ');
+
+    // Area fill path (close below the line)
+    const zeroY  = Math.min(toY(0), H - PAD_B);
+    const areaD  = `M${toX(0).toFixed(1)},${toY(points[0].balance).toFixed(1)} ` +
+      points.slice(1).map((p, i) => `L${toX(i+1).toFixed(1)},${toY(p.balance).toFixed(1)}`).join(' ') +
+      ` L${toX(12).toFixed(1)},${zeroY} L${toX(0).toFixed(1)},${zeroY} Z`;
+
+    const allPositive = minBal >= 0;
+    const lineColor   = net >= 0 ? '#256B42' : '#C4A245';
+    const fillId      = 'fstrip-grad';
+
+    // Month label positions (every 3 months to avoid crowding)
+    const labelEls = points.map((p, i) => {
+      if (i % 3 !== 0 && i !== 12) return '';
+      return `<text x="${toX(i).toFixed(1)}" y="${H - 4}" text-anchor="middle"
+        font-family="Plus Jakarta Sans,sans-serif" font-size="8" fill="#8a9a8a">${p.label}</text>`;
+    }).join('');
+
+    // Zero line
+    const zeroLineY = toY(0);
+    const zeroLine  = (zeroLineY > PAD_T && zeroLineY < H - PAD_B)
+      ? `<line x1="${PAD_L}" y1="${zeroLineY.toFixed(1)}" x2="${W - PAD_R}" y2="${zeroLineY.toFixed(1)}" stroke="rgba(18,32,18,0.1)" stroke-width="1" stroke-dasharray="3,3"/>`
+      : '';
+
+    // Today marker
+    const todayX = toX(0);
+    const todayLine = `<line x1="${todayX.toFixed(1)}" y1="${PAD_T}" x2="${todayX.toFixed(1)}" y2="${H - PAD_B}" stroke="rgba(37,107,66,0.3)" stroke-width="1.5" stroke-dasharray="3,2"/>`;
+
+    const svg = document.getElementById('forecast-strip-svg');
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="${fillId}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${lineColor}" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="${lineColor}" stop-opacity="0.02"/>
+        </linearGradient>
+      </defs>
+      ${zeroLine}
+      ${todayLine}
+      <path d="${areaD}" fill="url(#${fillId})"/>
+      <polyline points="${coords}" fill="none" stroke="${lineColor}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      ${points.map((p, i) => i === 0 ? `<circle cx="${toX(i).toFixed(1)}" cy="${toY(p.balance).toFixed(1)}" r="3" fill="${lineColor}"/>` : '').join('')}
+      ${labelEls}
+      <rect id="fstrip-hover-area" x="${PAD_L}" y="${PAD_T}" width="${chartW}" height="${chartH + 4}" fill="transparent" style="cursor:crosshair"/>
+    `;
+
+    // Account label
+    const finalBalance = points[12].balance;
+    document.getElementById('forecast-strip-acct').textContent =
+      `${acct.name} · 12 mo: ${finalBalance >= 0 ? '' : '-'}$${Math.abs(finalBalance).toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+
+    // Hover interaction
+    const hoverArea = svg.querySelector('#fstrip-hover-area');
+    const tooltip   = document.getElementById('forecast-tooltip');
+    const strip     = document.getElementById('forecast-strip');
+    hoverArea.addEventListener('mousemove', e => {
+      const rect  = svg.getBoundingClientRect();
+      const relX  = (e.clientX - rect.left) / rect.width * W - PAD_L;
+      const idx   = Math.max(0, Math.min(12, Math.round(relX / step)));
+      const p     = points[idx];
+      const cx    = toX(idx) / W * rect.width + rect.left - strip.getBoundingClientRect().left;
+      const cy    = toY(p.balance) / H * rect.height + rect.top - strip.getBoundingClientRect().top;
+      tooltip.style.display  = 'block';
+      tooltip.style.left     = `${cx}px`;
+      tooltip.style.top      = `${cy}px`;
+      tooltip.textContent    = `${p.label}  ${p.balance >= 0 ? '' : '-'}$${Math.abs(p.balance).toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+    });
+    hoverArea.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
   }
 
   // ── Analytics Sidebar ────────────────────────────────────────────────────────
