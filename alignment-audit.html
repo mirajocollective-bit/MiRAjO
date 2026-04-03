@@ -55,19 +55,22 @@
 
     /* ── HEADER ─────────────────────────────── */
     .site-header {
-      background: var(--p-deep);
-      padding: 16px 24px;
-      text-align: center;
+      background: #fff;
+      border-bottom: 1px solid #EDE8F8;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .site-header a { display: inline-block; }
-    .site-header img { height: 36px; }
     .site-header .header-label {
       font-size: 11px;
+      font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #A990E8;
-      margin-top: 6px;
+      color: var(--p-light);
     }
+    .site-header a { display: inline-block; }
+    .site-header img { height: 34px; }
 
     /* ── HERO ───────────────────────────────── */
     .hero {
@@ -616,8 +619,8 @@
 
 <!-- HEADER -->
 <header class="site-header">
-  <a href="/"><img src="/img/logo-horizontal.png" alt="MiRAjO"></a>
   <div class="header-label">The Alignment Audit</div>
+  <a href="/"><img src="/img/logo-horizontal.png" alt="MiRAjO"></a>
 </header>
 
 <!-- HERO -->
