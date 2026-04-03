@@ -45,19 +45,19 @@ export const SEQUENCES = {
       subject: "You're in. Welcome to the work.",
       body: (n) => wrap(
         greet(n) +
-        p(`Something happened the moment you hit purchase. You said yes to yourself — and that's not nothing. In a world where it's become genuinely easier to scroll for two hours than to sit with one honest question, making that decision is actually kind of remarkable.`) +
+        p(`Something happened the moment you hit purchase. You said yes to yourself, and that's not nothing. In a world where it's become genuinely easier to scroll for two hours than to sit with one honest question, making that decision is actually kind of remarkable.`) +
         p(`So, welcome. Let's get into it.`) +
-        p(`<strong style="color:#122012;">What you've got waiting for you:</strong><br>25 Days &amp; 25 Nights is structured simply. Each day: a lesson, a journal prompt, and your 10 Non-Negotiables. The nights are yours to reflect. Repeat for 25 days. The work is not complicated — it just asks you to actually do it. (I know. Revolutionary.)`) +
+        p(`<strong style="color:#122012;">What you've got waiting for you:</strong><br>25 Days &amp; 25 Nights is structured simply. Each day: a lesson, a journal prompt, and your 10 Non-Negotiables. The nights are yours to reflect. Repeat for 25 days. The work is not complicated. It just asks you to actually do it. (I know. Revolutionary.)`) +
         p(`Inside you'll find video, written content, and the kind of questions that have a way of following you around long after you close the tab. That's a feature, not a bug.`) +
-        p(`<strong style="color:#122012;">How to get in:</strong><br>We don't use passwords here — passwords are overrated and nobody remembers them anyway. We use magic links instead. Here's how it works:`) +
+        p(`<strong style="color:#122012;">How to get in:</strong><br>We don't use passwords here. Passwords are overrated and nobody remembers them anyway. We use magic links instead. Here's how it works:`) +
         `<table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px;"><tr><td style="padding:0;">` +
-        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">1. Click the button below — it takes you to the login page.</p>` +
+        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">1. Click the button below. It takes you to the login page.</p>` +
         `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">2. Enter the email address you used to purchase.</p>` +
-        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">3. Check your inbox for an email from Miranda J — click that link.</p>` +
+        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">3. Check your inbox for an email from Miranda J, then click that link.</p>` +
         `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 0;font-family:Georgia,serif;">4. You're in your dashboard. That's it.</p>` +
         `</td></tr></table>` +
         btn('Start Day 1', LOGIN) +
-        p(`<strong style="color:#122012;">One thing to know:</strong> Magic links are single-use and expire quickly, so keep this email open when you click through. Once you're logged in, your session stays active — so as long as you don't clear your browser, you won't need to log in again for a good while.`) +
+        p(`<strong style="color:#122012;">One thing to know:</strong> Magic links are single-use and expire quickly, so keep this email open when you click through. Once you're logged in, your session stays active, so as long as you don't clear your browser, you won't need to log in again for a good while.`) +
         p(`The only question worth asking today is: <em>what am I actually here for?</em>`) +
         p(`Day 1 has the beginning of that answer. Go find it.`)
       ),
@@ -68,7 +68,7 @@ export const SEQUENCES = {
       body: (n) => wrap(
         greet(n) +
         p(`The first few days are easy. You're motivated, it's new.`) +
-        p(`The real question is whether you're actually doing the work — the Non-Negotiables, the journal, not just watching the videos.`) +
+        p(`The real question is whether you're actually doing the work: the Non-Negotiables, the journal, not just watching the videos.`) +
         p(`This program only works if you work it. Log back in and stay honest with yourself.`) +
         btn('Continue the Work', LOGIN)
       ),
@@ -304,18 +304,18 @@ export const SEQUENCES = {
         const result = d?.result || 'yellow';
         const copies = {
           red: {
-            headline: 'Disconnected — and probably have been for longer than you want to admit.',
-            body: `The audit did not tell you anything you did not already know. That question about last week — how you actually spent your time versus what you say you value — you knew the answer before you clicked it. The one about editing yourself around the people in your life. The one about watching your life from a distance instead of being in it. You knew.`,
-            next: `What the audit did was give you a number for it. And now you have a choice: name it and keep going the same way, or name it and actually do something about it. <a href="https://www.mirajoco.org/25daysand25nights?offer=audit" style="color:#5A3F9A;">25 Days and 25 Nights</a> was built for exactly this moment — twenty-five days of daily practice that closes the gap between the life you are describing and the one you are living.`,
+            headline: 'Disconnected. And probably have been for longer than you want to admit.',
+            body: `The audit did not tell you anything you did not already know. That question about last week, how you actually spent your time versus what you say you value, you knew the answer before you clicked it. The one about editing yourself around the people in your life. The one about watching your life from a distance instead of being in it. You knew.`,
+            next: `What the audit did was give you a number for it. And now you have a choice: name it and keep going the same way, or name it and actually do something about it. <a href="https://www.mirajoco.org/25daysand25nights?offer=audit" style="color:#5A3F9A;">25 Days and 25 Nights</a> was built for exactly this moment. Twenty-five days of daily practice that closes the gap between the life you are describing and the one you are living.`,
           },
           yellow: {
-            headline: 'Drifting — and somewhere in those ten questions you felt it.',
+            headline: 'Drifting. And somewhere in those ten questions you felt it.',
             body: `The question about your last big decision probably gave you pause. Or the one about whether the people closest to you actually know what is going on with you. Drifting does not mean falling apart. It means the distance between who you are and who you know you could be keeps widening, and you have mostly stopped fighting it.`,
             next: `That gap does not close on its own. <a href="https://www.mirajoco.org/25daysand25nights?offer=audit" style="color:#5A3F9A;">25 Days and 25 Nights</a> gives you the daily structure to stop drifting and start moving with intention. One honest day at a time.`,
           },
           green: {
-            headline: 'Connected — more than most people who take this.',
-            body: `That is not an accident. You are intentional. You think about this. The question the audit probably surfaced is not whether you are aligned — it is whether you are building or just maintaining what you already have. There is a difference between living well and living fully.`,
+            headline: 'Connected. More than most people who take this.',
+            body: `That is not an accident. You are intentional. You think about this. The question the audit probably surfaced is not whether you are aligned. It is whether you are building or just maintaining what you already have. There is a difference between living well and living fully.`,
             next: `<a href="https://www.mirajoco.org/25daysand25nights?offer=audit" style="color:#5A3F9A;">25 Days and 25 Nights</a> is for people in your position who are ready to stop coasting on good and start building great. This is not a rescue program. It is a growth one.`,
           },
         };
@@ -338,8 +338,8 @@ export const SEQUENCES = {
         greet(n) +
         p(`Three days ago you took the Alignment Audit. I want to talk about one question in particular.`) +
         p(`The one about sitting in silence for five minutes without reaching for your phone.`) +
-        p(`Most people answer that one before they finish reading it. Because they already know. Not because they are bad at stillness — but because the phone has become the default response to any moment of quiet. The second things get still, we reach. It is automatic.`) +
-        p(`That is not a distraction problem. That is a disconnection problem. The noise fills the gap where your own voice would be — and after a while, you stop noticing the gap is there.`) +
+        p(`Most people answer that one before they finish reading it. Because they already know. Not because they are bad at stillness, but because the phone has become the default response to any moment of quiet. The second things get still, we reach. It is automatic.`) +
+        p(`That is not a distraction problem. That is a disconnection problem. The noise fills the gap where your own voice would be, and after a while you stop noticing the gap is there.`) +
         p(`25 Days and 25 Nights is built around replacing those defaults. Not with willpower. With structure and daily practice that makes the new behavior the easier one.`) +
         btn('See What Is Inside', 'https://www.mirajoco.org/25daysand25nights?offer=audit')
       ),
@@ -350,10 +350,10 @@ export const SEQUENCES = {
       body: (n) => wrap(
         greet(n) +
         p(`A week ago you answered ten questions. I keep thinking about one of them.`) +
-        p(`"My last big decision was made for me — not for how it would look."`) +
+        p(`"My last big decision was made for me. Not for how it would look."`) +
         p(`Was that answer honest?`) +
-        p(`Not as a judgment. As a real question. Because that one tends to be the hardest to answer accurately. We tell ourselves we are choosing for ourselves long after we have started choosing for the audience — people we may not even respect, whose approval we are still quietly chasing.`) +
-        p(`If the audit hit something real — and I think it did, or you would not still be here — this is the next step. 25 Days and 25 Nights. Your quiz taker discount is still active.`) +
+        p(`Not as a judgment. As a real question. Because that one tends to be the hardest to answer accurately. We tell ourselves we are choosing for ourselves long after we have started choosing for the audience, people we may not even respect, whose approval we are still quietly chasing.`) +
+        p(`If the audit hit something real, and I think it did, this is the next step. 25 Days and 25 Nights. Your quiz taker discount is still active.`) +
         p(`Awareness without structure is just discomfort with better vocabulary. This gives you both.`) +
         btn('Enroll in 25 Days and 25 Nights', 'https://www.mirajoco.org/25daysand25nights?offer=audit') +
         p(`If it is not the right time, that is okay. But do not let it just sit there.`)
