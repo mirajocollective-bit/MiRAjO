@@ -144,13 +144,38 @@
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.72);
     }
     .hero-stat-div {
       width: 1px;
       height: 56px;
       background: rgba(255,255,255,0.12);
       flex-shrink: 0;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.45; transform: scale(1); }
+      50%       { opacity: 0.65; transform: scale(1.12); }
+    }
+    .hero::before {
+      animation: glowPulse 5s ease-in-out infinite;
+    }
+    .hero-eyebrow {
+      animation: fadeUp 0.7s cubic-bezier(0.25,0.46,0.45,0.94) both;
+    }
+    .hero h1 {
+      animation: fadeUp 0.7s 0.15s cubic-bezier(0.25,0.46,0.45,0.94) both;
+    }
+    .hero-sub {
+      animation: fadeUp 0.7s 0.3s cubic-bezier(0.25,0.46,0.45,0.94) both;
+    }
+    .hero-stats {
+      animation: fadeUp 0.7s 0.5s cubic-bezier(0.25,0.46,0.45,0.94) both;
     }
 
     /* ── QUOTE STRIPS ───────────────────────── */
@@ -697,12 +722,12 @@
   <p class="hero-sub">This is where you find out what. Ten questions. No fluff. A score that shows you exactly where the gap is showing up and what to do about it.</p>
   <div class="hero-stats">
     <div class="hero-stat">
-      <span class="hero-stat-num">10</span>
+      <span class="hero-stat-num" data-count="10">0</span>
       <span class="hero-stat-label">Questions</span>
     </div>
     <div class="hero-stat-div"></div>
     <div class="hero-stat">
-      <span class="hero-stat-num">5</span>
+      <span class="hero-stat-num" data-count="5">0</span>
       <span class="hero-stat-label">Minutes</span>
     </div>
     <div class="hero-stat-div"></div>
@@ -1207,6 +1232,30 @@
     tick();
   }
   startCountdown();
+
+  // ── Counter animation on hero stats ──────────
+  function animateCounter(el, target, duration) {
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
+  const statNums = document.querySelectorAll('.hero-stat-num[data-count]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target, parseInt(entry.target.dataset.count), 1200);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  statNums.forEach(el => observer.observe(el));
 </script>
 
 </body>
