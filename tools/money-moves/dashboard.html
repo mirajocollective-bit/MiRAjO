@@ -555,6 +555,24 @@
     }
     .undo-toast button:hover { background: rgba(242,235,217,0.1); }
 
+    /* ── Mode Picker Modal ── */
+    .mode-picker-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px;
+    }
+    .mode-picker-card {
+      border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 10px;
+      cursor: pointer; text-align: center; transition: all 0.18s;
+      background: var(--soft-white);
+    }
+    .mode-picker-card:hover { border-color: var(--new-growth); background: rgba(109,196,138,0.06); }
+    .mode-picker-card.selected {
+      border-color: var(--living-green); background: rgba(37,107,66,0.07);
+      box-shadow: 0 0 0 1px var(--living-green);
+    }
+    .mode-picker-icon { font-size: 24px; line-height: 1; margin-bottom: 5px; }
+    .mode-picker-name { font-size: 12px; font-weight: 700; color: var(--deep-forest); margin-bottom: 2px; }
+    .mode-picker-desc { font-size: 10px; color: var(--neutral); line-height: 1.4; }
+
     /* ── Add Account Modal ── */
     .acct-modal { max-width: 420px; }
 
@@ -882,7 +900,7 @@
         <div class="mode-name" id="mode-name">Mom Mode</div>
       </div>
       <div class="mode-msg" id="mode-msg">Add your first account and let's get to work.</div>
-      <button class="mode-change-btn" onclick="window.location.href='/tools/money-moves/settings#mode'">Change your mode →</button>
+      <button class="mode-change-btn" onclick="openModePickerModal()">Change your mode →</button>
     </div>
 
     <!-- Budget -->
@@ -1203,7 +1221,7 @@
     categories   = catRes.data   || [];
     goals        = goalRes.data  || [];
     debts        = debtRes.data  || [];
-    preferences  = prefRes.data  || { personality_mode: 'mom', alert_threshold: 80 };
+    preferences  = prefRes.data  || { personality_mode: 'default', alert_threshold: 80 };
 
     // Select first account or saved default
     if (!selectedAccountId || !accounts.find(a => a.id === selectedAccountId)) {
@@ -1628,14 +1646,80 @@
 
   // ── Mode ────────────────────────────────────────────────────────────────────
   const MODES = {
-    mom:       { icon:'🤱', name:'Mom Mode',        idle:'Add your transactions and I\'ll keep an eye on things, baby.',         warning:'Baby, you\'re getting close to your limit. We need to talk about these choices.', over:'Honey, you went over budget. We are NOT doing this again next month.', ontrack:'That\'s my baby! You\'re right on track this month.' },
-    dad:       { icon:'👨', name:'Dad Mode',         idle:'Let\'s see the numbers.',                                              warning:'You\'re at 80%. Watch it.',                                                        over:'Over budget. Fix it.',                                                           ontrack:'On track. Keep going.' },
-    spiritual: { icon:'🙏', name:'Spiritual Guide',  idle:'Your financial journey is an act of intention. Begin with awareness.', warning:'Pause. Your spending energy is approaching its boundary. Realign.',              over:'The budget has been exceeded. This is information. Recenter and redirect.',       ontrack:'You are in alignment. Your choices this month reflect your values.' },
-    wrestling: { icon:'🤼', name:'Wrestling Mode',   idle:'LET\'S GO. TRACK THOSE MOVES. YOUR MONEY DOESN\'T SLEEP.',            warning:'YOU\'RE AT 80%! THE CROWD IS WATCHING! HOLD YOUR GROUND!',                       over:'YOU GOT PINNED. GET UP. FIGHT BACK. ADJUST THE GAME PLAN.',                      ontrack:'YOU\'RE WINNING THIS MONTH! DON\'T LET UP!' },
+    default:   { icon:'💼', name:'Professional',    desc:'Calm, clear, no pressure.',
+                 idle:'Track your income and expenses. Knowledge is your greatest financial asset.',
+                 ontrack:'Solid progress. You\'re operating within budget this month.',
+                 warning:'Heads up — you\'re at 80% of income. Review your discretionary spending.',
+                 over:'You\'ve exceeded income this month. Time to course-correct.' },
+    mom:       { icon:'🤱', name:'Mom Mode',         desc:'Nurturing but firm.',
+                 idle:'Add your transactions and I\'ll keep an eye on things, baby.',
+                 ontrack:'That\'s my baby! You\'re right on track this month.',
+                 warning:'Baby, you\'re getting close to your limit. We need to talk about these choices.',
+                 over:'Honey, you went over budget. We are NOT doing this again next month.' },
+    dad:       { icon:'👨', name:'Dad Mode',          desc:'Direct, no-nonsense.',
+                 idle:'Let\'s see the numbers.',
+                 ontrack:'On track. Keep going.',
+                 warning:'You\'re at 80%. Watch it.',
+                 over:'Over budget. Fix it.' },
+    spiritual: { icon:'🙏', name:'Spiritual Guide',   desc:'Grounded, mindful, purpose-driven.',
+                 idle:'Your financial journey is an act of intention. Begin with awareness.',
+                 ontrack:'You are in alignment. Your choices this month reflect your values.',
+                 warning:'Pause. Your spending energy is approaching its boundary. Realign.',
+                 over:'The budget has been exceeded. This is information. Recenter and redirect.' },
+    wrestling: { icon:'🤼', name:'Wrestling Mode',    desc:'Hype, intensity, trash-talk motivation.',
+                 idle:'LET\'S GO. TRACK THOSE MOVES. YOUR MONEY DOESN\'T SLEEP.',
+                 ontrack:'YOU\'RE WINNING THIS MONTH! DON\'T LET UP!',
+                 warning:'YOU\'RE AT 80%! THE CROWD IS WATCHING! HOLD YOUR GROUND!',
+                 over:'YOU GOT PINNED. GET UP. FIGHT BACK. ADJUST THE GAME PLAN.' },
+    coach:     { icon:'🏆', name:'Coach Mode',        desc:'Game mindset, team energy.',
+                 idle:'Every champion tracks their numbers. Let\'s see what you\'re working with.',
+                 ontrack:'You\'re in the zone! Financial game is strong — keep pushing.',
+                 warning:'You\'re close to the limit. Tighten up before the final quarter.',
+                 over:'Overtime spending. Call a timeout and reassess the game plan.' },
+    ceo:       { icon:'👔', name:'CEO Mode',           desc:'Boardroom strategy, run it like a business.',
+                 idle:'Run your finances like a business. Every dollar is a resource allocation decision.',
+                 ontrack:'Revenue over expenses. The board is pleased. Keep executing.',
+                 warning:'Burn rate is climbing. Tighten the budget before end of quarter.',
+                 over:'You\'re in the red. Restructure immediately. CEOs don\'t miss targets twice.' },
+    bff:       { icon:'🫂', name:'BFF Mode',           desc:'Real talk, supportive, we\'re in this together.',
+                 idle:'Hey! Log your stuff — I\'m not judging, I just want to see us both WIN.',
+                 ontrack:'Okay STOP. You\'re doing so well this month. I\'m genuinely proud of you.',
+                 warning:'Okay babe, we need to talk. You\'re getting a little close to the edge.',
+                 over:'I love you, but we are NOT doing this again. Budget meeting. Now.' },
+    hypeman:   { icon:'🎤', name:'Hype Man',           desc:'Celebration energy, keeps it loud.',
+                 idle:'YOOO. Your money is here and it\'s ready to work. LET\'S GET IT.',
+                 ontrack:'YOU ARE THAT PERSON. Budget looking CLEAN. We are WINNING.',
+                 warning:'Pump the brakes! You\'re close to the limit. DON\'T BLOW IT.',
+                 over:'We are NOT going out like this. REGROUP. RESET. COME BACK HARDER.' },
+    grandma:   { icon:'👵', name:'Grandma Mode',       desc:'Old-school wisdom and unconditional love.',
+                 idle:'Sweetheart, money saved is a good night\'s sleep. Let\'s see what we have, dear.',
+                 ontrack:'Oh, I\'m so proud of you, honey. You\'re saving just like I taught you.',
+                 warning:'Now baby, slow down a little. You\'re spending more than Grandma would like.',
+                 over:'Oh my goodness. Come sit down. We need to talk about this, sweetheart.' },
+    sergeant:  { icon:'🎖️', name:'Drill Sergeant',     desc:'Military strict, zero excuses.',
+                 idle:'ATTENTION! Financial report is waiting. NO EXCUSES. LOG YOUR TRANSACTIONS.',
+                 ontrack:'AS YOU WERE. Budget is under control. Maintain your discipline, soldier.',
+                 warning:'WHAT IS HAPPENING HERE? You are at 80%! GET IT TOGETHER IMMEDIATELY.',
+                 over:'YOU BLEW THE BUDGET. That is UNACCEPTABLE. Reallocate NOW.' },
+    therapist: { icon:'🛋️', name:'Therapist Mode',     desc:'Reflective, emotionally intelligent.',
+                 idle:'Take a breath. Let\'s explore your relationship with money today. No judgment.',
+                 ontrack:'I\'m noticing some really healthy financial patterns. How does that feel?',
+                 warning:'I\'m sensing some anxiety building. Let\'s talk about what\'s driving these choices.',
+                 over:'This is data, not failure. What unmet need might this spending reflect?' },
+    genz:      { icon:'✨', name:'Gen Z Mode',          desc:'Very online, bestie energy.',
+                 idle:'bestie your finances aren\'t going to check themselves... just saying 💅',
+                 ontrack:'okay this budget is literally SERVING. main character energy. not taking questions.',
+                 warning:'this is giving overspent. we need to recalibrate asap bestie ngl',
+                 over:'we went over budget and that\'s... a lot. anyway, reset arc begins now ✨' },
+    villain:   { icon:'😈', name:'Villain Era',         desc:'Building an empire, no apologies.',
+                 idle:'We don\'t play small here. Track every dollar. We\'re building an empire.',
+                 ontrack:'Look at that. Under budget and building. Nobody does it like us.',
+                 warning:'The empire doesn\'t overspend. 80% and climbing. Rein it in.',
+                 over:'Even villains have limits. You exceeded the budget. We don\'t make this mistake twice.' },
   };
 
   function renderMode() {
-    const mode    = MODES[preferences.personality_mode] || MODES.mom;
+    const mode    = MODES[preferences.personality_mode] || MODES.default;
     const monthTx = getMonthTransactions();
     const income  = monthTx.filter(t => t.type === 'income').reduce((s,t)  => s + Number(t.amount), 0);
     const expense = monthTx.filter(t => t.type === 'expense').reduce((s,t) => s + Number(t.amount), 0);
@@ -2505,6 +2589,34 @@
     setView(currentView === 'forecast' ? 'calendar' : 'forecast');
   };
 
+  // ── Mode Picker ──────────────────────────────────────────────────────────────
+  window.openModePickerModal = function () {
+    const grid    = document.getElementById('mode-picker-grid');
+    const current = preferences.personality_mode || 'default';
+    grid.innerHTML = Object.entries(MODES).map(([key, m]) => `
+      <div class="mode-picker-card${key === current ? ' selected' : ''}" onclick="selectMode('${key}')">
+        <div class="mode-picker-icon">${m.icon}</div>
+        <div class="mode-picker-name">${m.name}</div>
+        <div class="mode-picker-desc">${m.desc}</div>
+      </div>`).join('');
+    document.getElementById('mode-picker-overlay').style.display = 'flex';
+  };
+
+  window.closeModePickerModal = function () {
+    document.getElementById('mode-picker-overlay').style.display = 'none';
+  };
+
+  window.selectMode = async function (key) {
+    preferences.personality_mode = key;
+    // Highlight selected immediately
+    document.querySelectorAll('.mode-picker-card').forEach(c => c.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+    // Save to Supabase
+    await supabase.from('mm_preferences').upsert({ user_id: user.id, personality_mode: key }, { onConflict: 'user_id' });
+    renderMode();
+    setTimeout(closeModePickerModal, 400);
+  };
+
   window.goToToday = function () {
     const now = new Date();
     currentMonth = now.getMonth();
@@ -2688,12 +2800,22 @@
         <div class="faq-q" onclick="toggleFaq(this)">What are personality modes? <span class="faq-chevron">▼</span></div>
         <div class="faq-a">Personality modes change the tone of your budget coaching messages. Choose the voice that motivates you:
           <ul>
+            <li>💼 <strong>Professional</strong> — calm, clear, no pressure</li>
             <li>🤱 <strong>Mom Mode</strong> — nurturing but firm</li>
-            <li>💼 <strong>Dad Mode</strong> — direct, no-nonsense</li>
+            <li>👨 <strong>Dad Mode</strong> — direct, no-nonsense</li>
             <li>🙏 <strong>Spiritual Guide</strong> — grounded and mindful</li>
-            <li>🤼 <strong>Wrestling Mode</strong> — hyped, intense, trash-talk motivation</li>
+            <li>🤼 <strong>Wrestling Mode</strong> — hype, intensity, trash-talk</li>
+            <li>🏆 <strong>Coach Mode</strong> — game mindset, team energy</li>
+            <li>👔 <strong>CEO Mode</strong> — boardroom strategy</li>
+            <li>🫂 <strong>BFF Mode</strong> — real talk, supportive</li>
+            <li>🎤 <strong>Hype Man</strong> — celebration energy</li>
+            <li>👵 <strong>Grandma Mode</strong> — old-school wisdom and love</li>
+            <li>🎖️ <strong>Drill Sergeant</strong> — military strict, zero excuses</li>
+            <li>🛋️ <strong>Therapist Mode</strong> — reflective, emotionally intelligent</li>
+            <li>✨ <strong>Gen Z Mode</strong> — very online, bestie energy</li>
+            <li>😈 <strong>Villain Era</strong> — building an empire, no apologies</li>
           </ul>
-          Switch anytime in Settings.
+          Click "Change your mode" on the dashboard to switch anytime.
         </div>
       </div>
     </div>
@@ -2781,6 +2903,18 @@
     await loadAll();
   };
 </script>
+
+<!-- Mode Picker Modal -->
+<div class="modal-overlay" id="mode-picker-overlay" onclick="if(event.target===this)closeModePickerModal()" style="z-index:250">
+  <div class="modal" style="max-width:520px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div class="modal-title" style="margin-bottom:0">Choose Your Mode</div>
+      <button onclick="closeModePickerModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--neutral);line-height:1">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--neutral);margin-bottom:16px;line-height:1.5">Pick the voice that keeps you motivated. You can switch anytime.</p>
+    <div class="mode-picker-grid" id="mode-picker-grid"></div>
+  </div>
+</div>
 
 <!-- Undo Toast -->
 <div class="undo-toast" id="undo-toast">
