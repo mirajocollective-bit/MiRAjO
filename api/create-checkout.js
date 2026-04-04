@@ -9,6 +9,11 @@ export default async function handler(req, res) {
 
   const { email, couponId } = req.body || {};
 
+  const VALID_COUPONS = new Set(['Ve6MHGlP']);
+  if (couponId && !VALID_COUPONS.has(couponId)) {
+    return res.status(400).json({ error: 'Invalid coupon' });
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
