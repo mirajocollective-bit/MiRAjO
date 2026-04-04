@@ -87,7 +87,6 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       outline: none;
       transition: border-color 0.2s;
-      text-align: center;
     }
 
     .login-input::placeholder { color: rgba(37,107,66,0.35); }
@@ -107,28 +106,52 @@
       transition: transform 0.2s, box-shadow 0.3s;
       box-shadow: 0 8px 32px rgba(18,32,18,0.2);
       font-family: 'Plus Jakarta Sans', sans-serif;
+      margin-top: 4px;
     }
 
     .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(18,32,18,0.28); }
     .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .login-msg {
-      margin-top: 20px;
+      margin-top: 16px;
       font-size: 14px;
       line-height: 1.6;
       min-height: 20px;
       color: var(--living-green);
     }
 
+    .login-forgot {
+      display: block;
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--forest-mid);
+      text-decoration: none;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+    .login-forgot:hover { opacity: 1; }
+
     .login-back {
+      display: block;
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--forest-mid);
+      text-decoration: none;
+      opacity: 0.65;
+      transition: color 0.2s;
+    }
+    .login-back:hover { color: var(--deep-forest); opacity: 1; }
+
+    .login-home {
       margin-top: 32px;
       font-size: 13px;
       color: var(--forest-mid);
       text-decoration: none;
-      transition: color 0.2s;
+      display: block;
       opacity: 0.7;
+      transition: color 0.2s;
     }
-    .login-back:hover { color: var(--deep-forest); opacity: 1; }
+    .login-home:hover { color: var(--deep-forest); opacity: 1; }
 
     @media (max-width: 480px) {
       .login-card { padding: 40px 28px; }
@@ -141,52 +164,114 @@
 
 <div class="login-card">
   <a href="https://www.mirajoco.org"><img src="/img/logo-horizontal.png" alt="MiRAjO" class="login-logo"></a>
-  <div class="login-eyebrow">Student Access</div>
-  <h1 class="login-title">Welcome Back</h1>
-  <p class="login-sub">Enter your email and we'll send you a secure login link. No password needed.</p>
 
-  <form class="login-form" id="login-form">
-    <input type="email" class="login-input" placeholder="Your email address" required>
-    <button type="submit" class="login-btn">Send My Login Link</button>
-  </form>
+  <!-- Sign In -->
+  <div id="login-section">
+    <div class="login-eyebrow">Student Access</div>
+    <h1 class="login-title">Welcome Back</h1>
+    <p class="login-sub">Enter your email and password to access your course.</p>
 
-  <p class="login-msg" id="login-msg"></p>
-  <a href="https://www.mirajoco.org" class="login-back">← Back to MiRAjO</a>
+    <form class="login-form" id="login-form">
+      <input type="email" id="login-email" class="login-input" placeholder="Email address" required>
+      <input type="password" id="login-password" class="login-input" placeholder="Password" required>
+      <button type="submit" class="login-btn">Sign In</button>
+    </form>
+    <p class="login-msg" id="login-msg"></p>
+    <a href="#" id="forgot-link" class="login-forgot">Forgot your password?</a>
+  </div>
+
+  <!-- Forgot Password -->
+  <div id="reset-section" style="display:none;">
+    <h1 class="login-title">Reset your password</h1>
+    <p class="login-sub">Enter the email you used to purchase. We'll send a link to set a new password.</p>
+
+    <form class="login-form" id="reset-form">
+      <input type="email" id="reset-email" class="login-input" placeholder="Email address" required>
+      <button type="submit" class="login-btn">Send Reset Link</button>
+    </form>
+    <p class="login-msg" id="reset-msg"></p>
+    <a href="#" id="back-to-login" class="login-back">← Back to sign in</a>
+  </div>
+
+  <a href="https://www.mirajoco.org" class="login-home">← Back to MiRAjO</a>
 </div>
 
+<script src="/api/config"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+  // If already signed in, go straight to dashboard
+  db.auth.getSession().then(({ data: { session } }) => {
+    if (session) window.location.href = '/programs/dashboard';
+  });
+
+  // Sign in with password
   document.getElementById('login-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = this.querySelector('.login-btn');
     const msg = document.getElementById('login-msg');
-    const email = this.querySelector('input[type="email"]').value;
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    btn.textContent = 'Signing in...';
+    btn.disabled = true;
+    msg.textContent = '';
+
+    const { error } = await db.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      msg.textContent = (error.message === 'Invalid login credentials')
+        ? 'Email or password is incorrect. Use "Forgot your password?" to set one.'
+        : error.message;
+      msg.style.color = '#E88080';
+      btn.textContent = 'Sign In';
+      btn.disabled = false;
+      return;
+    }
+
+    window.location.href = '/programs/dashboard';
+  });
+
+  // Show forgot password form
+  document.getElementById('forgot-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('reset-section').style.display = 'block';
+  });
+
+  // Back to sign in
+  document.getElementById('back-to-login').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('reset-section').style.display = 'none';
+    document.getElementById('login-section').style.display = 'block';
+  });
+
+  // Send password reset email
+  document.getElementById('reset-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.login-btn');
+    const msg = document.getElementById('reset-msg');
+    const email = document.getElementById('reset-email').value.trim();
 
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    try {
-      const res = await fetch('/api/auth-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
+    const { error } = await db.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://www.mirajoco.org/programs/confirm?setup=1'
+    });
 
-      if (res.ok) {
-        msg.textContent = "Check your email — your login link is on its way.";
-        msg.style.color = '#256B42';
-        this.reset();
-      } else {
-        msg.textContent = "Something went wrong. Please try again.";
-        msg.style.color = '#E88080';
-        btn.textContent = 'Send My Login Link';
-        btn.disabled = false;
-      }
-    } catch {
-      msg.textContent = "Something went wrong. Please try again.";
+    if (error) {
+      msg.textContent = 'Something went wrong. Please try again.';
       msg.style.color = '#E88080';
-      btn.textContent = 'Send My Login Link';
+      btn.textContent = 'Send Reset Link';
       btn.disabled = false;
+      return;
     }
+
+    msg.textContent = 'Check your inbox — a reset link is on its way.';
+    msg.style.color = '#256B42';
+    document.getElementById('reset-form').style.display = 'none';
   });
 </script>
 

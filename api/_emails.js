@@ -43,21 +43,15 @@ export const SEQUENCES = {
     {
       step: 1, delayDays: 0,
       subject: "You're in. Welcome to the work.",
-      body: (n) => wrap(
+      body: (n, d = {}) => wrap(
         greet(n) +
         p(`Something happened the moment you hit purchase. You said yes to yourself, and that's not nothing. In a world where it's become genuinely easier to scroll for two hours than to sit with one honest question, making that decision is actually kind of remarkable.`) +
         p(`So, welcome. Let's get into it.`) +
         p(`<strong style="color:#122012;">What you've got waiting for you:</strong><br>25 Days &amp; 25 Nights is structured simply. Each day: a lesson, a journal prompt, and your 10 Non-Negotiables. The nights are yours to reflect. Repeat for 25 days. The work is not complicated. It just asks you to actually do it. (I know. Revolutionary.)`) +
         p(`Inside you'll find video, written content, and the kind of questions that have a way of following you around long after you close the tab. That's a feature, not a bug.`) +
-        p(`<strong style="color:#122012;">How to get in:</strong><br>We don't use passwords here. Passwords are overrated and nobody remembers them anyway. We use magic links instead. Here's how it works:`) +
-        `<table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px;"><tr><td style="padding:0;">` +
-        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">1. Click the button below. It takes you to the login page.</p>` +
-        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">2. Enter the email address you used to purchase.</p>` +
-        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 6px;font-family:Georgia,serif;">3. Check your inbox for an email from Miranda J, then click that link.</p>` +
-        `<p style="font-size:15px;line-height:1.9;color:#1a2a1a;margin:0 0 0;font-family:Georgia,serif;">4. You're in your dashboard. That's it.</p>` +
-        `</td></tr></table>` +
-        btn('Start Day 1', LOGIN) +
-        p(`<strong style="color:#122012;">One thing to know:</strong> Magic links are single-use and expire quickly, so keep this email open when you click through. Once you're logged in, your session stays active, so as long as you don't clear your browser, you won't need to log in again for a good while.`) +
+        p(`<strong style="color:#122012;">First step: set your password.</strong><br>Click the button below to choose your password and land straight in your course dashboard. This link is for you only and works once, so use it now.`) +
+        btn('Set Your Password &amp; Start', d.setup_link || LOGIN) +
+        p(`Once your password is set, you'll log in at <a href="${LOGIN}" style="color:#256B42;">${LOGIN.replace('https://', '')}</a> using your email and password any time.`) +
         p(`The only question worth asking today is: <em>what am I actually here for?</em>`) +
         p(`Day 1 has the beginning of that answer. Go find it.`)
       ),

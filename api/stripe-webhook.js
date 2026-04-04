@@ -115,12 +115,24 @@ export default async function handler(req, res) {
 
       console.log(`Couples enrollment: Partner A (${email}) enrolled, couple record created`);
     } else {
-      // 25D25N flow
+      // 25D25N flow — generate a one-time password setup link
+      let setupLink = null;
+      try {
+        const { data: linkData } = await supabase.auth.admin.generateLink({
+          type: 'recovery',
+          email,
+          options: { redirectTo: `${process.env.SITE_URL}/programs/confirm?setup=1` },
+        });
+        setupLink = linkData?.properties?.action_link || null;
+      } catch (err) {
+        console.error('[stripe-webhook] Setup link error:', err.message);
+      }
+
       await addTag(email, 'enrolled-25d25n', {
         first_name: firstName,
         fields: { last_name: lastName, phone, city, country },
       });
-      await queueSequence(supabase, email, 'enrolled-25d25n', firstName);
+      await queueSequence(supabase, email, 'enrolled-25d25n', firstName, { setup_link: setupLink });
 
       console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);
     }
