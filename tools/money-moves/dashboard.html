@@ -347,7 +347,7 @@
     .cal-cell.other-month { opacity: 0.25; pointer-events: none; }
 
     .cal-date-num {
-      font-size: 12px; font-weight: 600; color: var(--deep-forest); margin-bottom: 3px;
+      font-size: 12px; font-weight: 600; color: #111; margin-bottom: 3px;
       width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
       border-radius: 50%;
     }
@@ -362,9 +362,9 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
       display: flex; align-items: center; gap: 3px;
     }
-    .cal-entry.income  { background: rgba(37,107,66,0.09);  color: var(--living-green); }
-    .cal-entry.expense { background: rgba(192,57,43,0.08);  color: #b03020; }
-    .cal-entry.transfer { background: rgba(107,114,128,0.08); color: var(--neutral); }
+    .cal-entry.income  { background: rgba(37,107,66,0.09);  color: #111; }
+    .cal-entry.expense { background: rgba(192,57,43,0.08);  color: #111; }
+    .cal-entry.transfer { background: rgba(107,114,128,0.08); color: #111; }
     .cal-entry[draggable] { cursor: grab; }
     .cal-entry.dragging { opacity: 0.3; cursor: grabbing; }
     .cal-cell.drag-over { background: rgba(37,107,66,0.08) !important; outline: 2px dashed var(--living-green); }
@@ -374,8 +374,8 @@
       font-size: 9px; font-weight: 700; padding: 1px 4px;
       border-radius: 4px; background: rgba(18,32,18,0.04);
     }
-    .cal-day-balance.positive { color: var(--income-color); }
-    .cal-day-balance.negative { color: var(--expense-color); }
+    .cal-day-balance.positive { color: #111; }
+    .cal-day-balance.negative { color: #111; }
 
     /* ── Forecast view ── */
     .forecast-view {
