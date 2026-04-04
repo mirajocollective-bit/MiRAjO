@@ -410,6 +410,139 @@
     .mbadge-foundation { background: rgba(93,190,138,0.1); color: var(--aligned); border: 1px solid rgba(93,190,138,0.2); }
     .mbadge-locked { background: transparent; color: var(--cie-muted); border: 1px solid rgba(122,107,116,0.15); }
 
+    /* ═══ PROFILE SNAPSHOT ═══ */
+    .profile-section {
+      margin-bottom: 56px;
+    }
+    .profile-section-header {
+      margin-bottom: 24px;
+    }
+    .profile-section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cie-crimson);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .profile-section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--cie-dark);
+      margin-bottom: 6px;
+    }
+    .profile-section-sub {
+      font-size: 14px;
+      color: var(--cie-muted);
+      line-height: 1.6;
+    }
+    .profile-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .profile-col {
+      background: #ffffff;
+      border: 1px solid var(--cie-border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .profile-col-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(184,32,56,0.08);
+      background: rgba(184,32,56,0.03);
+    }
+    .profile-col-who {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .who-you-label    { color: var(--cie-crimson); }
+    .who-partner-label { color: var(--cie-muted); }
+    .profile-col-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--cie-dark);
+    }
+    .profile-field {
+      padding: 13px 20px;
+      border-bottom: 1px solid rgba(184,32,56,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .profile-field:last-child { border-bottom: none; }
+    .profile-field-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cie-muted);
+      font-weight: 600;
+    }
+    .profile-field-value {
+      font-size: 14px;
+      color: var(--cie-dark);
+      line-height: 1.5;
+    }
+    .profile-field-value.empty {
+      color: rgba(122,107,116,0.4);
+      font-style: italic;
+      font-size: 13px;
+    }
+    .profile-field-value.gap {
+      color: var(--cie-crimson);
+      font-weight: 600;
+    }
+    .profile-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .profile-tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(184,32,56,0.06);
+      border: 1px solid rgba(184,32,56,0.15);
+      color: var(--cie-dark);
+    }
+    .profile-gap-row {
+      background: rgba(196,162,69,0.06);
+      border: 1px solid rgba(196,162,69,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: var(--cie-dark);
+      line-height: 1.6;
+    }
+    .profile-gap-row:last-child { margin-bottom: 0; }
+    .profile-gap-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .profile-no-data {
+      background: rgba(184,32,56,0.03);
+      border: 1px dashed rgba(184,32,56,0.15);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--cie-muted);
+    }
+    @media (max-width: 640px) {
+      .profile-cols { grid-template-columns: 1fr; }
+    }
+
     /* ═══ CTA ═══ */
     .report-cta {
       text-align: center;
@@ -593,10 +726,152 @@ async function init() {
   const youLabel     = firstName || 'You';
   const partnerLabel = 'Your Partner';
 
-  renderReport(report, isPartnerA, youLabel, partnerLabel, user.id);
+  // Load both partner profiles (RLS allows partners to see each other)
+  const { data: profileRows } = await db
+    .from('partner_profiles')
+    .select('*')
+    .eq('couple_id', couple.id);
+
+  const myProfile      = profileRows?.find(p => p.user_id === user.id) || null;
+  const partnerProfile = profileRows?.find(p => p.user_id !== user.id) || null;
+
+  renderReport(report, isPartnerA, youLabel, partnerLabel, user.id, myProfile, partnerProfile);
 }
 
-function renderReport(report, isPartnerA, youLabel, partnerLabel, userId) {
+const LABEL = {
+  age:     { 'under-25':'Under 25','25-34':'25–34','35-44':'35–44','45-54':'45–54','55+':'55+' },
+  time:    { 'under-1':'Less than 1 year','1-3':'1–3 years','3-5':'3–5 years','5-10':'5–10 years','10+':'10+ years' },
+  status:  { 'dating':'Dating','engaged':'Engaged','married':'Married' },
+  family:  { 'no-kids':'No children','kids-together':'Children together','stepparent':'Stepparent','blended':'Blended family','unsure':'Not sure yet' },
+  stage:   { 'idea':'Idea stage','startup':'Startup','growing':'Growing','established':'Established' },
+  role:    { 'equal-partners':'Equal partners','i-lead':'Takes the lead','they-lead':'Partner leads','still-figuring':'Still figuring it out' },
+  years:   { 'just-starting':'Just starting','under-2':'Under 2 years','2-5':'2–5 years','5+':'5+ years' },
+  scale:   { 'low':'Low','medium':'Medium','high':'High' },
+  debt:    { 'none':'Debt-free','manageable':'Manageable','significant':'Significant','overwhelming':'Overwhelming' },
+  savings: { 'none':'No runway','1-3-months':'1–3 months','3-6-months':'3–6 months','6-plus':'6+ months' },
+};
+
+function lbl(map, val) {
+  return val ? (LABEL[map]?.[val] || val) : null;
+}
+
+function profileField(label, value, isGap) {
+  if (!value) return `<div class="profile-field">
+    <div class="profile-field-label">${label}</div>
+    <div class="profile-field-value empty">Not provided</div>
+  </div>`;
+  return `<div class="profile-field">
+    <div class="profile-field-label">${label}</div>
+    <div class="profile-field-value${isGap ? ' gap' : ''}">${escHtml(value)}</div>
+  </div>`;
+}
+
+function profileTagsField(label, arr) {
+  if (!arr?.length) return `<div class="profile-field">
+    <div class="profile-field-label">${label}</div>
+    <div class="profile-field-value empty">Not provided</div>
+  </div>`;
+  return `<div class="profile-field">
+    <div class="profile-field-label">${label}</div>
+    <div class="profile-tags">${arr.map(t => `<span class="profile-tag">${escHtml(t)}</span>`).join('')}</div>
+  </div>`;
+}
+
+function renderProfileCol(profile, whoClass, whoLabel, displayName) {
+  if (!profile?.completed_at) {
+    return `<div class="profile-col">
+      <div class="profile-col-header">
+        <div class="profile-col-who ${whoClass}">${whoLabel}</div>
+        <div class="profile-col-name">${escHtml(displayName)}</div>
+      </div>
+      <div class="profile-no-data">Profile not completed yet.</div>
+    </div>`;
+  }
+
+  const p = profile;
+  return `<div class="profile-col">
+    <div class="profile-col-header">
+      <div class="profile-col-who ${whoClass}">${whoLabel}</div>
+      <div class="profile-col-name">${escHtml(displayName)}</div>
+    </div>
+    ${profileField('Age Range', lbl('age', p.age_range))}
+    ${profileTagsField('Cultural Background', p.cultural_backgrounds)}
+    ${profileField('Faith Influence', lbl('scale', p.faith_influence))}
+    ${profileField('Political Values Matter', lbl('scale', p.political_importance))}
+    ${profileField('Time Together', lbl('time', p.time_together))}
+    ${profileField('Relationship Status', lbl('status', p.relationship_status))}
+    ${profileField('Family Structure', lbl('family', p.family_structure))}
+    ${profileField('Business Stage', lbl('stage', p.business_stage))}
+    ${profileField('My Role', lbl('role', p.business_role))}
+    ${profileField('Years Building Together', lbl('years', p.years_building_together))}
+    ${profileField('Debt Level', lbl('debt', p.debt_level))}
+    ${profileField('Savings Runway', lbl('savings', p.savings_runway))}
+    ${profileField('Money Alignment', lbl('scale', p.money_alignment))}
+    ${p.biggest_challenge ? profileField('Biggest Challenge', p.biggest_challenge) : ''}
+    ${profileTagsField('Course Goals', p.course_goal)}
+  </div>`;
+}
+
+function renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel) {
+  const bothDone = myProfile?.completed_at && partnerProfile?.completed_at;
+
+  // Surface notable gaps between completed profiles
+  const gaps = [];
+  if (bothDone) {
+    const scaleScore = { low: 1, medium: 2, high: 3 };
+
+    const faithA = scaleScore[myProfile.faith_influence] || 0;
+    const faithB = scaleScore[partnerProfile.faith_influence] || 0;
+    if (myProfile.faith_influence && partnerProfile.faith_influence && Math.abs(faithA - faithB) >= 2) {
+      gaps.push(`Faith plays a <strong>${lbl('scale', myProfile.faith_influence)?.toLowerCase()}</strong> role for ${escHtml(youLabel)} and a <strong>${lbl('scale', partnerProfile.faith_influence)?.toLowerCase()}</strong> role for ${escHtml(partnerLabel)}. Worth an honest conversation about how that shows up in the business.`);
+    }
+
+    const polA = scaleScore[myProfile.political_importance] || 0;
+    const polB = scaleScore[partnerProfile.political_importance] || 0;
+    if (myProfile.political_importance && partnerProfile.political_importance && Math.abs(polA - polB) >= 2) {
+      gaps.push(`Shared political values matter <strong>${lbl('scale', myProfile.political_importance)?.toLowerCase()}</strong> to ${escHtml(youLabel)} and <strong>${lbl('scale', partnerProfile.political_importance)?.toLowerCase()}</strong> to ${escHtml(partnerLabel)}. This difference can surface in business decisions and values alignment.`);
+    }
+
+    if (myProfile.family_structure && partnerProfile.family_structure && myProfile.family_structure !== partnerProfile.family_structure) {
+      gaps.push(`You described your family structure differently — <strong>${lbl('family', myProfile.family_structure)}</strong> vs. <strong>${lbl('family', partnerProfile.family_structure)}</strong>. That discrepancy is worth talking through.`);
+    }
+
+    if (myProfile.business_role && partnerProfile.business_role && myProfile.business_role !== partnerProfile.business_role) {
+      const roleA = lbl('role', myProfile.business_role);
+      const roleB = lbl('role', partnerProfile.business_role);
+      if (!(myProfile.business_role === 'equal-partners' && partnerProfile.business_role === 'equal-partners')) {
+        gaps.push(`${escHtml(youLabel)} sees their role as <strong>${roleA?.toLowerCase()}</strong>. ${escHtml(partnerLabel)} sees it as <strong>${roleB?.toLowerCase()}</strong>. Role perception gaps are one of the most common friction points — your course addresses this directly.`);
+      }
+    }
+
+    const monA = scaleScore[myProfile.money_alignment] || 0;
+    const monB = scaleScore[partnerProfile.money_alignment] || 0;
+    if (myProfile.money_alignment && partnerProfile.money_alignment && Math.abs(monA - monB) >= 2) {
+      gaps.push(`${escHtml(youLabel)} rates money alignment as <strong>${lbl('scale', myProfile.money_alignment)?.toLowerCase()}</strong>. ${escHtml(partnerLabel)} rates it as <strong>${lbl('scale', partnerProfile.money_alignment)?.toLowerCase()}</strong>. That gap in perception is itself data.`);
+    }
+  }
+
+  return `<div class="profile-section">
+    <div class="profile-section-header">
+      <div class="profile-section-eyebrow">Your Starting Point</div>
+      <div class="profile-section-title">About You Both</div>
+      <div class="profile-section-sub">Individual profiles — completed separately before the course began.</div>
+    </div>
+
+    <div class="profile-cols">
+      ${renderProfileCol(myProfile, 'who-you-label', 'You', youLabel)}
+      ${renderProfileCol(partnerProfile, 'who-partner-label', 'Your Partner', partnerLabel)}
+    </div>
+
+    ${gaps.length ? `
+    <div style="margin-top:8px;">
+      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--cie-gold);font-weight:700;margin-bottom:12px;">Worth Noting</div>
+      ${gaps.map(g => `<div class="profile-gap-row">${g}</div>`).join('')}
+    </div>` : ''}
+  </div>`;
+}
+
+function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProfile, partnerProfile) {
   const rd = report.report_data || {};
   const unlocked = report.unlocked_domains || [];
   const generated = report.generated_at ? new Date(report.generated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
@@ -642,6 +917,8 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId) {
           : `${4 - alignedCount} ${4 - alignedCount === 1 ? 'domain' : 'domains'} show gaps. That\'s not a crisis — it\'s information. Your course path has been built specifically around what you need. Read each domain honestly before you respond to each other.`
         }</div>
       </div>
+
+      ${renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)}
 
       ${DOMAINS_META.map((d, i) => {
         const info = alignmentInfo(d.key, unlocked, rd);

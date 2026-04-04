@@ -132,9 +132,11 @@ export const SEQUENCES = {
         greet(n) +
         p(`You just made a decision most couples never make. You said: we are going to look at this honestly, together. That takes courage and it takes love.`) +
         p(`Here is what happens next.`) +
-        p(`<strong style="color:#122012;">Step 1: Log in and get your bearings.</strong><br>Use the button below to access your dashboard. You will find The Partnership Diagnostic waiting for you. Complete your side privately. Your partner will not see your answers.`) +
-        p(`<strong style="color:#122012;">Step 2: Invite your partner.</strong><br>After you log in, you will be prompted to enter your partner's email. They will receive their own invite and complete the diagnostic separately.`) +
-        p(`<strong style="color:#122012;">Step 3: See your Partnership Report together.</strong><br>Once both of you have finished, your report generates automatically. That is where the real work begins.`) +
+        p(`<strong style="color:#122012;">Step 1: Log in.</strong><br>Use the button below. Once you are in your dashboard, everything else will be waiting for you.`) +
+        p(`<strong style="color:#122012;">Step 2: Build your individual profile.</strong><br>Takes about five minutes. This is yours alone — your background, family situation, where the business is, and what you are hoping this course does for you both. Your partner will complete theirs separately.`) +
+        p(`<strong style="color:#122012;">Step 3: Invite your partner.</strong><br>From your dashboard, enter their email. They will get everything they need to set up their account and complete their own profile and assessment.`) +
+        p(`<strong style="color:#122012;">Step 4: Complete Module 1, then the Diagnostic.</strong><br>Module 1 is where everyone starts. Once you finish it, The Partnership Diagnostic unlocks. Answer honestly — your partner will not see your responses.`) +
+        p(`<strong style="color:#122012;">Step 5: See your Partnership Report together.</strong><br>Once both of you have completed the diagnostic, your report generates automatically. Your profiles, your answers, your gaps — side by side. That is where the real work begins.`) +
         btn('Log In and Get Started', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-confirm`) +
         p(`If you have any questions at all, reply to this email. I read every one.`)
       ),
@@ -171,9 +173,10 @@ export const SEQUENCES = {
         greet(n) +
         p(`${d?.partner_name || 'Your partner'} just enrolled in Couples in Entrepreneurship and they want you in it with them.`) +
         p(`That is not a small thing. They did not just buy a course. They said: I want us to be better at this together. Together being the operative word.`) +
-        p(`Here is what the course is:`) +
-        p(`You each complete The Partnership Diagnostic privately. No shared answers, no pressure. Then the system generates your Partnership Report which shows you exactly where you are aligned and where you are not across four areas: Money, Business, Family, and Relationship.`) +
-        p(`From there, a joint course path opens up built specifically around your gaps. Not a generic program. Yours.`) +
+        p(`Here is how it works:`) +
+        p(`First, you each build your own individual profile — five minutes, completely private. Your background, family situation, where the business is, what you are each hoping for. Then you each complete The Partnership Diagnostic separately across four areas: Business, Finances, Family, and Relationship. No shared answers. No pressure.`) +
+        p(`Once both of you are done, the system generates your Partnership Report — your profiles and your diagnostic answers side by side, showing exactly where you align and where the gaps are. You open that report together.`) +
+        p(`From there, a joint course path unlocks built specifically around your gaps. Not a generic program. Yours.`) +
         p(`It is not therapy. It is infrastructure for couples who are building something serious.`) +
         btn('Accept Your Invite', d?.invite_url || `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-join`) +
         p(`If you have questions before you jump in, reply here. I am happy to talk through what this looks like for you both.`)

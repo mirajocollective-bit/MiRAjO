@@ -408,6 +408,41 @@
     .support-link { font-size: 14px; font-weight: 600; color: var(--cie-crimson); text-decoration: none; white-space: nowrap; }
     .support-link:hover { color: var(--cie-crimson-lt); }
 
+    /* ═══ PROFILE BANNER ═══ */
+    .profile-banner {
+      background: linear-gradient(135deg, rgba(196,162,69,0.08) 0%, rgba(184,32,56,0.05) 100%);
+      border: 1px solid rgba(196,162,69,0.35);
+      border-radius: 16px;
+      padding: 28px 36px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .profile-banner-text { flex: 1; min-width: 220px; }
+    .profile-banner-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cie-gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .profile-banner-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--cie-dark);
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .profile-banner-sub {
+      font-size: 13px;
+      color: var(--cie-muted);
+      line-height: 1.6;
+    }
+
     /* ═══ INVITE BANNER ═══ */
     .invite-banner {
       background: #ffffff;
@@ -586,6 +621,15 @@ async function renderDashboard(user) {
   const coupleId = coupleRow.id;
   const partnerId = user.id === coupleRow.partner_a_user_id ? coupleRow.partner_b_user_id : coupleRow.partner_a_user_id;
 
+  // Load profile status
+  const { data: profileRow } = await db
+    .from('partner_profiles')
+    .select('completed_at')
+    .eq('user_id', user.id)
+    .eq('couple_id', coupleId)
+    .single();
+  const profileComplete = !!profileRow?.completed_at;
+
   // Load diagnostic completion for both partners
   const { data: completions } = await db
     .from('diagnostic_completion')
@@ -649,6 +693,18 @@ async function renderDashboard(user) {
   const partnerLabel = 'Your Partner';
 
   let html = '';
+
+  // ── PROFILE BANNER ──
+  if (!profileComplete) {
+    html += `<div class="profile-banner">
+      <div class="profile-banner-text">
+        <div class="profile-banner-label">Action Needed</div>
+        <div class="profile-banner-title">Complete your individual profile</div>
+        <div class="profile-banner-sub">Takes 5 minutes. Your profile adds real context to your Partnership Report and personalizes your experience.</div>
+      </div>
+      <a href="/programs/couples-profile" class="btn-gold" style="flex-shrink:0;">Build My Profile →</a>
+    </div>`;
+  }
 
   // ── INVITE BANNER (partner B not yet joined) ──
   const partnerLinked = !!coupleRow.partner_b_user_id;

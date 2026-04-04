@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Profile — Couples in Entrepreneurship | MiRAjO</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cie-dark:      #14090F;
+      --cie-crimson:   #B82038;
+      --cie-crimson-lt:#D43A56;
+      --cie-rose:      #D4607A;
+      --cie-blush:     #FBE8EE;
+      --cie-blush-lt:  #FDF3F6;
+      --cie-gold:      #C4A245;
+      --cie-gold-lt:   #D9B96A;
+      --cie-muted:     #7A6B74;
+      --cie-border:    rgba(184,32,56,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--cie-blush-lt);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      color: var(--cie-dark);
+    }
+
+    /* ═══ TOP BAR ═══ */
+    .top-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--cie-border);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar-logo img { height: 56px; width: auto; display: block; }
+    .top-bar-right { display: flex; align-items: center; gap: 16px; }
+    .top-bar-save { font-size: 12px; color: var(--cie-muted); }
+    .top-bar-exit {
+      font-size: 12px;
+      color: var(--cie-crimson);
+      text-decoration: none;
+      background: rgba(184,32,56,0.06);
+      border: 1px solid var(--cie-border);
+      border-radius: 6px;
+      padding: 8px 16px;
+      transition: all 0.2s;
+    }
+    .top-bar-exit:hover { background: rgba(184,32,56,0.12); }
+
+    /* ═══ PROGRESS STEPS ═══ */
+    .progress-bar-wrap {
+      background: #ffffff;
+      border-bottom: 1px solid var(--cie-border);
+      padding: 0 40px;
+    }
+    .progress-steps {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: stretch;
+    }
+    .progress-step {
+      flex: 1;
+      padding: 14px 0;
+      text-align: center;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.2s;
+      cursor: default;
+    }
+    .progress-step.active { border-bottom-color: var(--cie-crimson); }
+    .progress-step.done   { border-bottom-color: rgba(93,190,138,0.6); }
+    .progress-step-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cie-muted);
+      margin-bottom: 2px;
+    }
+    .progress-step.active .progress-step-num { color: var(--cie-crimson); }
+    .progress-step.done .progress-step-num   { color: #5DBE8A; }
+    .progress-step-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(20,9,15,0.35);
+    }
+    .progress-step.active .progress-step-name { color: var(--cie-dark); }
+    .progress-step.done .progress-step-name   { color: rgba(93,190,138,0.8); }
+
+    /* ═══ MAIN ═══ */
+    .main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 40px 80px;
+    }
+
+    /* ═══ INTRO ═══ */
+    .intro-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cie-crimson);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .intro-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 400;
+      color: var(--cie-dark);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .intro-body {
+      font-size: 16px;
+      color: var(--cie-muted);
+      line-height: 1.8;
+      max-width: 580px;
+      margin-bottom: 16px;
+    }
+    .intro-note {
+      display: inline-block;
+      background: rgba(184,32,56,0.05);
+      border: 1px solid var(--cie-border);
+      border-radius: 10px;
+      padding: 16px 24px;
+      font-size: 13px;
+      color: var(--cie-dark);
+      line-height: 1.7;
+      margin: 24px 0 40px;
+      max-width: 560px;
+    }
+    .intro-note strong { color: var(--cie-crimson); }
+
+    /* ═══ SECTION ═══ */
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cie-crimson);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 400;
+      color: var(--cie-dark);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .section-intro {
+      font-size: 15px;
+      color: var(--cie-muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    /* ═══ FIELD ═══ */
+    .field-block { margin-bottom: 36px; }
+    .field-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--cie-dark);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .field-label .optional {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--cie-muted);
+      margin-left: 6px;
+    }
+    .field-hint {
+      font-size: 13px;
+      color: var(--cie-muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    /* ═══ RADIO / SELECT CHIPS ═══ */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip input[type="radio"],
+    .chip input[type="checkbox"] { display: none; }
+    .chip label {
+      display: inline-block;
+      padding: 9px 18px;
+      border-radius: 100px;
+      border: 1px solid rgba(184,32,56,0.2);
+      background: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--cie-muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      line-height: 1;
+    }
+    .chip label:hover {
+      border-color: rgba(184,32,56,0.4);
+      color: var(--cie-dark);
+    }
+    .chip input:checked + label {
+      background: var(--cie-crimson);
+      border-color: var(--cie-crimson);
+      color: #ffffff;
+    }
+
+    /* ═══ SCALE (low/medium/high) ═══ */
+    .scale-group {
+      display: flex;
+      gap: 10px;
+    }
+    .scale-option input[type="radio"] { display: none; }
+    .scale-option label {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 14px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(184,32,56,0.15);
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+    }
+    .scale-option label:hover {
+      background: rgba(184,32,56,0.04);
+      border-color: rgba(184,32,56,0.3);
+    }
+    .scale-option input:checked + label {
+      background: rgba(184,32,56,0.08);
+      border-color: var(--cie-crimson);
+    }
+    .scale-label-main {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cie-dark);
+      text-transform: capitalize;
+    }
+    .scale-option input:checked + label .scale-label-main {
+      color: var(--cie-crimson);
+    }
+    .scale-label-sub {
+      font-size: 11px;
+      color: var(--cie-muted);
+      line-height: 1.3;
+    }
+
+    /* ═══ TEXTAREA ═══ */
+    textarea {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid rgba(184,32,56,0.2);
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: 15px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--cie-dark);
+      line-height: 1.7;
+      resize: vertical;
+      min-height: 90px;
+      transition: border-color 0.2s;
+    }
+    textarea::placeholder { color: rgba(122,107,116,0.4); }
+    textarea:focus { outline: none; border-color: var(--cie-crimson); }
+
+    /* ═══ DIVIDER ═══ */
+    .section-divider {
+      border: none;
+      border-top: 1px solid rgba(184,32,56,0.1);
+      margin: 40px 0;
+    }
+
+    /* ═══ NAV ═══ */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(184,32,56,0.1);
+    }
+    .btn-back {
+      font-size: 14px;
+      color: var(--cie-muted);
+      background: transparent;
+      border: 1px solid rgba(184,32,56,0.15);
+      border-radius: 8px;
+      padding: 13px 28px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn-back:hover { color: var(--cie-dark); border-color: rgba(184,32,56,0.35); }
+    .btn-next {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      background: var(--cie-crimson);
+      border: none;
+      border-radius: 8px;
+      padding: 13px 32px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.2s, transform 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .btn-next:hover { background: var(--cie-crimson-lt); transform: translateY(-1px); }
+    .btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ═══ ERROR ═══ */
+    .form-error {
+      background: rgba(168,104,94,0.12);
+      border: 1px solid rgba(168,104,94,0.3);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #E89088;
+      margin-top: 16px;
+      display: none;
+    }
+
+    /* ═══ SPINNER ═══ */
+    .spinner {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(184,32,56,0.15);
+      border-top-color: var(--cie-crimson);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 28px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .page-loading { display: flex; align-items: center; justify-content: center; min-height: 60vh; }
+
+    @media (max-width: 640px) {
+      .top-bar { padding: 14px 20px; }
+      .progress-bar-wrap { padding: 0 20px; }
+      .progress-step-name { display: none; }
+      .main { padding: 40px 24px 60px; }
+      .scale-group { gap: 6px; }
+      .nav-buttons { flex-wrap: wrap; }
+      .btn-next { width: 100%; text-align: center; order: -1; }
+      .btn-back { width: 100%; text-align: center; }
+    }
+  </style>
+  <script src="/analytics.js"></script>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/programs/couples-dashboard" class="top-bar-logo">
+    <img src="/img/logo-horizontal.png" alt="MiRAjO">
+  </a>
+  <div class="top-bar-right">
+    <span class="top-bar-save" id="save-status"></span>
+    <a href="/programs/couples-dashboard" class="top-bar-exit">Save &amp; Exit</a>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-steps">
+    <div class="progress-step" data-step="1">
+      <div class="progress-step-num">01</div>
+      <div class="progress-step-name">You</div>
+    </div>
+    <div class="progress-step" data-step="2">
+      <div class="progress-step-num">02</div>
+      <div class="progress-step-name">Relationship</div>
+    </div>
+    <div class="progress-step" data-step="3">
+      <div class="progress-step-num">03</div>
+      <div class="progress-step-name">Business</div>
+    </div>
+    <div class="progress-step" data-step="4">
+      <div class="progress-step-num">04</div>
+      <div class="progress-step-name">Finances</div>
+    </div>
+    <div class="progress-step" data-step="5">
+      <div class="progress-step-num">05</div>
+      <div class="progress-step-name">Goals</div>
+    </div>
+  </div>
+</div>
+
+<div class="main" id="main">
+  <div class="page-loading"><div class="spinner"></div></div>
+</div>
+
+<script src="/api/config"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+const STORAGE_KEY = 'cie_profile_draft';
+let currentStep = 0;
+let userId = null;
+let coupleId = null;
+
+const CULTURAL_OPTIONS = [
+  'African / African American',
+  'Afro-Caribbean',
+  'Asian / Asian American',
+  'Central American',
+  'East African',
+  'European / European American',
+  'Indigenous / Native American',
+  'Latinx / Hispanic',
+  'Middle Eastern / North African',
+  'Pacific Islander',
+  'South Asian',
+  'Southeast Asian',
+  'West African',
+  'Multiracial / Multicultural',
+  'Other',
+  'Prefer not to say',
+];
+
+const GOAL_OPTIONS = [
+  'Get on the same page financially',
+  'Define our roles and responsibilities',
+  'Improve how we communicate',
+  'Align on our business vision',
+  'Strengthen our relationship',
+  'Navigate family and parenting',
+  'Build a long-term plan together',
+  'Understand each other better',
+];
+
+function getDraft() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
+}
+function saveDraft(updates) {
+  const draft = getDraft();
+  Object.assign(draft, updates);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+  const el = document.getElementById('save-status');
+  if (el) { el.textContent = 'Saved'; setTimeout(() => { el.textContent = ''; }, 1800); }
+}
+
+async function init() {
+  let { data: { session } } = await db.auth.getSession();
+  if (!session) { window.location.href = '/programs/login'; return; }
+  const { data: refreshed } = await db.auth.refreshSession();
+  if (refreshed?.session) session = refreshed.session;
+  userId = session.user.id;
+
+  const { data: couple } = await db
+    .from('couples')
+    .select('id')
+    .or(`partner_a_user_id.eq.${userId},partner_b_user_id.eq.${userId}`)
+    .single();
+
+  if (!couple) {
+    document.getElementById('main').innerHTML = `<p style="color:var(--cie-muted);text-align:center;padding:80px 0;">No couple record found. Please contact <a href="mailto:programs@mirajoco.org" style="color:var(--cie-crimson);">support</a>.</p>`;
+    return;
+  }
+  coupleId = couple.id;
+
+  // Load existing profile into draft
+  const { data: existing } = await db
+    .from('partner_profiles')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('couple_id', coupleId)
+    .single();
+
+  if (existing) {
+    const draft = {
+      age_range: existing.age_range || '',
+      cultural_backgrounds: existing.cultural_backgrounds || [],
+      faith_influence: existing.faith_influence || '',
+      political_importance: existing.political_importance || '',
+      time_together: existing.time_together || '',
+      relationship_status: existing.relationship_status || '',
+      family_structure: existing.family_structure || '',
+      business_stage: existing.business_stage || '',
+      business_role: existing.business_role || '',
+      years_building_together: existing.years_building_together || '',
+      debt_level: existing.debt_level || '',
+      savings_runway: existing.savings_runway || '',
+      money_alignment: existing.money_alignment || '',
+      financial_stressor: existing.financial_stressor || '',
+      biggest_challenge: existing.biggest_challenge || '',
+      course_goal: existing.course_goal || [],
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+
+    // Already completed — still allow editing
+    if (existing.completed_at) {
+      renderIntro(true);
+      return;
+    }
+  }
+
+  renderIntro(false);
+}
+
+function renderIntro(alreadyDone) {
+  currentStep = 0;
+  updateProgressBar();
+  document.getElementById('main').innerHTML = `
+    <div>
+      <div class="intro-eyebrow">Couples in Entrepreneurship</div>
+      <h1 class="intro-title">Tell us about yourself.</h1>
+      <p class="intro-body">This is your individual profile — your partner will complete theirs separately. It takes about 5 minutes.</p>
+      <p class="intro-body">Your answers give the course and your final report real context. The more honest you are, the more useful this becomes.</p>
+      <div class="intro-note">
+        <strong>Your profile is yours.</strong> Sensitive fields are optional and marked clearly. You can update your profile at any time from your dashboard.
+      </div>
+      <button class="btn-next" onclick="goToStep(1)">${alreadyDone ? 'Update My Profile' : 'Start My Profile'}</button>
+    </div>`;
+}
+
+// ═══ SECTION 1: WHO YOU ARE ═══
+function renderSection1() {
+  const d = getDraft();
+  document.getElementById('main').innerHTML = `
+    <div>
+      <div class="section-eyebrow">Section 1 of 5</div>
+      <h2 class="section-title">Who You Are</h2>
+      <p class="section-intro">Start with the basics. Optional fields help us give your report more depth.</p>
+
+      <div class="field-block">
+        <div class="field-label">How old are you?</div>
+        <div class="chip-group" id="age_range">
+          ${['Under 25','25–34','35–44','45–54','55+'].map((label, i) => {
+            const val = ['under-25','25-34','35-44','45-54','55+'][i];
+            return `<div class="chip">
+              <input type="radio" name="age_range" id="age_${val}" value="${val}" ${d.age_range===val?'checked':''} onchange="saveDraft({age_range:'${val}'})">
+              <label for="age_${val}">${label}</label>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">Cultural background <span class="optional">(optional — select all that apply)</span></div>
+        <div class="field-hint">Which cultures do you identify with or feel most influenced by?</div>
+        <div class="chip-group" id="cultural_backgrounds">
+          ${CULTURAL_OPTIONS.map(opt => {
+            const val = opt.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
+            const checked = (d.cultural_backgrounds||[]).includes(opt);
+            return `<div class="chip">
+              <input type="checkbox" id="cult_${val}" value="${opt}" ${checked?'checked':''} onchange="toggleMulti('cultural_backgrounds','${opt.replace(/'/,"\\'")}',this.checked)">
+              <label for="cult_${val}">${opt}</label>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <div class="field-block">
+        <div class="field-label">How much does your faith or spiritual beliefs guide your decisions? <span class="optional">(optional)</span></div>
+        <div class="scale-group">
+          ${[['low','Not much','It rarely factors in'],['medium','Somewhat','It shapes some choices'],['high','A great deal','It guides most decisions']].map(([val,main,sub]) => `
+            <div class="scale-option">
+              <input type="radio" name="faith_influence" id="faith_${val}" value="${val}" ${d.faith_influence===val?'checked':''} onchange="saveDraft({faith_influence:'${val}'})">
+              <label for="faith_${val}">
+                <span class="scale-label-main">${main}</span>
+                <span class="scale-label-sub">${sub}</span>
+              </label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">How important is it that your partner shares your political values? <span class="optional">(optional)</span></div>
+        <div class="scale-group">
+          ${[['low','Not important','We can differ here'],['medium','Somewhat','Some overlap matters'],['high','Very important','Core values must align']].map(([val,main,sub]) => `
+            <div class="scale-option">
+              <input type="radio" name="political_importance" id="pol_${val}" value="${val}" ${d.political_importance===val?'checked':''} onchange="saveDraft({political_importance:'${val}'})">
+              <label for="pol_${val}">
+                <span class="scale-label-main">${main}</span>
+                <span class="scale-label-sub">${sub}</span>
+              </label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div id="section-error" class="form-error">Please select your age range to continue.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-back" onclick="goToStep(0)">← Back</button>
+        <button class="btn-next" onclick="validateAndNext(1)">Next →</button>
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══ SECTION 2: YOUR RELATIONSHIP ═══
+function renderSection2() {
+  const d = getDraft();
+  document.getElementById('main').innerHTML = `
+    <div>
+      <div class="section-eyebrow">Section 2 of 5</div>
+      <h2 class="section-title">Your Relationship</h2>
+      <p class="section-intro">Tell us where you are as a couple right now.</p>
+
+      <div class="field-block">
+        <div class="field-label">How long have you been together?</div>
+        <div class="chip-group">
+          ${[['under-1','Less than 1 year'],['1-3','1–3 years'],['3-5','3–5 years'],['5-10','5–10 years'],['10+','10+ years']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="time_together" id="time_${val}" value="${val}" ${d.time_together===val?'checked':''} onchange="saveDraft({time_together:'${val}'})">
+              <label for="time_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">Where are you in your relationship?</div>
+        <div class="chip-group">
+          ${[['dating','Dating'],['engaged','Engaged'],['married','Married']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="relationship_status" id="rel_${val}" value="${val}" ${d.relationship_status===val?'checked':''} onchange="saveDraft({relationship_status:'${val}'})">
+              <label for="rel_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">What does your family structure look like?</div>
+        <div class="chip-group">
+          ${[['no-kids','No children'],['kids-together','Children together'],['stepparent','Stepparent'],['blended','Blended family'],['unsure','Not sure yet']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="family_structure" id="fam_${val}" value="${val}" ${d.family_structure===val?'checked':''} onchange="saveDraft({family_structure:'${val}'})">
+              <label for="fam_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div id="section-error" class="form-error">Please answer all three questions to continue.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-back" onclick="goToStep(1)">← Back</button>
+        <button class="btn-next" onclick="validateAndNext(2)">Next →</button>
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══ SECTION 3: YOUR BUSINESS ═══
+function renderSection3() {
+  const d = getDraft();
+  document.getElementById('main').innerHTML = `
+    <div>
+      <div class="section-eyebrow">Section 3 of 5</div>
+      <h2 class="section-title">Your Business</h2>
+      <p class="section-intro">Tell us where the business stands right now.</p>
+
+      <div class="field-block">
+        <div class="field-label">What stage is your business in?</div>
+        <div class="chip-group">
+          ${[['idea','Idea stage'],['startup','Startup (early revenue)'],['growing','Growing (consistent revenue)'],['established','Established (scaling)']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="business_stage" id="biz_${val}" value="${val}" ${d.business_stage===val?'checked':''} onchange="saveDraft({business_stage:'${val}'})">
+              <label for="biz_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">How would you describe your role in the business?</div>
+        <div class="chip-group">
+          ${[['equal-partners','Equal partners'],['i-lead','I take the lead'],['they-lead','My partner takes the lead'],['still-figuring','Still figuring it out']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="business_role" id="role_${val}" value="${val}" ${d.business_role===val?'checked':''} onchange="saveDraft({business_role:'${val}'})">
+              <label for="role_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">How long have you been building together?</div>
+        <div class="chip-group">
+          ${[['just-starting','Just starting'],['under-2','Under 2 years'],['2-5','2–5 years'],['5+','5+ years']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="years_building_together" id="yrs_${val}" value="${val}" ${d.years_building_together===val?'checked':''} onchange="saveDraft({years_building_together:'${val}'})">
+              <label for="yrs_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div id="section-error" class="form-error">Please answer all three questions to continue.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-back" onclick="goToStep(2)">← Back</button>
+        <button class="btn-next" onclick="validateAndNext(3)">Next →</button>
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══ SECTION 4: FINANCES ═══
+function renderSection4() {
+  const d = getDraft();
+  document.getElementById('main').innerHTML = `
+    <div>
+      <div class="section-eyebrow">Section 4 of 5</div>
+      <h2 class="section-title">Your Financial Picture</h2>
+      <p class="section-intro">All fields in this section are optional. This context helps your report — nothing here changes your course path.</p>
+
+      <div class="field-block">
+        <div class="field-label">How would you describe your current debt situation? <span class="optional">(optional)</span></div>
+        <div class="chip-group">
+          ${[['none','Debt-free'],['manageable','Manageable'],['significant','Significant'],['overwhelming','Overwhelming']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="debt_level" id="debt_${val}" value="${val}" ${d.debt_level===val?'checked':''} onchange="saveDraft({debt_level:'${val}'})">
+              <label for="debt_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">How much savings runway do you have? <span class="optional">(optional)</span></div>
+        <div class="chip-group">
+          ${[['none','None right now'],['1-3-months','1–3 months'],['3-6-months','3–6 months'],['6-plus','6+ months']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="savings_runway" id="sav_${val}" value="${val}" ${d.savings_runway===val?'checked':''} onchange="saveDraft({savings_runway:'${val}'})">
+              <label for="sav_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">How aligned are you as a couple on money decisions? <span class="optional">(optional)</span></div>
+        <div class="scale-group">
+          ${[['low','Not aligned','We see it differently'],['medium','Somewhat','Some alignment'],['high','Very aligned','We are on the same page']].map(([val,main,sub]) => `
+            <div class="scale-option">
+              <input type="radio" name="money_alignment" id="mon_${val}" value="${val}" ${d.money_alignment===val?'checked':''} onchange="saveDraft({money_alignment:'${val}'})">
+              <label for="mon_${val}">
+                <span class="scale-label-main">${main}</span>
+                <span class="scale-label-sub">${sub}</span>
+              </label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">What is your biggest financial stressor right now? <span class="optional">(optional)</span></div>
+        <textarea id="financial_stressor" placeholder="Be as specific or general as you like..." oninput="saveDraft({financial_stressor:this.value})">${escapeHtml(d.financial_stressor||'')}</textarea>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn-back" onclick="goToStep(3)">← Back</button>
+        <button class="btn-next" onclick="goToStep(5)">Next →</button>
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══ SECTION 5: GOALS ═══
+function renderSection5() {
+  const d = getDraft();
+  document.getElementById('main').innerHTML = `
+    <div>
+      <div class="section-eyebrow">Section 5 of 5</div>
+      <h2 class="section-title">What You're Bringing In</h2>
+      <p class="section-intro">Last section. Tell us what brought you here and what you're hoping to walk away with.</p>
+
+      <div class="field-block">
+        <div class="field-label">What is your biggest challenge in the business right now?</div>
+        <textarea id="biggest_challenge" placeholder="Be honest — this is just for context." oninput="saveDraft({biggest_challenge:this.value})">${escapeHtml(d.biggest_challenge||'')}</textarea>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">What do you want most from this course? <span class="optional">(select all that apply)</span></div>
+        <div class="chip-group">
+          ${GOAL_OPTIONS.map(opt => {
+            const val = opt.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
+            const checked = (d.course_goal||[]).includes(opt);
+            return `<div class="chip">
+              <input type="checkbox" id="goal_${val}" value="${opt}" ${checked?'checked':''} onchange="toggleMulti('course_goal','${opt.replace(/'/,"\\'")}',this.checked)">
+              <label for="goal_${val}">${opt}</label>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <div id="section-error" class="form-error">Please share your biggest challenge and select at least one goal.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-back" onclick="goToStep(4)">← Back</button>
+        <button class="btn-next" onclick="validateAndSubmit()">Complete My Profile</button>
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMulti(field, value, checked) {
+  const d = getDraft();
+  const arr = d[field] || [];
+  if (checked && !arr.includes(value)) arr.push(value);
+  if (!checked) { const i = arr.indexOf(value); if (i > -1) arr.splice(i, 1); }
+  saveDraft({ [field]: arr });
+}
+
+function validateAndNext(step) {
+  const d = getDraft();
+  const err = document.getElementById('section-error');
+
+  if (step === 1) {
+    if (!d.age_range) { err.style.display = 'block'; err.scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+  }
+  if (step === 2) {
+    if (!d.time_together || !d.relationship_status || !d.family_structure) {
+      err.style.display = 'block'; err.scrollIntoView({ behavior:'smooth', block:'center' }); return;
+    }
+  }
+  if (step === 3) {
+    if (!d.business_stage || !d.business_role || !d.years_building_together) {
+      err.style.display = 'block'; err.scrollIntoView({ behavior:'smooth', block:'center' }); return;
+    }
+  }
+
+  goToStep(step + 1);
+}
+
+async function validateAndSubmit() {
+  const d = getDraft();
+  const err = document.getElementById('section-error');
+
+  if (!d.biggest_challenge?.trim() || !(d.course_goal?.length)) {
+    err.style.display = 'block'; err.scrollIntoView({ behavior:'smooth', block:'center' }); return;
+  }
+
+  document.getElementById('main').innerHTML = `
+    <div style="text-align:center;padding:80px 0;">
+      <div class="spinner"></div>
+      <div style="font-family:'Instrument Serif',serif;font-size:28px;color:var(--cie-dark);margin-bottom:12px;">Saving your profile...</div>
+      <p style="font-size:15px;color:var(--cie-muted);">Just a moment.</p>
+    </div>`;
+
+  try {
+    const { error } = await db.from('partner_profiles').upsert({
+      user_id: userId,
+      couple_id: coupleId,
+      age_range: d.age_range || null,
+      cultural_backgrounds: d.cultural_backgrounds?.length ? d.cultural_backgrounds : null,
+      faith_influence: d.faith_influence || null,
+      political_importance: d.political_importance || null,
+      time_together: d.time_together || null,
+      relationship_status: d.relationship_status || null,
+      family_structure: d.family_structure || null,
+      business_stage: d.business_stage || null,
+      business_role: d.business_role || null,
+      years_building_together: d.years_building_together || null,
+      debt_level: d.debt_level || null,
+      savings_runway: d.savings_runway || null,
+      money_alignment: d.money_alignment || null,
+      financial_stressor: d.financial_stressor || null,
+      biggest_challenge: d.biggest_challenge || null,
+      course_goal: d.course_goal?.length ? d.course_goal : null,
+      completed_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'user_id,couple_id' });
+
+    if (error) throw new Error(error.message);
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    document.getElementById('main').innerHTML = `
+      <div style="text-align:center;padding:80px 0 40px;">
+        <div style="font-family:'Instrument Serif',serif;font-size:36px;color:var(--cie-dark);margin-bottom:16px;">Your profile is set.</div>
+        <p style="font-size:16px;color:var(--cie-muted);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">Your individual profile will add real context to your Partnership Report. You can update it at any time from your dashboard.</p>
+        <a href="/programs/couples-dashboard" style="display:inline-block;padding:14px 32px;background:var(--cie-crimson);color:#ffffff;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">Back to Dashboard</a>
+      </div>`;
+  } catch (err) {
+    document.getElementById('main').innerHTML = `
+      <div style="text-align:center;padding:80px 0 40px;">
+        <div style="font-family:'Instrument Serif',serif;font-size:28px;color:var(--cie-dark);margin-bottom:16px;">Something went wrong</div>
+        <p style="font-size:14px;color:var(--cie-muted);margin-bottom:24px;">${err.message}</p>
+        <p style="font-size:13px;color:var(--cie-muted);">Your answers are saved locally. Please try again or contact <a href="mailto:programs@mirajoco.org" style="color:var(--cie-crimson);">programs@mirajoco.org</a>.</p>
+        <br><button class="btn-next" onclick="goToStep(5)" style="margin-top:16px;">← Go Back</button>
+      </div>`;
+  }
+}
+
+function goToStep(step) {
+  currentStep = step;
+  updateProgressBar();
+  if (step === 0) renderIntro(false);
+  else if (step === 1) renderSection1();
+  else if (step === 2) renderSection2();
+  else if (step === 3) renderSection3();
+  else if (step === 4) renderSection4();
+  else if (step === 5) renderSection5();
+}
+
+function updateProgressBar() {
+  document.querySelectorAll('.progress-step').forEach(el => {
+    const s = parseInt(el.dataset.step);
+    el.classList.remove('active', 'done');
+    if (s === currentStep) el.classList.add('active');
+    else if (s < currentStep) el.classList.add('done');
+  });
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+</body>
+</html>

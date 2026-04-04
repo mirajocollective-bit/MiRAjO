@@ -328,8 +328,8 @@
     }
     .how-steps {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 32px;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 28px;
       margin-top: 60px;
       position: relative;
     }
@@ -337,8 +337,8 @@
       content: '';
       position: absolute;
       top: 44px;
-      left: calc(16.66% + 16px);
-      right: calc(16.66% + 16px);
+      left: calc(12.5% + 16px);
+      right: calc(12.5% + 16px);
       height: 2px;
       background: linear-gradient(90deg, var(--cie-crimson), var(--cie-rose), var(--cie-crimson));
       opacity: 0.3;
@@ -738,7 +738,7 @@
       section { padding: 72px 24px; }
       .founding-creds { grid-template-columns: 1fr !important; }
       .pain-grid { grid-template-columns: 1fr; }
-      .how-steps { grid-template-columns: 1fr; }
+      .how-steps { grid-template-columns: 1fr 1fr; }
       .how-steps::before { display: none; }
       .domains-grid { grid-template-columns: 1fr; }
       .included-grid { grid-template-columns: 1fr; }
@@ -751,6 +751,7 @@
     @media (max-width: 600px) {
       .pain-grid { grid-template-columns: 1fr; }
       .how-steps { grid-template-columns: 1fr; }
+      .how-steps::before { display: none; }
       .domains-grid { grid-template-columns: 1fr; }
       .included-grid { grid-template-columns: 1fr; }
       .miranda-inner { grid-template-columns: 1fr; }
@@ -844,20 +845,25 @@
   <section class="how">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">How it works</p>
-      <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">Three phases. One shared path forward.</h2>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">Four steps. Built around who you actually are.</h2>
       <div class="how-steps">
-        <div class="how-step" data-aos="fade-up" data-aos-delay="80">
+        <div class="how-step" data-aos="fade-up" data-aos-delay="60">
           <div class="how-step-num">1</div>
-          <h3>The Partnership Diagnostic</h3>
-          <p>Each partner completes their own private assessment across four domains. Your partner cannot see your answers. Honest answers only.</p>
+          <h3>Your Individual Profile</h3>
+          <p>Each partner builds their own private profile — your background, family structure, business stage, financial picture, and what you are each hoping to walk away with. Five minutes. Yours alone.</p>
         </div>
-        <div class="how-step" data-aos="fade-up" data-aos-delay="160">
+        <div class="how-step" data-aos="fade-up" data-aos-delay="120">
           <div class="how-step-num">2</div>
-          <h3>The Partnership Report</h3>
-          <p>Once both partners finish, your report generates automatically. It shows exactly where you are aligned and where you are not. You open it together.</p>
+          <h3>The Partnership Diagnostic</h3>
+          <p>Each partner completes a private assessment across four domains — Business, Finances, Family, and Relationship. Your partner cannot see your answers. Honest answers only.</p>
         </div>
-        <div class="how-step" data-aos="fade-up" data-aos-delay="240">
+        <div class="how-step" data-aos="fade-up" data-aos-delay="200">
           <div class="how-step-num">3</div>
+          <h3>The Partnership Report</h3>
+          <p>Once both partners finish, your report generates automatically. It shows exactly where you are aligned and where you are not — including a snapshot of both your profiles side by side. You open it together.</p>
+        </div>
+        <div class="how-step" data-aos="fade-up" data-aos-delay="280">
+          <div class="how-step-num">4</div>
           <h3>Your Joint Course Path</h3>
           <p>A course built around your actual gaps. If you are mostly aligned, you move faster. If everything needs work, the full course unlocks. Either way, it is yours.</p>
         </div>
@@ -997,6 +1003,15 @@
       <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">Everything both of you need. One price.</h2>
       <div class="included-grid">
         <div class="included-item" data-aos="fade-up" data-aos-delay="80">
+          <div class="included-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <h4>Individual Partner Profiles</h4>
+            <p>Each partner builds a private profile — cultural background, family structure, business stage, financial picture, and personal goals. Yours alone, surfaced together in your report.</p>
+          </div>
+        </div>
+        <div class="included-item" data-aos="fade-up" data-aos-delay="100">
           <div class="included-icon">
             <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
           </div>
