@@ -22,8 +22,17 @@ const ALLOWED_TAGS = [
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { email, tag, firstName } = req.body;
-  if (!email || !tag) return res.status(400).json({ error: 'Missing email or tag' });
+  // Require a valid Supabase user JWT
+  const token = (req.headers['authorization'] || '').replace('Bearer ', '').trim();
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+  if (authErr || !user) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { tag, firstName } = req.body;
+  const email = user.email;
+
+  if (!tag) return res.status(400).json({ error: 'Missing tag' });
   if (!ALLOWED_TAGS.includes(tag)) return res.status(400).json({ error: 'Unknown tag' });
 
   await addTag(email, tag);

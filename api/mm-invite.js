@@ -13,10 +13,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { inviterUserId, inviteeEmail } = req.body || {};
-  if (!inviterUserId || !inviteeEmail) {
-    return res.status(400).json({ error: 'inviterUserId and inviteeEmail are required' });
+  const token = (req.headers['authorization'] || '').replace('Bearer ', '').trim();
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+  if (authErr || !user) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { inviteeEmail } = req.body || {};
+  if (!inviteeEmail) {
+    return res.status(400).json({ error: 'inviteeEmail is required' });
   }
+
+  const inviterUserId = user.id;
 
   const email = inviteeEmail.trim().toLowerCase();
 

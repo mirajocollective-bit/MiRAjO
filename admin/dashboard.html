@@ -751,6 +751,16 @@
   function saveLookerUrl() {
     const url = document.getElementById('looker-url-input').value.trim();
     if (!url) return;
+    try {
+      const parsed = new URL(url);
+      if (parsed.hostname !== 'lookerstudio.google.com') {
+        alert('URL must be from lookerstudio.google.com');
+        return;
+      }
+    } catch {
+      alert('Invalid URL');
+      return;
+    }
     localStorage.setItem('mj_looker_url', url);
     renderLookerEmbed(url);
   }

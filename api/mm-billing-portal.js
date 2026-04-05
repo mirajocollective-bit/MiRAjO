@@ -12,8 +12,13 @@ const supabase = createClient(
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { userId } = req.body || {};
-  if (!userId) return res.status(400).json({ error: 'userId required' });
+  const token = (req.headers['authorization'] || '').replace('Bearer ', '').trim();
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+  if (authErr || !user) return res.status(401).json({ error: 'Unauthorized' });
+
+  const userId = user.id;
 
   const { data: sub } = await supabase
     .from('mm_subscriptions')

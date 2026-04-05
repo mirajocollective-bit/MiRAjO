@@ -1070,6 +1070,7 @@
         <label for="inq-message">Tell me about your event *</label>
         <textarea id="inq-message" name="message" placeholder="Audience, theme, what you're hoping Miranda will bring to the room..." required></textarea>
       </div>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACyf19GGVbAXiDCE" data-theme="light" style="margin-bottom:12px;"></div>
       <button type="submit" class="form-submit" id="speakingSubmit">Send Inquiry</button>
       <div class="form-message" id="speakingMsg"></div>
     </form>
@@ -1150,6 +1151,7 @@
   <div class="kit-footer-note">mirajoco.org/media-kit &middot; 2026</div>
 </div>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script src="/analytics.js"></script>
 <script>
   // Speaking inquiry form
@@ -1162,12 +1164,13 @@
     msg.style.display = 'none';
 
     const data = {
-      name:         document.getElementById('inq-name').value.trim(),
-      email:        document.getElementById('inq-email').value.trim(),
-      organization: document.getElementById('inq-org').value.trim(),
-      eventDate:    document.getElementById('inq-date').value.trim(),
-      eventType:    document.getElementById('inq-type').value,
-      message:      document.getElementById('inq-message').value.trim(),
+      name:           document.getElementById('inq-name').value.trim(),
+      email:          document.getElementById('inq-email').value.trim(),
+      organization:   document.getElementById('inq-org').value.trim(),
+      eventDate:      document.getElementById('inq-date').value.trim(),
+      eventType:      document.getElementById('inq-type').value,
+      message:        document.getElementById('inq-message').value.trim(),
+      turnstileToken: document.querySelector('[name="cf-turnstile-response"]')?.value || '',
     };
 
     try {

@@ -1051,8 +1051,8 @@
 
     const res = await fetch('/api/mm-invite', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ inviterUserId: user.id, inviteeEmail: email }),
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+      body: JSON.stringify({ inviteeEmail: email }),
     });
 
     btn.disabled = false; btn.textContent = 'Send Invite';
@@ -1112,8 +1112,8 @@
       manageLink.textContent = 'Loading...';
       const res = await fetch('/api/mm-billing-portal', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user.id }),
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify({}),
       });
       if (res.ok) {
         const { url } = await res.json();
