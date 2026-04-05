@@ -1,8 +1,4 @@
 // api/newsletter-stats.js — subscriber count + recent broadcasts
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://www.mirajoco.org');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -16,28 +12,46 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  const key = process.env.RESEND_API_KEY;
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  const headers = { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' };
+
   try {
-    const [contactsRes, broadcastsRes] = await Promise.all([
-      resend.contacts.list({ audienceId: process.env.RESEND_AUDIENCE_ID }),
-      resend.broadcasts.list(),
-    ]);
+    // Paginate through all contacts to get accurate count
+    let total = 0;
+    let active = 0;
+    let cursor = null;
+    let hasMore = true;
 
-    const contacts = contactsRes.data?.data || [];
-    const broadcasts = broadcastsRes.data?.data || [];
+    while (hasMore) {
+      const url = cursor
+        ? `https://api.resend.com/audiences/${audienceId}/contacts?cursor=${cursor}`
+        : `https://api.resend.com/audiences/${audienceId}/contacts`;
 
-    const activeCount = contacts.filter(c => !c.unsubscribed).length;
+      const r = await fetch(url, { headers });
+      const data = await r.json();
 
-    return res.status(200).json({
-      subscribers: activeCount,
-      total: contacts.length,
-      broadcasts: broadcasts.slice(0, 10).map(b => ({
-        id: b.id,
-        name: b.name,
-        subject: b.subject,
-        status: b.status,
-        created_at: b.created_at,
-      })),
-    });
+      const contacts = data.data || [];
+      total += contacts.length;
+      active += contacts.filter(c => !c.unsubscribed).length;
+      hasMore = data.has_more || false;
+      cursor = contacts.length > 0 ? contacts[contacts.length - 1].id : null;
+      if (!hasMore) break;
+    }
+
+    // Get recent broadcasts
+    const broadcastsRes = await fetch('https://api.resend.com/broadcasts', { headers });
+    const broadcastsData = await broadcastsRes.json();
+    const broadcasts = (broadcastsData.data || []).slice(0, 10).map(b => ({
+      id: b.id,
+      name: b.name,
+      subject: b.subject,
+      status: b.status,
+      created_at: b.created_at,
+    }));
+
+    return res.status(200).json({ subscribers: active, total, broadcasts });
+
   } catch (err) {
     console.error('[newsletter-stats]', err.message);
     return res.status(500).json({ error: err.message });
