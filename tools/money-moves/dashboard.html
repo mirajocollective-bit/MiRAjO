@@ -33,16 +33,22 @@
 
     /* ── Nav ── */
     .nav {
-      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
+      background: #fff;
+      border-bottom: 1px solid rgba(18,32,18,0.08);
+      box-shadow: 0 1px 8px rgba(18,32,18,0.05);
       padding: 0 32px;
       display: flex; align-items: center; justify-content: space-between;
       height: 52px; position: sticky; top: 0; z-index: 100;
     }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
-    .nav-logo  { height: 30px; width: auto; }
-    .nav-product { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dry-sage); }
+    .nav-left { display: flex; align-items: center; gap: 10px; }
+    .nav-icon  { height: 26px; width: 26px; object-fit: contain; }
+    .nav-wordmark {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px; font-weight: 400; letter-spacing: 1px;
+      color: var(--deep-forest);
+    }
     .nav-right { display: flex; align-items: center; gap: 8px; }
-    .nav-greeting { font-size: 13px; color: rgba(242,235,217,0.7); }
+    .nav-greeting { font-size: 13px; color: var(--neutral); }
     .nav-btn {
       font-size: 12px; font-weight: 600; padding: 6px 12px;
       border-radius: 7px; border: none; cursor: pointer;
@@ -50,8 +56,8 @@
     }
     .nav-btn:hover { opacity: 0.8; }
     .nav-btn-add      { background: var(--dry-sage); color: var(--deep-forest); }
-    .nav-btn-settings { background: transparent; color: var(--warm-parchment); border: 1px solid rgba(242,235,217,0.25); }
-    .nav-btn-forecast { background: transparent; color: var(--new-growth); border: 1px solid rgba(109,196,138,0.35); }
+    .nav-btn-settings { background: transparent; color: var(--deep-forest); border: 1px solid rgba(18,32,18,0.18); }
+    .nav-btn-forecast { background: transparent; color: var(--living-green); border: 1px solid rgba(37,107,66,0.3); }
 
     /* ── Account tabs bar ── */
     .accounts-bar {
@@ -663,6 +669,46 @@
     .faq-a strong { color: var(--deep-forest); }
     .faq-nav-btn { background: transparent; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
 
+    /* ── Emoji picker ── */
+    .desc-row { display: flex; gap: 8px; align-items: flex-start; }
+    .emoji-btn {
+      flex-shrink: 0; width: 44px; height: 44px; border: 1px solid var(--border);
+      border-radius: 10px; background: var(--soft-white); cursor: pointer;
+      font-size: 20px; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s; position: relative;
+    }
+    .emoji-btn:hover { border-color: var(--living-green); background: rgba(37,107,66,0.05); }
+    .emoji-btn.has-emoji { border-color: var(--living-green); background: rgba(37,107,66,0.07); }
+    .emoji-picker-wrap { position: relative; flex-shrink: 0; }
+    .emoji-picker {
+      display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 400;
+      background: #fff; border-radius: 14px; padding: 12px;
+      box-shadow: 0 8px 32px rgba(18,32,18,0.16); border: 1px solid var(--border);
+      width: 264px;
+    }
+    .emoji-picker.open { display: block; }
+    .emoji-picker-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--neutral); margin-bottom: 8px; display: block;
+    }
+    .emoji-picker-grid {
+      display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px;
+    }
+    .emoji-picker-grid span {
+      font-size: 20px; cursor: pointer; padding: 5px;
+      border-radius: 7px; text-align: center; line-height: 1;
+      transition: background 0.12s;
+    }
+    .emoji-picker-grid span:hover { background: rgba(37,107,66,0.1); }
+    .emoji-picker-grid span.selected { background: rgba(37,107,66,0.15); outline: 1px solid var(--living-green); border-radius: 6px; }
+    .emoji-clear {
+      margin-top: 8px; width: 100%; padding: 7px; border: 1px solid var(--border);
+      border-radius: 8px; background: transparent; font-size: 12px; font-weight: 600;
+      color: var(--neutral); cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.15s;
+    }
+    .emoji-clear:hover { background: var(--soft-white); }
+
     /* ── Responsive ── */
     @media (max-width: 1200px) {
       .layout { grid-template-columns: 44px 1fr 300px !important; }
@@ -691,10 +737,10 @@
 <!-- Nav -->
 <nav class="nav">
   <div class="nav-left">
-    <a href="https://www.mirajoco.org">
-      <img src="/img/logo-horizontal.png" alt="MiRAjO" class="nav-logo">
+    <a href="/tools/money-moves" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <img src="/img/favicon.png" alt="Money Moves" class="nav-icon">
+      <span class="nav-wordmark">MONEY MOVES</span>
     </a>
-    <span class="nav-product">Money Moves</span>
   </div>
   <div class="nav-right">
     <span class="nav-greeting" id="nav-greeting">Hi there</span>
@@ -939,8 +985,22 @@
       <button class="type-tab transfer"         id="tab-transfer" onclick="setType('transfer')">Transfer</button>
     </div>
     <div class="form-group">
-      <label class="form-label">Description</label>
-      <input type="text" class="form-input" id="txn-desc" placeholder="e.g. Grocery run, Rent, Client payment">
+      <label class="form-label">Icon &amp; Description</label>
+      <div class="desc-row">
+        <div class="emoji-picker-wrap">
+          <button type="button" class="emoji-btn" id="emoji-btn" onclick="toggleEmojiPicker(event)" title="Pick an icon">😊</button>
+          <div class="emoji-picker" id="emoji-picker">
+            <span class="emoji-picker-label">Pick an icon</span>
+            <div class="emoji-picker-grid" id="emoji-picker-grid">
+              💰💵💳🏦📈📉🎯🏠🏡🚗🚙✈️🍽️🛒🛍️☕
+              💻📱📺🎬🎵🎮📚🏥💊🏋️‍♀️💪🐾👶🎓🧾📋
+              💡🔌🌊🔥💈✂️🎁🎂🌿🏖️⛽🚿🧺🧹🔧🪴
+            </div>
+            <button class="emoji-clear" onclick="clearEmoji()">Remove icon</button>
+          </div>
+        </div>
+        <input type="text" class="form-input" id="txn-desc" placeholder="e.g. Rent, Paycheck, Groceries" style="flex:1">
+      </div>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -1174,6 +1234,55 @@
   let editingDate     = null;   // calendar date of the occurrence being edited
   let editingRecurScope = null; // 'one' | 'future' | 'all' — set when recurring scope chosen
   let modalSnapshot   = null;   // field values when modal opened, for change detection
+  let selectedEmoji   = '';     // emoji icon for current transaction
+
+  // ── Emoji helpers ────────────────────────────────────────────────────────────
+  const EMOJI_RE = /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/u;
+
+  function parseEmojiFromDesc(desc) {
+    const m = desc?.match(EMOJI_RE);
+    return m ? { emoji: m[1], text: desc.slice(m[0].length) } : { emoji: '', text: desc || '' };
+  }
+
+  function setEmoji(emoji) {
+    selectedEmoji = emoji;
+    const btn = document.getElementById('emoji-btn');
+    btn.textContent = emoji || '😊';
+    btn.classList.toggle('has-emoji', !!emoji);
+    // Highlight selected in grid
+    document.querySelectorAll('#emoji-picker-grid span').forEach(s => {
+      s.classList.toggle('selected', s.textContent.trim() === emoji);
+    });
+  }
+
+  function clearEmoji() {
+    setEmoji('');
+    document.getElementById('emoji-picker').classList.remove('open');
+  }
+
+  function toggleEmojiPicker(e) {
+    e.stopPropagation();
+    document.getElementById('emoji-picker').classList.toggle('open');
+  }
+
+  // Wire up emoji grid clicks
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('emoji-picker-grid').addEventListener('click', e => {
+      const span = e.target.closest('span');
+      if (!span) return;
+      const emoji = span.textContent.trim();
+      setEmoji(emoji === selectedEmoji ? '' : emoji);
+      document.getElementById('emoji-picker').classList.remove('open');
+    });
+  });
+
+  // Close emoji picker when clicking outside
+  document.addEventListener('click', e => {
+    const wrap = document.querySelector('.emoji-picker-wrap');
+    if (wrap && !wrap.contains(e.target)) {
+      document.getElementById('emoji-picker')?.classList.remove('open');
+    }
+  });
 
   // Account type colors
   const ACCT_COLORS = {
@@ -2088,6 +2197,7 @@
 
   window.openModal = function (dateStr) {
     editingTxnId = null;
+    setEmoji('');
     document.getElementById('modal-title').textContent = 'Add Transaction';
     document.getElementById('txn-delete-btn').style.display = 'none';
     document.getElementById('txn-date').value = dateStr || new Date().toISOString().split('T')[0];
@@ -2111,7 +2221,9 @@
     setType(t.type || 'expense');
     document.getElementById('txn-date').value     = t.date || '';
     document.getElementById('txn-amount').value   = t.amount || '';
-    document.getElementById('txn-desc').value     = t.description || '';
+    const parsed = parseEmojiFromDesc(t.description);
+    setEmoji(parsed.emoji);
+    document.getElementById('txn-desc').value     = parsed.text;
     document.getElementById('txn-notes').value    = t.notes || '';
     document.getElementById('txn-recurring').checked = !!t.is_recurring;
     document.getElementById('recur-group').style.display = t.is_recurring ? 'block' : 'none';
@@ -2152,6 +2264,8 @@
     modalSnapshot     = null;
     window._recurExcSave = null;
     window._recurFutureOriginal = null;
+    setEmoji('');
+    document.getElementById('emoji-picker').classList.remove('open');
     document.getElementById('modal-overlay').classList.remove('open');
     document.getElementById('modal-title').textContent = 'Add Transaction';
     document.getElementById('txn-delete-btn').style.display = 'none';
@@ -2192,7 +2306,8 @@
   };
 
   window.saveTransaction = async function () {
-    const desc      = document.getElementById('txn-desc').value.trim();
+    const rawDesc   = document.getElementById('txn-desc').value.trim();
+    const desc      = selectedEmoji ? `${selectedEmoji} ${rawDesc}` : rawDesc;
     const amount    = parseFloat(document.getElementById('txn-amount').value);
     const date      = document.getElementById('txn-date').value;
     const accountId = document.getElementById('txn-account').value;
