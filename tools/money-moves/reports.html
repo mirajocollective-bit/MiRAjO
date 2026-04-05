@@ -173,14 +173,55 @@
     }
     .empty-icon { font-size: 36px; margin-bottom: 12px; }
 
+    /* ── Date input ── */
+    .filter-input {
+      padding: 8px 10px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #fff; outline: none;
+      transition: border-color 0.2s; cursor: pointer;
+    }
+    .filter-input:focus { border-color: var(--living-green); }
+    .custom-range { display: none; align-items: center; gap: 6px; }
+    .custom-range.visible { display: flex; }
+
+    /* ── Export dropdown ── */
+    .export-wrap { position: relative; }
+    .export-main {
+      font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 8px;
+      border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dry-sage); color: var(--deep-forest);
+      transition: opacity 0.2s; white-space: nowrap;
+    }
+    .export-main:hover { opacity: 0.85; }
+    .export-menu {
+      display: none; position: absolute; top: calc(100% + 6px); right: 0;
+      background: #fff; border-radius: 12px; border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(18,32,18,0.14);
+      min-width: 220px; z-index: 200; overflow: hidden;
+    }
+    .export-menu.open { display: block; }
+    .export-menu button {
+      display: block; width: 100%; text-align: left;
+      padding: 12px 16px; border: none; background: none; cursor: pointer;
+      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); transition: background 0.15s;
+    }
+    .export-menu button:hover { background: var(--soft-white); }
+    .export-menu-divider { height: 1px; background: var(--border); margin: 4px 0; }
+    .export-menu-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--neutral); padding: 8px 16px 4px;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 700px) {
       .nav { padding: 0 16px; }
-      .filters-bar { padding: 12px 16px; }
+      .filters-bar { padding: 12px 16px; gap: 10px; }
       .layout { padding: 16px 16px 60px; }
       .summary-row { grid-template-columns: 1fr; }
       .cat-grid { grid-template-columns: 1fr; }
       .card-body { padding: 16px; }
+      .filter-divider { display: none; }
     }
   </style>
   <script src="/analytics.js"></script>
@@ -196,8 +237,18 @@
     <span class="nav-product">Money Moves</span>
   </div>
   <div class="nav-right">
-    <button class="export-btn export-csv" onclick="exportCSV()">Export CSV</button>
-    <button class="export-btn export-pdf" onclick="exportPDF()">Export PDF</button>
+    <div class="export-wrap" id="export-wrap">
+      <button class="export-main" onclick="toggleExportMenu()">Export ▾</button>
+      <div class="export-menu" id="export-menu">
+        <div class="export-menu-label">CSV</div>
+        <button onclick="exportCSV(); closeExportMenu()">Transaction List (.csv)</button>
+        <div class="export-menu-divider"></div>
+        <div class="export-menu-label">PDF</div>
+        <button onclick="exportPDF('pl'); closeExportMenu()">P&amp;L Statement (.pdf)</button>
+        <button onclick="exportPDF('categories'); closeExportMenu()">Category Report (.pdf)</button>
+        <button onclick="exportPDF('transactions'); closeExportMenu()">Transaction List (.pdf)</button>
+      </div>
+    </div>
     <a href="/tools/money-moves/dashboard" class="nav-back">← Dashboard</a>
   </div>
 </nav>
@@ -210,7 +261,7 @@
   </select>
   <div class="filter-divider"></div>
   <span class="filter-label">Period</span>
-  <select class="filter-select" id="filter-period" onchange="applyFilters()">
+  <select class="filter-select" id="filter-period" onchange="onPeriodChange()">
     <option value="this_month">This Month</option>
     <option value="last_month">Last Month</option>
     <option value="this_quarter">This Quarter</option>
@@ -218,6 +269,24 @@
     <option value="this_year" selected>This Year</option>
     <option value="last_year">Last Year</option>
     <option value="all_time">All Time</option>
+    <option value="custom">Custom Range</option>
+  </select>
+  <div class="custom-range" id="custom-range">
+    <input type="date" class="filter-input" id="custom-start" onchange="applyFilters()">
+    <span style="font-size:12px;color:var(--neutral)">to</span>
+    <input type="date" class="filter-input" id="custom-end" onchange="applyFilters()">
+  </div>
+  <div class="filter-divider"></div>
+  <span class="filter-label">Type</span>
+  <select class="filter-select" id="filter-type" onchange="applyFilters()">
+    <option value="all">All</option>
+    <option value="income">Income</option>
+    <option value="expense">Expenses</option>
+  </select>
+  <div class="filter-divider"></div>
+  <span class="filter-label">Category</span>
+  <select class="filter-select" id="filter-category" onchange="applyFilters()">
+    <option value="all">All Categories</option>
   </select>
   <div class="filter-divider"></div>
   <span class="filter-label">View</span>
@@ -225,6 +294,7 @@
     <option value="pl">P&amp;L Statement</option>
     <option value="categories">By Category</option>
     <option value="monthly">Monthly Trend</option>
+    <option value="transactions">Transaction List</option>
   </select>
 </div>
 
@@ -290,8 +360,28 @@
       sel.appendChild(opt);
     });
 
+    // Populate category filter
+    const catSel = document.getElementById('filter-category');
+    categories.sort((a,b) => a.name.localeCompare(b.name)).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id; opt.textContent = c.name;
+      catSel.appendChild(opt);
+    });
+
     applyFilters();
   }
+
+  // ── Period UI handler ──────────────────────────────────────────────────────
+  window.onPeriodChange = function () {
+    const period = document.getElementById('filter-period').value;
+    const cr = document.getElementById('custom-range');
+    if (period === 'custom') {
+      cr.classList.add('visible');
+    } else {
+      cr.classList.remove('visible');
+      applyFilters();
+    }
+  };
 
   // ── Date range helper ────────────────────────────────────────────────────────
   function getDateRange(period) {
@@ -299,6 +389,12 @@
     const y     = now.getFullYear();
     const m     = now.getMonth();
     const q     = Math.floor(m / 3);
+
+    if (period === 'custom') {
+      const s = document.getElementById('custom-start').value;
+      const e = document.getElementById('custom-end').value;
+      return [s ? new Date(s + 'T00:00:00') : null, e ? new Date(e + 'T23:59:59') : null];
+    }
 
     switch (period) {
       case 'this_month':    return [new Date(y, m, 1),        new Date(y, m + 1, 0)];
@@ -311,28 +407,48 @@
     }
   }
 
+  function periodLabel(period) {
+    const map = {
+      this_month: 'This Month', last_month: 'Last Month',
+      this_quarter: 'This Quarter', last_quarter: 'Last Quarter',
+      this_year: 'This Year', last_year: 'Last Year',
+      all_time: 'All Time',
+    };
+    if (period === 'custom') {
+      const s = document.getElementById('custom-start').value;
+      const e = document.getElementById('custom-end').value;
+      return `${s || '—'} to ${e || '—'}`;
+    }
+    return map[period] || period;
+  }
+
   function fmt(n) {
     return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   // ── Apply filters ────────────────────────────────────────────────────────────
   window.applyFilters = function () {
-    const accountId = document.getElementById('filter-account').value;
-    const period    = document.getElementById('filter-period').value;
-    const view      = document.getElementById('filter-view').value;
+    const accountId  = document.getElementById('filter-account').value;
+    const period     = document.getElementById('filter-period').value;
+    const view       = document.getElementById('filter-view').value;
+    const typeFilter = document.getElementById('filter-type').value;
+    const catFilter  = document.getElementById('filter-category').value;
     const [start, end] = getDateRange(period);
 
     filtered = transactions.filter(t => {
       if (accountId !== 'all' && t.account_id !== accountId) return false;
       if (t.type === 'transfer') return false;
-      if (start && new Date(t.date) < start) return false;
-      if (end   && new Date(t.date) > end)   return false;
+      if (typeFilter !== 'all' && t.type !== typeFilter) return false;
+      if (catFilter  !== 'all' && t.category_id !== catFilter) return false;
+      if (start && new Date(t.date + 'T00:00:00') < start) return false;
+      if (end   && new Date(t.date + 'T00:00:00') > end)   return false;
       return true;
     });
 
-    if      (view === 'pl')         renderPL(period);
-    else if (view === 'categories') renderCategories();
-    else if (view === 'monthly')    renderMonthly();
+    if      (view === 'pl')           renderPL(period);
+    else if (view === 'categories')   renderCategories();
+    else if (view === 'monthly')      renderMonthly();
+    else if (view === 'transactions') renderTransactionList();
   };
 
   // ── P&L Statement ────────────────────────────────────────────────────────────
@@ -603,23 +719,89 @@
       </div>`;
   }
 
+  // ── Transaction List View ─────────────────────────────────────────────────────
+  function renderTransactionList() {
+    const sorted = [...filtered].sort((a,b) => b.date.localeCompare(a.date));
+    const totalIn  = filtered.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount),0);
+    const totalOut = filtered.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount),0);
+    const net      = totalIn - totalOut;
+
+    const layout = document.getElementById('report-layout');
+    layout.innerHTML = `
+      <div class="summary-row">
+        <div class="summary-tile">
+          <div class="tile-label">Total Income</div>
+          <div class="tile-amount income">${fmt(totalIn)}</div>
+          <div class="tile-sub">${filtered.filter(t=>t.type==='income').length} transactions</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">Total Expenses</div>
+          <div class="tile-amount expense">${fmt(totalOut)}</div>
+          <div class="tile-sub">${filtered.filter(t=>t.type==='expense').length} transactions</div>
+        </div>
+        <div class="summary-tile">
+          <div class="tile-label">Net</div>
+          <div class="tile-amount net ${net>=0?'positive':'negative'}">${net>=0?'':'-'}${fmt(net)}</div>
+          <div class="tile-sub">${sorted.length} total entries</div>
+        </div>
+      </div>
+      <div class="report-card">
+        <div class="card-header">
+          <div><div class="card-title">Transaction List</div><div class="card-sub">${sorted.length} transactions</div></div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div style="overflow-x:auto">
+            <table class="pl-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th style="text-align:left">Description</th>
+                  <th style="text-align:left">Category</th>
+                  <th style="text-align:left">Account</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sorted.length ? sorted.map(t => {
+                  const cat  = categories.find(c=>c.id===t.category_id)?.name || '—';
+                  const acct = accounts.find(a=>a.id===t.account_id)?.name    || '—';
+                  const cls  = t.type==='income'?'positive':'negative';
+                  const sign = t.type==='income'?'+':'-';
+                  return `<tr>
+                    <td style="white-space:nowrap">${t.date}</td>
+                    <td style="text-align:left">${t.description||'—'}</td>
+                    <td style="text-align:left;color:var(--neutral)">${cat}</td>
+                    <td style="text-align:left;color:var(--neutral)">${acct}</td>
+                    <td class="${cls}">${sign}${fmt(t.amount)}</td>
+                  </tr>`;
+                }).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--neutral);padding:32px">No transactions match the current filters.</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ── Export helpers ────────────────────────────────────────────────────────────
+  window.toggleExportMenu = function () {
+    document.getElementById('export-menu').classList.toggle('open');
+  };
+  window.closeExportMenu = function () {
+    document.getElementById('export-menu').classList.remove('open');
+  };
+  document.addEventListener('click', e => {
+    if (!document.getElementById('export-wrap')?.contains(e.target)) closeExportMenu();
+  });
+
   // ── CSV Export ────────────────────────────────────────────────────────────────
   window.exportCSV = function () {
-    const accountId = document.getElementById('filter-account').value;
-    const period    = document.getElementById('filter-period').value;
-    const [start, end] = getDateRange(period);
-
-    const rows = transactions.filter(t => {
-      if (accountId !== 'all' && t.account_id !== accountId) return false;
-      if (start && new Date(t.date) < start) return false;
-      if (end   && new Date(t.date) > end)   return false;
-      return true;
-    });
+    const period = document.getElementById('filter-period').value;
+    const sorted = [...filtered].sort((a,b) => a.date.localeCompare(b.date));
 
     const headers = ['Date','Description','Type','Amount','Category','Account','Notes'];
     const lines = [headers.join(',')];
 
-    rows.forEach(t => {
+    sorted.forEach(t => {
       const cat   = categories.find(c => c.id === t.category_id)?.name || '';
       const acct  = accounts.find(a => a.id === t.account_id)?.name   || '';
       const amt   = t.type === 'expense' ? `-${Number(t.amount).toFixed(2)}` : Number(t.amount).toFixed(2);
@@ -638,39 +820,24 @@
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
     a.href     = url;
-    a.download = `money-moves-${period}.csv`;
+    a.download = `money-moves-transactions-${period}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
 
   // ── PDF Export ─────────────────────────────────────────────────────────────────
-  window.exportPDF = function () {
-    const { jsPDF } = window.jspdf;
-    const doc   = new jsPDF();
-    const period = document.getElementById('filter-period').value;
-
-    const incomes  = filtered.filter(t => t.type === 'income');
-    const expenses = filtered.filter(t => t.type === 'expense');
-    const totalIn  = incomes.reduce((s,t)  => s + Number(t.amount), 0);
-    const totalOut = expenses.reduce((s,t) => s + Number(t.amount), 0);
-    const net      = totalIn - totalOut;
-
-    const incomeCats  = groupByCategory(incomes);
-    const expenseCats = groupByCategory(expenses);
-
-    // Header
+  function pdfHeader(doc, subtitle, period) {
     doc.setFillColor(18, 32, 18);
     doc.rect(0, 0, 210, 28, 'F');
     doc.setTextColor(242, 235, 217);
     doc.setFontSize(16); doc.setFont('helvetica', 'bold');
     doc.text('Money Moves by MiRAjO', 14, 12);
     doc.setFontSize(10); doc.setFont('helvetica', 'normal');
-    doc.text(`Profit & Loss Statement — ${period.replace(/_/g,' ').toUpperCase()}`, 14, 20);
+    doc.text(`${subtitle} — ${periodLabel(period).toUpperCase()}`, 14, 20);
     doc.text(`Generated ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`, 140, 20);
+  }
 
-    // Summary boxes
-    doc.setTextColor(18, 32, 18);
-    let y = 38;
+  function pdfSummaryBoxes(doc, totalIn, totalOut, net, y) {
     const boxes = [
       { label: 'TOTAL INCOME',  value: `$${totalIn.toFixed(2)}`,  color: [37,107,66] },
       { label: 'TOTAL EXPENSES', value: `$${totalOut.toFixed(2)}`, color: [192,57,43] },
@@ -680,64 +847,173 @@
       const x = 14 + i * 62;
       doc.setFillColor(248, 246, 242);
       doc.roundedRect(x, y, 58, 20, 2, 2, 'F');
-      doc.setFontSize(7); doc.setFont('helvetica', 'bold');
-      doc.setTextColor(107, 114, 128);
+      doc.setFontSize(7); doc.setFont('helvetica', 'bold'); doc.setTextColor(107, 114, 128);
       doc.text(b.label, x + 4, y + 7);
       doc.setFontSize(12); doc.setTextColor(...b.color);
       doc.text(b.value, x + 4, y + 16);
     });
+    return y + 30;
+  }
 
-    y = 68;
-
-    // Income section
-    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(107, 114, 128);
-    doc.text('INCOME', 14, y); y += 5;
-    doc.setDrawColor(200, 200, 200); doc.line(14, y, 196, y); y += 5;
-
-    incomeCats.forEach(c => {
-      doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(18,32,18);
-      doc.text(c.name, 22, y);
-      doc.setTextColor(37,107,66); doc.setFont('helvetica','bold');
-      doc.text(`$${c.total.toFixed(2)}`, 160, y, { align: 'right' });
-      y += 6;
-    });
-    doc.setFont('helvetica','bold'); doc.setTextColor(18,32,18);
-    doc.text('Total Income', 14, y);
-    doc.setTextColor(37,107,66);
-    doc.text(`$${totalIn.toFixed(2)}`, 160, y, { align: 'right' });
-    y += 10;
-
-    // Expense section
-    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(107, 114, 128);
-    doc.text('EXPENSES', 14, y); y += 5;
-    doc.setDrawColor(200,200,200); doc.line(14, y, 196, y); y += 5;
-
-    expenseCats.forEach(c => {
-      if (y > 265) { doc.addPage(); y = 20; }
-      doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(18,32,18);
-      doc.text(c.name, 22, y);
-      doc.setTextColor(192,57,43); doc.setFont('helvetica','bold');
-      doc.text(`$${c.total.toFixed(2)}`, 160, y, { align: 'right' });
-      y += 6;
-    });
-    doc.setFont('helvetica','bold'); doc.setTextColor(18,32,18);
-    doc.text('Total Expenses', 14, y);
-    doc.setTextColor(192,57,43);
-    doc.text(`$${totalOut.toFixed(2)}`, 160, y, { align: 'right' });
-    y += 10;
-
-    // Net row
-    doc.setFillColor(18,32,18);
-    doc.rect(14, y, 182, 10, 'F');
-    doc.setTextColor(242,235,217); doc.setFontSize(10); doc.setFont('helvetica','bold');
-    doc.text(`NET ${net >= 0 ? 'PROFIT' : 'LOSS'}`, 18, y + 7);
-    doc.text(`${net >= 0 ? '' : '-'}$${Math.abs(net).toFixed(2)}`, 192, y + 7, { align: 'right' });
-
-    // Footer
+  function pdfFooter(doc) {
     doc.setFontSize(8); doc.setTextColor(150,150,150); doc.setFont('helvetica','normal');
     doc.text('Money Moves by MiRAjO · mirajoco.org', 105, 290, { align: 'center' });
+  }
 
-    doc.save(`money-moves-pl-${period}.pdf`);
+  window.exportPDF = function (mode) {
+    const { jsPDF } = window.jspdf;
+    const doc    = new jsPDF();
+    const period = document.getElementById('filter-period').value;
+
+    const incomes  = filtered.filter(t => t.type === 'income');
+    const expenses = filtered.filter(t => t.type === 'expense');
+    const totalIn  = incomes.reduce((s,t) => s + Number(t.amount), 0);
+    const totalOut = expenses.reduce((s,t) => s + Number(t.amount), 0);
+    const net      = totalIn - totalOut;
+
+    if (mode === 'pl') {
+      pdfHeader(doc, 'Profit & Loss Statement', period);
+      let y = pdfSummaryBoxes(doc, totalIn, totalOut, net, 38);
+
+      const incomeCats  = groupByCategory(incomes);
+      const expenseCats = groupByCategory(expenses);
+
+      doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(107,114,128);
+      doc.text('INCOME', 14, y); y += 5;
+      doc.setDrawColor(200,200,200); doc.line(14, y, 196, y); y += 5;
+      incomeCats.forEach(c => {
+        doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(18,32,18);
+        doc.text(c.name, 22, y);
+        doc.setTextColor(37,107,66); doc.setFont('helvetica','bold');
+        doc.text(`$${c.total.toFixed(2)}`, 160, y, { align: 'right' }); y += 6;
+      });
+      doc.setFont('helvetica','bold'); doc.setTextColor(18,32,18);
+      doc.text('Total Income', 14, y);
+      doc.setTextColor(37,107,66);
+      doc.text(`$${totalIn.toFixed(2)}`, 160, y, { align: 'right' }); y += 10;
+
+      doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(107,114,128);
+      doc.text('EXPENSES', 14, y); y += 5;
+      doc.setDrawColor(200,200,200); doc.line(14, y, 196, y); y += 5;
+      expenseCats.forEach(c => {
+        if (y > 265) { doc.addPage(); y = 20; pdfFooter(doc); }
+        doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(18,32,18);
+        doc.text(c.name, 22, y);
+        doc.setTextColor(192,57,43); doc.setFont('helvetica','bold');
+        doc.text(`$${c.total.toFixed(2)}`, 160, y, { align: 'right' }); y += 6;
+      });
+      doc.setFont('helvetica','bold'); doc.setTextColor(18,32,18);
+      doc.text('Total Expenses', 14, y);
+      doc.setTextColor(192,57,43);
+      doc.text(`$${totalOut.toFixed(2)}`, 160, y, { align: 'right' }); y += 10;
+
+      doc.setFillColor(18,32,18);
+      doc.rect(14, y, 182, 10, 'F');
+      doc.setTextColor(242,235,217); doc.setFontSize(10); doc.setFont('helvetica','bold');
+      doc.text(`NET ${net >= 0 ? 'PROFIT' : 'LOSS'}`, 18, y + 7);
+      doc.text(`${net >= 0 ? '' : '-'}$${Math.abs(net).toFixed(2)}`, 192, y + 7, { align: 'right' });
+
+      pdfFooter(doc);
+      doc.save(`money-moves-pl-${period}.pdf`);
+
+    } else if (mode === 'categories') {
+      pdfHeader(doc, 'Category Report', period);
+      let y = pdfSummaryBoxes(doc, totalIn, totalOut, net, 38);
+
+      const incomeCats  = groupByCategory(incomes);
+      const expenseCats = groupByCategory(expenses);
+
+      function renderCatSection(title, cats, total, color) {
+        doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(107,114,128);
+        doc.text(title, 14, y); y += 5;
+        doc.setDrawColor(200,200,200); doc.line(14, y, 196, y); y += 6;
+        cats.forEach(c => {
+          if (y > 265) { doc.addPage(); y = 20; }
+          const pct   = total > 0 ? ((c.total / total) * 100).toFixed(1) : '0.0';
+          const barW  = total > 0 ? Math.round((c.total / total) * 80) : 0;
+          doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(18,32,18);
+          doc.text(c.name, 14, y);
+          doc.setTextColor(...color); doc.setFont('helvetica','bold');
+          doc.text(`$${c.total.toFixed(2)}`, 130, y, { align: 'right' });
+          doc.setTextColor(107,114,128); doc.setFont('helvetica','normal');
+          doc.text(`${pct}%`, 145, y);
+          doc.setFillColor(230,230,230); doc.rect(155, y - 4, 80, 4, 'F');
+          doc.setFillColor(...color); doc.rect(155, y - 4, barW, 4, 'F');
+          y += 8;
+        });
+        y += 4;
+      }
+
+      renderCatSection('INCOME BY CATEGORY', incomeCats, totalIn, [37,107,66]);
+      renderCatSection('EXPENSES BY CATEGORY', expenseCats, totalOut, [192,57,43]);
+
+      pdfFooter(doc);
+      doc.save(`money-moves-categories-${period}.pdf`);
+
+    } else if (mode === 'transactions') {
+      pdfHeader(doc, 'Transaction List', period);
+      let y = 38;
+      const sorted = [...filtered].sort((a,b) => a.date.localeCompare(b.date));
+
+      // Column headers
+      doc.setFillColor(248,246,242);
+      doc.rect(14, y, 182, 8, 'F');
+      doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.setTextColor(107,114,128);
+      doc.text('DATE',        16, y + 5.5);
+      doc.text('DESCRIPTION', 42, y + 5.5);
+      doc.text('CATEGORY',    110, y + 5.5);
+      doc.text('ACCOUNT',     148, y + 5.5);
+      doc.text('AMOUNT',      196, y + 5.5, { align: 'right' });
+      y += 10;
+
+      sorted.forEach(t => {
+        if (y > 270) {
+          doc.addPage();
+          y = 20;
+          doc.setFillColor(248,246,242); doc.rect(14, y, 182, 8, 'F');
+          doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.setTextColor(107,114,128);
+          doc.text('DATE', 16, y+5.5); doc.text('DESCRIPTION', 42, y+5.5);
+          doc.text('CATEGORY', 110, y+5.5); doc.text('ACCOUNT', 148, y+5.5);
+          doc.text('AMOUNT', 196, y+5.5, { align: 'right' });
+          y += 10;
+        }
+        const cat  = categories.find(c=>c.id===t.category_id)?.name || '—';
+        const acct = accounts.find(a=>a.id===t.account_id)?.name    || '—';
+        const sign = t.type === 'income' ? '+' : '-';
+        const amtColor = t.type === 'income' ? [37,107,66] : [192,57,43];
+
+        doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(18,32,18);
+        doc.text(t.date, 16, y);
+        doc.text((t.description||'—').substring(0,28), 42, y);
+        doc.setTextColor(107,114,128); doc.setFontSize(7.5);
+        doc.text(cat.substring(0,18), 110, y);
+        doc.text(acct.substring(0,16), 148, y);
+        doc.setTextColor(...amtColor); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+        doc.text(`${sign}$${Number(t.amount).toFixed(2)}`, 196, y, { align: 'right' });
+        y += 7;
+      });
+
+      // Totals footer
+      y += 4;
+      if (y > 265) { doc.addPage(); y = 20; }
+      doc.setDrawColor(200,200,200); doc.line(14, y, 196, y); y += 6;
+      doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(18,32,18);
+      doc.text(`Total Income:`, 14, y);
+      doc.setTextColor(37,107,66);
+      doc.text(`$${totalIn.toFixed(2)}`, 80, y);
+      doc.setTextColor(18,32,18);
+      doc.text(`Total Expenses:`, 100, y);
+      doc.setTextColor(192,57,43);
+      doc.text(`$${totalOut.toFixed(2)}`, 170, y);
+      y += 8;
+      doc.setFillColor(18,32,18); doc.rect(14, y, 182, 10, 'F');
+      doc.setTextColor(242,235,217);
+      doc.text(`NET ${net >= 0 ? 'PROFIT' : 'LOSS'}`, 18, y + 7);
+      doc.text(`${net >= 0 ? '' : '-'}$${Math.abs(net).toFixed(2)}`, 192, y + 7, { align: 'right' });
+
+      pdfFooter(doc);
+      doc.save(`money-moves-transactions-${period}.pdf`);
+    }
   };
 
   // ── Init ─────────────────────────────────────────────────────────────────────
