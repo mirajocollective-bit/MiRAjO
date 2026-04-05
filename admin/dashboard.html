@@ -354,10 +354,11 @@
   <div class="login-card">
     <img src="/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png" alt="MiRAjO" class="login-logo">
     <h1>Admin Dashboard</h1>
-    <p>Enter your password to continue.</p>
+    <p>Enter your credentials to continue.</p>
+    <input type="text" id="un-input" class="login-input" placeholder="Username" autocomplete="username">
     <input type="password" id="pw-input" class="login-input" placeholder="Password" autocomplete="current-password">
     <button class="login-btn" id="login-btn" onclick="login()">Sign In</button>
-    <p class="login-error" id="login-error">Incorrect password.</p>
+    <p class="login-error" id="login-error">Incorrect username or password.</p>
   </div>
 </div>
 
@@ -518,11 +519,12 @@
 
   // ── AUTH ──────────────────────────────────────────────
   async function login() {
+    const un = document.getElementById('un-input').value.trim();
     const pw = document.getElementById('pw-input').value;
     const btn = document.getElementById('login-btn');
     const errEl = document.getElementById('login-error');
 
-    if (!pw) return;
+    if (!un || !pw) return;
     btn.disabled = true;
     btn.textContent = 'Signing in...';
     errEl.style.display = 'none';
@@ -531,7 +533,7 @@
       const res = await fetch('/api/admin-auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw }),
+        body: JSON.stringify({ username: un, password: pw }),
       });
 
       if (res.ok) {
@@ -559,6 +561,9 @@
     document.getElementById('pw-input').value = '';
   }
 
+  document.getElementById('un-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('pw-input').focus();
+  });
   document.getElementById('pw-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') login();
   });
