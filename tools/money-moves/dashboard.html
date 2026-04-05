@@ -1590,9 +1590,10 @@
       </script>
     </div>
     <div class="form-group">
-      <label class="form-label" id="new-acct-balance-label">Current Balance ($)</label>
+      <label class="form-label" id="new-acct-balance-label">Opening Balance ($)</label>
       <input type="number" class="form-input" id="new-acct-balance" placeholder="0.00" step="0.01">
-      <div id="new-acct-balance-hint" style="font-size:11px;color:var(--neutral);margin-top:5px;display:none;"></div>
+      <div style="font-size:11px;color:var(--neutral);margin-top:5px">What's in this account right now? Add transactions from here forward and your balance will stay accurate.</div>
+      <div id="new-acct-balance-hint" style="font-size:11px;color:var(--neutral);margin-top:4px;display:none;"></div>
     </div>
     <div class="modal-actions">
       <button class="modal-cancel" onclick="closeAcctModal()">Cancel</button>
@@ -3405,23 +3406,9 @@
 
     if (error) { alert('Error adding account: ' + error.message); return; }
 
-    // If a starting balance was entered, record it as an Opening Balance transaction
-    if (balance > 0 && data) {
-      const now = new Date();
-      const today = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-      const { data: memberRows } = await supabase.from('mm_members').select('id').eq('user_id', user.id).limit(1);
-      const { error: balErr } = await supabase.from('mm_transactions').insert({
-        household_id: householdId,
-        account_id:   data.id,
-        member_id:    memberRows?.[0]?.id || null,
-        type:         'income',
-        amount:       balance,
-        date:         today,
-        description:  'Opening Balance',
-        is_recurring: false,
-      });
-      if (balErr) alert('Account saved but opening balance failed: ' + balErr.message);
-    }
+    // Opening balance is stored in mm_accounts.current_balance only.
+    // It's factored into all balance calculations as a starting point.
+    // Do NOT also create a transaction — that would double-count it.
 
     closeAcctModal();
     document.getElementById('new-acct-name').value    = '';
