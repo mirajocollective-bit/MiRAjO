@@ -62,23 +62,23 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:    #14090F;
-      --cie-plum:    #1E0F1C;
-      --cie-navy:    #1B2A4A;
-      --cie-navy-mid:#243356;
-      --cie-crimson: #B82038;
+      --cie-dark:     #0D0D0D;
+      --cie-plum:     #0D0D0D;
+      --cie-navy:     #0D0D0D;
+      --cie-navy-mid: #1A1A1A;
+      --cie-crimson:  #B82038;
       --cie-crimson-lt:#D43A56;
-      --cie-rose:    #D4607A;
-      --cie-rose-lt: #E8879A;
-      --cie-blush:   #FBE8EE;
-      --cie-blush-lt:#FDF3F6;
-      --cie-gold:    #C4A245;
-      --cie-gold-lt: #D9B96A;
-      --cie-cream:   #FDF6F8;
-      --cie-warm:    #F2E4E8;
-      --cie-muted:   #7A6B74;
-      --cie-muted-lt:#B8A0A8;
-      --cie-border:  rgba(184,32,56,0.15);
+      --cie-rose:     #E8547A;
+      --cie-rose-lt:  #F2899E;
+      --cie-blush:    #FFF0F4;
+      --cie-blush-lt: #F8F8F8;
+      --cie-gold:     #C4A245;
+      --cie-gold-lt:  #D9B96A;
+      --cie-cream:    #FFFFFF;
+      --cie-warm:     #F8F8F8;
+      --cie-muted:    #666666;
+      --cie-muted-lt: #999999;
+      --cie-border:   rgba(13,13,13,0.12);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -100,7 +100,7 @@
       align-items: center;
       padding: 18px 40px;
       background: #ffffff;
-      border-bottom: 1px solid rgba(184,32,56,0.12);
+      border-bottom: 1px solid rgba(13,13,13,0.1);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -122,13 +122,13 @@
     }
     .nav-cta:hover { background: var(--cie-crimson-lt); }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--cie-navy); }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--cie-dark); }
     .mobile-menu {
       display: none;
       position: absolute;
       top: 100%; left: 0; right: 0;
       background: #ffffff;
-      border-bottom: 1px solid rgba(184,32,56,0.12);
+      border-bottom: 1px solid rgba(13,13,13,0.1);
       padding: 20px;
       flex-direction: column;
       gap: 16px;
@@ -139,7 +139,7 @@
 
     /* ═══ HERO ═══ */
     .hero {
-      background: linear-gradient(165deg, #14090F 0%, #1E0F1C 45%, #2A1020 100%);
+      background: linear-gradient(165deg, #0D0D0D 0%, #1A0A10 45%, #200D12 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -155,15 +155,15 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 30% 40%, rgba(184,32,56,0.18) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 65%, rgba(212,96,122,0.14) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 40%, rgba(184,32,56,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 65%, rgba(232,84,122,0.14) 0%, transparent 50%);
       pointer-events: none;
     }
     .hero-eyebrow {
       font-size: 11px;
       letter-spacing: 3.5px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--cie-rose-lt);
       font-weight: 600;
       margin-bottom: 28px;
       position: relative;
@@ -172,7 +172,7 @@
       font-family: 'Instrument Serif', serif;
       font-size: clamp(42px, 6vw, 80px);
       font-weight: 400;
-      color: #F5EDD8;
+      color: #FFFFFF;
       line-height: 1.1;
       max-width: 820px;
       margin-bottom: 28px;
@@ -206,7 +206,7 @@
       margin-top: 16px;
       position: relative;
     }
-    .hero-price-line strong { color: var(--cie-cream); }
+    .hero-price-line strong { color: #FFFFFF; }
     .btn-primary {
       display: inline-block;
       padding: 18px 44px;
@@ -251,10 +251,10 @@
       font-weight: 600;
       margin-bottom: 16px;
     }
-    /* Gold eyebrows on dark sections */
+    /* Pink eyebrows on dark sections */
     .truth .section-eyebrow,
     .modules .section-eyebrow,
-    .final-cta .section-eyebrow { color: var(--cie-gold); }
+    .final-cta .section-eyebrow { color: var(--cie-rose); }
     .hero .hero-eyebrow { color: var(--cie-rose-lt); }
     .section-title {
       font-family: 'Instrument Serif', serif;
@@ -280,15 +280,16 @@
       margin-top: 48px;
     }
     .pain-card {
-      background: var(--cie-blush);
+      background: var(--cie-cream);
       border-radius: 12px;
       padding: 28px 32px;
+      border: 1.5px solid var(--cie-border);
       border-left: 3px solid var(--cie-crimson);
     }
     .pain-card p {
       font-size: 16px;
       line-height: 1.75;
-      color: #2A3545;
+      color: #1A1A1A;
       font-style: italic;
       font-family: 'Instrument Serif', serif;
     }
@@ -300,7 +301,7 @@
       text-align: center;
     }
     .truth .section-title { color: var(--cie-cream); }
-    .truth .section-body { color: rgba(245,237,216,0.72); max-width: 660px; margin: 0 auto 0; }
+    .truth .section-body { color: rgba(255,255,255,0.68); max-width: 660px; margin: 0 auto 0; }
     .truth-stat {
       display: flex;
       justify-content: center;
@@ -312,12 +313,12 @@
     .truth-stat-item .num {
       font-family: 'Instrument Serif', serif;
       font-size: 56px;
-      color: var(--cie-gold);
+      color: var(--cie-rose-lt);
       line-height: 1;
     }
     .truth-stat-item .label {
       font-size: 14px;
-      color: rgba(253,246,248,0.78);
+      color: rgba(255,255,255,0.72);
       margin-top: 8px;
       letter-spacing: 0.3px;
     }
@@ -325,6 +326,7 @@
     /* ═══ HOW IT WORKS ═══ */
     .how {
       background: var(--cie-blush-lt);
+      border-top: 1px solid var(--cie-border);
     }
     .how-steps {
       display: grid;
@@ -348,15 +350,15 @@
       width: 88px;
       height: 88px;
       border-radius: 50%;
-      background: var(--cie-navy);
-      color: var(--cie-gold);
+      background: var(--cie-dark);
+      color: #FFFFFF;
       font-family: 'Instrument Serif', serif;
       font-size: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 24px;
-      border: 2px solid rgba(196,162,69,0.25);
+      border: 2px solid rgba(232,84,122,0.35);
     }
     .how-step h3 {
       font-family: 'Instrument Serif', serif;
@@ -385,7 +387,7 @@
       border-radius: 16px;
       padding: 36px;
       background: var(--cie-cream);
-      border: 1px solid rgba(196,162,69,0.2);
+      border: 1.5px solid var(--cie-border);
       position: relative;
       overflow: hidden;
     }
@@ -418,7 +420,7 @@
     .domain-questions {
       margin-top: 16px;
       padding-top: 16px;
-      border-top: 1px solid rgba(196,162,69,0.2);
+      border-top: 1px solid var(--cie-border);
       list-style: none;
     }
     .domain-questions li {
@@ -448,7 +450,7 @@
     .modules .section-title { color: var(--cie-cream); }
     .modules-note {
       font-size: 15px;
-      color: rgba(253,246,248,0.70);
+      color: rgba(255,255,255,0.65);
       margin-top: 12px;
       max-width: 620px;
     }
@@ -463,13 +465,13 @@
       align-items: flex-start;
       gap: 24px;
       padding: 28px 0;
-      border-bottom: 1px solid rgba(196,162,69,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .module-row:last-child { border-bottom: none; }
     .module-num {
       font-family: 'Instrument Serif', serif;
       font-size: 13px;
-      color: var(--cie-gold);
+      color: var(--cie-rose);
       letter-spacing: 1px;
       min-width: 32px;
       padding-top: 3px;
@@ -484,7 +486,7 @@
     }
     .module-info p {
       font-size: 15px;
-      color: rgba(253,246,248,0.72);
+      color: rgba(255,255,255,0.65);
       line-height: 1.65;
     }
     .module-tag {
@@ -498,8 +500,8 @@
       align-self: flex-start;
       margin-top: 4px;
     }
-    .module-tag.foundation { background: rgba(196,162,69,0.15); color: var(--cie-gold); }
-    .module-tag.adaptive   { background: rgba(138,155,184,0.15); color: var(--cie-muted); }
+    .module-tag.foundation { background: rgba(232,84,122,0.12); color: var(--cie-rose); }
+    .module-tag.adaptive   { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); }
 
     /* ═══ WHATS INCLUDED ═══ */
     .included {
@@ -516,7 +518,8 @@
       gap: 18px;
       align-items: flex-start;
       padding: 24px;
-      background: var(--cie-blush);
+      background: var(--cie-cream);
+      border: 1.5px solid var(--cie-border);
       border-radius: 12px;
     }
     .included-icon {
@@ -529,7 +532,7 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    .included-icon svg { width: 20px; height: 20px; stroke: var(--cie-gold); fill: none; stroke-width: 1.8; }
+    .included-icon svg { width: 20px; height: 20px; stroke: #FFFFFF; fill: none; stroke-width: 1.8; }
     .included-item h4 {
       font-size: 15px;
       font-weight: 600;
@@ -544,16 +547,16 @@
 
     /* ═══ PRICING ═══ */
     .pricing {
-      background: var(--cie-blush-lt);
+      background: var(--cie-blush);
       text-align: center;
     }
     .pricing-card {
       max-width: 540px;
       margin: 52px auto 0;
-      background: var(--cie-navy);
+      background: var(--cie-dark);
       border-radius: 20px;
       padding: 56px 48px;
-      border: 1px solid rgba(196,162,69,0.2);
+      border: 1px solid rgba(232,84,122,0.2);
       position: relative;
       overflow: hidden;
     }
@@ -569,7 +572,7 @@
       font-size: 11px;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--cie-rose);
       font-weight: 600;
       margin-bottom: 24px;
     }
@@ -593,9 +596,9 @@
     }
     .pricing-features li {
       font-size: 15px;
-      color: var(--cie-cream);
+      color: #FFFFFF;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(196,162,69,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -606,13 +609,13 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: rgba(196,162,69,0.15);
-      border: 1.5px solid var(--cie-gold);
+      background: rgba(232,84,122,0.12);
+      border: 1.5px solid var(--cie-rose);
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23C4A245' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23E8547A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: center;
     }
@@ -689,23 +692,23 @@
 
     /* ═══ FINAL CTA ═══ */
     .final-cta {
-      background: linear-gradient(160deg, #14090F 0%, #1E0F1C 60%, #2A1020 100%);
+      background: var(--cie-dark);
       text-align: center;
       color: var(--cie-cream);
     }
     .final-cta .section-title { color: var(--cie-cream); max-width: 680px; margin: 0 auto 24px; }
-    .final-cta .section-body { color: var(--cie-muted-lt); max-width: 520px; margin: 0 auto 48px; }
+    .final-cta .section-body { color: rgba(255,255,255,0.65); max-width: 520px; margin: 0 auto 48px; }
 
     /* ═══ FOOTER ═══ */
     footer {
-      background: var(--cie-navy);
+      background: #0D0D0D;
       padding: 40px;
       text-align: center;
-      border-top: 1px solid rgba(196,162,69,0.1);
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
     footer p { font-size: 13px; color: var(--cie-muted); }
     footer a { color: var(--cie-muted); text-decoration: none; }
-    footer a:hover { color: var(--cie-cream); }
+    footer a:hover { color: #FFFFFF; }
 
     /* ═══ SOCIAL BAR ═══ */
     .social-bar {
@@ -721,15 +724,15 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(15,23,41,0.85);
-      border: 1px solid rgba(196,162,69,0.25);
+      background: rgba(13,13,13,0.88);
+      border: 1px solid rgba(255,255,255,0.14);
       display: flex;
       align-items: center;
       justify-content: center;
       transition: background 0.2s, border-color 0.2s;
       text-decoration: none;
     }
-    .social-bar a:hover { background: var(--cie-dark); border-color: var(--cie-gold); }
+    .social-bar a:hover { background: #0D0D0D; border-color: var(--cie-rose); }
     .social-bar svg { width: 17px; height: 17px; fill: var(--cie-cream); }
 
     /* ═══ RESPONSIVE ═══ */
@@ -785,12 +788,9 @@
       <em>Keep the relationship.</em>
     </h1>
     <p class="hero-sub" data-aos="fade-up" data-aos-delay="160">
-      You want the business to succeed. You want the relationship to survive it. Couples in Entrepreneurship is the framework for both.
+      Each partner answers a private scenario-based diagnostic. When both of you finish, a shared report reveals exactly where you align and where you do not. The course unlocks around your specific gaps. Nothing is generic. Everything is built from the two of you.
     </p>
-    <div class="hero-img" data-aos="fade-up" data-aos-delay="220">
-      <img src="/img/couplesmoney.webp" alt="Couples in Entrepreneurship" loading="lazy">
-    </div>
-    <button class="btn-primary" onclick="startCheckout()" data-aos="fade-up" data-aos-delay="280">Enroll Both Partners</button>
+    <button class="btn-primary" onclick="startCheckout()" data-aos="fade-up" data-aos-delay="220">Enroll Both Partners</button>
     <p class="hero-price-line" data-aos="fade-up" data-aos-delay="320"><strong>$997</strong> one-time payment. Lifetime access for both partners.</p>
   </section>
 
@@ -822,20 +822,45 @@
       <p class="section-eyebrow" data-aos="fade-up">The truth</p>
       <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">This is not a relationship problem.<br>It is an alignment problem.</h2>
       <p class="section-body" data-aos="fade-up" data-aos-delay="120">
-        The strongest businesses have aligned founders. When those founders also share a life, the stakes are higher and the cost of misalignment is double. Couples in Entrepreneurship is not therapy. It is infrastructure for couples who are building something serious and refuse to do it at the expense of each other.
+        The strongest businesses have aligned founders. When those founders also share a life, the stakes are higher and the cost of misalignment is double. Couples in Entrepreneurship is not therapy. It does not ask you to talk about your feelings in a group. It is a private, data-driven process built for two people who are serious about what they are building and serious about who they are building it with.
       </p>
       <div class="truth-stat" data-aos="fade-up" data-aos-delay="180">
         <div class="truth-stat-item">
-          <div class="num">4</div>
-          <div class="label">Domains assessed:<br>Money, Business,<br>Family, Relationship</div>
+          <div class="num">32</div>
+          <div class="label">Real scenarios across<br>Business, Finances,<br>Family, Relationship</div>
         </div>
         <div class="truth-stat-item">
           <div class="num">2</div>
-          <div class="label">Partners enter<br>individually, privately</div>
+          <div class="label">Partners answer<br>privately with no<br>influence from each other</div>
         </div>
         <div class="truth-stat-item">
           <div class="num">1</div>
-          <div class="label">Shared report that<br>shows you the truth</div>
+          <div class="label">Shared report that<br>shows both perspectives<br>side by side</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOT LIKE ANYTHING ELSE -->
+  <section style="background:#0D0D0D;padding:72px 40px;border-top:1px solid rgba(255,255,255,0.06);">
+    <div class="container-sm" style="text-align:center;">
+      <p class="section-eyebrow" style="color:var(--cie-rose);margin-bottom:20px;" data-aos="fade-up">What makes this different</p>
+      <h2 class="section-title" style="color:#FFFFFF;max-width:640px;margin:0 auto 20px;" data-aos="fade-up" data-aos-delay="60">This is not therapy. It is not coaching. It is not a retreat.</h2>
+      <p style="font-size:17px;color:rgba(255,255,255,0.65);line-height:1.8;max-width:580px;margin:0 auto 56px;" data-aos="fade-up" data-aos-delay="100">
+        It is a diagnostic that reads the actual shape of your partnership, a report you open together, and a course that works on what the report found. Nothing is assigned before you answer. Nothing is built for someone else's relationship.
+      </p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:820px;margin:0 auto;" class="founding-creds" data-aos="fade-up" data-aos-delay="140">
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(232,84,122,0.18);border-radius:14px;padding:28px 24px;text-align:left;">
+          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--cie-rose);font-weight:700;margin-bottom:14px;">Not a quiz</div>
+          <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.75;">You read real scenarios. Situations that actually happen inside couples-run businesses. You choose how you see them. Your partner sees nothing until the report is ready.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(232,84,122,0.18);border-radius:14px;padding:28px 24px;text-align:left;">
+          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--cie-rose);font-weight:700;margin-bottom:14px;">Not a generic program</div>
+          <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.75;">The course you work through is built from your report. Couples who are mostly aligned move faster. Couples with real gaps across every domain get the full course. It is different for every pair.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(232,84,122,0.18);border-radius:14px;padding:28px 24px;text-align:left;">
+          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--cie-rose);font-weight:700;margin-bottom:14px;">Not just for couples in crisis</div>
+          <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.75;">Most couples who go through this are not falling apart. They are building something real and they want to do it right. The report shows them where they are solid and where the cracks are forming before they become problems.</p>
         </div>
       </div>
     </div>
@@ -850,22 +875,22 @@
         <div class="how-step" data-aos="fade-up" data-aos-delay="60">
           <div class="how-step-num">1</div>
           <h3>Your Individual Profile</h3>
-          <p>Each partner builds their own private profile — your background, family structure, business stage, financial picture, and what you are each hoping to walk away with. Five minutes. Yours alone.</p>
+          <p>Each partner builds a private profile covering your background, family structure, business stage, financial picture, and what you are personally hoping to get out of this. Five minutes. Yours alone. Your partner does theirs separately.</p>
         </div>
         <div class="how-step" data-aos="fade-up" data-aos-delay="120">
           <div class="how-step-num">2</div>
           <h3>The Partnership Diagnostic</h3>
-          <p>Each partner completes a private assessment across four domains — Business, Finances, Family, and Relationship. Your partner cannot see your answers. Honest answers only.</p>
+          <p>Each partner reads real scenarios across Business, Finances, Family, and Relationship. Not a rating scale. Actual situations that happen in couples-run businesses. You choose how you see them. Your partner sees nothing until the report is ready.</p>
         </div>
         <div class="how-step" data-aos="fade-up" data-aos-delay="200">
           <div class="how-step-num">3</div>
           <h3>The Partnership Report</h3>
-          <p>Once both partners finish, your report generates automatically. It shows exactly where you are aligned and where you are not — including a snapshot of both your profiles side by side. You open it together.</p>
+          <p>Once both of you submit, the report generates automatically. It shows each partner's perspective side by side across every domain, where you see things the same and where you do not. You open it together. That conversation is the beginning of the work.</p>
         </div>
         <div class="how-step" data-aos="fade-up" data-aos-delay="280">
           <div class="how-step-num">4</div>
           <h3>Your Joint Course Path</h3>
-          <p>A course built around your actual gaps. If you are mostly aligned, you move faster. If everything needs work, the full course unlocks. Either way, it is yours.</p>
+          <p>The modules that unlock are driven by your report. Strong in finances, not in relationship? You skip what you do not need and go deep where it matters. The course works for your specific gaps, not a template built for someone else.</p>
         </div>
       </div>
     </div>
@@ -880,41 +905,41 @@
         <div class="domain-card business" data-aos="fade-up" data-aos-delay="80">
           <div class="domain-icon">📈</div>
           <h3>Business</h3>
-          <p>You can love the same business and have completely different visions for where it is going. The Diagnostic surfaces that before it costs you.</p>
+          <p>You can love the same business and have completely different visions for where it is going. The scenarios in this domain surface that before it costs you: how decisions get made, who is carrying what, and whether both of you feel like you have a real seat at the table.</p>
           <ul class="domain-questions">
-            <li>Where do you see the business in three years?</li>
-            <li>How are decisions made and do you feel heard?</li>
-            <li>Is your current role working for you?</li>
+            <li>Do you both see the same long-term vision?</li>
+            <li>How does one partner's strength become the other's silence?</li>
+            <li>When one person does more, does the other know?</li>
           </ul>
         </div>
         <div class="domain-card relationship" data-aos="fade-up" data-aos-delay="120">
           <div class="domain-icon">🤝</div>
           <h3>Relationship</h3>
-          <p>Intimacy, connection, and faith are not soft topics. They are the foundation. When the business is hard, this is what holds or breaks.</p>
+          <p>Intimacy, connection, and shared values are not soft topics. They are the foundation of everything. This domain looks at what happens to the relationship when the business gets louder and whether both partners are even aware of it.</p>
           <ul class="domain-questions">
-            <li>How has intimacy shifted since you started building?</li>
-            <li>Do you have a shared faith or spiritual practice?</li>
-            <li>Do you feel like partners first or co-founders first?</li>
+            <li>Does the business feel more important than the relationship?</li>
+            <li>Are you filling in gaps about what your partner believes?</li>
+            <li>When did you stop choosing each other first?</li>
           </ul>
         </div>
         <div class="domain-card money" data-aos="fade-up" data-aos-delay="160">
           <div class="domain-icon">💰</div>
-          <h3>Money</h3>
-          <p>Money is the most common source of tension in business partnerships. Not because of the numbers, but because of what the numbers mean to each person.</p>
+          <h3>Finances</h3>
+          <p>The tension is rarely about the numbers. It is about what the numbers mean to each person. This domain reads how both partners think about money, what they do when things are tight, and what they do when there is more than expected.</p>
           <ul class="domain-questions">
-            <li>Who manages the finances and is that working?</li>
-            <li>How much do you reinvest versus take home?</li>
-            <li>What does financial security actually mean to you?</li>
+            <li>What happens when there is surplus and no agreement on how to use it?</li>
+            <li>Who holds the financial anxiety and who holds the financial decisions?</li>
+            <li>What does financial security actually mean to each of you?</li>
           </ul>
         </div>
         <div class="domain-card family" data-aos="fade-up" data-aos-delay="200">
           <div class="domain-icon">🏡</div>
           <h3>Family</h3>
-          <p>Home life does not pause for the business. When it is uneven, the resentment builds quietly and then loudly. This domain names it.</p>
+          <p>Home life does not pause for the business. When the load is uneven, the resentment builds quietly and then loudly. This domain names it, including the dynamics that come with blended families, young children, and different ideas about what home is supposed to feel like.</p>
           <ul class="domain-questions">
-            <li>How are home responsibilities divided?</li>
-            <li>Does the business take too much from family time?</li>
-            <li>Where is the friction in your daily home life?</li>
+            <li>Who is carrying the home and is that the agreement you both agreed to?</li>
+            <li>How does your family structure shape what you each need from this business?</li>
+            <li>What are you each protecting your kids from without telling the other?</li>
           </ul>
         </div>
       </div>
@@ -1008,7 +1033,7 @@
           </div>
           <div>
             <h4>Individual Partner Profiles</h4>
-            <p>Each partner builds a private profile — cultural background, family structure, business stage, financial picture, and personal goals. Yours alone, surfaced together in your report.</p>
+            <p>Each partner builds a private profile covering cultural background, family structure, business stage, financial picture, and personal goals. Yours alone, surfaced together in your report.</p>
           </div>
         </div>
         <div class="included-item" data-aos="fade-up" data-aos-delay="100">
@@ -1070,41 +1095,41 @@
   </section>
 
   <!-- FROM THE CREATOR -->
-  <section style="background:var(--cie-navy);padding:100px 40px;text-align:center;" data-aos="fade-up">
+  <section style="background:#0D0D0D;padding:100px 40px;text-align:center;" data-aos="fade-up">
     <div class="container-sm">
-      <p class="section-eyebrow" style="color:var(--cie-gold);">From the Creator</p>
-      <h2 class="section-title" style="color:var(--cie-cream);max-width:600px;margin-left:auto;margin-right:auto;">I built this course<br><em style="color:var(--cie-rose-lt);font-style:italic;">because I lived the problem.</em></h2>
+      <p class="section-eyebrow" style="color:var(--cie-rose);">From the Creator</p>
+      <h2 class="section-title" style="color:#FFFFFF;max-width:600px;margin-left:auto;margin-right:auto;">I built this course<br><em style="color:var(--cie-rose-lt);font-style:italic;">because I lived the problem.</em></h2>
 
       <!-- Miranda's testimonial -->
-      <div style="max-width:720px;margin:0 auto 64px;background:rgba(255,255,255,0.04);border:1px solid rgba(196,162,69,0.2);border-radius:20px;padding:48px 56px;text-align:left;" data-aos="fade-up" data-aos-delay="80">
-        <div style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,30px);color:var(--cie-cream);line-height:1.6;font-style:italic;margin-bottom:32px;">
+      <div style="max-width:720px;margin:0 auto 64px;background:rgba(255,255,255,0.04);border:1px solid rgba(232,84,122,0.18);border-radius:20px;padding:48px 56px;text-align:left;" data-aos="fade-up" data-aos-delay="80">
+        <div style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,30px);color:#FFFFFF;line-height:1.6;font-style:italic;margin-bottom:32px;">
           "We were in competition with each other, forgetting we were both working toward the same shared goals. It looked like divorce and missed opportunities to bond and comfort each other. We were not aligned on how long we wanted to stay in the business together, or what each person's individual goals even were."
         </div>
         <div style="display:flex;align-items:center;gap:16px;">
-          <img src="img/Miranda J- Headshot.jpeg" alt="Miranda Johnson" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid rgba(196,162,69,0.4);">
+          <img src="img/Miranda J- Headshot.jpeg" alt="Miranda Johnson" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid rgba(232,84,122,0.4);">
           <div>
-            <div style="font-size:15px;font-weight:600;color:var(--cie-cream);">Miranda Johnson</div>
-            <div style="font-size:12px;color:rgba(253,246,248,0.4);letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Creator — Couples in Entrepreneurship</div>
+            <div style="font-size:15px;font-weight:600;color:#FFFFFF;">Miranda Johnson</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.38);letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Creator, Couples in Entrepreneurship</div>
           </div>
         </div>
       </div>
 
       <!-- Credentials -->
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;" class="founding-creds">
-        <div style="background:rgba(245,237,216,0.05);border:1px solid rgba(196,162,69,0.2);border-radius:16px;padding:32px 24px;">
-          <div style="font-family:'Instrument Serif',serif;font-size:48px;color:var(--cie-gold);opacity:0.5;line-height:1;margin-bottom:10px;">20</div>
-          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(253,246,248,0.4);margin-bottom:12px;">Years</p>
-          <p style="font-size:14px;color:rgba(253,246,248,0.65);line-height:1.75;">Two decades building businesses, raising five daughters, and rebuilding herself when life required it. This course came from living both sides of the equation.</p>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px 24px;">
+          <div style="font-family:'Instrument Serif',serif;font-size:48px;color:var(--cie-rose-lt);line-height:1;margin-bottom:10px;">20</div>
+          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:12px;">Years</p>
+          <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;">Two decades building businesses, raising five daughters, and rebuilding herself when life required it. This course came from living both sides of the equation.</p>
         </div>
-        <div style="background:rgba(245,237,216,0.05);border:1px solid rgba(196,162,69,0.2);border-radius:16px;padding:32px 24px;">
-          <div style="font-family:'Instrument Serif',serif;font-size:48px;color:var(--cie-gold);opacity:0.5;line-height:1;margin-bottom:10px;">2</div>
-          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(253,246,248,0.4);margin-bottom:12px;">Published Books</p>
-          <p style="font-size:14px;color:rgba(253,246,248,0.65);line-height:1.75;"><em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>. Miranda has been studying and writing the framework she now teaches.</p>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px 24px;">
+          <div style="font-family:'Instrument Serif',serif;font-size:48px;color:var(--cie-rose-lt);line-height:1;margin-bottom:10px;">2</div>
+          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:12px;">Published Books</p>
+          <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;"><em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>. Miranda has been studying and writing the framework she now teaches.</p>
         </div>
-        <div style="background:rgba(245,237,216,0.05);border:1px solid rgba(196,162,69,0.2);border-radius:16px;padding:32px 24px;">
-          <div style="font-family:'Instrument Serif',serif;font-size:48px;color:var(--cie-gold);opacity:0.5;line-height:1;margin-bottom:10px;">$997</div>
-          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(253,246,248,0.4);margin-bottom:12px;">For Both Partners</p>
-          <p style="font-size:14px;color:rgba(253,246,248,0.65);line-height:1.75;">One purchase covers both of you. Individual business coaching at this level runs $200–$500 per session. This is the course equivalent for the two of you, together.</p>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px 24px;">
+          <div style="font-family:'Instrument Serif',serif;font-size:48px;color:var(--cie-rose-lt);line-height:1;margin-bottom:10px;">$997</div>
+          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:12px;">For Both Partners</p>
+          <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;">One purchase covers both of you. Individual business coaching at this level runs $200 to $500 per session. This is the course equivalent for the two of you, together.</p>
         </div>
       </div>
     </div>
@@ -1134,9 +1159,9 @@
       <p class="section-eyebrow" data-aos="fade-up">Enrollment</p>
       <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">One investment. Both of you, for the long haul.</h2>
       <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="pricing-badge">Founding Cohort — Closes May 15</div>
+        <div class="pricing-badge">Founding Cohort. Closes May 15.</div>
         <div class="pricing-amount"><span>$</span>997</div>
-        <p class="pricing-note">One-time payment. Lifetime access for both partners.<br><span style="color:var(--cie-rose);font-size:12px;">Price increases to $1,197 after May 15.</span></p>
+        <p class="pricing-note">One-time payment. Lifetime access for both partners.<br><span style="color:var(--cie-rose);font-size:12px;">Price increases after the founding cohort closes May 15.</span></p>
         <ul class="pricing-features">
           <li>The Partnership Diagnostic for each partner</li>
           <li>Your Partnership Report, auto-generated</li>
@@ -1147,7 +1172,7 @@
         </ul>
         <button class="btn-primary" onclick="startCheckout()" style="width:100%;justify-content:center;display:block;text-align:center;">Enroll Both Partners</button>
         <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cie-gold)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cie-rose)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <span style="font-size:13px;color:var(--cie-muted);">3-day satisfaction guarantee &nbsp;·&nbsp; Questions? <a href="mailto:programs@mirajoco.org" style="color:var(--cie-muted);text-decoration:underline;">programs@mirajoco.org</a></span>
         </div>
       </div>
@@ -1211,10 +1236,10 @@
     <div class="container-sm">
       <p class="section-eyebrow" data-aos="fade-up">Ready?</p>
       <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">Most couples wait until the business breaks the relationship to ask for help. You do not have to.</h2>
-      <p class="section-body" data-aos="fade-up" data-aos-delay="120">This is the course for couples who are serious about what they are building and who they are building it with.</p>
+      <p class="section-body" data-aos="fade-up" data-aos-delay="120">Enroll. Both of you build your profiles. Both of you take the diagnostic privately. Your report generates automatically. From there, the course works on what the report actually found. That is the whole product. No fluff. No filler. No content built for someone else's relationship.</p>
       <button class="btn-primary" onclick="startCheckout()" data-aos="fade-up" data-aos-delay="180">Enroll Both Partners</button>
       <p style="margin-top:16px;font-size:14px;color:var(--cie-muted);" data-aos="fade-up" data-aos-delay="220">$997 one-time. Lifetime access. Both partners included.</p>
-      <p style="margin-top:32px;font-size:14px;color:rgba(253,246,248,0.45);" data-aos="fade-up" data-aos-delay="260">Not ready to commit? <a href="/couples-scorecard" style="color:var(--cie-rose-lt);text-decoration:underline;">Take the free Couples Alignment Scorecard first →</a></p>
+      <p style="margin-top:32px;font-size:14px;color:rgba(255,255,255,0.45);" data-aos="fade-up" data-aos-delay="260">Not ready yet? <a href="/couples-scorecard" style="color:var(--cie-rose-lt);text-decoration:underline;">Take the free Couples Alignment Scorecard first</a></p>
     </div>
   </section>
 
@@ -1323,15 +1348,15 @@
   </script>
 
 <!-- ═══ DISCOUNT POP-UP ═══ -->
-<div id="discount-popup" style="display:none;position:fixed;inset:0;background:rgba(20,9,15,0.8);z-index:9999;align-items:center;justify-content:center;padding:24px;">
-  <div style="background:linear-gradient(160deg,#14090F,#2A0F1A);border:1px solid rgba(184,32,56,0.25);border-radius:20px;padding:48px 40px;max-width:420px;width:100%;text-align:center;position:relative;">
+<div id="discount-popup" style="display:none;position:fixed;inset:0;background:rgba(13,13,13,0.85);z-index:9999;align-items:center;justify-content:center;padding:24px;">
+  <div style="background:#0D0D0D;border:1.5px solid rgba(232,84,122,0.25);border-radius:20px;padding:48px 40px;max-width:420px;width:100%;text-align:center;position:relative;">
     <button onclick="closePopup()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;line-height:1;">&times;</button>
-    <div style="display:inline-block;background:rgba(196,162,69,0.15);border:1px solid rgba(196,162,69,0.4);color:#C4A245;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;">Limited Offer</div>
-    <h2 style="font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;color:#fff;margin-bottom:12px;line-height:1.3;">Build together for <em style="color:#C4A245;">$150 less.</em></h2>
-    <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:28px;">Couples in Entrepreneurship — one purchase, both partners included. Diagnostic, report, and adaptive course path built around your real gaps.</p>
+    <div style="display:inline-block;background:rgba(232,84,122,0.12);border:1px solid rgba(232,84,122,0.4);color:var(--cie-rose);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;">Limited Offer</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;color:#fff;margin-bottom:12px;line-height:1.3;">Build together for <em style="color:var(--cie-rose);">$150 less.</em></h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:28px;">One purchase, both partners included. Diagnostic, report, and adaptive course path built around your real gaps.</p>
     <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:24px;">
       <span style="font-size:16px;color:rgba(255,255,255,0.3);text-decoration:line-through;">$997</span>
-      <span style="font-size:32px;font-weight:700;color:#C4A245;">$847</span>
+      <span style="font-size:32px;font-weight:700;color:var(--cie-rose);">$847</span>
     </div>
     <button id="popup-enroll-btn" onclick="enrollWithPopupDiscount()" style="width:100%;padding:16px;background:#B82038;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:opacity 0.2s;">Claim $150 Off</button>
     <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:14px;">Discount applied automatically at checkout</p>
