@@ -670,21 +670,19 @@
     .faq-nav-btn { background: transparent; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
 
     /* ── Emoji picker ── */
-    .desc-row { display: flex; gap: 8px; align-items: flex-start; }
+    .desc-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; }
     .emoji-btn {
       flex-shrink: 0; width: 44px; height: 44px; border: 1px solid var(--border);
       border-radius: 10px; background: var(--soft-white); cursor: pointer;
       font-size: 20px; display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s, background 0.2s; position: relative;
+      transition: border-color 0.2s, background 0.2s;
     }
     .emoji-btn:hover { border-color: var(--living-green); background: rgba(37,107,66,0.05); }
     .emoji-btn.has-emoji { border-color: var(--living-green); background: rgba(37,107,66,0.07); }
-    .emoji-picker-wrap { position: relative; flex-shrink: 0; }
     .emoji-picker {
-      display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 400;
-      background: #fff; border-radius: 14px; padding: 12px;
-      box-shadow: 0 8px 32px rgba(18,32,18,0.16); border: 1px solid var(--border);
-      width: 264px;
+      display: none;
+      background: var(--soft-white); border-radius: 12px; padding: 12px;
+      border: 1px solid var(--border); margin-top: 2px; margin-bottom: 4px;
     }
     .emoji-picker.open { display: block; }
     .emoji-picker-label {
@@ -699,15 +697,15 @@
       border-radius: 7px; text-align: center; line-height: 1;
       transition: background 0.12s;
     }
-    .emoji-picker-grid span:hover { background: rgba(37,107,66,0.1); }
-    .emoji-picker-grid span.selected { background: rgba(37,107,66,0.15); outline: 1px solid var(--living-green); border-radius: 6px; }
+    .emoji-picker-grid span:hover { background: rgba(37,107,66,0.12); }
+    .emoji-picker-grid span.selected { background: rgba(37,107,66,0.18); outline: 1px solid var(--living-green); border-radius: 6px; }
     .emoji-clear {
       margin-top: 8px; width: 100%; padding: 7px; border: 1px solid var(--border);
-      border-radius: 8px; background: transparent; font-size: 12px; font-weight: 600;
+      border-radius: 8px; background: #fff; font-size: 12px; font-weight: 600;
       color: var(--neutral); cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
       transition: background 0.15s;
     }
-    .emoji-clear:hover { background: var(--soft-white); }
+    .emoji-clear:hover { background: rgba(18,32,18,0.04); }
 
     /* ── Responsive ── */
     @media (max-width: 1200px) {
@@ -987,22 +985,20 @@
     <div class="form-group">
       <label class="form-label">Icon &amp; Description</label>
       <div class="desc-row">
-        <div class="emoji-picker-wrap">
-          <button type="button" class="emoji-btn" id="emoji-btn" onclick="toggleEmojiPicker(event)" title="Pick an icon">😊</button>
-          <div class="emoji-picker" id="emoji-picker">
-            <span class="emoji-picker-label">Pick an icon</span>
-            <div class="emoji-picker-grid" id="emoji-picker-grid">
-              <span>💰</span><span>💵</span><span>💳</span><span>🏦</span><span>📈</span><span>📉</span><span>🎯</span><span>🏠</span>
-              <span>🏡</span><span>🚗</span><span>🚙</span><span>✈️</span><span>🍽️</span><span>🛒</span><span>🛍️</span><span>☕</span>
-              <span>💻</span><span>📱</span><span>📺</span><span>🎬</span><span>🎵</span><span>🎮</span><span>📚</span><span>🏥</span>
-              <span>💊</span><span>💪</span><span>🐾</span><span>👶</span><span>🎓</span><span>🧾</span><span>📋</span><span>💡</span>
-              <span>🔌</span><span>🌊</span><span>🔥</span><span>🎁</span><span>🎂</span><span>🌿</span><span>🏖️</span><span>⛽</span>
-              <span>🚿</span><span>🧺</span><span>🔧</span><span>🪴</span><span>🏋️</span><span>✂️</span><span>🧹</span><span>🤝</span>
-            </div>
-            <button class="emoji-clear" onclick="clearEmoji()">Remove icon</button>
-          </div>
-        </div>
+        <button type="button" class="emoji-btn" id="emoji-btn" onclick="toggleEmojiPicker(event)" title="Pick an icon">😊</button>
         <input type="text" class="form-input" id="txn-desc" placeholder="e.g. Rent, Paycheck, Groceries" style="flex:1">
+      </div>
+      <div class="emoji-picker" id="emoji-picker">
+        <span class="emoji-picker-label">Pick an icon</span>
+        <div class="emoji-picker-grid" id="emoji-picker-grid">
+          <span>💰</span><span>💵</span><span>💳</span><span>🏦</span><span>📈</span><span>📉</span><span>🎯</span><span>🏠</span>
+          <span>🏡</span><span>🚗</span><span>🚙</span><span>✈️</span><span>🍽️</span><span>🛒</span><span>🛍️</span><span>☕</span>
+          <span>💻</span><span>📱</span><span>📺</span><span>🎬</span><span>🎵</span><span>🎮</span><span>📚</span><span>🏥</span>
+          <span>💊</span><span>💪</span><span>🐾</span><span>👶</span><span>🎓</span><span>🧾</span><span>📋</span><span>💡</span>
+          <span>🔌</span><span>🌊</span><span>🔥</span><span>🎁</span><span>🎂</span><span>🌿</span><span>🏖️</span><span>⛽</span>
+          <span>🚿</span><span>🧺</span><span>🔧</span><span>🪴</span><span>🏋️</span><span>✂️</span><span>🧹</span><span>🤝</span>
+        </div>
+        <button class="emoji-clear" onclick="clearEmoji()">Remove icon</button>
       </div>
     </div>
     <div class="form-row">
@@ -1277,13 +1273,6 @@
     document.getElementById('emoji-picker').classList.remove('open');
   });
 
-  // Close emoji picker when clicking outside
-  document.addEventListener('click', e => {
-    const wrap = document.querySelector('.emoji-picker-wrap');
-    if (wrap && !wrap.contains(e.target)) {
-      document.getElementById('emoji-picker')?.classList.remove('open');
-    }
-  });
 
   // Account type colors
   const ACCT_COLORS = {
