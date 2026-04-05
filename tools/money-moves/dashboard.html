@@ -881,6 +881,11 @@
           <button class="cal-view-btn active" id="btn-calendar" onclick="setView('calendar')">Calendar</button>
           <button class="cal-view-btn" id="btn-forecast" onclick="setView('forecast')">Forecast</button>
         </div>
+        <div class="cal-view-toggle" style="margin-left:8px;" title="How entries appear on the calendar">
+          <button class="cal-view-btn active" id="btn-display-both"  onclick="setEntryDisplay('both')">😊 Name</button>
+          <button class="cal-view-btn"        id="btn-display-emoji" onclick="setEntryDisplay('emoji')">😊</button>
+          <button class="cal-view-btn"        id="btn-display-name"  onclick="setEntryDisplay('name')">Name</button>
+        </div>
       </div>
       <div class="cal-nav">
         <button class="cal-nav-btn" title="Previous year" onclick="changeYear(-1)">&#171;</button>
@@ -1234,6 +1239,7 @@
   let editingRecurScope = null; // 'one' | 'future' | 'all' — set when recurring scope chosen
   let modalSnapshot   = null;   // field values when modal opened, for change detection
   let selectedEmoji   = '';     // emoji icon for current transaction
+  let entryDisplay    = localStorage.getItem('mm_entry_display') || 'both'; // 'both' | 'emoji' | 'name'
 
   // ── Emoji helpers ────────────────────────────────────────────────────────────
   const EMOJI_RE = /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/u;
@@ -1263,6 +1269,21 @@
     e.stopPropagation();
     document.getElementById('emoji-picker').classList.toggle('open');
   }
+
+  // ── Entry display mode ───────────────────────────────────────────────────────
+  window.setEntryDisplay = function (mode) {
+    entryDisplay = mode;
+    localStorage.setItem('mm_entry_display', mode);
+    ['both','emoji','name'].forEach(m => {
+      document.getElementById(`btn-display-${m}`)?.classList.toggle('active', m === mode);
+    });
+    renderCalendar();
+  };
+
+  // Init display toggle state
+  ['both','emoji','name'].forEach(m => {
+    document.getElementById(`btn-display-${m}`)?.classList.toggle('active', m === entryDisplay);
+  });
 
   // Wire up emoji grid clicks (DOM already ready — script is at bottom of body)
   document.getElementById('emoji-picker-grid').addEventListener('click', e => {
@@ -1636,11 +1657,17 @@
         const displayT = exc ? { ...t, amount: exc.amount ?? t.amount, description: exc.description ?? t.description } : t;
 
         const incoming = displayT.type === 'transfer' && displayT.transfer_to_account_id === selectedAccountId;
-        const prefix = displayT.type === 'income' ? '+' : incoming ? '←' : displayT.type === 'transfer' ? '→' : '-';
+        const sign = displayT.type === 'income' ? '+' : incoming ? '←' : displayT.type === 'transfer' ? '→' : '-';
+        const { emoji: txnEmoji, text: txnName } = parseEmojiFromDesc(displayT.description);
+        const amt = `${sign}$${Number(displayT.amount).toFixed(0)}`;
+        let entryLabel;
+        if (entryDisplay === 'emoji')      entryLabel = txnEmoji ? `${txnEmoji} ${amt}` : amt;
+        else if (entryDisplay === 'name')  entryLabel = txnName  ? `${amt} ${txnName}`  : amt;
+        else                               entryLabel = txnEmoji ? `${txnEmoji} ${amt}${txnName ? ' ' + txnName : ''}` : `${amt}${txnName ? ' ' + txnName : ''}`;
 
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${incoming ? 'income' : displayT.type}`;
-        entry.textContent = `${prefix}$${Number(displayT.amount).toFixed(0)} ${displayT.description || ''}`;
+        entry.textContent = entryLabel;
         entry.title = 'Click to edit';
         entry.addEventListener('click', (e) => {
           e.stopPropagation();
