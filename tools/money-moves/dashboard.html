@@ -1247,7 +1247,7 @@
     return m ? { emoji: m[1], text: desc.slice(m[0].length) } : { emoji: '', text: desc || '' };
   }
 
-  function setEmoji(emoji) {
+  window.setEmoji = function setEmoji(emoji) {
     selectedEmoji = emoji;
     const btn = document.getElementById('emoji-btn');
     btn.textContent = emoji || '😊';
@@ -1258,12 +1258,12 @@
     });
   }
 
-  function clearEmoji() {
+  window.clearEmoji = function clearEmoji() {
     setEmoji('');
     document.getElementById('emoji-picker').classList.remove('open');
   }
 
-  function toggleEmojiPicker(e) {
+  window.toggleEmojiPicker = function toggleEmojiPicker(e) {
     e.stopPropagation();
     document.getElementById('emoji-picker').classList.toggle('open');
   }
