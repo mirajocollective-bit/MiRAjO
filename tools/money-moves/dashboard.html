@@ -1450,6 +1450,34 @@
   </div>
 </div>
 
+<!-- Remove Account Confirmation Modal -->
+<div class="modal-overlay" id="remove-acct-overlay" style="display:none;z-index:310">
+  <div class="modal" style="max-width:420px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:rgba(192,57,43,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚠️</div>
+      <div>
+        <div class="modal-title" style="margin-bottom:2px;color:#C0392B">Remove Account</div>
+        <div style="font-size:12px;color:var(--neutral)" id="remove-acct-subtitle">This action is permanent.</div>
+      </div>
+    </div>
+    <div style="background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.15);border-radius:12px;padding:14px 16px;margin-bottom:18px">
+      <div style="font-size:13px;font-weight:700;color:var(--deep-forest);margin-bottom:6px" id="remove-acct-name-display">—</div>
+      <div style="font-size:12px;color:var(--neutral);line-height:1.6">Removing this account will <strong style="color:#C0392B">hide all of its transactions</strong> from your calendar and reports. Your data is kept in case you need to restore it, but you won't see it again without contacting support.</div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button onclick="document.getElementById('remove-acct-overlay').style.display='none'" style="flex:1;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;color:var(--neutral)">Cancel</button>
+      <button id="remove-acct-confirm-btn" onclick="confirmRemoveAccount()" style="flex:1;padding:12px;background:#C0392B;border:none;border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#fff">Yes, Remove Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- Account context menu -->
+<div id="acct-ctx-menu" style="display:none;position:fixed;z-index:400;background:#fff;border:1px solid rgba(18,32,18,0.1);border-radius:12px;box-shadow:0 8px 32px rgba(18,32,18,0.18);padding:6px;min-width:160px">
+  <button id="acct-ctx-remove" onclick="openRemoveAccountModal()" style="width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#C0392B;text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px">
+    <span>🗑</span> Remove Account
+  </button>
+</div>
+
 <!-- Add Account Modal -->
 <div class="modal-overlay" id="acct-modal-overlay" onclick="closeAcctModalOutside(event)">
   <div class="modal acct-modal">
@@ -1710,22 +1738,21 @@
       const balance = acctRunningBalance[acct.id] ?? 0;
       netWorth += balance;
 
+      const fmtBal = `${balance >= 0 ? '' : '-'}$${Math.abs(balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       const tab = document.createElement('div');
       tab.className = `account-tab${acct.id === selectedAccountId ? ' active' : ''}`;
-      tab.dataset.id = acct.id;
+      tab.dataset.id  = acct.id;
+      tab.dataset.name = acct.name;
+      tab.dataset.bal  = fmtBal;
       tab.innerHTML = `
         <div class="account-tab-top">
           <div class="account-dot" style="background:${color}"></div>
           <div class="account-tab-name">${acct.name}</div>
-          <button class="acct-remove-btn" title="Remove account" onclick="removeAccount('${acct.id}','${acct.name.replace(/'/g,'\\\'')}')" style="margin-left:4px;background:none;border:none;cursor:pointer;color:#aaa;font-size:13px;line-height:1;padding:0 2px;display:none;">✕</button>
         </div>
         <div class="account-tab-type">${acct.type}</div>
-        <div class="account-tab-balance ${balance >= 0 ? 'positive' : 'negative'}">
-          ${balance >= 0 ? '' : '-'}$${Math.abs(balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </div>`;
-      tab.onclick = () => selectAccount(acct.id);
-      tab.addEventListener('mouseenter', () => tab.querySelector('.acct-remove-btn').style.display = 'inline');
-      tab.addEventListener('mouseleave', () => tab.querySelector('.acct-remove-btn').style.display = 'none');
+        <div class="account-tab-balance ${balance >= 0 ? 'positive' : 'negative'}">${fmtBal}</div>`;
+      tab.addEventListener('click', () => selectAccount(acct.id));
+      tab.addEventListener('contextmenu', e => showAcctCtxMenu(e, acct.id, acct.name, fmtBal));
       bar.insertBefore(tab, addBtn);
     });
 
@@ -3248,13 +3275,54 @@
     selectAccount(data.id);
   };
 
-  window.removeAccount = async function (id, name) {
-    if (!confirm(`Remove "${name}"?\n\nThis will also delete all transactions for this account. This cannot be undone.`)) return;
-    // Soft-delete: set is_active = false so data is retained but account disappears
-    const { error } = await supabase.from('mm_accounts').update({ is_active: false }).eq('id', id);
-    if (error) { alert('Error removing account: ' + error.message); return; }
-    if (selectedAccountId === id) selectedAccountId = null;
+  // ── Account context menu + remove flow ──────────────────────────────────────
+  let _acctCtxId = null;
+
+  function showAcctCtxMenu(e, id, name, bal) {
+    e.preventDefault();
+    _acctCtxId = id;
+    const menu = document.getElementById('acct-ctx-menu');
+    menu.style.display = 'block';
+    // Position near click, keep within viewport
+    const x = Math.min(e.clientX, window.innerWidth  - 180);
+    const y = Math.min(e.clientY, window.innerHeight - 80);
+    menu.style.left = x + 'px';
+    menu.style.top  = y + 'px';
+  }
+
+  // Close context menu on any outside click
+  document.addEventListener('click', () => {
+    document.getElementById('acct-ctx-menu').style.display = 'none';
+  });
+
+  window.openRemoveAccountModal = function () {
+    if (!_acctCtxId) return;
+    const tab  = document.querySelector(`.account-tab[data-id="${_acctCtxId}"]`);
+    const name = tab?.dataset.name || '—';
+    const bal  = tab?.dataset.bal  || '';
+    document.getElementById('remove-acct-name-display').textContent = `${name}${bal ? '  ·  ' + bal : ''}`;
+    document.getElementById('remove-acct-subtitle').textContent = 'Removing this account cannot be undone.';
+    document.getElementById('remove-acct-overlay').style.display = 'flex';
+  };
+
+  window.confirmRemoveAccount = async function () {
+    if (!_acctCtxId) return;
+    const btn = document.getElementById('remove-acct-confirm-btn');
+    btn.textContent = 'Removing…'; btn.disabled = true;
+    // Soft-delete: flag as inactive so data is retained
+    const { error } = await supabase.from('mm_accounts').update({ is_active: false }).eq('id', _acctCtxId);
+    btn.textContent = 'Yes, Remove Account'; btn.disabled = false;
+    if (error) { alert('Error: ' + error.message); return; }
+    if (selectedAccountId === _acctCtxId) selectedAccountId = null;
+    _acctCtxId = null;
+    document.getElementById('remove-acct-overlay').style.display = 'none';
     await loadAll();
+  };
+
+  window.removeAccount = async function (id, name) {
+    // Legacy — redirect to the new modal flow
+    _acctCtxId = id;
+    window.openRemoveAccountModal();
   };
 
   // ── View toggle ──────────────────────────────────────────────────────────────
