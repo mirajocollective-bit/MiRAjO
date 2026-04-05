@@ -1,6 +1,6 @@
-// Daily cron: find enrolled 25D25N users with no progress in 3+ days → apply inactive-nudge tag in Kit
+// Daily cron: find enrolled 25D25N users with no progress in 3+ days → queue nudge email
 import { createClient } from '@supabase/supabase-js';
-import { addTag } from './_kit.js';
+import { queueSequence } from './_emails.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -18,18 +18,18 @@ export default async function handler(req, res) {
     if (error) throw error;
 
     if (!users || users.length === 0) {
-      return res.status(200).json({ tagged: 0, message: 'No inactive users found' });
+      return res.status(200).json({ nudged: 0, message: 'No inactive users found' });
     }
 
-    let tagged = 0;
+    let nudged = 0;
     for (const user of users) {
       if (!user.email) continue;
-      const ok = await addTag(user.email, 'inactive-nudge');
-      if (ok) tagged++;
+      await queueSequence(supabase, user.email, 'inactive-nudge', user.first_name || '');
+      nudged++;
     }
 
-    console.log(`[inactive-nudge] Tagged ${tagged}/${users.length} users`);
-    return res.status(200).json({ tagged, total: users.length });
+    console.log(`[inactive-nudge] Queued nudge for ${nudged}/${users.length} users`);
+    return res.status(200).json({ nudged, total: users.length });
 
   } catch (err) {
     console.error('[inactive-nudge]', err.message);

@@ -1,33 +1,32 @@
+// Adds subscriber to Resend audience (replaces Kit form)
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  res.setHeader('Access-Control-Allow-Origin', 'https://www.mirajoco.org');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const { email, first_name } = req.body;
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  if (!email) {
-    return res.status(400).json({ error: 'Email is required' });
-  }
+  const { email, first_name } = req.body || {};
+  if (!email) return res.status(400).json({ error: 'Email is required' });
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) return res.status(400).json({ error: 'Invalid email' });
 
   try {
-    const response = await fetch('https://api.convertkit.com/v3/forms/9186169/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        api_key: process.env.CONVERTKIT_API_KEY,
-        email,
-        first_name: first_name || ''
-      })
+    await resend.contacts.create({
+      audienceId: process.env.RESEND_AUDIENCE_ID,
+      email,
+      firstName: first_name || '',
+      unsubscribed: false,
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return res.status(400).json({ error: data.message || 'Subscription failed' });
-    }
-
     return res.status(200).json({ success: true });
   } catch (err) {
-    return res.status(500).json({ error: 'Server error' });
+    console.error('[waitlist] Resend error:', err.message);
+    return res.status(500).json({ error: 'Failed to subscribe' });
   }
 }

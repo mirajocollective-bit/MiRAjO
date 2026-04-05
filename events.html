@@ -896,7 +896,32 @@
 <section class="events-cta" data-aos="fade-up">
   <h2 class="events-cta-title">Never miss what's next.</h2>
   <p class="events-cta-sub">Join the newsletter and be first to know when new events drop near you.</p>
-  <a href="https://mirajocollective.kit.com/9186169" target="_blank" rel="noopener" class="events-cta-btn">Stay Connected</a>
+  <form id="events-nl-form" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+    <input type="email" id="events-nl-email" placeholder="Your email address" required style="padding:14px 20px;border:none;border-radius:8px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;min-width:220px;flex:1;max-width:320px;">
+    <button type="submit" class="events-cta-btn" style="margin:0;">Stay Connected</button>
+  </form>
+  <p id="events-nl-msg" style="margin-top:14px;font-size:14px;min-height:20px;"></p>
+  <script>
+    document.getElementById('events-nl-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button');
+      const msg = document.getElementById('events-nl-msg');
+      btn.disabled = true; btn.textContent = 'Subscribing...';
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: document.getElementById('events-nl-email').value.trim() }),
+      });
+      if (res.ok) {
+        msg.textContent = "You're in. See you in your inbox.";
+        this.style.display = 'none';
+      } else {
+        msg.style.color = '#E88080';
+        msg.textContent = 'Something went wrong. Try again.';
+        btn.disabled = false; btn.textContent = 'Stay Connected';
+      }
+    });
+  </script>
 </section>
 
 <!-- FOOTER -->

@@ -992,9 +992,12 @@
           <div class="emoji-picker" id="emoji-picker">
             <span class="emoji-picker-label">Pick an icon</span>
             <div class="emoji-picker-grid" id="emoji-picker-grid">
-              💰💵💳🏦📈📉🎯🏠🏡🚗🚙✈️🍽️🛒🛍️☕
-              💻📱📺🎬🎵🎮📚🏥💊🏋️‍♀️💪🐾👶🎓🧾📋
-              💡🔌🌊🔥💈✂️🎁🎂🌿🏖️⛽🚿🧺🧹🔧🪴
+              <span>💰</span><span>💵</span><span>💳</span><span>🏦</span><span>📈</span><span>📉</span><span>🎯</span><span>🏠</span>
+              <span>🏡</span><span>🚗</span><span>🚙</span><span>✈️</span><span>🍽️</span><span>🛒</span><span>🛍️</span><span>☕</span>
+              <span>💻</span><span>📱</span><span>📺</span><span>🎬</span><span>🎵</span><span>🎮</span><span>📚</span><span>🏥</span>
+              <span>💊</span><span>💪</span><span>🐾</span><span>👶</span><span>🎓</span><span>🧾</span><span>📋</span><span>💡</span>
+              <span>🔌</span><span>🌊</span><span>🔥</span><span>🎁</span><span>🎂</span><span>🌿</span><span>🏖️</span><span>⛽</span>
+              <span>🚿</span><span>🧺</span><span>🔧</span><span>🪴</span><span>🏋️</span><span>✂️</span><span>🧹</span><span>🤝</span>
             </div>
             <button class="emoji-clear" onclick="clearEmoji()">Remove icon</button>
           </div>
@@ -1265,15 +1268,13 @@
     document.getElementById('emoji-picker').classList.toggle('open');
   }
 
-  // Wire up emoji grid clicks
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('emoji-picker-grid').addEventListener('click', e => {
-      const span = e.target.closest('span');
-      if (!span) return;
-      const emoji = span.textContent.trim();
-      setEmoji(emoji === selectedEmoji ? '' : emoji);
-      document.getElementById('emoji-picker').classList.remove('open');
-    });
+  // Wire up emoji grid clicks (DOM already ready — script is at bottom of body)
+  document.getElementById('emoji-picker-grid').addEventListener('click', e => {
+    const span = e.target.closest('span');
+    if (!span) return;
+    const emoji = span.textContent.trim();
+    setEmoji(emoji === selectedEmoji ? '' : emoji);
+    document.getElementById('emoji-picker').classList.remove('open');
   });
 
   // Close emoji picker when clicking outside

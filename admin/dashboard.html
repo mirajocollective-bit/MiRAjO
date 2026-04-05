@@ -483,6 +483,76 @@
       </div>
     </div>
 
+    <!-- Newsletter -->
+    <div class="panel grid-full">
+      <div class="panel-header">
+        <span class="panel-title">Newsletter</span>
+        <span class="panel-count" id="nl-sub-count">—</span>
+      </div>
+      <div class="panel-body" style="padding:24px 28px;">
+
+        <!-- Stats row -->
+        <div style="display:flex;gap:24px;margin-bottom:28px;flex-wrap:wrap;">
+          <div style="background:var(--soft-white);border-radius:10px;padding:16px 24px;flex:1;min-width:140px;">
+            <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Active Subscribers</div>
+            <div id="nl-active" style="font-size:28px;font-weight:700;color:var(--deep-forest);">—</div>
+          </div>
+          <div style="background:var(--soft-white);border-radius:10px;padding:16px 24px;flex:1;min-width:140px;">
+            <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Total List</div>
+            <div id="nl-total" style="font-size:28px;font-weight:700;color:var(--deep-forest);">—</div>
+          </div>
+          <div style="background:var(--soft-white);border-radius:10px;padding:16px 24px;flex:2;min-width:200px;">
+            <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Import contacts from Kit</div>
+            <p style="font-size:13px;color:var(--muted);margin:0;">Export CSV from Kit → Resend dashboard → Audiences → Import contacts. One-time setup.</p>
+          </div>
+        </div>
+
+        <!-- Compose -->
+        <div style="border-top:1px solid var(--border);padding-top:24px;">
+          <div style="font-size:13px;font-weight:700;color:var(--deep-forest);margin-bottom:16px;letter-spacing:0.5px;text-transform:uppercase;">Send Newsletter</div>
+          <div style="display:flex;flex-direction:column;gap:12px;max-width:720px;">
+            <input type="text" id="nl-subject" placeholder="Subject line" style="padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:var(--deep-forest);">
+            <textarea id="nl-html" placeholder="Paste full HTML email here..." rows="10" style="padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:monospace;outline:none;color:var(--deep-forest);resize:vertical;"></textarea>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <button onclick="previewNewsletter()" style="padding:10px 20px;background:var(--soft-white);border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Preview</button>
+              <button onclick="sendNewsletter()" id="nl-send-btn" style="padding:10px 24px;background:var(--deep-forest);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Send to All Subscribers</button>
+              <span id="nl-send-msg" style="font-size:14px;color:var(--living-green);"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent broadcasts -->
+        <div style="border-top:1px solid var(--border);padding-top:24px;margin-top:24px;">
+          <div style="font-size:13px;font-weight:700;color:var(--deep-forest);margin-bottom:16px;letter-spacing:0.5px;text-transform:uppercase;">Recent Broadcasts</div>
+          <div id="nl-broadcasts-loading" style="font-size:14px;color:var(--muted);">Loading...</div>
+          <table id="nl-broadcasts-table" style="display:none;width:100%;border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);">Name</th>
+                <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);">Subject</th>
+                <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);">Status</th>
+                <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);">Date</th>
+              </tr>
+            </thead>
+            <tbody id="nl-broadcasts-body"></tbody>
+          </table>
+          <div id="nl-broadcasts-empty" style="display:none;font-size:14px;color:var(--muted);">No broadcasts yet.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Preview modal -->
+    <div id="nl-preview-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;">
+      <div style="background:#fff;border-radius:16px;width:90%;max-width:660px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="padding:16px 24px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-weight:700;font-size:15px;">Email Preview</span>
+          <button onclick="document.getElementById('nl-preview-modal').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
+        </div>
+        <iframe id="nl-preview-frame" style="flex:1;border:none;width:100%;min-height:500px;"></iframe>
+      </div>
+    </div>
+
     <!-- Analytics -->
     <div class="panel grid-full analytics-panel">
       <div class="panel-header">
@@ -574,6 +644,7 @@
     document.getElementById('dashboard').style.display = 'block';
     loadData();
     loadLookerUrl();
+    loadNewsletterStats();
   }
 
   window.addEventListener('load', () => {
@@ -746,6 +817,83 @@
   function loadLookerUrl() {
     const saved = localStorage.getItem('mj_looker_url');
     if (saved) renderLookerEmbed(saved);
+  }
+
+  // ── NEWSLETTER ────────────────────────────────────────
+  async function loadNewsletterStats() {
+    try {
+      const res = await fetch('/api/newsletter-stats', {
+        headers: { 'Authorization': 'Bearer ' + authToken },
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      document.getElementById('nl-active').textContent = data.subscribers ?? '—';
+      document.getElementById('nl-total').textContent = data.total ?? '—';
+      document.getElementById('nl-sub-count').textContent = (data.subscribers ?? '—') + ' active';
+
+      const tbody = document.getElementById('nl-broadcasts-body');
+      document.getElementById('nl-broadcasts-loading').style.display = 'none';
+      if (!data.broadcasts || data.broadcasts.length === 0) {
+        document.getElementById('nl-broadcasts-empty').style.display = 'block';
+      } else {
+        document.getElementById('nl-broadcasts-table').style.display = 'table';
+        tbody.innerHTML = data.broadcasts.map(b => `
+          <tr>
+            <td style="padding:10px 12px;font-size:14px;border-bottom:1px solid var(--border);">${b.name || '—'}</td>
+            <td style="padding:10px 12px;font-size:14px;border-bottom:1px solid var(--border);">${b.subject || '—'}</td>
+            <td style="padding:10px 12px;font-size:13px;border-bottom:1px solid var(--border);"><span style="padding:3px 10px;border-radius:20px;background:${b.status === 'sent' ? '#EBF7F0' : '#F5F2EC'};color:${b.status === 'sent' ? '#256B42' : '#6B7B6B'};font-weight:600;">${b.status}</span></td>
+            <td style="padding:10px 12px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);">${b.created_at ? new Date(b.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}</td>
+          </tr>
+        `).join('');
+      }
+    } catch (e) {
+      console.error('[newsletter-stats]', e);
+    }
+  }
+
+  function previewNewsletter() {
+    const html = document.getElementById('nl-html').value;
+    if (!html) return;
+    const modal = document.getElementById('nl-preview-modal');
+    const frame = document.getElementById('nl-preview-frame');
+    frame.srcdoc = html;
+    modal.style.display = 'flex';
+  }
+
+  async function sendNewsletter() {
+    const subject = document.getElementById('nl-subject').value.trim();
+    const html = document.getElementById('nl-html').value.trim();
+    const btn = document.getElementById('nl-send-btn');
+    const msg = document.getElementById('nl-send-msg');
+
+    if (!subject || !html) { msg.style.color = '#E88080'; msg.textContent = 'Subject and HTML are required.'; return; }
+    if (!confirm(`Send "${subject}" to all subscribers? This cannot be undone.`)) return;
+
+    btn.disabled = true; btn.textContent = 'Sending...';
+    msg.textContent = '';
+
+    try {
+      const res = await fetch('/api/newsletter-send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+        body: JSON.stringify({ subject, html, name: subject }),
+      });
+      if (res.ok) {
+        msg.style.color = 'var(--living-green)';
+        msg.textContent = 'Sent successfully!';
+        document.getElementById('nl-subject').value = '';
+        document.getElementById('nl-html').value = '';
+        await loadNewsletterStats();
+      } else {
+        const err = await res.json();
+        msg.style.color = '#E88080';
+        msg.textContent = err.error || 'Send failed.';
+      }
+    } catch (e) {
+      msg.style.color = '#E88080';
+      msg.textContent = 'Network error. Try again.';
+    }
+    btn.disabled = false; btn.textContent = 'Send to All Subscribers';
   }
 
   function saveLookerUrl() {

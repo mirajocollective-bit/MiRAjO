@@ -21,718 +21,793 @@
       --cie-border:    rgba(184,32,56,0.15);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: var(--cie-blush-lt);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      color: var(--cie-dark);
-    }
+    body { background: var(--cie-blush-lt); font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; color: var(--cie-dark); }
 
-    /* ═══ TOP BAR ═══ */
-    .top-bar {
-      background: #ffffff;
-      border-bottom: 1px solid var(--cie-border);
-      padding: 16px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .top-bar-logo img { height: 56px; width: auto; display: block; }
-    .top-bar-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .top-bar-save {
-      font-size: 12px;
-      color: var(--cie-muted);
-    }
-    .top-bar-exit {
-      font-size: 12px;
-      color: var(--cie-crimson);
-      text-decoration: none;
-      background: rgba(184,32,56,0.06);
-      border: 1px solid var(--cie-border);
-      border-radius: 6px;
-      padding: 8px 16px;
-      transition: all 0.2s;
-    }
-    .top-bar-exit:hover { background: rgba(184,32,56,0.12); }
+    /* NAV */
+    .top-bar { background: #fff; border-bottom: 1px solid var(--cie-border); padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .top-bar-logo img { height: 52px; width: auto; }
+    .top-bar-right { display: flex; align-items: center; gap: 16px; }
+    .top-bar-name { font-size: 13px; color: var(--cie-muted); }
+    .top-bar-exit { font-size: 12px; color: var(--cie-crimson); background: rgba(184,32,56,0.06); border: 1px solid var(--cie-border); border-radius: 6px; padding: 8px 16px; text-decoration: none; }
 
-    /* ═══ PROGRESS STEPS ═══ */
-    .progress-bar-wrap {
-      background: #ffffff;
-      border-bottom: 1px solid var(--cie-border);
-      padding: 0 40px;
-    }
-    .progress-steps {
-      max-width: 760px;
-      margin: 0 auto;
-      display: flex;
-      align-items: stretch;
-    }
-    .progress-step {
-      flex: 1;
-      padding: 14px 0;
-      text-align: center;
-      border-bottom: 3px solid transparent;
-      transition: border-color 0.2s;
-      cursor: default;
-    }
-    .progress-step.active { border-bottom-color: var(--cie-crimson); }
-    .progress-step.done   { border-bottom-color: rgba(93,190,138,0.6); }
-    .progress-step-num {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--cie-muted);
-      margin-bottom: 2px;
-    }
-    .progress-step.active .progress-step-num { color: var(--cie-crimson); }
-    .progress-step.done .progress-step-num   { color: #5DBE8A; }
-    .progress-step-name {
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(20,9,15,0.35);
-    }
-    .progress-step.active .progress-step-name { color: var(--cie-dark); }
-    .progress-step.done .progress-step-name   { color: rgba(93,190,138,0.8); }
+    /* DOMAIN STEPS */
+    .domain-steps { background: #fff; border-bottom: 1px solid var(--cie-border); padding: 0 40px; }
+    .domain-steps-inner { max-width: 800px; margin: 0 auto; display: flex; }
+    .domain-step { flex: 1; padding: 14px 0; text-align: center; border-bottom: 3px solid transparent; transition: border-color 0.2s; }
+    .domain-step.active { border-bottom-color: var(--cie-crimson); }
+    .domain-step.done { border-bottom-color: rgba(93,190,138,0.6); }
+    .domain-step-num { font-size: 11px; font-weight: 700; color: var(--cie-muted); letter-spacing: 1px; }
+    .domain-step.active .domain-step-num { color: var(--cie-crimson); }
+    .domain-step.done .domain-step-num { color: #5DBE8A; }
+    .domain-step-name { font-size: 12px; color: var(--cie-muted); margin-top: 2px; }
+    .domain-step.active .domain-step-name { color: var(--cie-dark); font-weight: 600; }
 
-    /* ═══ MAIN ═══ */
-    .main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 56px 40px 80px;
-    }
+    /* MAIN */
+    .main { max-width: 800px; margin: 0 auto; padding: 48px 40px 80px; }
 
-    /* ═══ INTRO SCREEN ═══ */
-    .intro-screen {
-      text-align: center;
-      padding: 24px 0 40px;
-    }
-    .intro-eyebrow {
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--cie-crimson);
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-    .intro-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(30px, 5vw, 48px);
-      font-weight: 400;
-      color: var(--cie-dark);
-      line-height: 1.2;
-      margin-bottom: 24px;
-    }
-    .intro-body {
-      font-size: 16px;
-      color: var(--cie-muted);
-      line-height: 1.8;
-      max-width: 580px;
-      margin: 0 auto 16px;
-    }
-    .intro-note {
-      display: inline-block;
-      background: rgba(184,32,56,0.05);
-      border: 1px solid var(--cie-border);
-      border-radius: 10px;
-      padding: 16px 24px;
-      font-size: 13px;
-      color: var(--cie-dark);
-      line-height: 1.7;
-      margin: 24px auto 40px;
-      max-width: 560px;
-    }
-    .intro-note strong { color: var(--cie-crimson); }
+    /* INTRO */
+    .intro-eyebrow { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--cie-crimson); font-weight: 700; margin-bottom: 16px; }
+    .intro-title { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 4vw, 42px); color: var(--cie-dark); line-height: 1.2; margin-bottom: 20px; }
+    .intro-body { font-size: 15px; color: var(--cie-muted); line-height: 1.8; margin-bottom: 16px; }
+    .intro-note { background: rgba(184,32,56,0.05); border: 1px solid var(--cie-border); border-radius: 10px; padding: 16px 20px; font-size: 14px; color: var(--cie-muted); line-height: 1.7; margin-bottom: 32px; }
+    .intro-note strong { color: var(--cie-dark); }
 
-    /* ═══ DOMAIN SCREEN ═══ */
-    .domain-screen { display: none; }
-    .domain-screen.active { display: block; }
-    .domain-eyebrow {
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--cie-crimson);
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-    .domain-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(26px, 4vw, 38px);
-      font-weight: 400;
-      color: var(--cie-dark);
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .domain-intro {
-      font-size: 15px;
-      color: var(--cie-muted);
-      line-height: 1.7;
-      margin-bottom: 40px;
-      max-width: 600px;
-    }
+    /* DOMAIN HEADER */
+    .domain-eyebrow { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--cie-crimson); font-weight: 700; margin-bottom: 12px; }
+    .domain-title { font-family: 'Instrument Serif', serif; font-size: clamp(24px, 3.5vw, 36px); color: var(--cie-dark); margin-bottom: 10px; }
+    .domain-intro { font-size: 14px; color: var(--cie-muted); line-height: 1.7; margin-bottom: 36px; }
 
-    /* ═══ QUESTION ═══ */
-    .question-block {
-      margin-bottom: 36px;
-    }
-    .question-label {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--cie-dark);
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-    .question-hint {
-      font-size: 13px;
-      color: var(--cie-muted);
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-    textarea {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid rgba(184,32,56,0.2);
-      border-radius: 10px;
-      padding: 16px 18px;
-      font-size: 15px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--cie-dark);
-      line-height: 1.7;
-      resize: vertical;
-      min-height: 100px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    textarea::placeholder { color: rgba(122,107,116,0.4); }
-    textarea:focus {
-      outline: none;
-      border-color: var(--cie-crimson);
-      background: #ffffff;
-    }
+    /* SCENARIO CARD */
+    .scenario-card { background: #fff; border: 1px solid var(--cie-border); border-radius: 12px; padding: 28px; margin-bottom: 20px; transition: border-color 0.2s; }
+    .scenario-card.answered { border-color: rgba(184,32,56,0.35); }
+    .scenario-story { font-size: 14px; line-height: 1.85; color: var(--cie-dark); margin-bottom: 18px; }
+    .scenario-question { font-size: 14px; font-weight: 700; color: var(--cie-dark); margin-bottom: 16px; }
+    .scenario-options { display: flex; flex-direction: column; gap: 10px; }
+    .scenario-option { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--cie-border); border-radius: 8px; cursor: pointer; transition: all 0.18s; }
+    .scenario-option:hover { border-color: var(--cie-crimson); background: rgba(184,32,56,0.03); }
+    .scenario-option.selected { border-color: var(--cie-crimson); background: rgba(184,32,56,0.06); }
+    .scenario-option input[type="radio"] { display: none; }
+    .option-key { width: 24px; height: 24px; min-width: 24px; border: 1.5px solid var(--cie-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--cie-muted); transition: all 0.18s; }
+    .scenario-option.selected .option-key { background: var(--cie-crimson); border-color: var(--cie-crimson); color: #fff; }
+    .option-text { font-size: 13.5px; line-height: 1.65; color: var(--cie-dark); padding-top: 2px; }
 
-    /* ═══ ALIGNMENT RATING ═══ */
-    .rating-block {
-      margin: 48px 0 40px;
-      padding: 28px 32px;
-      background: rgba(184,32,56,0.04);
-      border: 1px solid var(--cie-border);
-      border-radius: 14px;
-    }
-    .rating-label {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--cie-dark);
-      margin-bottom: 8px;
-    }
-    .rating-sub {
-      font-size: 13px;
-      color: var(--cie-muted);
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-    .rating-options {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .rating-option input[type="radio"] { display: none; }
-    .rating-option label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px solid rgba(184,32,56,0.15);
-      background: #ffffff;
-      transition: all 0.2s;
-      min-width: 100px;
-      flex: 1;
-    }
-    .rating-option label:hover { background: rgba(184,32,56,0.05); border-color: rgba(184,32,56,0.3); }
-    .rating-option input:checked + label {
-      background: rgba(184,32,56,0.08);
-      border-color: var(--cie-crimson);
-    }
-    .rating-num {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--cie-crimson);
-      line-height: 1;
-    }
-    .rating-text {
-      font-size: 11px;
-      color: var(--cie-muted);
-      text-align: center;
-      line-height: 1.3;
-    }
-    .rating-option input:checked + label .rating-text { color: var(--cie-dark); }
+    /* NOTES */
+    .notes-block { margin-top: 32px; }
+    .notes-label { font-size: 13px; font-weight: 600; color: var(--cie-muted); margin-bottom: 8px; }
+    .notes-block textarea { width: 100%; border: 1px solid var(--cie-border); border-radius: 8px; padding: 14px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; color: var(--cie-dark); background: #fff; resize: vertical; min-height: 80px; line-height: 1.65; }
+    .notes-block textarea:focus { outline: none; border-color: var(--cie-rose); }
 
-    /* ═══ DIVIDER ═══ */
-    .domain-divider {
-      border: none;
-      border-top: 1px solid rgba(184,32,56,0.1);
-      margin: 48px 0;
-    }
+    /* NAV BUTTONS */
+    .nav-buttons { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+    .btn-back { background: transparent; border: 1px solid var(--cie-border); color: var(--cie-muted); border-radius: 8px; padding: 12px 24px; font-size: 14px; cursor: pointer; }
+    .btn-next { background: var(--cie-crimson); color: #fff; border: none; border-radius: 8px; padding: 14px 32px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-next:hover { background: var(--cie-crimson-lt); }
+    .form-error { color: var(--cie-crimson); font-size: 13px; margin-top: 16px; display: none; }
 
-    /* ═══ NAVIGATION ═══ */
-    .nav-buttons {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 40px;
-      padding-top: 32px;
-      border-top: 1px solid rgba(184,32,56,0.1);
-    }
-    .btn-back {
-      font-size: 14px;
-      color: var(--cie-muted);
-      background: transparent;
-      border: 1px solid rgba(184,32,56,0.15);
-      border-radius: 8px;
-      padding: 13px 28px;
-      cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      transition: all 0.2s;
-    }
-    .btn-back:hover { color: var(--cie-dark); border-color: rgba(184,32,56,0.35); }
-    .btn-next {
-      font-size: 14px;
-      font-weight: 700;
-      color: #ffffff;
-      background: var(--cie-crimson);
-      border: none;
-      border-radius: 8px;
-      padding: 13px 32px;
-      cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      transition: background 0.2s, transform 0.2s;
-      letter-spacing: 0.3px;
-    }
-    .btn-next:hover { background: var(--cie-crimson-lt); transform: translateY(-1px); }
-    .btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-next-spacer { flex: 1; }
-
-    /* ═══ SUBMIT STATE ═══ */
-    .submitting-screen { display: none; text-align: center; padding: 80px 0; }
-    .submitting-screen.active { display: block; }
-    .spinner {
-      width: 48px; height: 48px;
-      border: 3px solid rgba(184,32,56,0.15);
-      border-top-color: var(--cie-crimson);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 28px;
-    }
+    /* SPINNER */
+    .spinner { width: 36px; height: 36px; border: 3px solid var(--cie-border); border-top-color: var(--cie-crimson); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .submitting-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: 28px;
-      color: var(--cie-dark);
-      margin-bottom: 12px;
-    }
-    .submitting-sub { font-size: 15px; color: var(--cie-muted); }
 
-    /* ═══ ERROR ═══ */
-    .form-error {
-      background: rgba(168,104,94,0.12);
-      border: 1px solid rgba(168,104,94,0.3);
-      border-radius: 10px;
-      padding: 14px 18px;
-      font-size: 13px;
-      color: #E89088;
-      margin-top: 16px;
-      display: none;
-    }
+    /* SAVE INDICATOR */
+    .save-indicator { font-size: 12px; color: var(--cie-muted); }
+    .save-indicator.saved { color: #5DBE8A; }
 
-    /* ═══ LOADING ═══ */
-    .page-loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 60vh;
-    }
-
-    @media (max-width: 640px) {
+    @media (max-width: 600px) {
       .top-bar { padding: 14px 20px; }
-      .progress-bar-wrap { padding: 0 20px; }
-      .progress-step-name { display: none; }
-      .main { padding: 40px 24px 60px; }
-      .rating-options { gap: 6px; }
-      .rating-option label { min-width: 0; padding: 10px 8px; }
-      .rating-num { font-size: 18px; }
-      .rating-text { font-size: 10px; }
-      .nav-buttons { flex-wrap: wrap; }
-      .btn-next { width: 100%; text-align: center; order: -1; }
-      .btn-back { width: 100%; text-align: center; }
+      .domain-steps { padding: 0 20px; }
+      .domain-step-name { display: none; }
+      .main { padding: 32px 20px 60px; }
+      .scenario-card { padding: 20px; }
     }
   </style>
-  <!-- Site Analytics -->
-  <script src="/analytics.js"></script>
 </head>
 <body>
 
 <div class="top-bar">
-  <a href="/programs/couples-dashboard" class="top-bar-logo">
-    <img src="/img/logo-horizontal.png" alt="MiRAjO">
-  </a>
+  <div class="top-bar-logo"><a href="/programs/couples-dashboard"><img src="/img/logo-horizontal.png" alt="MiRAjO"></a></div>
   <div class="top-bar-right">
-    <span class="top-bar-save" id="save-status"></span>
-    <a href="/programs/couples-dashboard" class="top-bar-exit">Save &amp; Exit</a>
+    <span class="top-bar-name" id="topName"></span>
+    <span class="save-indicator" id="saveIndicator">Saving...</span>
+    <a href="/programs/couples-dashboard" class="top-bar-exit">Dashboard</a>
   </div>
 </div>
 
-<div class="progress-bar-wrap" id="progress-bar-wrap" style="display:none;">
-  <div class="progress-steps">
-    <div class="progress-step" data-step="1">
-      <div class="progress-step-num">01</div>
-      <div class="progress-step-name">Business</div>
-    </div>
-    <div class="progress-step" data-step="2">
-      <div class="progress-step-num">02</div>
-      <div class="progress-step-name">Finances</div>
-    </div>
-    <div class="progress-step" data-step="3">
-      <div class="progress-step-num">03</div>
-      <div class="progress-step-name">Family</div>
-    </div>
-    <div class="progress-step" data-step="4">
-      <div class="progress-step-num">04</div>
-      <div class="progress-step-name">Relationship</div>
-    </div>
+<div class="domain-steps">
+  <div class="domain-steps-inner">
+    <div class="domain-step" data-step="1"><div class="domain-step-num">01</div><div class="domain-step-name">Business</div></div>
+    <div class="domain-step" data-step="2"><div class="domain-step-num">02</div><div class="domain-step-name">Finances</div></div>
+    <div class="domain-step" data-step="3"><div class="domain-step-num">03</div><div class="domain-step-name">Family</div></div>
+    <div class="domain-step" data-step="4"><div class="domain-step-num">04</div><div class="domain-step-name">Relationship</div></div>
   </div>
 </div>
 
-<div class="main" id="main">
-  <div class="page-loading"><div class="spinner"></div></div>
-</div>
+<div class="main" id="main"></div>
 
-<script src="/api/config"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-const DOMAINS = [
-  {
-    key: 'business',
-    title: 'Business',
-    intro: 'Answer honestly. There is no right answer — just your perspective. Your partner will not see your responses here.',
-    questions: [
-      { key: 'q1', label: 'What is your vision for the business in 3 years?', hint: 'Where do you see it going? What does success look like to you?' },
-      { key: 'q2', label: 'What is your current role in the business — and is it working?', hint: 'Be honest about whether your role fits you and whether it feels sustainable.' },
-      { key: 'q3', label: 'How are business decisions made — and do you feel heard?', hint: 'Think about how the two of you actually operate when it\'s time to decide something.' },
-      { key: 'q4', label: 'How do you feel about the current pace of growth?', hint: 'Too fast, too slow, or just right — and why?' },
-    ],
-  },
-  {
-    key: 'finances',
-    title: 'Finances',
-    intro: 'Money is one of the most common stress points for couples in business. Answer openly — this is just for you.',
-    questions: [
-      { key: 'q1', label: 'How do you currently handle personal vs. business money?', hint: 'Are they separate? Mixed? Is the system working?' },
-      { key: 'q2', label: 'Who manages the finances — and does that arrangement feel right to you?', hint: 'Not just who does it, but whether you feel informed and included.' },
-      { key: 'q3', label: 'Are you aligned on how much to reinvest in the business vs. take home?', hint: 'Where do you stand on this? What feels fair?' },
-      { key: 'q4', label: 'What does financial security mean to you personally?', hint: 'This matters because partners often have very different answers.' },
-    ],
-  },
-  {
-    key: 'family',
-    title: 'Family & Home',
-    intro: 'The home is where the business spills into life. Be honest about where the friction is.',
-    questions: [
-      { key: 'q1', label: 'How are home responsibilities divided between you?', hint: 'Who does what — and does it feel equitable?' },
-      { key: 'q2', label: 'If you have children, how is parenting managed alongside the business?', hint: 'If no children, speak to any family responsibilities (aging parents, extended family, etc.).' },
-      { key: 'q3', label: 'Where are the biggest points of friction in your daily home life?', hint: 'What keeps coming up? What never fully gets resolved?' },
-      { key: 'q4', label: 'Do you feel the business takes too much from your family time?', hint: 'Be honest. What would you change if you could?' },
-    ],
-  },
-  {
-    key: 'relationship',
-    title: 'Relationship',
-    intro: 'This is the part most people skip — and the part that matters most. This section covers more ground than the others — allow a bit more time and answer with care.',
-    questions: [
-      { key: 'q1', label: 'How do you communicate when you disagree about the business?', hint: 'What does a disagreement actually look like between you two?' },
-      { key: 'q2', label: 'How do you handle conflict — do you tend to resolve it or avoid it?', hint: 'Be honest. Both patterns are common.' },
-      { key: 'q3', label: 'How has intimacy changed since starting the business together?', hint: 'Emotional closeness, physical connection, time together — all of it.' },
-      { key: 'q4', label: 'Do you feel like partners first — or business partners first?', hint: 'Which one leads? How does that show up?' },
-      { key: 'q5', label: 'What do you need more of from each other?', hint: 'Say it here, privately, before you say it anywhere else.' },
-      { key: 'q6', label: 'Do you have a shared spiritual or faith practice?', hint: 'Prayer, meditation, church, values-based rituals — whatever that looks like for you.' },
-      { key: 'q7', label: 'Is faith or shared values something you want to be more present in how you run your business?', hint: 'Not asking what your partner wants — what do you want?' },
-      { key: 'q8', label: 'When things get genuinely hard, what do you return to together?', hint: 'What holds you? What grounds you as a couple?' },
-    ],
-  },
-];
+// ═══ ALL SCENARIOS ═══
+// condition: null = base (everyone), otherwise { field, values } or { type, fields }
+// scores are internal only — never shown to users
 
-const STORAGE_KEY = 'cie_diagnostic_draft';
-let currentStep = 0; // 0 = intro, 1-4 = domains
-let userId = null;
-let coupleId = null;
-let alreadyComplete = false;
+const SCENARIOS = {
+  business: [
+    {
+      key: 'B1', condition: null,
+      story: 'You need to give someone an answer today. Not a massive call, but not nothing either. Your partner is unreachable and the window is closing.',
+      question: 'What do you do?',
+      options: [
+        { key: 'A', text: 'You make the call, keep a note of what you decided and why, and fill them in when they are back.', score: 4 },
+        { key: 'B', text: 'You let the window close. A decision this size should not happen without both of you.', score: 2 },
+        { key: 'C', text: 'You make the call and mention it later when it comes up naturally.', score: 3 },
+        { key: 'D', text: 'You handle it. If it goes well, great. If not, you will figure it out then.', score: 1 },
+      ]
+    },
+    {
+      key: 'B2', condition: null,
+      story: 'Something real lands. More revenue, more reach. You are ready to move. Your partner is not so sure.',
+      question: 'What do you do?',
+      options: [
+        { key: 'A', text: 'You slow down and ask what is making them hesitate before you say another word about it.', score: 4 },
+        { key: 'B', text: 'You lay out your full case and ask for a proper sit-down before either of you decides.', score: 3 },
+        { key: 'C', text: 'You push forward. You believe in it and sometimes one person has to lead.', score: 2 },
+        { key: 'D', text: 'You let it go. If both of you are not in it, the opportunity is not worth the tension.', score: 1 },
+      ]
+    },
+    {
+      key: 'B3', condition: null,
+      story: 'A mentor, advisor, or investor gives you feedback about the business. It is good feedback. But it directly contradicts the way your partner has been running their side of things.',
+      question: 'What do you do?',
+      options: [
+        { key: 'A', text: 'You share it with your partner as something worth considering, not as proof they are wrong.', score: 4 },
+        { key: 'B', text: 'You sit on it. You do not want to start something based on one person\'s opinion.', score: 2 },
+        { key: 'C', text: 'You bring it up the next time you two disagree because now you have backup.', score: 1 },
+        { key: 'D', text: 'You implement what makes sense and tell your partner what you changed and why.', score: 3 },
+      ]
+    },
+    {
+      key: 'B4', condition: null,
+      story: 'You keep doing things that both of you agreed were your partner\'s responsibility. Not because they are dropping the ball. Just because things fall and you pick them up.',
+      question: 'What do you do?',
+      options: [
+        { key: 'A', text: 'You bring it up. Not as a complaint, just as a check-in on whether the split still makes sense.', score: 4 },
+        { key: 'B', text: 'You keep handling it. The work needs to get done and right now you are the one doing it.', score: 2 },
+        { key: 'C', text: 'You stop doing it and wait to see if they notice.', score: 1 },
+        { key: 'D', text: 'You mention it once and then let them handle it however they handle it.', score: 3 },
+      ]
+    },
+    {
+      key: 'B5', condition: null,
+      story: 'Something in the business is not working and it is connected to what your partner is leading. You have noticed it for a while. So have the numbers.',
+      question: 'What do you do?',
+      options: [
+        { key: 'A', text: 'You ask to look at it together. Not to point fingers, just to understand what is happening.', score: 4 },
+        { key: 'B', text: 'You bring it up directly. The business cannot wait for a comfortable moment.', score: 3 },
+        { key: 'C', text: 'You quietly take on some of the work yourself to help without making it a conversation.', score: 2 },
+        { key: 'D', text: 'You wait. You do not want to bring up a problem before you have a solution to go with it.', score: 1 },
+      ]
+    },
+    {
+      key: 'B6', condition: { field: 'both_full_time', values: ['one-of-us', 'neither'] },
+      story: 'One of you wants to quit the job and go all in. Full focus, build this thing for real. The other is not ready to make that call yet.',
+      question: 'What happens next?',
+      options: [
+        { key: 'A', text: 'You map out what it would actually take financially before either of you says yes or no.', score: 4 },
+        { key: 'B', text: 'The one who wants to go in goes in. The other will follow when they are ready.', score: 2 },
+        { key: 'C', text: 'You both agree to stay where you are until you are fully aligned. You will not rush it.', score: 3 },
+        { key: 'D', text: 'You drop the conversation. It always ends in tension and right now you cannot afford that.', score: 1 },
+      ]
+    },
+    {
+      key: 'B7', condition: { type: 'vision_gap' },
+      story: 'Someone approaches you about investing in the business. Real money. But their expectations do not quite match where one of you sees this going long term.',
+      question: 'What do you do?',
+      options: [
+        { key: 'A', text: 'You both take 48 hours separately to think about what you actually want before you respond.', score: 4 },
+        { key: 'B', text: 'You turn it down. Outside money changes the dynamic and you are not ready for that conversation.', score: 2 },
+        { key: 'C', text: 'You move forward with the conversation and let it show you both what you really want.', score: 3 },
+        { key: 'D', text: 'The partner who feels more strongly about it makes the call.', score: 1 },
+      ]
+    },
+    {
+      key: 'B8', condition: { field: 'business_role', values: ['i-lead', 'they-lead'] },
+      story: 'A major client makes it clear they prefer dealing with one of you. The other partner starts quietly stepping back from client conversations.',
+      question: 'What do you do?',
+      options: [
+        { key: 'A', text: 'You name it. You ask your partner directly how they are feeling about it and whether the current setup is still working for both of you.', score: 4 },
+        { key: 'B', text: 'You let it be. If it is working for the client, you will sort out the internal piece later.', score: 2 },
+        { key: 'C', text: 'You make sure your partner stays looped in on key updates so they do not feel cut out.', score: 3 },
+        { key: 'D', text: 'You do not bring it up. If they have a problem with it, they will say something.', score: 1 },
+      ]
+    },
+  ],
 
-function getDraft() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
-}
-function saveDraft(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  const el = document.getElementById('save-status');
-  if (el) { el.textContent = 'Saved'; setTimeout(() => { el.textContent = ''; }, 2000); }
-}
+  finances: [
+    {
+      key: 'F1', condition: null,
+      story: 'Marcus and Denise had their best quarter yet. Forty thousand more than expected. Marcus immediately started pricing out a new truck for the business. Denise booked the vacation they had been putting off for two years. Neither told the other before they did it. When the statements came in they had their first real fight in months.',
+      question: 'What should they do now?',
+      options: [
+        { key: 'A', text: 'Agree on a split going forward — a set percentage back into the business and a set amount personal, every time there is surplus.', score: 4 },
+        { key: 'B', text: 'Have a long conversation about priorities so they understand each other better before the next good month comes.', score: 3 },
+        { key: 'C', text: 'Let this one go and make a rule for next time. They were both doing what felt natural.', score: 2 },
+        { key: 'D', text: 'Keep personal spending separate going forward so money does not become a recurring argument.', score: 1 },
+      ]
+    },
+    {
+      key: 'F2', condition: null,
+      story: 'James has been managing the books for their marketing company. The last quarter was rough — down nearly $18,000 from where they projected. He has not told his wife Keisha yet because he wants to have a plan before he brings her a problem. She finds the statements on his laptop while printing something and sits in silence for a long time before he gets home.',
+      question: 'What should Keisha say when James walks in?',
+      options: [
+        { key: 'A', text: 'She focuses on the numbers first. She asks him to walk her through where they actually are and what the plan is.', score: 3 },
+        { key: 'B', text: 'She tells him what she found and asks him to help her understand why he carried this alone.', score: 4 },
+        { key: 'C', text: 'She brings it up but keeps it light. She does not want him to feel attacked when he was already trying to fix it.', score: 2 },
+        { key: 'D', text: 'She waits for him to bring it up. He knows she uses that printer. He will say something.', score: 1 },
+      ]
+    },
+    {
+      key: 'F3', condition: null,
+      story: 'Tanya and Devon run a catering company together. The business account has $9,000. Their personal account is nearly empty after a slow month. Devon transfers $2,500 to cover their mortgage before talking to Tanya about it. He figures it is their business and their house, so it is all the same money. Tanya sees the transfer notification and her stomach drops.',
+      question: 'What is Tanya\'s real concern?',
+      options: [
+        { key: 'A', text: 'The amount. $2,500 is significant and he should have checked in first.', score: 3 },
+        { key: 'B', text: 'The pattern. If he moved money without asking once, there is nothing stopping him from doing it again.', score: 4 },
+        { key: 'C', text: 'Nothing serious. He solved a real problem and the mortgage is paid. She should let this one go.', score: 1 },
+        { key: 'D', text: 'The fact that she found out from a notification and not from him.', score: 2 },
+      ]
+    },
+    {
+      key: 'F4', condition: null,
+      story: 'Simone and Ray have been running their consulting firm for two years without taking a real salary. They finally have enough to make a move. Ray wants to reinvest everything and scale. Simone wants to start paying themselves. She is tired of feeling like they are building something they cannot touch. They are both right. They both know it. That is the problem.',
+      question: 'What should Ray say to Simone?',
+      options: [
+        { key: 'A', text: 'Tell me what taking a salary would actually mean for you right now.', score: 4 },
+        { key: 'B', text: 'Look at these numbers. Reinvesting now is the only way we get to where we want to be.', score: 1 },
+        { key: 'C', text: 'What if we agree on a small salary now and revisit the split every six months as the business grows.', score: 3 },
+        { key: 'D', text: 'Let\'s bring someone else in to weigh in so it\'s not just us going back and forth on this.', score: 2 },
+      ]
+    },
+    {
+      key: 'F5', condition: null,
+      story: 'Adrienne and Marcus have not been fighting. They have not been laughing either. The business has been slow for three months and neither of them has said that out loud yet. The conversations are shorter. The evenings are quieter. Adrienne thinks Marcus is pulling away. Marcus thinks Adrienne is disappointed in him.',
+      question: 'What is the most dangerous thing about this situation?',
+      options: [
+        { key: 'A', text: 'They are both building a story about what the other person is thinking and neither story is accurate.', score: 4 },
+        { key: 'B', text: 'The business problems are not getting solved because they are too busy managing the distance.', score: 3 },
+        { key: 'C', text: 'They have not had a real conversation in a while and the longer they wait the harder it gets.', score: 2 },
+        { key: 'D', text: 'Adrienne is carrying something that is not hers to carry alone.', score: 1 },
+      ]
+    },
+    {
+      key: 'F6', condition: null,
+      story: 'Lisa and Tony have a clear division in their business — she runs marketing, he runs operations. Lisa approved a $3,500 ad campaign without checking with Tony. In her mind it was her area and her decision to make. He found out when the payment hit and felt blindsided. She thinks he is overreacting. He thinks she crossed a line.',
+      question: 'Tony is upset. What is the most useful thing Lisa could say?',
+      options: [
+        { key: 'A', text: 'You are right. Anything over a certain amount should be a conversation first, regardless of whose lane it is.', score: 4 },
+        { key: 'B', text: 'I understand why you feel blindsided but this was my call to make.', score: 1 },
+        { key: 'C', text: 'I should have told you. What would you need from me going forward?', score: 3 },
+        { key: 'D', text: 'Next time I will tell you first. But I still think it was the right spend.', score: 2 },
+      ]
+    },
+    {
+      key: 'F7', condition: { field: 'primary_income', values: ['yes'] },
+      story: 'Brendan and Camille quit their jobs eight months ago to run their business full time. This month is the thinnest it has been. Brendan wants to take a small business loan to get through the quarter. Camille wants to cut everything they can before they take on debt. They are scared and they are showing it differently.',
+      question: 'What does this couple need most right now?',
+      options: [
+        { key: 'A', text: 'A decision. One of them needs to make the call and they both need to commit.', score: 2 },
+        { key: 'B', text: 'A real number. Exactly how long can they last and at what point does the loan become the only move.', score: 4 },
+        { key: 'C', text: 'To say out loud that they are both scared. The decisions will be clearer once they stop pretending otherwise.', score: 3 },
+        { key: 'D', text: 'Someone else to weigh in. A mentor or advisor who has been through this before.', score: 1 },
+      ]
+    },
+    {
+      key: 'F8', condition: { field: 'debt_level', values: ['significant', 'overwhelming'] },
+      story: 'Before they started the business Nadia came in with $40,000 in student loan debt. Her husband Darius came in debt free. The business is growing but Nadia\'s debt sits in the background of every financial conversation. Darius has never said it is her problem. But Nadia feels it every time the budget comes up.',
+      question: 'What is Nadia really waiting for?',
+      options: [
+        { key: 'A', text: 'For the debt to be paid off so she can stop feeling like a liability in her own marriage.', score: 2 },
+        { key: 'B', text: 'For Darius to say, without her asking, that they are in this together regardless of where the debt came from.', score: 4 },
+        { key: 'C', text: 'For a real plan that makes the number feel manageable instead of like a cloud over everything.', score: 3 },
+        { key: 'D', text: 'For permission to bring it up without feeling like she is making it his problem.', score: 1 },
+      ]
+    },
+    {
+      key: 'F9', condition: { field: 'savings_runway', values: ['none', '1-3-months'] },
+      story: 'Jade and Chris have three months of runway left. A wholesale deal just landed that could 4x their revenue but it requires $12,000 upfront they do not have sitting still. Jade wants to find a way to make it work. Chris wants to protect what little cushion they have.',
+      question: 'What should they do?',
+      options: [
+        { key: 'A', text: 'Take the deal. The risk of staying small is greater than the risk of running out.', score: 1 },
+        { key: 'B', text: 'Pass. You cannot build on an empty foundation and three months is not enough cushion to risk.', score: 2 },
+        { key: 'C', text: 'Map out what yes looks like in 90 days and what no looks like in 90 days, then decide.', score: 3 },
+        { key: 'D', text: 'Find out if the terms are flexible. A payment plan or partial upfront changes the entire equation.', score: 4 },
+      ]
+    },
+  ],
+
+  family: [
+    {
+      key: 'Fam1', condition: null,
+      story: 'Vanessa and Derek both work in the business full time. Vanessa also handles most of what happens at home — the appointments, the groceries, the calls from school. She has not said anything directly but Derek has noticed she is tired in a way that is different. He tells himself she would say something if it was a problem.',
+      question: 'What is Derek missing?',
+      options: [
+        { key: 'A', text: 'That Vanessa is waiting to be asked, not waiting to complain.', score: 4 },
+        { key: 'B', text: 'That Vanessa\'s tiredness is starting to show up in her work.', score: 2 },
+        { key: 'C', text: 'That they need to sit down and officially divide up the home responsibilities.', score: 3 },
+        { key: 'D', text: 'Nothing. If it were serious she would have said something by now.', score: 1 },
+      ]
+    },
+    {
+      key: 'Fam2', condition: null,
+      story: 'Jerome and Patrice decided to expand their business last year. More clients, more hours, more stress. They talked about it as a business decision. They never talked about what it would mean for their evenings, their weekends, their kids\' routines. Six months in the expansion is working. The family is fraying.',
+      question: 'What did Jerome and Patrice skip?',
+      options: [
+        { key: 'A', text: 'They needed a family plan to go alongside the business plan.', score: 4 },
+        { key: 'B', text: 'Patrice should have spoken up if she had concerns before they said yes.', score: 1 },
+        { key: 'C', text: 'They needed to hire household support sooner to take the pressure off.', score: 2 },
+        { key: 'D', text: 'They needed a 90-day check-in to see how the family was actually adjusting.', score: 3 },
+      ]
+    },
+    {
+      key: 'Fam3', condition: null,
+      story: 'Nina and Andre had a disagreement before work. It was about the kids\' schedule and who dropped the ball. They both said they were fine. They were not fine. By 10am it was showing up in how they were communicating in a client meeting. The client did not notice. Their team did.',
+      question: 'What should Nina and Andre do?',
+      options: [
+        { key: 'A', text: 'Finish the workday and come back to it at home where it belongs.', score: 2 },
+        { key: 'B', text: 'Take 10 minutes before the next meeting and clear enough of it to get through the day.', score: 3 },
+        { key: 'C', text: 'Acknowledge to each other that they brought something unfinished into the day and agree on when they will finish it.', score: 4 },
+        { key: 'D', text: 'Let it go. Every couple has bad mornings and the work still got done.', score: 1 },
+      ]
+    },
+    {
+      key: 'Fam4', condition: null,
+      story: 'Marcus and Tamara have two kids. When something comes up — sick child, school event, teacher call — it is almost always Tamara who handles it. Not because they agreed to that. It just became the pattern. Marcus tells himself she is better at it. Tamara has started to feel like she is running two full-time jobs.',
+      question: 'What is the real cost of this pattern?',
+      options: [
+        { key: 'A', text: 'Tamara will burn out and when she does the business will feel it too.', score: 3 },
+        { key: 'B', text: 'Tamara is building resentment quietly. By the time it comes out it will be bigger than any one conversation can fix.', score: 4 },
+        { key: 'C', text: 'The kids are better off with a fully present parent even if it is just one of them.', score: 1 },
+        { key: 'D', text: 'Marcus is missing time with his kids that he is not going to get back.', score: 2 },
+      ]
+    },
+    {
+      key: 'Fam5', condition: null,
+      story: 'Before they launched the business Keisha and Raymond talked about what family life would look like. They had a plan — dinner together most nights, weekends mostly protected, the kids would not feel it. Two years in almost none of that is true. They have both adjusted without ever having a conversation about adjusting.',
+      question: 'What is most true about Keisha and Raymond right now?',
+      options: [
+        { key: 'A', text: 'They are resilient. Every couple building something real goes through this phase.', score: 2 },
+        { key: 'B', text: 'They made promises to their family they are not keeping and that has a cost even when no one is saying it out loud.', score: 3 },
+        { key: 'C', text: 'They are operating on an outdated agreement. The plan they made does not match the life they are living and they have never updated it together.', score: 4 },
+        { key: 'D', text: 'Raymond has given more than he bargained for and Keisha may not fully see it.', score: 1 },
+      ]
+    },
+    {
+      key: 'Fam6', condition: { field: 'family_structure', values: ['blended', 'stepparent'] },
+      story: 'Damon and Yvette are building a business together. Damon has two kids from his previous relationship who spend every other week with them. During those weeks the pace changes — more obligations, more pickups, more of Yvette in a role she did not fully plan for. It is working, mostly. But Damon has noticed Yvette goes a little quieter those weeks.',
+      question: 'What should Damon do?',
+      options: [
+        { key: 'A', text: 'Ask Yvette directly — not if she is okay, but what those weeks actually feel like for her.', score: 4 },
+        { key: 'B', text: 'Give her more space during those weeks. She will find her rhythm.', score: 1 },
+        { key: 'C', text: 'Have a real conversation about what her role with his kids looks like and whether it is working for both of them.', score: 3 },
+        { key: 'D', text: 'Let it be. She knew what she was stepping into and she has not said it is a problem.', score: 2 },
+      ]
+    },
+    {
+      key: 'Fam7', condition: { field: 'family_structure', values: ['kids-together'] },
+      story: 'Simone and David do not argue much. But when they do it is almost always about the kids. She thinks he is too lenient. He thinks she is too strict. In the business they move in sync. At home they feel like they are parenting two different children. Their son has started to figure out who to ask for what.',
+      question: 'What is the most important thing Simone and David need to do?',
+      options: [
+        { key: 'A', text: 'Get on the same page about a few non-negotiables so the kids are not navigating two different households under one roof.', score: 4 },
+        { key: 'B', text: 'Accept that they have different parenting styles and let each parent lead in their own lane.', score: 2 },
+        { key: 'C', text: 'Have the conversation away from the house. When they are in business mode they communicate better.', score: 3 },
+        { key: 'D', text: 'Let the kids figure it out. Different perspectives from two parents are not always a problem.', score: 1 },
+      ]
+    },
+    {
+      key: 'Fam8', condition: { field: 'family_structure', values: ['no-kids', 'unsure'] },
+      story: 'Alicia and Trevor are two years into the business. Things are growing. The question of kids keeps coming up — not in a tense way, just in a we-have-not-really-decided way. Alicia is starting to feel the clock differently than Trevor is. He thinks there is more time. She is not sure there is.',
+      question: 'What does this couple actually need to talk about?',
+      options: [
+        { key: 'A', text: 'A timeline — even a loose one — so both of them are working from the same assumption about what comes next.', score: 4 },
+        { key: 'B', text: 'Whether they actually want kids or just think they are supposed to want them.', score: 3 },
+        { key: 'C', text: 'Whether the business is in a place where it could absorb that kind of change.', score: 2 },
+        { key: 'D', text: 'Nothing yet. When the time is right they will both know.', score: 1 },
+      ]
+    },
+  ],
+
+  relationship: [
+    {
+      key: 'R1', condition: null,
+      story: 'Camille and Trey had a real disagreement about a business decision. It got heated. They both said things that were sharper than they needed to be. They resolved the business issue. They never resolved the moment. That night they were polite. The next morning was normal. But something was sitting just below the surface.',
+      question: 'What is actually happening here?',
+      options: [
+        { key: 'A', text: 'They are being mature. Not every argument needs a full debrief.', score: 2 },
+        { key: 'B', text: 'They resolved the issue but skipped the repair. Over time those unfinished moments stack up.', score: 4 },
+        { key: 'C', text: 'One of them needs to be the one to bring it back up.', score: 3 },
+        { key: 'D', text: 'This is how long-term couples work. The politeness is the repair.', score: 1 },
+      ]
+    },
+    {
+      key: 'R2', condition: null,
+      story: 'Lisa and Anthony have a good business. They have a good family. What they have less of is each other. Not because anything is wrong. Just because there is always something more urgent. The last time they were genuinely present with each other — not talking about the business, not managing something — neither of them can quite remember.',
+      question: 'What does this tell you about Lisa and Anthony?',
+      options: [
+        { key: 'A', text: 'They are in a season. Every couple building something real goes through this.', score: 2 },
+        { key: 'B', text: 'They have let the business become the most important relationship in the house.', score: 4 },
+        { key: 'C', text: 'They need to start scheduling time together the way they schedule everything else.', score: 3 },
+        { key: 'D', text: 'Anthony should plan something. Lisa has been carrying a lot and she needs to feel considered.', score: 1 },
+      ]
+    },
+    {
+      key: 'R3', condition: null,
+      story: 'Dominique has a strong personality in the business. She sets direction, closes deals, drives decisions. Her husband Marcus is talented but quieter. Over time the dynamic at work has started to come home. Dominique does not notice. Marcus does not know how to name it. He just knows that lately he feels like he works for his wife.',
+      question: 'What is Marcus experiencing?',
+      options: [
+        { key: 'A', text: 'A confidence issue. He needs to find his voice in the business before this gets worse.', score: 2 },
+        { key: 'B', text: 'A dynamic that started in the business and has leaked into the relationship.', score: 4 },
+        { key: 'C', text: 'A communication gap. He has not told Dominique how he feels.', score: 3 },
+        { key: 'D', text: 'Something that will work itself out as the roles in the business mature and balance.', score: 1 },
+      ]
+    },
+    {
+      key: 'R4', condition: null,
+      story: 'Naomi and Stephen have been together for four years and building a business for two of them. They talk about everything. Or they think they do. One evening a topic comes up — faith, values, how they see something important — and Naomi realizes she does not actually know where Stephen stands. Not really. She has been filling in the blanks herself.',
+      question: 'What should Naomi do?',
+      options: [
+        { key: 'A', text: 'Ask him. Not to start a debate but because she realizes she has been assuming instead of knowing.', score: 4 },
+        { key: 'B', text: 'Let it go. Four years in, these conversations create more friction than clarity.', score: 1 },
+        { key: 'C', text: 'Wait and see if it comes up naturally over the next few weeks.', score: 2 },
+        { key: 'D', text: 'Share where she stands first and see if he meets her there.', score: 3 },
+      ]
+    },
+    {
+      key: 'R5', condition: null,
+      story: 'Ava and Jordan used to be the couple people noticed. Easy with each other, present, affectionate. Two years into the business something shifted. Not a fight. Nothing happened. The business just got louder and the closeness got quieter. Ava misses Jordan. Jordan thinks Ava seems fine.',
+      question: 'What is Jordan missing?',
+      options: [
+        { key: 'A', text: 'That the business growing and the relationship shrinking is not a trade-off Ava agreed to.', score: 4 },
+        { key: 'B', text: 'That Ava needs quality time and he should plan something intentional soon.', score: 3 },
+        { key: 'C', text: 'That Ava has not said what she needs so he cannot be expected to know.', score: 2 },
+        { key: 'D', text: 'Nothing serious. Relationships have seasons and this is a building season.', score: 1 },
+      ]
+    },
+    {
+      key: 'R6', condition: { field: 'faith_influence', values: ['high'] },
+      story: 'Grace and Michael have always led with faith. It is part of how they parent, how they handle conflict, and how they built the business from the start. A new partnership opportunity has come up that would significantly grow their revenue. It sits uncomfortably with some of their values. Michael sees it as a business decision. Grace sees it as something bigger than that.',
+      question: 'What should they do?',
+      options: [
+        { key: 'A', text: 'Take the meeting. You can have values and still look at an opportunity.', score: 2 },
+        { key: 'B', text: 'Decline without a full discussion. Grace\'s discomfort is enough of a signal.', score: 3 },
+        { key: 'C', text: 'Have a real conversation about where their line is before they respond to any opportunity like this.', score: 4 },
+        { key: 'D', text: 'Let Michael handle it. He is more comfortable separating business from personal values.', score: 1 },
+      ]
+    },
+    {
+      key: 'R7', condition: { type: 'visibility_or_politics_gap' },
+      story: 'Chris and Dana have always kept certain conversations off the table. It has worked for them. But the business is growing and they are becoming more public — speaking, social media, community involvement. The things they used to leave unspoken are starting to have visibility. Their silence on certain topics is being noticed by their audience and by each other.',
+      question: 'What does this couple need to address?',
+      options: [
+        { key: 'A', text: 'A clear line between what stays private and what goes public.', score: 3 },
+        { key: 'B', text: 'Nothing. Couples do not have to agree on everything and a business does not need a political identity.', score: 2 },
+        { key: 'C', text: 'A real conversation about whether their differences can coexist inside a shared public brand as the business grows.', score: 4 },
+        { key: 'D', text: 'One of them needs to soften their position. A shared brand needs a shared voice.', score: 1 },
+      ]
+    },
+    {
+      key: 'R8', condition: { field: 'time_together', values: ['under-1', '1-3'] },
+      story: 'Jasmine and Kevin have been together for two years and running their business for one of them. They are figuring out the relationship and the business at the same time. Some days it feels like too much. On those days they are not sure if they are fighting about the business or the relationship or both.',
+      question: 'What is the most important thing for Jasmine and Kevin to understand?',
+      options: [
+        { key: 'A', text: 'They are doing two of the hardest things at once. That deserves acknowledgment, not more pressure.', score: 3 },
+        { key: 'B', text: 'They need more relationship time that has nothing to do with the business.', score: 2 },
+        { key: 'C', text: 'When they fight it matters which one they are actually fighting about. Mixing them up makes both harder to solve.', score: 4 },
+        { key: 'D', text: 'They may have moved too fast. Building a business before the relationship is fully solid is a real risk.', score: 1 },
+      ]
+    },
+  ],
+};
+
+const DOMAIN_META = {
+  business:      { label: 'Business',      intro: 'Read each situation and choose the answer that feels most true — not what you think you should say, but what actually resonates.' },
+  finances:      { label: 'Finances',      intro: 'These situations are real. Some of them will feel familiar. Just go with what comes first.' },
+  family:        { label: 'Family',        intro: 'Take your time with these. There is no wrong way to read a story.' },
+  relationship:  { label: 'Relationship',  intro: 'This is the one most people rush through. Do not. Read slowly.' },
+};
+
+const DOMAIN_ORDER = ['business', 'finances', 'family', 'relationship'];
+const SCALE_MAP = { low: 1, medium: 2, high: 3 };
+const VIS_MAP   = { 'very-private': 1, 'mostly-private': 2, 'selective': 3, 'comfortable': 4, 'personal-brand': 5 };
+
+let userId, coupleId, myProfile, partnerProfile;
+let currentDomain = 0;
+let answers   = {}; // { scenarioKey: { option: 'A', score: 4 } }
+let notes     = {}; // { domain: text }
+let saveTimer = null;
 
 async function init() {
-  let { data: { session } } = await db.auth.getSession();
-  if (!session) { window.location.href = '/programs/login'; return; }
+  const { data: { user } } = await db.auth.getUser();
+  if (!user) { window.location.href = '/programs/couples-join'; return; }
+  userId = user.id;
 
-  const { data: refreshed } = await db.auth.refreshSession();
-  if (refreshed?.session) session = refreshed.session;
+  const firstName = user.user_metadata?.first_name || user.email?.split('@')[0] || 'Partner';
+  document.getElementById('topName').textContent = firstName;
 
-  userId = session.user.id;
-
-  // Find couple
-  const { data: couple } = await db
+  // Get couple
+  const { data: couples } = await db
     .from('couples')
-    .select('id')
+    .select('id, partner_a_user_id, partner_b_user_id')
     .or(`partner_a_user_id.eq.${userId},partner_b_user_id.eq.${userId}`)
-    .single();
+    .limit(1);
 
-  if (!couple) {
-    document.getElementById('main').innerHTML = `<p style="color:var(--cie-muted);text-align:center;padding:80px 0;">No couple record found. Please contact <a href="mailto:programs@mirajoco.org" style="color:var(--cie-crimson);">support</a>.</p>`;
-    return;
-  }
+  if (!couples?.length) { window.location.href = '/programs/couples-dashboard'; return; }
+  const couple = couples[0];
   coupleId = couple.id;
 
-  // Check if already complete
-  const { data: completion } = await db
-    .from('diagnostic_completion')
-    .select('completed_at')
-    .eq('couple_id', coupleId)
-    .eq('user_id', userId)
-    .single();
+  const partnerId = userId === couple.partner_a_user_id
+    ? couple.partner_b_user_id
+    : couple.partner_a_user_id;
 
-  if (completion) {
-    alreadyComplete = true;
-    document.getElementById('main').innerHTML = `
-      <div style="text-align:center;padding:80px 0 40px;">
-        <div style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--cie-dark);margin-bottom:16px;">You're done.</div>
-        <p style="font-size:16px;color:var(--cie-muted);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">You've already completed The Partnership Diagnostic. Once your partner finishes theirs, your Partnership Report will be ready on your dashboard.</p>
-        <a href="/programs/couples-dashboard" style="display:inline-block;padding:14px 32px;background:var(--cie-crimson);color:#ffffff;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">Back to Dashboard</a>
-      </div>`;
-    return;
-  }
+  // Load both profiles for conditional branching
+  const { data: profiles } = await db
+    .from('partner_profiles')
+    .select('*')
+    .eq('couple_id', coupleId);
 
-  // Load existing responses from Supabase into draft
+  myProfile      = profiles?.find(p => p.user_id === userId) || {};
+  partnerProfile = profiles?.find(p => p.user_id === partnerId) || {};
+
+  // Load existing answers
   const { data: existing } = await db
-    .from('diagnostic_responses')
-    .select('domain, question_key, response_text')
+    .from('diagnostic_answers')
+    .select('scenario_key, selected_option, score')
     .eq('couple_id', coupleId)
     .eq('user_id', userId);
 
-  if (existing?.length) {
-    const draft = getDraft();
-    for (const row of existing) {
-      if (!draft[row.domain]) draft[row.domain] = {};
-      draft[row.domain][row.question_key] = row.response_text;
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+  for (const row of (existing || [])) {
+    answers[row.scenario_key] = { option: row.selected_option, score: row.score };
   }
 
-  document.getElementById('progress-bar-wrap').style.display = '';
-  renderIntro();
+  // Load existing notes
+  const { data: existingNotes } = await db
+    .from('diagnostic_notes')
+    .select('domain, note_text')
+    .eq('couple_id', coupleId)
+    .eq('user_id', userId);
+
+  for (const row of (existingNotes || [])) {
+    notes[row.domain] = row.note_text;
+  }
+
+  setSaveStatus('saved');
+  showIntro();
 }
 
-function renderIntro() {
-  currentStep = 0;
-  updateProgressBar();
+function shouldShow(scenario) {
+  if (!scenario.condition) return true;
+  const c = scenario.condition;
+
+  if (c.field) {
+    return c.values.includes(myProfile[c.field]);
+  }
+  if (c.type === 'vision_gap') {
+    return myProfile.long_term_vision && partnerProfile.long_term_vision &&
+           myProfile.long_term_vision !== partnerProfile.long_term_vision;
+  }
+  if (c.type === 'visibility_or_politics_gap') {
+    const polA = SCALE_MAP[myProfile.political_importance] || 0;
+    const polB = SCALE_MAP[partnerProfile.political_importance] || 0;
+    const visA = VIS_MAP[myProfile.public_visibility] || 0;
+    const visB = VIS_MAP[partnerProfile.public_visibility] || 0;
+    return Math.abs(polA - polB) >= 2 || Math.abs(visA - visB) >= 2;
+  }
+  return false;
+}
+
+function domainScenarios(domain) {
+  return SCENARIOS[domain].filter(s => shouldShow(s));
+}
+
+function selectOption(scenarioKey, optionKey, score) {
+  answers[scenarioKey] = { option: optionKey, score };
+
+  // Update UI
+  document.querySelectorAll(`[data-scenario="${scenarioKey}"] .scenario-option`).forEach(el => {
+    el.classList.toggle('selected', el.dataset.option === optionKey);
+  });
+  const card = document.querySelector(`[data-scenario="${scenarioKey}"]`);
+  if (card) card.classList.add('answered');
+
+  scheduleSave();
+}
+
+function scheduleSave() {
+  setSaveStatus('saving');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flushSave, 1200);
+}
+
+async function flushSave() {
+  const rows = Object.entries(answers).map(([scenario_key, { option, score }]) => ({
+    couple_id: coupleId,
+    user_id:   userId,
+    domain:    getDomainForKey(scenario_key),
+    scenario_key,
+    selected_option: option,
+    score,
+  }));
+
+  if (rows.length) {
+    await db.from('diagnostic_answers')
+      .upsert(rows, { onConflict: 'couple_id,user_id,scenario_key' });
+  }
+
+  // Save notes
+  const noteRows = Object.entries(notes)
+    .filter(([, t]) => t?.trim())
+    .map(([domain, note_text]) => ({
+      couple_id: coupleId, user_id: userId, domain, note_text,
+      updated_at: new Date().toISOString(),
+    }));
+  if (noteRows.length) {
+    await db.from('diagnostic_notes')
+      .upsert(noteRows, { onConflict: 'couple_id,user_id,domain' });
+  }
+
+  setSaveStatus('saved');
+}
+
+function getDomainForKey(key) {
+  for (const [domain, scenarios] of Object.entries(SCENARIOS)) {
+    if (scenarios.find(s => s.key === key)) return domain;
+  }
+  return null;
+}
+
+function setSaveStatus(state) {
+  const el = document.getElementById('saveIndicator');
+  el.textContent = state === 'saved' ? 'Saved' : 'Saving...';
+  el.className = 'save-indicator' + (state === 'saved' ? ' saved' : '');
+}
+
+function updateStepBar(stepIndex) {
+  document.querySelectorAll('.domain-step').forEach(el => {
+    const s = parseInt(el.dataset.step);
+    el.classList.remove('active', 'done');
+    if (s === stepIndex + 1) el.classList.add('active');
+    else if (s < stepIndex + 1) el.classList.add('done');
+  });
+}
+
+function showIntro() {
+  updateStepBar(-1);
   document.getElementById('main').innerHTML = `
-    <div class="intro-screen">
-      <div class="intro-eyebrow">Couples in Entrepreneurship</div>
-      <h1 class="intro-title">The Partnership Diagnostic</h1>
-      <p class="intro-body">This is your private assessment. Your partner will not see your answers — and you will not see theirs. The system compares your responses and generates your Partnership Report once you're both done.</p>
-      <p class="intro-body">There are four domains: Business, Finances, Family, and Relationship. Answer honestly. Take your time. You can save and return at any point.</p>
-      <div class="intro-note">
-        <strong>Private by design.</strong> Your partner cannot access this page or view any of your responses before the report generates. The only thing they will know is whether you've completed it.
-      </div>
-      <button class="btn-next" onclick="goToStep(1)">Begin the Diagnostic</button>
+    <div class="intro-eyebrow">The Partnership Diagnostic</div>
+    <h1 class="intro-title">Time to see yourselves clearly.</h1>
+    <p class="intro-body">You are going to read through a series of real situations — couples navigating the same things you are. For each one, choose the answer that actually resonates. Not the one that sounds best. The one that feels true.</p>
+    <p class="intro-body">There are four areas: Business, Finances, Family, and Relationship. Your partner is doing this separately. Your individual answers stay private — only the picture they create together is shared.</p>
+    <div class="intro-note"><strong>Take your time.</strong> Your answers save automatically as you go. You can leave and come back at any point.</div>
+    <div class="nav-buttons" style="justify-content:flex-end;">
+      <button class="btn-next" onclick="showDomain(0)">Begin →</button>
     </div>`;
 }
 
-function renderDomain(stepIndex) {
-  const domain = DOMAINS[stepIndex - 1];
-  const draft = getDraft();
-  const saved = draft[domain.key] || {};
+function showDomain(index) {
+  currentDomain = index;
+  updateStepBar(index);
+  const domain = DOMAIN_ORDER[index];
+  const meta = DOMAIN_META[domain];
+  const scenarios = domainScenarios(domain);
 
   let html = `
-    <div class="domain-screen active">
-      <div class="domain-eyebrow">Domain ${stepIndex} of 4</div>
-      <h2 class="domain-title">${domain.title}</h2>
-      <p class="domain-intro">${domain.intro}</p>`;
+    <div class="domain-eyebrow">Part ${index + 1} of 4</div>
+    <h2 class="domain-title">${meta.label}</h2>
+    <p class="domain-intro">${meta.intro}</p>`;
 
-  domain.questions.forEach((q, i) => {
-    const val = saved[q.key] || '';
+  for (const s of scenarios) {
+    const answered = answers[s.key];
     html += `
-      <div class="question-block">
-        <div class="question-label">${q.label}</div>
-        ${q.hint ? `<div class="question-hint">${q.hint}</div>` : ''}
-        <textarea id="q_${domain.key}_${q.key}" rows="4" placeholder="Your thoughts..."
-          oninput="autoSave('${domain.key}','${q.key}',this.value)">${escapeHtml(val)}</textarea>
+      <div class="scenario-card${answered ? ' answered' : ''}" data-scenario="${s.key}">
+        <p class="scenario-story">${escHtml(s.story)}</p>
+        <p class="scenario-question">${escHtml(s.question)}</p>
+        <div class="scenario-options">
+          ${s.options.map(o => `
+            <div class="scenario-option${answered?.option === o.key ? ' selected' : ''}"
+                 data-option="${o.key}"
+                 onclick="selectOption('${s.key}','${o.key}',${o.score})">
+              <input type="radio" name="${s.key}" value="${o.key}" ${answered?.option === o.key ? 'checked' : ''}>
+              <div class="option-key">${o.key}</div>
+              <div class="option-text">${escHtml(o.text)}</div>
+            </div>`).join('')}
+        </div>
       </div>`;
-  });
-
-  // Alignment rating
-  const ratingVal = saved['alignment_rating'] || '';
-  const RATINGS = [
-    { v: 1, text: 'Very misaligned' },
-    { v: 2, text: 'Mostly misaligned' },
-    { v: 3, text: 'In the middle' },
-    { v: 4, text: 'Mostly aligned' },
-    { v: 5, text: 'Fully aligned' },
-  ];
+  }
 
   html += `
-    <hr class="domain-divider">
-    <div class="rating-block">
-      <div class="rating-label">Overall, how aligned do you feel with your partner in this area right now?</div>
-      <div class="rating-sub">This is your honest gut read — not where you want to be, where you actually are.</div>
-      <div class="rating-options">
-        ${RATINGS.map(r => `
-          <div class="rating-option">
-            <input type="radio" name="rating_${domain.key}" id="r_${domain.key}_${r.v}" value="${r.v}"
-              ${ratingVal == r.v ? 'checked' : ''}
-              onchange="autoSave('${domain.key}','alignment_rating','${r.v}')">
-            <label for="r_${domain.key}_${r.v}">
-              <span class="rating-num">${r.v}</span>
-              <span class="rating-text">${r.text}</span>
-            </label>
-          </div>`).join('')}
-      </div>
+    <div class="notes-block">
+      <div class="notes-label">Anything you want to add about this area? <span style="font-weight:400;color:var(--cie-muted);">(optional — just for you)</span></div>
+      <textarea placeholder="Your thoughts..." oninput="notes['${domain}']=this.value;scheduleSave()">${escHtml(notes[domain] || '')}</textarea>
     </div>
-
-    <div id="form-error-${domain.key}" class="form-error">Please answer all questions and select an alignment rating before continuing.</div>
-
+    <div class="form-error" id="domain-error">Please answer every scenario before continuing.</div>
     <div class="nav-buttons">
-      <button class="btn-back" onclick="goToStep(${stepIndex - 1})">${stepIndex === 1 ? '← Back to Intro' : '← Previous'}</button>
-      <div class="btn-next-spacer"></div>
-      <button class="btn-next" onclick="handleNext('${domain.key}', ${stepIndex})">
-        ${stepIndex < 4 ? 'Next Domain →' : 'Submit Diagnostic'}
-      </button>
-    </div>
-  </div>`;
+      ${index > 0 ? `<button class="btn-back" onclick="showDomain(${index - 1})">← Back</button>` : '<div></div>'}
+      <button class="btn-next" onclick="${index < 3 ? `nextDomain(${index})` : 'submitDiagnostic()'}">${index < 3 ? 'Next →' : 'Submit Diagnostic'}</button>
+    </div>`;
 
   document.getElementById('main').innerHTML = html;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function autoSave(domainKey, qKey, value) {
-  const draft = getDraft();
-  if (!draft[domainKey]) draft[domainKey] = {};
-  draft[domainKey][qKey] = value;
-  saveDraft(draft);
-}
-
-function handleNext(domainKey, stepIndex) {
-  const domain = DOMAINS[stepIndex - 1];
-  const draft = getDraft();
-  const saved = draft[domainKey] || {};
-
-  // Validate: all questions answered + alignment rating selected
-  const missing = domain.questions.some(q => !saved[q.key]?.trim());
-  const noRating = !saved['alignment_rating'];
-
-  if (missing || noRating) {
-    const err = document.getElementById(`form-error-${domainKey}`);
-    if (err) { err.style.display = 'block'; err.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+function nextDomain(index) {
+  const domain = DOMAIN_ORDER[index];
+  const scenarios = domainScenarios(domain);
+  const unanswered = scenarios.filter(s => !answers[s.key]);
+  if (unanswered.length) {
+    const err = document.getElementById('domain-error');
+    err.style.display = 'block';
+    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
-
-  if (stepIndex < 4) {
-    goToStep(stepIndex + 1);
-  } else {
-    submitDiagnostic();
-  }
+  showDomain(index + 1);
 }
 
 async function submitDiagnostic() {
-  document.getElementById('main').innerHTML = `
-    <div class="submitting-screen active">
-      <div class="spinner"></div>
-      <div class="submitting-title">Submitting your responses...</div>
-      <p class="submitting-sub">This will just take a moment.</p>
-    </div>`;
-  document.getElementById('progress-bar-wrap').style.display = 'none';
+  const domain = DOMAIN_ORDER[3];
+  const scenarios = domainScenarios(domain);
+  const unanswered = scenarios.filter(s => !answers[s.key]);
+  if (unanswered.length) {
+    const err = document.getElementById('domain-error');
+    err.style.display = 'block';
+    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
 
-  const draft = getDraft();
+  // Final save before submit
+  clearTimeout(saveTimer);
+  await flushSave();
+
+  document.getElementById('main').innerHTML = `
+    <div style="text-align:center;padding:80px 0;">
+      <div class="spinner"></div>
+      <div style="font-family:'Instrument Serif',serif;font-size:28px;color:var(--cie-dark);margin-bottom:12px;">Submitting your diagnostic...</div>
+      <p style="font-size:14px;color:var(--cie-muted);">Just a moment.</p>
+    </div>`;
 
   try {
     const res = await fetch('/api/couples-submit-diagnostic', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: userId, couple_id: coupleId, responses: draft }),
+      body: JSON.stringify({ user_id: userId, couple_id: coupleId }),
     });
     const data = await res.json();
 
-    if (!res.ok) throw new Error(data.error || 'Submission failed');
-
-    localStorage.removeItem(STORAGE_KEY);
-
-    const main = document.getElementById('main');
     if (data.report_ready) {
-      main.innerHTML = `
+      document.getElementById('main').innerHTML = `
         <div style="text-align:center;padding:80px 0 40px;">
-          <div style="font-size:48px;margin-bottom:24px;">🎉</div>
           <div style="font-family:'Instrument Serif',serif;font-size:36px;color:var(--cie-dark);margin-bottom:16px;">Your report is ready.</div>
-          <p style="font-size:16px;color:var(--cie-muted);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">Both partners have completed the diagnostic. Your Partnership Report is ready to view — see where you're aligned and where to focus your work together.</p>
-          <a href="/programs/couples-report" style="display:inline-block;padding:14px 32px;background:#5DBE8A;color:#0F1729;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">View Your Partnership Report</a>
+          <p style="font-size:15px;color:var(--cie-muted);max-width:480px;margin:0 auto 32px;line-height:1.7;">Both of you have completed the diagnostic. Your Partnership Report is waiting.</p>
+          <a href="/programs/couples-report" style="display:inline-block;padding:14px 32px;background:var(--cie-crimson);color:#fff;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">View Your Report →</a>
         </div>`;
     } else {
-      main.innerHTML = `
+      document.getElementById('main').innerHTML = `
         <div style="text-align:center;padding:80px 0 40px;">
-          <div style="font-family:'Instrument Serif',serif;font-size:36px;color:var(--cie-dark);margin-bottom:16px;">You're done.</div>
-          <p style="font-size:16px;color:var(--cie-muted);margin-bottom:16px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">Your responses have been saved privately. Once your partner completes their side, your Partnership Report will generate automatically.</p>
-          <p style="font-size:14px;color:var(--cie-muted);margin-bottom:32px;">We'll email you both when it's ready.</p>
-          <a href="/programs/couples-dashboard" style="display:inline-block;padding:14px 32px;background:var(--cie-crimson);color:#ffffff;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">Back to Dashboard</a>
+          <div style="font-family:'Instrument Serif',serif;font-size:36px;color:var(--cie-dark);margin-bottom:16px;">You are done.</div>
+          <p style="font-size:15px;color:var(--cie-muted);max-width:480px;margin:0 auto 32px;line-height:1.7;">Your answers are in. Your report generates as soon as your partner finishes. We will email you both when it is ready.</p>
+          <a href="/programs/couples-dashboard" style="display:inline-block;padding:14px 32px;background:var(--cie-crimson);color:#fff;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">Back to Dashboard</a>
         </div>`;
     }
   } catch (err) {
     document.getElementById('main').innerHTML = `
       <div style="text-align:center;padding:80px 0 40px;">
-        <div style="font-family:'Instrument Serif',serif;font-size:28px;color:var(--cie-dark);margin-bottom:16px;">Something went wrong</div>
-        <p style="font-size:14px;color:var(--cie-muted);margin-bottom:24px;">${err.message}</p>
-        <p style="font-size:13px;color:var(--cie-muted);">Your answers are saved locally. Please try again or contact <a href="mailto:programs@mirajoco.org" style="color:var(--cie-crimson);">programs@mirajoco.org</a>.</p>
-        <br><button class="btn-next" onclick="goToStep(4)" style="margin-top:16px;">← Go Back</button>
+        <div style="font-family:'Instrument Serif',serif;font-size:28px;color:var(--cie-dark);margin-bottom:12px;">Something went wrong.</div>
+        <p style="font-size:14px;color:var(--cie-muted);margin-bottom:24px;">Your answers are saved. Please try again.</p>
+        <button class="btn-next" onclick="showDomain(3)">← Go Back</button>
       </div>`;
-    document.getElementById('progress-bar-wrap').style.display = '';
   }
 }
 
-function goToStep(step) {
-  currentStep = step;
-  updateProgressBar();
-  if (step === 0) {
-    renderIntro();
-  } else {
-    renderDomain(step);
-  }
-}
-
-function updateProgressBar() {
-  document.querySelectorAll('.progress-step').forEach(el => {
-    const s = parseInt(el.dataset.step);
-    el.classList.remove('active', 'done');
-    if (s === currentStep) el.classList.add('active');
-    else if (s < currentStep) el.classList.add('done');
-  });
-}
-
-function escapeHtml(str) {
-  return String(str)
+function escHtml(str) {
+  return String(str || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -741,6 +816,5 @@ function escapeHtml(str) {
 
 init();
 </script>
-
 </body>
 </html>

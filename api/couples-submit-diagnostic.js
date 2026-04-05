@@ -1,6 +1,7 @@
 // POST /api/couples-submit-diagnostic
-// Saves diagnostic responses + marks completion.
-// If both partners are done, generates the Partnership Report and queues report-ready emails.
+// Marks this partner's diagnostic complete.
+// When both partners are done, calculates domain scores from scenario answers,
+// determines unlocked modules, generates the Partnership Report, and queues emails.
 
 import { createClient } from '@supabase/supabase-js';
 import { queueSequence } from './_emails.js';
@@ -10,17 +11,24 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// Unlock a domain if either partner rated it <= 3, or the gap between ratings >= 2
-function shouldUnlock(ratingA, ratingB) {
-  if (!ratingA || !ratingB) return true; // missing data → unlock to be safe
-  return ratingA <= 3 || ratingB <= 3 || Math.abs(ratingA - ratingB) >= 2;
+const DOMAINS = ['business', 'finances', 'family', 'relationship'];
+
+// Unlock a domain if either partner averages below 3.0 or the gap between them is >= 1.0
+function shouldUnlock(avgA, avgB) {
+  if (avgA === null || avgB === null) return true;
+  return avgA < 3.0 || avgB < 3.0 || Math.abs(avgA - avgB) >= 1.0;
+}
+
+function average(scores) {
+  if (!scores?.length) return null;
+  return scores.reduce((sum, s) => sum + s, 0) / scores.length;
 }
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { user_id, couple_id, responses } = req.body || {};
-  if (!user_id || !couple_id || !responses) {
+  const { user_id, couple_id } = req.body || {};
+  if (!user_id || !couple_id) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -35,30 +43,7 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'Unauthorized' });
   }
 
-  // Save all responses (upsert by couple_id + user_id + domain + question_key)
-  const rows = [];
-  for (const [domain, questions] of Object.entries(responses)) {
-    for (const [question_key, response_text] of Object.entries(questions)) {
-      rows.push({
-        couple_id,
-        user_id,
-        domain,
-        question_key,
-        response_text: String(response_text),
-      });
-    }
-  }
-
-  const { error: saveError } = await supabase
-    .from('diagnostic_responses')
-    .upsert(rows, { onConflict: 'couple_id,user_id,domain,question_key' });
-
-  if (saveError) {
-    console.error('Save responses error:', saveError);
-    return res.status(500).json({ error: 'Failed to save responses' });
-  }
-
-  // Mark this user's diagnostic as complete
+  // Mark this partner's diagnostic as complete
   const { error: completionError } = await supabase
     .from('diagnostic_completion')
     .upsert({ couple_id, user_id, completed_at: new Date().toISOString() },
@@ -83,7 +68,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true, report_ready: false });
   }
 
-  // Both partners done — check if report already exists
+  // Both done — check if report already generated
   const { data: existingReport } = await supabase
     .from('partnership_reports')
     .select('id')
@@ -94,52 +79,52 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true, report_ready: true });
   }
 
-  // Load both partners' alignment ratings
-  const partnerId = user_id === couple.partner_a_user_id ? couple.partner_b_user_id : couple.partner_a_user_id;
-  const DOMAINS = ['business', 'finances', 'family', 'relationship'];
+  // Load all diagnostic answers for this couple
+  const { data: allAnswers } = await supabase
+    .from('diagnostic_answers')
+    .select('user_id, domain, score')
+    .eq('couple_id', couple_id);
 
-  const { data: allRatings } = await supabase
-    .from('diagnostic_responses')
-    .select('user_id, domain, response_text')
-    .eq('couple_id', couple_id)
-    .eq('question_key', 'alignment_rating');
-
-  const ratings = {};
-  for (const row of (allRatings || [])) {
-    if (!ratings[row.domain]) ratings[row.domain] = {};
-    ratings[row.domain][row.user_id] = parseInt(row.response_text, 10);
+  // Group scores by domain + partner
+  const domainScores = {};
+  for (const row of (allAnswers || [])) {
+    if (!domainScores[row.domain]) domainScores[row.domain] = {};
+    if (!domainScores[row.domain][row.user_id]) domainScores[row.domain][row.user_id] = [];
+    domainScores[row.domain][row.user_id].push(row.score);
   }
 
   // Determine unlocked domains
   const unlocked_domains = [];
   for (const domain of DOMAINS) {
-    const rA = ratings[domain]?.[couple.partner_a_user_id];
-    const rB = ratings[domain]?.[couple.partner_b_user_id];
-    if (shouldUnlock(rA, rB)) unlocked_domains.push(domain);
+    const avgA = average(domainScores[domain]?.[couple.partner_a_user_id]);
+    const avgB = average(domainScores[domain]?.[couple.partner_b_user_id]);
+    if (shouldUnlock(avgA, avgB)) unlocked_domains.push(domain);
   }
 
-  // If all 4 are misaligned, set 'all' flag for easy frontend check
   if (unlocked_domains.length === DOMAINS.length) unlocked_domains.push('all');
 
-  // Load all responses for report_data
-  const { data: allResponses } = await supabase
-    .from('diagnostic_responses')
-    .select('user_id, domain, question_key, response_text')
-    .eq('couple_id', couple_id);
-
-  // Build report_data: { domain: { question_key: { partner_a: text, partner_b: text } } }
+  // Build report_data: domain averages + raw score arrays for display
   const report_data = {};
-  for (const row of (allResponses || [])) {
-    if (!report_data[row.domain]) report_data[row.domain] = {};
-    if (!report_data[row.domain][row.question_key]) report_data[row.domain][row.question_key] = {};
-    const who = row.user_id === couple.partner_a_user_id ? 'partner_a' : 'partner_b';
-    report_data[row.domain][row.question_key][who] = row.response_text;
+  for (const domain of DOMAINS) {
+    const aScores = domainScores[domain]?.[couple.partner_a_user_id] || [];
+    const bScores = domainScores[domain]?.[couple.partner_b_user_id] || [];
+    report_data[domain] = {
+      partner_a_avg: average(aScores),
+      partner_b_avg: average(bScores),
+      partner_a_scores: aScores,
+      partner_b_scores: bScores,
+    };
   }
 
   // Insert partnership report
   const { error: reportError } = await supabase
     .from('partnership_reports')
-    .insert({ couple_id, unlocked_domains, report_data, generated_at: new Date().toISOString() });
+    .insert({
+      couple_id,
+      unlocked_domains,
+      report_data,
+      generated_at: new Date().toISOString(),
+    });
 
   if (reportError) {
     console.error('Report insert error:', reportError);

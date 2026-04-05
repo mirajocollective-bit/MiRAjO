@@ -358,6 +358,20 @@ export const SEQUENCES = {
     },
   ],
 
+  'inactive-nudge': [
+    {
+      step: 1, delayDays: 0,
+      subject: "Your course is still waiting for you.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`You enrolled in 25 Days and 25 Nights and then life happened. I get it.`) +
+        p(`But you bought this for a reason. That reason did not go away just because things got busy.`) +
+        p(`Ten minutes. That is all Day 1 asks for. Log back in and give yourself ten minutes today.`) +
+        btn('Pick Up Where You Left Off', LOGIN)
+      ),
+    },
+  ],
+
   'course-25d25n-complete': [
     {
       step: 1, delayDays: 0,

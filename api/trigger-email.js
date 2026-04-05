@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import { addTag } from './_kit.js';
 import { queueSequence } from './_emails.js';
 
 const supabase = createClient(
@@ -12,17 +11,11 @@ const SEQUENCE_MAP = {
   'course-25d25n-complete': 'course-25d25n-complete',
 };
 
-const ALLOWED_TAGS = [
-  'enrolled-25d25n',
-  'module-1-complete',
-  'course-25d25n-complete',
-  'inactive-nudge',
-];
+const ALLOWED_TAGS = Object.keys(SEQUENCE_MAP);
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  // Require a valid Supabase user JWT
   const token = (req.headers['authorization'] || '').replace('Bearer ', '').trim();
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
 
@@ -34,8 +27,6 @@ export default async function handler(req, res) {
 
   if (!tag) return res.status(400).json({ error: 'Missing tag' });
   if (!ALLOWED_TAGS.includes(tag)) return res.status(400).json({ error: 'Unknown tag' });
-
-  await addTag(email, tag);
 
   const sequenceName = SEQUENCE_MAP[tag];
   if (sequenceName) {

@@ -698,7 +698,57 @@ function renderSection3() {
         </div>
       </div>
 
-      <div id="section-error" class="form-error">Please answer all three questions to continue.</div>
+      <div class="field-block">
+        <div class="field-label">Where do you see this business in 10 years?</div>
+        <div class="chip-group">
+          ${[['lifestyle','Lifestyle business — income, freedom, balance'],['scale-sell','Scale and sell — we\'re building to exit'],['generational','Generational legacy — something that outlives us'],['not-sure','We haven\'t decided yet']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="long_term_vision" id="ltv_${val}" value="${val}" ${d.long_term_vision===val?'checked':''} onchange="saveDraft({long_term_vision:'${val}'})">
+              <label for="ltv_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">How do you approach risk in the business?</div>
+        <div class="scale-group">
+          ${[['very-conservative','Very Conservative','Stability first — always'],['conservative','Conservative','Careful and deliberate'],['moderate','Moderate','Balanced approach'],['calculated-risk','Calculated Risk-Taker','Bold when the data supports it'],['aggressive','Aggressive','Move fast, figure it out']].map(([val,main,sub]) => `
+            <div class="scale-option">
+              <input type="radio" name="risk_tolerance" id="risk_${val}" value="${val}" ${d.risk_tolerance===val?'checked':''} onchange="saveDraft({risk_tolerance:'${val}'})">
+              <label for="risk_${val}">
+                <span class="scale-label-main">${main}</span>
+                <span class="scale-label-sub">${sub}</span>
+              </label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">Are both of you working in the business full-time?</div>
+        <div class="chip-group">
+          ${[['both','Yes, we both are'],['one-of-us','One of us is — the other has other work'],['neither','Not yet — neither of us is full-time']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="both_full_time" id="ft_${val}" value="${val}" ${d.both_full_time===val?'checked':''} onchange="saveDraft({both_full_time:'${val}'})">
+              <label for="ft_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label">How comfortable are you being public about your business and relationship? <span class="optional">(optional)</span></div>
+        <div class="scale-group">
+          ${[['very-private','Very Private','Keep it all separate'],['mostly-private','Mostly Private','Business only, not relationship'],['selective','Selective','Share what serves the brand'],['comfortable','Comfortable','Open about both'],['personal-brand','Building a Personal Brand','The relationship IS part of the brand']].map(([val,main,sub]) => `
+            <div class="scale-option">
+              <input type="radio" name="public_visibility" id="pub_${val}" value="${val}" ${d.public_visibility===val?'checked':''} onchange="saveDraft({public_visibility:'${val}'})">
+              <label for="pub_${val}">
+                <span class="scale-label-main">${main}</span>
+                <span class="scale-label-sub">${sub}</span>
+              </label>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div id="section-error" class="form-error">Please answer all required questions to continue.</div>
 
       <div class="nav-buttons">
         <button class="btn-back" onclick="goToStep(2)">← Back</button>
@@ -715,7 +765,18 @@ function renderSection4() {
     <div>
       <div class="section-eyebrow">Section 4 of 5</div>
       <h2 class="section-title">Your Financial Picture</h2>
-      <p class="section-intro">All fields in this section are optional. This context helps your report — nothing here changes your course path.</p>
+      <p class="section-intro">A few fields are required — they drive the scenarios you'll see in the diagnostic. The rest add depth to your report.</p>
+
+      <div class="field-block">
+        <div class="field-label">Is this business your primary household income source?</div>
+        <div class="chip-group">
+          ${[['yes','Yes — this is how we pay the bills'],['shared','It\'s one of our income sources'],['no','No — we have other primary income']].map(([val,label]) => `
+            <div class="chip">
+              <input type="radio" name="primary_income" id="pi_${val}" value="${val}" ${d.primary_income===val?'checked':''} onchange="saveDraft({primary_income:'${val}'})">
+              <label for="pi_${val}">${label}</label>
+            </div>`).join('')}
+        </div>
+      </div>
 
       <div class="field-block">
         <div class="field-label">How would you describe your current debt situation? <span class="optional">(optional)</span></div>
@@ -758,9 +819,11 @@ function renderSection4() {
         <textarea id="financial_stressor" placeholder="Be as specific or general as you like..." oninput="saveDraft({financial_stressor:this.value})">${escapeHtml(d.financial_stressor||'')}</textarea>
       </div>
 
+      <div id="section-error" class="form-error">Please indicate whether this is your primary income source.</div>
+
       <div class="nav-buttons">
         <button class="btn-back" onclick="goToStep(3)">← Back</button>
-        <button class="btn-next" onclick="goToStep(5)">Next →</button>
+        <button class="btn-next" onclick="validateAndNext(4)">Next →</button>
       </div>
     </div>`;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -824,8 +887,15 @@ function validateAndNext(step) {
       err.style.display = 'block'; err.scrollIntoView({ behavior:'smooth', block:'center' }); return;
     }
   }
+  if (step === 4) {
+    if (!d.primary_income) {
+      const e4 = document.getElementById('section-error');
+      if (e4) { e4.style.display = 'block'; e4.scrollIntoView({ behavior:'smooth', block:'center' }); }
+      return;
+    }
+  }
   if (step === 3) {
-    if (!d.business_stage || !d.business_role || !d.years_building_together) {
+    if (!d.business_stage || !d.business_role || !d.years_building_together || !d.long_term_vision || !d.risk_tolerance || !d.both_full_time) {
       err.style.display = 'block'; err.scrollIntoView({ behavior:'smooth', block:'center' }); return;
     }
   }
@@ -862,6 +932,11 @@ async function validateAndSubmit() {
       business_stage: d.business_stage || null,
       business_role: d.business_role || null,
       years_building_together: d.years_building_together || null,
+      long_term_vision: d.long_term_vision || null,
+      risk_tolerance: d.risk_tolerance || null,
+      both_full_time: d.both_full_time || null,
+      public_visibility: d.public_visibility || null,
+      primary_income: d.primary_income || null,
       debt_level: d.debt_level || null,
       savings_runway: d.savings_runway || null,
       money_alignment: d.money_alignment || null,

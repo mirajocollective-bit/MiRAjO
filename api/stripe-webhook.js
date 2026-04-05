@@ -1,6 +1,5 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
-import { addTag } from './_kit.js';
 import { queueSequence } from './_emails.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -128,10 +127,6 @@ export default async function handler(req, res) {
         console.error('[stripe-webhook] Setup link error:', err.message);
       }
 
-      await addTag(email, 'enrolled-25d25n', {
-        first_name: firstName,
-        fields: { last_name: lastName, phone, city, country },
-      });
       await queueSequence(supabase, email, 'enrolled-25d25n', firstName, { setup_link: setupLink });
 
       console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);

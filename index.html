@@ -1719,7 +1719,33 @@
     <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--new-growth);font-weight:600;margin-bottom:16px;">Stay Connected</div>
     <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(26px,3.5vw,40px);color:var(--warm-parchment);font-weight:400;line-height:1.2;margin-bottom:16px;">Words worth reading. Delivered with intention.</h2>
     <p style="font-size:15px;color:var(--text-muted-dark);line-height:1.8;margin-bottom:36px;">No countdowns. No spam. Just grounded truth when you need it.</p>
-    <script async data-uid="019ac3bc3d" src="https://mirajo.kit.com/019ac3bc3d/index.js"></script>
+    <form id="newsletter-form" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <input type="text" id="nl-name" placeholder="First name" style="flex:1;min-width:130px;padding:14px 18px;border:1px solid rgba(242,235,217,0.2);border-radius:8px;background:rgba(255,255,255,0.07);color:var(--warm-parchment);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;outline:none;">
+      <input type="email" id="nl-email" placeholder="Email address" required style="flex:2;min-width:190px;padding:14px 18px;border:1px solid rgba(242,235,217,0.2);border-radius:8px;background:rgba(255,255,255,0.07);color:var(--warm-parchment);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;outline:none;">
+      <button type="submit" style="padding:14px 28px;background:var(--dry-sage);color:var(--deep-forest);border:none;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;">Subscribe</button>
+    </form>
+    <p id="nl-msg" style="margin-top:16px;font-size:14px;color:var(--new-growth);min-height:20px;"></p>
+    <script>
+      document.getElementById('newsletter-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button');
+        const msg = document.getElementById('nl-msg');
+        btn.disabled = true; btn.textContent = 'Subscribing...';
+        const res = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: document.getElementById('nl-email').value.trim(), first_name: document.getElementById('nl-name').value.trim() }),
+        });
+        if (res.ok) {
+          msg.textContent = "You're in. See you in your inbox.";
+          this.style.display = 'none';
+        } else {
+          msg.style.color = '#E88080';
+          msg.textContent = 'Something went wrong. Try again.';
+          btn.disabled = false; btn.textContent = 'Subscribe';
+        }
+      });
+    </script>
   </div>
 </section>
 
