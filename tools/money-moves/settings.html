@@ -781,11 +781,51 @@
 
         <div class="danger-zone">
           <div class="danger-title">Danger Zone</div>
-          <button class="danger-btn" onclick="signOut()">Sign Out</button>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div>
+              <button class="danger-btn" onclick="openResetModal()">Reset Calendar Data</button>
+              <div style="font-size:12px;color:var(--neutral);margin-top:6px">Wipes all transactions and accounts. Keeps your categories, goals, preferences, and login. Use this to start fresh.</div>
+            </div>
+            <button class="danger-btn" onclick="signOut()">Sign Out</button>
+          </div>
         </div>
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- Reset Modal -->
+<div id="reset-overlay" style="display:none;position:fixed;inset:0;background:rgba(18,32,18,0.55);z-index:400;display:none;align-items:center;justify-content:center;padding:24px">
+  <div style="background:#fff;border-radius:24px;width:100%;max-width:440px;padding:32px;box-shadow:0 24px 64px rgba(18,32,18,0.22)">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+      <div style="width:44px;height:44px;border-radius:12px;background:rgba(192,57,43,0.1);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🗑️</div>
+      <div>
+        <div style="font-size:18px;font-weight:700;color:#c0392b;font-family:'Instrument Serif',serif">Reset Calendar Data</div>
+        <div style="font-size:13px;color:var(--neutral);margin-top:2px">This cannot be undone.</div>
+      </div>
+    </div>
+    <div style="background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.18);border-radius:12px;padding:16px;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--deep-forest);line-height:1.7">
+        This will permanently delete:<br>
+        <strong>• All transactions</strong> across all accounts<br>
+        <strong>• All accounts</strong> (Checking, Savings, etc.)<br><br>
+        Your <strong>categories, goals, debts, and preferences</strong> will be kept.
+        You'll be redirected to the dashboard to add accounts fresh.
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--neutral);margin-bottom:16px">Type <strong>RESET</strong> to confirm:</div>
+    <input type="text" id="reset-confirm-input" placeholder="Type RESET here"
+      style="width:100%;padding:12px;border:1.5px solid rgba(192,57,43,0.3);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;margin-bottom:16px"
+      oninput="const b=document.getElementById('reset-confirm-btn');b.disabled=this.value!=='RESET';b.style.opacity=this.value==='RESET'?'1':'0.4'">
+    <div style="display:flex;gap:10px">
+      <button onclick="closeResetModal()" style="flex:1;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;color:var(--neutral)">Cancel</button>
+      <button id="reset-confirm-btn" onclick="confirmReset()" disabled
+        style="flex:1;padding:12px;background:#c0392b;border:none;border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#fff;opacity:0.4;transition:opacity 0.2s"
+        onmouseenter="if(!this.disabled)this.style.opacity=0.85" onmouseleave="if(!this.disabled)this.style.opacity=1">
+        Yes, Reset My Data
+      </button>
+    </div>
   </div>
 </div>
 
@@ -1292,6 +1332,49 @@
     el.classList.add('show');
     setTimeout(() => el.classList.remove('show'), 3000);
   }
+
+  // ── Reset ────────────────────────────────────────────────────────────────────
+  window.openResetModal = function () {
+    document.getElementById('reset-confirm-input').value = '';
+    document.getElementById('reset-confirm-btn').disabled = true;
+    document.getElementById('reset-confirm-btn').style.opacity = '0.4';
+    const el = document.getElementById('reset-overlay');
+    el.style.display = 'flex';
+  };
+
+  window.closeResetModal = function () {
+    document.getElementById('reset-overlay').style.display = 'none';
+  };
+
+  window.confirmReset = async function () {
+    const btn = document.getElementById('reset-confirm-btn');
+    btn.textContent = 'Resetting…'; btn.disabled = true;
+
+    try {
+      // Delete all transactions for this household
+      await supabase.from('mm_transactions').delete().eq('household_id', householdId);
+      // Soft-delete all accounts (keeps the row but hides it)
+      await supabase.from('mm_accounts').update({ is_active: false }).eq('household_id', householdId);
+
+      // Re-create the two default accounts at $0
+      await supabase.from('mm_accounts').insert([
+        { household_id: householdId, name: 'Checking', type: 'checking', current_balance: 0, color: '#256B42', sort_order: 0 },
+        { household_id: householdId, name: 'Savings',  type: 'savings',  current_balance: 0, color: '#C4A245', sort_order: 1 },
+      ]);
+
+      closeResetModal();
+      window.location.href = '/tools/money-moves/dashboard?welcome=1';
+    } catch (err) {
+      btn.textContent = 'Yes, Reset My Data';
+      btn.disabled = false;
+      toast('Something went wrong. Try again.', true);
+    }
+  };
+
+  // Disable/style confirm button dynamically
+  document.getElementById('reset-confirm-btn')?.addEventListener('click', function () {
+    if (!this.disabled) this.style.opacity = '1';
+  });
 
   // ── Init ─────────────────────────────────────────────────────────────────────
   loadAll();
