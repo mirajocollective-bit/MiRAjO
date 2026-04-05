@@ -1617,6 +1617,23 @@
   const firstName = user.user_metadata?.first_name || user.email.split('@')[0];
   document.getElementById('nav-greeting').textContent = `Hi, ${firstName}`;
 
+  // ── Subscription gate ────────────────────────────────────────────────────────
+  // Allow access if: active or trialing Stripe sub, OR a provisioned trial that has not yet expired
+  {
+    const { data: sub } = await supabase.from('mm_subscriptions')
+      .select('status, period_end, stripe_subscription_id')
+      .eq('user_id', user.id).maybeSingle();
+
+    const isPending = !sub || sub.stripe_subscription_id === 'pending';
+    const trialExpired = isPending && sub && new Date(sub.period_end) < new Date();
+    const realSubActive = sub && ['active', 'trialing'].includes(sub.status) && sub.stripe_subscription_id !== 'pending';
+
+    if (!realSubActive && (!sub || trialExpired)) {
+      window.location.href = '/tools/money-moves/pricing';
+      return;
+    }
+  }
+
   const params = new URLSearchParams(window.location.search);
   if (params.get('welcome') && !sessionStorage.getItem('mm_welcomed')) {
     const isMember = params.get('welcome') === 'member';

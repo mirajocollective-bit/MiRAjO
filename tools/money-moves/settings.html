@@ -842,9 +842,20 @@
 
   // ── Auth guard ──────────────────────────────────────────────────────────────
   const { data: { session } } = await supabase.auth.getSession();
-  if (!session) { window.location.href = '/tools/money-moves/login'; }
+  if (!session) { window.location.href = '/tools/money-moves/login'; return; }
 
   const user = session.user;
+
+  // ── Subscription gate ────────────────────────────────────────────────────────
+  {
+    const { data: sub } = await supabase.from('mm_subscriptions')
+      .select('status, period_end, stripe_subscription_id')
+      .eq('user_id', user.id).maybeSingle();
+    const isPending = !sub || sub.stripe_subscription_id === 'pending';
+    const trialExpired = isPending && sub && new Date(sub.period_end) < new Date();
+    const realSubActive = sub && ['active', 'trialing'].includes(sub.status) && sub.stripe_subscription_id !== 'pending';
+    if (!realSubActive && (!sub || trialExpired)) { window.location.href = '/tools/money-moves/pricing'; return; }
+  }
 
   let householdId = null;
   let categories  = [];
