@@ -481,6 +481,88 @@
     .debt-detail { font-size: 11px; color: var(--neutral); margin-top: 1px; }
     .debt-balance { font-size: 13px; font-weight: 700; color: var(--expense-color); }
 
+    /* ── Debt Payoff Calculator ── */
+    .calc-toggle-row {
+      display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+      user-select: none;
+    }
+    .calc-toggle-row:hover .sidebar-title { color: var(--living-green); }
+    .calc-chevron { font-size: 11px; color: var(--neutral); transition: transform 0.2s; }
+    .calc-chevron.open { transform: rotate(180deg); }
+    .calc-body { margin-top: 12px; }
+    .calc-select {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      background: var(--soft-white); outline: none; margin-bottom: 10px; cursor: pointer;
+    }
+    .calc-select:focus { border-color: var(--living-green); }
+    .calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .calc-field label {
+      font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--neutral); display: block; margin-bottom: 3px;
+    }
+    .calc-field input {
+      width: 100%; padding: 7px 9px; border: 1px solid var(--border); border-radius: 7px;
+      font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      background: #fff; outline: none; transition: border-color 0.15s;
+    }
+    .calc-field input:focus { border-color: var(--living-green); }
+    .calc-extra-row {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+      background: rgba(196,162,69,0.06); border-radius: 8px; padding: 8px 10px;
+      border: 1px solid rgba(196,162,69,0.2);
+    }
+    .calc-extra-label { font-size: 11px; font-weight: 600; color: var(--deep-forest); flex-shrink: 0; }
+    .calc-extra-input {
+      flex: 1; padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px;
+      font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      background: #fff; outline: none; min-width: 0;
+    }
+    .calc-extra-input:focus { border-color: var(--dry-sage); }
+    .calc-results {
+      background: var(--soft-white); border-radius: 10px;
+      border: 1px solid var(--border); overflow: hidden; margin-bottom: 10px;
+    }
+    .calc-result-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 7px 12px; border-bottom: 1px solid var(--border); font-size: 12px;
+    }
+    .calc-result-row:last-child { border-bottom: none; }
+    .calc-result-label { color: var(--neutral); font-weight: 500; }
+    .calc-result-val { font-weight: 700; color: var(--deep-forest); }
+    .calc-result-val.good  { color: var(--income-color); }
+    .calc-result-val.warn  { color: var(--expense-color); }
+    .calc-result-val.gold  { color: var(--dry-sage); }
+    .calc-savings-banner {
+      background: linear-gradient(135deg, rgba(37,107,66,0.08), rgba(37,107,66,0.04));
+      border: 1px solid rgba(37,107,66,0.2); border-radius: 10px;
+      padding: 10px 12px; margin-bottom: 10px; display: none;
+    }
+    .calc-savings-banner.show { display: block; }
+    .calc-savings-banner p { font-size: 11px; color: var(--forest-mid); line-height: 1.6; margin: 0; }
+    .calc-savings-banner strong { color: var(--living-green); }
+    .calc-amort-toggle {
+      width: 100%; padding: 7px; border: 1px solid var(--border); border-radius: 8px;
+      background: transparent; font-size: 11px; font-weight: 600; color: var(--neutral);
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s;
+      margin-bottom: 8px;
+    }
+    .calc-amort-toggle:hover { background: rgba(18,32,18,0.03); }
+    .calc-amort-wrap { display: none; max-height: 200px; overflow-y: auto; }
+    .calc-amort-wrap.show { display: block; }
+    .calc-amort-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+    .calc-amort-table th {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      color: var(--neutral); padding: 5px 6px; text-align: right; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: #fff;
+    }
+    .calc-amort-table th:first-child { text-align: left; }
+    .calc-amort-table td {
+      padding: 4px 6px; text-align: right; border-bottom: 1px solid rgba(18,32,18,0.04); color: var(--deep-forest);
+    }
+    .calc-amort-table td:first-child { text-align: left; color: var(--neutral); }
+    .calc-amort-table tr:last-child td { border-bottom: none; font-weight: 700; }
+
     /* ── Add Transaction Modal ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
@@ -974,6 +1056,87 @@
       <div class="sidebar-title">Debt Tracker</div>
       <div id="debt-list"><p style="font-size:13px;color:var(--neutral);opacity:0.7">No debts tracked yet.</p></div>
       <button class="goal-add-btn" style="margin-top:12px" onclick="window.location.href='/tools/money-moves/settings#debts'">+ Add a Debt</button>
+    </div>
+
+    <!-- Debt Payoff Calculator -->
+    <div class="sidebar-card" id="debt-calc-card">
+      <div class="calc-toggle-row" onclick="toggleDebtCalc()">
+        <span class="sidebar-title" style="margin-bottom:0">💳 Debt Payoff Calculator</span>
+        <span class="calc-chevron" id="calc-chevron">▼</span>
+      </div>
+      <div class="calc-body" id="calc-body" style="display:none">
+
+        <select class="calc-select" id="calc-debt-select" onchange="fillCalcFromDebt()">
+          <option value="">— Manual entry —</option>
+        </select>
+
+        <div class="calc-fields">
+          <div class="calc-field">
+            <label>Balance ($)</label>
+            <input type="number" id="calc-balance" placeholder="5000" min="0" step="0.01" oninput="runCalc()">
+          </div>
+          <div class="calc-field">
+            <label>APR (%)</label>
+            <input type="number" id="calc-rate" placeholder="19.99" min="0" step="0.01" oninput="runCalc()">
+          </div>
+          <div class="calc-field">
+            <label>Min Payment ($)</label>
+            <input type="number" id="calc-payment" placeholder="150" min="0" step="0.01" oninput="runCalc()">
+          </div>
+          <div class="calc-field">
+            <label>Start Month</label>
+            <input type="month" id="calc-start" oninput="runCalc()">
+          </div>
+        </div>
+
+        <div class="calc-extra-row">
+          <span class="calc-extra-label">+ Extra / mo</span>
+          <input type="number" class="calc-extra-input" id="calc-extra" placeholder="0" min="0" step="5" oninput="runCalc()">
+          <span style="font-size:11px;color:var(--neutral)">= see savings</span>
+        </div>
+
+        <div class="calc-results" id="calc-results" style="display:none">
+          <div class="calc-result-row">
+            <span class="calc-result-label">Payoff date</span>
+            <span class="calc-result-val" id="cr-payoff">—</span>
+          </div>
+          <div class="calc-result-row">
+            <span class="calc-result-label">Months left</span>
+            <span class="calc-result-val" id="cr-months">—</span>
+          </div>
+          <div class="calc-result-row">
+            <span class="calc-result-label">Total paid</span>
+            <span class="calc-result-val" id="cr-total">—</span>
+          </div>
+          <div class="calc-result-row">
+            <span class="calc-result-label">Total interest</span>
+            <span class="calc-result-val warn" id="cr-interest">—</span>
+          </div>
+        </div>
+
+        <div class="calc-savings-banner" id="calc-savings-banner">
+          <p id="calc-savings-text"></p>
+        </div>
+
+        <button class="calc-amort-toggle" id="calc-amort-btn" onclick="toggleAmort()" style="display:none">
+          Show full amortization schedule ▼
+        </button>
+        <div class="calc-amort-wrap" id="calc-amort-wrap">
+          <table class="calc-amort-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Payment</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody id="calc-amort-body"></tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
 
   </div>
@@ -2168,6 +2331,151 @@
         <div class="debt-balance">$${Number(d.current_balance).toLocaleString('en-US', { minimumFractionDigits: 0 })}</div>
       </div>`).join('');
   }
+
+  // ── Debt Payoff Calculator ───────────────────────────────────────────────────
+  window.toggleDebtCalc = function () {
+    const body    = document.getElementById('calc-body');
+    const chevron = document.getElementById('calc-chevron');
+    const open    = body.style.display === 'none';
+    body.style.display = open ? 'block' : 'none';
+    chevron.classList.toggle('open', open);
+    if (open) populateCalcDebtSelect();
+  };
+
+  function populateCalcDebtSelect() {
+    const sel = document.getElementById('calc-debt-select');
+    sel.innerHTML = '<option value="">— Manual entry —</option>' +
+      debts.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+  }
+
+  window.fillCalcFromDebt = function () {
+    const id   = document.getElementById('calc-debt-select').value;
+    const debt = debts.find(d => d.id === id);
+    if (!debt) return;
+    document.getElementById('calc-balance').value = debt.current_balance || '';
+    document.getElementById('calc-rate').value    = debt.interest_rate   || '';
+    document.getElementById('calc-payment').value = debt.minimum_payment || '';
+    runCalc();
+  };
+
+  function calcAmortization(balance, annualRate, payment, extra) {
+    const monthlyRate = annualRate / 100 / 12;
+    const totalPayment = payment + (extra || 0);
+    const schedule = [];
+    let bal = balance;
+    let month = 0;
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const start = new Date(document.getElementById('calc-start').value + '-01' || new Date());
+
+    while (bal > 0 && month < 600) {
+      const interest  = bal * monthlyRate;
+      let   principal = totalPayment - interest;
+      if (principal <= 0) return null; // payment too low to cover interest
+      if (principal > bal) principal = bal;
+      const paid = principal + interest;
+      bal -= principal;
+
+      const d = new Date(start.getFullYear(), start.getMonth() + month, 1);
+      schedule.push({
+        label:     `${MONTHS[d.getMonth()]} ${d.getFullYear()}`,
+        payment:   paid,
+        principal,
+        interest,
+        balance:   Math.max(bal, 0),
+      });
+      month++;
+      if (bal <= 0.005) break;
+    }
+    return schedule;
+  }
+
+  window.runCalc = function () {
+    const balance  = parseFloat(document.getElementById('calc-balance').value);
+    const rate     = parseFloat(document.getElementById('calc-rate').value);
+    const payment  = parseFloat(document.getElementById('calc-payment').value);
+    const extra    = parseFloat(document.getElementById('calc-extra').value) || 0;
+
+    const resultsEl = document.getElementById('calc-results');
+    const bannerEl  = document.getElementById('calc-savings-banner');
+    const amortBtn  = document.getElementById('calc-amort-btn');
+
+    if (!balance || !rate || !payment) { resultsEl.style.display = 'none'; bannerEl.classList.remove('show'); amortBtn.style.display = 'none'; return; }
+
+    const MONTHS_LABEL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    // Base schedule (no extra)
+    const base = calcAmortization(balance, rate, payment, 0);
+    if (!base) {
+      document.getElementById('cr-payoff').textContent    = 'Payment too low';
+      document.getElementById('cr-months').textContent    = '—';
+      document.getElementById('cr-total').textContent     = '—';
+      document.getElementById('cr-interest').textContent  = '—';
+      resultsEl.style.display = 'block';
+      bannerEl.classList.remove('show');
+      amortBtn.style.display = 'none';
+      return;
+    }
+
+    const baseLast    = base[base.length - 1];
+    const baseTotal   = base.reduce((s, r) => s + r.payment, 0);
+    const baseInt     = base.reduce((s, r) => s + r.interest, 0);
+    const baseMonths  = base.length;
+
+    document.getElementById('cr-payoff').textContent   = baseLast.label;
+    document.getElementById('cr-months').textContent   = `${baseMonths} month${baseMonths !== 1 ? 's' : ''}`;
+    document.getElementById('cr-total').textContent    = `$${baseTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    document.getElementById('cr-interest').textContent = `$${baseInt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    resultsEl.style.display = 'block';
+
+    // Extra payment scenario
+    if (extra > 0) {
+      const xtra     = calcAmortization(balance, rate, payment, extra);
+      if (xtra) {
+        const xtraMonths = xtra.length;
+        const xtraInt    = xtra.reduce((s, r) => s + r.interest, 0);
+        const savedInt   = baseInt - xtraInt;
+        const savedMos   = baseMonths - xtraMonths;
+        document.getElementById('calc-savings-text').innerHTML =
+          `Adding <strong>$${extra}/mo</strong> pays off <strong>${savedMos} month${savedMos !== 1 ? 's' : ''} sooner</strong> and saves you <strong>$${savedInt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} in interest</strong>. Payoff: <strong>${xtra[xtra.length-1].label}</strong>.`;
+        bannerEl.classList.add('show');
+
+        // Build combined amort table with extra
+        buildAmortTable(xtra, true);
+      }
+    } else {
+      bannerEl.classList.remove('show');
+      buildAmortTable(base, false);
+    }
+
+    amortBtn.style.display = 'block';
+  };
+
+  function buildAmortTable(schedule, withExtra) {
+    const body = document.getElementById('calc-amort-body');
+    body.innerHTML = schedule.map((r, i) => `
+      <tr>
+        <td>${r.label}</td>
+        <td>$${r.payment.toFixed(2)}</td>
+        <td>$${r.principal.toFixed(2)}</td>
+        <td style="color:var(--expense-color)">$${r.interest.toFixed(2)}</td>
+        <td style="font-weight:${r.balance < 0.01 ? '700' : '400'}">$${r.balance.toFixed(2)}</td>
+      </tr>`).join('');
+  }
+
+  window.toggleAmort = function () {
+    const wrap = document.getElementById('calc-amort-wrap');
+    const btn  = document.getElementById('calc-amort-btn');
+    const open = wrap.classList.toggle('show');
+    btn.textContent = open ? 'Hide amortization schedule ▲' : 'Show full amortization schedule ▼';
+  };
+
+  // Init start month to current month
+  (function () {
+    const now = new Date();
+    const mm  = String(now.getMonth() + 1).padStart(2, '0');
+    const el  = document.getElementById('calc-start');
+    if (el) el.value = `${now.getFullYear()}-${mm}`;
+  })();
 
   // ── Modal helpers ────────────────────────────────────────────────────────────
   function populateModalSelects() {
