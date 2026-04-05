@@ -481,6 +481,22 @@
     .debt-detail { font-size: 11px; color: var(--neutral); margin-top: 1px; }
     .debt-balance { font-size: 13px; font-weight: 700; color: var(--expense-color); }
 
+    /* ── Sidebar drag-to-reorder ── */
+    .sidebar-card[draggable="true"] { cursor: default; }
+    .drag-handle {
+      cursor: grab; color: var(--neutral); font-size: 15px; opacity: 0;
+      padding: 2px 4px; border-radius: 4px; line-height: 1; flex-shrink: 0;
+      transition: opacity 0.15s;
+    }
+    .sidebar-card:hover .drag-handle { opacity: 0.45; }
+    .drag-handle:hover { opacity: 0.85 !important; background: rgba(18,32,18,0.05); }
+    .sidebar-card.card-dragging { opacity: 0.35; box-shadow: none; }
+    .sidebar-card.card-drag-over { outline: 2px dashed var(--living-green); outline-offset: 2px; }
+    .card-title-row {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+    }
+    .card-title-row .sidebar-title { margin-bottom: 0; }
+
     /* ── Debt Payoff Calculator ── */
     .calc-toggle-row {
       display: flex; align-items: center; justify-content: space-between; cursor: pointer;
@@ -1039,30 +1055,42 @@
     </div>
 
     <!-- Budget -->
-    <div class="sidebar-card">
-      <div class="sidebar-title">Budget This Month</div>
+    <div class="sidebar-card" id="card-budget" data-card-id="card-budget" draggable="true">
+      <div class="card-title-row">
+        <span class="sidebar-title">Budget This Month</span>
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+      </div>
       <div id="budget-list"><p style="font-size:13px;color:var(--neutral);opacity:0.7">Set category budgets in Settings.</p></div>
     </div>
 
     <!-- Goals -->
-    <div class="sidebar-card">
-      <div class="sidebar-title">Savings Goals</div>
+    <div class="sidebar-card" id="card-goals" data-card-id="card-goals" draggable="true">
+      <div class="card-title-row">
+        <span class="sidebar-title">Savings Goals</span>
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+      </div>
       <div id="goals-list"></div>
       <button class="goal-add-btn" onclick="window.location.href='/tools/money-moves/settings#goals'">+ Add a Goal</button>
     </div>
 
     <!-- Debts -->
-    <div class="sidebar-card">
-      <div class="sidebar-title">Debt Tracker</div>
+    <div class="sidebar-card" id="card-debts" data-card-id="card-debts" draggable="true">
+      <div class="card-title-row">
+        <span class="sidebar-title">Debt Tracker</span>
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+      </div>
       <div id="debt-list"><p style="font-size:13px;color:var(--neutral);opacity:0.7">No debts tracked yet.</p></div>
       <button class="goal-add-btn" style="margin-top:12px" onclick="window.location.href='/tools/money-moves/settings#debts'">+ Add a Debt</button>
     </div>
 
     <!-- Debt Payoff Calculator -->
-    <div class="sidebar-card" id="debt-calc-card">
-      <div class="calc-toggle-row" onclick="toggleDebtCalc()">
-        <span class="sidebar-title" style="margin-bottom:0">💳 Debt Payoff Calculator</span>
-        <span class="calc-chevron" id="calc-chevron">▼</span>
+    <div class="sidebar-card" id="card-calc" data-card-id="card-calc" draggable="true">
+      <div class="calc-toggle-row">
+        <div class="card-title-row" style="margin-bottom:0;flex:1;cursor:pointer" onclick="toggleDebtCalc()">
+          <span class="sidebar-title" style="margin-bottom:0">💳 Debt Payoff Calculator</span>
+          <span class="calc-chevron" id="calc-chevron">▼</span>
+        </div>
+        <span class="drag-handle" title="Drag to reorder" style="margin-left:8px">⠿</span>
       </div>
       <div class="calc-body" id="calc-body" style="display:none">
 
@@ -2332,6 +2360,72 @@
       </div>`).join('');
   }
 
+  // ── Sidebar drag-to-reorder ──────────────────────────────────────────────────
+  (function initSidebarDrag() {
+    const CARD_IDS    = ['card-budget', 'card-goals', 'card-debts', 'card-calc'];
+    const ORDER_KEY   = 'mm_sidebar_order';
+    const sidebar     = document.querySelector('.sidebar');
+    let dragSrc       = null;
+
+    // Restore saved order
+    const saved = JSON.parse(localStorage.getItem(ORDER_KEY) || 'null');
+    if (saved) {
+      saved.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) sidebar.appendChild(el);
+      });
+    }
+
+    CARD_IDS.forEach(id => {
+      const card = document.getElementById(id);
+      if (!card) return;
+
+      card.addEventListener('dragstart', e => {
+        // Only drag if handle was grabbed
+        if (!e.target.closest('.drag-handle') && e.target !== card) {
+          e.preventDefault(); return;
+        }
+        dragSrc = card;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', id);
+        setTimeout(() => card.classList.add('card-dragging'), 0);
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('card-dragging');
+        sidebar.querySelectorAll('[data-card-id]').forEach(c => c.classList.remove('card-drag-over'));
+        // Save new order
+        const order = [...sidebar.querySelectorAll('[data-card-id]')].map(el => el.dataset.cardId);
+        localStorage.setItem(ORDER_KEY, JSON.stringify(order));
+        dragSrc = null;
+      });
+
+      card.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        if (dragSrc && card !== dragSrc) card.classList.add('card-drag-over');
+      });
+
+      card.addEventListener('dragleave', () => card.classList.remove('card-drag-over'));
+
+      card.addEventListener('drop', e => {
+        e.preventDefault();
+        card.classList.remove('card-drag-over');
+        if (dragSrc && dragSrc !== card) {
+          // Determine relative position and insert
+          const cards     = [...sidebar.querySelectorAll('[data-card-id]')];
+          const srcIdx    = cards.indexOf(dragSrc);
+          const targetIdx = cards.indexOf(card);
+          if (srcIdx < targetIdx) {
+            sidebar.insertBefore(dragSrc, card.nextSibling);
+          } else {
+            sidebar.insertBefore(dragSrc, card);
+          }
+        }
+      });
+    });
+  })();
+
   // ── Debt Payoff Calculator ───────────────────────────────────────────────────
   window.toggleDebtCalc = function () {
     const body    = document.getElementById('calc-body');
@@ -2342,19 +2436,49 @@
     if (open) populateCalcDebtSelect();
   };
 
+  const CALC_PRESETS = [
+    { id: '__mortgage__',  label: '🏠 Mortgage',          apr: 7.0  },
+    { id: '__heloc__',     label: '🏡 Home Equity (HELOC)', apr: 8.5  },
+    { id: '__car__',       label: '🚗 Auto Loan',          apr: 6.5  },
+    { id: '__student__',   label: '🎓 Student Loan',       apr: 5.5  },
+    { id: '__cc__',        label: '💳 Credit Card',        apr: 21.99 },
+    { id: '__medical__',   label: '🏥 Medical Bill',       apr: 0    },
+    { id: '__personal__',  label: '📋 Personal Loan',      apr: 11.0 },
+    { id: '__business__',  label: '🏢 Business Loan',      apr: 9.0  },
+    { id: '__payday__',    label: '⚡ Payday Loan',        apr: 36.0 },
+    { id: '__irs__',       label: '🧾 IRS / Tax Debt',     apr: 8.0  },
+    { id: '__other__',     label: '📌 Other',              apr: 0    },
+  ];
+
   function populateCalcDebtSelect() {
     const sel = document.getElementById('calc-debt-select');
-    sel.innerHTML = '<option value="">— Manual entry —</option>' +
-      debts.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+    let html = '<option value="">— Manual entry —</option>';
+    if (debts.length) {
+      html += `<optgroup label="Your Tracked Debts">` +
+        debts.map(d => `<option value="${d.id}">${DEBT_ICONS[d.type] || '📋'} ${d.name}</option>`).join('') +
+        `</optgroup>`;
+    }
+    html += `<optgroup label="Common Debt Types">` +
+      CALC_PRESETS.map(p => `<option value="${p.id}">${p.label}</option>`).join('') +
+      `</optgroup>`;
+    sel.innerHTML = html;
   }
 
   window.fillCalcFromDebt = function () {
-    const id   = document.getElementById('calc-debt-select').value;
-    const debt = debts.find(d => d.id === id);
-    if (!debt) return;
-    document.getElementById('calc-balance').value = debt.current_balance || '';
-    document.getElementById('calc-rate').value    = debt.interest_rate   || '';
-    document.getElementById('calc-payment').value = debt.minimum_payment || '';
+    const id    = document.getElementById('calc-debt-select').value;
+    const debt  = debts.find(d => d.id === id);
+    const preset = CALC_PRESETS.find(p => p.id === id);
+
+    if (debt) {
+      document.getElementById('calc-balance').value = debt.current_balance || '';
+      document.getElementById('calc-rate').value    = debt.interest_rate   || '';
+      document.getElementById('calc-payment').value = debt.minimum_payment || '';
+    } else if (preset) {
+      document.getElementById('calc-balance').value = '';
+      document.getElementById('calc-rate').value    = preset.apr || '';
+      document.getElementById('calc-payment').value = '';
+      document.getElementById('calc-balance').focus();
+    }
     runCalc();
   };
 
