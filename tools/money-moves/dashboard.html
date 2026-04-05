@@ -309,6 +309,44 @@
     .cal-nav-divider { width: 1px; height: 20px; background: rgba(18,32,18,0.1); margin: 0 2px; }
     .cal-nav-year-label { font-size: 12px; font-weight: 700; color: var(--neutral); padding: 0 2px; }
 
+    /* ── Transaction search ── */
+    .cal-search-wrap { position: relative; }
+    .cal-search-input {
+      height: 34px; padding: 0 32px 0 12px; border-radius: 8px;
+      border: 1px solid rgba(18,32,18,0.14); background: var(--soft-white);
+      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); outline: none; width: 180px;
+      transition: border-color 0.2s, width 0.25s, box-shadow 0.2s;
+    }
+    .cal-search-input:focus { border-color: var(--living-green); background: #fff; width: 220px; box-shadow: 0 0 0 3px rgba(37,107,66,0.08); }
+    .cal-search-input::placeholder { color: var(--neutral); }
+    .cal-search-clear {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--neutral);
+      font-size: 14px; padding: 0; display: none; line-height: 1;
+    }
+    .cal-search-results {
+      display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: #fff; border-radius: 14px; border: 1px solid rgba(18,32,18,0.1);
+      box-shadow: 0 12px 40px rgba(18,32,18,0.16); z-index: 60;
+      max-height: 360px; overflow-y: auto; width: 320px;
+    }
+    .cal-search-results.open { display: block; }
+    .sr-header { padding: 10px 14px 6px; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--neutral); border-bottom: 1px solid var(--border); }
+    .sr-row {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+      cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border);
+    }
+    .sr-row:last-child { border-bottom: none; }
+    .sr-row:hover { background: rgba(37,107,66,0.05); }
+    .sr-emoji { font-size: 18px; flex-shrink: 0; width: 24px; text-align: center; }
+    .sr-desc { flex: 1; font-size: 13px; font-weight: 600; color: var(--deep-forest); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sr-sub { font-size: 11px; color: var(--neutral); }
+    .sr-amt { font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .sr-amt.income { color: var(--income-color); }
+    .sr-amt.expense { color: var(--expense-color); }
+    .sr-empty { padding: 20px; text-align: center; font-size: 13px; color: var(--neutral); }
+
     /* ── Jump-to dropdown ── */
     .cal-jump-wrap { position: relative; }
     .cal-month { font-family: 'Instrument Serif', serif; font-size: 22px; cursor: pointer; user-select: none; }
@@ -1100,12 +1138,19 @@
           <button class="cal-view-btn"        id="btn-display-name"  onclick="setEntryDisplay('name')">Name</button>
         </div>
       </div>
-      <div class="cal-nav">
-        <button class="cal-nav-btn" title="Previous year" onclick="changeYear(-1)">&#171;</button>
-        <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8592;</button>
-        <button class="cal-nav-btn" onclick="goToToday()" title="Jump to today" style="font-size:10px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;width:auto;padding:0 8px;color:var(--living-green);border-color:rgba(37,107,66,0.25);">Today</button>
-        <button class="cal-nav-btn" onclick="changeMonth(1)">&#8594;</button>
-        <button class="cal-nav-btn" title="Next year" onclick="changeYear(1)">&#187;</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="cal-search-wrap">
+          <input class="cal-search-input" id="cal-search" placeholder="🔍 Search transactions" autocomplete="off" oninput="onCalSearch(this.value)" onkeydown="if(event.key==='Escape')clearCalSearch()">
+          <button class="cal-search-clear" id="cal-search-clear" onclick="clearCalSearch()" title="Clear search">✕</button>
+          <div class="cal-search-results" id="cal-search-results"></div>
+        </div>
+        <div class="cal-nav">
+          <button class="cal-nav-btn" title="Previous year" onclick="changeYear(-1)">&#171;</button>
+          <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8592;</button>
+          <button class="cal-nav-btn" onclick="goToToday()" title="Jump to today" style="font-size:10px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;width:auto;padding:0 8px;color:var(--living-green);border-color:rgba(37,107,66,0.25);">Today</button>
+          <button class="cal-nav-btn" onclick="changeMonth(1)">&#8594;</button>
+          <button class="cal-nav-btn" title="Next year" onclick="changeYear(1)">&#187;</button>
+        </div>
       </div>
     </div>
 
@@ -1472,10 +1517,33 @@
 </div>
 
 <!-- Account context menu -->
-<div id="acct-ctx-menu" style="display:none;position:fixed;z-index:400;background:#fff;border:1px solid rgba(18,32,18,0.1);border-radius:12px;box-shadow:0 8px 32px rgba(18,32,18,0.18);padding:6px;min-width:160px">
+<div id="acct-ctx-menu" style="display:none;position:fixed;z-index:400;background:#fff;border:1px solid rgba(18,32,18,0.1);border-radius:12px;box-shadow:0 8px 32px rgba(18,32,18,0.18);padding:6px;min-width:180px">
+  <button onclick="openEditBalanceModal()" style="width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--deep-forest);text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px">
+    <span>✏️</span> Edit Opening Balance
+  </button>
+  <div style="height:1px;background:rgba(18,32,18,0.07);margin:3px 0"></div>
   <button id="acct-ctx-remove" onclick="openRemoveAccountModal()" style="width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#C0392B;text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px">
     <span>🗑</span> Remove Account
   </button>
+</div>
+
+<!-- Edit Opening Balance Modal -->
+<div class="modal-overlay" id="edit-balance-overlay" style="display:none;z-index:310">
+  <div class="modal" style="max-width:380px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="modal-title" style="margin-bottom:0">Opening Balance</div>
+      <button onclick="document.getElementById('edit-balance-overlay').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--neutral)">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--neutral);margin-bottom:16px;line-height:1.6">This is the balance your account started with before you added any transactions in Money Moves.</p>
+    <div class="form-group">
+      <label class="form-label" id="edit-balance-acct-label">Account</label>
+      <input type="number" class="form-input" id="edit-balance-input" placeholder="0.00" step="0.01">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="document.getElementById('edit-balance-overlay').style.display='none'">Cancel</button>
+      <button class="modal-save" onclick="saveOpeningBalance()">Save Balance</button>
+    </div>
+  </div>
 </div>
 
 <!-- Add Account Modal -->
@@ -1723,12 +1791,13 @@
     // Remove old tabs
     bar.querySelectorAll('.account-tab').forEach(t => t.remove());
 
-    // Compute running balance per account from all transactions (including future planned)
+    // Compute running balance per account = opening balance + all transactions
     const acctRunningBalance = {};
     accounts.forEach(acct => {
-      acctRunningBalance[acct.id] = transactions
+      const txnSum = transactions
         .filter(t => t.account_id === acct.id)
         .reduce((sum, t) => sum + (t.type === 'income' ? Number(t.amount) : t.type === 'expense' ? -Number(t.amount) : 0), 0);
+      acctRunningBalance[acct.id] = Number(acct.current_balance) + txnSum;
     });
 
     let netWorth = 0;
@@ -1866,7 +1935,16 @@
     const expense = monthTx.filter(t => t.type === 'expense').reduce((s, t) => s + Number(t.amount), 0);
     const net     = income - expense;
 
-    document.getElementById('acct-balance').textContent     = acct ? `$${Number(acct.current_balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}` : '—';
+    // Running balance = opening balance + all transactions to date
+    let runBal = null;
+    if (acct) {
+      const txnSum = transactions
+        .filter(t => t.account_id === acct.id)
+        .reduce((s, t) => s + (t.type === 'income' ? Number(t.amount) : t.type === 'expense' ? -Number(t.amount) : 0), 0);
+      runBal = Number(acct.current_balance) + txnSum;
+    }
+    document.getElementById('acct-balance').textContent     = runBal !== null ? `${runBal >= 0 ? '' : '-'}$${Math.abs(runBal).toLocaleString('en-US', { minimumFractionDigits: 2 })}` : '—';
+    document.getElementById('acct-balance').className       = `summary-amount ${runBal === null ? 'balance' : runBal >= 0 ? 'income' : 'expense'}`;
     document.getElementById('acct-balance-sub').textContent = acct ? acct.name : 'select an account';
     document.getElementById('total-income').textContent     = `$${income.toFixed(2)}`;
     document.getElementById('total-expenses').textContent   = `$${expense.toFixed(2)}`;
@@ -1905,7 +1983,9 @@
       .filter(t => t.account_id === selectedAccountId && t.date)
       .sort((a, b) => (a.date < b.date ? -1 : 1));
 
-    let balanceBeforeMonth = 0;
+    // Start from opening balance, then add all transactions before this month
+    const selectedAcct = accounts.find(a => a.id === selectedAccountId);
+    let balanceBeforeMonth = selectedAcct ? Number(selectedAcct.current_balance) : 0;
     acctTxns.forEach(t => {
       if (t.date < monthPrefix) {
         balanceBeforeMonth += t.type === 'income' ? Number(t.amount) : t.type === 'expense' ? -Number(t.amount) : 0;
@@ -1955,6 +2035,7 @@
 
       const cell = document.createElement('div');
       cell.className = `cal-cell${isToday ? ' today' : ''}`;
+      cell.dataset.date = dateStr;
       cell.onclick   = () => openModal(dateStr);
       let dragCount = 0;
       cell.addEventListener('dragenter', (e) => { e.preventDefault(); dragCount++; cell.classList.add('drag-over'); });
@@ -2400,6 +2481,75 @@
       rateEl.className   = `summary-ratio-rate${savingsRate < 0 ? ' negative' : ''}`;
     }
   }
+
+  // ── Transaction search ───────────────────────────────────────────────────────
+  const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  window.onCalSearch = function (q) {
+    const results   = document.getElementById('cal-search-results');
+    const clearBtn  = document.getElementById('cal-search-clear');
+    clearBtn.style.display = q ? 'block' : 'none';
+
+    if (!q.trim()) { results.classList.remove('open'); return; }
+
+    const lq = q.toLowerCase();
+    const matches = transactions.filter(t => {
+      if (selectedAccountId && t.account_id !== selectedAccountId) return false;
+      const desc  = (t.description || '').toLowerCase();
+      const notes = (t.notes || '').toLowerCase();
+      const amt   = String(t.amount);
+      return desc.includes(lq) || notes.includes(lq) || amt.includes(lq);
+    }).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 20);
+
+    if (!matches.length) {
+      results.innerHTML = `<div class="sr-empty">No transactions found for "${q}"</div>`;
+      results.classList.add('open');
+      return;
+    }
+
+    const { emoji: _, text: __ } = { emoji: '', text: '' }; // warmup
+    results.innerHTML = `<div class="sr-header">${matches.length} result${matches.length !== 1 ? 's' : ''}</div>` +
+      matches.map(t => {
+        const { emoji, text } = parseEmojiFromDesc(t.description || '');
+        const d    = new Date(t.date + 'T00:00:00');
+        const dateStr = `${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+        const sign = t.type === 'income' ? '+' : t.type === 'expense' ? '-' : '';
+        const cls  = t.type === 'income' ? 'income' : t.type === 'expense' ? 'expense' : '';
+        return `<div class="sr-row" onclick="jumpToTransaction('${t.date}','${t.id}')">
+          <div class="sr-emoji">${emoji || (t.type === 'income' ? '💰' : t.type === 'expense' ? '💸' : '↔️')}</div>
+          <div style="flex:1;min-width:0">
+            <div class="sr-desc">${text || t.description || '—'}</div>
+            <div class="sr-sub">${dateStr}${t.notes ? ' · ' + t.notes : ''}</div>
+          </div>
+          <div class="sr-amt ${cls}">${sign}$${Number(t.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+        </div>`;
+      }).join('');
+    results.classList.add('open');
+  };
+
+  window.clearCalSearch = function () {
+    document.getElementById('cal-search').value = '';
+    document.getElementById('cal-search-clear').style.display = 'none';
+    document.getElementById('cal-search-results').classList.remove('open');
+  };
+
+  window.jumpToTransaction = function (dateStr, txnId) {
+    clearCalSearch();
+    const d = new Date(dateStr + 'T00:00:00');
+    currentYear  = d.getFullYear();
+    currentMonth = d.getMonth();
+    renderCalendar();
+    // Briefly highlight the cell
+    setTimeout(() => {
+      const cell = document.querySelector(`[data-date="${dateStr}"]`);
+      if (cell) { cell.style.outline = '2px solid var(--dry-sage)'; setTimeout(() => cell.style.outline = '', 1800); }
+    }, 50);
+  };
+
+  // Close search results when clicking outside
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.cal-search-wrap')) clearCalSearch();
+  });
 
   window.toggleAnalytics = function () {
     const layout = document.querySelector('.layout');
@@ -3294,6 +3444,26 @@
   document.addEventListener('click', () => {
     document.getElementById('acct-ctx-menu').style.display = 'none';
   });
+
+  window.openEditBalanceModal = function () {
+    if (!_acctCtxId) return;
+    const acct = accounts.find(a => a.id === _acctCtxId);
+    if (!acct) return;
+    document.getElementById('edit-balance-acct-label').textContent = acct.name;
+    document.getElementById('edit-balance-input').value = Number(acct.current_balance).toFixed(2);
+    document.getElementById('edit-balance-overlay').style.display = 'flex';
+  };
+
+  window.saveOpeningBalance = async function () {
+    if (!_acctCtxId) return;
+    const val = parseFloat(document.getElementById('edit-balance-input').value) || 0;
+    const { error } = await supabase.from('mm_accounts').update({ current_balance: val }).eq('id', _acctCtxId);
+    if (error) { alert('Error: ' + error.message); return; }
+    const acct = accounts.find(a => a.id === _acctCtxId);
+    if (acct) acct.current_balance = val;
+    document.getElementById('edit-balance-overlay').style.display = 'none';
+    await loadAll();
+  };
 
   window.openRemoveAccountModal = function () {
     if (!_acctCtxId) return;
