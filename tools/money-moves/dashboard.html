@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="/img/favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/tools/money-moves/manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Money Moves">
+  <meta name="theme-color" content="#122012">
   <title>Dashboard — Money Moves by MiRAjO</title>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
@@ -4050,5 +4055,11 @@
   <span id="undo-toast-msg"></span>
   <button onclick="triggerUndo()">Undo</button>
 </div>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/tools/money-moves/sw.js', { scope: '/tools/money-moves/' })
+      .catch(e => console.warn('SW registration failed:', e));
+  }
+</script>
 </body>
 </html>
