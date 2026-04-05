@@ -120,23 +120,25 @@
     /* ── Main layout ── */
     .layout {
       display: grid;
-      grid-template-columns: 240px 1fr 300px;
+      grid-template-columns: 1fr 300px;
       gap: 14px;
-      max-width: 1440px;
+      max-width: 1600px;
       margin: 0 auto;
-      padding: 14px 20px 40px;
+      padding: 14px 24px 40px;
       transition: grid-template-columns 0.25s ease;
     }
-    .layout.analytics-collapsed { grid-template-columns: 44px 1fr 300px; }
+    .layout.analytics-open { grid-template-columns: 240px 1fr 300px; }
 
     /* ── Analytics Sidebar ── */
     .analytics-sidebar {
+      display: none;
       align-self: start; position: sticky; top: 24px;
       background: #fff; border-radius: 16px;
       border: 1px solid rgba(18,32,18,0.06);
       box-shadow: 0 4px 16px rgba(18,32,18,0.08);
       overflow: hidden;
     }
+    .layout.analytics-open .analytics-sidebar { display: block; }
     .analytics-toggle {
       display: flex; align-items: center; justify-content: space-between;
       padding: 13px 14px; cursor: pointer;
@@ -150,10 +152,8 @@
     .analytics-toggle-icon {
       font-size: 11px; color: var(--neutral); transition: transform 0.25s; flex-shrink: 0;
     }
-    .analytics-collapsed .analytics-toggle-label { display: none; }
-    .analytics-collapsed .analytics-toggle-icon { transform: rotate(180deg); margin: 0 auto; }
+    .layout.analytics-open .analytics-toggle-icon { transform: rotate(180deg); }
     .analytics-content { overflow: hidden; transition: opacity 0.2s; }
-    .analytics-collapsed .analytics-content { opacity: 0; height: 0; pointer-events: none; }
 
     .analytics-section { border-bottom: 1px solid var(--border); }
     .analytics-section:last-child { border-bottom: none; }
@@ -345,7 +345,7 @@
     }
 
     .cal-cell {
-      min-height: 72px; border-radius: 10px; padding: 7px 7px 20px;
+      min-height: 108px; border-radius: 10px; padding: 8px 8px 22px;
       cursor: pointer; transition: background 0.15s;
       position: relative; border: 1px solid transparent;
     }
@@ -364,8 +364,8 @@
     }
 
     .cal-entry {
-      font-size: 10px; font-weight: 600; border-radius: 5px;
-      padding: 2px 6px; margin-bottom: 2px;
+      font-size: 11px; font-weight: 600; border-radius: 5px;
+      padding: 3px 7px; margin-bottom: 2px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
       display: flex; align-items: center; gap: 3px;
     }
@@ -808,25 +808,120 @@
     }
     .emoji-clear:hover { background: rgba(18,32,18,0.04); }
 
+    /* ── Floating Calculator ── */
+    .float-calc {
+      position: fixed; bottom: 28px; right: 28px; width: 256px;
+      background: #fff; border-radius: 20px; z-index: 500;
+      box-shadow: 0 16px 56px rgba(18,32,18,0.22), 0 4px 16px rgba(18,32,18,0.1);
+      border: 1px solid rgba(18,32,18,0.07); overflow: hidden;
+      display: none; flex-direction: column; touch-action: none;
+    }
+    .float-calc.open { display: flex; }
+    .float-calc-header {
+      background: var(--deep-forest); padding: 10px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: grab; user-select: none;
+    }
+    .float-calc-header:active { cursor: grabbing; }
+    .float-calc-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(242,235,217,0.7); }
+    .float-calc-close { background: none; border: none; color: rgba(242,235,217,0.6); font-size: 16px; cursor: pointer; padding: 0; line-height: 1; }
+    .float-calc-close:hover { color: var(--warm-parchment); }
+    .float-calc-display {
+      background: var(--deep-forest); padding: 8px 16px 14px; text-align: right;
+    }
+    .float-calc-expr { font-size: 11px; color: rgba(242,235,217,0.4); min-height: 16px; }
+    .float-calc-val { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--warm-parchment); line-height: 1.1; word-break: break-all; }
+    .float-calc-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: rgba(18,32,18,0.07); padding: 1px;
+    }
+    .fc-btn {
+      background: #fff; border: none; cursor: pointer; padding: 0;
+      font-size: 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500; color: var(--deep-forest); height: 52px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.1s; -webkit-tap-highlight-color: transparent;
+    }
+    .fc-btn:hover { background: var(--soft-white); }
+    .fc-btn:active { background: #e8e4dc; }
+    .fc-btn.fc-op  { color: var(--living-green); font-weight: 700; background: rgba(37,107,66,0.04); }
+    .fc-btn.fc-op:hover { background: rgba(37,107,66,0.1); }
+    .fc-btn.fc-fn  { color: var(--neutral); font-size: 13px; }
+    .fc-btn.fc-eq  { background: var(--living-green); color: #fff; font-weight: 700; }
+    .fc-btn.fc-eq:hover { background: var(--forest-mid); }
+    .fc-btn.fc-zero { grid-column: span 2; }
+    .float-calc-toggle {
+      font-size: 12px; font-weight: 600; padding: 7px 14px;
+      border-radius: 8px; border: 1px solid rgba(18,32,18,0.18);
+      background: transparent; color: var(--deep-forest); cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s;
+    }
+    .float-calc-toggle:hover { background: var(--soft-white); }
+    .float-calc-toggle.calc-active { background: var(--deep-forest); color: var(--warm-parchment); border-color: var(--deep-forest); }
+
+    /* ── Mobile bottom nav ── */
+    .mobile-nav {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: #fff; border-top: 1px solid var(--border);
+      height: 62px; align-items: stretch; justify-content: space-around;
+      padding: 0 4px; box-shadow: 0 -4px 20px rgba(18,32,18,0.08);
+    }
+    .mobile-nav-btn {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 3px; border: none; background: transparent;
+      cursor: pointer; color: var(--neutral); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px; font-weight: 600; padding: 8px 4px;
+      -webkit-tap-highlight-color: transparent; transition: color 0.15s;
+    }
+    .mobile-nav-btn:hover, .mobile-nav-btn.active { color: var(--living-green); }
+    .mobile-nav-btn .mnb-icon { font-size: 20px; line-height: 1; }
+    .mobile-nav-btn.mnb-add {
+      background: var(--dry-sage); border-radius: 14px; color: var(--deep-forest);
+      flex: 0 0 56px; height: 56px; align-self: center; border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(196,162,69,0.4);
+    }
+    .mobile-nav-btn.mnb-add .mnb-icon { font-size: 24px; }
+
     /* ── Responsive ── */
-    @media (max-width: 1200px) {
-      .layout { grid-template-columns: 44px 1fr 300px !important; }
-      .analytics-collapsed .analytics-toggle-label { display: none; }
+    @media (max-width: 1100px) {
+      .layout.analytics-open { grid-template-columns: 200px 1fr 280px; }
     }
-    @media (max-width: 1024px) {
-      .layout { grid-template-columns: 1fr !important; }
-      .analytics-sidebar { display: none; }
-      .sidebar { order: -1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr 260px !important; }
+      .layout.analytics-open { grid-template-columns: 1fr 260px !important; }
+      .analytics-sidebar { display: none !important; }
     }
-    @media (max-width: 700px) {
-      .nav { padding: 0 16px; }
-      .nav-greeting, .nav-btn-forecast { display: none; }
-      .accounts-bar { padding: 0 16px; }
-      .layout { padding: 16px 16px 40px; gap: 16px; }
-      .summary-bar { grid-template-columns: repeat(2, 1fr); }
-      .sidebar { grid-template-columns: 1fr; }
-      .cal-cell { min-height: 64px; }
+    @media (max-width: 768px) {
+      body { padding-bottom: 62px; }
+      .nav { height: 48px; padding: 0 16px; }
+      .nav-greeting, .nav-btn-forecast, .nav-btn-logout,
+      .nav-btn-settings, .float-calc-toggle { display: none; }
+      .accounts-bar { top: 48px; padding: 0 12px; }
+      .layout {
+        grid-template-columns: 1fr !important;
+        padding: 12px 12px 80px; gap: 12px;
+      }
+      .analytics-sidebar { display: none !important; }
+      .sidebar {
+        display: grid; grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .summary-bar { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .cal-cell { min-height: 82px; padding: 6px 6px 18px; }
+      .cal-entry { font-size: 10px; padding: 2px 5px; }
+      .float-calc { bottom: 72px; right: 12px; width: 240px; }
+      .mobile-nav { display: flex; }
       .form-row { grid-template-columns: 1fr; }
+      .modal { padding: 24px 20px; border-radius: 20px; }
+    }
+    @media (max-width: 540px) {
+      .sidebar { grid-template-columns: 1fr; }
+      .cal-cell { min-height: 68px; }
+      .cal-day-name { font-size: 10px; letter-spacing: 0; }
+      .cal-grid { padding: 0 8px 12px; gap: 2px; }
+      .summary-bar { gap: 6px; }
+      .accounts-bar { padding: 0 8px; }
+      .float-calc { right: 8px; bottom: 70px; width: 232px; }
     }
   </style>
   <script src="/analytics.js"></script>
@@ -848,6 +943,7 @@
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/reports'">Reports</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/settings'">Settings</button>
     <button class="nav-btn nav-btn-settings" onclick="openFaq()" title="Help & FAQ" style="font-size:16px; padding:6px 11px;">?</button>
+    <button class="float-calc-toggle" id="calc-toggle-btn" onclick="toggleFloatCalc()" title="Pop-up Calculator">🧮</button>
     <button class="nav-btn nav-btn-logout" onclick="logOut()" title="Log out">Log Out</button>
   </div>
 </nav>
@@ -1556,9 +1652,8 @@
 
     // Restore analytics sidebar state
     const analyticsOpen = localStorage.getItem('mm_analytics_open');
-    if (analyticsOpen === '0') {
-      document.getElementById('analytics-sidebar').classList.add('collapsed');
-      document.querySelector('.layout').classList.add('analytics-collapsed');
+    if (analyticsOpen === '1') {
+      document.querySelector('.layout').classList.add('analytics-open');
     }
     if (localStorage.getItem('mm_analytics_income_open') === '0') {
       document.getElementById('analytics-income-list').classList.add('hidden');
@@ -2259,11 +2354,9 @@
   }
 
   window.toggleAnalytics = function () {
-    const sidebar   = document.getElementById('analytics-sidebar');
-    const layout    = document.querySelector('.layout');
-    const collapsed = sidebar.classList.toggle('collapsed');
-    layout.classList.toggle('analytics-collapsed', collapsed);
-    localStorage.setItem('mm_analytics_open', collapsed ? '0' : '1');
+    const layout = document.querySelector('.layout');
+    const isOpen = layout.classList.toggle('analytics-open');
+    localStorage.setItem('mm_analytics_open', isOpen ? '1' : '0');
   };
 
   window.toggleAnalyticsSection = function (section) {
@@ -3405,6 +3498,137 @@
 </div>
 
 <script>
+  // ── Floating Calculator ──────────────────────────────────────────────────────
+  (function initFloatCalc() {
+    let fcVal     = '0';
+    let fcExpr    = '';
+    let fcPending = null;   // pending operator
+    let fcFirst   = true;   // next digit clears display
+
+    function fcRender() {
+      document.getElementById('fc-val').textContent  = fcVal;
+      document.getElementById('fc-expr').textContent = fcExpr;
+    }
+
+    window.toggleFloatCalc = function () {
+      const el  = document.getElementById('float-calc');
+      const btn = document.getElementById('calc-toggle-btn');
+      const isOpen = el.classList.toggle('open');
+      if (btn) btn.classList.toggle('calc-active', isOpen);
+    };
+
+    window.fcInput = function (key) {
+      if (key === 'C') {
+        fcVal = '0'; fcExpr = ''; fcPending = null; fcFirst = true;
+        fcRender(); return;
+      }
+      if (key === '+/-') {
+        if (fcVal !== '0') { fcVal = fcVal.startsWith('-') ? fcVal.slice(1) : '-' + fcVal; fcRender(); }
+        return;
+      }
+      if (key === '%') {
+        fcVal = String(parseFloat(fcVal) / 100);
+        fcFirst = true; fcRender(); return;
+      }
+      if (key === '=' ) {
+        if (fcPending) {
+          const a = parseFloat(fcPending.a), b = parseFloat(fcVal);
+          let r;
+          if (fcPending.op === '+') r = a + b;
+          else if (fcPending.op === '-') r = a - b;
+          else if (fcPending.op === '*') r = a * b;
+          else if (fcPending.op === '/') r = b !== 0 ? a / b : 'Error';
+          fcExpr = `${fcPending.a} ${fcPending.opLabel} ${fcVal} =`;
+          fcVal  = r === 'Error' ? 'Error' : String(parseFloat(r.toFixed(10)));
+          fcPending = null; fcFirst = true;
+          fcRender();
+        }
+        return;
+      }
+      if (['+','-','*','/'].includes(key)) {
+        if (fcPending) {
+          const a = parseFloat(fcPending.a), b = parseFloat(fcVal);
+          let r;
+          if (fcPending.op === '+') r = a + b;
+          else if (fcPending.op === '-') r = a - b;
+          else if (fcPending.op === '*') r = a * b;
+          else if (fcPending.op === '/') r = b !== 0 ? a / b : 'Error';
+          fcVal = r === 'Error' ? 'Error' : String(parseFloat(r.toFixed(10)));
+        }
+        const labels = {'+':'+','-':'−','*':'×','/':'÷'};
+        fcExpr    = `${fcVal} ${labels[key]}`;
+        fcPending = { op: key, opLabel: labels[key], a: fcVal };
+        fcFirst   = true; fcRender(); return;
+      }
+      // digit or decimal
+      if (fcFirst) { fcVal = (key === '.' ? '0.' : key); fcFirst = false; }
+      else {
+        if (key === '.' && fcVal.includes('.')) return;
+        fcVal = fcVal === '0' && key !== '.' ? key : fcVal + key;
+      }
+      fcRender();
+    };
+
+    // ── Drag to move ──────────────────────────────────────────────────────────
+    const header = document.getElementById('float-calc-header');
+    const panel  = document.getElementById('float-calc');
+    let dragging = false, ox = 0, oy = 0;
+
+    header.addEventListener('mousedown', function (e) {
+      if (e.target.classList.contains('float-calc-close')) return;
+      dragging = true;
+      const rect = panel.getBoundingClientRect();
+      ox = e.clientX - rect.left;
+      oy = e.clientY - rect.top;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      if (!dragging) return;
+      let x = e.clientX - ox;
+      let y = e.clientY - oy;
+      x = Math.max(0, Math.min(window.innerWidth  - panel.offsetWidth,  x));
+      y = Math.max(0, Math.min(window.innerHeight - panel.offsetHeight, y));
+      panel.style.left   = x + 'px';
+      panel.style.top    = y + 'px';
+      panel.style.right  = 'auto';
+      panel.style.bottom = 'auto';
+    });
+
+    document.addEventListener('mouseup', function () { dragging = false; });
+
+    // Touch drag
+    header.addEventListener('touchstart', function (e) {
+      if (e.target.classList.contains('float-calc-close')) return;
+      dragging = true;
+      const t = e.touches[0];
+      const rect = panel.getBoundingClientRect();
+      ox = t.clientX - rect.left;
+      oy = t.clientY - rect.top;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function (e) {
+      if (!dragging) return;
+      const t = e.touches[0];
+      let x = t.clientX - ox;
+      let y = t.clientY - oy;
+      x = Math.max(0, Math.min(window.innerWidth  - panel.offsetWidth,  x));
+      y = Math.max(0, Math.min(window.innerHeight - panel.offsetHeight, y));
+      panel.style.left   = x + 'px';
+      panel.style.top    = y + 'px';
+      panel.style.right  = 'auto';
+      panel.style.bottom = 'auto';
+    }, { passive: true });
+
+    document.addEventListener('touchend', function () { dragging = false; });
+  })();
+
+  // ── Mobile nav helper ────────────────────────────────────────────────────────
+  window.scrollToSidebar = function () {
+    const sb = document.querySelector('.sidebar');
+    if (sb) sb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   // ── FAQ ────────────────────────────────────────────────────────────────────
   window.openFaq  = function () { document.getElementById('faq-overlay').classList.add('open'); };
   window.closeFaq = function () { document.getElementById('faq-overlay').classList.remove('open'); };
@@ -3488,6 +3712,58 @@
     await loadAll();
   };
 </script>
+
+<!-- Floating Calculator -->
+<div class="float-calc" id="float-calc">
+  <div class="float-calc-header" id="float-calc-header">
+    <span class="float-calc-title">Calculator</span>
+    <button class="float-calc-close" onclick="toggleFloatCalc()" title="Close">✕</button>
+  </div>
+  <div class="float-calc-display">
+    <div class="float-calc-expr" id="fc-expr"></div>
+    <div class="float-calc-val" id="fc-val">0</div>
+  </div>
+  <div class="float-calc-grid">
+    <button class="fc-btn fc-fn" onclick="fcInput('C')">C</button>
+    <button class="fc-btn fc-fn" onclick="fcInput('+/-')">+/−</button>
+    <button class="fc-btn fc-fn" onclick="fcInput('%')">%</button>
+    <button class="fc-btn fc-op" onclick="fcInput('/')">÷</button>
+    <button class="fc-btn" onclick="fcInput('7')">7</button>
+    <button class="fc-btn" onclick="fcInput('8')">8</button>
+    <button class="fc-btn" onclick="fcInput('9')">9</button>
+    <button class="fc-btn fc-op" onclick="fcInput('*')">×</button>
+    <button class="fc-btn" onclick="fcInput('4')">4</button>
+    <button class="fc-btn" onclick="fcInput('5')">5</button>
+    <button class="fc-btn" onclick="fcInput('6')">6</button>
+    <button class="fc-btn fc-op" onclick="fcInput('-')">−</button>
+    <button class="fc-btn" onclick="fcInput('1')">1</button>
+    <button class="fc-btn" onclick="fcInput('2')">2</button>
+    <button class="fc-btn" onclick="fcInput('3')">3</button>
+    <button class="fc-btn fc-op" onclick="fcInput('+')">+</button>
+    <button class="fc-btn fc-zero" onclick="fcInput('0')">0</button>
+    <button class="fc-btn" onclick="fcInput('.')">.</button>
+    <button class="fc-btn fc-eq" onclick="fcInput('=')">=</button>
+  </div>
+</div>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-btn" onclick="window.location.href='/tools/money-moves/dashboard'">
+    <span class="mnb-icon">📅</span>Calendar
+  </button>
+  <button class="mobile-nav-btn" onclick="scrollToSidebar()">
+    <span class="mnb-icon">📊</span>Budget
+  </button>
+  <button class="mobile-nav-btn mnb-add" onclick="openModal()">
+    <span class="mnb-icon">＋</span>
+  </button>
+  <button class="mobile-nav-btn" onclick="toggleFloatCalc()">
+    <span class="mnb-icon">🧮</span>Calc
+  </button>
+  <button class="mobile-nav-btn" onclick="openFaq()">
+    <span class="mnb-icon">❓</span>Help
+  </button>
+</nav>
 
 <!-- Mode Picker Modal -->
 <div class="modal-overlay" id="mode-picker-overlay" onclick="if(event.target===this)closeModePickerModal()" style="z-index:250">
