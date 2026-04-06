@@ -798,7 +798,7 @@ async function renderDashboard(user) {
   }
 
   // ── MODULE 1 FEATURED CARD ──
-  html += `<div class="section-label">${!myCompletion ? 'Start Here — The Foundation' : 'The Foundation'}</div>`;
+  html += `<div class="section-label">The Foundation</div>`;
   const mod1 = MODULES[0];
   const mod1Pct = mod1LessonCount > 0 ? Math.round((mod1CompletedCount / mod1LessonCount) * 100) : 0;
   let mod1StatusHtml = '';
@@ -807,9 +807,9 @@ async function renderDashboard(user) {
   } else if (mod1Pct > 0) {
     mod1StatusHtml = `<span class="module-card-status status-started">${mod1Pct}% done</span>`;
   } else {
-    mod1StatusHtml = `<span class="module-card-status status-unlocked">Ready to start</span>`;
+    mod1StatusHtml = `<span class="module-card-status status-unlocked">Available now</span>`;
   }
-  html += `<a href="/programs/couples-course/${mod1.slug}" class="module-card unlocked${!myCompletion ? ' foundation' : ''}" style="margin-bottom:40px;max-width:520px;">
+  html += `<a href="/programs/couples-course/${mod1.slug}" class="module-card unlocked" style="margin-bottom:40px;max-width:520px;">
     <div class="module-card-top">
       <span class="module-card-num">Module 1</span>
     </div>
