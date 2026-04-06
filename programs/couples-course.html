@@ -897,16 +897,24 @@ async function markComplete(lessonId, lessonIdx) {
 
 function showModuleComplete() {
   const overlay = document.getElementById('mc-overlay');
-  document.getElementById('mc-title').textContent = currentModule.title + ' — Done.';
-  const mcSubText = currentModule.position === 1
-    ? 'You\'ve finished Module 1. Head to your dashboard to take the Partnership Diagnostic — that\'s your next step.'
-    : 'You\'ve completed this module. Keep going — the work compounds.';
-  document.getElementById('mc-sub').textContent = mcSubText;
-
   const actions = document.getElementById('mc-actions');
-  actions.innerHTML = `
-    <a href="/programs/couples-dashboard" class="mc-btn-primary">Back to Dashboard</a>
-    <button class="mc-btn-outline" onclick="document.getElementById('mc-overlay').classList.remove('show')">Stay Here</button>`;
+
+  if (currentModule.position === 8) {
+    document.getElementById('mc-title').textContent = 'Course Complete.';
+    document.getElementById('mc-sub').textContent = 'You both did the work. That is not nothing. Your Partnership Report and course are yours for life — return any time.';
+    actions.innerHTML = `
+      <a href="/programs/certificate" class="mc-btn-primary">View Your Certificate</a>
+      <a href="/programs/couples-dashboard" class="mc-btn-outline">Back to Dashboard</a>`;
+  } else {
+    document.getElementById('mc-title').textContent = currentModule.title + ' — Done.';
+    const mcSubText = currentModule.position === 1
+      ? 'You\'ve finished Module 1. Head to your dashboard to take the Partnership Diagnostic — that\'s your next step.'
+      : 'You\'ve completed this module. Keep going — the work compounds.';
+    document.getElementById('mc-sub').textContent = mcSubText;
+    actions.innerHTML = `
+      <a href="/programs/couples-dashboard" class="mc-btn-primary">Back to Dashboard</a>
+      <button class="mc-btn-outline" onclick="document.getElementById('mc-overlay').classList.remove('show')">Stay Here</button>`;
+  }
 
   overlay.classList.add('show');
 
