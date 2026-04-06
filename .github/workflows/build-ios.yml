@@ -28,13 +28,13 @@ jobs:
       - name: Resolve Swift Package Manager dependencies
         run: |
           xcodebuild -resolvePackageDependencies \
-            -workspace ios/App/App.xcworkspace \
+            -project ios/App/App.xcodeproj \
             -scheme App
 
       - name: Build iOS (unsigned — for App Store upload you will sign in Xcode/App Store Connect)
         run: |
           xcodebuild \
-            -workspace ios/App/App.xcworkspace \
+            -project ios/App/App.xcodeproj \
             -scheme App \
             -configuration Release \
             -destination generic/platform=iOS \
