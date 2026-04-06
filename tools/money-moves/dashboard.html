@@ -1425,13 +1425,9 @@
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.5 7A5.5 5.5 0 1 0 3.2 3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1.5 3.5V7H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Reset
             </button>
-            <button class="mtg-action-btn" onclick="printMortgage()" title="Print report">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="5" width="10" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M4 5V2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V5" stroke="currentColor" stroke-width="1.4"/><rect x="4" y="8" width="6" height="1" rx=".5" fill="currentColor"/><rect x="4" y="10" width="4" height="1" rx=".5" fill="currentColor"/></svg>
-              Print
-            </button>
-            <button class="mtg-action-btn mtg-action-primary" onclick="downloadMortgagePDF()" title="Download PDF report">
+            <button class="mtg-action-btn mtg-action-primary" onclick="downloadMortgagePDF()" title="Download &amp; Print report">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2v7M4.5 6.5 7 9l2.5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              Download
+              Download / Print
             </button>
           </div>
         </div>
@@ -2170,6 +2166,7 @@
   const user = session.user;
   const firstName = user.user_metadata?.first_name || user.email.split('@')[0];
   document.getElementById('nav-greeting').textContent = `Hi, ${firstName}`;
+  window._mmUser = user;
 
   // ── Subscription gate ────────────────────────────────────────────────────────
   // Allow access if: active or trialing Stripe sub, OR a provisioned trial that has not yet expired
@@ -4359,19 +4356,25 @@
     window.printMortgage = function () { window.print(); };
 
     window.downloadMortgagePDF = function () {
-      const homeVal  = document.getElementById('mtg-home-value').value;
-      const downAmt  = document.getElementById('mtg-down-amt').value;
-      const rate     = document.getElementById('mtg-rate').value;
-      const term     = document.getElementById('mtg-term').value;
-      const monthly  = document.getElementById('mtg-monthly-total').textContent;
-      const ltTotal  = document.getElementById('mtg-lt-total').textContent;
-      const ltInt    = document.getElementById('mtg-lt-interest').textContent;
+      const homeVal   = document.getElementById('mtg-home-value').value;
+      const downAmt   = document.getElementById('mtg-down-amt').value;
+      const rate      = document.getElementById('mtg-rate').value;
+      const term      = document.getElementById('mtg-term').value;
+      const monthly   = document.getElementById('mtg-monthly-total').textContent;
+      const ltTotal   = document.getElementById('mtg-lt-total').textContent;
+      const ltInt     = document.getElementById('mtg-lt-interest').textContent;
       const amortWrap = document.getElementById('mtg-amort-wrap');
 
+      // Get customer name/email from the session user
+      const greetingEl = document.getElementById('nav-greeting');
+      const nameDisplay = greetingEl ? greetingEl.textContent.replace(/^Hi,?\s*/i, '').trim() : '';
+      const userEmail   = (typeof supabase !== 'undefined' && window._mmUser) ? window._mmUser.email : '';
+
       const win = window.open('', '_blank');
-      win.document.write('<!DOCTYPE html><html><head><title>Mortgage Report \u2014 Money Moves by MiRAjO</title><style>'
+      win.document.write('<!DOCTYPE html><html><head><title>Mortgage Report \u2014 Money Moves Budget Calendar</title><style>'
         + 'body{font-family:Arial,sans-serif;color:#122012;padding:40px;max-width:900px;margin:0 auto}'
-        + 'h1{font-size:24px;margin-bottom:4px}.sub{color:#6b7280;font-size:13px;margin-bottom:32px}'
+        + 'h1{font-size:24px;margin-bottom:4px}.sub{color:#6b7280;font-size:13px;margin-bottom:6px}'
+        + '.customer{font-size:13px;color:#122012;font-weight:600;margin-bottom:28px}'
         + '.sec{margin-bottom:28px}.sec-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b7280;margin-bottom:10px}'
         + '.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #e5e7eb;font-size:13px}'
         + '.val{font-weight:700}.total-row{font-size:16px;font-weight:700;padding-top:12px;border-top:2px solid #122012;border-bottom:none}'
@@ -4379,10 +4382,11 @@
         + 'th{text-align:right;font-size:10px;text-transform:uppercase;color:#6b7280;padding:8px 10px;border-bottom:2px solid #e5e7eb}'
         + 'th:first-child{text-align:left}td{padding:6px 10px;text-align:right;border-bottom:1px solid #f3f4f6}'
         + 'td:first-child{text-align:left}.yr-row td{background:#fdf8ec;font-weight:700;color:#C4A245}'
-        + '.footer{margin-top:40px;font-size:11px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:16px}'
+        + '.footer{margin-top:48px;font-size:10px;color:#d1d5db;border-top:1px solid #f3f4f6;padding-top:12px;text-align:center;letter-spacing:0.5px}'
         + '</style></head><body>'
         + '<h1>Mortgage Report</h1>'
-        + '<div class="sub">Generated ' + new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + ' \u00b7 Money Moves by MiRAjO</div>'
+        + '<div class="sub">Generated ' + new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '</div>'
+        + (nameDisplay || userEmail ? '<div class="customer">' + [nameDisplay, userEmail].filter(Boolean).join(' &middot; ') + '</div>' : '<div style="margin-bottom:28px"></div>')
         + '<div class="sec"><div class="sec-title">Loan Summary</div>'
         + '<div class="row"><span>Home Value</span><span class="val">$' + parseFloat(homeVal).toLocaleString() + '</span></div>'
         + '<div class="row"><span>Down Payment</span><span class="val">$' + parseFloat(downAmt).toLocaleString() + '</span></div>'
@@ -4394,7 +4398,7 @@
         + '<div class="row"><span>Total Interest Paid</span><span class="val">' + ltInt + '</span></div>'
         + '<div class="row total-row"><span>Total of All Payments</span><span class="val">' + ltTotal + '</span></div></div>'
         + (amortWrap.classList.contains('open') ? '<div class="sec"><div class="sec-title">Amortization Schedule</div>' + amortWrap.innerHTML + '</div>' : '')
-        + '<div class="footer">Money Moves by MiRAjO &middot; mirajoco.org/tools/money-moves</div>'
+        + '<div class="footer">Money Moves Budget Calendar</div>'
         + '</body></html>');
       win.document.close();
       setTimeout(() => win.print(), 400);
