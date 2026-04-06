@@ -1108,13 +1108,14 @@
       display: flex; align-items: center; gap: 16px; padding-top: 4px;
     }
     .mtg-donut { width: 100px; height: 100px; flex-shrink: 0; }
-    .mtg-donut-pi  { stroke: var(--living-green); }
-    .mtg-donut-tax { stroke: var(--dry-sage); }
-    .mtg-donut-ins { stroke: #7a9ea0; }
-    .mtg-donut-pmi { stroke: #b07a5a; }
-    .mtg-donut-hoa { stroke: #8B72C8; }
-    .mtg-donut-legend { display: flex; flex-direction: column; gap: 5px; }
-    .mtg-legend-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--deep-forest); font-weight: 500; }
+    .mtg-donut-principal { stroke: var(--living-green); }
+    .mtg-donut-interest  { stroke: var(--dry-sage); }
+    .mtg-donut-tax { stroke: #7a9ea0; }
+    .mtg-donut-ins { stroke: #b07a5a; }
+    .mtg-donut-pmi { stroke: #8B72C8; }
+    .mtg-donut-hoa { stroke: #5a7a8a; }
+    .mtg-donut-legend { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
+    .mtg-legend-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--deep-forest); font-weight: 500; white-space: nowrap; }
     .mtg-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
     /* Lifetime */
@@ -1567,8 +1568,12 @@
 
               <div class="mtg-breakdown">
                 <div class="mtg-bk-row">
-                  <span class="mtg-bk-label">Principal &amp; Interest</span>
-                  <span class="mtg-bk-val" id="mtg-bk-pi">—</span>
+                  <span class="mtg-bk-label">Principal</span>
+                  <span class="mtg-bk-val" id="mtg-bk-principal">—</span>
+                </div>
+                <div class="mtg-bk-row">
+                  <span class="mtg-bk-label">Interest</span>
+                  <span class="mtg-bk-val" id="mtg-bk-interest">—</span>
                 </div>
                 <div class="mtg-bk-row" id="mtg-bk-extra-row" style="display:none">
                   <span class="mtg-bk-label">Extra Payment</span>
@@ -1596,18 +1601,20 @@
               <div class="mtg-donut-wrap">
                 <svg class="mtg-donut" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" id="mtg-donut-svg">
                   <circle cx="60" cy="60" r="46" fill="none" stroke="rgba(18,32,18,0.06)" stroke-width="18"/>
-                  <circle class="mtg-donut-pi"  cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
-                  <circle class="mtg-donut-tax" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
-                  <circle class="mtg-donut-ins" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
-                  <circle class="mtg-donut-pmi" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
-                  <circle class="mtg-donut-hoa" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-principal" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-interest"  cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-tax" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-ins" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-pmi" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-hoa" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/>
                 </svg>
                 <div class="mtg-donut-legend">
-                  <div class="mtg-legend-row"><span class="mtg-legend-dot" style="background:var(--living-green)"></span>Principal &amp; Interest</div>
-                  <div class="mtg-legend-row mtg-legend-tax" style="display:none"><span class="mtg-legend-dot" style="background:var(--dry-sage)"></span>Property Tax</div>
-                  <div class="mtg-legend-row mtg-legend-ins" style="display:none"><span class="mtg-legend-dot" style="background:#7a9ea0"></span>Insurance</div>
-                  <div class="mtg-legend-row mtg-legend-pmi" style="display:none"><span class="mtg-legend-dot" style="background:#b07a5a"></span>PMI</div>
-                  <div class="mtg-legend-row mtg-legend-hoa" style="display:none"><span class="mtg-legend-dot" style="background:#8B72C8"></span>HOA</div>
+                  <div class="mtg-legend-row"><span class="mtg-legend-dot" style="background:var(--living-green)"></span>Principal</div>
+                  <div class="mtg-legend-row"><span class="mtg-legend-dot" style="background:var(--dry-sage)"></span>Interest</div>
+                  <div class="mtg-legend-row mtg-legend-tax" style="display:none"><span class="mtg-legend-dot" style="background:#7a9ea0"></span>Property Tax</div>
+                  <div class="mtg-legend-row mtg-legend-ins" style="display:none"><span class="mtg-legend-dot" style="background:#b07a5a"></span>Insurance</div>
+                  <div class="mtg-legend-row mtg-legend-pmi" style="display:none"><span class="mtg-legend-dot" style="background:#8B72C8"></span>PMI</div>
+                  <div class="mtg-legend-row mtg-legend-hoa" style="display:none"><span class="mtg-legend-dot" style="background:#5a7a8a"></span>HOA</div>
                 </div>
               </div>
             </div>
@@ -4205,9 +4212,14 @@
         } else { pmiHintEl.textContent = ''; pmiUntilEl.textContent = ''; }
       } else { pmiHintEl.textContent = ''; pmiUntilEl.textContent = ''; }
 
+      // Month-1 principal vs interest split
+      const mo1Interest  = principal * rMo;
+      const mo1Principal = piMo - mo1Interest;
+
       const monthlyTotal = piMo + extraMo + taxMo + insMo + pmiMo + hoaMo;
       document.getElementById('mtg-monthly-total').textContent = fmtDec(monthlyTotal, 2);
-      document.getElementById('mtg-bk-pi').textContent = fmtDec(piMo, 2);
+      document.getElementById('mtg-bk-principal').textContent = fmtDec(mo1Principal, 2);
+      document.getElementById('mtg-bk-interest').textContent  = fmtDec(mo1Interest, 2);
 
       function showRow(id, show, valId, val) {
         const el = document.getElementById(id);
@@ -4220,7 +4232,7 @@
       showRow('mtg-bk-pmi-row',   pmiMo > 0,   'mtg-bk-pmi',   pmiMo);
       showRow('mtg-bk-hoa-row',   hoaMo > 0,   'mtg-bk-hoa',   hoaMo);
 
-      updateDonut(piMo, taxMo, insMo, pmiMo, hoaMo, monthlyTotal);
+      updateDonut(mo1Principal, mo1Interest, taxMo, insMo, pmiMo, hoaMo, monthlyTotal);
 
       const ltFees  = (taxYr + insYr) * (paidOffMonth / 12) + totalPmi + hoaMo * paidOffMonth;
       const ltTotal = downAmt + principal + totalInterest + totalExtra + ltFees;
@@ -4255,10 +4267,11 @@
       }
     };
 
-    function updateDonut(pi, tax, ins, pmi, hoa, total) {
+    function updateDonut(principal, interest, tax, ins, pmi, hoa, total) {
       if (total <= 0) return;
       const segments = [
-        { id: 'mtg-donut-pi',  val: pi,  legend: null },
+        { id: 'mtg-donut-principal', val: principal, legend: null },
+        { id: 'mtg-donut-interest',  val: interest,  legend: null },
         { id: 'mtg-donut-tax', val: tax, legend: '.mtg-legend-tax' },
         { id: 'mtg-donut-ins', val: ins, legend: '.mtg-legend-ins' },
         { id: 'mtg-donut-pmi', val: pmi, legend: '.mtg-legend-pmi' },
