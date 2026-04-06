@@ -2164,7 +2164,7 @@
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${incoming ? 'income' : displayT.type}`;
         entry.textContent = entryLabel;
-        entry.title = 'Click to edit';
+        entry.title = `${displayT.description || ''}${displayT.amount ? ' — ' + sign + '$' + Number(displayT.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''}`;
         entry.addEventListener('click', (e) => {
           e.stopPropagation();
           openEditModal(displayT, dateStr);
