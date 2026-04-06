@@ -22,28 +22,38 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: List available schemes (diagnostic)
+        run: xcodebuild -project ios/App/App.xcodeproj -list
+
       - name: Resolve Swift Package Manager dependencies
         run: |
           xcodebuild -resolvePackageDependencies \
             -project ios/App/App.xcodeproj \
             -scheme App
 
-      - name: Build iOS (unsigned — for App Store upload you will sign in Xcode/App Store Connect)
+      - name: Build iOS (unsigned)
         run: |
           xcodebuild \
             -project ios/App/App.xcodeproj \
             -scheme App \
             -configuration Release \
             -destination generic/platform=iOS \
-            -archivePath ios/App/App.xcarchive \
+            -archivePath $RUNNER_TEMP/App.xcarchive \
             archive \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGN_IDENTITY=""
+            CODE_SIGN_IDENTITY="" \
+            2>&1 | tee /tmp/xcodebuild.log; \
+          EXIT=${PIPESTATUS[0]}; \
+          if [ $EXIT -ne 0 ]; then \
+            echo "--- ERRORS ---"; \
+            grep "error:" /tmp/xcodebuild.log | tail -30; \
+            exit $EXIT; \
+          fi
 
       - name: Upload iOS archive artifact
         uses: actions/upload-artifact@v4
         with:
           name: money-moves-ios-archive
-          path: ios/App/App.xcarchive
+          path: ${{ runner.temp }}/App.xcarchive
           retention-days: 30
