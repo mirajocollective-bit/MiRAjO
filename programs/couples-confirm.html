@@ -8,125 +8,199 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:      #14090F;
-      --cie-crimson:   #B82038;
-      --cie-crimson-lt:#D43A56;
-      --cie-rose:      #D4607A;
-      --cie-blush:     #FBE8EE;
-      --cie-blush-lt:  #FDF3F6;
-      --cie-gold:      #C4A245;
-      --cie-gold-lt:   #D9B96A;
-      --cie-muted:     #7A6B74;
-      --cie-muted-lt:  #B8A0A8;
-      --cie-border:    rgba(184,32,56,0.15);
+      --black:    #0D0D0D;
+      --white:    #FFFFFF;
+      --red:      #B82038;
+      --red-lt:   #D43A56;
+      --pink:     #E8547A;
+      --pink-lt:  #F2899E;
+      --pink-bg:  #FFF0F4;
+      --muted:    #666666;
+      --muted-lt: #999999;
+      --border:   rgba(13,13,13,0.12);
+      --red-border: rgba(184,32,56,0.18);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--cie-blush-lt);
+      background: var(--black);
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
+      justify-content: flex-start;
+      padding: 48px 24px 64px;
       -webkit-font-smoothing: antialiased;
     }
+
+    /* Logo */
+    .logo-wrap {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .logo {
+      height: 48px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    /* Card */
     .card {
       width: 100%;
       max-width: 480px;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 44px 40px;
       text-align: center;
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 48px 44px;
-      box-shadow: 0 4px 40px rgba(184,32,56,0.08);
-      border-top: 4px solid var(--cie-crimson);
     }
-    .logo {
-      height: 56px;
-      width: auto;
-      margin: 0 auto 40px;
-      display: block;
+    @media (max-width: 520px) {
+      .card { padding: 36px 28px; }
     }
 
-    /* ── STATES ── */
+    /* States */
     .state { display: none; }
     .state.active { display: block; }
 
     /* Spinner */
     .spinner {
-      width: 44px;
-      height: 44px;
-      border: 3px solid rgba(184,32,56,0.15);
-      border-top-color: var(--cie-crimson);
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(184,32,56,0.12);
+      border-top-color: var(--red);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
-      margin: 0 auto 32px;
+      margin: 0 auto 28px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--pink);
+      margin-bottom: 12px;
+    }
 
     /* Headings */
     h1 {
       font-family: 'Instrument Serif', serif;
       font-size: 32px;
       font-weight: 400;
-      color: var(--cie-dark);
+      color: var(--black);
       margin-bottom: 14px;
       line-height: 1.2;
     }
-    h1 em { font-style: italic; color: var(--cie-crimson); }
+    h1 em { font-style: italic; color: var(--red); }
     .sub {
       font-size: 15px;
-      color: var(--cie-muted);
+      color: var(--muted);
       line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    /* Email hint box */
+    .hint-box {
+      background: var(--pink-bg);
+      border: 1px solid var(--red-border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .hint-box strong {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .hint-box p {
+      font-size: 14px;
+      color: var(--black);
+      line-height: 1.65;
+    }
+
+    /* Steps */
+    .steps {
+      text-align: left;
       margin-bottom: 32px;
     }
-
-    /* Check email state */
-    .email-hint {
-      background: var(--cie-blush);
-      border: 1px solid var(--cie-border);
-      border-radius: 12px;
-      padding: 20px 24px;
-      font-size: 14px;
-      color: var(--cie-dark);
-      line-height: 1.65;
-      margin-bottom: 28px;
-      text-align: left;
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
     }
-    .email-hint strong { color: var(--cie-crimson); display: block; margin-bottom: 6px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .step-num.active-step {
+      background: var(--red);
+    }
+    .step-body {}
+    .step-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 2px;
+    }
+    .step-label.active-step { color: var(--red); }
+    .step-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
 
     /* Form */
-    .form-group { text-align: left; margin-bottom: 16px; }
+    .form-group { text-align: left; margin-bottom: 14px; }
     label {
       display: block;
-      font-size: 11px;
-      letter-spacing: 1.5px;
+      font-size: 10px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--cie-dark);
+      color: var(--muted);
       font-weight: 700;
       margin-bottom: 8px;
-      opacity: 0.55;
     }
     input[type="email"],
     input[type="text"] {
       width: 100%;
-      padding: 15px 18px;
-      background: var(--cie-blush-lt);
-      border: 1.5px solid var(--cie-border);
+      padding: 14px 16px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
       border-radius: 8px;
       font-size: 15px;
-      color: var(--cie-dark);
+      color: var(--black);
       font-family: 'Plus Jakarta Sans', sans-serif;
       outline: none;
       transition: border-color 0.2s;
     }
-    input:focus { border-color: var(--cie-crimson); }
-    input::placeholder { color: var(--cie-muted-lt); }
+    input:focus { border-color: var(--red); }
+    input::placeholder { color: var(--muted-lt); }
+
+    /* Buttons */
     .btn {
       width: 100%;
-      padding: 16px;
-      background: var(--cie-crimson);
-      color: #ffffff;
+      padding: 15px;
+      background: var(--red);
+      color: var(--white);
       border: none;
       border-radius: 8px;
       font-size: 15px;
@@ -135,68 +209,69 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       transition: background 0.2s;
       margin-top: 8px;
+      text-decoration: none;
+      display: block;
+      text-align: center;
     }
-    .btn:hover { background: var(--cie-crimson-lt); }
+    .btn:hover { background: var(--red-lt); }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .btn-ghost {
-      background: transparent;
-      border: 1.5px solid var(--cie-border);
-      color: var(--cie-muted);
-      margin-top: 12px;
-    }
-    .btn-ghost:hover { border-color: var(--cie-crimson); color: var(--cie-dark); }
 
-    /* Success / error messages */
+    /* Messages */
     .msg-success {
       display: none;
-      margin-top: 16px;
+      margin-top: 14px;
       font-size: 13.5px;
-      color: #3A8A5A;
+      color: #2F8A5A;
       line-height: 1.65;
     }
     .msg-error {
       display: none;
-      margin-top: 16px;
+      margin-top: 14px;
       font-size: 13.5px;
-      color: var(--cie-crimson);
+      color: var(--red);
       line-height: 1.65;
     }
 
-    /* Invite sent success state */
-    .success-ring {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: rgba(184,32,56,0.08);
-      border: 2px solid var(--cie-crimson);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 28px;
-    }
-    .success-ring svg { width: 32px; height: 32px; stroke: var(--cie-crimson); fill: none; stroke-width: 2; }
-
+    /* Divider */
     .divider {
       border: none;
-      border-top: 1px solid var(--cie-border);
-      margin: 28px 0;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
     }
+
+    /* Skip link */
     .skip-link {
       font-size: 13px;
-      color: var(--cie-muted);
+      color: var(--muted);
       text-decoration: none;
       display: inline-block;
       margin-top: 4px;
     }
-    .skip-link:hover { color: var(--cie-dark); }
+    .skip-link:hover { color: var(--black); }
+
+    /* Success ring */
+    .success-ring {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--pink-bg);
+      border: 2px solid var(--red-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-ring svg { width: 30px; height: 30px; stroke: var(--red); fill: none; stroke-width: 2.5; }
   </style>
-  <!-- Site Analytics -->
   <script src="/analytics.js"></script>
 </head>
 <body>
 
-<div class="card">
+<div class="logo-wrap">
   <img src="/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png" alt="MiRAjO" class="logo">
+</div>
+
+<div class="card">
 
   <!-- STATE: Loading -->
   <div class="state active" id="state-loading">
@@ -207,14 +282,14 @@
 
   <!-- STATE: Check email (not yet logged in, post-purchase) -->
   <div class="state" id="state-check-email">
+    <p class="eyebrow">Enrollment confirmed</p>
     <h1>You're in.<br><em>Check your email.</em></h1>
-    <p class="sub">Your enrollment is confirmed. We sent a login link to the email you used at checkout.</p>
-    <div class="email-hint">
+    <p class="sub">We sent a login link to the email you used at checkout.</p>
+    <div class="hint-box">
       <strong>How to get in</strong>
-      Open the email from Miranda J, click the link, and you will land right back here to invite your partner.
+      <p>Open the email from Miranda J, click the link, and you will land right back here to invite your partner.</p>
     </div>
-    <p class="sub" style="font-size:13px;margin-bottom:0;">Did not get it? Check your spam folder, or request a new link below.</p>
-    <hr class="divider">
+    <p class="sub" style="font-size:13px;margin-bottom:20px;">Did not get it? Check your spam folder, or request a new link below.</p>
     <div class="form-group">
       <label>Your email address</label>
       <input type="email" id="resend-email" placeholder="you@email.com">
@@ -226,8 +301,41 @@
 
   <!-- STATE: Invite partner (logged in) -->
   <div class="state" id="state-invite">
-    <h1>Now invite<br><em>your partner.</em></h1>
-    <p class="sub">You are in. The next step is getting your partner set up. Enter their email and we will send them everything they need to join you.</p>
+    <p class="eyebrow">Step 1 of 4</p>
+    <h1>Invite<br><em>your partner.</em></h1>
+    <p class="sub">Enter their email and we will send them everything they need to create their account and join you.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num active-step">1</div>
+        <div class="step-body">
+          <div class="step-label active-step">Invite your partner</div>
+          <div class="step-desc">They will get an email to create their account. You are here now.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-label">Both complete your profiles</div>
+          <div class="step-desc">Each of you fills in a short profile. This shapes the scenarios you see in the diagnostic.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-label">Each of you takes the diagnostic privately</div>
+          <div class="step-desc">Your answers are yours alone. Your partner will never see your individual responses.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-label">Your Partnership Report generates</div>
+          <div class="step-desc">Once both of you finish, your alignment report reveals and your course modules unlock.</div>
+        </div>
+      </div>
+    </div>
+
     <div class="form-group">
       <label>Your partner's email</label>
       <input type="email" id="partner-email" placeholder="partner@email.com">
@@ -243,11 +351,12 @@
     <div class="success-ring">
       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <h1>Invite sent.</h1>
-    <p class="sub">Your partner will receive an email with everything they need to join. Once they accept and complete The Partnership Diagnostic, your Partnership Report generates automatically.</p>
-    <p class="sub" style="margin-bottom:0;">While you wait, you can log into your dashboard and start exploring.</p>
+    <p class="eyebrow">Invite sent</p>
+    <h1>They're on<br><em>their way.</em></h1>
+    <p class="sub">Your partner will receive an email with everything they need to join. Once both of you complete The Partnership Diagnostic, your Partnership Report generates automatically and your modules unlock.</p>
+    <p class="sub" style="margin-bottom:0;">While you wait, go to your dashboard and complete your profile to get ready.</p>
     <hr class="divider">
-    <a href="/programs/couples-dashboard" class="btn" style="text-decoration:none;display:block;">Go to My Dashboard</a>
+    <a href="/programs/couples-dashboard" class="btn">Go to My Dashboard</a>
   </div>
 
 </div>
@@ -263,7 +372,6 @@
   }
 
   async function init() {
-    // Handle magic link code in URL first
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
     if (code) {

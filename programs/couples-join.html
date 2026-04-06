@@ -26,217 +26,293 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:      #14090F;
-      --cie-crimson:   #B82038;
-      --cie-crimson-lt:#D43A56;
-      --cie-rose:      #D4607A;
-      --cie-blush:     #FBE8EE;
-      --cie-blush-lt:  #FDF3F6;
-      --cie-gold:      #C4A245;
-      --cie-muted:     #7A6B74;
-      --cie-border:    rgba(184,32,56,0.15);
+      --black:    #0D0D0D;
+      --white:    #FFFFFF;
+      --red:      #B82038;
+      --red-lt:   #D43A56;
+      --pink:     #E8547A;
+      --pink-lt:  #F2899E;
+      --pink-bg:  #FFF0F4;
+      --muted:    #666666;
+      --muted-lt: #999999;
+      --border:   rgba(13,13,13,0.12);
+      --red-border: rgba(184,32,56,0.18);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--cie-blush-lt);
+      background: var(--black);
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
+      justify-content: flex-start;
+      padding: 48px 24px 64px;
       -webkit-font-smoothing: antialiased;
-      color: var(--cie-dark);
     }
-    .card {
-      width: 100%;
-      max-width: 480px;
+
+    /* Logo */
+    .logo-wrap {
+      margin-bottom: 40px;
       text-align: center;
     }
     .logo {
-      height: 56px;
+      height: 48px;
       width: auto;
-      margin: 0 auto 44px;
-      display: block;
+      filter: brightness(0) invert(1);
     }
 
+    /* Card */
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 44px 40px;
+      text-align: center;
+    }
+    @media (max-width: 520px) {
+      .card { padding: 36px 28px; }
+    }
+
+    /* States */
     .state { display: none; }
     .state.active { display: block; }
 
+    /* Spinner */
     .spinner {
-      width: 44px;
-      height: 44px;
-      border: 3px solid rgba(184,32,56,0.15);
-      border-top-color: var(--cie-crimson);
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(184,32,56,0.12);
+      border-top-color: var(--red);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
-      margin: 0 auto 32px;
+      margin: 0 auto 28px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* Eyebrow */
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--pink);
+      margin-bottom: 12px;
+    }
+
+    /* Headings */
     h1 {
       font-family: 'Instrument Serif', serif;
-      font-size: 34px;
+      font-size: 32px;
       font-weight: 400;
-      color: var(--cie-dark);
+      color: var(--black);
       margin-bottom: 14px;
       line-height: 1.2;
     }
-    h1 em { font-style: italic; color: var(--cie-crimson); }
+    h1 em { font-style: italic; color: var(--red); }
     .sub {
       font-size: 15px;
-      color: var(--cie-muted);
+      color: var(--muted);
       line-height: 1.75;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
-    .invite-from {
+    /* Invite from badge */
+    .invite-badge {
       display: inline-block;
-      background: rgba(184,32,56,0.06);
-      border: 1px solid var(--cie-border);
+      background: var(--pink-bg);
+      border: 1px solid var(--red-border);
       border-radius: 8px;
-      padding: 12px 20px;
+      padding: 10px 18px;
       font-size: 14px;
-      color: var(--cie-dark);
-      margin-bottom: 32px;
+      color: var(--black);
+      margin-bottom: 28px;
     }
-    .invite-from span { color: var(--cie-crimson); font-weight: 600; }
+    .invite-badge span { color: var(--red); font-weight: 700; }
 
-    .course-card {
-      background: #ffffff;
-      border: 1px solid var(--cie-border);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 32px;
+    /* What you're joining card */
+    .joining-card {
+      background: var(--black);
+      border-radius: 10px;
+      padding: 20px 22px;
       text-align: left;
+      margin-bottom: 28px;
     }
-    .course-card-label {
+    .joining-card-label {
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--cie-crimson);
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--pink);
       margin-bottom: 8px;
     }
-    .course-card h3 {
+    .joining-card h3 {
       font-family: 'Instrument Serif', serif;
       font-size: 20px;
       font-weight: 400;
-      color: var(--cie-dark);
+      color: var(--white);
       margin-bottom: 8px;
     }
-    .course-card p {
+    .joining-card p {
       font-size: 13.5px;
-      color: var(--cie-muted);
+      color: var(--muted-lt);
       line-height: 1.65;
     }
 
+    /* Steps */
+    .steps {
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .step-num.active-step { background: var(--red); }
+    .step-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 2px;
+    }
+    .step-label.active-step { color: var(--red); }
+    .step-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Form */
     .form-group { text-align: left; margin-bottom: 14px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
     label {
       display: block;
-      font-size: 11px;
-      letter-spacing: 1.5px;
+      font-size: 10px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--cie-muted);
-      font-weight: 600;
+      color: var(--muted);
+      font-weight: 700;
       margin-bottom: 8px;
     }
     input[type="text"],
     input[type="email"] {
       width: 100%;
-      padding: 15px 18px;
-      background: #ffffff;
-      border: 1px solid rgba(184,32,56,0.2);
+      padding: 14px 16px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
       border-radius: 8px;
       font-size: 15px;
-      color: var(--cie-dark);
+      color: var(--black);
       font-family: 'Plus Jakarta Sans', sans-serif;
       outline: none;
       transition: border-color 0.2s;
     }
-    input:focus { border-color: var(--cie-crimson); }
-    input::placeholder { color: rgba(122,107,116,0.4); }
+    input:focus { border-color: var(--red); }
+    input::placeholder { color: var(--muted-lt); }
 
+    /* Button */
     .btn {
       width: 100%;
-      padding: 16px;
-      background: var(--cie-crimson);
-      color: #ffffff;
+      padding: 15px;
+      background: var(--red);
+      color: var(--white);
       border: none;
       border-radius: 8px;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      transition: opacity 0.2s;
+      transition: background 0.2s;
       margin-top: 8px;
     }
-    .btn:hover { opacity: 0.88; }
+    .btn:hover { background: var(--red-lt); }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
     .msg-error {
       display: none;
-      margin-top: 16px;
+      margin-top: 14px;
       font-size: 13.5px;
-      color: #E08080;
+      color: var(--red);
       line-height: 1.65;
     }
 
+    .privacy-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted-lt);
+      line-height: 1.65;
+    }
+
+    /* Divider */
     .divider {
       border: none;
-      border-top: 1px solid rgba(184,32,56,0.1);
-      margin: 28px 0;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
     }
 
     /* Success ring */
     .success-ring {
-      width: 72px;
-      height: 72px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
-      background: rgba(184,32,56,0.08);
-      border: 2px solid var(--cie-crimson);
+      background: var(--pink-bg);
+      border: 2px solid var(--red-border);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 28px;
+      margin: 0 auto 24px;
     }
-    .success-ring svg { width: 32px; height: 32px; stroke: var(--cie-crimson); fill: none; stroke-width: 2; }
+    .success-ring svg { width: 30px; height: 30px; stroke: var(--red); fill: none; stroke-width: 2.5; }
 
     /* Error ring */
     .error-ring {
-      width: 72px;
-      height: 72px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
-      background: rgba(224,128,128,0.1);
-      border: 2px solid rgba(224,128,128,0.5);
+      background: rgba(184,32,56,0.06);
+      border: 2px solid var(--red-border);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 28px;
+      margin: 0 auto 24px;
     }
-    .error-ring svg { width: 32px; height: 32px; stroke: #E08080; fill: none; stroke-width: 2; }
+    .error-ring svg { width: 30px; height: 30px; stroke: var(--red); fill: none; stroke-width: 2.5; }
 
     .help-link {
       font-size: 13px;
-      color: var(--cie-muted);
+      color: var(--muted);
       text-decoration: none;
     }
-    .help-link:hover { color: var(--cie-dark); }
-    .privacy-note {
-      margin-top: 20px;
-      font-size: 12px;
-      color: rgba(122,107,116,0.5);
-      line-height: 1.6;
-    }
+    .help-link:hover { color: var(--black); }
   </style>
-  <!-- Site Analytics -->
   <script src="/analytics.js"></script>
 </head>
 <body>
 
-<div class="card">
+<div class="logo-wrap">
   <img src="/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png" alt="MiRAjO" class="logo">
+</div>
+
+<div class="card">
 
   <!-- STATE: Loading -->
   <div class="state active" id="state-loading">
@@ -247,17 +323,49 @@
 
   <!-- STATE: Join form -->
   <div class="state" id="state-join">
-    <h1>You've been<br><em>invited.</em></h1>
-    <p class="sub" id="invite-sub">Your partner has invited you to join them in Couples in Entrepreneurship.</p>
+    <p class="eyebrow">You've been invited</p>
+    <h1>Your partner<br><em>is waiting.</em></h1>
+    <p class="sub" id="invite-sub">Create your account and join them in Couples in Entrepreneurship.</p>
 
-    <div class="invite-from" id="invite-from" style="display:none">
+    <div class="invite-badge" id="invite-from" style="display:none">
       Invited by <span id="partner-name"></span>
     </div>
 
-    <div class="course-card">
-      <p class="course-card-label">You're joining</p>
+    <div class="joining-card">
+      <p class="joining-card-label">You're joining</p>
       <h3>Couples in Entrepreneurship</h3>
-      <p>Take The Partnership Diagnostic privately, reveal your alignment report together, and work through a course built around your real gaps.</p>
+      <p>A scenario-based diagnostic reveals where you and your partner are aligned, where you are not, and which course modules will close the gaps.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num active-step">1</div>
+        <div class="step-body">
+          <div class="step-label active-step">Create your account</div>
+          <div class="step-desc">Set up your login. Your partner's access is already confirmed.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-label">Complete your profile</div>
+          <div class="step-desc">A short profile that shapes which scenarios you see in the diagnostic.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-label">Take the diagnostic privately</div>
+          <div class="step-desc">Your answers are yours alone. Your partner will never see your individual responses.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-label">Your Partnership Report reveals</div>
+          <div class="step-desc">Once both of you finish, your alignment report generates and your course modules unlock.</div>
+        </div>
+      </div>
     </div>
 
     <div class="form-row">
@@ -286,9 +394,10 @@
     <div class="success-ring">
       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
+    <p class="eyebrow">Account created</p>
     <h1>You're in.</h1>
-    <p class="sub">Your account is set up. Check your email for a login link from Miranda J. Click it and you will land straight in your dashboard.</p>
-    <p class="sub" style="margin-bottom:0;">Once both of you complete The Partnership Diagnostic, your Partnership Report generates automatically.</p>
+    <p class="sub">Check your email for a login link. Click it and you will land straight in your dashboard.</p>
+    <p class="sub" style="margin-bottom:0;">Start with your profile, then take The Partnership Diagnostic. Once both of you finish, your Partnership Report generates automatically.</p>
     <hr class="divider">
     <a href="mailto:programs@mirajoco.org" class="help-link">Questions? programs@mirajoco.org</a>
   </div>
@@ -298,7 +407,7 @@
     <div class="error-ring">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </div>
-    <h1>This link has<br>expired.</h1>
+    <h1>This link has<br><em>expired.</em></h1>
     <p class="sub">Invite links are valid for 7 days. Ask your partner to log in and resend the invite, or email us and we will sort it out.</p>
     <hr class="divider">
     <a href="mailto:programs@mirajoco.org" class="help-link">programs@mirajoco.org</a>
@@ -319,16 +428,12 @@
   async function init() {
     if (!token) { show('state-error'); return; }
 
-    // Pre-fill partner name if passed in URL
     if (fromName) {
       document.getElementById('partner-name').textContent = fromName;
       document.getElementById('invite-from').style.display = 'inline-block';
       document.getElementById('invite-sub').textContent = `${fromName} has invited you to join them in Couples in Entrepreneurship.`;
     }
 
-    // We will validate the token on submit — show the form now
-    // Pre-fill email from token lookup would require a server call;
-    // instead let the user confirm their email on the form
     document.getElementById('join-email').removeAttribute('readonly');
     show('state-join');
   }
@@ -360,7 +465,6 @@
       if (res.status === 400 && data.error?.includes('expired')) { show('state-error'); return; }
 
       if (res.ok) {
-        // If we got a direct login URL, redirect straight in
         if (data.login_url) {
           window.location.href = data.login_url;
         } else {
