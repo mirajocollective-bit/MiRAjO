@@ -666,13 +666,12 @@ async function init() {
 
   if (!mod) { showError('Module not found.'); return; }
 
-  // Lock check (module 1 always open, module 8 open if report exists, others check unlocked_domains)
+  // Lock check — all modules require a report; adaptive modules also check unlocked_domains
   const unlocked = report?.unlocked_domains || [];
-  const isFoundation = mod.position === 1;
-  const isWin = mod.position === 8;
+  const isBookend = mod.position === 1 || mod.position === 8;
   const domainUnlocked = unlocked.includes(mod.unlock_domain) || unlocked.includes('all');
 
-  if (!isFoundation && !(isWin && report) && !domainUnlocked) {
+  if (!report || (!isBookend && !domainUnlocked)) {
     window.location.href = '/programs/couples-dashboard';
     return;
   }

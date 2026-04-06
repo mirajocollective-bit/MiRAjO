@@ -849,31 +849,6 @@ async function renderDashboard(user) {
     </div>
   </div>`;
 
-  // ── MODULE 1 — THE FOUNDATION ──
-  const mod1 = MODULES[0];
-  const mod1Pct = mod1LessonCount > 0 ? Math.round((mod1CompletedCount / mod1LessonCount) * 100) : 0;
-  let mod1StatusHtml = '';
-  if (mod1Pct === 100) {
-    mod1StatusHtml = `<span class="module-card-status status-complete">&#10003; Complete</span>`;
-  } else if (mod1Pct > 0) {
-    mod1StatusHtml = `<span class="module-card-status status-started">${mod1Pct}% done</span>`;
-  } else {
-    mod1StatusHtml = `<span class="module-card-status status-unlocked">Available now</span>`;
-  }
-  html += `<div class="section-label" style="margin-top:8px;">Module 1 — The Foundation</div>`;
-  html += `<p style="font-size:13px;color:var(--muted);margin:-12px 0 20px;line-height:1.6;">Complete this while your partner finishes their diagnostic — or return to it any time.</p>`;
-  html += `<a href="/programs/couples-course/${mod1.slug}" class="module-card unlocked" style="margin-bottom:40px;max-width:520px;">
-    <div class="module-card-top">
-      <span class="module-card-num">Module 1</span>
-    </div>
-    <div class="module-card-title">${mod1.title}</div>
-    <div class="module-card-desc">${mod1.desc}</div>
-    <div class="module-card-footer">
-      ${mod1StatusHtml}
-      ${mod1LessonCount > 0 ? `<span style="font-size:11px;color:var(--muted);">${mod1CompletedCount}/${mod1LessonCount} lessons</span>` : ''}
-    </div>
-    ${mod1Pct > 0 ? `<div class="module-progress-bar"><div class="module-progress-fill" style="width:${mod1Pct}%"></div></div>` : ''}
-  </a>`;
 
   // ── REPORT READY BANNER ──
   if (bothComplete && reportReady) {
@@ -893,11 +868,10 @@ async function renderDashboard(user) {
   html += `<div class="modules-grid">`;
 
   for (const mod of MODULES) {
-    if (mod.num === 1) continue; // Module 1 is already shown above
-
-    // Determine lock state
+    // Determine lock state — all modules require a report
     let unlocked = false;
-    if (mod.num === 8) unlocked = reportReady;
+    const isBookend = mod.num === 1 || mod.num === 8;
+    if (isBookend) unlocked = reportReady;
     else unlocked = reportReady && (unlockedDomains.includes(mod.unlock_domain) || unlockedDomains.includes('all'));
 
     // Match to DB module for progress
