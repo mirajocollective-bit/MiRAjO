@@ -55,6 +55,7 @@
     { "source": "/programs/couples-join",               "destination": "/programs/couples-join.html" },
     { "source": "/programs/couples-dashboard",          "destination": "/programs/couples-dashboard.html" },
     { "source": "/programs/couples-diagnostic",         "destination": "/programs/couples-diagnostic.html" },
+    { "source": "/programs/couples-profile",            "destination": "/programs/couples-profile.html" },
     { "source": "/programs/couples-report",             "destination": "/programs/couples-report.html" },
     { "source": "/programs/couples-course/:slug",       "destination": "/programs/couples-course.html" },
     { "source": "/programs/certificate",         "destination": "/programs/certificate.html" },
