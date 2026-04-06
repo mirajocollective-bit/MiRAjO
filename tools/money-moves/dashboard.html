@@ -942,7 +942,7 @@
       .analytics-sidebar { display: none !important; }
     }
     @media (max-width: 768px) {
-      body { padding-bottom: 62px; }
+      body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
       .nav { height: 48px; padding: 0 16px; }
       .nav-greeting, .nav-btn-forecast, .nav-btn-logout,
       .nav-btn-settings, .float-calc-toggle, .forecast-strip-toggle { display: none; }
@@ -951,10 +951,7 @@
         padding: 12px 12px 80px; gap: 12px;
       }
       .analytics-sidebar { display: none !important; }
-      .sidebar {
-        display: grid; grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
+      .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .summary-bar { flex-wrap: wrap; }
       .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
       .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
@@ -962,9 +959,18 @@
       .cal-cell { height: 82px; padding: 5px 5px 16px; }
       .cal-entry { font-size: 10px; padding: 2px 5px; }
       .float-calc { bottom: 72px; right: 12px; width: 240px; }
-      .mobile-nav { display: flex; }
+      .mobile-nav { display: flex; padding-bottom: max(8px, env(safe-area-inset-bottom, 8px)); height: auto; min-height: 62px; }
       .form-row { grid-template-columns: 1fr; }
       .modal { padding: 24px 20px; border-radius: 20px; }
+      /* Cal header: two rows so arrows always visible */
+      .cal-header { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 10px; }
+      .cal-header-left { justify-content: space-between; }
+      .cal-header > div:last-child { justify-content: space-between; }
+      /* Bigger nav arrow touch targets (Apple min 44px) */
+      .cal-nav-btn { width: 44px; height: 44px; font-size: 18px; }
+      /* Search collapses to icon; expands on focus */
+      .cal-search-input { width: 36px; padding: 0 10px; color: transparent; transition: width 0.25s, color 0.15s; }
+      .cal-search-input:focus, .cal-search-input:not(:placeholder-shown) { width: 150px; color: var(--deep-forest); }
     }
     @media (max-width: 540px) {
       .sidebar { grid-template-columns: 1fr; }
@@ -974,6 +980,29 @@
       .cal-grid { padding: 0 8px 12px; gap: 2px; }
       .summary-bar { gap: 6px; }
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
+    }
+
+    /* ── PWA Install Banner ── */
+    .install-banner {
+      display: none; position: fixed;
+      bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+      left: 12px; right: 12px; z-index: 300;
+      background: var(--deep-forest); color: #fff; border-radius: 14px;
+      padding: 14px 16px; align-items: center; gap: 12px;
+      box-shadow: 0 8px 24px rgba(18,32,18,0.3);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .install-banner.visible { display: flex; }
+    .install-banner-text { flex: 1; font-size: 13px; font-weight: 500; line-height: 1.4; }
+    .install-banner-text strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .install-banner-btn {
+      padding: 8px 14px; border-radius: 8px; border: none; cursor: pointer;
+      font-weight: 700; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dry-sage); color: var(--deep-forest); white-space: nowrap;
+    }
+    .install-banner-close {
+      background: none; border: none; color: rgba(255,255,255,0.5); font-size: 20px;
+      cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;
     }
   </style>
   <script src="/analytics.js"></script>
@@ -3674,6 +3703,38 @@
     }
   });
 
+  // ── PWA Install Banner ───────────────────────────────────────────────────────
+  let _installPrompt = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    _installPrompt = e;
+    if (!localStorage.getItem('mm_install_dismissed')) {
+      document.getElementById('install-banner').classList.add('visible');
+    }
+  });
+  document.getElementById('install-btn').addEventListener('click', async () => {
+    if (!_installPrompt) return;
+    _installPrompt.prompt();
+    const { outcome } = await _installPrompt.userChoice;
+    if (outcome === 'accepted') localStorage.setItem('mm_install_dismissed', '1');
+    document.getElementById('install-banner').classList.remove('visible');
+    _installPrompt = null;
+  });
+  window.dismissInstallBanner = function () {
+    localStorage.setItem('mm_install_dismissed', '1');
+    document.getElementById('install-banner').classList.remove('visible');
+  };
+  // iOS: no beforeinstallprompt — show a manual hint if in Safari and not standalone
+  const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isIos && !isStandalone && !localStorage.getItem('mm_install_dismissed')) {
+    const banner = document.getElementById('install-banner');
+    banner.querySelector('.install-banner-text').innerHTML =
+      '<strong>Add to Home Screen</strong>Tap <strong>Share</strong> then <strong>Add to Home Screen</strong> to install Money Moves.';
+    banner.querySelector('#install-btn').style.display = 'none';
+    banner.classList.add('visible');
+  }
+
   // ── Onboarding ───────────────────────────────────────────────────────────────
   window.dismissOnboarding = function () {
     localStorage.setItem('mm_onboarded', '1');
@@ -4085,6 +4146,16 @@
     <button class="fc-btn" onclick="fcInput('.')">.</button>
     <button class="fc-btn fc-eq" onclick="fcInput('=')">=</button>
   </div>
+</div>
+
+<!-- PWA Install Banner -->
+<div class="install-banner" id="install-banner">
+  <div class="install-banner-text">
+    <strong>Add to Home Screen</strong>
+    Install Money Moves for instant access — works offline too.
+  </div>
+  <button class="install-banner-btn" id="install-btn">Install</button>
+  <button class="install-banner-close" onclick="dismissInstallBanner()">✕</button>
 </div>
 
 <!-- Mobile Bottom Nav -->
