@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -25,10 +25,11 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync ios
 
-      - name: Install CocoaPods
+      - name: Resolve Swift Package Manager dependencies
         run: |
-          cd ios/App
-          pod install
+          xcodebuild -resolvePackageDependencies \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App
 
       - name: Build iOS (unsigned — for App Store upload you will sign in Xcode/App Store Connect)
         run: |
@@ -39,7 +40,9 @@ jobs:
             -destination generic/platform=iOS \
             -archivePath ios/App/App.xcarchive \
             archive \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY=""
 
       - name: Upload iOS archive artifact
         uses: actions/upload-artifact@v4
