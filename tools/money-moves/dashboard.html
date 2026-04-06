@@ -982,6 +982,206 @@
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
     }
 
+    /* ── Mortgage Calculator ── */
+    .mortgage-view {
+      display: none; padding: 24px 24px 32px;
+    }
+    .mortgage-view.active { display: block; }
+
+    .mtg-inner { max-width: 960px; margin: 0 auto; }
+
+    .mtg-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .mtg-title {
+      font-family: 'Instrument Serif', serif; font-size: 20px;
+      color: var(--deep-forest); margin-bottom: 4px;
+    }
+    .mtg-sub { font-size: 13px; color: var(--neutral); line-height: 1.5; }
+
+    .mtg-header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .mtg-action-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 8px; border: 1px solid rgba(18,32,18,0.18);
+      background: transparent; color: var(--deep-forest); cursor: pointer;
+      font-size: 12px; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.15s; white-space: nowrap;
+    }
+    .mtg-action-btn:hover { background: var(--soft-white); }
+    .mtg-action-btn.mtg-action-primary {
+      background: var(--deep-forest); color: var(--warm-parchment);
+      border-color: var(--deep-forest);
+    }
+    .mtg-action-btn.mtg-action-primary:hover { opacity: 0.85; }
+
+    .mtg-body {
+      display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start;
+    }
+
+    /* Inputs */
+    .mtg-inputs {
+      background: #fff; border-radius: 16px;
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 2px 10px rgba(18,32,18,0.07);
+      padding: 20px 22px;
+    }
+    .mtg-section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral);
+      margin-bottom: 14px;
+    }
+    .mtg-section-label--gap { margin-top: 20px; }
+    .mtg-optional { font-size: 9px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--neutral); opacity: 0.7; }
+
+    .mtg-field-group {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;
+    }
+    .mtg-field { display: flex; flex-direction: column; gap: 5px; }
+    .mtg-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--neutral);
+    }
+    .mtg-input-wrap {
+      display: flex; align-items: center;
+      border: 1px solid rgba(18,32,18,0.14); border-radius: 9px;
+      background: #fff; overflow: hidden; transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .mtg-input-wrap:focus-within {
+      border-color: var(--living-green);
+      box-shadow: 0 0 0 3px rgba(37,107,66,0.08);
+    }
+    .mtg-readonly-wrap { background: var(--soft-white); }
+    .mtg-prefix, .mtg-suffix {
+      padding: 0 8px; font-size: 13px; color: var(--neutral);
+      font-weight: 600; flex-shrink: 0; user-select: none;
+    }
+    .mtg-input {
+      flex: 1; min-width: 0; padding: 9px 8px;
+      border: none; outline: none; font-size: 13px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: transparent;
+    }
+    .mtg-input[readonly] { color: var(--neutral); cursor: default; }
+    .mtg-input-split { display: flex; gap: 6px; }
+    .mtg-pct-wrap { background: var(--soft-white); }
+    .mtg-select {
+      width: 100%; padding: 9px 10px;
+      border: 1px solid rgba(18,32,18,0.14); border-radius: 9px;
+      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #fff; outline: none; cursor: pointer;
+      transition: border-color 0.18s;
+    }
+    .mtg-select:focus { border-color: var(--living-green); }
+    .mtg-field-hint { font-size: 10px; color: var(--dry-sage); font-weight: 600; min-height: 14px; }
+
+    /* Results */
+    .mtg-results { display: flex; flex-direction: column; gap: 14px; }
+
+    .mtg-results-card {
+      background: #fff; border-radius: 16px;
+      border: 1px solid rgba(18,32,18,0.06);
+      box-shadow: 0 2px 10px rgba(18,32,18,0.07);
+      padding: 18px 20px;
+    }
+    .mtg-results-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral); margin-bottom: 6px;
+    }
+    .mtg-results-total {
+      font-family: 'Instrument Serif', serif; font-size: 32px;
+      color: var(--deep-forest); line-height: 1.1; margin-bottom: 16px;
+    }
+
+    .mtg-breakdown { border-top: 1px solid var(--border); padding-top: 12px; margin-bottom: 16px; }
+    .mtg-bk-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .mtg-bk-row:last-child { border-bottom: none; }
+    .mtg-bk-label { color: var(--neutral); font-weight: 500; display: flex; align-items: baseline; gap: 4px; }
+    .mtg-bk-sub { font-size: 10px; color: var(--dry-sage); font-weight: 600; }
+    .mtg-bk-val { font-weight: 700; color: var(--deep-forest); }
+
+    /* Donut chart */
+    .mtg-donut-wrap {
+      display: flex; align-items: center; gap: 16px; padding-top: 4px;
+    }
+    .mtg-donut { width: 100px; height: 100px; flex-shrink: 0; }
+    .mtg-donut-pi  { stroke: var(--living-green); }
+    .mtg-donut-tax { stroke: var(--dry-sage); }
+    .mtg-donut-ins { stroke: #7a9ea0; }
+    .mtg-donut-pmi { stroke: #b07a5a; }
+    .mtg-donut-hoa { stroke: #8B72C8; }
+    .mtg-donut-legend { display: flex; flex-direction: column; gap: 5px; }
+    .mtg-legend-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--deep-forest); font-weight: 500; }
+    .mtg-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Lifetime */
+    .mtg-lifetime-grid { display: flex; flex-direction: column; gap: 0; }
+    .mtg-lt-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .mtg-lt-row:first-child { padding-top: 2px; }
+    .mtg-lt-label { color: var(--neutral); font-weight: 500; }
+    .mtg-lt-val { font-weight: 600; color: var(--deep-forest); }
+    .mtg-lt-interest { color: var(--expense-color); }
+    .mtg-lt-total-row { border-bottom: none; padding-top: 10px; margin-top: 4px; border-top: 2px solid var(--border); }
+    .mtg-lt-grand { font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--deep-forest); }
+    .mtg-payoff-banner {
+      margin-top: 14px; padding: 10px 12px;
+      background: rgba(37,107,66,0.07); border-left: 3px solid var(--living-green);
+      border-radius: 8px; font-size: 12px; color: var(--forest-mid); line-height: 1.55;
+    }
+
+    /* Amortization table */
+    .mtg-amort-section { margin-top: 20px; }
+    .mtg-amort-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 12px 16px; border-radius: 10px;
+      border: 1px solid rgba(18,32,18,0.12); background: #fff; cursor: pointer;
+      font-size: 12px; font-weight: 700; color: var(--deep-forest);
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s;
+    }
+    .mtg-amort-toggle:hover { background: var(--soft-white); }
+    .mtg-amort-wrap {
+      display: none; margin-top: 10px; background: #fff; border-radius: 12px;
+      border: 1px solid rgba(18,32,18,0.07); overflow: hidden;
+    }
+    .mtg-amort-wrap.open { display: block; }
+    .mtg-amort-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .mtg-amort-table th {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--neutral); padding: 10px 14px; text-align: right;
+      border-bottom: 2px solid var(--border); white-space: nowrap;
+      position: sticky; top: 0; background: #fff;
+    }
+    .mtg-amort-table th:first-child { text-align: left; }
+    .mtg-amort-table td {
+      padding: 8px 14px; text-align: right; border-bottom: 1px solid rgba(18,32,18,0.04);
+      color: var(--deep-forest);
+    }
+    .mtg-amort-table td:first-child { text-align: left; color: var(--neutral); font-weight: 500; }
+    .mtg-amort-table tr:hover td { background: rgba(37,107,66,0.03); }
+    .mtg-amort-table .mtg-amort-year td {
+      background: rgba(196,162,69,0.05); font-weight: 700;
+      font-size: 11px; color: var(--dry-sage); letter-spacing: 0.5px;
+    }
+
+    /* Mortgage responsive */
+    @media (max-width: 860px) {
+      .mtg-body { grid-template-columns: 1fr; }
+      .mtg-results { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .mtg-field-group { grid-template-columns: 1fr; }
+      .mtg-results { grid-template-columns: 1fr; }
+      .mtg-header { flex-direction: column; }
+      .mtg-header-actions { width: 100%; justify-content: flex-start; }
+      .mtg-results-total { font-size: 26px; }
+    }
+
     /* ── PWA Install Banner ── */
     .install-banner {
       display: none; position: fixed;
@@ -1025,7 +1225,18 @@
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/reports'">Reports</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/settings'">Settings</button>
     <button class="nav-btn nav-btn-settings" onclick="openFaq()" title="Help & FAQ" style="font-size:16px; padding:6px 11px;">?</button>
-    <button class="float-calc-toggle" id="calc-toggle-btn" onclick="toggleFloatCalc()" title="Pop-up Calculator">🧮</button>
+    <button class="float-calc-toggle" id="calc-toggle-btn" onclick="toggleFloatCalc()" title="Calculator">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">
+        <rect x="2" y="1" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/>
+        <rect x="4" y="3" width="8" height="3" rx="1" fill="currentColor"/>
+        <circle cx="4.5" cy="9" r="1" fill="currentColor"/>
+        <circle cx="8" cy="9" r="1" fill="currentColor"/>
+        <circle cx="11.5" cy="9" r="1" fill="currentColor"/>
+        <circle cx="4.5" cy="12" r="1" fill="currentColor"/>
+        <circle cx="8" cy="12" r="1" fill="currentColor"/>
+        <rect x="10.5" y="11" width="2" height="2" rx="0.5" fill="currentColor"/>
+      </svg>
+    </button>
     <button class="nav-btn nav-btn-logout" onclick="logOut()" title="Log out">Log Out</button>
   </div>
 </nav>
@@ -1165,6 +1376,7 @@
         <div class="cal-view-toggle">
           <button class="cal-view-btn active" id="btn-calendar" onclick="setView('calendar')">Calendar</button>
           <button class="cal-view-btn" id="btn-forecast" onclick="setView('forecast')">Forecast</button>
+          <button class="cal-view-btn" id="btn-mortgage" onclick="setView('mortgage')">Mortgage</button>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
@@ -1196,6 +1408,274 @@
       </div>
       <div class="cal-grid" id="cal-grid"></div>
     </div>
+
+    <!-- Mortgage Calculator -->
+    <div class="mortgage-view" id="mortgage-view">
+      <div class="mtg-inner">
+
+        <!-- Header row -->
+        <div class="mtg-header">
+          <div>
+            <div class="mtg-title">Mortgage Calculator</div>
+            <div class="mtg-sub">Estimate your monthly payment and total cost of ownership.</div>
+          </div>
+          <div class="mtg-header-actions">
+            <button class="mtg-action-btn" onclick="resetMortgage()" title="Reset all fields">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.5 7A5.5 5.5 0 1 0 3.2 3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1.5 3.5V7H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Reset
+            </button>
+            <button class="mtg-action-btn" onclick="printMortgage()" title="Print report">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="5" width="10" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M4 5V2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V5" stroke="currentColor" stroke-width="1.4"/><rect x="4" y="8" width="6" height="1" rx=".5" fill="currentColor"/><rect x="4" y="10" width="4" height="1" rx=".5" fill="currentColor"/></svg>
+              Print
+            </button>
+            <button class="mtg-action-btn mtg-action-primary" onclick="downloadMortgagePDF()" title="Download PDF report">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2v7M4.5 6.5 7 9l2.5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Download
+            </button>
+          </div>
+        </div>
+
+        <!-- Two-column: inputs + results -->
+        <div class="mtg-body">
+
+          <!-- LEFT: Inputs -->
+          <div class="mtg-inputs">
+
+            <div class="mtg-section-label">Loan Details</div>
+
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-home-value">Home Value</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-home-value" type="number" min="0" step="1000" value="350000" oninput="calcMortgage()">
+                </div>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-down-pct">Down Payment</label>
+                <div class="mtg-input-split">
+                  <div class="mtg-input-wrap" style="flex:1">
+                    <span class="mtg-prefix">$</span>
+                    <input class="mtg-input" id="mtg-down-amt" type="number" min="0" step="1000" value="70000" oninput="onMtgDownAmt()">
+                  </div>
+                  <div class="mtg-input-wrap mtg-pct-wrap" style="flex:0 0 80px">
+                    <input class="mtg-input" id="mtg-down-pct" type="number" min="0" max="100" step="0.5" value="20" oninput="onMtgDownPct()">
+                    <span class="mtg-suffix">%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-loan-amt">Loan Amount</label>
+                <div class="mtg-input-wrap mtg-readonly-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-loan-amt" type="text" readonly tabindex="-1">
+                </div>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-rate">Interest Rate</label>
+                <div class="mtg-input-wrap">
+                  <input class="mtg-input" id="mtg-rate" type="number" min="0" max="30" step="0.05" value="6.75" oninput="calcMortgage()">
+                  <span class="mtg-suffix">%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-term">Loan Term</label>
+                <select class="mtg-select" id="mtg-term" onchange="calcMortgage()">
+                  <option value="30">30 years</option>
+                  <option value="20">20 years</option>
+                  <option value="15">15 years</option>
+                  <option value="10">10 years</option>
+                </select>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-start">Start Date</label>
+                <input class="mtg-input" id="mtg-start" type="month" oninput="calcMortgage()">
+              </div>
+            </div>
+
+            <div class="mtg-section-label mtg-section-label--gap">Homeowner Expenses <span class="mtg-optional">(optional)</span></div>
+
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-tax">Property Tax / Year</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-tax" type="number" min="0" step="100" value="0" placeholder="0" oninput="calcMortgage()">
+                </div>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-insurance">Home Insurance / Year</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-insurance" type="number" min="0" step="100" value="0" placeholder="0" oninput="calcMortgage()">
+                </div>
+              </div>
+            </div>
+
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-pmi">PMI / Year</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-pmi" type="number" min="0" step="100" value="0" placeholder="0" oninput="calcMortgage()">
+                </div>
+                <div class="mtg-field-hint" id="mtg-pmi-hint"></div>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-hoa">HOA Fees / Month</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-hoa" type="number" min="0" step="10" value="0" placeholder="0" oninput="calcMortgage()">
+                </div>
+              </div>
+            </div>
+
+            <div class="mtg-section-label mtg-section-label--gap">Extra Payments <span class="mtg-optional">(optional)</span></div>
+
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-extra-monthly">Extra Monthly Payment</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-extra-monthly" type="number" min="0" step="50" value="0" placeholder="0" oninput="calcMortgage()">
+                </div>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="mtg-extra-yearly">Extra Yearly Payment</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="mtg-extra-yearly" type="number" min="0" step="100" value="0" placeholder="0" oninput="calcMortgage()">
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /mtg-inputs -->
+
+          <!-- RIGHT: Results -->
+          <div class="mtg-results">
+
+            <!-- Monthly payment breakdown -->
+            <div class="mtg-results-card">
+              <div class="mtg-results-label">Est. Monthly Payment</div>
+              <div class="mtg-results-total" id="mtg-monthly-total">$—</div>
+
+              <div class="mtg-breakdown">
+                <div class="mtg-bk-row">
+                  <span class="mtg-bk-label">Principal &amp; Interest</span>
+                  <span class="mtg-bk-val" id="mtg-bk-pi">—</span>
+                </div>
+                <div class="mtg-bk-row" id="mtg-bk-extra-row" style="display:none">
+                  <span class="mtg-bk-label">Extra Payment</span>
+                  <span class="mtg-bk-val" id="mtg-bk-extra">—</span>
+                </div>
+                <div class="mtg-bk-row" id="mtg-bk-tax-row" style="display:none">
+                  <span class="mtg-bk-label">Property Tax</span>
+                  <span class="mtg-bk-val" id="mtg-bk-tax">—</span>
+                </div>
+                <div class="mtg-bk-row" id="mtg-bk-ins-row" style="display:none">
+                  <span class="mtg-bk-label">Home Insurance</span>
+                  <span class="mtg-bk-val" id="mtg-bk-ins">—</span>
+                </div>
+                <div class="mtg-bk-row" id="mtg-bk-pmi-row" style="display:none">
+                  <span class="mtg-bk-label">PMI <span class="mtg-bk-sub" id="mtg-bk-pmi-until"></span></span>
+                  <span class="mtg-bk-val" id="mtg-bk-pmi">—</span>
+                </div>
+                <div class="mtg-bk-row" id="mtg-bk-hoa-row" style="display:none">
+                  <span class="mtg-bk-label">HOA Fees</span>
+                  <span class="mtg-bk-val" id="mtg-bk-hoa">—</span>
+                </div>
+              </div>
+
+              <!-- Donut chart -->
+              <div class="mtg-donut-wrap">
+                <svg class="mtg-donut" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" id="mtg-donut-svg">
+                  <circle cx="60" cy="60" r="46" fill="none" stroke="rgba(18,32,18,0.06)" stroke-width="18"/>
+                  <circle class="mtg-donut-pi"  cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-tax" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-ins" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-pmi" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
+                  <circle class="mtg-donut-hoa" cx="60" cy="60" r="46" fill="none" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
+                </svg>
+                <div class="mtg-donut-legend">
+                  <div class="mtg-legend-row"><span class="mtg-legend-dot" style="background:var(--living-green)"></span>Principal &amp; Interest</div>
+                  <div class="mtg-legend-row mtg-legend-tax" style="display:none"><span class="mtg-legend-dot" style="background:var(--dry-sage)"></span>Property Tax</div>
+                  <div class="mtg-legend-row mtg-legend-ins" style="display:none"><span class="mtg-legend-dot" style="background:#7a9ea0"></span>Insurance</div>
+                  <div class="mtg-legend-row mtg-legend-pmi" style="display:none"><span class="mtg-legend-dot" style="background:#b07a5a"></span>PMI</div>
+                  <div class="mtg-legend-row mtg-legend-hoa" style="display:none"><span class="mtg-legend-dot" style="background:#8B72C8"></span>HOA</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lifetime summary -->
+            <div class="mtg-results-card mtg-lifetime-card">
+              <div class="mtg-results-label">Lifetime Cost Summary</div>
+              <div class="mtg-lifetime-grid">
+                <div class="mtg-lt-row">
+                  <span class="mtg-lt-label">Down Payment</span>
+                  <span class="mtg-lt-val" id="mtg-lt-down">—</span>
+                </div>
+                <div class="mtg-lt-row">
+                  <span class="mtg-lt-label">Principal</span>
+                  <span class="mtg-lt-val" id="mtg-lt-principal">—</span>
+                </div>
+                <div class="mtg-lt-row">
+                  <span class="mtg-lt-label">Total Interest</span>
+                  <span class="mtg-lt-val mtg-lt-interest" id="mtg-lt-interest">—</span>
+                </div>
+                <div class="mtg-lt-row" id="mtg-lt-extra-row" style="display:none">
+                  <span class="mtg-lt-label">Extra Payments</span>
+                  <span class="mtg-lt-val" id="mtg-lt-extra">—</span>
+                </div>
+                <div class="mtg-lt-row" id="mtg-lt-fees-row">
+                  <span class="mtg-lt-label">Taxes, Insurance &amp; Fees</span>
+                  <span class="mtg-lt-val" id="mtg-lt-fees">—</span>
+                </div>
+                <div class="mtg-lt-row mtg-lt-total-row">
+                  <span class="mtg-lt-label">Total of All Payments</span>
+                  <span class="mtg-lt-val mtg-lt-grand" id="mtg-lt-total">—</span>
+                </div>
+              </div>
+              <div class="mtg-payoff-banner" id="mtg-payoff-banner" style="display:none">
+                <span id="mtg-payoff-text"></span>
+              </div>
+            </div>
+
+          </div><!-- /mtg-results -->
+        </div><!-- /mtg-body -->
+
+        <!-- Amortization Table -->
+        <div class="mtg-amort-section">
+          <button class="mtg-amort-toggle" id="mtg-amort-toggle" onclick="toggleMtgAmort()">
+            Show Amortization Schedule
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" id="mtg-amort-chevron" style="transition:transform 0.2s"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="mtg-amort-wrap" id="mtg-amort-wrap">
+            <div style="overflow-x:auto">
+              <table class="mtg-amort-table" id="mtg-amort-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Payment</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Extra</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="mtg-amort-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /mtg-inner -->
+    </div><!-- /mortgage-view -->
 
     <!-- Hint bar -->
     <div class="hint-bar" id="hint-bar">
@@ -3592,9 +4072,17 @@
     currentView = view;
     document.getElementById('calendar-view').style.display = view === 'calendar' ? 'block' : 'none';
     document.getElementById('forecast-view').classList.toggle('active', view === 'forecast');
+    document.getElementById('mortgage-view').classList.toggle('active', view === 'mortgage');
     document.getElementById('btn-calendar').classList.toggle('active', view === 'calendar');
     document.getElementById('btn-forecast').classList.toggle('active', view === 'forecast');
+    document.getElementById('btn-mortgage').classList.toggle('active', view === 'mortgage');
+    // Hide calendar controls that don't apply in mortgage view
+    const calControls = document.querySelector('.cal-header > div:last-child');
+    if (calControls) calControls.style.visibility = view === 'mortgage' ? 'hidden' : '';
+    const hintBar = document.getElementById('hint-bar');
+    if (hintBar) hintBar.style.display = view === 'mortgage' ? 'none' : '';
     if (view === 'forecast') renderForecast();
+    if (view === 'mortgage') calcMortgage();
   };
 
   window.toggleForecast = function () {
@@ -3609,6 +4097,297 @@
     localStorage.setItem('mm_forecast_strip_open', isOpen ? '1' : '0');
     if (isOpen) renderForecastStrip();
   };
+
+  // ── Mortgage Calculator ─────────────────────────────────────────────────────
+
+  (function () {
+    const CIRC = 2 * Math.PI * 46;
+
+    function fmt(n) {
+      return n == null || isNaN(n) ? '—' : '$' + Math.round(n).toLocaleString();
+    }
+    function fmtDec(n, d) {
+      return n == null || isNaN(n) ? '—' : '$' + n.toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    (function setDefaultStart() {
+      const el = document.getElementById('mtg-start');
+      if (!el) return;
+      const d = new Date();
+      d.setMonth(d.getMonth() + 1);
+      el.value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    })();
+
+    window.onMtgDownPct = function () {
+      const home = parseFloat(document.getElementById('mtg-home-value').value) || 0;
+      const pct  = parseFloat(document.getElementById('mtg-down-pct').value) || 0;
+      document.getElementById('mtg-down-amt').value = Math.round(home * pct / 100);
+      calcMortgage();
+    };
+
+    window.onMtgDownAmt = function () {
+      const home = parseFloat(document.getElementById('mtg-home-value').value) || 0;
+      const amt  = parseFloat(document.getElementById('mtg-down-amt').value) || 0;
+      document.getElementById('mtg-down-pct').value = home > 0 ? (amt / home * 100).toFixed(1) : 0;
+      calcMortgage();
+    };
+
+    function buildAmortRows(principal, ratePct, termYrs, extraMo, extraYr, startVal) {
+      if (principal <= 0 || ratePct <= 0) return [];
+      const rMo = ratePct / 100 / 12;
+      const n   = termYrs * 12;
+      const piMo = principal * rMo * Math.pow(1 + rMo, n) / (Math.pow(1 + rMo, n) - 1);
+      const startDate = startVal ? new Date(startVal + '-01') : new Date();
+      const rows = [];
+      let balance = principal;
+      for (let i = 0; i < n && balance > 0.01; i++) {
+        const intPmt = balance * rMo;
+        let prinPmt  = piMo - intPmt;
+        const extra  = extraMo + (((i + 1) % 12 === 0) ? extraYr : 0);
+        const actualExtra = Math.min(extra, Math.max(0, balance - prinPmt));
+        prinPmt  = Math.min(prinPmt, balance);
+        balance  = Math.max(0, balance - prinPmt - actualExtra);
+        const rowDate = new Date(startDate);
+        rowDate.setMonth(rowDate.getMonth() + i);
+        rows.push({ date: rowDate, pmt: piMo, prin: prinPmt, int: intPmt, extra: actualExtra, bal: balance });
+        if (balance <= 0.01) break;
+      }
+      return rows;
+    }
+
+    window.calcMortgage = function () {
+      const homeVal  = parseFloat(document.getElementById('mtg-home-value').value) || 0;
+      const downAmt  = parseFloat(document.getElementById('mtg-down-amt').value) || 0;
+      const ratePct  = parseFloat(document.getElementById('mtg-rate').value) || 0;
+      const termYrs  = parseInt(document.getElementById('mtg-term').value) || 30;
+      const taxYr    = parseFloat(document.getElementById('mtg-tax').value) || 0;
+      const insYr    = parseFloat(document.getElementById('mtg-insurance').value) || 0;
+      const pmiYr    = parseFloat(document.getElementById('mtg-pmi').value) || 0;
+      const hoaMo    = parseFloat(document.getElementById('mtg-hoa').value) || 0;
+      const extraMo  = parseFloat(document.getElementById('mtg-extra-monthly').value) || 0;
+      const extraYr  = parseFloat(document.getElementById('mtg-extra-yearly').value) || 0;
+      const startVal = document.getElementById('mtg-start').value;
+
+      const principal = Math.max(0, homeVal - downAmt);
+      document.getElementById('mtg-loan-amt').value = Math.round(principal).toLocaleString();
+
+      if (principal <= 0 || ratePct <= 0) {
+        document.getElementById('mtg-monthly-total').textContent = '—';
+        return;
+      }
+
+      const rMo  = ratePct / 100 / 12;
+      const n    = termYrs * 12;
+      const piMo = principal * rMo * Math.pow(1 + rMo, n) / (Math.pow(1 + rMo, n) - 1);
+      const taxMo = taxYr / 12;
+      const insMo = insYr / 12;
+      const pmiMo = pmiYr / 12;
+      const pmiStopsAt = homeVal * 0.8;
+
+      const rows = buildAmortRows(principal, ratePct, termYrs, extraMo, extraYr, startVal);
+      let totalInterest = 0, totalExtra = 0, totalPmi = 0, paidOffMonth = n;
+      rows.forEach((r, i) => {
+        totalInterest += r.int;
+        totalExtra    += r.extra;
+        totalPmi      += (r.bal + r.prin + r.extra > pmiStopsAt ? pmiMo : 0);
+        paidOffMonth   = i + 1;
+      });
+
+      // PMI hint
+      const pmiHintEl   = document.getElementById('mtg-pmi-hint');
+      const pmiUntilEl  = document.getElementById('mtg-bk-pmi-until');
+      if (pmiYr > 0) {
+        const pmiMonthIdx = rows.findIndex(r => r.bal <= pmiStopsAt);
+        if (pmiMonthIdx >= 0) {
+          const label = rows[pmiMonthIdx].date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+          pmiHintEl.textContent  = 'Drops off ~' + label;
+          pmiUntilEl.textContent = '(until ~' + label + ')';
+        } else { pmiHintEl.textContent = ''; pmiUntilEl.textContent = ''; }
+      } else { pmiHintEl.textContent = ''; pmiUntilEl.textContent = ''; }
+
+      const monthlyTotal = piMo + extraMo + taxMo + insMo + pmiMo + hoaMo;
+      document.getElementById('mtg-monthly-total').textContent = fmtDec(monthlyTotal, 2);
+      document.getElementById('mtg-bk-pi').textContent = fmtDec(piMo, 2);
+
+      function showRow(id, show, valId, val) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = show ? '' : 'none';
+        if (show && valId) document.getElementById(valId).textContent = fmtDec(val, 2);
+      }
+      showRow('mtg-bk-extra-row', extraMo > 0, 'mtg-bk-extra', extraMo);
+      showRow('mtg-bk-tax-row',   taxMo > 0,   'mtg-bk-tax',   taxMo);
+      showRow('mtg-bk-ins-row',   insMo > 0,   'mtg-bk-ins',   insMo);
+      showRow('mtg-bk-pmi-row',   pmiMo > 0,   'mtg-bk-pmi',   pmiMo);
+      showRow('mtg-bk-hoa-row',   hoaMo > 0,   'mtg-bk-hoa',   hoaMo);
+
+      updateDonut(piMo, taxMo, insMo, pmiMo, hoaMo, monthlyTotal);
+
+      const ltFees  = (taxYr + insYr) * (paidOffMonth / 12) + totalPmi + hoaMo * paidOffMonth;
+      const ltTotal = downAmt + principal + totalInterest + totalExtra + ltFees;
+      document.getElementById('mtg-lt-down').textContent      = fmt(downAmt);
+      document.getElementById('mtg-lt-principal').textContent = fmt(principal);
+      document.getElementById('mtg-lt-interest').textContent  = fmt(totalInterest);
+      showRow('mtg-lt-extra-row', totalExtra > 0, 'mtg-lt-extra', totalExtra);
+      document.getElementById('mtg-lt-fees').textContent  = fmt(ltFees);
+      document.getElementById('mtg-lt-total').textContent = fmt(ltTotal);
+
+      const banner    = document.getElementById('mtg-payoff-banner');
+      const payoffTxt = document.getElementById('mtg-payoff-text');
+      if (totalExtra > 0 && paidOffMonth < n) {
+        const savedMonths = n - paidOffMonth;
+        const savedYrs = Math.floor(savedMonths / 12);
+        const savedMos = savedMonths % 12;
+        const payoffLabel = rows[rows.length - 1].date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        const rowsNoExtra = buildAmortRows(principal, ratePct, termYrs, 0, 0, startVal);
+        const intNoExtra  = rowsNoExtra.reduce((s, r) => s + r.int, 0);
+        const intSaved    = intNoExtra - totalInterest;
+        payoffTxt.innerHTML = 'With extra payments, you pay off in <strong>' + payoffLabel + '</strong> — '
+          + (savedYrs > 0 ? savedYrs + ' yr' + (savedYrs > 1 ? 's' : '') + ' ' : '')
+          + (savedMos > 0 ? savedMos + ' mo ' : '')
+          + 'early — saving <strong>' + fmt(intSaved) + '</strong> in interest.';
+        banner.style.display = '';
+      } else {
+        banner.style.display = 'none';
+      }
+
+      if (document.getElementById('mtg-amort-wrap').classList.contains('open')) {
+        renderAmortTable(rows);
+      }
+    };
+
+    function updateDonut(pi, tax, ins, pmi, hoa, total) {
+      if (total <= 0) return;
+      const segments = [
+        { id: 'mtg-donut-pi',  val: pi,  legend: null },
+        { id: 'mtg-donut-tax', val: tax, legend: '.mtg-legend-tax' },
+        { id: 'mtg-donut-ins', val: ins, legend: '.mtg-legend-ins' },
+        { id: 'mtg-donut-pmi', val: pmi, legend: '.mtg-legend-pmi' },
+        { id: 'mtg-donut-hoa', val: hoa, legend: '.mtg-legend-hoa' },
+      ];
+      let offset = 0;
+      segments.forEach(seg => {
+        const el = document.getElementById(seg.id);
+        if (!el) return;
+        const pct  = seg.val / total;
+        const dash = CIRC * pct;
+        const gap  = CIRC - dash;
+        el.setAttribute('stroke-dasharray', dash + ' ' + gap);
+        el.setAttribute('stroke-dashoffset', -offset);
+        offset += dash;
+        if (seg.legend) {
+          const lel = document.querySelector(seg.legend);
+          if (lel) lel.style.display = seg.val > 0 ? '' : 'none';
+        }
+      });
+    }
+
+    function renderAmortTable(rows) {
+      const tbody = document.getElementById('mtg-amort-body');
+      if (!tbody) return;
+      const frags = [];
+      let lastYear = null, yearPrin = 0, yearInt = 0, yearExtra = 0;
+      rows.forEach(r => {
+        const yr = r.date.getFullYear();
+        if (lastYear !== null && yr !== lastYear) {
+          frags.push('<tr class="mtg-amort-year"><td>' + lastYear + '</td><td></td><td>' + fmt(yearPrin) + '</td><td>' + fmt(yearInt) + '</td><td>' + (yearExtra > 0 ? fmt(yearExtra) : '—') + '</td><td></td></tr>');
+          yearPrin = 0; yearInt = 0; yearExtra = 0;
+        }
+        lastYear  = yr;
+        yearPrin  += r.prin;
+        yearInt   += r.int;
+        yearExtra += r.extra;
+        const mo = r.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        frags.push('<tr><td>' + mo + '</td><td>' + fmtDec(r.pmt, 2) + '</td><td>' + fmtDec(r.prin, 2) + '</td><td>' + fmtDec(r.int, 2) + '</td><td>' + (r.extra > 0 ? fmtDec(r.extra, 2) : '—') + '</td><td>' + fmt(r.bal) + '</td></tr>');
+      });
+      if (lastYear !== null) {
+        frags.push('<tr class="mtg-amort-year"><td>' + lastYear + '</td><td></td><td>' + fmt(yearPrin) + '</td><td>' + fmt(yearInt) + '</td><td>' + (yearExtra > 0 ? fmt(yearExtra) : '—') + '</td><td></td></tr>');
+      }
+      tbody.innerHTML = frags.join('');
+    }
+
+    window.toggleMtgAmort = function () {
+      const wrap    = document.getElementById('mtg-amort-wrap');
+      const chevron = document.getElementById('mtg-amort-chevron');
+      const btn     = document.getElementById('mtg-amort-toggle');
+      const isOpen  = wrap.classList.toggle('open');
+      chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
+      btn.childNodes[0].textContent = (isOpen ? 'Hide' : 'Show') + ' Amortization Schedule';
+      if (isOpen) {
+        const homeVal = parseFloat(document.getElementById('mtg-home-value').value) || 0;
+        const downAmt = parseFloat(document.getElementById('mtg-down-amt').value) || 0;
+        const ratePct = parseFloat(document.getElementById('mtg-rate').value) || 0;
+        const termYrs = parseInt(document.getElementById('mtg-term').value) || 30;
+        const extraMo = parseFloat(document.getElementById('mtg-extra-monthly').value) || 0;
+        const extraYr = parseFloat(document.getElementById('mtg-extra-yearly').value) || 0;
+        const startVal = document.getElementById('mtg-start').value;
+        renderAmortTable(buildAmortRows(Math.max(0, homeVal - downAmt), ratePct, termYrs, extraMo, extraYr, startVal));
+      }
+    };
+
+    window.resetMortgage = function () {
+      document.getElementById('mtg-home-value').value    = 350000;
+      document.getElementById('mtg-down-amt').value      = 70000;
+      document.getElementById('mtg-down-pct').value      = 20;
+      document.getElementById('mtg-rate').value          = 6.75;
+      document.getElementById('mtg-term').value          = 30;
+      document.getElementById('mtg-tax').value           = 0;
+      document.getElementById('mtg-insurance').value     = 0;
+      document.getElementById('mtg-pmi').value           = 0;
+      document.getElementById('mtg-hoa').value           = 0;
+      document.getElementById('mtg-extra-monthly').value = 0;
+      document.getElementById('mtg-extra-yearly').value  = 0;
+      const d = new Date(); d.setMonth(d.getMonth() + 1);
+      document.getElementById('mtg-start').value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+      const wrap = document.getElementById('mtg-amort-wrap');
+      if (wrap.classList.contains('open')) toggleMtgAmort();
+      calcMortgage();
+    };
+
+    window.printMortgage = function () { window.print(); };
+
+    window.downloadMortgagePDF = function () {
+      const homeVal  = document.getElementById('mtg-home-value').value;
+      const downAmt  = document.getElementById('mtg-down-amt').value;
+      const rate     = document.getElementById('mtg-rate').value;
+      const term     = document.getElementById('mtg-term').value;
+      const monthly  = document.getElementById('mtg-monthly-total').textContent;
+      const ltTotal  = document.getElementById('mtg-lt-total').textContent;
+      const ltInt    = document.getElementById('mtg-lt-interest').textContent;
+      const amortWrap = document.getElementById('mtg-amort-wrap');
+
+      const win = window.open('', '_blank');
+      win.document.write('<!DOCTYPE html><html><head><title>Mortgage Report \u2014 Money Moves by MiRAjO</title><style>'
+        + 'body{font-family:Arial,sans-serif;color:#122012;padding:40px;max-width:900px;margin:0 auto}'
+        + 'h1{font-size:24px;margin-bottom:4px}.sub{color:#6b7280;font-size:13px;margin-bottom:32px}'
+        + '.sec{margin-bottom:28px}.sec-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b7280;margin-bottom:10px}'
+        + '.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #e5e7eb;font-size:13px}'
+        + '.val{font-weight:700}.total-row{font-size:16px;font-weight:700;padding-top:12px;border-top:2px solid #122012;border-bottom:none}'
+        + 'table{width:100%;border-collapse:collapse;font-size:11px;margin-top:10px}'
+        + 'th{text-align:right;font-size:10px;text-transform:uppercase;color:#6b7280;padding:8px 10px;border-bottom:2px solid #e5e7eb}'
+        + 'th:first-child{text-align:left}td{padding:6px 10px;text-align:right;border-bottom:1px solid #f3f4f6}'
+        + 'td:first-child{text-align:left}.yr-row td{background:#fdf8ec;font-weight:700;color:#C4A245}'
+        + '.footer{margin-top:40px;font-size:11px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:16px}'
+        + '</style></head><body>'
+        + '<h1>Mortgage Report</h1>'
+        + '<div class="sub">Generated ' + new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + ' \u00b7 Money Moves by MiRAjO</div>'
+        + '<div class="sec"><div class="sec-title">Loan Summary</div>'
+        + '<div class="row"><span>Home Value</span><span class="val">$' + parseFloat(homeVal).toLocaleString() + '</span></div>'
+        + '<div class="row"><span>Down Payment</span><span class="val">$' + parseFloat(downAmt).toLocaleString() + '</span></div>'
+        + '<div class="row"><span>Loan Amount</span><span class="val">$' + (parseFloat(homeVal) - parseFloat(downAmt)).toLocaleString() + '</span></div>'
+        + '<div class="row"><span>Interest Rate</span><span class="val">' + rate + '%</span></div>'
+        + '<div class="row"><span>Loan Term</span><span class="val">' + term + ' years</span></div></div>'
+        + '<div class="sec"><div class="sec-title">Results</div>'
+        + '<div class="row"><span>Est. Monthly Payment</span><span class="val">' + monthly + '</span></div>'
+        + '<div class="row"><span>Total Interest Paid</span><span class="val">' + ltInt + '</span></div>'
+        + '<div class="row total-row"><span>Total of All Payments</span><span class="val">' + ltTotal + '</span></div></div>'
+        + (amortWrap.classList.contains('open') ? '<div class="sec"><div class="sec-title">Amortization Schedule</div>' + amortWrap.innerHTML + '</div>' : '')
+        + '<div class="footer">Money Moves by MiRAjO &middot; mirajoco.org/tools/money-moves</div>'
+        + '</body></html>');
+      win.document.close();
+      setTimeout(() => win.print(), 400);
+    };
+
+  })();
 
   // ── Mode Picker ──────────────────────────────────────────────────────────────
   window.openModePickerModal = function () {
@@ -4169,8 +4948,8 @@
   <button class="mobile-nav-btn mnb-add" onclick="openModal()">
     <span class="mnb-icon">＋</span>
   </button>
-  <button class="mobile-nav-btn" onclick="toggleFloatCalc()">
-    <span class="mnb-icon">🧮</span>Calc
+  <button class="mobile-nav-btn" onclick="setView('mortgage')">
+    <span class="mnb-icon">🏠</span>Mortgage
   </button>
   <button class="mobile-nav-btn" onclick="openFaq()">
     <span class="mnb-icon">❓</span>Help
