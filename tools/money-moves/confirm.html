@@ -64,6 +64,24 @@
       color: var(--living-green); text-decoration: none; opacity: 0.7;
     }
     .back:hover { opacity: 1; }
+    .resend-input {
+      width: 100%; padding: 14px 18px; margin-top: 16px;
+      border: 1px solid rgba(37,107,66,0.25); border-radius: 10px;
+      font-size: 15px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: #f5faf7; outline: none;
+      transition: border-color 0.2s;
+    }
+    .resend-input:focus { border-color: var(--living-green); }
+    .set-pw-btn {
+      width: 100%; margin-top: 14px; padding: 16px;
+      background: var(--deep-forest); color: var(--warm-parchment);
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .set-pw-btn:hover { opacity: 0.85; }
+    .set-pw-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .pw-msg { margin-top: 14px; font-size: 14px; line-height: 1.6; min-height: 20px; }
   </style>
   <script src="/analytics.js"></script>
 </head>
@@ -77,6 +95,14 @@
   <h1 class="title" id="title">Signing you in...</h1>
   <p class="sub" id="sub">Just a moment while we confirm your link.</p>
   <a href="/tools/money-moves/login" class="back" id="back-link" style="display:none">← Back to Login</a>
+
+  <!-- Set password form (shown on password reset flow) -->
+  <div id="set-password-section" style="display:none;margin-top:8px;text-align:left;">
+    <input type="password" id="pw-input" class="resend-input" placeholder="New password (min 8 characters)">
+    <input type="password" id="pw-confirm" class="resend-input" placeholder="Confirm password" style="margin-top:10px;">
+    <button class="set-pw-btn" id="set-pw-btn">Set Password</button>
+    <p class="pw-msg" id="pw-msg"></p>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -117,6 +143,51 @@
   }
 
   async function afterSession() {
+    const params = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.replace('#', '?').slice(1));
+
+    // Password reset flow — show set-password form
+    if (params.get('setup') === '1' || hashParams.get('type') === 'recovery') {
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('title').textContent = 'Set your password';
+      document.getElementById('sub').textContent = 'Choose a password to use every time you log in.';
+      document.getElementById('set-password-section').style.display = 'block';
+
+      document.getElementById('set-pw-btn').addEventListener('click', async function () {
+        const pw  = document.getElementById('pw-input').value;
+        const pw2 = document.getElementById('pw-confirm').value;
+        const msg = document.getElementById('pw-msg');
+
+        if (pw.length < 8) {
+          msg.textContent = 'Password must be at least 8 characters.';
+          msg.style.color = '#c0392b';
+          return;
+        }
+        if (pw !== pw2) {
+          msg.textContent = 'Passwords do not match.';
+          msg.style.color = '#c0392b';
+          return;
+        }
+
+        this.textContent = 'Setting password...';
+        this.disabled = true;
+
+        const { error } = await supabase.auth.updateUser({ password: pw });
+        if (error) {
+          msg.textContent = 'Something went wrong. Please try again.';
+          msg.style.color = '#c0392b';
+          this.textContent = 'Set Password';
+          this.disabled = false;
+          return;
+        }
+
+        msg.textContent = 'Password set! Taking you to your dashboard...';
+        msg.style.color = '#256B42';
+        setTimeout(() => { window.location.href = '/tools/money-moves/dashboard'; }, 1500);
+      });
+      return;
+    }
+
     // Activate invited household members (no-op for owners/returning users)
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -127,7 +198,6 @@
         });
         const result = await r.json();
         if (result.activated) {
-          // This is a family invite — show a distinct welcome
           document.getElementById('title').textContent = 'You\'re in!';
           document.getElementById('sub').textContent = 'You have joined the household. Taking you to your dashboard...';
           setTimeout(() => { window.location.href = '/tools/money-moves/dashboard?welcome=member'; }, 1800);
@@ -135,7 +205,6 @@
         }
       }
     } catch (e) {
-      // Non-critical — continue to redirect even if activation check fails
       console.warn('[confirm] Activation check failed:', e.message);
     }
     redirect();
