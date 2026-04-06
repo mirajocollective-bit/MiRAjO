@@ -8,64 +8,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --black:    #0D0D0D;
-      --white:    #FFFFFF;
-      --red:      #B82038;
-      --red-lt:   #D43A56;
-      --pink:     #E8547A;
-      --pink-lt:  #F2899E;
-      --pink-bg:  #FFF0F4;
-      --muted:    #666666;
-      --muted-lt: #999999;
-      --border:   rgba(13,13,13,0.12);
-      --red-border: rgba(184,32,56,0.18);
+      --black:      #0D0D0D;
+      --surface:    #161616;
+      --surface-2:  #1F1F1F;
+      --white:      #FFFFFF;
+      --red:        #B82038;
+      --red-lt:     #D43A56;
+      --pink:       #E8547A;
+      --pink-lt:    #F2899E;
+      --muted:      rgba(255,255,255,0.5);
+      --muted-lt:   rgba(255,255,255,0.28);
+      --border:     rgba(255,255,255,0.1);
+      --border-red: rgba(184,32,56,0.35);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
+    html, body {
       background: var(--black);
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      color: var(--white);
+    }
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 48px 24px 64px;
-      -webkit-font-smoothing: antialiased;
+      padding: 52px 24px 80px;
     }
 
-    /* Logo */
-    .logo-wrap {
-      margin-bottom: 40px;
-      text-align: center;
-    }
-    .logo {
-      height: 48px;
-      width: auto;
-      filter: brightness(0) invert(1);
-    }
+    /* ── Logo ── */
+    .logo-wrap { margin-bottom: 44px; text-align: center; }
+    .logo { height: 44px; width: auto; filter: brightness(0) invert(1); }
 
-    /* Card */
-    .card {
+    /* ── Wrapper ── */
+    .wrap {
       width: 100%;
-      max-width: 480px;
-      background: var(--white);
-      border-radius: 16px;
-      padding: 44px 40px;
+      max-width: 500px;
       text-align: center;
     }
-    @media (max-width: 520px) {
-      .card { padding: 36px 28px; }
-    }
 
-    /* States */
+    /* ── States ── */
     .state { display: none; }
     .state.active { display: block; }
 
-    /* Spinner */
+    /* ── Spinner ── */
     .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(184,32,56,0.12);
+      width: 40px; height: 40px;
+      border: 3px solid rgba(184,32,56,0.2);
       border-top-color: var(--red);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -73,102 +63,100 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Eyebrow */
+    /* ── Eyebrow ── */
     .eyebrow {
       font-size: 10px;
-      letter-spacing: 2.5px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       font-weight: 700;
       color: var(--pink);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
-    /* Headings */
+    /* ── Headings ── */
     h1 {
       font-family: 'Instrument Serif', serif;
-      font-size: 32px;
+      font-size: clamp(34px, 7vw, 48px);
       font-weight: 400;
-      color: var(--black);
-      margin-bottom: 14px;
-      line-height: 1.2;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 16px;
     }
-    h1 em { font-style: italic; color: var(--red); }
+    h1 em { font-style: italic; color: var(--pink); }
     .sub {
       font-size: 15px;
       color: var(--muted);
       line-height: 1.75;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
-    /* Email hint box */
-    .hint-box {
-      background: var(--pink-bg);
-      border: 1px solid var(--red-border);
+    /* ── Red accent bar ── */
+    .accent-bar {
+      width: 48px;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+      margin: 0 auto 32px;
+    }
+
+    /* ── Info box (email hint) ── */
+    .info-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
       border-radius: 10px;
       padding: 18px 22px;
       text-align: left;
       margin-bottom: 28px;
     }
-    .hint-box strong {
+    .info-box strong {
       display: block;
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--red);
+      color: var(--pink);
       font-weight: 700;
       margin-bottom: 6px;
     }
-    .hint-box p {
-      font-size: 14px;
-      color: var(--black);
-      line-height: 1.65;
-    }
+    .info-box p { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
-    /* Steps */
-    .steps {
-      text-align: left;
-      margin-bottom: 32px;
-    }
+    /* ── Steps ── */
+    .steps { text-align: left; margin-bottom: 36px; }
     .step {
       display: flex;
       align-items: flex-start;
-      gap: 14px;
-      padding: 14px 0;
+      gap: 16px;
+      padding: 16px 0;
       border-bottom: 1px solid var(--border);
     }
-    .step:last-child { border-bottom: none; }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
     .step-num {
       flex-shrink: 0;
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       border-radius: 50%;
-      background: var(--black);
-      color: var(--white);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
       font-size: 11px;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin-top: 1px;
     }
     .step-num.active-step {
       background: var(--red);
+      border-color: var(--red);
+      color: var(--white);
     }
-    .step-body {}
     .step-label {
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 700;
-      color: var(--black);
-      margin-bottom: 2px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 3px;
     }
-    .step-label.active-step { color: var(--red); }
-    .step-desc {
-      font-size: 12.5px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .step-label.active-step { color: var(--white); }
+    .step-desc { font-size: 12.5px; color: var(--muted-lt); line-height: 1.6; }
 
-    /* Form */
+    /* ── Form ── */
     .form-group { text-align: left; margin-bottom: 14px; }
     label {
       display: block;
@@ -183,11 +171,11 @@
     input[type="text"] {
       width: 100%;
       padding: 14px 16px;
-      background: var(--white);
+      background: var(--surface);
       border: 1.5px solid var(--border);
       border-radius: 8px;
       font-size: 15px;
-      color: var(--black);
+      color: var(--white);
       font-family: 'Plus Jakarta Sans', sans-serif;
       outline: none;
       transition: border-color 0.2s;
@@ -195,10 +183,10 @@
     input:focus { border-color: var(--red); }
     input::placeholder { color: var(--muted-lt); }
 
-    /* Buttons */
+    /* ── Buttons ── */
     .btn {
       width: 100%;
-      padding: 15px;
+      padding: 16px;
       background: var(--red);
       color: var(--white);
       border: none;
@@ -214,54 +202,42 @@
       text-align: center;
     }
     .btn:hover { background: var(--red-lt); }
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* Messages */
+    /* ── Messages ── */
     .msg-success {
-      display: none;
-      margin-top: 14px;
-      font-size: 13.5px;
-      color: #2F8A5A;
-      line-height: 1.65;
+      display: none; margin-top: 14px;
+      font-size: 13.5px; color: #4CAF82; line-height: 1.65;
     }
     .msg-error {
-      display: none;
-      margin-top: 14px;
-      font-size: 13.5px;
-      color: var(--red);
-      line-height: 1.65;
+      display: none; margin-top: 14px;
+      font-size: 13.5px; color: var(--pink-lt); line-height: 1.65;
     }
 
-    /* Divider */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 24px 0;
-    }
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
 
-    /* Skip link */
+    /* ── Skip link ── */
     .skip-link {
-      font-size: 13px;
-      color: var(--muted);
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 4px;
+      font-size: 13px; color: var(--muted-lt);
+      text-decoration: none; display: inline-block; margin-top: 6px;
     }
-    .skip-link:hover { color: var(--black); }
+    .skip-link:hover { color: var(--white); }
 
-    /* Success ring */
+    /* ── Success ring ── */
     .success-ring {
-      width: 68px;
-      height: 68px;
+      width: 72px; height: 72px;
       border-radius: 50%;
-      background: var(--pink-bg);
-      border: 2px solid var(--red-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
+      background: rgba(184,32,56,0.12);
+      border: 2px solid var(--border-red);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
     }
-    .success-ring svg { width: 30px; height: 30px; stroke: var(--red); fill: none; stroke-width: 2.5; }
+    .success-ring svg { width: 32px; height: 32px; stroke: var(--red); fill: none; stroke-width: 2.5; }
+
+    /* ── Help link ── */
+    .help-link { font-size: 13px; color: var(--muted-lt); text-decoration: none; }
+    .help-link:hover { color: var(--white); }
   </style>
   <script src="/analytics.js"></script>
 </head>
@@ -271,12 +247,12 @@
   <img src="/img/Where%20Authenticity%20is%20the%20new%20blue%20check%20(250%20x%20150%20px)%20(800%20x%20312%20px)%20(450%20x%2070%20px)%20(Logo)%20(1).png" alt="MiRAjO" class="logo">
 </div>
 
-<div class="card">
+<div class="wrap">
 
   <!-- STATE: Loading -->
   <div class="state active" id="state-loading">
     <div class="spinner"></div>
-    <h1>Just a moment...</h1>
+    <h1>Just a<br>moment...</h1>
     <p class="sub">Getting things ready for you.</p>
   </div>
 
@@ -284,12 +260,12 @@
   <div class="state" id="state-check-email">
     <p class="eyebrow">Enrollment confirmed</p>
     <h1>You're in.<br><em>Check your email.</em></h1>
-    <p class="sub">We sent a login link to the email you used at checkout.</p>
-    <div class="hint-box">
-      <strong>How to get in</strong>
-      <p>Open the email from Miranda J, click the link, and you will land right back here to invite your partner.</p>
+    <div class="accent-bar"></div>
+    <p class="sub">We sent a login link to the email you used at checkout. Click it and you will land right back here to invite your partner.</p>
+    <div class="info-box">
+      <strong>Did not get it?</strong>
+      <p>Check your spam folder, or enter your email below to send a new link.</p>
     </div>
-    <p class="sub" style="font-size:13px;margin-bottom:20px;">Did not get it? Check your spam folder, or request a new link below.</p>
     <div class="form-group">
       <label>Your email address</label>
       <input type="email" id="resend-email" placeholder="you@email.com">
@@ -302,7 +278,8 @@
   <!-- STATE: Invite partner (logged in) -->
   <div class="state" id="state-invite">
     <p class="eyebrow">Step 1 of 4</p>
-    <h1>Invite<br><em>your partner.</em></h1>
+    <h1>Now invite<br><em>your partner.</em></h1>
+    <div class="accent-bar"></div>
     <p class="sub">Enter their email and we will send them everything they need to create their account and join you.</p>
 
     <div class="steps">
@@ -317,7 +294,7 @@
         <div class="step-num">2</div>
         <div class="step-body">
           <div class="step-label">Both complete your profiles</div>
-          <div class="step-desc">Each of you fills in a short profile. This shapes the scenarios you see in the diagnostic.</div>
+          <div class="step-desc">A short profile that shapes the scenarios you each see in the diagnostic.</div>
         </div>
       </div>
       <div class="step">
@@ -353,10 +330,12 @@
     </div>
     <p class="eyebrow">Invite sent</p>
     <h1>They're on<br><em>their way.</em></h1>
-    <p class="sub">Your partner will receive an email with everything they need to join. Once both of you complete The Partnership Diagnostic, your Partnership Report generates automatically and your modules unlock.</p>
-    <p class="sub" style="margin-bottom:0;">While you wait, go to your dashboard and complete your profile to get ready.</p>
-    <hr class="divider">
+    <div class="accent-bar"></div>
+    <p class="sub">Your partner will receive an email with everything they need to join. Once both of you complete The Partnership Diagnostic, your report generates and your modules unlock.</p>
+    <p class="sub" style="margin-bottom:32px;">While you wait, go to your dashboard and complete your profile to get ready.</p>
     <a href="/programs/couples-dashboard" class="btn">Go to My Dashboard</a>
+    <hr class="divider">
+    <a href="mailto:programs@mirajoco.org" class="help-link">Questions? programs@mirajoco.org</a>
   </div>
 
 </div>
