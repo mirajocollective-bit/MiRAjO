@@ -1183,6 +1183,87 @@
       .mtg-results-total { font-size: 26px; }
     }
 
+    /* ── DTI Calculator ── */
+    .dti-view { display: none; padding: 24px 24px 32px; }
+    .dti-view.active { display: block; }
+    .dti-inner { max-width: 860px; margin: 0 auto; }
+    .dti-body {
+      display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start;
+    }
+    .dti-results { display: flex; flex-direction: column; gap: 14px; }
+
+    .dti-label-sub { font-size: 9px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--neutral); opacity: 0.8; }
+
+    .dti-ratio-card {}
+    .dti-ratio-display { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+    .dti-ratio-number {
+      font-family: 'Instrument Serif', serif; font-size: 40px;
+      color: var(--deep-forest); line-height: 1;
+    }
+    .dti-ratio-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 10px;
+      border-radius: 99px; white-space: nowrap;
+    }
+    .dti-badge-good   { background: rgba(37,107,66,0.1);  color: var(--living-green); }
+    .dti-badge-ok     { background: rgba(196,162,69,0.12); color: #a07a20; }
+    .dti-badge-high   { background: rgba(230,126,34,0.12); color: #b35a10; }
+    .dti-badge-danger { background: rgba(192,57,43,0.1);   color: var(--expense-color); }
+
+    .dti-gauge-wrap { margin-bottom: 12px; }
+    .dti-gauge-track {
+      height: 10px; background: rgba(18,32,18,0.07); border-radius: 99px;
+      overflow: visible; position: relative; margin-bottom: 18px;
+    }
+    .dti-gauge-fill {
+      height: 100%; border-radius: 99px; max-width: 100%;
+      transition: width 0.4s, background 0.4s;
+      background: var(--living-green);
+    }
+    .dti-gauge-fill.dti-ok     { background: var(--dry-sage); }
+    .dti-gauge-fill.dti-high   { background: #e67e22; }
+    .dti-gauge-fill.dti-danger { background: var(--expense-color); }
+    .dti-gauge-markers {
+      position: absolute; top: 14px; left: 0; right: 0; pointer-events: none;
+    }
+    .dti-gauge-markers span {
+      position: absolute; transform: translateX(-50%);
+      font-size: 9px; font-weight: 700; color: var(--neutral); white-space: nowrap;
+    }
+    .dti-verdict {
+      font-size: 12px; color: var(--forest-mid); line-height: 1.55;
+      background: rgba(18,32,18,0.03); border-radius: 8px;
+      padding: 9px 12px; min-height: 40px;
+    }
+
+    .dti-guide-card {
+      background: var(--soft-white); border-radius: 14px;
+      border: 1px solid rgba(18,32,18,0.06); padding: 16px 18px;
+    }
+    .dti-guide-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral); margin-bottom: 12px;
+    }
+    .dti-guide-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 12px; color: var(--deep-forest); line-height: 1.5; margin-bottom: 8px;
+    }
+    .dti-guide-row:last-child { margin-bottom: 0; }
+    .dti-guide-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+    }
+    .dti-green  { background: var(--living-green); }
+    .dti-yellow { background: var(--dry-sage); }
+    .dti-orange { background: #e67e22; }
+    .dti-red    { background: var(--expense-color); }
+
+    @media (max-width: 720px) {
+      .dti-body { grid-template-columns: 1fr; }
+      .dti-results { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .dti-results { grid-template-columns: 1fr; }
+    }
+
     /* ── PWA Install Banner ── */
     .install-banner {
       display: none; position: fixed;
@@ -1378,6 +1459,7 @@
           <button class="cal-view-btn active" id="btn-calendar" onclick="setView('calendar')">Calendar</button>
           <button class="cal-view-btn" id="btn-forecast" onclick="setView('forecast')">Forecast</button>
           <button class="cal-view-btn" id="btn-mortgage" onclick="setView('mortgage')">Mortgage</button>
+          <button class="cal-view-btn" id="btn-dti" onclick="setView('dti')">DTI</button>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
@@ -1679,6 +1761,172 @@
 
       </div><!-- /mtg-inner -->
     </div><!-- /mortgage-view -->
+
+    <!-- DTI Calculator -->
+    <div class="dti-view" id="dti-view">
+      <div class="dti-inner">
+
+        <div class="mtg-header">
+          <div>
+            <div class="mtg-title">Debt-to-Income Calculator</div>
+            <div class="mtg-sub">See how lenders view your financial health — and where you stand.</div>
+          </div>
+          <div class="mtg-header-actions">
+            <button class="mtg-action-btn" onclick="resetDTI()" title="Reset all fields">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.5 7A5.5 5.5 0 1 0 3.2 3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1.5 3.5V7H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <div class="dti-body">
+
+          <!-- LEFT: Inputs -->
+          <div class="dti-inputs mtg-inputs">
+
+            <div class="mtg-section-label">Monthly Gross Income <span class="mtg-optional">(before taxes)</span></div>
+            <div class="mtg-field-group" style="grid-template-columns:1fr">
+              <div class="mtg-field">
+                <label class="mtg-label" for="dti-income">Total Household Income / Month</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="dti-income" type="number" min="0" step="100" value="0" placeholder="0" oninput="calcDTI()">
+                </div>
+              </div>
+            </div>
+
+            <div class="mtg-section-label mtg-section-label--gap">Housing Costs <span class="mtg-optional">(front-end)</span></div>
+            <div class="mtg-field-group" style="grid-template-columns:1fr">
+              <div class="mtg-field">
+                <label class="mtg-label" for="dti-housing">Monthly Mortgage or Rent Payment</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="dti-housing" type="number" min="0" step="50" value="0" placeholder="0" oninput="calcDTI()">
+                </div>
+              </div>
+            </div>
+
+            <div class="mtg-section-label mtg-section-label--gap">Monthly Debt Payments <span class="mtg-optional">(back-end)</span></div>
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="dti-car">Car Loan(s)</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="dti-car" type="number" min="0" step="10" value="0" placeholder="0" oninput="calcDTI()">
+                </div>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="dti-student">Student Loans</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="dti-student" type="number" min="0" step="10" value="0" placeholder="0" oninput="calcDTI()">
+                </div>
+              </div>
+            </div>
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label" for="dti-cc">Credit Card Min. Payments</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="dti-cc" type="number" min="0" step="10" value="0" placeholder="0" oninput="calcDTI()">
+                </div>
+              </div>
+              <div class="mtg-field">
+                <label class="mtg-label" for="dti-other">Other Loans / Payments</label>
+                <div class="mtg-input-wrap">
+                  <span class="mtg-prefix">$</span>
+                  <input class="mtg-input" id="dti-other" type="number" min="0" step="10" value="0" placeholder="0" oninput="calcDTI()">
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /dti-inputs -->
+
+          <!-- RIGHT: Results -->
+          <div class="dti-results">
+
+            <!-- Front-end ratio -->
+            <div class="mtg-results-card dti-ratio-card" id="dti-front-card">
+              <div class="mtg-results-label">Front-End Ratio <span class="dti-label-sub">(housing only)</span></div>
+              <div class="dti-ratio-display">
+                <div class="dti-ratio-number" id="dti-front-pct">—</div>
+                <div class="dti-ratio-badge" id="dti-front-badge"></div>
+              </div>
+              <div class="dti-gauge-wrap">
+                <div class="dti-gauge-track">
+                  <div class="dti-gauge-fill" id="dti-front-fill"></div>
+                  <div class="dti-gauge-markers">
+                    <span style="left:28%">28%</span>
+                    <span style="left:36%">36%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="dti-verdict" id="dti-front-verdict"></div>
+            </div>
+
+            <!-- Back-end ratio -->
+            <div class="mtg-results-card dti-ratio-card" id="dti-back-card">
+              <div class="mtg-results-label">Back-End Ratio <span class="dti-label-sub">(all debt)</span></div>
+              <div class="dti-ratio-display">
+                <div class="dti-ratio-number" id="dti-back-pct">—</div>
+                <div class="dti-ratio-badge" id="dti-back-badge"></div>
+              </div>
+              <div class="dti-gauge-wrap">
+                <div class="dti-gauge-track">
+                  <div class="dti-gauge-fill" id="dti-back-fill"></div>
+                  <div class="dti-gauge-markers">
+                    <span style="left:36%">36%</span>
+                    <span style="left:43%">43%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="dti-verdict" id="dti-back-verdict"></div>
+            </div>
+
+            <!-- Breakdown -->
+            <div class="mtg-results-card">
+              <div class="mtg-results-label">Monthly Breakdown</div>
+              <div class="mtg-lifetime-grid">
+                <div class="mtg-lt-row">
+                  <span class="mtg-lt-label">Gross Income</span>
+                  <span class="mtg-lt-val" id="dti-bk-income">—</span>
+                </div>
+                <div class="mtg-lt-row">
+                  <span class="mtg-lt-label">Total Debt Payments</span>
+                  <span class="mtg-lt-val" id="dti-bk-debt">—</span>
+                </div>
+                <div class="mtg-lt-row mtg-lt-total-row">
+                  <span class="mtg-lt-label">Remaining Income</span>
+                  <span class="mtg-lt-val mtg-lt-grand" id="dti-bk-remaining">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lender guide -->
+            <div class="dti-guide-card">
+              <div class="dti-guide-title">What Lenders Look For</div>
+              <div class="dti-guide-row">
+                <span class="dti-guide-dot dti-green"></span>
+                <span><strong>Front-end &lt; 28%</strong> — Most conventional lenders</span>
+              </div>
+              <div class="dti-guide-row">
+                <span class="dti-guide-dot dti-yellow"></span>
+                <span><strong>Back-end &lt; 36%</strong> — Ideal for conventional loans</span>
+              </div>
+              <div class="dti-guide-row">
+                <span class="dti-guide-dot dti-orange"></span>
+                <span><strong>Back-end up to 43%</strong> — FHA and many lenders still approve</span>
+              </div>
+              <div class="dti-guide-row">
+                <span class="dti-guide-dot dti-red"></span>
+                <span><strong>Back-end &gt; 43%</strong> — High risk; most lenders will decline</span>
+              </div>
+            </div>
+
+          </div><!-- /dti-results -->
+        </div><!-- /dti-body -->
+      </div><!-- /dti-inner -->
+    </div><!-- /dti-view -->
 
     <!-- Hint bar -->
     <div class="hint-bar" id="hint-bar">
@@ -4077,16 +4325,19 @@
     document.getElementById('calendar-view').style.display = view === 'calendar' ? 'block' : 'none';
     document.getElementById('forecast-view').classList.toggle('active', view === 'forecast');
     document.getElementById('mortgage-view').classList.toggle('active', view === 'mortgage');
+    document.getElementById('dti-view').classList.toggle('active', view === 'dti');
     document.getElementById('btn-calendar').classList.toggle('active', view === 'calendar');
     document.getElementById('btn-forecast').classList.toggle('active', view === 'forecast');
     document.getElementById('btn-mortgage').classList.toggle('active', view === 'mortgage');
-    // Hide calendar controls that don't apply in mortgage view
+    document.getElementById('btn-dti').classList.toggle('active', view === 'dti');
     const calControls = document.querySelector('.cal-header > div:last-child');
-    if (calControls) calControls.style.visibility = view === 'mortgage' ? 'hidden' : '';
+    const isCalc = view === 'mortgage' || view === 'dti';
+    if (calControls) calControls.style.visibility = isCalc ? 'hidden' : '';
     const hintBar = document.getElementById('hint-bar');
-    if (hintBar) hintBar.style.display = view === 'mortgage' ? 'none' : '';
+    if (hintBar) hintBar.style.display = isCalc ? 'none' : '';
     if (view === 'forecast') renderForecast();
     if (view === 'mortgage') calcMortgage();
+    if (view === 'dti') calcDTI();
   };
 
   window.toggleForecast = function () {
@@ -4406,6 +4657,102 @@
 
   })();
 
+  // ── DTI Calculator ──────────────────────────────────────────────────────────
+
+  (function () {
+    function fmtD(n) {
+      return n == null || isNaN(n) ? '—' : '$' + Math.round(n).toLocaleString();
+    }
+
+    function getRating(pct, thresholds) {
+      // thresholds: [good, ok, high] — above high = danger
+      if (pct <= thresholds[0]) return 'good';
+      if (pct <= thresholds[1]) return 'ok';
+      if (pct <= thresholds[2]) return 'high';
+      return 'danger';
+    }
+
+    const LABELS = {
+      front: {
+        good:   'Excellent. You\'re well within the 28% threshold most lenders prefer.',
+        ok:     'Acceptable. Some lenders may flag this — consider reducing housing costs if possible.',
+        high:   'Above the 36% caution line. Focus on reducing housing costs before applying for new credit.',
+        danger: 'High. Most lenders will view this as a significant risk for housing debt alone.'
+      },
+      back: {
+        good:   'Excellent. Your total debt load is well-managed and lenders will view you favorably.',
+        ok:     'Acceptable range for many lenders. Work on paying down existing debt to improve your profile.',
+        high:   'FHA loans may still be possible, but conventional lenders may decline. Priority: reduce debt.',
+        danger: 'High risk. Most lenders will decline at this ratio. Focus on debt payoff before applying.'
+      }
+    };
+
+    const BADGE = {
+      good:   ['Excellent', 'dti-badge-good'],
+      ok:     ['Watch It',  'dti-badge-ok'],
+      high:   ['High',      'dti-badge-high'],
+      danger: ['Too High',  'dti-badge-danger']
+    };
+
+    function renderRatio(type, pct, thresholds) {
+      const rating   = isNaN(pct) || pct === 0 ? null : getRating(pct, thresholds);
+      const pctEl    = document.getElementById('dti-' + type + '-pct');
+      const badgeEl  = document.getElementById('dti-' + type + '-badge');
+      const fillEl   = document.getElementById('dti-' + type + '-fill');
+      const verdictEl = document.getElementById('dti-' + type + '-verdict');
+
+      if (!rating) {
+        pctEl.textContent    = '—';
+        badgeEl.textContent  = '';
+        badgeEl.className    = 'dti-ratio-badge';
+        fillEl.style.width   = '0%';
+        fillEl.className     = 'dti-gauge-fill';
+        verdictEl.textContent = 'Enter your income and debt amounts above.';
+        return;
+      }
+
+      pctEl.textContent   = pct.toFixed(1) + '%';
+      badgeEl.textContent = BADGE[rating][0];
+      badgeEl.className   = 'dti-ratio-badge ' + BADGE[rating][1];
+
+      const fillClass = rating === 'good' ? '' : ('dti-' + (rating === 'ok' ? 'ok' : rating === 'high' ? 'high' : 'danger'));
+      fillEl.className  = 'dti-gauge-fill' + (fillClass ? ' ' + fillClass : '');
+      fillEl.style.width = Math.min(pct * 1.4, 100) + '%'; // scale so 70% fills bar
+
+      verdictEl.textContent = LABELS[type][rating];
+    }
+
+    window.calcDTI = function () {
+      const income  = parseFloat(document.getElementById('dti-income').value)  || 0;
+      const housing = parseFloat(document.getElementById('dti-housing').value) || 0;
+      const car     = parseFloat(document.getElementById('dti-car').value)     || 0;
+      const student = parseFloat(document.getElementById('dti-student').value) || 0;
+      const cc      = parseFloat(document.getElementById('dti-cc').value)      || 0;
+      const other   = parseFloat(document.getElementById('dti-other').value)   || 0;
+
+      const totalDebt = housing + car + student + cc + other;
+      const frontPct  = income > 0 ? (housing / income * 100) : NaN;
+      const backPct   = income > 0 ? (totalDebt / income * 100) : NaN;
+
+      renderRatio('front', frontPct, [28, 36, 43]);
+      renderRatio('back',  backPct,  [36, 43, 50]);
+
+      document.getElementById('dti-bk-income').textContent    = income > 0 ? fmtD(income) : '—';
+      document.getElementById('dti-bk-debt').textContent      = totalDebt > 0 ? fmtD(totalDebt) : '—';
+      document.getElementById('dti-bk-remaining').textContent = income > 0 ? fmtD(income - totalDebt) : '—';
+    };
+
+    window.resetDTI = function () {
+      ['dti-income','dti-housing','dti-car','dti-student','dti-cc','dti-other'].forEach(id => {
+        document.getElementById(id).value = 0;
+      });
+      calcDTI();
+    };
+
+    // Init on load
+    calcDTI();
+  })();
+
   // ── Mode Picker ──────────────────────────────────────────────────────────────
   window.openModePickerModal = function () {
     const grid    = document.getElementById('mode-picker-grid');
@@ -4553,7 +4900,7 @@
     <div class="faq-header">
       <div>
         <h2>Help &amp; FAQ</h2>
-        <p>How to get the most out of Money Moves</p>
+        <p>Everything you need to get the most out of Money Moves</p>
       </div>
       <button class="faq-close" onclick="closeFaq()">✕</button>
     </div>
@@ -4561,103 +4908,165 @@
     <!-- Getting Started -->
     <div class="faq-section">
       <div class="faq-section-title">Getting Started</div>
-
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">How do I add my first account? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Click <strong>+ Add Account</strong> in the account tab bar at the top. Give it a name (e.g. "Checking"), select the type, and enter your current balance. You can add as many accounts as you need — checking, savings, credit cards, or custom.</div>
+        <div class="faq-q" onclick="toggleFaq(this)">How do I set up my account? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Start by adding at least one account — click <strong>+ Add Account</strong> in the account bar at the top of the calendar. Give it a name (Checking, Savings, etc.), choose the account type, and enter your current balance. From there, add your first income and expense transactions and you're tracking.</div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">How do I log income or an expense? <span class="faq-chevron">▼</span></div>
         <div class="faq-a">Two ways:
           <ul>
             <li>Click <strong>+ Add</strong> in the top nav bar</li>
-            <li>Click any day on the calendar to open the add transaction form pre-filled with that date</li>
+            <li>Click any day on the calendar to open the form pre-filled with that date</li>
           </ul>
           Choose Income, Expense, or Transfer, fill in the details, and hit Save.
         </div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">What is a recurring transaction? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Recurring transactions repeat automatically — weekly, bi-weekly, monthly, etc. Toggle <strong>Recurring</strong> when adding a transaction, set the frequency, and optionally set an end date or count. These feed your 7-Year Forecast automatically.</div>
+        <div class="faq-a">Recurring transactions repeat automatically — weekly, bi-weekly, monthly, etc. Toggle <strong>Recurring</strong> when adding a transaction, set the frequency, and optionally an end date or count. They appear on every future occurrence in the calendar and feed directly into your 7-Year Forecast.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I add an emoji to a transaction? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Yes. When adding or editing a transaction, click the emoji button next to the description field. Pick one from the shelf to personalize your entries — they appear right on the calendar pill so you can spot transactions at a glance.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I edit or delete a transaction? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click any transaction pill on the calendar to open it. You'll see options to edit the details or delete it entirely. If it's a recurring transaction, you can choose to delete just that occurrence or all future ones.</div>
       </div>
     </div>
 
     <!-- The Calendar -->
     <div class="faq-section">
       <div class="faq-section-title">The Calendar</div>
-
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">What do the colors on the calendar mean? <span class="faq-chevron">▼</span></div>
+        <div class="faq-q" onclick="toggleFaq(this)">What do the colors and numbers on the calendar mean? <span class="faq-chevron">▼</span></div>
         <div class="faq-a">
           <ul>
-            <li><strong style="color:var(--income-color)">Green entries</strong> = income</li>
-            <li><strong style="color:var(--expense-color)">Red entries</strong> = expenses</li>
-            <li><strong style="color:var(--neutral)">Grey entries</strong> = transfers between accounts</li>
-            <li>The small number in the bottom-right of each day = your running daily balance for that account</li>
+            <li><strong style="color:var(--income-color)">Green pills</strong> = income transactions</li>
+            <li><strong style="color:var(--expense-color)">Red pills</strong> = expense transactions</li>
+            <li><strong style="color:var(--neutral)">Grey pills</strong> = transfers between accounts</li>
+            <li>The small number in the <strong>bottom-right of each day cell</strong> = your running daily balance for the selected account</li>
+            <li>The <strong>today</strong> cell is highlighted with a green border and a filled green date circle</li>
           </ul>
         </div>
       </div>
-
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I navigate between months and years? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">
+          <ul>
+            <li>Use the <strong>← →</strong> arrows to move one month at a time</li>
+            <li>Use the <strong>« »</strong> arrows to jump a full year</li>
+            <li>Click the <strong>month/year heading</strong> to open the Jump to Date picker — choose any month and year directly</li>
+            <li>Click <strong>Today</strong> to snap back to the current month instantly</li>
+          </ul>
+        </div>
+      </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">Can I move a transaction to a different date? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Yes — just <strong>drag and drop</strong> any transaction pill to a new date on the calendar. The date updates automatically in your records.</div>
+        <div class="faq-a">Yes — <strong>drag and drop</strong> any transaction pill to a new day on the calendar. The date updates automatically. This works on desktop; on mobile, tap to edit and change the date manually.</div>
       </div>
-
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">How do I navigate between months? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Use the <strong>← →</strong> arrows in the top-right of the calendar to move back or forward one month at a time.</div>
+        <div class="faq-q" onclick="toggleFaq(this)">How does the search work? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click the <strong>search bar</strong> (top right of the calendar header) and start typing. Results appear instantly — showing the transaction description, date, and amount. Click a result to jump to that date. Press Escape or the ✕ to clear.</div>
       </div>
-
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">What is the Forecast view? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Switch to <strong>Forecast</strong> (tab next to Calendar) to see a 7-year month-by-month projection of your cash flow based on your recurring transactions. It's a powerful planning tool — great for spotting future shortfalls or surplus months before they happen.</div>
+        <div class="faq-q" onclick="toggleFaq(this)">What is the summary bar at the top? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">The summary bar shows four cards for the currently selected month and account: <strong>Account Balance</strong>, <strong>Income This Month</strong>, <strong>Expenses This Month</strong>, and <strong>Month Balance</strong> (income minus expenses). The bar on the right shows what percentage of your income was spent and what was saved.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What are the daily budget hints at the bottom? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">The hint bar at the bottom of the calendar rotates through personalized tips and reminders. Click the dots to cycle through them. Hints adapt based on your spending patterns and selected personality mode.</div>
+      </div>
+    </div>
+
+    <!-- Forecast & Analytics -->
+    <div class="faq-section">
+      <div class="faq-section-title">Forecast &amp; Analytics</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the 7-Year Forecast? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Switch to <strong>Forecast</strong> in the view toggle (next to Calendar) to see a month-by-month projection of your cash flow for the next 7 years — based entirely on your recurring transactions. It shows projected income, expenses, net, and running balance. Use it to spot future shortfalls or surplus periods before they hit.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the 12-Month Balance Forecast strip? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click <strong>📈 Forecast</strong> in the top nav to reveal a compact sparkline chart showing your projected balance over the next 12 months. Hover over it to see the projected balance for any future month. It stays collapsed by default — turn it on when you need a quick visual snapshot.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What does the Analytics sidebar show? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">The Analytics sidebar (click <strong>Analytics</strong> on the left edge of the dashboard) breaks down your spending and income by category for the selected month. Each category shows how much you've spent vs. your budget with a progress bar. Green = on track, yellow = approaching your limit, orange/red = over budget. Your net savings rate is shown at the bottom.</div>
+      </div>
+    </div>
+
+    <!-- Budget, Goals & Debt -->
+    <div class="faq-section">
+      <div class="faq-section-title">Budget, Goals &amp; Debt</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I set a budget for a category? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">In the Analytics sidebar, click any category's budget label to set a monthly limit for it. Once set, the progress bar tracks spending against your budget in real time throughout the month.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I track savings goals? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">In the right sidebar, find the <strong>Goals</strong> card. Click <strong>+ Add Goal</strong> to create a savings goal with a target amount and optional target date. As you add income tagged to that goal, the progress bar updates. Use goals for emergency funds, vacations, down payments — anything you're building toward.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How does the Debt Payoff Calculator work? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">In the right sidebar, find the <strong>Debt Payoff</strong> card. Select a debt, enter the balance, interest rate, and minimum payment. The calculator shows your payoff date, total interest paid, and how much you save by adding extra monthly payments. It's the same math credit card companies don't want you to do.</div>
+      </div>
+    </div>
+
+    <!-- Calculators -->
+    <div class="faq-section">
+      <div class="faq-section-title">Calculators</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the Mortgage Calculator? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click the <strong>Mortgage</strong> tab in the calendar view toggle. Enter your home value, down payment, interest rate, and loan term. The calculator shows your estimated monthly payment broken down into principal, interest, taxes, insurance, PMI, and HOA. It also shows lifetime costs, an interest savings banner if you add extra payments, and a full amortization schedule. You can download or print a report directly from this tab.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the DTI Calculator? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click the <strong>DTI</strong> tab in the calendar view toggle. Enter your monthly gross income and all debt payments. The calculator shows your <strong>front-end ratio</strong> (housing costs vs. income) and <strong>back-end ratio</strong> (all debt vs. income) — color-coded green, yellow, orange, or red based on what lenders consider acceptable. Use this before applying for a mortgage, car loan, or any major credit.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the pop-up calculator? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click the <strong>calculator icon</strong> in the top-right nav bar to open a floating calculator you can drag anywhere on the screen. Use it to do quick math without leaving your dashboard — great for splitting bills or verifying totals before entering a transaction.</div>
       </div>
     </div>
 
     <!-- Accounts & Money -->
     <div class="faq-section">
       <div class="faq-section-title">Accounts &amp; Money</div>
-
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">How do I switch between accounts on the calendar? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Click any account tab in the bar below the nav. The calendar, summary cards, and balance will all update to show that account's transactions. Net Worth (top-right of the account bar) always reflects all accounts combined.</div>
+        <div class="faq-q" onclick="toggleFaq(this)">How do I switch between accounts? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click any account tab in the bar just below the nav. The calendar, summary cards, and running balance all update to show that account's transactions. <strong>Net Worth</strong> in the top-right of the account bar always reflects all accounts combined, regardless of which one is selected.</div>
       </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">What is Net Worth? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Net Worth is the total of all your account balances combined. It's always visible in the top-right of the account bar regardless of which account you're viewing.</div>
-      </div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">How do transfers work? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Select <strong>Transfer</strong> when adding a transaction. Choose the source account and destination account. The amount is deducted from one and added to the other — it won't count as income or expense in your monthly summary.</div>
+        <div class="faq-a">Select <strong>Transfer</strong> when adding a transaction. Choose the source account and destination account. The amount is deducted from one and added to the other — it does not count as income or expense in your monthly summary, so your net balance stays accurate.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I reorder or customize the sidebar cards? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Yes — on desktop, hover over any sidebar card to reveal the drag handle on the left. Drag cards up or down to reorder them however you prefer. Your order is saved automatically.</div>
       </div>
     </div>
 
     <!-- Family Plan -->
     <div class="faq-section">
       <div class="faq-section-title">Family Plan</div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">How do I add a family member? <span class="faq-chevron">▼</span></div>
         <div class="faq-a">Go to <strong>Settings → Household</strong>. Enter your family member's email and send an invite. They'll receive a link to create their account and join your shared household. All accounts, transactions, and goals are shared across the household.</div>
       </div>
-
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">Can family members see everything? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Yes — all household members share the same view. This is intentional. Money Moves is designed for financial transparency within a household. Each member can add and edit transactions.</div>
+        <div class="faq-q" onclick="toggleFaq(this)">Can family members see and edit everything? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Yes — all household members share the same view and can add or edit transactions. This is intentional. Money Moves is built around financial transparency within a household. If you need separate tracking, create separate accounts within the app for each person.</div>
       </div>
     </div>
 
     <!-- Personality Modes -->
     <div class="faq-section">
       <div class="faq-section-title">Personality Modes</div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">What are personality modes? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Personality modes change the tone of your budget coaching messages. Choose the voice that motivates you:
+        <div class="faq-a">Personality modes change the tone of your daily budget coaching messages to match whatever voice keeps you motivated. Click <strong>"Change your mode"</strong> on the dashboard to switch anytime:
           <ul>
             <li>💼 <strong>Professional</strong> — calm, clear, no pressure</li>
             <li>🤱 <strong>Mom Mode</strong> — nurturing but firm</li>
@@ -4674,21 +5083,32 @@
             <li>✨ <strong>Gen Z Mode</strong> — very online, bestie energy</li>
             <li>😈 <strong>Villain Era</strong> — building an empire, no apologies</li>
           </ul>
-          Click "Change your mode" on the dashboard to switch anytime.
         </div>
       </div>
     </div>
 
-    <!-- Account -->
+    <!-- Your Account -->
     <div class="faq-section">
       <div class="faq-section-title">Your Account</div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">How do I log out? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Click <strong>Log Out</strong> in the top-right of the nav bar. You'll be taken back to the login page. Your data is saved and will be right here when you log back in.</div>
+        <div class="faq-q" onclick="toggleFaq(this)">How do I sign in? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Go to the login page and sign in with <strong>Google</strong>, <strong>LinkedIn</strong>, or your <strong>email and password</strong>. Always use the same method you used when you first signed up — mixing methods creates separate accounts.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">I forgot my password — how do I reset it? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">On the login page, click <strong>"Forgot your password?"</strong> and enter your email. You'll receive a reset link in your inbox. Click it, set a new password, and you'll be taken directly to your dashboard. Note: this only works if you signed up with email/password — Google and LinkedIn accounts don't use a password.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">How do I change my email or password? <span class="faq-chevron">▼</span></div>
-        <div class="faq-a">Go to <strong>Settings → Account</strong> to update your email or reset your password. A confirmation email will be sent for any email changes.</div>
+        <div class="faq-a">Go to <strong>Settings → Account</strong> to update your email or password. A confirmation email will be sent for any email changes.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I cancel my subscription? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Go to <strong>Settings → Subscription</strong> to manage or cancel your plan. If you cancel, you'll retain access through the end of your current billing period. Your data is preserved — if you reactivate, everything will be right where you left it.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I log out? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click <strong>Log Out</strong> in the top-right of the nav bar. Your data is saved automatically — nothing is lost when you log out.</div>
       </div>
     </div>
 
