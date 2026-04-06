@@ -790,6 +790,41 @@
       transition: background 0.15s;
     }
     .faq-close:hover { background: var(--soft-white); }
+
+    /* FAQ search */
+    .faq-search-wrap {
+      position: relative; margin-bottom: 24px;
+    }
+    .faq-search-input {
+      width: 100%; padding: 11px 36px 11px 14px;
+      border: 1px solid rgba(18,32,18,0.15); border-radius: 10px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--deep-forest); background: var(--soft-white); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .faq-search-input:focus {
+      border-color: var(--living-green);
+      box-shadow: 0 0 0 3px rgba(37,107,66,0.08);
+      background: #fff;
+    }
+    .faq-search-input::placeholder { color: var(--neutral); }
+    .faq-search-clear {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--neutral);
+      font-size: 15px; padding: 0; display: none; line-height: 1;
+    }
+    .faq-search-icon {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--neutral); font-size: 14px; pointer-events: none;
+    }
+    .faq-search-input { padding-left: 34px; }
+    .faq-no-results {
+      display: none; text-align: center; padding: 32px 16px;
+      font-size: 14px; color: var(--neutral); line-height: 1.6;
+    }
+    .faq-no-results strong { color: var(--deep-forest); display: block; margin-bottom: 4px; font-size: 15px; }
+    mark { background: rgba(196,162,69,0.25); color: inherit; border-radius: 2px; padding: 0 1px; }
+
     .faq-section { margin-bottom: 24px; }
     .faq-section-title {
       font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
@@ -4905,6 +4940,16 @@
       <button class="faq-close" onclick="closeFaq()">✕</button>
     </div>
 
+    <!-- Search -->
+    <div class="faq-search-wrap">
+      <span class="faq-search-icon">🔍</span>
+      <input class="faq-search-input" id="faq-search" type="text" placeholder="Search help topics…" oninput="onFaqSearch(this.value)" autocomplete="off">
+      <button class="faq-search-clear" id="faq-search-clear" onclick="clearFaqSearch()" title="Clear">✕</button>
+    </div>
+    <div class="faq-no-results" id="faq-no-results">
+      <strong>No results found</strong>Try different keywords or browse the sections below.
+    </div>
+
     <!-- Getting Started -->
     <div class="faq-section">
       <div class="faq-section-title">Getting Started</div>
@@ -5248,18 +5293,83 @@
   };
 
   // ── FAQ ────────────────────────────────────────────────────────────────────
-  window.openFaq  = function () { document.getElementById('faq-overlay').classList.add('open'); };
-  window.closeFaq = function () { document.getElementById('faq-overlay').classList.remove('open'); };
-  window.logOut   = async function () {
+  window.openFaq = function () {
+    document.getElementById('faq-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('faq-search').focus(), 80);
+  };
+  window.closeFaq = function () {
+    document.getElementById('faq-overlay').classList.remove('open');
+    clearFaqSearch();
+  };
+  window.logOut = async function () {
     await supabase.auth.signOut();
     window.location.href = '/tools/money-moves/login';
   };
   window.toggleFaq = function (qEl) {
     const aEl = qEl.nextElementSibling;
     const isOpen = qEl.classList.contains('open');
-    // Close all
     document.querySelectorAll('.faq-q.open').forEach(el => { el.classList.remove('open'); el.nextElementSibling.classList.remove('open'); });
     if (!isOpen) { qEl.classList.add('open'); aEl.classList.add('open'); }
+  };
+
+  window.onFaqSearch = function (val) {
+    const q     = val.trim().toLowerCase();
+    const clear = document.getElementById('faq-search-clear');
+    const noRes = document.getElementById('faq-no-results');
+    clear.style.display = q ? 'block' : 'none';
+
+    // Close all open answers when searching
+    document.querySelectorAll('.faq-q.open').forEach(el => { el.classList.remove('open'); el.nextElementSibling.classList.remove('open'); });
+
+    const sections = document.querySelectorAll('#faq-overlay .faq-section');
+    let totalVisible = 0;
+
+    sections.forEach(section => {
+      const items = section.querySelectorAll('.faq-item');
+      let sectionVisible = 0;
+
+      items.forEach(item => {
+        const qEl   = item.querySelector('.faq-q');
+        const aEl   = item.querySelector('.faq-a');
+        const qText = qEl.textContent.toLowerCase();
+        const aText = aEl.textContent.toLowerCase();
+
+        if (!q || qText.includes(q) || aText.includes(q)) {
+          item.style.display = '';
+          // Highlight matching text in question
+          if (q) {
+            const chevron = qEl.querySelector('.faq-chevron');
+            const chevronHTML = chevron ? chevron.outerHTML : '';
+            const rawText = qEl.textContent.replace(/▼$/, '').trim();
+            const highlighted = rawText.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<mark>$1</mark>');
+            qEl.innerHTML = highlighted + ' ' + chevronHTML;
+            // Re-attach onclick after innerHTML replace
+            qEl.onclick = function () { window.toggleFaq(this); };
+          } else {
+            // Restore plain text
+            const chevron = qEl.querySelector('.faq-chevron');
+            const chevronHTML = chevron ? chevron.outerHTML : '<span class="faq-chevron">▼</span>';
+            const marks = qEl.querySelectorAll('mark');
+            marks.forEach(m => m.replaceWith(m.textContent));
+          }
+          sectionVisible++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      section.style.display = sectionVisible > 0 ? '' : 'none';
+      totalVisible += sectionVisible;
+    });
+
+    noRes.style.display = (q && totalVisible === 0) ? 'block' : 'none';
+  };
+
+  window.clearFaqSearch = function () {
+    const input = document.getElementById('faq-search');
+    input.value = '';
+    onFaqSearch('');
+    input.focus();
   };
 
   // ── Hints ──────────────────────────────────────────────────────────────────
