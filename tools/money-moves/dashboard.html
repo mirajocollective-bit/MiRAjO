@@ -1137,11 +1137,6 @@
           <button class="cal-view-btn active" id="btn-calendar" onclick="setView('calendar')">Calendar</button>
           <button class="cal-view-btn" id="btn-forecast" onclick="setView('forecast')">Forecast</button>
         </div>
-        <div class="cal-view-toggle" style="margin-left:8px;" title="How entries appear on the calendar">
-          <button class="cal-view-btn active" id="btn-display-both"  onclick="setEntryDisplay('both')">😊 Name</button>
-          <button class="cal-view-btn"        id="btn-display-emoji" onclick="setEntryDisplay('emoji')">😊</button>
-          <button class="cal-view-btn"        id="btn-display-name"  onclick="setEntryDisplay('name')">Name</button>
-        </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="cal-search-wrap">
@@ -1551,6 +1546,40 @@
   </div>
 </div>
 
+<!-- Onboarding Modal -->
+<div class="modal-overlay" id="onboarding-overlay" style="display:none;z-index:9999;background:rgba(18,32,18,0.6)">
+  <div class="modal" style="max-width:440px;padding:32px 28px">
+    <div style="font-size:24px;margin-bottom:4px">👋 Welcome to Money Moves!</div>
+    <div style="font-size:13px;color:var(--neutral);margin-bottom:24px">Here's how to get started in 3 steps.</div>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--living-green);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:var(--deep-forest);margin-bottom:2px">Add your first account</div>
+          <div style="font-size:12px;color:var(--neutral)">Click <strong>+ Add Account</strong> in the account bar at the top. Add checking, savings, or a credit card.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--living-green);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:var(--deep-forest);margin-bottom:2px">Log income &amp; expenses</div>
+          <div style="font-size:12px;color:var(--neutral)">Click any day on the calendar to add a transaction. Your balance updates automatically.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--living-green);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:var(--deep-forest);margin-bottom:2px">Navigate months &amp; years</div>
+          <div style="font-size:12px;color:var(--neutral)">Use <strong>« ←</strong> and <strong>→ »</strong> at the top right to move between months and years.</div>
+        </div>
+      </div>
+    </div>
+    <button onclick="dismissOnboarding()" style="width:100%;padding:13px;border:none;border-radius:10px;background:var(--living-green);color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
+      Got it, let's go!
+    </button>
+  </div>
+</div>
+
 <!-- Add Account Modal -->
 <div class="modal-overlay" id="acct-modal-overlay" onclick="closeAcctModalOutside(event)">
   <div class="modal acct-modal">
@@ -1571,20 +1600,24 @@
       </select>
       <script>
         document.getElementById('new-acct-type').addEventListener('change', function () {
-          const label = document.getElementById('new-acct-balance-label');
-          const hint  = document.getElementById('new-acct-balance-hint');
-          const type  = this.value;
+          const label     = document.getElementById('new-acct-balance-label');
+          const hint      = document.getElementById('new-acct-balance-hint');
+          const limitGrp  = document.getElementById('new-acct-limit-group');
+          const type      = this.value;
           if (type === 'credit') {
-            label.textContent = 'Current Balance Owed ($)';
-            hint.textContent  = 'Enter the amount you currently owe on this card (e.g. 450.00).';
-            hint.style.display = 'block';
+            label.textContent       = 'Amount Currently Owed ($)';
+            hint.textContent        = 'Enter what you currently owe on this card (e.g. 450.00).';
+            hint.style.display      = 'block';
+            limitGrp.style.display  = 'block';
           } else if (type === 'loan') {
-            label.textContent = 'Outstanding Balance ($)';
-            hint.textContent  = 'Enter the remaining amount owed on this loan.';
-            hint.style.display = 'block';
+            label.textContent       = 'Outstanding Balance ($)';
+            hint.textContent        = 'Enter the remaining amount owed on this loan.';
+            hint.style.display      = 'block';
+            limitGrp.style.display  = 'none';
           } else {
-            label.textContent  = 'Current Balance ($)';
-            hint.style.display = 'none';
+            label.textContent       = 'Current Balance ($)';
+            hint.style.display      = 'none';
+            limitGrp.style.display  = 'none';
           }
         });
       </script>
@@ -1594,6 +1627,11 @@
       <input type="number" class="form-input" id="new-acct-balance" placeholder="0.00" step="0.01">
       <div style="font-size:11px;color:var(--neutral);margin-top:5px">What's in this account right now? Add transactions from here forward and your balance will stay accurate.</div>
       <div id="new-acct-balance-hint" style="font-size:11px;color:var(--neutral);margin-top:4px;display:none;"></div>
+    </div>
+    <div class="form-group" id="new-acct-limit-group" style="display:none">
+      <label class="form-label">Credit Limit ($)</label>
+      <input type="number" class="form-input" id="new-acct-credit-limit" placeholder="e.g. 5000.00" step="0.01">
+      <div style="font-size:11px;color:var(--neutral);margin-top:5px">The total credit limit on this card. Used to show available credit.</div>
     </div>
     <div class="modal-actions">
       <button class="modal-cancel" onclick="closeAcctModal()">Cancel</button>
@@ -1705,10 +1743,6 @@
     renderCalendar();
   };
 
-  // Init display toggle state
-  ['both','emoji','name'].forEach(m => {
-    document.getElementById(`btn-display-${m}`)?.classList.toggle('active', m === entryDisplay);
-  });
 
   // Wire up emoji grid clicks (DOM already ready — script is at bottom of body)
   document.getElementById('emoji-picker-grid').addEventListener('click', e => {
@@ -1820,7 +1854,14 @@
       const txnSum = transactions
         .filter(t => t.account_id === acct.id)
         .reduce((sum, t) => sum + (t.type === 'income' ? Number(t.amount) : t.type === 'expense' ? -Number(t.amount) : 0), 0);
-      acctRunningBalance[acct.id] = Number(acct.current_balance) + txnSum;
+      if (acct.type === 'credit') {
+        // For credit: owed = initial_owed + charges - payments = initial_owed - txnSum
+        // Store as negative so net worth subtracts it (it's a liability)
+        const amountOwed = Number(acct.current_balance) - txnSum;
+        acctRunningBalance[acct.id] = -amountOwed;
+      } else {
+        acctRunningBalance[acct.id] = Number(acct.current_balance) + txnSum;
+      }
     });
 
     let netWorth = 0;
@@ -1830,7 +1871,22 @@
       const balance = acctRunningBalance[acct.id] ?? 0;
       netWorth += balance;
 
-      const fmtBal = `${balance >= 0 ? '' : '-'}$${Math.abs(balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      let fmtBal, balClass, balLabel;
+      if (acct.type === 'credit') {
+        const amountOwed    = -balance; // owed is positive
+        const creditLimit   = Number(acct.credit_limit) || 0;
+        const available     = creditLimit - amountOwed;
+        balLabel  = creditLimit > 0
+          ? `Avail: $${available.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          : `Owed: $${amountOwed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        balClass  = available < 0 ? 'negative' : 'positive';
+        fmtBal    = balLabel;
+      } else {
+        fmtBal   = `${balance >= 0 ? '' : '-'}$${Math.abs(balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        balClass = balance >= 0 ? 'positive' : 'negative';
+        balLabel = fmtBal;
+      }
+
       const tab = document.createElement('div');
       tab.className = `account-tab${acct.id === selectedAccountId ? ' active' : ''}`;
       tab.dataset.id  = acct.id;
@@ -1842,7 +1898,7 @@
           <div class="account-tab-name">${acct.name}</div>
         </div>
         <div class="account-tab-type">${acct.type}</div>
-        <div class="account-tab-balance ${balance >= 0 ? 'positive' : 'negative'}">${fmtBal}</div>`;
+        <div class="account-tab-balance ${balClass}">${balLabel}</div>`;
       tab.addEventListener('click', () => selectAccount(acct.id));
       tab.addEventListener('contextmenu', e => showAcctCtxMenu(e, acct.id, acct.name, fmtBal));
       bar.insertBefore(tab, addBtn);
@@ -2102,10 +2158,8 @@
         const sign = displayT.type === 'income' ? '+' : incoming ? '←' : displayT.type === 'transfer' ? '→' : '-';
         const { emoji: txnEmoji, text: txnName } = parseEmojiFromDesc(displayT.description);
         const amt = `${sign}$${Number(displayT.amount).toFixed(0)}`;
-        let entryLabel;
-        if (entryDisplay === 'emoji')      entryLabel = txnEmoji ? `${txnEmoji} ${amt}` : amt;
-        else if (entryDisplay === 'name')  entryLabel = txnName  ? `${amt} ${txnName}`  : amt;
-        else                               entryLabel = txnEmoji ? `${txnEmoji} ${amt}${txnName ? ' ' + txnName : ''}` : `${amt}${txnName ? ' ' + txnName : ''}`;
+        const recurMark = displayT.is_recurring ? '↻ ' : '';
+        const entryLabel = `${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
 
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${incoming ? 'income' : displayT.type}`;
@@ -3410,26 +3464,26 @@
   };
 
   window.saveAccount = async function () {
-    const name    = document.getElementById('new-acct-name').value.trim();
-    const type    = document.getElementById('new-acct-type').value;
-    const balance = parseFloat(document.getElementById('new-acct-balance').value) || 0;
+    const name        = document.getElementById('new-acct-name').value.trim();
+    const type        = document.getElementById('new-acct-type').value;
+    const balance     = parseFloat(document.getElementById('new-acct-balance').value) || 0;
+    const creditLimit = type === 'credit' ? (parseFloat(document.getElementById('new-acct-credit-limit').value) || 0) : 0;
     if (!name) return alert('Please enter an account name.');
 
     const color = ACCT_COLORS[type] || ACCT_COLORS.other;
     const { data, error } = await supabase.from('mm_accounts').insert({
       household_id: householdId, name, type, current_balance: balance,
-      color, sort_order: accounts.length,
+      credit_limit: creditLimit, color, sort_order: accounts.length,
     }).select().single();
 
     if (error) { alert('Error adding account: ' + error.message); return; }
 
-    // Opening balance is stored in mm_accounts.current_balance only.
-    // It's factored into all balance calculations as a starting point.
-    // Do NOT also create a transaction — that would double-count it.
-
     closeAcctModal();
-    document.getElementById('new-acct-name').value    = '';
-    document.getElementById('new-acct-balance').value = '';
+    document.getElementById('new-acct-name').value          = '';
+    document.getElementById('new-acct-balance').value       = '';
+    document.getElementById('new-acct-credit-limit').value  = '';
+    document.getElementById('new-acct-limit-group').style.display = 'none';
+    document.getElementById('new-acct-type').value          = 'checking';
     await loadAll();
     selectAccount(data.id);
   };
@@ -3620,9 +3674,19 @@
     }
   });
 
+  // ── Onboarding ───────────────────────────────────────────────────────────────
+  window.dismissOnboarding = function () {
+    localStorage.setItem('mm_onboarded', '1');
+    document.getElementById('onboarding-overlay').style.display = 'none';
+  };
+
   // ── Init ─────────────────────────────────────────────────────────────────────
   initJumpDropdown();
-  loadAll();
+  loadAll().then(() => {
+    if (!localStorage.getItem('mm_onboarded')) {
+      document.getElementById('onboarding-overlay').style.display = 'flex';
+    }
+  });
 })();
 </script>
 
