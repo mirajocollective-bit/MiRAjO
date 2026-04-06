@@ -1,0 +1,14 @@
+node_modules/
+
+# Capacitor build outputs (generated, not source)
+android/app/build/
+android/.gradle/
+ios/App/Pods/
+ios/App/App.xcarchive
+*.ipa
+*.apk
+*.aab
+
+# Environment
+.env
+.env.local
