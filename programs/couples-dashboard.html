@@ -732,12 +732,6 @@ async function renderDashboard(user) {
   const reportReady     = !!report;
   const bothComplete    = !!(myCompletion && partnerCompletion);
 
-  // Gate diagnostic behind Module 1 completion
-  const dbMod1             = dbModules?.find(m => m.position === 1);
-  const mod1LessonCount    = dbMod1?.lessons?.[0]?.count || 0;
-  const mod1CompletedCount = dbMod1 ? (moduleProgress[dbMod1.id] || 0) : 0;
-  const mod1Complete       = mod1LessonCount > 0 && mod1CompletedCount >= mod1LessonCount;
-
   // Load how far through the diagnostic THIS user is (by domain)
   const { data: myAnswers } = await db
     .from('diagnostic_answers')
@@ -746,16 +740,21 @@ async function renderDashboard(user) {
     .eq('user_id', user.id);
   const answeredDomains = new Set((myAnswers || []).map(a => a.domain));
 
+  // Module 1 progress (for display only — no longer gates anything)
+  const dbMod1             = dbModules?.find(m => m.position === 1);
+  const mod1LessonCount    = dbMod1?.lessons?.[0]?.count || 0;
+  const mod1CompletedCount = dbMod1 ? (moduleProgress[dbMod1.id] || 0) : 0;
+  const mod1Complete       = mod1LessonCount > 0 && mod1CompletedCount >= mod1LessonCount;
+
   // Partner names
   const firstName  = (await db.auth.getUser()).data?.user?.user_metadata?.first_name || 'You';
   const partnerLabel = 'Your Partner';
 
   // ── JOURNEY STRIP ──
   const journeySteps = [
-    { label: 'Step 1', name: 'Module 1', done: mod1Complete, active: !mod1Complete },
-    { label: 'Step 2', name: 'Partner Profiles', done: profileComplete, active: mod1Complete && !profileComplete },
-    { label: 'Step 3', name: 'Diagnostic', done: !!myCompletion, active: profileComplete && !myCompletion },
-    { label: 'Step 4', name: 'Course Path', done: reportReady, active: bothComplete && !reportReady },
+    { label: 'Step 1', name: 'Partner Profiles', done: profileComplete, active: !profileComplete },
+    { label: 'Step 2', name: 'Diagnostic', done: !!myCompletion, active: profileComplete && !myCompletion },
+    { label: 'Step 3', name: 'Course Path', done: reportReady, active: bothComplete && !reportReady },
   ];
   const journeyHtml = `<div class="journey-strip">${journeySteps.map(s => `
     <div class="journey-step${s.done ? ' done' : s.active ? ' active' : ''}">
@@ -798,8 +797,8 @@ async function renderDashboard(user) {
     </div>`;
   }
 
-  // ── STEP 1 — MODULE 1 FEATURED CARD ──
-  html += `<div class="section-label">Step 1 — Begin With Module 1</div>`;
+  // ── MODULE 1 FEATURED CARD ──
+  html += `<div class="section-label">Start Here — The Foundation</div>`;
   const mod1 = MODULES[0];
   const mod1Pct = mod1LessonCount > 0 ? Math.round((mod1CompletedCount / mod1LessonCount) * 100) : 0;
   let mod1StatusHtml = '';
@@ -832,7 +831,7 @@ async function renderDashboard(user) {
     }).join('')}
   </div>`;
 
-  html += `<div class="section-label" style="margin-top:8px;">Step 2 — The Partnership Diagnostic</div>`;
+  html += `<div class="section-label" style="margin-top:8px;">Step 1 — The Partnership Diagnostic</div>`;
   html += `<div class="diagnostic-card">
     <div class="diagnostic-card-header">
       <div>
@@ -859,13 +858,13 @@ async function renderDashboard(user) {
     </div>
     <div class="diagnostic-actions">
       ${!myCompletion
-        ? mod1Complete
+        ? profileComplete
           ? `<a href="/programs/couples-diagnostic" class="btn-gold">${answeredDomains.size > 0 ? 'Continue Diagnostic' : 'Take the Diagnostic'}</a>`
-          : `<a href="/programs/couples-course/the-cost-of-misalignment" class="btn-outline">&#128274; Complete Module 1 first →</a>`
+          : `<span class="btn-outline" style="cursor:default;opacity:0.6;">&#128274; Complete your profile first</span>`
         : `<span class="btn-outline" style="cursor:default;opacity:0.6;">&#10003; Diagnostic Complete</span>`
       }
-      ${!myCompletion && !mod1Complete
-        ? `<span style="font-size:13px;color:var(--muted);line-height:1.5;">Finish Module 1 to unlock the diagnostic.</span>`
+      ${!myCompletion && !profileComplete
+        ? `<span style="font-size:13px;color:var(--muted);line-height:1.5;">Complete your individual profile to unlock the diagnostic.</span>`
         : ''
       }
       ${myCompletion && !partnerCompletion
@@ -889,7 +888,7 @@ async function renderDashboard(user) {
 
   // ── STEP 3 — MODULES 2–8 ──
   const DOMAIN_LABELS = { business: 'Business', finances: 'Finances', family: 'Family', relationship: 'Relationship' };
-  html += `<div class="section-label" style="margin-top:8px;">Step 3 — Your Course Path</div>`;
+  html += `<div class="section-label" style="margin-top:8px;">Step 2 — Your Course Path</div>`;
   html += `<div class="modules-grid">`;
 
   for (const mod of MODULES) {
