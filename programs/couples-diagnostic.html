@@ -328,7 +328,7 @@ const SCENARIOS = {
   family: [
     {
       key: 'Fam1', condition: null,
-      story: 'Vanessa and Derek both work in the business full time. Vanessa also handles most of what happens at home — the appointments, the groceries, the calls from school. She has not said anything directly but Derek has noticed she is tired in a way that is different. He tells himself she would say something if it was a problem.',
+      story: 'Vanessa and Derek both work in the business full time. Vanessa also handles most of what happens at home — the appointments, the groceries, the errands, the household admin. She has not said anything directly but Derek has noticed she is tired in a way that is different. He tells himself she would say something if it was a problem.',
       question: 'What is Derek missing?',
       options: [
         { key: 'A', text: 'That Vanessa is waiting to be asked, not waiting to complain.', score: 4 },
@@ -338,7 +338,7 @@ const SCENARIOS = {
       ]
     },
     {
-      key: 'Fam2', condition: null,
+      key: 'Fam2', condition: { field: 'family_structure', values: ['kids-together', 'blended', 'stepparent'] },
       story: 'Jerome and Patrice decided to expand their business last year. More clients, more hours, more stress. They talked about it as a business decision. They never talked about what it would mean for their evenings, their weekends, their kids\' routines. Six months in the expansion is working. The family is fraying.',
       question: 'What did Jerome and Patrice skip?',
       options: [
@@ -349,7 +349,18 @@ const SCENARIOS = {
       ]
     },
     {
-      key: 'Fam3', condition: null,
+      key: 'Fam2b', condition: { field: 'family_structure', values: ['no-kids', 'unsure'] },
+      story: 'Jerome and Patrice decided to expand their business last year. More clients, more hours, more stress. They talked about it as a business decision. They never talked about what it would mean for their evenings, their weekends, the life they were building outside the business. Six months in the expansion is working. Everything else is running on fumes.',
+      question: 'What did Jerome and Patrice skip?',
+      options: [
+        { key: 'A', text: 'They needed a life plan to go alongside the business plan.', score: 4 },
+        { key: 'B', text: 'Patrice should have spoken up if she had concerns before they said yes.', score: 1 },
+        { key: 'C', text: 'They needed to hire support sooner to take the pressure off.', score: 2 },
+        { key: 'D', text: 'They needed a 90-day check-in to see how they were actually adjusting.', score: 3 },
+      ]
+    },
+    {
+      key: 'Fam3', condition: { field: 'family_structure', values: ['kids-together', 'blended', 'stepparent'] },
       story: 'Nina and Andre had a disagreement before work. It was about the kids\' schedule and who dropped the ball. They both said they were fine. They were not fine. By 10am it was showing up in how they were communicating in a client meeting. The client did not notice. Their team did.',
       question: 'What should Nina and Andre do?',
       options: [
@@ -360,7 +371,18 @@ const SCENARIOS = {
       ]
     },
     {
-      key: 'Fam4', condition: null,
+      key: 'Fam3b', condition: { field: 'family_structure', values: ['no-kids', 'unsure'] },
+      story: 'Nina and Andre had a disagreement before work. It started at home — something about the weekend, about time, about feeling like the business always wins. They both said they were fine. They were not fine. By 10am it was showing up in how they were communicating in a client meeting. The client did not notice. Their team did.',
+      question: 'What should Nina and Andre do?',
+      options: [
+        { key: 'A', text: 'Finish the workday and come back to it at home where it belongs.', score: 2 },
+        { key: 'B', text: 'Take 10 minutes before the next meeting and clear enough of it to get through the day.', score: 3 },
+        { key: 'C', text: 'Acknowledge to each other that they brought something unfinished into the day and agree on when they will finish it.', score: 4 },
+        { key: 'D', text: 'Let it go. Every couple has bad mornings and the work still got done.', score: 1 },
+      ]
+    },
+    {
+      key: 'Fam4', condition: { field: 'family_structure', values: ['kids-together', 'blended', 'stepparent'] },
       story: 'Marcus and Tamara have two kids. When something comes up — sick child, school event, teacher call — it is almost always Tamara who handles it. Not because they agreed to that. It just became the pattern. Marcus tells himself she is better at it. Tamara has started to feel like she is running two full-time jobs.',
       question: 'What is the real cost of this pattern?',
       options: [
@@ -371,12 +393,23 @@ const SCENARIOS = {
       ]
     },
     {
+      key: 'Fam4b', condition: { field: 'family_structure', values: ['no-kids', 'unsure'] },
+      story: 'Marcus and Tamara do not have kids yet. But when something comes up at home — an appointment, a repair, a family obligation — it is almost always Tamara who handles it. Not because they agreed to that. It just became the pattern. Marcus tells himself she does not mind. Tamara has started to feel like the business gets his best and she handles everything else.',
+      question: 'What is the real cost of this pattern?',
+      options: [
+        { key: 'A', text: 'Tamara will burn out and when she does the business will feel it too.', score: 3 },
+        { key: 'B', text: 'Tamara is building resentment quietly. By the time it comes out it will be bigger than any one conversation can fix.', score: 4 },
+        { key: 'C', text: 'It is not a big deal. When they have more help or more money it will sort itself out.', score: 1 },
+        { key: 'D', text: 'Marcus is getting a better deal than he realizes and it is costing him trust he does not know he is spending.', score: 2 },
+      ]
+    },
+    {
       key: 'Fam5', condition: null,
-      story: 'Before they launched the business Keisha and Raymond talked about what family life would look like. They had a plan — dinner together most nights, weekends mostly protected, the kids would not feel it. Two years in almost none of that is true. They have both adjusted without ever having a conversation about adjusting.',
+      story: 'Before they launched the business Keisha and Raymond talked about what life would look like. They had a plan — dinner together most nights, weekends mostly protected, the relationship would not take the hit. Two years in almost none of that is true. They have both adjusted without ever having a conversation about adjusting.',
       question: 'What is most true about Keisha and Raymond right now?',
       options: [
         { key: 'A', text: 'They are resilient. Every couple building something real goes through this phase.', score: 2 },
-        { key: 'B', text: 'They made promises to their family they are not keeping and that has a cost even when no one is saying it out loud.', score: 3 },
+        { key: 'B', text: 'They made commitments to each other they are not keeping and that has a cost even when no one is saying it out loud.', score: 3 },
         { key: 'C', text: 'They are operating on an outdated agreement. The plan they made does not match the life they are living and they have never updated it together.', score: 4 },
         { key: 'D', text: 'Raymond has given more than he bargained for and Keisha may not fully see it.', score: 1 },
       ]

@@ -681,14 +681,30 @@ async function init() {
   document.getElementById('nav-module-title').textContent = mod.title;
   document.getElementById('sidebar-module-name').textContent = mod.title;
 
+  // Load user's profile for lesson filtering
+  const { data: myProfile } = await db
+    .from('partner_profiles')
+    .select('family_structure')
+    .eq('user_id', userId)
+    .single();
+  const familyStructure = myProfile?.family_structure || null;
+
   // Load lessons
   const { data: lessons } = await db
     .from('lessons')
-    .select('id, title, position, video_url, content, together_work')
+    .select('id, title, position, video_url, content, together_work, profile_condition')
     .eq('module_id', mod.id)
     .order('position');
 
-  allLessons = lessons || [];
+  // Filter out lessons that don't match this user's profile
+  allLessons = (lessons || []).filter(l => {
+    if (!l.profile_condition) return true; // no condition = show to everyone
+    const c = l.profile_condition;
+    if (c.field === 'family_structure') {
+      return familyStructure && c.values.includes(familyStructure);
+    }
+    return true;
+  });
 
   // Load my progress
   if (allLessons.length > 0) {
