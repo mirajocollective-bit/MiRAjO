@@ -22,9 +22,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Sync Capacitor
-        run: npx cap sync ios
-
       - name: Resolve Swift Package Manager dependencies
         run: |
           xcodebuild -resolvePackageDependencies \
