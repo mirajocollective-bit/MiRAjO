@@ -797,32 +797,7 @@ async function renderDashboard(user) {
     </div>`;
   }
 
-  // ── MODULE 1 FEATURED CARD ──
-  html += `<div class="section-label">The Foundation</div>`;
-  const mod1 = MODULES[0];
-  const mod1Pct = mod1LessonCount > 0 ? Math.round((mod1CompletedCount / mod1LessonCount) * 100) : 0;
-  let mod1StatusHtml = '';
-  if (mod1Pct === 100) {
-    mod1StatusHtml = `<span class="module-card-status status-complete">&#10003; Complete</span>`;
-  } else if (mod1Pct > 0) {
-    mod1StatusHtml = `<span class="module-card-status status-started">${mod1Pct}% done</span>`;
-  } else {
-    mod1StatusHtml = `<span class="module-card-status status-unlocked">Available now</span>`;
-  }
-  html += `<a href="/programs/couples-course/${mod1.slug}" class="module-card unlocked" style="margin-bottom:40px;max-width:520px;">
-    <div class="module-card-top">
-      <span class="module-card-num">Module 1</span>
-    </div>
-    <div class="module-card-title">${mod1.title}</div>
-    <div class="module-card-desc">${mod1.desc}</div>
-    <div class="module-card-footer">
-      ${mod1StatusHtml}
-      ${mod1LessonCount > 0 ? `<span style="font-size:11px;color:var(--muted);">${mod1CompletedCount}/${mod1LessonCount} lessons</span>` : ''}
-    </div>
-    ${mod1Pct > 0 ? `<div class="module-progress-bar"><div class="module-progress-fill" style="width:${mod1Pct}%"></div></div>` : ''}
-  </a>`;
-
-  // ── STEP 2 — DIAGNOSTIC CARD ──
+  // ── STEP 1 — DIAGNOSTIC CARD ──
   const domainPillsHtml = `<div class="domain-pills">
     ${['Business','Finances','Family','Relationship'].map(d => {
       const key = d.toLowerCase();
@@ -831,7 +806,7 @@ async function renderDashboard(user) {
     }).join('')}
   </div>`;
 
-  html += `<div class="section-label" style="margin-top:8px;">Step 1 — The Partnership Diagnostic</div>`;
+  html += `<div class="section-label">Step 1 — The Partnership Diagnostic</div>`;
   html += `<div class="diagnostic-card">
     <div class="diagnostic-card-header">
       <div>
@@ -873,6 +848,32 @@ async function renderDashboard(user) {
       }
     </div>
   </div>`;
+
+  // ── MODULE 1 — THE FOUNDATION ──
+  const mod1 = MODULES[0];
+  const mod1Pct = mod1LessonCount > 0 ? Math.round((mod1CompletedCount / mod1LessonCount) * 100) : 0;
+  let mod1StatusHtml = '';
+  if (mod1Pct === 100) {
+    mod1StatusHtml = `<span class="module-card-status status-complete">&#10003; Complete</span>`;
+  } else if (mod1Pct > 0) {
+    mod1StatusHtml = `<span class="module-card-status status-started">${mod1Pct}% done</span>`;
+  } else {
+    mod1StatusHtml = `<span class="module-card-status status-unlocked">Available now</span>`;
+  }
+  html += `<div class="section-label" style="margin-top:8px;">Module 1 — The Foundation</div>`;
+  html += `<p style="font-size:13px;color:var(--muted);margin:-12px 0 20px;line-height:1.6;">Complete this while your partner finishes their diagnostic — or return to it any time.</p>`;
+  html += `<a href="/programs/couples-course/${mod1.slug}" class="module-card unlocked" style="margin-bottom:40px;max-width:520px;">
+    <div class="module-card-top">
+      <span class="module-card-num">Module 1</span>
+    </div>
+    <div class="module-card-title">${mod1.title}</div>
+    <div class="module-card-desc">${mod1.desc}</div>
+    <div class="module-card-footer">
+      ${mod1StatusHtml}
+      ${mod1LessonCount > 0 ? `<span style="font-size:11px;color:var(--muted);">${mod1CompletedCount}/${mod1LessonCount} lessons</span>` : ''}
+    </div>
+    ${mod1Pct > 0 ? `<div class="module-progress-bar"><div class="module-progress-fill" style="width:${mod1Pct}%"></div></div>` : ''}
+  </a>`;
 
   // ── REPORT READY BANNER ──
   if (bothComplete && reportReady) {
