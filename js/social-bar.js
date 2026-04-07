@@ -77,18 +77,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.18);
     }
     @media (max-width: 768px) {
-      .social-bar {
-        left: 12px;
-        right: auto;
-        top: auto;
-        bottom: 20px;
-        transform: none;
-        flex-direction: row;
-      }
-      .social-bar a {
-        width: 36px;
-        height: 36px;
-      }
+      .social-bar { display: none; }
     }
   `;
   document.head.appendChild(style);

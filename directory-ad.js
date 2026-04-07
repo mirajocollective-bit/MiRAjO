@@ -1,4 +1,5 @@
 (function () {
+  if (window.innerWidth < 1024) return;
   if (sessionStorage.getItem('dir-ad-dismissed')) return;
 
   const css = `

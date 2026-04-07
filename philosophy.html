@@ -41,7 +41,7 @@
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   <style>
     :root {
       --deep-forest: #122012;
@@ -162,7 +162,10 @@
       gap: 16px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
-    .mobile-menu.open { display: flex; }
+    .site-nav.nav-open .mobile-menu { display: flex; }
+    .nav-hamburger .icon-close { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-open { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-close { display: block; }
     .mobile-menu a {
       font-size: 14px;
       color: var(--text-muted-dark);
@@ -1141,7 +1144,7 @@
 </div>
 
 <!-- ═══ NAV ═══ -->
-<nav class="site-nav" x-data="{ open: false }">
+<nav class="site-nav">
   <a href="https://www.mirajoco.org" class="nav-logo">
     <img src="img/logo-stacked.png" alt="MiRAjO Collective">
   </a>
@@ -1176,15 +1179,15 @@
     </a>
     <a href="https://www.mirajoco.org/coaching" target="_blank" rel="noopener" class="nav-cta">Let's Talk Now!</a>
   </div>
-  <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
-    <svg x-show="!open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+  <button class="nav-hamburger" onclick="this.closest('.site-nav').classList.toggle('nav-open')" aria-label="Menu">
+    <svg class="icon-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
     </svg>
-    <svg x-show="open" style="display:none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <svg class="icon-close" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
     </svg>
   </button>
-  <div class="mobile-menu" :class="open ? 'open' : ''">
+  <div class="mobile-menu">
     <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
     <a href="https://www.mirajoco.org/programs">Programs</a>
     <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 25 Days &amp; 25 Nights</a>
