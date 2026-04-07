@@ -993,15 +993,18 @@
   </ul>
   <button class="nav-cta" onclick="startCheckout()">Enroll Now</button>
   <button class="nav-hamburger" @click="open = !open" aria-label="Menu">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-      <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    <svg x-show="!open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+    <svg x-show="open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
     </svg>
   </button>
   <div class="mobile-menu" :class="open ? 'open' : ''">
     <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
     <a href="https://www.mirajoco.org/programs">Programs</a>
     <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 25 Days &amp; 25 Nights</a>
+    <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="padding-left:20px;font-size:13px;opacity:0.8">↳ Couples in Entrepreneurship</a>
     <a href="https://www.mirajoco.org/blog">Writing</a>
     <a href="https://www.mirajoco.org/events">Events</a>
     <a href="https://www.mirajoco.org/alignment-audit" style="padding-left:20px;font-size:13px;opacity:0.8">↳ Free Alignment Audit</a>
