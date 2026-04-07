@@ -78,9 +78,10 @@
     }
     @media (max-width: 768px) {
       .social-bar {
-        right: 10px;
+        left: 12px;
+        right: auto;
         top: auto;
-        bottom: 24px;
+        bottom: 20px;
         transform: none;
         flex-direction: row;
       }
