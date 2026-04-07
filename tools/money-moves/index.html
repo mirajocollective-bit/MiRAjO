@@ -508,8 +508,30 @@
       .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
       .mockup-cell { min-height: 52px; }
     }
-    @media (max-width: 600px) {
+    /* ── Mobile nav ── */
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-shrink: 0; }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--deep-forest); display: block; }
+    .nav-hamburger .icon-close { display: none; }
+    .nav.nav-open .nav-hamburger .icon-open { display: none; }
+    .nav.nav-open .nav-hamburger .icon-close { display: block; }
+    .nav-mobile-menu {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      background: #fff; border-bottom: 1px solid rgba(18,32,18,0.08);
+      padding: 20px 20px 28px; flex-direction: column; gap: 4px;
+      box-shadow: 0 8px 24px rgba(18,32,18,0.1); z-index: 99;
+    }
+    .nav.nav-open .nav-mobile-menu { display: flex; }
+    .nav-mobile-menu a {
+      font-size: 15px; color: var(--deep-forest); text-decoration: none;
+      padding: 11px 0; border-bottom: 1px solid rgba(18,32,18,0.07); font-weight: 400;
+    }
+    .nav-mobile-menu a:last-child { border-bottom: none; }
+    .nav-mobile-menu .nav-btn { text-align: center; margin-top: 8px; padding: 14px; font-size: 14px; }
+
+    @media (max-width: 640px) {
       .nav { padding: 0 20px; }
+      .nav-right { display: none; }
+      .nav-hamburger { display: block; }
       .hero { padding: 64px 20px 48px; }
       .section { padding: 64px 20px; }
       .stats-bar { padding: 40px 20px; }
@@ -533,6 +555,17 @@
   <div class="nav-right">
     <a href="#features" class="nav-link">Features</a>
     <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="/tools/money-moves/login" class="nav-btn nav-btn-outline">Log In</a>
+    <a href="#pricing" class="nav-btn nav-btn-gold">Start Free Trial</a>
+  </div>
+  <button class="nav-hamburger" onclick="this.closest('.nav').classList.toggle('nav-open')" aria-label="Menu">
+    <svg class="icon-open" fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg class="icon-close" fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <div class="nav-mobile-menu">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://www.mirajoco.org">MiRAjO Collective</a>
     <a href="/tools/money-moves/login" class="nav-btn nav-btn-outline">Log In</a>
     <a href="#pricing" class="nav-btn nav-btn-gold">Start Free Trial</a>
   </div>
@@ -954,7 +987,7 @@
     <a href="https://www.mirajoco.org/philosophy">About</a>
     <a href="mailto:mirandaj@mirajoco.org">Contact</a>
   </div>
-  <p class="footer-copy">© 2026 MiRAjO Collective. All rights reserved.</p>
+  <p class="footer-copy">© 2026 MiRAjO Collective. All rights reserved. &nbsp;·&nbsp; <a href="/about/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="/about/terms">Terms of Use</a></p>
 </footer>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>

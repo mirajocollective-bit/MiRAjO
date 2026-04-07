@@ -730,7 +730,7 @@
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
       .site-nav { padding: 16px 20px; }
-      .nav-links, .nav-cta { display: none; }
+      .nav-links, .nav-cta, .nav-login-txt { display: none; }
       .nav-hamburger { display: block; }
       .nav-logo img { height: 44px; }
       .nav-badge { font-size: 10px; }
@@ -994,6 +994,7 @@
       </div>
     </li>
   </ul>
+  <a href="/programs/login" style="font-size:13px;color:rgba(18,32,18,0.5);text-decoration:none;font-weight:500;white-space:nowrap;flex-shrink:0;">Login</a>
   <button class="nav-cta" onclick="startCheckout()">Enroll Now</button>
   <button class="nav-hamburger" onclick="this.closest('.site-nav').classList.toggle('nav-open')" aria-label="Menu">
     <svg class="icon-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1013,6 +1014,7 @@
     <a href="https://www.mirajoco.org/alignment-audit" style="padding-left:20px;font-size:13px;opacity:0.8">↳ Free Alignment Audit</a>
     <a href="https://www.mirajoco.org/couples-scorecard" style="padding-left:20px;font-size:13px;opacity:0.8">↳ Free Couples Scorecard</a>
     <a href="https://www.mirajoco.org/tools/money-moves" style="padding-left:20px;font-size:13px;opacity:0.8">↳ Money Moves</a>
+    <a href="/programs/login">Login to Course</a>
     <button class="nav-cta" onclick="startCheckout()">Enroll Now</button>
   </div>
 </nav>

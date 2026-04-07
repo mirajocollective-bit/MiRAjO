@@ -172,8 +172,18 @@
       gap: 16px;
       z-index: 99;
     }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu .nav-cta { text-align: center; }
+    .site-nav.nav-open .mobile-menu { display: flex; }
+    .mobile-menu a { font-size: 14px; color: #0D0D0D; text-decoration: none; padding: 8px 0; border-bottom: 1px solid rgba(13,13,13,0.08); font-weight: 400; display: block; }
+    .mobile-menu a:last-of-type { border-bottom: none; }
+    .mobile-menu .nav-cta { text-align: center; border-bottom: none; }
+    .nav-hamburger .icon-close { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-open { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-close { display: block; }
+    .nav-login-link {
+      font-size: 13px; color: rgba(13,13,13,0.55); text-decoration: none;
+      font-weight: 500; transition: color 0.2s; white-space: nowrap;
+    }
+    .nav-login-link:hover { color: var(--cie-dark); }
 
     /* ═══ HERO ═══ */
     .hero {
@@ -777,6 +787,8 @@
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
       .site-nav { padding: 16px 20px; }
+      #navEnroll, .nav-login-link { display: none; }
+      .nav-hamburger { display: block; }
       section { padding: 72px 24px; }
       .founding-creds { grid-template-columns: 1fr !important; }
       .pain-grid { grid-template-columns: 1fr; }
@@ -788,7 +800,7 @@
       .miranda-photo { max-width: 320px; }
       .pricing-card { padding: 40px 28px; }
       .pricing-amount { font-size: 56px; }
-      .social-bar { right: 12px; bottom: 20px; }
+      .social-bar { display: none; }
     }
     @media (max-width: 600px) {
       .pain-grid { grid-template-columns: 1fr; }
@@ -810,11 +822,19 @@
     <a href="/" class="nav-logo">
       <img src="/img/logo-horizontal.png" alt="MiRAjO">
     </a>
+    <a href="/programs/login" class="nav-login-link">Login</a>
     <button class="nav-cta" id="navEnroll">Enroll Now</button>
-    <button class="nav-hamburger" aria-label="Menu" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <button class="nav-hamburger" aria-label="Menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div class="mobile-menu">
+      <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
+      <a href="https://www.mirajoco.org/programs">Programs</a>
+      <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="padding-left:20px;font-size:13px;opacity:0.75">↳ Couples in Entrepreneurship</a>
+      <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.75">↳ 25 Days &amp; 25 Nights</a>
+      <a href="https://www.mirajoco.org/coaching">Coaching</a>
+      <a href="/programs/login" class="nav-cta" style="margin-top:4px;">Login</a>
       <button class="nav-cta" onclick="startCheckout()">Enroll Now</button>
     </div>
   </nav>
