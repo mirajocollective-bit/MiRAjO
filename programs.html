@@ -144,7 +144,7 @@
     .nav-cta-wrap { display: flex; align-items: center; gap: 10px; }
     .nav-login { display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted-light); transition: color 0.2s; }
     .nav-login:hover { color: var(--deep-forest); }
-    .nav-cta { display: inline-block; font-size: 12px; padding: 9px 22px; background: var(--living-green); color: #fff; border-radius: 6px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; animation: ctaPulse 3s ease-in-out infinite; }
+    .nav-cta { display: inline-block; font-size: 12px; padding: 9px 22px; background: #fff; color: var(--living-green); border: 1.5px solid var(--living-green); border-radius: 6px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; animation: ctaPulse 3s ease-in-out infinite; }
     .nav-cta::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); animation: ctaShimmer 3s ease-in-out infinite; }
     @keyframes ctaPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(37,107,66,0.5); } 50% { box-shadow: 0 0 0 7px rgba(37,107,66,0); } }
     @keyframes ctaShimmer { 0% { left: -100%; } 40%, 100% { left: 160%; } }

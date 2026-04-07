@@ -122,15 +122,16 @@
       display: inline-block;
       font-size: 12px;
       padding: 9px 22px;
-      background: var(--coral);
-      color: #fff;
+      background: #fff;
+      color: var(--living-green);
+      border: 1.5px solid var(--living-green);
       border-radius: 6px;
       font-weight: 600;
       letter-spacing: 0.5px;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: background 0.3s, color 0.3s;
     }
-    .nav-cta:hover { background: var(--coral-light); }
+    .nav-cta:hover { background: var(--living-green); color: #fff; }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
     .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--warm-parchment); }
     .mobile-menu {
