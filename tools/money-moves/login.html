@@ -394,21 +394,22 @@
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    const { error } = await db.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://www.mirajoco.org/tools/money-moves/confirm?setup=1'
-    });
+    try {
+      const { error } = await db.auth.resetPasswordForEmail(email, {
+        redirectTo: 'https://www.mirajoco.org/tools/money-moves/login'
+      });
 
-    if (error) {
+      if (error) throw new Error(error.message);
+
+      msg.textContent = 'Check your inbox — a reset link is on its way.';
+      msg.style.color = '#256B42';
+      document.getElementById('reset-form').style.display = 'none';
+    } catch(err) {
       msg.textContent = 'Something went wrong. Please try again.';
       msg.style.color = '#E88080';
       btn.textContent = 'Send Reset Link';
       btn.disabled = false;
-      return;
     }
-
-    msg.textContent = 'Check your inbox — a reset link is on its way.';
-    msg.style.color = '#256B42';
-    document.getElementById('reset-form').style.display = 'none';
   });
 </script>
 
