@@ -2442,6 +2442,7 @@
 <script>
 (async function () {
   const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  window._mmSupabase = supabase;
 
   // ── Auth guard ──────────────────────────────────────────────────────────────
   const { data: { session } } = await supabase.auth.getSession();
@@ -5297,8 +5298,9 @@
     clearFaqSearch();
   };
   window.logOut = async function () {
-    const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-    await sb.auth.signOut();
+    try {
+      if (window._mmSupabase) await window._mmSupabase.auth.signOut();
+    } catch(e) {}
     window.location.href = '/tools/money-moves/login';
   };
   window.toggleFaq = function (qEl) {
