@@ -395,17 +395,20 @@
     btn.disabled = true;
 
     try {
-      const { error } = await db.auth.resetPasswordForEmail(email, {
-        redirectTo: 'https://www.mirajoco.org/tools/money-moves/login'
+      const res = await fetch('/api/mm-reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
       });
+      const data = await res.json();
 
-      if (error) throw new Error(error.message);
+      if (!res.ok) throw new Error(data.error || 'Failed');
 
       msg.textContent = 'Check your inbox — a reset link is on its way.';
       msg.style.color = '#256B42';
       document.getElementById('reset-form').style.display = 'none';
     } catch(err) {
-      msg.textContent = 'Something went wrong. Please try again.';
+      msg.textContent = err.message || 'Something went wrong. Please try again.';
       msg.style.color = '#E88080';
       btn.textContent = 'Send Reset Link';
       btn.disabled = false;
