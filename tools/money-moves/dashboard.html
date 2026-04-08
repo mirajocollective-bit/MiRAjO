@@ -2451,18 +2451,13 @@
   document.getElementById('nav-greeting').textContent = `Hi, ${firstName}`;
   window._mmUser = user;
 
-  // ── Subscription gate ────────────────────────────────────────────────────────
-  // Allow access if: active or trialing Stripe sub, OR a provisioned trial that has not yet expired
+  // ── Subscription gate (server-side check to bypass RLS) ─────────────────────
   {
-    const { data: sub } = await supabase.from('mm_subscriptions')
-      .select('status, period_end, stripe_subscription_id')
-      .eq('user_id', user.id).maybeSingle();
-
-    const isPending = !sub || sub.stripe_subscription_id === 'pending';
-    const trialExpired = isPending && sub && new Date(sub.period_end) < new Date();
-    const realSubActive = sub && ['active', 'trialing'].includes(sub.status) && sub.stripe_subscription_id !== 'pending';
-
-    if (!realSubActive && (!sub || trialExpired)) {
+    const accessRes = await fetch('/api/mm-check-access', {
+      headers: { 'Authorization': `Bearer ${session.access_token}` }
+    });
+    const { access } = await accessRes.json();
+    if (!access) {
       window.location.href = '/tools/money-moves/pricing';
       return;
     }
@@ -5302,7 +5297,8 @@
     clearFaqSearch();
   };
   window.logOut = async function () {
-    await supabase.auth.signOut();
+    const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    await sb.auth.signOut();
     window.location.href = '/tools/money-moves/login';
   };
   window.toggleFaq = function (qEl) {
