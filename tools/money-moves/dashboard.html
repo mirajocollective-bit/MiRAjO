@@ -2437,6 +2437,19 @@
 
 <script src="/api/config"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Define logOut globally so it's always available regardless of async IIFE state
+  window.logOut = async function () {
+    try {
+      if (window._mmSupabase) await window._mmSupabase.auth.signOut();
+      else {
+        const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+        await sb.auth.signOut();
+      }
+    } catch(e) {}
+    window.location.href = '/tools/money-moves/login';
+  };
+</script>
 
 
 <script>
@@ -5296,12 +5309,6 @@
   window.closeFaq = function () {
     document.getElementById('faq-overlay').classList.remove('open');
     clearFaqSearch();
-  };
-  window.logOut = async function () {
-    try {
-      if (window._mmSupabase) await window._mmSupabase.auth.signOut();
-    } catch(e) {}
-    window.location.href = '/tools/money-moves/login';
   };
   window.toggleFaq = function (qEl) {
     const aEl = qEl.nextElementSibling;
