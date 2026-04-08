@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#122012">
+  <title>Delete Account — Money Moves by MiRAjO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-forest:    #122012;
+      --forest-mid:     #1E4226;
+      --living-green:   #256B42;
+      --new-growth:     #6DC48A;
+      --warm-parchment: #F2EBD9;
+      --soft-white:     #FAF7F2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--new-growth);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 56px 48px;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 4px 40px rgba(18,32,18,0.12);
+    }
+    .logo { height: 32px; width: auto; display: block; margin: 0 auto 20px; }
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      color: var(--deep-forest);
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .warning-box {
+      background: #fff5f5;
+      border: 1px solid #fcc;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      color: #c00;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .warning-box strong { display: block; margin-bottom: 4px; }
+    label {
+      display: block;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--deep-forest);
+      margin-bottom: 20px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus { border-color: var(--living-green); }
+    .btn-delete {
+      width: 100%;
+      padding: 16px;
+      background: #c00;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-delete:hover { background: #a00; }
+    .btn-delete:disabled { background: #ccc; cursor: not-allowed; }
+    .msg {
+      margin-top: 20px;
+      font-size: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      display: none;
+    }
+    .msg.error { background: #fff5f5; color: #c00; border: 1px solid #fcc; display: block; }
+    .msg.success { background: #f0faf3; color: var(--living-green); border: 1px solid #b6e8c8; display: block; }
+    .back-link {
+      display: block;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #888;
+      text-decoration: none;
+    }
+    .back-link:hover { color: var(--living-green); }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <img src="/img/logo-stacked.png" alt="Money Moves by MiRAjO" class="logo">
+  <h1>Delete Your Account</h1>
+  <p class="subtitle">Enter your login credentials to permanently delete your account and all associated data.</p>
+
+  <div class="warning-box">
+    <strong>This action cannot be undone.</strong>
+    All your budget entries, categories, calendar data, and account information will be permanently deleted.
+  </div>
+
+  <form id="deleteForm">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Your password" required autocomplete="current-password">
+
+    <button type="submit" class="btn-delete" id="submitBtn">Permanently Delete My Account</button>
+  </form>
+
+  <div class="msg" id="msg"></div>
+  <a href="/tools/money-moves" class="back-link">← Back to Money Moves</a>
+</div>
+
+<script>
+  document.getElementById('deleteForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('msg');
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    msg.className = 'msg';
+    msg.textContent = '';
+    btn.disabled = true;
+    btn.textContent = 'Deleting...';
+
+    try {
+      const res = await fetch('/api/mm-delete-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        msg.className = 'msg error';
+        msg.textContent = data.error || 'Something went wrong. Please try again.';
+        btn.disabled = false;
+        btn.textContent = 'Permanently Delete My Account';
+      } else {
+        msg.className = 'msg success';
+        msg.textContent = 'Your account has been deleted. We\'re sorry to see you go.';
+        document.getElementById('deleteForm').style.display = 'none';
+      }
+    } catch (err) {
+      msg.className = 'msg error';
+      msg.textContent = 'Network error. Please try again.';
+      btn.disabled = false;
+      btn.textContent = 'Permanently Delete My Account';
+    }
+  });
+</script>
+</body>
+</html>

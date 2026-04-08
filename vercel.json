@@ -73,8 +73,9 @@
     { "source": "/tools/money-moves/login",     "destination": "/tools/money-moves/login.html" },
     { "source": "/tools/money-moves/confirm",   "destination": "/tools/money-moves/confirm.html" },
     { "source": "/tools/money-moves/dashboard", "destination": "/tools/money-moves/dashboard.html" },
-    { "source": "/tools/money-moves/settings",  "destination": "/tools/money-moves/settings.html" },
-    { "source": "/tools/money-moves/reports",   "destination": "/tools/money-moves/reports.html" },
-    { "source": "/tools/money-moves/pricing",   "destination": "/tools/money-moves/pricing.html" }
+    { "source": "/tools/money-moves/settings",        "destination": "/tools/money-moves/settings.html" },
+    { "source": "/tools/money-moves/reports",         "destination": "/tools/money-moves/reports.html" },
+    { "source": "/tools/money-moves/pricing",         "destination": "/tools/money-moves/pricing.html" },
+    { "source": "/tools/money-moves/delete-account",  "destination": "/tools/money-moves/delete-account.html" }
   ]
 }
