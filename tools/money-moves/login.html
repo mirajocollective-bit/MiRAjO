@@ -379,7 +379,23 @@
   });
 
   // Google sign in
-  document.getElementById('google-btn').addEventListener('click', async function() {
+  const googleBtn   = document.getElementById('google-btn');
+  const linkedinBtn = document.getElementById('linkedin-btn');
+  const googleHTML   = googleBtn.innerHTML;
+  const linkedinHTML = linkedinBtn.innerHTML;
+
+  // When the user hits Back after being sent to Google/LinkedIn, the browser
+  // restores this page from cache with the buttons still disabled. Reset them.
+  window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+      googleBtn.disabled   = false;
+      googleBtn.innerHTML  = googleHTML;
+      linkedinBtn.disabled  = false;
+      linkedinBtn.innerHTML = linkedinHTML;
+    }
+  });
+
+  googleBtn.addEventListener('click', async function() {
     this.disabled = true;
     this.textContent = 'Redirecting...';
     await db.auth.signInWithOAuth({
@@ -388,8 +404,7 @@
     });
   });
 
-  // LinkedIn sign in
-  document.getElementById('linkedin-btn').addEventListener('click', async function() {
+  linkedinBtn.addEventListener('click', async function() {
     this.disabled = true;
     this.textContent = 'Redirecting...';
     await db.auth.signInWithOAuth({
