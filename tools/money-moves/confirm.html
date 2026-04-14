@@ -146,11 +146,15 @@
     const params = new URLSearchParams(window.location.search);
     const hashParams = new URLSearchParams(window.location.hash.replace('#', '?').slice(1));
 
-    // Password reset flow — show set-password form
-    if (params.get('setup') === '1' || hashParams.get('type') === 'recovery') {
+    // New account setup or password reset — show set-password form
+    const isInvite   = hashParams.get('type') === 'invite';
+    const isRecovery = hashParams.get('type') === 'recovery';
+    if (params.get('setup') === '1' || isRecovery || isInvite) {
       document.getElementById('spinner').style.display = 'none';
-      document.getElementById('title').textContent = 'Set your password';
-      document.getElementById('sub').textContent = 'Choose a password to use every time you log in.';
+      document.getElementById('title').textContent = isInvite ? 'Create your password' : 'Set your password';
+      document.getElementById('sub').textContent = isInvite
+        ? 'Choose a password so you can sign in any time.'
+        : 'Choose a password to use every time you log in.';
       document.getElementById('set-password-section').style.display = 'block';
 
       document.getElementById('set-pw-btn').addEventListener('click', async function () {

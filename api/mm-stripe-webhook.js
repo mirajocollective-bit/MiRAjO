@@ -85,10 +85,10 @@ export default async function handler(req, res) {
     if (existingUser) {
       userId = existingUser.id;
     } else {
-      // Invite user — they'll get a magic link to set up their account
+      // Invite user — they'll get a link to set up their password
       const { data: invited, error: inviteErr } = await supabase.auth.admin.inviteUserByEmail(email, {
         data: { product: 'money-moves' },
-        redirectTo: `${process.env.SITE_URL}/tools/money-moves/confirm`,
+        redirectTo: `${process.env.SITE_URL}/tools/money-moves/confirm?setup=1`,
       });
       if (inviteErr) {
         console.error('Money Moves invite error:', inviteErr);

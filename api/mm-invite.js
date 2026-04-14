@@ -99,7 +99,7 @@ export default async function handler(req, res) {
   } else {
     const { data: invited, error: inviteErr } = await supabase.auth.admin.inviteUserByEmail(email, {
       data: { product: 'money-moves' },
-      redirectTo: `${process.env.SITE_URL}/tools/money-moves/confirm`,
+      redirectTo: `${process.env.SITE_URL}/tools/money-moves/confirm?setup=1`,
     });
     if (inviteErr) {
       console.error('[mm-invite] Supabase invite error:', inviteErr.message);

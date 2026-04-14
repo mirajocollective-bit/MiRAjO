@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   if (!email) return res.status(400).json({ error: 'Email is required.' });
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://www.mirajoco.org/tools/money-moves/login'
+    redirectTo: 'https://www.mirajoco.org/tools/money-moves/confirm?setup=1'
   });
 
   if (error) return res.status(400).json({ error: error.message });
