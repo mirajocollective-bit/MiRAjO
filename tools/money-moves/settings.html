@@ -779,6 +779,25 @@
 
         <button class="save-btn" onclick="saveAccount()">Save Account</button>
 
+        <!-- Change Password -->
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+          <div style="font-size:13px;font-weight:700;color:var(--deep-forest);margin-bottom:14px;letter-spacing:0.3px">Change Password</div>
+          <div style="display:flex;flex-direction:column;gap:10px;max-width:420px">
+            <div class="acct-field">
+              <label>New Password</label>
+              <input type="password" class="acct-input" id="pw-new" placeholder="At least 8 characters" autocomplete="new-password">
+            </div>
+            <div class="acct-field">
+              <label>Confirm New Password</label>
+              <input type="password" class="acct-input" id="pw-confirm" placeholder="Repeat new password" autocomplete="new-password">
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+              <button class="save-btn" id="pw-save-btn" onclick="changePassword()" style="padding:12px 22px;font-size:13px">Update Password</button>
+              <span id="pw-msg" style="font-size:13px;line-height:1.5"></span>
+            </div>
+          </div>
+        </div>
+
         <div class="danger-zone">
           <div class="danger-title">Danger Zone</div>
           <div style="display:flex;flex-direction:column;gap:10px">
@@ -1188,6 +1207,47 @@
 
     if (authRes.error || prefRes.error) return toast('Error saving. Try again.', true);
     toast('Account saved!');
+  };
+
+  window.changePassword = async function () {
+    const pw      = document.getElementById('pw-new').value;
+    const pw2     = document.getElementById('pw-confirm').value;
+    const msg     = document.getElementById('pw-msg');
+    const btn     = document.getElementById('pw-save-btn');
+
+    msg.textContent = '';
+    msg.style.color = '';
+
+    if (pw.length < 8) {
+      msg.textContent = 'Password must be at least 8 characters.';
+      msg.style.color = '#c0392b';
+      return;
+    }
+    if (pw !== pw2) {
+      msg.textContent = 'Passwords do not match.';
+      msg.style.color = '#c0392b';
+      return;
+    }
+
+    btn.textContent = 'Updating...';
+    btn.disabled = true;
+
+    const { error } = await supabase.auth.updateUser({ password: pw });
+
+    btn.textContent = 'Update Password';
+    btn.disabled = false;
+
+    if (error) {
+      msg.textContent = error.message || 'Could not update password. Try again.';
+      msg.style.color = '#c0392b';
+      return;
+    }
+
+    document.getElementById('pw-new').value     = '';
+    document.getElementById('pw-confirm').value = '';
+    msg.textContent = 'Password updated!';
+    msg.style.color = 'var(--living-green)';
+    setTimeout(() => { msg.textContent = ''; }, 3000);
   };
 
   window.signOut = async function () {
