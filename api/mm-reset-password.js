@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     type: 'recovery',
     email,
     options: {
-      redirectTo: `${process.env.SITE_URL}/tools/money-moves/confirm?setup=1`,
+      redirectTo: `${process.env.SITE_URL}/tools/money-moves/login`,
     },
   });
 

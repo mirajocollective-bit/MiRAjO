@@ -328,21 +328,29 @@
 <script src="/api/config"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  // Capture the hash BEFORE createClient — Supabase clears it via
+  // history.replaceState during initialization, so reading it later returns ''.
+  const _initialHash = window.location.hash;
   const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-  // Handle password recovery link — show set-password form instead of redirecting
+  // Track whether this is a password recovery flow so we never redirect
+  // a recovery session to the dashboard.
+  let _isRecovery = _initialHash.includes('type=recovery');
+
+  // onAuthStateChange fires when Supabase processes the recovery tokens.
+  // Set the flag and show the set-password form immediately.
   db.auth.onAuthStateChange((event, session) => {
     if (event === 'PASSWORD_RECOVERY') {
+      _isRecovery = true;
       document.getElementById('login-section').style.display = 'none';
       document.getElementById('reset-section').style.display = 'none';
       document.getElementById('set-password-section').style.display = 'block';
     }
   });
 
-  // If already signed in (and not a recovery), go straight to dashboard
+  // If already signed in and NOT a recovery flow, go straight to dashboard.
   db.auth.getSession().then(({ data: { session } }) => {
-    const hash = window.location.hash;
-    if (session && !hash.includes('type=recovery')) {
+    if (session && !_isRecovery) {
       window.location.href = '/tools/money-moves/dashboard';
     }
   });
