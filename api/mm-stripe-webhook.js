@@ -97,9 +97,8 @@ export default async function handler(req, res) {
       userId = invited.user.id;
     }
 
-    // Record subscription
-    await supabase.from('mm_subscriptions').upsert({
-      user_id:                userId,
+    // Record subscription (no unique constraint on user_id, so check first)
+    const subData = {
       stripe_customer_id:     customerId,
       stripe_subscription_id: subscription.id,
       plan,
@@ -107,7 +106,14 @@ export default async function handler(req, res) {
       status:     'active',
       period_end: periodEnd,
       updated_at: new Date().toISOString(),
-    }, { onConflict: 'user_id' });
+    };
+    const { data: existingSub } = await supabase
+      .from('mm_subscriptions').select('id').eq('user_id', userId).maybeSingle();
+    if (existingSub) {
+      await supabase.from('mm_subscriptions').update(subData).eq('user_id', userId);
+    } else {
+      await supabase.from('mm_subscriptions').insert({ user_id: userId, ...subData });
+    }
 
     // Create household
     const { data: household, error: hhErr } = await supabase

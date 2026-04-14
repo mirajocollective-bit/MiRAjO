@@ -62,9 +62,8 @@ export default async function handler(req, res) {
   const billing  = bestSub.metadata?.billing || 'monthly';
   const periodEnd = new Date(bestSub.current_period_end * 1000).toISOString();
 
-  // ── 4. Upsert mm_subscriptions ────────────────────────────────────────────
-  const { error: upsertErr } = await supabase.from('mm_subscriptions').upsert({
-    user_id:                sbUser.id,
+  // ── 4. Write mm_subscriptions (no unique constraint on user_id, check first)
+  const subData = {
     stripe_customer_id:     custId,
     stripe_subscription_id: bestSub.id,
     plan,
@@ -72,9 +71,14 @@ export default async function handler(req, res) {
     status:     bestSub.status,
     period_end: periodEnd,
     updated_at: new Date().toISOString(),
-  }, { onConflict: 'user_id' });
+  };
+  const { data: existingSub } = await supabase
+    .from('mm_subscriptions').select('id').eq('user_id', sbUser.id).maybeSingle();
+  const { error: writeErr } = existingSub
+    ? await supabase.from('mm_subscriptions').update(subData).eq('user_id', sbUser.id)
+    : await supabase.from('mm_subscriptions').insert({ user_id: sbUser.id, ...subData });
 
-  if (upsertErr) return res.status(500).json({ error: upsertErr.message });
+  if (writeErr) return res.status(500).json({ error: writeErr.message });
 
   // ── 5. Make sure they have a household (provision if missing) ─────────────
   const { data: existingMember } = await supabase

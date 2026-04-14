@@ -40,8 +40,7 @@ export default async function handler(req, res) {
   const periodEnd = new Date(sub.current_period_end * 1000).toISOString();
   const custId    = typeof sub.customer === 'string' ? sub.customer : sub.customer?.id;
 
-  const { error: upsertErr } = await supabase.from('mm_subscriptions').upsert({
-    user_id:                user.id,
+  const subData = {
     stripe_customer_id:     custId,
     stripe_subscription_id: sub.id,
     plan,
@@ -49,11 +48,21 @@ export default async function handler(req, res) {
     status:     sub.status,
     period_end: periodEnd,
     updated_at: new Date().toISOString(),
-  }, { onConflict: 'user_id' });
+  };
 
-  if (upsertErr) {
-    console.error('mm-verify-checkout: Supabase upsert error', upsertErr);
-    return res.status(500).json({ error: upsertErr.message });
+  const { data: existing } = await supabase
+    .from('mm_subscriptions')
+    .select('id')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  const { error: writeErr } = existing
+    ? await supabase.from('mm_subscriptions').update(subData).eq('user_id', user.id)
+    : await supabase.from('mm_subscriptions').insert({ user_id: user.id, ...subData });
+
+  if (writeErr) {
+    console.error('mm-verify-checkout: Supabase write error', writeErr);
+    return res.status(500).json({ error: writeErr.message });
   }
 
   console.log(`mm-verify-checkout: subscription confirmed for ${user.email} (${sub.id})`);
