@@ -116,6 +116,62 @@ export const SEQUENCES = {
     },
   ],
 
+  'module-2-complete': [
+    {
+      step: 1, delayDays: 0,
+      subject: "Module 2 done. You're building momentum.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Two modules in. That means you're past the point where most people stop.`) +
+        p(`Module 2 is where the framework starts to feel personal. What you're learning now isn't abstract anymore. It's about you specifically.`) +
+        p(`Keep that going. Module 3 is waiting.`) +
+        btn('Continue to Module 3', LOGIN)
+      ),
+    },
+  ],
+
+  'module-3-complete': [
+    {
+      step: 1, delayDays: 0,
+      subject: "Halfway through. Don't slow down now.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Three modules done. You're at the halfway point.`) +
+        p(`This is exactly where the work either starts to land or starts to feel like effort. If it's feeling hard, that's not a sign something is wrong. That's a sign you're actually doing it.`) +
+        p(`Two modules left. Go finish what you started.`) +
+        btn('Keep Going', LOGIN)
+      ),
+    },
+  ],
+
+  'module-4-complete': [
+    {
+      step: 1, delayDays: 0,
+      subject: "One module left. Finish it.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Four modules down. One to go.`) +
+        p(`You've done the hard part. The last module is where it all comes together. Don't leave it sitting unfinished.`) +
+        p(`You're closer than you think.`) +
+        btn('Go to Module 5', LOGIN)
+      ),
+    },
+  ],
+
+  'module-5-complete': [
+    {
+      step: 1, delayDays: 0,
+      subject: "All five modules. Now do the 25 days.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`You've completed all five modules. The full framework is in your hands now.`) +
+        p(`But the framework is not the finish line. The 25 Days are. That's where everything you've learned stops being something you know and starts being something you live.`) +
+        p(`Log in and keep going.`) +
+        btn('Continue the Course', LOGIN)
+      ),
+    },
+  ],
+
   // ── COUPLES IN ENTREPRENEURSHIP ──────────────────────────────
 
   'enrolled-couples-cie': [
@@ -127,10 +183,10 @@ export const SEQUENCES = {
         p(`You just made a decision most couples never make. You said: we are going to look at this honestly, together. That takes courage and it takes love.`) +
         p(`Here is what happens next.`) +
         p(`<strong style="color:#122012;">Step 1: Log in.</strong><br>Use the button below. Once you are in your dashboard, everything else will be waiting for you.`) +
-        p(`<strong style="color:#122012;">Step 2: Build your individual profile.</strong><br>Takes about five minutes. This is yours alone — your background, family situation, where the business is, and what you are hoping this course does for you both. Your partner will complete theirs separately.`) +
+        p(`<strong style="color:#122012;">Step 2: Build your individual profile.</strong><br>Takes about five minutes. This is yours alone: your background, family situation, where the business is, and what you are hoping this course does for you both. Your partner will complete theirs separately.`) +
         p(`<strong style="color:#122012;">Step 3: Invite your partner.</strong><br>From your dashboard, enter their email. They will get everything they need to set up their account and complete their own profile and assessment.`) +
-        p(`<strong style="color:#122012;">Step 4: Complete Module 1, then the Diagnostic.</strong><br>Module 1 is where everyone starts. Once you finish it, The Partnership Diagnostic unlocks. Answer honestly — your partner will not see your responses.`) +
-        p(`<strong style="color:#122012;">Step 5: See your Partnership Report together.</strong><br>Once both of you have completed the diagnostic, your report generates automatically. Your profiles, your answers, your gaps — side by side. That is where the real work begins.`) +
+        p(`<strong style="color:#122012;">Step 4: Complete Module 1, then the Diagnostic.</strong><br>Module 1 is where everyone starts. Once you finish it, The Partnership Diagnostic unlocks. Answer honestly. Your partner will not see your responses.`) +
+        p(`<strong style="color:#122012;">Step 5: See your Partnership Report together.</strong><br>Once both of you have completed the diagnostic, your report generates automatically. Your profiles, your answers, your gaps, side by side. That is where the real work begins.`) +
         btn('Log In and Get Started', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-confirm`) +
         p(`If you have any questions at all, reply to this email. I read every one.`)
       ),
@@ -168,8 +224,8 @@ export const SEQUENCES = {
         p(`${d?.partner_name || 'Your partner'} just enrolled in Couples in Entrepreneurship and they want you in it with them.`) +
         p(`That is not a small thing. They did not just buy a course. They said: I want us to be better at this together. Together being the operative word.`) +
         p(`Here is how it works:`) +
-        p(`First, you each build your own individual profile — five minutes, completely private. Your background, family situation, where the business is, what you are each hoping for. Then you each complete The Partnership Diagnostic separately across four areas: Business, Finances, Family, and Relationship. No shared answers. No pressure.`) +
-        p(`Once both of you are done, the system generates your Partnership Report — your profiles and your diagnostic answers side by side, showing exactly where you align and where the gaps are. You open that report together.`) +
+        p(`First, you each build your own individual profile. Five minutes, completely private. Your background, family situation, where the business is, what you are each hoping for. Then you each complete The Partnership Diagnostic separately across four areas: Business, Finances, Family, and Relationship. No shared answers. No pressure.`) +
+        p(`Once both of you are done, the system generates your Partnership Report. Your profiles and your diagnostic answers side by side, showing exactly where you align and where the gaps are. You open that report together.`) +
         p(`From there, a joint course path unlocks built specifically around your gaps. Not a generic program. Yours.`) +
         p(`It is not therapy. It is infrastructure for couples who are building something serious.`) +
         btn('Accept Your Invite', d?.invite_url || `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-join`) +
@@ -239,18 +295,18 @@ export const SEQUENCES = {
         const result = d?.result || 'yellow';
         const copies = {
           red: {
-            headline: 'Critical — The gap is real.',
-            body: `You are not imagining it. Something is off — in how you make decisions, how you talk about money, how connected you feel, or all of it. The distance between you did not happen overnight. But you named it today, and that is more than most couples ever do.`,
-            next: `The next step is not a conversation with your partner. It is this: <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#8B1A2B;">Couples in Entrepreneurship</a> was built for exactly where you are. Eight modules across Business, Finances, Family, and Relationship — built for couples in business who are tired of managing the gap and ready to close it.`,
+            headline: 'Critical. The gap is real.',
+            body: `You are not imagining it. Something is off: how you make decisions, how you talk about money, how connected you feel, or all of it. The distance between you did not happen overnight. But you named it today, and that is more than most couples ever do.`,
+            next: `The next step is not a conversation with your partner. It is this: <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#8B1A2B;">Couples in Entrepreneurship</a> was built for exactly where you are. Eight modules across Business, Finances, Family, and Relationship, built for couples in business who are tired of managing the gap and ready to close it.`,
           },
           yellow: {
-            headline: 'Caution — You are drifting.',
-            body: `You are not in crisis. But you are not as aligned as you need to be either. The kind of drift you are in tends to get slower and quieter — until one day it is not. You have time to close the gap. But it will not close on its own.`,
+            headline: 'Caution. You are drifting.',
+            body: `You are not in crisis. But you are not as aligned as you need to be either. The kind of drift you are in tends to get slower and quieter, until one day it is not. You have time to close the gap. But it will not close on its own.`,
             next: `<a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#8B1A2B;">Couples in Entrepreneurship</a> gives you the conversations, the frameworks, and the shared agreements to get back in sync before the distance becomes harder to cross.`,
           },
           green: {
-            headline: 'Aligned — And worth protecting.',
-            body: `You are in a strong place. That does not happen by accident — it takes two people actively choosing it. The couples who stay aligned are the ones who work at it intentionally, not the ones who assume it will hold.`,
+            headline: 'Aligned. And worth protecting.',
+            body: `You are in a strong place. That does not happen by accident. It takes two people actively choosing it. The couples who stay aligned are the ones who work at it intentionally, not the ones who assume it will hold.`,
             next: `<a href="https://www.mirajoco.org/couplesinentrepreneurship" style="color:#8B1A2B;">Couples in Entrepreneurship</a> is not just for couples in trouble. It is for couples who want to stay where you are and keep building from it.`,
           },
         };
@@ -274,7 +330,7 @@ export const SEQUENCES = {
         p(`You took the scorecard a few days ago. I want to share something I have seen again and again working with couples in business.`) +
         p(`The thing that creates the most distance between partners is not fighting. It is the conversations they keep almost having and then not having. The thing that stays unsaid because the timing is never right, or because they are not sure how to say it, or because they are afraid of what it will open up.`) +
         p(`Those almost-conversations accumulate. And the weight of them is heavier than the conversation itself ever would have been.`) +
-        p(`Couples in Entrepreneurship is built to give you the structure for those conversations — so they finally happen, in the right order, with the right framework underneath them.`) +
+        p(`Couples in Entrepreneurship is built to give you the structure for those conversations, so they finally happen, in the rest order, with the right framework underneath them.`) +
         btn('See What Is Inside', 'https://www.mirajoco.org/couplesinentrepreneurship')
       ),
     },
@@ -285,10 +341,10 @@ export const SEQUENCES = {
         greet(n) +
         p(`If you are still here, you are still thinking about it.`) +
         p(`That is how it works. The scorecard surfaced something you already knew was there. The question is what you do with it.`) +
-        p(`Couples in Entrepreneurship is $997 for both of you — one purchase, two accounts, lifetime access. It is not cheap. But a single session with a couples therapist who understands business costs more than that and gives you nothing to take home.`) +
+        p(`Couples in Entrepreneurship is $997 for both of you: one purchase, two accounts, lifetime access. It is not cheap. But a single session with a couples therapist who understands business costs more than that and gives you nothing to take home.`) +
         p(`This gives you eight modules, a shared diagnostic, a Partnership Report built on your actual answers, and a course path designed around your specific gaps. Not a generic program. Yours.`) +
         btn('Enroll in Couples in Entrepreneurship', 'https://www.mirajoco.org/couplesinentrepreneurship') +
-        p(`If it is not the right time, that is okay. But if it is — do not wait until the gap is wider.`)
+        p(`If it is not the right time, that is okay. But if it is, do not wait until the gap is wider.`)
       ),
     },
   ],

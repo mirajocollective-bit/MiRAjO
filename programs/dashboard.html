@@ -36,31 +36,31 @@
 
     /* ═══ NAV ═══ */
     .dash-nav {
-      background: linear-gradient(180deg, #4A6B4E, #2A3A2A);
+      background: #fff;
       padding: 18px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(201,184,150,0.18);
+      border-bottom: 1px solid rgba(42,58,42,0.1);
       position: sticky;
       top: 0;
       z-index: 100;
     }
     .dash-nav-logo img { height: 80px; width: auto; display: block; }
     .dash-nav-right { display: flex; align-items: center; gap: 20px; }
-    .dash-nav-email { font-size: 13px; color: var(--dry-sage); }
+    .dash-nav-email { font-size: 13px; color: var(--text-body-light); }
     .dash-logout {
       font-size: 12px;
-      color: var(--dry-sage);
-      background: rgba(201,184,150,0.12);
-      border: 1px solid rgba(201,184,150,0.2);
+      color: var(--p-mid);
+      background: transparent;
+      border: 1px solid rgba(90,63,154,0.25);
       border-radius: 6px;
       padding: 8px 16px;
       cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif;
       transition: all 0.2s;
     }
-    .dash-logout:hover { background: rgba(201,184,150,0.2); color: var(--warm-parchment); }
+    .dash-logout:hover { background: var(--p-pale); color: var(--p-deep); }
 
     /* ═══ HEADER ═══ */
     .dash-header {
@@ -238,7 +238,7 @@
     .course-btn {
       display: inline-block;
       padding: 10px 24px;
-      background: var(--deep-forest);
+      background: var(--p-mid);
       color: #fff;
       border-radius: 8px;
       font-size: 13px;

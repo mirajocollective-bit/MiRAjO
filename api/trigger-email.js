@@ -8,6 +8,10 @@ const supabase = createClient(
 
 const SEQUENCE_MAP = {
   'module-1-complete':      'module-1-complete',
+  'module-2-complete':      'module-2-complete',
+  'module-3-complete':      'module-3-complete',
+  'module-4-complete':      'module-4-complete',
+  'module-5-complete':      'module-5-complete',
   'course-25d25n-complete': 'course-25d25n-complete',
 };
 
