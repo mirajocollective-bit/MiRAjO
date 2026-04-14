@@ -1284,8 +1284,8 @@
 <!-- ═══ PROOF ═══ -->
 <section class="testimonials-section" data-aos="fade-up">
   <div class="testimonials-inner" style="text-align:center;">
-    <div class="section-eyebrow" style="text-align:center;color:var(--gold)">From the Creator</div>
-    <h2 class="section-title" style="text-align:center;color:var(--warm-parchment);max-width:640px;margin-left:auto;margin-right:auto;">I don't just teach this.<br><em style="font-style:italic;color:var(--gold-light);">I do it. Repeatedly.</em></h2>
+    <div class="section-eyebrow" id="proof-eyebrow" style="text-align:center;color:var(--gold)">From the Creator</div>
+    <h2 class="section-title" id="proof-title" style="text-align:center;color:var(--warm-parchment);max-width:640px;margin-left:auto;margin-right:auto;">I don't just teach this.<br><em style="font-style:italic;color:var(--gold-light);">I do it. Repeatedly.</em></h2>
 
     <!-- Miranda's testimonial -->
     <div style="max-width:760px;margin:0 auto 64px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,169,110,0.2);border-radius:20px;padding:48px 56px;text-align:left;" data-aos="fade-up" data-aos-delay="80">
@@ -1296,13 +1296,16 @@
         <img src="img/Miranda J- Headshot.jpeg" alt="Miranda Johnson" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,169,110,0.4);">
         <div>
           <div style="font-size:15px;font-weight:600;color:var(--warm-parchment);">Miranda Johnson</div>
-          <div style="font-size:12px;color:rgba(237,232,223,0.45);letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Creator — 25 Days &amp; 25 Nights</div>
+          <div style="font-size:12px;color:rgba(237,232,223,0.45);letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Creator, 25 Days &amp; 25 Nights</div>
         </div>
       </div>
     </div>
 
-    <!-- Credentials -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto;" class="founding-grid">
+    <!-- Student reviews (loaded dynamically) -->
+    <div id="student-reviews-grid" style="display:none;max-width:960px;margin:0 auto 64px;"></div>
+
+    <!-- Credentials (shown when no student reviews yet) -->
+    <div id="credentials-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto;" class="founding-grid">
       <div class="testimonial-card" data-aos="fade-up" data-aos-delay="0">
         <div style="font-family:'Instrument Serif',serif;font-size:52px;color:var(--gold);opacity:0.35;line-height:1;margin-bottom:16px;">20</div>
         <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(237,232,223,0.45);margin-bottom:12px;">Years</p>
@@ -1319,8 +1322,6 @@
         <p style="font-size:15px;color:#3A3228;line-height:1.75;">25 Days and 25 Nights is the result of two years of deep personal research into nature's laws and how they govern human performance, energy, and alignment.</p>
       </div>
     </div>
-
-    <p style="margin-top:48px;font-size:13px;color:rgba(237,232,223,0.35);letter-spacing:0.5px;">You're in the founding cohort. Your result gets featured here next.</p>
   </div>
 </section>
 
@@ -1330,7 +1331,6 @@
   <div class="section-eyebrow" style="color:var(--gold)">Investment</div>
   <h2 class="section-title" style="color:var(--warm-parchment)">One price. Lifetime access.<br>Start when you're ready.</h2>
   <div class="pricing-card">
-    <div class="pricing-badge">Founding Cohort Price</div>
     <div class="pricing-price">$597</div>
     <div class="pricing-note">One-time payment. No subscriptions, no renewals.</div>
     <ul class="pricing-list">
@@ -1342,7 +1342,7 @@
       <li>Certificate of completion</li>
       <li>Lifetime access. Return to it whenever you need a reset</li>
     </ul>
-    <a href="#enroll" class="pricing-btn" onclick="startCheckout(); return false;">Enroll Now — $597</a>
+    <a href="#enroll" class="pricing-btn" onclick="startCheckout(); return false;">Enroll Now for $597</a>
     <p class="pricing-sub">Do the full 25 days. If you don't feel the shift, email us and we'll make it right.</p>
   </div>
 </section>
@@ -1421,7 +1421,7 @@
       <li style="font-size:14px;color:rgba(237,232,217,0.75);padding:6px 0;padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);">→</span>Lifetime access</li>
     </ul>
     <div style="margin:8px 0 16px;">
-      <button class="waitlist-btn" id="enroll-btn" onclick="startCheckout()">Enroll Now — $597</button>
+      <button class="waitlist-btn" id="enroll-btn" onclick="startCheckout()">Enroll Now for $597</button>
     </div>
     <p class="waitlist-msg" id="enroll-msg"></p>
     <p style="font-size:12px;color:rgba(200,196,220,0.4);margin-top:20px;">Secure checkout. Lifetime access. 25 days starts when you're ready.</p>
@@ -1524,7 +1524,7 @@
   // Reset button if user navigates back
   window.addEventListener('pageshow', function() {
     const btn = document.getElementById('enroll-btn');
-    if (btn) { btn.textContent = 'Enroll Now — $597'; btn.disabled = false; }
+    if (btn) { btn.textContent = 'Enroll Now for $597'; btn.disabled = false; }
   });
 
   // ── Discount pop-up ───────────────────────────────
@@ -1564,6 +1564,35 @@
     }
   }
 
+  // ═══ LOAD STUDENT REVIEWS ═══
+  async function loadReviews() {
+    try {
+      const res = await fetch('/api/get-reviews?course=25-days-and-25-nights');
+      const { reviews } = await res.json();
+      if (!reviews || reviews.length === 0) return;
+
+      document.getElementById('credentials-grid').style.display = 'none';
+      document.getElementById('proof-eyebrow').textContent = 'What Students Say';
+      document.getElementById('proof-title').innerHTML = 'Real people.<br><em style="font-style:italic;color:var(--gold-light);">Real 25 days.</em>';
+
+      const grid = document.getElementById('student-reviews-grid');
+      const cols = reviews.length === 1 ? '1fr' : reviews.length === 2 ? '1fr 1fr' : 'repeat(3,1fr)';
+      grid.style.cssText = `display:grid;grid-template-columns:${cols};gap:24px;max-width:960px;margin:0 auto 64px;`;
+
+      grid.innerHTML = reviews.map(r => {
+        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return `<div class="testimonial-card" style="text-align:left;">
+          <div style="color:var(--gold);font-size:16px;letter-spacing:2px;margin-bottom:14px;">${stars}</div>
+          <p style="font-family:'Instrument Serif',serif;font-size:17px;color:var(--warm-parchment);line-height:1.65;font-style:italic;margin-bottom:16px;">"${r.body}"</p>
+          <p style="font-size:13px;font-weight:600;color:rgba(237,232,223,0.6);">${r.name}</p>
+        </div>`;
+      }).join('');
+
+      grid.style.display = 'grid';
+    } catch (e) { /* fail silently, credentials show by default */ }
+  }
+  loadReviews();
+
   async function startCheckout() {
     const btn = document.getElementById('enroll-btn');
     const msg = document.getElementById('enroll-msg');
@@ -1581,13 +1610,13 @@
       } else {
         msg.textContent = `Error: ${data.error || 'No URL returned'} (status ${res.status})`;
         msg.style.color = '#E88080';
-        btn.textContent = 'Enroll Now — $597';
+        btn.textContent = 'Enroll Now for $597';
         btn.disabled = false;
       }
     } catch (err) {
       msg.textContent = `Error: ${err.message}`;
       msg.style.color = '#E88080';
-      btn.textContent = 'Enroll Now — $597';
+      btn.textContent = 'Enroll Now for $597';
       btn.disabled = false;
     }
   }

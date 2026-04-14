@@ -609,6 +609,105 @@
       100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
 
+    /* ═══ COURSE COMPLETE REVIEW MODAL ═══ */
+    .review-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13, 5, 26, 0.96);
+      z-index: 950;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .review-modal-overlay.open { display: flex; }
+    .review-modal {
+      background: var(--p-dark);
+      border: 1px solid rgba(139,114,200,0.2);
+      border-radius: 20px;
+      padding: 48px 44px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+    .review-modal-icon { font-size: 48px; margin-bottom: 20px; }
+    .review-modal-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 3vw, 28px);
+      color: var(--warm-parchment);
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+    .review-modal-sub {
+      font-size: 15px;
+      color: var(--p-silver);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .review-stars {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .review-star {
+      font-size: 36px;
+      color: rgba(245,200,66,0.25);
+      cursor: pointer;
+      transition: color 0.15s, transform 0.1s;
+      user-select: none;
+    }
+    .review-star.active { color: var(--xp-gold); }
+    .review-star:hover { transform: scale(1.15); }
+    .review-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(139,114,200,0.2);
+      border-radius: 10px;
+      color: var(--warm-parchment);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 14px 16px;
+      resize: none;
+      outline: none;
+      margin-bottom: 24px;
+      transition: border-color 0.2s;
+    }
+    .review-textarea:focus { border-color: rgba(139,114,200,0.5); }
+    .review-textarea::placeholder { color: rgba(200,196,220,0.35); }
+    .review-modal-actions { display: flex; flex-direction: column; gap: 12px; }
+    .review-modal-submit {
+      padding: 14px 32px;
+      background: var(--p-mid);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+    }
+    .review-modal-submit:disabled { opacity: 0.4; cursor: default; }
+    .review-modal-submit:not(:disabled):hover { background: var(--p-light); }
+    .review-modal-skip {
+      background: none;
+      border: none;
+      color: var(--p-silver);
+      font-size: 13px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer;
+      padding: 4px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .review-modal-skip:hover { color: var(--warm-parchment); }
+    @media (max-width: 480px) {
+      .review-modal { padding: 36px 24px; }
+    }
+
     /* ═══ LOADING ═══ */
     .loading {
       display: flex;
@@ -988,6 +1087,27 @@
   <div>
     <div class="xp-toast-title" id="xp-toast-title">+50 XP Earned!</div>
     <div class="xp-toast-sub" id="xp-toast-sub">Lesson complete. Keep going!</div>
+  </div>
+</div>
+
+<!-- COURSE COMPLETE REVIEW MODAL -->
+<div class="review-modal-overlay" id="review-modal-overlay">
+  <div class="review-modal">
+    <div class="review-modal-icon">🎓</div>
+    <h2 class="review-modal-title">You finished 25 Days &amp; 25 Nights.</h2>
+    <p class="review-modal-sub">Before you grab your certificate, would you share what this experience was like for you? It takes 60 seconds and helps others know what they're getting into.</p>
+    <div class="review-stars" id="review-stars">
+      <span class="review-star" data-rating="1">★</span>
+      <span class="review-star" data-rating="2">★</span>
+      <span class="review-star" data-rating="3">★</span>
+      <span class="review-star" data-rating="4">★</span>
+      <span class="review-star" data-rating="5">★</span>
+    </div>
+    <textarea class="review-textarea" id="review-textarea" placeholder="What shifted for you? What would you tell someone considering this?" rows="4" maxlength="600"></textarea>
+    <div class="review-modal-actions">
+      <button class="review-modal-submit" id="review-modal-submit" disabled>Submit Review</button>
+      <button class="review-modal-skip" id="review-modal-skip">Skip, go to my certificate</button>
+    </div>
   </div>
 </div>
 
@@ -1661,11 +1781,68 @@
 
     if (isCourseComplete) {
       setTimeout(() => {
-        window.location.href = `/programs/certificate?course=${slug}`;
-      }, 3500);
+        toast.classList.remove('show');
+        showReviewModal();
+      }, 3000);
     } else {
       setTimeout(() => toast.classList.remove('show'), 3500);
     }
+  }
+
+  function showReviewModal() {
+    const overlay = document.getElementById('review-modal-overlay');
+    const stars = document.querySelectorAll('.review-star');
+    const submitBtn = document.getElementById('review-modal-submit');
+    const skipBtn = document.getElementById('review-modal-skip');
+    const textarea = document.getElementById('review-textarea');
+    let selectedRating = 0;
+
+    overlay.classList.add('open');
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        selectedRating = parseInt(star.dataset.rating);
+        stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.rating) <= selectedRating));
+        submitBtn.disabled = false;
+      });
+      star.addEventListener('mouseenter', () => {
+        const hovered = parseInt(star.dataset.rating);
+        stars.forEach(s => s.style.color = parseInt(s.dataset.rating) <= hovered ? 'var(--xp-gold)' : '');
+      });
+      star.addEventListener('mouseleave', () => {
+        stars.forEach(s => s.style.color = '');
+      });
+    });
+
+    function goToCertificate() {
+      overlay.classList.remove('open');
+      window.location.href = `/programs/certificate?course=${slug}`;
+    }
+
+    submitBtn.addEventListener('click', async () => {
+      if (!selectedRating) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      const firstName = state.user?.user_metadata?.first_name || '';
+      const lastName = state.user?.user_metadata?.last_name || '';
+      const name = [firstName, lastName].filter(Boolean).join(' ') || state.user?.email?.split('@')[0] || 'Anonymous';
+      try {
+        await fetch('/api/submit-review', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email: state.user?.email || '',
+            rating: selectedRating,
+            body: textarea.value.trim() || `Completed 25 Days and 25 Nights.`,
+            course: '25-days-and-25-nights',
+          }),
+        });
+      } catch (e) { /* non-blocking */ }
+      goToCertificate();
+    });
+
+    skipBtn.addEventListener('click', goToCertificate);
   }
 
   async function triggerEmail(tag) {
