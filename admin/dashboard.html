@@ -509,12 +509,24 @@
 
         <!-- Compose -->
         <div style="border-top:1px solid var(--border);padding-top:24px;">
-          <div style="font-size:13px;font-weight:700;color:var(--deep-forest);margin-bottom:16px;letter-spacing:0.5px;text-transform:uppercase;">Send Newsletter</div>
+          <div style="font-size:13px;font-weight:700;color:var(--deep-forest);margin-bottom:16px;letter-spacing:0.5px;text-transform:uppercase;">Compose Newsletter</div>
           <div style="display:flex;flex-direction:column;gap:12px;max-width:720px;">
             <input type="text" id="nl-subject" placeholder="Subject line" style="padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:var(--deep-forest);">
             <textarea id="nl-html" placeholder="Paste full HTML email here..." rows="10" style="padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:monospace;outline:none;color:var(--deep-forest);resize:vertical;"></textarea>
+            <!-- Schedule row -->
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+              <label style="font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;">Schedule for:</label>
+              <input type="datetime-local" id="nl-schedule" style="padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:var(--deep-forest);">
+              <span style="font-size:12px;color:var(--muted);">Leave blank to send immediately</span>
+            </div>
+            <!-- Test email row -->
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <input type="email" id="nl-test-email" placeholder="Test email address" style="padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:var(--deep-forest);min-width:240px;">
+              <button onclick="sendTestEmail()" id="nl-test-btn" style="padding:9px 18px;background:var(--dry-sage);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Send Test</button>
+            </div>
             <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
               <button onclick="previewNewsletter()" style="padding:10px 20px;background:var(--soft-white);border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Preview</button>
+              <button onclick="saveDraft()" id="nl-draft-btn" style="padding:10px 20px;background:var(--soft-white);border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Save Draft</button>
               <button onclick="sendNewsletter()" id="nl-send-btn" style="padding:10px 24px;background:var(--deep-forest);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Send to All Subscribers</button>
               <span id="nl-send-msg" style="font-size:14px;color:var(--living-green);"></span>
             </div>
@@ -550,6 +562,28 @@
           <button onclick="document.getElementById('nl-preview-modal').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
         </div>
         <iframe id="nl-preview-frame" style="flex:1;border:none;width:100%;min-height:500px;"></iframe>
+      </div>
+    </div>
+
+    <!-- Money Moves User Fix -->
+    <div class="panel grid-full">
+      <div class="panel-header">
+        <span class="panel-title">Money Moves — Fix User Access</span>
+      </div>
+      <div class="panel-body" style="padding:24px 32px">
+        <p style="font-size:13px;color:var(--muted);margin:0 0 16px;line-height:1.7">
+          If a subscriber is stuck on the payment screen after completing checkout, enter their email here.
+          This looks up their Stripe subscription and syncs it to the database so they can log in.
+        </p>
+        <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
+          <input type="email" id="fix-sub-email" placeholder="customer@email.com"
+            style="flex:1;min-width:240px;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;">
+          <button onclick="fixUserSub()"
+            style="padding:12px 22px;background:var(--deep-forest);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;">
+            Fix Access
+          </button>
+        </div>
+        <div id="fix-sub-result" style="margin-top:14px;font-size:13px;line-height:1.7"></div>
       </div>
     </div>
 
@@ -860,40 +894,124 @@
     modal.style.display = 'flex';
   }
 
-  async function sendNewsletter() {
+  async function sendTestEmail() {
     const subject = document.getElementById('nl-subject').value.trim();
     const html = document.getElementById('nl-html').value.trim();
-    const btn = document.getElementById('nl-send-btn');
+    const to = document.getElementById('nl-test-email').value.trim();
+    const btn = document.getElementById('nl-test-btn');
     const msg = document.getElementById('nl-send-msg');
+    if (!subject || !html) { msg.style.color = '#E88080'; msg.textContent = 'Add subject and HTML first.'; return; }
+    if (!to) { msg.style.color = '#E88080'; msg.textContent = 'Enter a test email address.'; return; }
+    btn.disabled = true; btn.textContent = 'Sending...'; msg.textContent = '';
+    try {
+      const res = await fetch('/api/newsletter-test', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+        body: JSON.stringify({ subject, html, to }),
+      });
+      if (res.ok) {
+        msg.style.color = 'var(--living-green)'; msg.textContent = `Test sent to ${to}.`;
+      } else {
+        const err = await res.json(); msg.style.color = '#E88080'; msg.textContent = err.error || 'Test failed.';
+      }
+    } catch (e) { msg.style.color = '#E88080'; msg.textContent = 'Network error.'; }
+    btn.disabled = false; btn.textContent = 'Send Test';
+  }
 
+  async function saveDraft() {
+    const subject = document.getElementById('nl-subject').value.trim();
+    const html = document.getElementById('nl-html').value.trim();
+    const btn = document.getElementById('nl-draft-btn');
+    const msg = document.getElementById('nl-send-msg');
     if (!subject || !html) { msg.style.color = '#E88080'; msg.textContent = 'Subject and HTML are required.'; return; }
-    if (!confirm(`Send "${subject}" to all subscribers? This cannot be undone.`)) return;
-
-    btn.disabled = true; btn.textContent = 'Sending...';
-    msg.textContent = '';
-
+    btn.disabled = true; btn.textContent = 'Saving...'; msg.textContent = '';
     try {
       const res = await fetch('/api/newsletter-send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
-        body: JSON.stringify({ subject, html, name: subject }),
+        body: JSON.stringify({ subject, html, name: subject, draftOnly: true }),
+      });
+      if (res.ok) {
+        msg.style.color = 'var(--living-green)'; msg.textContent = 'Draft saved in Resend.';
+      } else {
+        const err = await res.json(); msg.style.color = '#E88080'; msg.textContent = err.error || 'Save failed.';
+      }
+    } catch (e) { msg.style.color = '#E88080'; msg.textContent = 'Network error. Try again.'; }
+    btn.disabled = false; btn.textContent = 'Save Draft';
+  }
+
+  async function sendNewsletter() {
+    const subject = document.getElementById('nl-subject').value.trim();
+    const html = document.getElementById('nl-html').value.trim();
+    const scheduledAt = document.getElementById('nl-schedule').value;
+    const btn = document.getElementById('nl-send-btn');
+    const msg = document.getElementById('nl-send-msg');
+
+    if (!subject || !html) { msg.style.color = '#E88080'; msg.textContent = 'Subject and HTML are required.'; return; }
+
+    btn.disabled = true;
+    btn.textContent = scheduledAt ? 'Scheduling...' : 'Sending...';
+    msg.textContent = '';
+
+    try {
+      const body = { subject, html, name: subject };
+      if (scheduledAt) body.scheduledAt = new Date(scheduledAt).toISOString();
+
+      const res = await fetch('/api/newsletter-send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+        body: JSON.stringify(body),
       });
       if (res.ok) {
         msg.style.color = 'var(--living-green)';
-        msg.textContent = 'Sent successfully!';
+        msg.textContent = scheduledAt ? `Scheduled for ${new Date(scheduledAt).toLocaleString()}.` : 'Sent successfully!';
         document.getElementById('nl-subject').value = '';
         document.getElementById('nl-html').value = '';
+        document.getElementById('nl-schedule').value = '';
         await loadNewsletterStats();
       } else {
         const err = await res.json();
         msg.style.color = '#E88080';
-        msg.textContent = err.error || 'Send failed.';
+        msg.textContent = err.error || 'Failed.';
       }
     } catch (e) {
-      msg.style.color = '#E88080';
-      msg.textContent = 'Network error. Try again.';
+      msg.style.color = '#E88080'; msg.textContent = 'Network error. Try again.';
     }
     btn.disabled = false; btn.textContent = 'Send to All Subscribers';
+  }
+
+  async function fixUserSub() {
+    const email  = document.getElementById('fix-sub-email').value.trim();
+    const result = document.getElementById('fix-sub-result');
+    if (!email) { result.textContent = 'Enter an email address.'; result.style.color = '#c0392b'; return; }
+
+    result.style.color = 'var(--muted)';
+    result.textContent = 'Looking up subscription...';
+
+    try {
+      const res  = await fetch('/api/mm-admin-fix-sub', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+        body:    JSON.stringify({ email }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        result.style.color = '#c0392b';
+        result.textContent = `Error: ${data.error}`;
+        return;
+      }
+
+      result.style.color = '#256B42';
+      result.innerHTML =
+        `Done. <strong>${data.email}</strong> synced — Stripe sub <code>${data.stripe_sub_id}</code> ` +
+        `(${data.stripe_status}), access through ${new Date(data.period_end).toLocaleDateString()}. ` +
+        `${data.had_household ? 'Household already existed.' : 'Household was created.'}`;
+      document.getElementById('fix-sub-email').value = '';
+    } catch (e) {
+      result.style.color = '#c0392b';
+      result.textContent = 'Network error. Try again.';
+    }
   }
 
   function saveLookerUrl() {
