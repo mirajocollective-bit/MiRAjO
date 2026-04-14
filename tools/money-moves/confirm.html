@@ -210,10 +210,34 @@
     redirect();
   }
 
-  function redirect() {
+  async function redirect() {
     const params = new URLSearchParams(window.location.search);
     // New subscriber coming from Stripe success
     if (params.get('checkout') === 'success') {
+      document.getElementById('title').textContent = 'Confirming your subscription...';
+      document.getElementById('sub').textContent = 'Just a moment while we set everything up.';
+
+      // Verify payment directly with Stripe before redirecting so the
+      // dashboard access check doesn't race against the webhook.
+      const sessionId = params.get('session_id');
+      if (sessionId) {
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.access_token) {
+            await fetch('/api/mm-verify-checkout', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.access_token}`,
+              },
+              body: JSON.stringify({ session_id: sessionId }),
+            });
+          }
+        } catch (e) {
+          console.warn('[confirm] verify-checkout failed:', e.message);
+        }
+      }
+
       document.getElementById('title').textContent = 'You\'re in!';
       document.getElementById('sub').textContent = 'Your Money Moves account is ready. Taking you to your dashboard...';
       setTimeout(() => { window.location.href = '/tools/money-moves/dashboard?welcome=1'; }, 1800);

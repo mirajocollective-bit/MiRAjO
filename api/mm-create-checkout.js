@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         trial_period_days: 30,
         metadata: { plan, billing },
       },
-      success_url: `${process.env.SITE_URL}/tools/money-moves/confirm?checkout=success`,
+      success_url: `${process.env.SITE_URL}/tools/money-moves/confirm?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url:  `${process.env.SITE_URL}/tools/money-moves`,
       metadata: { product: 'money-moves', plan, billing },
     });
