@@ -335,40 +335,6 @@
     .dc-body { padding: 28px 32px; }
 
     /* ═══ ALIGNMENT CHART ═══ */
-    .chart-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 12px;
-    }
-    .chart-row canvas { flex-shrink: 0; }
-    .chart-legend {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .chart-legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .chart-legend-domain {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--black);
-      line-height: 1.2;
-    }
-    .chart-legend-status {
-      font-size: 11px;
-      font-weight: 600;
-    }
-    .chart-legend-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
 
     /* ═══ COMPACT DOMAIN CARDS (inside 2x2 grid) ═══ */
     .domain-grid .domain-card { border-radius: 8px; }
@@ -1339,22 +1305,8 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
             <div class="rblock-sub">Your alignment snapshot across all four domains.</div>
           </div>
           <div class="rblock-body">
-            <div class="chart-row">
-              ${buildAlignmentSVG(unlocked, rd)}
-              <div class="chart-legend">
-                ${DOMAINS_META.map(d => {
-                  const info = alignmentInfo(d.key, unlocked, rd);
-                  return `<div class="chart-legend-item">
-                    <div class="chart-legend-dot" style="background:${info.tier === 'needs' ? '#B82038' : info.tier === 'partial' ? '#C4860A' : '#2F8A5A'}"></div>
-                    <div>
-                      <div class="chart-legend-domain">${d.label}</div>
-                      <div class="chart-legend-status ${info.statusClass}">${info.label}</div>
-                    </div>
-                  </div>`;
-                }).join('')}
-              </div>
-            </div>
-            <div class="overview-message">
+            ${buildAlignmentSVG(unlocked, rd, isPartnerA, youLabel, partnerLabel)}
+            <div class="overview-message" style="margin-top:10px;">
               <div class="overview-message-label">Before You Read</div>
               <div class="overview-message-title">${alignedCount === 4 ? 'You\'re more aligned than most.' : alignedCount >= 2 ? 'You\'ve got a strong foundation to build on.' : 'This is exactly why you\'re here.'}</div>
               <div class="overview-message-body">${alignedCount === 4
@@ -1426,35 +1378,41 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
   document.getElementById('page-body').innerHTML = html;
 }
 
-function buildAlignmentSVG(unlocked, rd) {
-  const size = 100, cx = 50, cy = 50, outerR = 40, innerR = 24, gapDeg = 5;
-  const alignedCount = DOMAINS_META.filter(d => alignmentInfo(d.key, unlocked, rd).tier === 'aligned').length;
+function buildAlignmentSVG(unlocked, rd, isPartnerA, youLabel, partnerLabel) {
+  const W = 300, rowH = 42, labelW = 76, barX = labelW + 6;
+  const barW = W - barX - 28, targetX = barX + (3.5 / 4) * barW;
+  const H = DOMAINS_META.length * rowH + 28; // extra for legend
+  const f = v => v.toFixed(1);
 
-  function polar(r, deg) {
-    const rad = (deg - 90) * Math.PI / 180;
-    return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
-  }
+  const rows = DOMAINS_META.map((d, i) => {
+    const domainData = rd[d.key] || {};
+    const avgYou     = isPartnerA ? domainData.partner_a_avg : domainData.partner_b_avg;
+    const avgPartner = isPartnerA ? domainData.partner_b_avg : domainData.partner_a_avg;
+    const y = i * rowH + 4;
+    const wYou     = avgYou     != null ? Math.max(0, (avgYou     / 4) * barW) : 0;
+    const wPartner = avgPartner != null ? Math.max(0, (avgPartner / 4) * barW) : 0;
 
-  function segment(startDeg, endDeg, color) {
-    const [ox1, oy1] = polar(outerR, startDeg);
-    const [ox2, oy2] = polar(outerR, endDeg);
-    const [ix1, iy1] = polar(innerR, endDeg);
-    const [ix2, iy2] = polar(innerR, startDeg);
-    const f = v => v.toFixed(2);
-    return `<path d="M${f(ox1)},${f(oy1)} A${outerR},${outerR} 0 0 1 ${f(ox2)},${f(oy2)} L${f(ix1)},${f(iy1)} A${innerR},${innerR} 0 0 0 ${f(ix2)},${f(iy2)} Z" fill="${color}"/>`;
-  }
-
-  const segs = DOMAINS_META.map((d, i) => {
-    const tier = alignmentInfo(d.key, unlocked, rd).tier;
-    const color = tier === 'needs' ? '#B82038' : tier === 'partial' ? '#C4860A' : '#2F8A5A';
-    return segment(i * 90 + gapDeg / 2, (i + 1) * 90 - gapDeg / 2, color);
+    return `
+      <text x="0" y="${y + 9}" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="700" fill="#0D0D0D">${d.label}</text>
+      <rect x="${barX}" y="${y}" width="${barW}" height="10" rx="5" fill="#EBEBEB"/>
+      <rect x="${barX}" y="${y + 14}" width="${barW}" height="10" rx="5" fill="#EBEBEB"/>
+      ${wYou > 0     ? `<rect x="${barX}" y="${y}"      width="${f(wYou)}"     height="10" rx="5" fill="#B82038"/>` : ''}
+      ${wPartner > 0 ? `<rect x="${barX}" y="${y + 14}" width="${f(wPartner)}" height="10" rx="5" fill="#333333"/>` : ''}
+      ${avgYou     != null ? `<text x="${barX + wYou + 4}"     y="${y + 9}"      font-size="9" fill="#B82038" font-weight="700" font-family="Plus Jakarta Sans,sans-serif">${f(avgYou)}</text>` : ''}
+      ${avgPartner != null ? `<text x="${barX + wPartner + 4}" y="${y + 23}"     font-size="9" fill="#333333" font-weight="700" font-family="Plus Jakarta Sans,sans-serif">${f(avgPartner)}</text>` : ''}
+      <line x1="${f(targetX)}" y1="${y - 1}" x2="${f(targetX)}" y2="${y + 25}" stroke="#C4860A" stroke-width="1.5" stroke-dasharray="3,2"/>`;
   }).join('');
 
-  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
-    ${segs}
-    <text x="${cx}" y="${cy - 6}" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="700" fill="#0D0D0D">${alignedCount}/4</text>
-    <text x="${cx}" y="${cy + 9}" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="9" fill="#666666">aligned</text>
-  </svg>`;
+  const legY = DOMAINS_META.length * rowH + 8;
+  const legend = `
+    <rect x="${barX}"      y="${legY}" width="10" height="8" rx="3" fill="#B82038"/>
+    <text x="${barX + 13}" y="${legY + 8}" font-size="9" fill="#666" font-family="Plus Jakarta Sans,sans-serif">${escHtml(youLabel)}</text>
+    <rect x="${barX + 50}" y="${legY}" width="10" height="8" rx="3" fill="#333333"/>
+    <text x="${barX + 63}" y="${legY + 8}" font-size="9" fill="#666" font-family="Plus Jakarta Sans,sans-serif">${escHtml(partnerLabel)}</text>
+    <line x1="${barX + 115}" y1="${legY + 4}" x2="${barX + 125}" y2="${legY + 4}" stroke="#C4860A" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <text x="${barX + 128}" y="${legY + 8}" font-size="9" fill="#C4860A" font-family="Plus Jakarta Sans,sans-serif">Goal (3.5)</text>`;
+
+  return `<svg width="100%" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${rows}${legend}</svg>`;
 }
 
 function showNotReady() {
