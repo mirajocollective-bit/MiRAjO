@@ -334,6 +334,42 @@
     .badge-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .dc-body { padding: 28px 32px; }
 
+    /* ═══ ALIGNMENT CHART ═══ */
+    .chart-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .chart-row canvas { flex-shrink: 0; }
+    .chart-legend {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chart-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .chart-legend-domain {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--black);
+      line-height: 1.2;
+    }
+    .chart-legend-status {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
     /* ═══ COMPACT DOMAIN CARDS (inside 2x2 grid) ═══ */
     .domain-grid .domain-card { border-radius: 8px; }
     .domain-grid .dc-top-bar { height: 3px; }
@@ -865,6 +901,7 @@
   </style>
   <!-- Site Analytics -->
   <script src="/analytics.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -1292,7 +1329,7 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
 
     <div class="r-body">
 
-      <!-- ROW 1: Sections 1 + 2 -->
+      <!-- ROW 1: At a Glance + Diagnostic Results -->
       <div class="r-grid-2">
 
         <!-- Section 1: At a Glance -->
@@ -1303,15 +1340,20 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
             <div class="rblock-sub">Your alignment snapshot across all four domains.</div>
           </div>
           <div class="rblock-body">
-            <div class="overview-grid">
-              ${DOMAINS_META.map(d => {
-                const info = alignmentInfo(d.key, unlocked, rd);
-                return `<div class="overview-chip">
-                  <div class="overview-chip-bar ${info.chipClass}"></div>
-                  <div class="overview-chip-domain">${d.label}</div>
-                  <div class="overview-chip-status ${info.statusClass}">${info.label}</div>
-                </div>`;
-              }).join('')}
+            <div class="chart-row">
+              <canvas id="alignment-chart" width="180" height="180"></canvas>
+              <div class="chart-legend">
+                ${DOMAINS_META.map(d => {
+                  const info = alignmentInfo(d.key, unlocked, rd);
+                  return `<div class="chart-legend-item">
+                    <div class="chart-legend-dot" style="background:${info.tier === 'needs' ? '#B82038' : info.tier === 'partial' ? '#C4860A' : '#2F8A5A'}"></div>
+                    <div>
+                      <div class="chart-legend-domain">${d.label}</div>
+                      <div class="chart-legend-status ${info.statusClass}">${info.label}</div>
+                    </div>
+                  </div>`;
+                }).join('')}
+              </div>
             </div>
             <div class="overview-message">
               <div class="overview-message-label">Before You Read</div>
@@ -1324,21 +1366,21 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
           </div>
         </div>
 
-        <!-- Section 2: Where to Begin -->
+        <!-- Section 2: Diagnostic Results -->
         <div class="rblock">
           <div class="rblock-head">
             <div class="rblock-eyebrow">Section 2</div>
-            <div class="rblock-title">Where to Begin</div>
-            <div class="rblock-sub">Work through your modules in this order — each one builds on the last.</div>
+            <div class="rblock-title">Your Diagnostic Results</div>
+            <div class="rblock-sub">Scores and notes side by side across all four domains.</div>
           </div>
-          <div class="rblock-body-dark">
-            <div class="path-steps">${buildSuggestedPath(unlocked, rd)}</div>
+          <div class="rblock-body">
+            <div class="domain-grid">${domainCardsHtml}</div>
           </div>
         </div>
 
       </div>
 
-      <!-- ROW 2: Sections 3 + 4 -->
+      <!-- ROW 2: About You Both + Where to Begin -->
       <div class="r-grid-2">
 
         <!-- Section 3: About You Both -->
@@ -1353,15 +1395,15 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
           </div>
         </div>
 
-        <!-- Section 4: Diagnostic Results -->
+        <!-- Section 4: Where to Begin -->
         <div class="rblock">
           <div class="rblock-head">
             <div class="rblock-eyebrow">Section 4</div>
-            <div class="rblock-title">Your Diagnostic Results</div>
-            <div class="rblock-sub">Scores and notes side by side across all four domains.</div>
+            <div class="rblock-title">Where to Begin</div>
+            <div class="rblock-sub">Work through your modules in this order — each one builds on the last.</div>
           </div>
-          <div class="rblock-body">
-            <div class="domain-grid">${domainCardsHtml}</div>
+          <div class="rblock-body-dark">
+            <div class="path-steps">${buildSuggestedPath(unlocked, rd)}</div>
           </div>
         </div>
 
@@ -1383,6 +1425,66 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
   `;
 
   document.getElementById('page-body').innerHTML = html;
+  buildAlignmentChart(unlocked, rd);
+}
+
+function buildAlignmentChart(unlocked, rd) {
+  const canvas = document.getElementById('alignment-chart');
+  if (!canvas || typeof Chart === 'undefined') return;
+
+  const colors = DOMAINS_META.map(d => {
+    const tier = alignmentInfo(d.key, unlocked, rd).tier;
+    return tier === 'needs' ? '#B82038' : tier === 'partial' ? '#C4860A' : '#2F8A5A';
+  });
+
+  const alignedCount = DOMAINS_META.filter(d => alignmentInfo(d.key, unlocked, rd).tier === 'aligned').length;
+
+  new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      labels: DOMAINS_META.map(d => d.label),
+      datasets: [{
+        data: [25, 25, 25, 25],
+        backgroundColor: colors,
+        borderWidth: 3,
+        borderColor: '#ffffff',
+        hoverOffset: 4,
+      }]
+    },
+    options: {
+      cutout: '62%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const info = alignmentInfo(DOMAINS_META[ctx.dataIndex].key, unlocked, rd);
+              return ` ${info.label}`;
+            }
+          }
+        }
+      },
+      animation: { duration: 600 }
+    },
+    plugins: [{
+      id: 'center-text',
+      afterDraw(chart) {
+        const { ctx, chartArea: { width, height, left, top } } = chart;
+        ctx.save();
+        const cx = left + width / 2;
+        const cy = top + height / 2;
+        ctx.font = 'bold 26px Plus Jakarta Sans, sans-serif';
+        ctx.fillStyle = '#0D0D0D';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`${alignedCount}/4`, cx, cy - 8);
+        ctx.font = '11px Plus Jakarta Sans, sans-serif';
+        ctx.fillStyle = '#666666';
+        ctx.fillText('aligned', cx, cy + 12);
+        ctx.restore();
+      }
+    }]
+  });
 }
 
 function showNotReady() {
