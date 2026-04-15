@@ -151,6 +151,7 @@
       font-size: 11px; color: var(--neutral); transition: transform 0.25s; flex-shrink: 0;
     }
     .layout.analytics-open .analytics-toggle-icon { transform: rotate(180deg); }
+    .analytics-toggle:hover { background: #fffbe6; }
     .analytics-content { display: none; }
     .layout.analytics-open .analytics-content { display: block; }
 
@@ -3822,13 +3823,6 @@
 
   // ── FEATURE BEACONS ─────────────────────────────────────────────
   const FEATURE_HINTS = [
-    {
-      id: 'widgets',
-      getTarget: () => document.querySelector('.analytics-toggle'),
-      title: 'Analytics & Tools',
-      body: 'Your goals, debt tracker, budget tools, and spending breakdown all live here. Click the panel to open.',
-      anchor: 'bottom-left',
-    },
     {
       id: 'beats',
       getTarget: () => document.getElementById('beats-toggle'),
