@@ -353,21 +353,21 @@
       align-items: center;
       gap: 8px;
     }
-    .chart-legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
     .chart-legend-domain {
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       color: var(--black);
       line-height: 1.2;
     }
     .chart-legend-status {
       font-size: 11px;
       font-weight: 600;
+    }
+    .chart-legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
     /* ═══ COMPACT DOMAIN CARDS (inside 2x2 grid) ═══ */
@@ -1341,7 +1341,7 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
           </div>
           <div class="rblock-body">
             <div class="chart-row">
-              <canvas id="alignment-chart" width="180" height="180"></canvas>
+              <canvas id="alignment-chart" width="90" height="90"></canvas>
               <div class="chart-legend">
                 ${DOMAINS_META.map(d => {
                   const info = alignmentInfo(d.key, unlocked, rd);
@@ -1473,14 +1473,14 @@ function buildAlignmentChart(unlocked, rd) {
         ctx.save();
         const cx = left + width / 2;
         const cy = top + height / 2;
-        ctx.font = 'bold 26px Plus Jakarta Sans, sans-serif';
+        ctx.font = 'bold 14px Plus Jakarta Sans, sans-serif';
         ctx.fillStyle = '#0D0D0D';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(`${alignedCount}/4`, cx, cy - 8);
-        ctx.font = '11px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(`${alignedCount}/4`, cx, cy - 5);
+        ctx.font = '9px Plus Jakarta Sans, sans-serif';
         ctx.fillStyle = '#666666';
-        ctx.fillText('aligned', cx, cy + 12);
+        ctx.fillText('aligned', cx, cy + 7);
         ctx.restore();
       }
     }]
