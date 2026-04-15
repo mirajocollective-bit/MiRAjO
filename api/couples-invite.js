@@ -1,9 +1,9 @@
 // POST /api/couples-invite
 // Called after purchase when Partner A submits Partner B's email
-// Creates invite token and queues invite email sequence via Resend
+// Creates invite token and sends invite email immediately via Resend
 
 import { createClient } from '@supabase/supabase-js';
-import { queueSequence } from './_emails.js';
+import { queueSequence, SEQUENCES } from './_emails.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -53,11 +53,49 @@ export default async function handler(req, res) {
   const partnerBEmail = partner_b_email.toLowerCase().trim();
   const partnerName = partner_a_first_name || 'Your partner';
 
-  // Queue invite email sequence for Partner B
-  await queueSequence(supabase, partnerBEmail, 'invited-couples-cie', '', {
-    partner_name: partnerName,
-    invite_url: inviteUrl,
+  // Send invite email immediately via Resend
+  const step1 = SEQUENCES['invited-couples-cie'][0];
+  const subject = step1.subject({ partner_name: partnerName });
+  const html = step1.body('', { partner_name: partnerName, invite_url: inviteUrl });
+
+  const emailRes = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'Miranda J <mirandaj@mirajoco.org>',
+      to: partnerBEmail,
+      subject,
+      html,
+    }),
   });
+
+  if (!emailRes.ok) {
+    const err = await emailRes.text();
+    console.error('Invite email send error:', err);
+    return res.status(500).json({ error: 'Failed to send invite email' });
+  }
+
+  // Also queue the follow-up reminder (step 2, 2 days later) — skip step 1 since already sent
+  const followUpSteps = SEQUENCES['invited-couples-cie'].slice(1);
+  if (followUpSteps.length) {
+    const now = new Date();
+    const rows = followUpSteps.map(({ step, delayDays }) => {
+      const sendAfter = new Date(now);
+      sendAfter.setDate(sendAfter.getDate() + delayDays);
+      return {
+        email: partnerBEmail,
+        first_name: '',
+        sequence: 'invited-couples-cie',
+        step,
+        send_after: sendAfter.toISOString(),
+        extra_data: { partner_name: partnerName, invite_url: inviteUrl },
+      };
+    });
+    await supabase.from('email_queue').upsert(rows, { onConflict: 'email,sequence,step', ignoreDuplicates: true });
+  }
 
   console.log(`Invite sent to ${partnerBEmail} for couple ${couple.id}`);
   res.status(200).json({ success: true });
