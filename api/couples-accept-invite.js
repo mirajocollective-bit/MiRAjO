@@ -51,22 +51,40 @@ export default async function handler(req, res) {
   }
 
   // Create Partner B's Supabase account if it doesn't exist
-  const { data: { users } } = await supabase.auth.admin.listUsers();
-  let partnerB = users?.find(u => u.email === invite.partner_b_email);
+  let partnerB = null;
+  const { data: created, error: createError } = await supabase.auth.admin.createUser({
+    email: invite.partner_b_email,
+    email_confirm: true,
+    user_metadata: { first_name: first_name || '', last_name: last_name || '' },
+  });
 
-  if (!partnerB) {
-    const { data: created, error: createError } = await supabase.auth.admin.createUser({
-      email: invite.partner_b_email,
-      email_confirm: true,
-      user_metadata: { first_name: first_name || '', last_name: last_name || '' },
-    });
-
-    if (createError || !created?.user) {
+  if (createError) {
+    // User already exists — find them by paging through listUsers
+    if (createError.message?.toLowerCase().includes('already')) {
+      let found = null;
+      let page = 1;
+      while (!found) {
+        const { data: { users }, error: listErr } = await supabase.auth.admin.listUsers({ page, perPage: 100 });
+        if (listErr || !users?.length) break;
+        found = users.find(u => u.email === invite.partner_b_email) || null;
+        if (found || users.length < 100) break;
+        page++;
+      }
+      if (!found) {
+        console.error('Could not locate existing Partner B account:', invite.partner_b_email);
+        return res.status(500).json({ error: 'Failed to locate account' });
+      }
+      partnerB = found;
+    } else {
       console.error('Failed to create Partner B account:', createError);
       return res.status(500).json({ error: 'Failed to create account' });
     }
+  } else {
+    partnerB = created?.user;
+  }
 
-    partnerB = created.user;
+  if (!partnerB) {
+    return res.status(500).json({ error: 'Failed to create account' });
   }
 
   // Link Partner B to the couple
@@ -98,11 +116,13 @@ export default async function handler(req, res) {
     );
 
   // Generate magic link so Partner B can log straight in
+  // redirectTo points to /programs/confirm?cie=1 — confirm.html handles
+  // PKCE code exchange and routes CIE users to the couples dashboard
   const { data: magicLink } = await supabase.auth.admin.generateLink({
     type: 'magiclink',
     email: invite.partner_b_email,
     options: {
-      redirectTo: `${process.env.SITE_URL}/programs/couples-dashboard`,
+      redirectTo: `${process.env.SITE_URL}/programs/confirm?cie=1`,
     },
   });
 

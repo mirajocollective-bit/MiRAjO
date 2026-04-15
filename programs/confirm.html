@@ -173,6 +173,7 @@
     // PKCE flow: ?code= in query string (Supabase JS v2 default)
     const code = queryParams.get('code');
     const isSetup = queryParams.get('setup') === '1';
+    const isCIE = queryParams.get('cie') === '1';
     if (code) {
       const { error } = await db.auth.exchangeCodeForSession(code);
       if (error) {
@@ -187,7 +188,7 @@
         document.getElementById('set-password-section').style.display = 'block';
         return;
       }
-      window.location.href = '/programs/dashboard';
+      window.location.href = isCIE ? '/programs/couples-dashboard' : '/programs/dashboard';
       return;
     }
 
@@ -203,14 +204,14 @@
         showError('Your link has expired. Please request a new one.');
         return;
       }
-      window.location.href = '/programs/dashboard';
+      window.location.href = isCIE ? '/programs/couples-dashboard' : '/programs/dashboard';
       return;
     }
 
     // Fallback: already have a session
     const { data: { session } } = await db.auth.getSession();
     if (session) {
-      window.location.href = '/programs/dashboard';
+      window.location.href = isCIE ? '/programs/couples-dashboard' : '/programs/dashboard';
     } else {
       showError('Your link has expired or is invalid. Please request a new one.');
     }
