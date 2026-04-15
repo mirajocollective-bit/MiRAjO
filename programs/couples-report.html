@@ -117,111 +117,161 @@
     }
     .report-note strong { color: var(--cie-dark); }
 
-    /* ═══ SUMMARY STRIP ═══ */
-    .summary-strip {
-      max-width: 900px;
+    /* ═══ STATUS COLORS ═══ */
+    .bar-aligned  { background: var(--aligned); }
+    .bar-partial  { background: var(--partial); }
+    .bar-needs    { background: var(--needs-work); }
+    .status-aligned  { color: var(--aligned); }
+    .status-partial  { color: var(--partial); }
+    .status-needs    { color: var(--needs-work); }
+    .badge-aligned  { background: rgba(47,138,90,0.08);  color: var(--aligned);    border: 1px solid rgba(47,138,90,0.2); }
+    .badge-partial  { background: rgba(196,134,10,0.08); color: var(--partial);    border: 1px solid rgba(196,134,10,0.2); }
+    .badge-needs    { background: rgba(184,32,56,0.08);  color: var(--needs-work); border: 1px solid rgba(184,32,56,0.2); }
+    .bdot-aligned  { background: var(--aligned); }
+    .bdot-partial  { background: var(--partial); }
+    .bdot-needs    { background: var(--needs-work); }
+
+    /* ═══ SECTION LAYOUT ═══ */
+    .rs {
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+    }
+    .rs-white  { background: #ffffff; }
+    .rs-tinted { background: #F9F9F9; }
+    .rs-dark   { background: var(--black); }
+    .rs-inner {
+      max-width: 960px;
       margin: 0 auto;
-      padding: 48px 40px 0;
+      padding: 64px 40px;
+    }
+    .rs-header {
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .rs-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .rs-dark .rs-eyebrow { color: var(--pink); }
+    .rs-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3.5vw, 34px);
+      font-weight: 400;
+      color: var(--black);
+      line-height: 1.2;
+    }
+    .rs-dark .rs-title { color: #ffffff; }
+    .rs-dark .rs-header { border-color: rgba(255,255,255,0.1); }
+    .rs-sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-top: 8px;
+      max-width: 580px;
+    }
+    .rs-dark .rs-sub { color: rgba(255,255,255,0.5); }
+
+    /* ═══ OVERVIEW GRID ═══ */
+    .overview-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
+      margin-bottom: 32px;
     }
-    .summary-chip {
+    .overview-chip {
       background: #ffffff;
-      border: 1px solid var(--cie-border);
-      border-radius: 12px;
-      padding: 20px 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    .summary-chip-bar {
+    .rs-tinted .overview-chip { background: #ffffff; }
+    .overview-chip-bar {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
+      height: 4px;
     }
-    .bar-aligned  { background: var(--aligned); }
-    .bar-partial  { background: var(--partial); }
-    .bar-needs    { background: var(--needs-work); }
-    .summary-chip-domain {
-      font-size: 10px;
-      letter-spacing: 2.5px;
+    .overview-chip-domain {
+      font-size: 11px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--cie-muted);
+      color: var(--muted);
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
-    .summary-chip-status {
-      font-size: 13px;
+    .overview-chip-status {
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: 0.3px;
     }
-    .status-aligned  { color: var(--aligned); }
-    .status-partial  { color: var(--partial); }
-    .status-needs    { color: var(--needs-work); }
-
-    /* ═══ CONTENT ═══ */
-    .report-content {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 56px 40px 80px;
+    .overview-message {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
     }
-
-    /* ═══ TOGETHER NOTE ═══ */
-    .together-note {
-      background: linear-gradient(135deg, rgba(93,190,138,0.06) 0%, rgba(251,232,238,0.8) 100%);
-      border: 1px solid rgba(93,190,138,0.2);
-      border-radius: 14px;
-      padding: 28px 32px;
-      margin-bottom: 56px;
-    }
-    .together-note-label {
+    .rs-tinted .overview-message { background: #ffffff; }
+    .overview-message-label {
       font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--aligned);
       font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .together-note-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: 22px;
-      color: var(--cie-dark);
-      font-weight: 400;
       margin-bottom: 8px;
     }
-    .together-note-body {
-      font-size: 14px;
-      color: var(--cie-muted);
+    .overview-message-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+    .overview-message-body {
+      font-size: 15px;
+      color: var(--muted);
       line-height: 1.7;
     }
 
-    /* ═══ DOMAIN SECTION ═══ */
-    .domain-section {
-      margin-bottom: 56px;
+    /* ═══ DOMAIN CARDS ═══ */
+    .domain-cards { display: flex; flex-direction: column; gap: 24px; }
+    .domain-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
     }
-    .domain-header {
+    .rs-tinted .domain-card { background: #ffffff; }
+    .dc-top-bar { height: 5px; width: 100%; }
+    .dc-top-needs    { background: var(--needs-work); }
+    .dc-top-partial  { background: var(--partial); }
+    .dc-top-aligned  { background: var(--aligned); }
+    .dc-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 20px;
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--border-lt);
       flex-wrap: wrap;
     }
-    .domain-header-left {}
-    .domain-num {
+    .dc-domain-label {
       font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--cie-muted);
+      color: var(--muted);
       font-weight: 600;
       margin-bottom: 4px;
     }
-    .domain-name {
+    .dc-domain-name {
       font-family: 'Instrument Serif', serif;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 400;
-      color: var(--cie-dark);
+      color: var(--black);
     }
     .alignment-badge {
       display: flex;
@@ -234,17 +284,36 @@
       letter-spacing: 0.5px;
       white-space: nowrap;
     }
-    .badge-aligned  { background: rgba(93,190,138,0.1);  color: var(--aligned);    border: 1px solid rgba(93,190,138,0.25); }
-    .badge-partial  { background: rgba(217,185,106,0.1); color: var(--partial);    border: 1px solid rgba(217,185,106,0.25); }
-    .badge-needs    { background: rgba(192,122,114,0.1); color: var(--needs-work); border: 1px solid rgba(192,122,114,0.25); }
-    .badge-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dc-body { padding: 28px 32px; }
+
+    /* ═══ DOWNLOAD BUTTON ═══ */
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      background: transparent;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.3px;
+      text-decoration: none;
     }
-    .bdot-aligned  { background: var(--aligned); }
-    .bdot-partial  { background: var(--partial); }
-    .bdot-needs    { background: var(--needs-work); }
+    .btn-download:hover { background: var(--red); color: #ffffff; }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
 
     /* Rating comparison */
     .rating-compare {
@@ -702,16 +771,30 @@
       .dash-nav-logo img { height: 52px; }
       .dash-nav-name { display: none; }
       .report-hero { padding: 48px 24px 40px; }
-      .summary-strip { grid-template-columns: 1fr 1fr; padding: 32px 24px 0; }
-      .report-content { padding: 40px 24px 60px; }
+      .rs-inner { padding: 48px 24px; }
+      .overview-grid { grid-template-columns: 1fr 1fr; }
       .qa-answers { grid-template-columns: 1fr; }
       .qa-answer:first-child { border-right: none; border-bottom: 1px solid rgba(13,13,13,0.07); }
       .rating-compare { flex-direction: column; gap: 12px; }
-      .course-path-section { padding: 28px 24px; }
-      .domain-header { flex-direction: column; align-items: flex-start; }
+      .dc-header { flex-direction: column; align-items: flex-start; }
+      .dc-header, .dc-body { padding: 20px 20px; }
+      .profile-cols { grid-template-columns: 1fr; }
+      .suggested-path { padding: 40px 24px; }
     }
     @media (max-width: 480px) {
-      .summary-strip { grid-template-columns: 1fr; }
+      .overview-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═══ PRINT / DOWNLOAD PDF ═══ */
+    @media print {
+      .dash-nav, .btn-download, .hero-actions .btn-download, .report-cta { display: none !important; }
+      body { background: #fff !important; }
+      .rs-dark { background: #1a1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .report-hero { background: #fff !important; border-bottom: 2px solid #0D0D0D; }
+      .domain-card, .overview-chip, .overview-message { break-inside: avoid; }
+      .rs { border-bottom: 1px solid #ddd; }
+      .rs-inner { padding: 40px 32px; }
+      a { color: inherit !important; text-decoration: none !important; }
     }
   </style>
   <!-- Site Analytics -->
@@ -1035,11 +1118,6 @@ function renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)
   }
 
   return `<div class="profile-section">
-    <div class="profile-section-header">
-      <div class="profile-section-eyebrow">Your Starting Point</div>
-      <div class="profile-section-title">About You Both</div>
-      <div class="profile-section-sub">Individual profiles — completed separately before the course began.</div>
-    </div>
 
     <div class="profile-cols">
       ${renderProfileCol(myProfile, 'who-you-label', 'You', youLabel)}
@@ -1048,157 +1126,174 @@ function renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)
 
     ${gaps.length ? `
     <div style="margin-top:8px;">
-      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--cie-gold);font-weight:700;margin-bottom:12px;">Worth Noting</div>
+      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:12px;">Worth Noting</div>
       ${gaps.map(g => `<div class="profile-gap-row">${g}</div>`).join('')}
     </div>` : ''}
   </div>`;
 }
 
 function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProfile, partnerProfile, myNotes, partnerNotes) {
-  const rd = report.report_data || {};
+  const rd       = report.report_data || {};
   const unlocked = report.unlocked_domains || [];
-  const generated = report.generated_at ? new Date(report.generated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+  const generated = report.generated_at
+    ? new Date(report.generated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '';
 
-  // Summary counts
   let alignedCount = 0;
-  DOMAINS_META.forEach(d => {
-    const info = alignmentInfo(d.key, unlocked, rd);
-    if (info.tier === 'aligned') alignedCount++;
-  });
+  DOMAINS_META.forEach(d => { if (alignmentInfo(d.key, unlocked, rd).tier === 'aligned') alignedCount++; });
 
-  // Build page
-  let html = `
+  // Domain cards (Section 4)
+  const domainCardsHtml = DOMAINS_META.map((d, i) => {
+    const info       = alignmentInfo(d.key, unlocked, rd);
+    const domainData = rd[d.key] || {};
+    const avgYou     = isPartnerA ? domainData.partner_a_avg : domainData.partner_b_avg;
+    const avgPartner = isPartnerA ? domainData.partner_b_avg : domainData.partner_a_avg;
+    const myNote     = myNotes?.[d.key] || '';
+    const partNote   = partnerNotes?.[d.key] || '';
+    const hasNotes   = myNote || partNote;
+    const topBar     = info.tier === 'needs' ? 'dc-top-needs' : info.tier === 'partial' ? 'dc-top-partial' : 'dc-top-aligned';
+    return `
+    <div class="domain-card">
+      <div class="dc-top-bar ${topBar}"></div>
+      <div class="dc-header">
+        <div>
+          <div class="dc-domain-label">Domain ${i + 1} of 4</div>
+          <div class="dc-domain-name">${d.label}</div>
+        </div>
+        <div class="alignment-badge ${info.badgeClass}">
+          <div class="badge-dot ${info.dotClass}"></div>${info.label}
+        </div>
+      </div>
+      <div class="dc-body">
+        ${avgYou != null && avgPartner != null ? `
+        <div class="rating-compare">
+          <div class="rating-compare-label">Scenario<br>average</div>
+          <div class="rating-compare-bars">
+            <div class="rating-bar-row">
+              <div class="rating-bar-who">${escHtml(youLabel)}</div>
+              <div class="rating-bar-track"><div class="rating-bar-fill fill-you" style="width:${(avgYou/4*100).toFixed(0)}%"></div></div>
+              <div class="rating-bar-val">${avgYou.toFixed(1)}<span class="rating-bar-label">${scoreLabel(avgYou)}</span></div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="rating-bar-who">${escHtml(partnerLabel)}</div>
+              <div class="rating-bar-track"><div class="rating-bar-fill fill-partner" style="width:${(avgPartner/4*100).toFixed(0)}%"></div></div>
+              <div class="rating-bar-val">${avgPartner.toFixed(1)}<span class="rating-bar-label">${scoreLabel(avgPartner)}</span></div>
+            </div>
+          </div>
+          <div class="rating-scale-note">Scored 1–4 &nbsp;·&nbsp; 1 = avoidant &nbsp;·&nbsp; 2 = reactive &nbsp;·&nbsp; 3 = intentional &nbsp;·&nbsp; 4 = proactive</div>
+        </div>` : ''}
+        ${hasNotes ? `
+        <div class="qa-grid" style="margin-top:${avgYou != null ? '20px' : '0'}">
+          <div class="qa-row">
+            <div class="qa-question">Your notes from the diagnostic</div>
+            <div class="qa-answers">
+              <div class="qa-answer">
+                <div class="qa-answer-who who-you">${escHtml(youLabel)}</div>
+                <div class="qa-answer-text ${myNote ? '' : 'empty'}">${myNote ? escHtml(myNote) : 'No notes added.'}</div>
+              </div>
+              <div class="qa-answer">
+                <div class="qa-answer-who who-partner">${escHtml(partnerLabel)}</div>
+                <div class="qa-answer-text ${partNote ? '' : 'empty'}">${partNote ? escHtml(partNote) : 'No notes added.'}</div>
+              </div>
+            </div>
+          </div>
+        </div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  const html = `
+    <!-- HERO -->
     <div class="report-hero">
       <div class="report-hero-inner">
         <div class="report-eyebrow">Couples in Entrepreneurship</div>
         <h1 class="report-title">Your <em>Partnership Report</em></h1>
         ${generated ? `<div class="report-date">Generated ${generated}</div>` : ''}
-        <div class="report-note">
-          <strong>Read this together.</strong> Don't summarize it to each other later. Sit down, open this page side by side, and go through it as a team. What you see here is where the work begins.
+        <div class="hero-actions">
+          <button onclick="window.print()" class="btn-download">&#8659; Download PDF</button>
+          <a href="/programs/couples-dashboard" class="btn-gold" style="font-size:13px;padding:11px 22px;">Go to Dashboard →</a>
         </div>
+        <div class="report-note"><strong>Read this together.</strong> Don't summarize it to each other later. Sit down, open this page side by side, and go through it as a team. What you see here is where the work begins.</div>
       </div>
     </div>
 
-    <div class="summary-strip">
-      ${DOMAINS_META.map(d => {
-        const info = alignmentInfo(d.key, unlocked, rd);
-        return `<div class="summary-chip">
-          <div class="summary-chip-bar ${info.chipClass}"></div>
-          <div class="summary-chip-domain">${d.label}</div>
-          <div class="summary-chip-status ${info.statusClass}">${info.label}</div>
-        </div>`;
-      }).join('')}
-    </div>
-
-    <div class="suggested-path">
-      <div class="suggested-path-inner">
-        <div class="suggested-path-eyebrow">Where to Begin</div>
-        <div class="suggested-path-title">Your Recommended Path</div>
-        <div class="suggested-path-sub">Your modules are unlocked based on where you misalign. Work through them in this order — each one builds on the last.</div>
-        <div class="path-steps">
-          ${buildSuggestedPath(unlocked, rd)}
+    <!-- SECTION 1: AT A GLANCE -->
+    <div class="rs rs-tinted">
+      <div class="rs-inner">
+        <div class="rs-header">
+          <div class="rs-eyebrow">Section 1</div>
+          <div class="rs-title">At a Glance</div>
+          <div class="rs-sub">Your alignment snapshot across all four domains.</div>
         </div>
-      </div>
-    </div>
-
-    <div class="report-content">
-
-      <div class="together-note">
-        <div class="together-note-label">Before You Read</div>
-        <div class="together-note-title">${alignedCount === 4 ? 'You\'re more aligned than most.' : alignedCount >= 2 ? 'You\'ve got a strong foundation to build on.' : 'This is exactly why you\'re here.'}</div>
-        <div class="together-note-body">${alignedCount === 4
-          ? 'All four domains show alignment. That doesn\'t mean there\'s nothing to work on — it means you\'ve got a strong base. Module 1 will help you understand how to protect it as the business grows.'
-          : `${4 - alignedCount} ${4 - alignedCount === 1 ? 'domain' : 'domains'} show gaps. That\'s not a crisis — it\'s information. Your course path has been built specifically around what you need. Read each domain honestly before you respond to each other.`
-        }</div>
-      </div>
-
-      ${renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)}
-
-      ${DOMAINS_META.map((d, i) => {
-        const info       = alignmentInfo(d.key, unlocked, rd);
-        const domainData = rd[d.key] || {};
-        const avgYou     = isPartnerA ? domainData.partner_a_avg : domainData.partner_b_avg;
-        const avgPartner = isPartnerA ? domainData.partner_b_avg : domainData.partner_a_avg;
-        const myNote     = myNotes?.[d.key] || '';
-        const partNote   = partnerNotes?.[d.key] || '';
-        const hasNotes   = myNote || partNote;
-
-        return `
-        <div class="domain-section">
-          <div class="domain-header">
-            <div class="domain-header-left">
-              <div class="domain-num">Domain ${i + 1} of 4</div>
-              <div class="domain-name">${d.label}</div>
-            </div>
-            <div class="alignment-badge ${info.badgeClass}">
-              <div class="badge-dot ${info.dotClass}"></div>
-              ${info.label}
-            </div>
-          </div>
-
-          ${avgYou != null && avgPartner != null ? `
-          <div class="rating-compare">
-            <div class="rating-compare-label">Scenario<br>average</div>
-            <div class="rating-compare-bars">
-              <div class="rating-bar-row">
-                <div class="rating-bar-who">${escHtml(youLabel)}</div>
-                <div class="rating-bar-track"><div class="rating-bar-fill fill-you" style="width:${(avgYou / 4 * 100).toFixed(0)}%"></div></div>
-                <div class="rating-bar-val">${avgYou.toFixed(1)}<span class="rating-bar-label">${scoreLabel(avgYou)}</span></div>
-              </div>
-              <div class="rating-bar-row">
-                <div class="rating-bar-who">${escHtml(partnerLabel)}</div>
-                <div class="rating-bar-track"><div class="rating-bar-fill fill-partner" style="width:${(avgPartner / 4 * 100).toFixed(0)}%"></div></div>
-                <div class="rating-bar-val">${avgPartner.toFixed(1)}<span class="rating-bar-label">${scoreLabel(avgPartner)}</span></div>
-              </div>
-            </div>
-            <div class="rating-scale-note">Scored 1–4 · 1 = avoidant, 2 = reactive, 3 = intentional, 4 = proactive</div>
-          </div>` : ''}
-
-          ${hasNotes ? `
-          <div class="qa-grid">
-            <div class="qa-row">
-              <div class="qa-question">Notes from the diagnostic</div>
-              <div class="qa-answers">
-                <div class="qa-answer">
-                  <div class="qa-answer-who who-you">${escHtml(youLabel)}</div>
-                  <div class="qa-answer-text ${myNote ? '' : 'empty'}">${myNote ? escHtml(myNote) : 'No notes added.'}</div>
-                </div>
-                <div class="qa-answer">
-                  <div class="qa-answer-who who-partner">${escHtml(partnerLabel)}</div>
-                  <div class="qa-answer-text ${partNote ? '' : 'empty'}">${partNote ? escHtml(partNote) : 'No notes added.'}</div>
-                </div>
-              </div>
-            </div>
-          </div>` : ''}
-        </div>`;
-      }).join('')}
-
-      <div class="course-path-section">
-        <div class="course-path-eyebrow">Your Course Path</div>
-        <div class="course-path-title">Modules unlocked for your path</div>
-        <div class="course-path-sub">Based on your Partnership Report, these are the modules your course path includes. You both gain access to the same set.</div>
-        <div class="module-list">
-          ${MODULE_LIST.map(m => {
-            const isUnlocked = m.always || m.always_if_report || unlocked.includes(m.unlock_domain) || unlocked.includes('all');
-            return `<div class="module-list-item ${isUnlocked ? 'unlocked' : 'locked'}">
-              <div class="module-list-num">${String(m.num).padStart(2, '0')}</div>
-              <div class="module-list-name">${escHtml(m.title)}</div>
-              <div class="module-list-badge ${m.always ? 'mbadge-foundation' : isUnlocked ? 'mbadge-unlocked' : 'mbadge-locked'}">
-                ${m.always ? 'Foundation' : isUnlocked ? 'Unlocked' : 'Locked'}
-              </div>
+        <div class="overview-grid">
+          ${DOMAINS_META.map(d => {
+            const info = alignmentInfo(d.key, unlocked, rd);
+            return `<div class="overview-chip">
+              <div class="overview-chip-bar ${info.chipClass}"></div>
+              <div class="overview-chip-domain">${d.label}</div>
+              <div class="overview-chip-status ${info.statusClass}">${info.label}</div>
             </div>`;
           }).join('')}
         </div>
+        <div class="overview-message">
+          <div class="overview-message-label">Before You Read</div>
+          <div class="overview-message-title">${alignedCount === 4 ? 'You\'re more aligned than most.' : alignedCount >= 2 ? 'You\'ve got a strong foundation to build on.' : 'This is exactly why you\'re here.'}</div>
+          <div class="overview-message-body">${alignedCount === 4
+            ? 'All four domains show alignment. That doesn\'t mean there\'s nothing to work on — it means you\'ve got a strong base. Your course will help you protect it as the business grows.'
+            : `${4 - alignedCount} ${4 - alignedCount === 1 ? 'domain shows a gap' : 'domains show gaps'}. That\'s not a crisis — it\'s information. Your course path is built around exactly what you need. Read each domain honestly before you respond to each other.`
+          }</div>
+        </div>
       </div>
+    </div>
 
-      <div class="report-cta">
-        <p style="font-family:'Instrument Serif',serif;font-size:clamp(20px,3vw,26px);color:var(--cie-dark);margin-bottom:10px;">Your course path is unlocked.</p>
-        <p style="font-size:14px;color:var(--cie-muted);margin-bottom:28px;line-height:1.7;">The modules built for your specific gaps are ready. Head to your dashboard to begin.</p>
-        <a href="/programs/couples-dashboard" class="btn-gold">Start Your Course →</a>
-        <p style="margin-top:16px;font-size:13px;color:var(--cie-muted);"><a href="/programs/couples-dashboard" style="color:var(--cie-muted);text-decoration:underline;">Back to Dashboard</a></p>
+    <!-- SECTION 2: WHERE TO BEGIN -->
+    <div class="rs rs-dark">
+      <div class="rs-inner">
+        <div class="rs-header">
+          <div class="rs-eyebrow">Section 2</div>
+          <div class="rs-title">Where to Begin</div>
+          <div class="rs-sub">Work through your unlocked modules in this order — each one builds on the last.</div>
+        </div>
+        <div class="path-steps">${buildSuggestedPath(unlocked, rd)}</div>
       </div>
+    </div>
 
-    </div>`;
+    <!-- SECTION 3: ABOUT YOU BOTH -->
+    <div class="rs rs-white">
+      <div class="rs-inner">
+        <div class="rs-header">
+          <div class="rs-eyebrow">Section 3</div>
+          <div class="rs-title">About You Both</div>
+          <div class="rs-sub">Individual profiles completed separately. Differences are highlighted below.</div>
+        </div>
+        ${renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)}
+      </div>
+    </div>
+
+    <!-- SECTION 4: DIAGNOSTIC RESULTS -->
+    <div class="rs rs-tinted">
+      <div class="rs-inner">
+        <div class="rs-header">
+          <div class="rs-eyebrow">Section 4</div>
+          <div class="rs-title">Your Diagnostic Results</div>
+          <div class="rs-sub">How each of you responded across the four domains — scores, labels, and your notes side by side.</div>
+        </div>
+        <div class="domain-cards">${domainCardsHtml}</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="rs rs-white">
+      <div class="rs-inner" style="text-align:center;padding-top:56px;padding-bottom:72px;">
+        <p style="font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,30px);color:var(--black);margin-bottom:10px;">Your course path is unlocked.</p>
+        <p style="font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto;">The modules built for your specific gaps are ready. Head to your dashboard to begin.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="/programs/couples-dashboard" class="btn-gold">Go to My Dashboard →</a>
+          <button onclick="window.print()" class="btn-download">&#8659; Download PDF</button>
+        </div>
+      </div>
+    </div>
+  `;
 
   document.getElementById('page-body').innerHTML = html;
 }
