@@ -796,7 +796,7 @@ const LABEL = {
   status:  { 'dating':'Dating','engaged':'Engaged','married':'Married' },
   family:  { 'no-kids':'No children','kids-together':'Children together','stepparent':'Stepparent','blended':'Blended family','unsure':'Not sure yet' },
   stage:   { 'idea':'Idea stage','startup':'Startup','growing':'Growing','established':'Established' },
-  role:    { 'equal-partners':'Equal partners','i-lead':'Takes the lead','they-lead':'Partner leads','still-figuring':'Still figuring it out' },
+  role:    { 'equal-partners':'Equal partners','i-lead':'Takes the lead','they-lead':'Supporting role','still-figuring':'Still figuring it out' },
   years:   { 'just-starting':'Just starting','under-2':'Under 2 years','2-5':'2–5 years','5+':'5+ years' },
   scale:   { 'low':'Low','medium':'Medium','high':'High' },
   debt:    { 'none':'Debt-free','manageable':'Manageable','significant':'Significant','overwhelming':'Overwhelming' },
@@ -920,7 +920,7 @@ function renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)
     const riskA = riskOrder[myProfile.risk_tolerance] || 0;
     const riskB = riskOrder[partnerProfile.risk_tolerance] || 0;
     if (myProfile.risk_tolerance && partnerProfile.risk_tolerance && Math.abs(riskA - riskB) >= 2) {
-      gaps.push(`${escHtml(youLabel)} approaches risk as <strong>${lbl('risk', myProfile.risk_tolerance)?.toLowerCase()}</strong>. ${escHtml(partnerLabel)} is <strong>${lbl('risk', partnerProfile.risk_tolerance)?.toLowerCase()}</strong>. This gap shows up in every major business decision — hiring, pricing, investment, growth pace.`);
+      gaps.push(`${escHtml(youLabel)} approaches risk as <strong>${lbl('risk', myProfile.risk_tolerance)?.toLowerCase()}</strong>. ${escHtml(partnerLabel)} approaches it as <strong>${lbl('risk', partnerProfile.risk_tolerance)?.toLowerCase()}</strong>. This gap shows up in every major business decision — hiring, pricing, investment, growth pace.`);
     }
 
     const visOrder = { 'very-private': 1, 'mostly-private': 2, 'selective': 3, 'comfortable': 4, 'personal-brand': 5 };
