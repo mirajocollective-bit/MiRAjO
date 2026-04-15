@@ -140,24 +140,26 @@
     .r-body {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 24px 32px 48px;
+      padding: 16px 24px 32px;
     }
     .r-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 20px;
-      align-items: start;
+      gap: 14px;
+      margin-bottom: 14px;
     }
     .rblock {
       background: #ffffff;
-      border-radius: 14px;
+      border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
     }
     .rblock-head {
       background: var(--black);
-      padding: 18px 24px;
+      padding: 12px 18px;
+      flex-shrink: 0;
     }
     .rblock-eyebrow {
       font-size: 9px;
@@ -165,115 +167,121 @@
       text-transform: uppercase;
       color: var(--pink);
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .rblock-title {
       font-family: 'Instrument Serif', serif;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 400;
       color: #ffffff;
       line-height: 1.2;
     }
     .rblock-sub {
-      font-size: 12px;
+      font-size: 11px;
       color: rgba(255,255,255,0.4);
-      margin-top: 3px;
+      margin-top: 2px;
     }
     .rblock-body {
-      padding: 24px;
+      padding: 14px 16px;
+      overflow-y: auto;
+      max-height: 390px;
+      flex: 1;
     }
     .rblock-body-dark {
       background: #1A1A1A;
-      padding: 24px;
+      padding: 14px 16px;
+      overflow-y: auto;
+      max-height: 390px;
+      flex: 1;
     }
     .rblock-body .profile-section { margin-bottom: 0; }
     .domain-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 10px;
     }
     .r-cta {
       background: var(--black);
-      border-radius: 14px;
-      padding: 36px 32px;
+      border-radius: 10px;
+      padding: 24px 28px;
       text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
+    .r-cta-left { text-align: left; }
     .r-cta-title {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(20px, 2.5vw, 26px);
+      font-size: clamp(18px, 2vw, 22px);
       color: #ffffff;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
     }
     .r-cta-sub {
-      font-size: 14px;
+      font-size: 13px;
       color: rgba(255,255,255,0.5);
-      line-height: 1.7;
-      margin-bottom: 24px;
-      max-width: 420px;
-      margin-left: auto;
-      margin-right: auto;
+      line-height: 1.6;
     }
-    .r-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .r-cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
     /* ═══ OVERVIEW GRID ═══ */
     .overview-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
+      gap: 8px;
+      margin-bottom: 12px;
     }
     .overview-chip {
-      background: #ffffff;
+      background: #F9F9F9;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px 20px;
+      border-radius: 8px;
+      padding: 12px 10px;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    .rs-tinted .overview-chip { background: #ffffff; }
     .overview-chip-bar {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 4px;
+      height: 3px;
     }
     .overview-chip-domain {
-      font-size: 11px;
-      letter-spacing: 2px;
+      font-size: 9px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--muted);
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
     .overview-chip-status {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
     }
     .overview-message {
-      background: #ffffff;
+      background: #F9F9F9;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px 28px;
+      border-radius: 8px;
+      padding: 12px 14px;
     }
-    .rs-tinted .overview-message { background: #ffffff; }
     .overview-message-label {
-      font-size: 10px;
-      letter-spacing: 3px;
+      font-size: 9px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--aligned);
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
     .overview-message-title {
       font-family: 'Instrument Serif', serif;
-      font-size: 20px;
+      font-size: 16px;
       color: var(--black);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .overview-message-body {
-      font-size: 15px;
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     /* ═══ DOMAIN CARDS ═══ */
@@ -327,12 +335,21 @@
     .dc-body { padding: 28px 32px; }
 
     /* ═══ COMPACT DOMAIN CARDS (inside 2x2 grid) ═══ */
-    .domain-grid .dc-header { padding: 16px 18px 12px; }
-    .domain-grid .dc-body   { padding: 16px 18px; }
-    .domain-grid .dc-domain-name { font-size: 20px; }
-    .domain-grid .rating-compare { padding: 14px 16px; gap: 12px; }
+    .domain-grid .domain-card { border-radius: 8px; }
+    .domain-grid .dc-top-bar { height: 3px; }
+    .domain-grid .dc-header { padding: 10px 14px 8px; flex-direction: column; align-items: flex-start; gap: 6px; }
+    .domain-grid .dc-body   { padding: 10px 14px; }
+    .domain-grid .dc-domain-label { font-size: 9px; }
+    .domain-grid .dc-domain-name { font-size: 16px; }
+    .domain-grid .alignment-badge { padding: 4px 10px; font-size: 11px; }
+    .domain-grid .rating-compare { padding: 10px 12px; gap: 8px; flex-direction: column; }
     .domain-grid .rating-compare-label { display: none; }
-    .domain-grid .qa-answer { padding: 14px 16px; }
+    .domain-grid .rating-scale-note { font-size: 10px; }
+    .domain-grid .rating-bar-who { font-size: 10px; width: 70px; }
+    .domain-grid .rating-bar-val { font-size: 11px; }
+    .domain-grid .qa-answer { padding: 10px 12px; }
+    .domain-grid .qa-question { padding: 10px 12px; font-size: 12px; }
+    .domain-grid .qa-answer-text { font-size: 13px; line-height: 1.5; }
 
     /* ═══ DOWNLOAD BUTTON ═══ */
     .btn-download {
@@ -590,8 +607,8 @@
     .profile-cols {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
     .profile-col {
       background: #ffffff;
@@ -600,12 +617,12 @@
       overflow: hidden;
     }
     .profile-col-header {
-      padding: 16px 20px;
+      padding: 10px 14px;
       border-bottom: 1px solid rgba(13,13,13,0.07);
       background: rgba(13,13,13,0.02);
     }
     .profile-col-who {
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       font-weight: 700;
@@ -619,29 +636,29 @@
       color: var(--cie-dark);
     }
     .profile-field {
-      padding: 13px 20px;
+      padding: 7px 14px;
       border-bottom: 1px solid rgba(13,13,13,0.04);
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
     }
     .profile-field:last-child { border-bottom: none; }
     .profile-field-label {
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--cie-muted);
       font-weight: 600;
     }
     .profile-field-value {
-      font-size: 15px;
+      font-size: 13px;
       color: var(--cie-dark);
-      line-height: 1.55;
+      line-height: 1.45;
     }
     .profile-field-value.empty {
       color: rgba(122,107,116,0.4);
       font-style: italic;
-      font-size: 13px;
+      font-size: 12px;
     }
     .profile-field-value.gap {
       color: var(--cie-crimson);
@@ -664,12 +681,12 @@
     .profile-gap-row {
       background: var(--pink-bg);
       border: 1px solid rgba(232,84,122,0.2);
-      border-radius: 10px;
-      padding: 16px 20px;
-      margin-bottom: 10px;
-      font-size: 15px;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      font-size: 12px;
       color: var(--cie-dark);
-      line-height: 1.7;
+      line-height: 1.6;
     }
     .profile-gap-row:last-child { margin-bottom: 0; }
     .profile-gap-label {
@@ -732,22 +749,22 @@
     .path-step {
       display: flex;
       align-items: flex-start;
-      gap: 20px;
-      padding: 20px 0;
+      gap: 12px;
+      padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .path-step:last-child { border-bottom: none; }
     .path-step-circle {
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
-      margin-top: 2px;
+      margin-top: 1px;
     }
     .circle-priority { background: var(--red);  color: #ffffff; }
     .circle-recommended { background: var(--pink); color: #ffffff; }
@@ -766,15 +783,15 @@
     .tag-included    { color: rgba(255,255,255,0.4); }
     .tag-always      { color: rgba(255,255,255,0.3); }
     .path-step-module {
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 700;
       color: #ffffff;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
     .path-step-note {
-      font-size: 13px;
+      font-size: 11px;
       color: rgba(255,255,255,0.5);
-      line-height: 1.55;
+      line-height: 1.5;
     }
     @media (max-width: 640px) {
       .suggested-path { padding: 40px 24px; }
@@ -813,29 +830,25 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ═══ RESPONSIVE ═══ */
-    @media (max-width: 1024px) {
-      .r-grid-2 { grid-template-columns: 1fr; }
-      .domain-grid { grid-template-columns: 1fr 1fr; }
-    }
     @media (max-width: 768px) {
       .dash-nav { padding: 14px 20px; }
       .dash-nav-logo img { height: 44px; }
       .dash-nav-name { display: none; }
-      .r-hero { padding: 20px 20px 16px; }
-      .r-body { padding: 16px 16px 40px; }
-      .r-grid-2 { grid-template-columns: 1fr; gap: 16px; }
+      .r-hero { padding: 16px 20px 12px; }
+      .r-body { padding: 12px 12px 24px; }
+      .r-grid-2 { grid-template-columns: 1fr; gap: 10px; }
       .domain-grid { grid-template-columns: 1fr; }
       .overview-grid { grid-template-columns: 1fr 1fr; }
       .qa-answers { grid-template-columns: 1fr; }
       .qa-answer:first-child { border-right: none; border-bottom: 1px solid rgba(13,13,13,0.07); }
-      .rating-compare { flex-direction: column; gap: 12px; }
-      .dc-header { flex-direction: column; align-items: flex-start; }
-      .dc-header, .dc-body { padding: 20px 20px; }
+      .rating-compare { flex-direction: column; gap: 8px; }
       .profile-cols { grid-template-columns: 1fr; }
+      .rblock-body, .rblock-body-dark { max-height: none; }
+      .r-cta { flex-direction: column; text-align: center; }
+      .r-cta-left { text-align: center; }
     }
     @media (max-width: 480px) {
       .overview-grid { grid-template-columns: 1fr; }
-      .domain-grid { grid-template-columns: 1fr; }
     }
 
     /* ═══ PRINT / DOWNLOAD PDF ═══ */
@@ -1356,8 +1369,10 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
 
       <!-- CTA -->
       <div class="r-cta">
-        <div class="r-cta-title">Your course path is unlocked.</div>
-        <div class="r-cta-sub">The modules built for your specific gaps are ready. Head to your dashboard to begin.</div>
+        <div class="r-cta-left">
+          <div class="r-cta-title">Your course path is unlocked.</div>
+          <div class="r-cta-sub">The modules built for your specific gaps are ready.</div>
+        </div>
         <div class="r-cta-actions">
           <a href="/programs/couples-dashboard" class="btn-gold">Go to My Dashboard →</a>
           <button onclick="window.print()" class="btn-download">&#8659; Download PDF</button>
