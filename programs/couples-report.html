@@ -754,6 +754,21 @@ async function init() {
     else partnerNotes[row.domain] = row.note_text;
   }
 
+  // If unlocked_domains is empty, regenerate before rendering
+  if (!report.unlocked_domains?.length) {
+    try {
+      const regen = await fetch('/api/cie-regenerate-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id, couple_id: couple.id }),
+      });
+      const regenData = await regen.json();
+      if (regenData.unlocked_domains?.length) {
+        report.unlocked_domains = regenData.unlocked_domains;
+      }
+    } catch (_) {}
+  }
+
   renderReport(report, isPartnerA, youLabel, partnerLabel, user.id, myProfile, partnerProfile, myNotes, partnerNotes);
 }
 

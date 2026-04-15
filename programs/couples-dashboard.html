@@ -732,10 +732,10 @@ async function renderDashboard(user) {
   const reportReady   = !!report;
   const bothComplete  = !!(myCompletion && partnerCompletion);
 
-  // If report exists but unlocked_domains is empty, trigger recalculation silently
-  if (reportReady && unlockedDomains.length === 0 && bothComplete) {
+  // If report exists but unlocked_domains is empty, recalculate now
+  if (reportReady && unlockedDomains.length === 0) {
     try {
-      const recalc = await fetch('/api/couples-submit-diagnostic', {
+      const recalc = await fetch('/api/cie-regenerate-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: user.id, couple_id: coupleId }),
