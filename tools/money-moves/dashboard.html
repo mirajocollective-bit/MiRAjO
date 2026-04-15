@@ -1357,6 +1357,68 @@
       cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;
     }
 
+    /* ── Feature Beacons ── */
+    .feature-beacon {
+      position: fixed;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--living-green);
+      z-index: 800;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    .feature-beacon::before,
+    .feature-beacon::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid var(--living-green);
+      animation: beaconRing 1.8s ease-out infinite;
+    }
+    .feature-beacon::after { animation-delay: 0.6s; }
+    @keyframes beaconRing {
+      0%   { transform: scale(1);   opacity: 0.7; }
+      100% { transform: scale(2.8); opacity: 0;   }
+    }
+
+    .feature-tooltip {
+      position: fixed;
+      background: #0D0D0D;
+      color: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      width: 220px;
+      z-index: 801;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      animation: tooltipPop 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes tooltipPop {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+    .ft-arrow {
+      position: absolute;
+      width: 10px; height: 10px;
+      background: #0D0D0D;
+      transform: rotate(45deg);
+    }
+    .ft-title {
+      font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+      color: var(--living-green); margin-bottom: 5px;
+    }
+    .ft-body { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.55; margin-bottom: 12px; }
+    .ft-dismiss {
+      display: block; width: 100%;
+      background: rgba(255,255,255,0.1); border: none;
+      color: #fff; border-radius: 7px; padding: 8px;
+      font-size: 12px; font-weight: 700; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.15s;
+    }
+    .ft-dismiss:hover { background: rgba(255,255,255,0.18); }
+
     /* ── XP Bar (nav) ── */
     .nav-xp-wrap {
       display: flex; align-items: center; gap: 6px;
@@ -3774,6 +3836,128 @@
 
   // Init XP bar on load
   gmUpdateNav();
+
+  // ── FEATURE BEACONS ─────────────────────────────────────────────
+  const FEATURE_HINTS = [
+    {
+      id: 'widgets',
+      getTarget: () => document.querySelector('.nav-btn-widgets'),
+      title: 'Widgets Panel',
+      body: 'Your goals, debt tracker, and budget tools live in here. Tap to open.',
+      anchor: 'bottom-left',
+    },
+    {
+      id: 'beats',
+      getTarget: () => document.getElementById('beats-toggle'),
+      title: 'Beats to Budget',
+      body: 'Budget to music. Pick Lo-Fi, Hip Hop, R&B, or Jazz and get in the zone.',
+      anchor: 'top-left',
+    },
+    {
+      id: 'xp',
+      getTarget: () => document.getElementById('nav-xp-wrap'),
+      title: 'Your XP',
+      body: 'Every transaction earns XP. Level up from Budget Rookie all the way to GOAT.',
+      anchor: 'bottom-right',
+    },
+  ];
+
+  let activeTooltip = null;
+
+  function initBeacons() {
+    FEATURE_HINTS.forEach(hint => {
+      if (localStorage.getItem(`mm_seen_${hint.id}`)) return;
+      const target = hint.getTarget();
+      if (!target) return;
+
+      const rect = target.getBoundingClientRect();
+      const beacon = document.createElement('div');
+      beacon.className = 'feature-beacon';
+      beacon.id = `beacon-${hint.id}`;
+      beacon.style.top  = (rect.top  + rect.height / 2 - 6) + 'px';
+      beacon.style.left = (rect.left + rect.width  - 4)     + 'px';
+      beacon.onclick = (e) => { e.stopPropagation(); showBeaconTooltip(hint); };
+      document.body.appendChild(beacon);
+    });
+  }
+
+  function showBeaconTooltip(hint) {
+    dismissActiveTooltip();
+
+    const target = hint.getTarget();
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+
+    const tip = document.createElement('div');
+    tip.className = 'feature-tooltip';
+    tip.id = `tooltip-${hint.id}`;
+
+    // Arrow
+    const arrow = document.createElement('div');
+    arrow.className = 'ft-arrow';
+
+    // Position tooltip and arrow based on anchor
+    const TW = 220, TH = 120;
+    let top, left, arrowStyle;
+
+    if (hint.anchor === 'bottom-left') {
+      top  = rect.bottom + 12;
+      left = rect.left;
+      arrowStyle = `top:-5px; left:${rect.width/2}px;`;
+    } else if (hint.anchor === 'bottom-right') {
+      top  = rect.bottom + 12;
+      left = Math.max(8, rect.right - TW);
+      arrowStyle = `top:-5px; right:20px;`;
+    } else { // top-left (above)
+      top  = rect.top - TH - 16;
+      left = Math.max(8, rect.right - TW);
+      arrowStyle = `bottom:-5px; right:20px;`;
+    }
+
+    // Keep on screen
+    top  = Math.max(8, Math.min(top,  window.innerHeight - TH - 8));
+    left = Math.max(8, Math.min(left, window.innerWidth  - TW - 8));
+
+    tip.style.top  = top  + 'px';
+    tip.style.left = left + 'px';
+    arrow.style.cssText += arrowStyle;
+    tip.appendChild(arrow);
+
+    tip.innerHTML += `
+      <div class="ft-title">${hint.title}</div>
+      <div class="ft-body">${hint.body}</div>
+      <button class="ft-dismiss" onclick="dismissBeacon('${hint.id}')">Got it</button>
+    `;
+
+    document.body.appendChild(tip);
+    activeTooltip = tip;
+
+    // Close on outside click
+    setTimeout(() => document.addEventListener('click', dismissActiveTooltip, { once: true }), 50);
+  }
+
+  function dismissActiveTooltip() {
+    if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+  }
+
+  window.dismissBeacon = function (id) {
+    localStorage.setItem(`mm_seen_${id}`, '1');
+    document.getElementById(`beacon-${id}`)?.remove();
+    dismissActiveTooltip();
+  };
+
+  // Reposition beacons on scroll/resize
+  let beaconTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(beaconTimer);
+    beaconTimer = setTimeout(() => {
+      document.querySelectorAll('.feature-beacon').forEach(b => b.remove());
+      initBeacons();
+    }, 200);
+  });
+
+  // Init after a short delay so nav has rendered
+  setTimeout(initBeacons, 800);
 
   // ── BEATS TO BUDGET ─────────────────────────────────────────────
   const BEATS_VIBES = [
