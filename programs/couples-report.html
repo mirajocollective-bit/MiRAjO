@@ -1079,8 +1079,19 @@ async function init() {
   }
 
   const isPartnerA = user.id === couple.partner_a_user_id;
-  const youLabel     = firstName || 'You';
-  const partnerLabel = 'Your Partner';
+  const youLabel = firstName || 'You';
+
+  // Fetch partner's first name via service-role API
+  let partnerLabel = 'Your Partner';
+  try {
+    const nameResp = await fetch('/api/cie-couple-names', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: user.id, couple_id: couple.id }),
+    });
+    const nameData = await nameResp.json();
+    if (nameData.partner_name) partnerLabel = nameData.partner_name;
+  } catch (_) {}
 
   // Load both partner profiles (RLS allows partners to see each other)
   const { data: profileRows } = await db
@@ -1267,7 +1278,7 @@ function renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)
 
     <div class="profile-cols">
       ${renderProfileCol(myProfile, 'who-you-label', 'You', youLabel)}
-      ${renderProfileCol(partnerProfile, 'who-partner-label', 'Your Partner', partnerLabel)}
+      ${renderProfileCol(partnerProfile, 'who-partner-label', partnerLabel, partnerLabel)}
     </div>
 
     ${gaps.length ? `
