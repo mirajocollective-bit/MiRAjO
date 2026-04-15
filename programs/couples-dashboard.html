@@ -778,6 +778,11 @@ async function renderDashboard(user) {
       </div>
       <a href="/programs/couples-profile" class="btn-gold" style="flex-shrink:0;">Build My Profile →</a>
     </div>`;
+  } else {
+    html += `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0 4px;margin-bottom:4px;">
+      <span style="font-size:13px;color:var(--muted);"><span style="color:#5DBE8A;font-weight:700;">✓</span> Your profile is complete</span>
+      <a href="/programs/couples-profile" style="font-size:13px;color:var(--cie-crimson);text-decoration:none;font-weight:600;">Edit Profile →</a>
+    </div>`;
   }
 
   // ── INVITE BANNER (partner B not yet joined) ──
@@ -868,11 +873,8 @@ async function renderDashboard(user) {
   html += `<div class="modules-grid">`;
 
   for (const mod of MODULES) {
-    // Determine lock state — all modules require a report
-    let unlocked = false;
-    const isBookend = mod.num === 1 || mod.num === 8;
-    if (isBookend) unlocked = reportReady;
-    else unlocked = reportReady && (unlockedDomains.includes(mod.unlock_domain) || unlockedDomains.includes('all'));
+    // All modules unlock once the report is ready — unlocked_domains drives priority display in the report, not gates here
+    const unlocked = reportReady;
 
     // Match to DB module for progress
     const dbMod = dbModules?.find(m => m.position === mod.num);

@@ -13,10 +13,9 @@ const supabase = createClient(
 
 const DOMAINS = ['business', 'finances', 'family', 'relationship'];
 
-// Unlock a domain if either partner averages below 3.0 or the gap between them is >= 1.0
+// All domains unlock once both partners complete — the report uses scores to show priority areas
 function shouldUnlock(avgA, avgB) {
-  if (avgA === null || avgB === null) return true;
-  return avgA < 3.0 || avgB < 3.0 || Math.abs(avgA - avgB) >= 1.0;
+  return true;
 }
 
 function average(scores) {

@@ -676,18 +676,24 @@ const MODULE_LIST = [
 ];
 
 function alignmentInfo(domain, unlockedDomains, reportData) {
-  const rA = parseInt(reportData?.[domain]?.alignment_rating?.partner_a || 0);
-  const rB = parseInt(reportData?.[domain]?.alignment_rating?.partner_b || 0);
-  const inUnlocked = unlockedDomains.includes(domain) || unlockedDomains.includes('all');
+  const avgA = reportData?.[domain]?.partner_a_avg;
+  const avgB = reportData?.[domain]?.partner_b_avg;
 
-  if (!inUnlocked) {
+  // No score data available — default to aligned
+  if (avgA == null || avgB == null) {
     return { tier: 'aligned', label: 'Aligned', badgeClass: 'badge-aligned', dotClass: 'bdot-aligned', statusClass: 'status-aligned', barClass: 'bar-aligned', chipClass: 'bar-aligned' };
   }
-  const avg = (rA + rB) / 2;
-  if (avg >= 3 && Math.abs(rA - rB) <= 2) {
+
+  const gap   = Math.abs(avgA - avgB);
+  const lower = Math.min(avgA, avgB);
+
+  if (gap >= 1.0 || lower < 2.5) {
+    return { tier: 'needs', label: 'Needs Attention', badgeClass: 'badge-needs', dotClass: 'bdot-needs', statusClass: 'status-needs', barClass: 'bar-needs', chipClass: 'bar-needs' };
+  }
+  if (gap >= 0.5 || lower < 3.5) {
     return { tier: 'partial', label: 'Partially Aligned', badgeClass: 'badge-partial', dotClass: 'bdot-partial', statusClass: 'status-partial', barClass: 'bar-partial', chipClass: 'bar-partial' };
   }
-  return { tier: 'needs', label: 'Needs Attention', badgeClass: 'badge-needs', dotClass: 'bdot-needs', statusClass: 'status-needs', barClass: 'bar-needs', chipClass: 'bar-needs' };
+  return { tier: 'aligned', label: 'Aligned', badgeClass: 'badge-aligned', dotClass: 'bdot-aligned', statusClass: 'status-aligned', barClass: 'bar-aligned', chipClass: 'bar-aligned' };
 }
 
 async function init() {
@@ -735,7 +741,20 @@ async function init() {
   const myProfile      = profileRows?.find(p => p.user_id === user.id) || null;
   const partnerProfile = profileRows?.find(p => p.user_id !== user.id) || null;
 
-  renderReport(report, isPartnerA, youLabel, partnerLabel, user.id, myProfile, partnerProfile);
+  // Load diagnostic notes for both partners
+  const { data: notesRows } = await db
+    .from('diagnostic_notes')
+    .select('user_id, domain, note_text')
+    .eq('couple_id', couple.id);
+
+  const myNotes = {};
+  const partnerNotes = {};
+  for (const row of (notesRows || [])) {
+    if (row.user_id === user.id) myNotes[row.domain] = row.note_text;
+    else partnerNotes[row.domain] = row.note_text;
+  }
+
+  renderReport(report, isPartnerA, youLabel, partnerLabel, user.id, myProfile, partnerProfile, myNotes, partnerNotes);
 }
 
 const LABEL = {
@@ -899,7 +918,7 @@ function renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)
   </div>`;
 }
 
-function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProfile, partnerProfile) {
+function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProfile, partnerProfile, myNotes, partnerNotes) {
   const rd = report.report_data || {};
   const unlocked = report.unlocked_domains || [];
   const generated = report.generated_at ? new Date(report.generated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
@@ -949,10 +968,13 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
       ${renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)}
 
       ${DOMAINS_META.map((d, i) => {
-        const info = alignmentInfo(d.key, unlocked, rd);
+        const info       = alignmentInfo(d.key, unlocked, rd);
         const domainData = rd[d.key] || {};
-        const rYou     = parseInt(domainData.alignment_rating?.[isPartnerA ? 'partner_a' : 'partner_b'] || 0);
-        const rPartner = parseInt(domainData.alignment_rating?.[isPartnerA ? 'partner_b' : 'partner_a'] || 0);
+        const avgYou     = isPartnerA ? domainData.partner_a_avg : domainData.partner_b_avg;
+        const avgPartner = isPartnerA ? domainData.partner_b_avg : domainData.partner_a_avg;
+        const myNote     = myNotes?.[d.key] || '';
+        const partNote   = partnerNotes?.[d.key] || '';
+        const hasNotes   = myNote || partNote;
 
         return `
         <div class="domain-section">
@@ -967,43 +989,39 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
             </div>
           </div>
 
-          ${rYou && rPartner ? `
+          ${avgYou != null && avgPartner != null ? `
           <div class="rating-compare">
-            <div class="rating-compare-label">Alignment<br>ratings</div>
+            <div class="rating-compare-label">Scenario<br>average</div>
             <div class="rating-compare-bars">
               <div class="rating-bar-row">
                 <div class="rating-bar-who">${escHtml(youLabel)}</div>
-                <div class="rating-bar-track"><div class="rating-bar-fill fill-you" style="width:${rYou * 20}%"></div></div>
-                <div class="rating-bar-val">${rYou}</div>
+                <div class="rating-bar-track"><div class="rating-bar-fill fill-you" style="width:${(avgYou / 4 * 100).toFixed(0)}%"></div></div>
+                <div class="rating-bar-val">${avgYou.toFixed(1)}</div>
               </div>
               <div class="rating-bar-row">
                 <div class="rating-bar-who">${escHtml(partnerLabel)}</div>
-                <div class="rating-bar-track"><div class="rating-bar-fill fill-partner" style="width:${rPartner * 20}%"></div></div>
-                <div class="rating-bar-val">${rPartner}</div>
+                <div class="rating-bar-track"><div class="rating-bar-fill fill-partner" style="width:${(avgPartner / 4 * 100).toFixed(0)}%"></div></div>
+                <div class="rating-bar-val">${avgPartner.toFixed(1)}</div>
               </div>
             </div>
           </div>` : ''}
 
+          ${hasNotes ? `
           <div class="qa-grid">
-            ${d.questions.map(q => {
-              const youAns     = domainData[q.key]?.[isPartnerA ? 'partner_a' : 'partner_b'] || '';
-              const partnerAns = domainData[q.key]?.[isPartnerA ? 'partner_b' : 'partner_a'] || '';
-              return `
-              <div class="qa-row">
-                <div class="qa-question">${escHtml(q.text)}</div>
-                <div class="qa-answers">
-                  <div class="qa-answer">
-                    <div class="qa-answer-who who-you">${escHtml(youLabel)}</div>
-                    <div class="qa-answer-text ${youAns ? '' : 'empty'}">${youAns ? escHtml(youAns) : 'No answer provided.'}</div>
-                  </div>
-                  <div class="qa-answer">
-                    <div class="qa-answer-who who-partner">${escHtml(partnerLabel)}</div>
-                    <div class="qa-answer-text ${partnerAns ? '' : 'empty'}">${partnerAns ? escHtml(partnerAns) : 'No answer provided.'}</div>
-                  </div>
+            <div class="qa-row">
+              <div class="qa-question">Notes from the diagnostic</div>
+              <div class="qa-answers">
+                <div class="qa-answer">
+                  <div class="qa-answer-who who-you">${escHtml(youLabel)}</div>
+                  <div class="qa-answer-text ${myNote ? '' : 'empty'}">${myNote ? escHtml(myNote) : 'No notes added.'}</div>
                 </div>
-              </div>`;
-            }).join('')}
-          </div>
+                <div class="qa-answer">
+                  <div class="qa-answer-who who-partner">${escHtml(partnerLabel)}</div>
+                  <div class="qa-answer-text ${partNote ? '' : 'empty'}">${partNote ? escHtml(partNote) : 'No notes added.'}</div>
+                </div>
+              </div>
+            </div>
+          </div>` : ''}
         </div>`;
       }).join('')}
 
@@ -1013,12 +1031,13 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
         <div class="course-path-sub">Based on your Partnership Report, these are the modules your course path includes. You both gain access to the same set.</div>
         <div class="module-list">
           ${MODULE_LIST.map(m => {
-            const isUnlocked = m.always || m.always_if_report || unlocked.includes(m.unlock_domain) || unlocked.includes('all');
-            return `<div class="module-list-item ${isUnlocked ? 'unlocked' : 'locked'}">
+            // All modules unlock when the report is generated — unlocked_domains drives priority display only
+            const isFoundation = m.always;
+            return `<div class="module-list-item unlocked">
               <div class="module-list-num">${String(m.num).padStart(2, '0')}</div>
               <div class="module-list-name">${escHtml(m.title)}</div>
-              <div class="module-list-badge ${m.always ? 'mbadge-foundation' : isUnlocked ? 'mbadge-unlocked' : 'mbadge-locked'}">
-                ${m.always ? 'Foundation' : isUnlocked ? 'Unlocked' : 'Locked'}
+              <div class="module-list-badge ${isFoundation ? 'mbadge-foundation' : 'mbadge-unlocked'}">
+                ${isFoundation ? 'Foundation' : 'Unlocked'}
               </div>
             </div>`;
           }).join('')}
