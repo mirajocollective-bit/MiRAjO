@@ -433,9 +433,9 @@
     @keyframes calSpin { to { transform: rotate(360deg); } }
 
     .cal-cell {
-      height: 90px; border-radius: 0; padding: 5px 6px 4px;
+      height: 90px; border-radius: 0; padding: 5px 6px 18px;
       cursor: pointer; transition: background 0.15s;
-      position: relative;
+      position: relative; overflow: hidden;
       border-top: 2px solid #111;
       border-right: 2px solid #111;
       overflow: hidden;
@@ -1044,7 +1044,7 @@
       .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
       .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
       .cal-grid { grid-auto-rows: 80px; }
-      .cal-cell { height: 80px; padding: 4px 5px 18px; border-top-width: 1.5px; border-right-width: 1.5px; }
+      .cal-cell { height: 80px; padding: 4px 5px 16px; border-top-width: 1.5px; border-right-width: 1.5px; overflow: hidden; }
       .cal-grid { border-left-width: 1.5px; border-bottom-width: 1.5px; }
       .cal-entry { font-size: 10px; padding: 2px 5px; }
       .float-calc { bottom: 72px; right: 12px; width: 240px; }
@@ -4185,6 +4185,21 @@
   };
 
   // ── Mode Text-to-Speech ──────────────────────────────────────────────────────
+  const MODE_VOICE = {
+    default:   { rate: 0.92, pitch: 1.05 },
+    mom:       { rate: 0.85, pitch: 1.10 },
+    dad:       { rate: 1.00, pitch: 0.78 },
+    spiritual: { rate: 0.72, pitch: 0.92 },
+    wrestling: { rate: 1.25, pitch: 1.20 },
+    coach:     { rate: 1.10, pitch: 1.05 },
+    ceo:       { rate: 0.95, pitch: 0.85 },
+    bff:       { rate: 1.05, pitch: 1.18 },
+    hypeman:   { rate: 1.22, pitch: 1.28 },
+    grandma:   { rate: 0.68, pitch: 1.12 },
+    sergeant:  { rate: 1.15, pitch: 0.72 },
+    therapist: { rate: 0.76, pitch: 1.02 },
+  };
+
   window.speakMode = function () {
     if (!window.speechSynthesis) return;
     const btn = document.getElementById('mode-speak-btn');
@@ -4194,11 +4209,15 @@
       btn?.classList.remove('speaking');
       return;
     }
-    const msg = document.getElementById('mode-msg')?.textContent?.trim();
-    if (!msg) return;
+    const rawMsg = document.getElementById('mode-msg')?.textContent?.trim();
+    if (!rawMsg) return;
+    // Strip emoji before speaking
+    const msg = rawMsg.replace(/\p{Extended_Pictographic}/gu, '').replace(/\s+/g, ' ').trim();
+    const modeKey = preferences?.personality_mode || 'default';
+    const vp = MODE_VOICE[modeKey] || MODE_VOICE.default;
     const utt = new SpeechSynthesisUtterance(msg);
-    utt.rate  = 0.92;
-    utt.pitch = 1.05;
+    utt.rate  = vp.rate;
+    utt.pitch = vp.pitch;
     // Pick a natural-sounding voice if available
     const voices = window.speechSynthesis.getVoices();
     const preferred = voices.find(v => /Samantha|Karen|Google US English|en-US/i.test(v.name + v.lang));
