@@ -151,7 +151,7 @@
       font-size: 11px; color: var(--neutral); transition: transform 0.25s; flex-shrink: 0;
     }
     .layout.analytics-open .analytics-toggle-icon { transform: rotate(180deg); }
-    .analytics-toggle:hover { background: #fffbe6; }
+    .analytics-toggle:hover { background: rgba(18,32,18,0.03); }
     .analytics-content { display: none; }
     .layout.analytics-open .analytics-content { display: block; }
 
@@ -425,7 +425,7 @@
       border-right: 2px solid #111;
       overflow: hidden;
     }
-    .cal-cell:hover { background: rgba(18,32,18,0.04); }
+    .cal-cell:hover { background: #fffce8; }
     .cal-cell.today { background: rgba(37,107,66,0.07); box-shadow: inset 0 0 0 2px var(--living-green); }
     .cal-cell.other-month { opacity: 0.25; pointer-events: none; }
 
@@ -3937,11 +3937,12 @@
   setTimeout(initBeacons, 800);
 
   // ── BEATS TO BUDGET ─────────────────────────────────────────────
+  // To update a vibe: replace the id with any YouTube video ID (the part after ?v= in the URL)
   const BEATS_VIBES = [
-    { name: '🌙 Lo-Fi',      id: 'jfKfPfyJRdk' },
-    { name: '🔥 Hip Hop',    id: 'HolijBLAVQA'  },
-    { name: '✨ R&B',        id: 'UfNS_HbzMJA'  },
-    { name: '🎷 Jazz',       id: 'Dx5qFachd3A'  },
+    { name: '🌙 Lo-Fi',      id: 'jfKfPfyJRdk' },  // Lofi Girl 24/7
+    { name: '🔥 Hip Hop',    id: 'Nu_8h1LY07Q'  },  // Trap Soul + LoFi 24/7
+    { name: '✨ R&B',        id: 'WamzfT5E20c'  },  // After Hours R&B 24/7
+    { name: '🎷 Jazz',       id: 'HuFYqnbVbzY'  },  // Jazz Lofi Radio 24/7
   ];
   let beatsOpen = false;
   let beatsPlaying = false;
@@ -5966,7 +5967,7 @@
     hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, 6000);
   };
 
-  document.addEventListener('DOMContentLoaded', initHints);
+  initHints();
 
   // ── Undo Toast ───────────────────────────────────────────────────────────────
   let _undoFn    = null;
