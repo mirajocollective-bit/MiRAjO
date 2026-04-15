@@ -60,20 +60,21 @@
       top: 0;
       z-index: 100;
     }
-    .dash-nav-logo img { height: 72px; width: auto; display: block; }
+    .dash-nav-logo img { height: 56px; width: auto; display: block; filter: brightness(0) invert(1); }
     .dash-nav-right { display: flex; align-items: center; gap: 16px; }
-    .dash-nav-name { font-size: 13px; color: rgba(255,255,255,0.55); }
-    .dash-back {
+    .dash-nav-name { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .dash-logout {
       font-size: 12px;
-      color: #ffffff;
+      color: var(--white);
       background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.2);
       border-radius: 6px;
       padding: 8px 16px;
-      text-decoration: none;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       transition: all 0.2s;
     }
-    .dash-back:hover { background: rgba(255,255,255,0.18); }
+    .dash-logout:hover { background: rgba(255,255,255,0.18); }
 
     /* ═══ HERO ═══ */
     .r-hero {
@@ -818,7 +819,7 @@
     }
     @media (max-width: 768px) {
       .dash-nav { padding: 14px 20px; }
-      .dash-nav-logo img { height: 52px; }
+      .dash-nav-logo img { height: 44px; }
       .dash-nav-name { display: none; }
       .r-hero { padding: 20px 20px 16px; }
       .r-body { padding: 16px 16px 40px; }
@@ -860,7 +861,7 @@
   </a>
   <div class="dash-nav-right">
     <span class="dash-nav-name" id="user-name"></span>
-    <a href="/programs/couples-dashboard" class="dash-back">← Dashboard</a>
+    <button class="dash-logout" id="logout-btn">Sign Out</button>
   </div>
 </nav>
 
@@ -962,6 +963,11 @@ async function init() {
   const user = session.user;
   const firstName = user.user_metadata?.first_name || user.email;
   document.getElementById('user-name').textContent = firstName;
+
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await db.auth.signOut();
+    window.location.href = '/programs/login';
+  });
 
   // Load couple
   const { data: couple } = await db
