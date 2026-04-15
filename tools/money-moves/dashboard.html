@@ -6152,7 +6152,7 @@
     hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, 6000);
   };
 
-  initHints();
+  try { initHints(); } catch(e) { setTimeout(initHints, 400); }
 
   // ── Undo Toast ───────────────────────────────────────────────────────────────
   let _undoFn    = null;
