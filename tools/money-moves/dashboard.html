@@ -114,40 +114,61 @@
     /* ── Main layout ── */
     .layout {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 40px 1fr;
       gap: 14px;
       max-width: 1600px;
       margin: 0 auto;
       padding: 14px 24px 40px;
       transition: grid-template-columns 0.25s ease;
     }
-    .layout.analytics-open { grid-template-columns: 240px 1fr; }
+    .layout.analytics-open { grid-template-columns: 280px 1fr; }
 
     /* ── Analytics Sidebar ── */
     .analytics-sidebar {
-      display: none;
       align-self: start; position: sticky; top: 24px;
       background: #fff; border-radius: 16px;
       border: 1px solid rgba(18,32,18,0.06);
       box-shadow: 0 4px 16px rgba(18,32,18,0.08);
       overflow: hidden;
     }
-    .layout.analytics-open .analytics-sidebar { display: block; }
     .analytics-toggle {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 13px 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      padding: 13px 8px; cursor: pointer;
       border-bottom: 1px solid var(--border);
-      white-space: nowrap;
+      white-space: nowrap; gap: 6px;
+    }
+    .layout.analytics-open .analytics-toggle {
+      justify-content: space-between;
+      padding: 13px 14px;
     }
     .analytics-toggle-label {
+      display: none;
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--neutral);
     }
+    .layout.analytics-open .analytics-toggle-label { display: block; }
     .analytics-toggle-icon {
       font-size: 11px; color: var(--neutral); transition: transform 0.25s; flex-shrink: 0;
     }
     .layout.analytics-open .analytics-toggle-icon { transform: rotate(180deg); }
-    .analytics-content { overflow: hidden; transition: opacity 0.2s; }
+    .analytics-content { display: none; }
+    .layout.analytics-open .analytics-content { display: block; }
+
+    .analytics-tools-divider {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 14px 6px;
+    }
+    .analytics-tools-divider span {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral); opacity: 0.6;
+    }
+    .analytics-tools-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .analytics-widgets {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 0 10px 12px;
+    }
 
     .analytics-section { border-bottom: 1px solid var(--border); }
     .analytics-section:last-child { border-bottom: none; }
@@ -464,41 +485,7 @@
       font-size: 12px; letter-spacing: 0.5px; color: var(--dry-sage);
     }
 
-    /* ── Sidebar drawer ── */
-    .sidebar {
-      position: fixed;
-      top: 52px;
-      right: 0;
-      width: 300px;
-      height: calc(100vh - 52px);
-      background: #f8f6f1;
-      border-left: 1px solid rgba(18,32,18,0.1);
-      overflow-y: auto;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 16px;
-      box-shadow: -4px 0 24px rgba(18,32,18,0.08);
-    }
-    .sidebar.open { transform: translateX(0); }
-    .sidebar-drawer-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 4px;
-    }
-    .sidebar-drawer-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--neutral); }
-    .sidebar-close-btn {
-      background: none; border: none; cursor: pointer; font-size: 18px;
-      color: var(--neutral); padding: 0 4px; line-height: 1;
-    }
-    .sidebar-overlay {
-      position: fixed; inset: 0; background: rgba(18,32,18,0.25);
-      z-index: 199; display: none;
-    }
-    .sidebar-overlay.show { display: block; }
-    .nav-btn-widgets { background: transparent; color: var(--deep-forest); border: 1px solid rgba(18,32,18,0.18); }
+    /* ── Widget cards (in analytics panel) ── */
 
     .sidebar-card {
       background: #fff; border-radius: 14px;
@@ -1004,7 +991,8 @@
 
     /* ── Responsive ── */
     @media (max-width: 1100px) {
-      .layout.analytics-open { grid-template-columns: 200px 1fr 280px; }
+      .layout { grid-template-columns: 40px 1fr; }
+      .layout.analytics-open { grid-template-columns: 220px 1fr; }
     }
     @media (max-width: 900px) {
       .layout { grid-template-columns: 1fr !important; }
@@ -1021,7 +1009,6 @@
         padding: 12px 12px 80px; gap: 12px;
       }
       .analytics-sidebar { display: none !important; }
-      .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .summary-bar { flex-wrap: wrap; }
       .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
       .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
@@ -1043,7 +1030,6 @@
       .cal-search-input:focus, .cal-search-input:not(:placeholder-shown) { width: 150px; color: var(--deep-forest); }
     }
     @media (max-width: 540px) {
-      .sidebar { grid-template-columns: 1fr; }
       .cal-grid { grid-auto-rows: 80px; }
       .cal-cell { height: 80px; }
       .cal-day-name { font-size: 10px; letter-spacing: 0; }
@@ -1593,11 +1579,9 @@
         <rect x="10.5" y="11" width="2" height="2" rx="0.5" fill="currentColor"/>
       </svg>
     </button>
-    <button class="nav-btn nav-btn-widgets" onclick="toggleSidebar()" title="Widgets &amp; Goals">⊞</button>
     <button class="nav-btn nav-btn-logout" onclick="logOut()" title="Log out">Log Out</button>
   </div>
 </nav>
-<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- Level Up Toast -->
 <div class="levelup-toast" id="levelup-toast">
@@ -1686,8 +1670,8 @@
   <!-- Analytics Sidebar -->
   <div class="analytics-sidebar" id="analytics-sidebar">
     <div class="analytics-toggle" onclick="toggleAnalytics()">
-      <span class="analytics-toggle-label">Analytics</span>
-      <span class="analytics-toggle-icon">◀</span>
+      <span class="analytics-toggle-label">Analytics & Tools</span>
+      <span class="analytics-toggle-icon">▶</span>
     </div>
     <div class="analytics-content" id="analytics-content">
 
@@ -1720,6 +1704,138 @@
         <span class="analytics-savings-lbl">Savings Rate</span>
         <span class="analytics-savings-val" id="analytics-savings-val">—</span>
       </div>
+
+      <!-- Tools divider -->
+      <div class="analytics-tools-divider"><span>Tools</span></div>
+
+      <!-- Widget cards -->
+      <div class="analytics-widgets" id="analytics-widgets">
+
+        <!-- Personality mode -->
+        <div class="sidebar-card mode-card">
+          <div class="sidebar-title">Your Mode</div>
+          <div class="mode-display">
+            <div class="mode-icon" id="mode-icon">🤱</div>
+            <div class="mode-name" id="mode-name">Mom Mode</div>
+          </div>
+          <div class="mode-msg" id="mode-msg">Add your first account and let's get to work.</div>
+          <button class="mode-change-btn" onclick="openModePickerModal()">Change your mode →</button>
+        </div>
+
+        <!-- Budget -->
+        <div class="sidebar-card" id="card-budget" data-card-id="card-budget" draggable="true">
+          <div class="card-title-row">
+            <span class="sidebar-title">Budget This Month</span>
+            <span class="drag-handle" title="Drag to reorder">⠿</span>
+          </div>
+          <div id="budget-list"><p style="font-size:13px;color:var(--neutral);opacity:0.7">Set category budgets in Settings.</p></div>
+        </div>
+
+        <!-- Goals -->
+        <div class="sidebar-card" id="card-goals" data-card-id="card-goals" draggable="true">
+          <div class="card-title-row">
+            <span class="sidebar-title">Savings Goals</span>
+            <span class="drag-handle" title="Drag to reorder">⠿</span>
+          </div>
+          <div id="goals-list"></div>
+          <button class="goal-add-btn" onclick="window.location.href='/tools/money-moves/settings#goals'">+ Add a Goal</button>
+        </div>
+
+        <!-- Debts -->
+        <div class="sidebar-card" id="card-debts" data-card-id="card-debts" draggable="true">
+          <div class="card-title-row">
+            <span class="sidebar-title">Debt Tracker</span>
+            <span class="drag-handle" title="Drag to reorder">⠿</span>
+          </div>
+          <div id="debt-list"><p style="font-size:13px;color:var(--neutral);opacity:0.7">No debts tracked yet.</p></div>
+          <button class="goal-add-btn" style="margin-top:12px" onclick="window.location.href='/tools/money-moves/settings#debts'">+ Add a Debt</button>
+        </div>
+
+        <!-- Debt Payoff Calculator -->
+        <div class="sidebar-card" id="card-calc" data-card-id="card-calc" draggable="true">
+          <div class="calc-toggle-row">
+            <div class="card-title-row" style="margin-bottom:0;flex:1;cursor:pointer" onclick="toggleDebtCalc()">
+              <span class="sidebar-title" style="margin-bottom:0">💳 Debt Payoff Calculator</span>
+              <span class="calc-chevron" id="calc-chevron">▼</span>
+            </div>
+            <span class="drag-handle" title="Drag to reorder" style="margin-left:8px">⠿</span>
+          </div>
+          <div class="calc-body" id="calc-body" style="display:none">
+
+            <select class="calc-select" id="calc-debt-select" onchange="fillCalcFromDebt()">
+              <option value="">— Manual entry —</option>
+            </select>
+
+            <div class="calc-fields">
+              <div class="calc-field">
+                <label>Balance ($)</label>
+                <input type="number" id="calc-balance" placeholder="5000" min="0" step="0.01" oninput="runCalc()">
+              </div>
+              <div class="calc-field">
+                <label>APR (%)</label>
+                <input type="number" id="calc-rate" placeholder="19.99" min="0" step="0.01" oninput="runCalc()">
+              </div>
+              <div class="calc-field">
+                <label>Min Payment ($)</label>
+                <input type="number" id="calc-payment" placeholder="150" min="0" step="0.01" oninput="runCalc()">
+              </div>
+              <div class="calc-field">
+                <label>Start Month</label>
+                <input type="month" id="calc-start" oninput="runCalc()">
+              </div>
+            </div>
+
+            <div class="calc-extra-row">
+              <span class="calc-extra-label">+ Extra / mo</span>
+              <input type="number" class="calc-extra-input" id="calc-extra" placeholder="0" min="0" step="5" oninput="runCalc()">
+              <span style="font-size:11px;color:var(--neutral)">= see savings</span>
+            </div>
+
+            <div class="calc-results" id="calc-results" style="display:none">
+              <div class="calc-result-row">
+                <span class="calc-result-label">Payoff date</span>
+                <span class="calc-result-val" id="cr-payoff">—</span>
+              </div>
+              <div class="calc-result-row">
+                <span class="calc-result-label">Months left</span>
+                <span class="calc-result-val" id="cr-months">—</span>
+              </div>
+              <div class="calc-result-row">
+                <span class="calc-result-label">Total paid</span>
+                <span class="calc-result-val" id="cr-total">—</span>
+              </div>
+              <div class="calc-result-row">
+                <span class="calc-result-label">Total interest</span>
+                <span class="calc-result-val warn" id="cr-interest">—</span>
+              </div>
+            </div>
+
+            <div class="calc-savings-banner" id="calc-savings-banner">
+              <p id="calc-savings-text"></p>
+            </div>
+
+            <button class="calc-amort-toggle" id="calc-amort-btn" onclick="toggleAmort()" style="display:none">
+              Show full amortization schedule ▼
+            </button>
+            <div class="calc-amort-wrap" id="calc-amort-wrap">
+              <table class="calc-amort-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Payment</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="calc-amort-body"></tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /analytics-widgets -->
 
     </div>
   </div>
@@ -2257,138 +2373,6 @@
     </div>
   </div>
 
-  <!-- Sidebar drawer -->
-  <div class="sidebar" id="sidebar-drawer">
-    <div class="sidebar-drawer-header">
-      <span class="sidebar-drawer-title">Widgets</span>
-      <button class="sidebar-close-btn" onclick="toggleSidebar()" title="Close">✕</button>
-    </div>
-
-    <!-- Personality mode -->
-    <div class="sidebar-card mode-card">
-      <div class="sidebar-title">Your Mode</div>
-      <div class="mode-display">
-        <div class="mode-icon" id="mode-icon">🤱</div>
-        <div class="mode-name" id="mode-name">Mom Mode</div>
-      </div>
-      <div class="mode-msg" id="mode-msg">Add your first account and let's get to work.</div>
-      <button class="mode-change-btn" onclick="openModePickerModal()">Change your mode →</button>
-    </div>
-
-    <!-- Budget -->
-    <div class="sidebar-card" id="card-budget" data-card-id="card-budget" draggable="true">
-      <div class="card-title-row">
-        <span class="sidebar-title">Budget This Month</span>
-        <span class="drag-handle" title="Drag to reorder">⠿</span>
-      </div>
-      <div id="budget-list"><p style="font-size:13px;color:var(--neutral);opacity:0.7">Set category budgets in Settings.</p></div>
-    </div>
-
-    <!-- Goals -->
-    <div class="sidebar-card" id="card-goals" data-card-id="card-goals" draggable="true">
-      <div class="card-title-row">
-        <span class="sidebar-title">Savings Goals</span>
-        <span class="drag-handle" title="Drag to reorder">⠿</span>
-      </div>
-      <div id="goals-list"></div>
-      <button class="goal-add-btn" onclick="window.location.href='/tools/money-moves/settings#goals'">+ Add a Goal</button>
-    </div>
-
-    <!-- Debts -->
-    <div class="sidebar-card" id="card-debts" data-card-id="card-debts" draggable="true">
-      <div class="card-title-row">
-        <span class="sidebar-title">Debt Tracker</span>
-        <span class="drag-handle" title="Drag to reorder">⠿</span>
-      </div>
-      <div id="debt-list"><p style="font-size:13px;color:var(--neutral);opacity:0.7">No debts tracked yet.</p></div>
-      <button class="goal-add-btn" style="margin-top:12px" onclick="window.location.href='/tools/money-moves/settings#debts'">+ Add a Debt</button>
-    </div>
-
-    <!-- Debt Payoff Calculator -->
-    <div class="sidebar-card" id="card-calc" data-card-id="card-calc" draggable="true">
-      <div class="calc-toggle-row">
-        <div class="card-title-row" style="margin-bottom:0;flex:1;cursor:pointer" onclick="toggleDebtCalc()">
-          <span class="sidebar-title" style="margin-bottom:0">💳 Debt Payoff Calculator</span>
-          <span class="calc-chevron" id="calc-chevron">▼</span>
-        </div>
-        <span class="drag-handle" title="Drag to reorder" style="margin-left:8px">⠿</span>
-      </div>
-      <div class="calc-body" id="calc-body" style="display:none">
-
-        <select class="calc-select" id="calc-debt-select" onchange="fillCalcFromDebt()">
-          <option value="">— Manual entry —</option>
-        </select>
-
-        <div class="calc-fields">
-          <div class="calc-field">
-            <label>Balance ($)</label>
-            <input type="number" id="calc-balance" placeholder="5000" min="0" step="0.01" oninput="runCalc()">
-          </div>
-          <div class="calc-field">
-            <label>APR (%)</label>
-            <input type="number" id="calc-rate" placeholder="19.99" min="0" step="0.01" oninput="runCalc()">
-          </div>
-          <div class="calc-field">
-            <label>Min Payment ($)</label>
-            <input type="number" id="calc-payment" placeholder="150" min="0" step="0.01" oninput="runCalc()">
-          </div>
-          <div class="calc-field">
-            <label>Start Month</label>
-            <input type="month" id="calc-start" oninput="runCalc()">
-          </div>
-        </div>
-
-        <div class="calc-extra-row">
-          <span class="calc-extra-label">+ Extra / mo</span>
-          <input type="number" class="calc-extra-input" id="calc-extra" placeholder="0" min="0" step="5" oninput="runCalc()">
-          <span style="font-size:11px;color:var(--neutral)">= see savings</span>
-        </div>
-
-        <div class="calc-results" id="calc-results" style="display:none">
-          <div class="calc-result-row">
-            <span class="calc-result-label">Payoff date</span>
-            <span class="calc-result-val" id="cr-payoff">—</span>
-          </div>
-          <div class="calc-result-row">
-            <span class="calc-result-label">Months left</span>
-            <span class="calc-result-val" id="cr-months">—</span>
-          </div>
-          <div class="calc-result-row">
-            <span class="calc-result-label">Total paid</span>
-            <span class="calc-result-val" id="cr-total">—</span>
-          </div>
-          <div class="calc-result-row">
-            <span class="calc-result-label">Total interest</span>
-            <span class="calc-result-val warn" id="cr-interest">—</span>
-          </div>
-        </div>
-
-        <div class="calc-savings-banner" id="calc-savings-banner">
-          <p id="calc-savings-text"></p>
-        </div>
-
-        <button class="calc-amort-toggle" id="calc-amort-btn" onclick="toggleAmort()" style="display:none">
-          Show full amortization schedule ▼
-        </button>
-        <div class="calc-amort-wrap" id="calc-amort-wrap">
-          <table class="calc-amort-table">
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th>Payment</th>
-                <th>Principal</th>
-                <th>Interest</th>
-                <th>Balance</th>
-              </tr>
-            </thead>
-            <tbody id="calc-amort-body"></tbody>
-          </table>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
 </div>
 
 <!-- Add Transaction Modal -->
@@ -3703,12 +3687,6 @@
     if (!e.target.closest('.cal-search-wrap')) clearCalSearch();
   });
 
-  window.toggleSidebar = function () {
-    const drawer  = document.getElementById('sidebar-drawer');
-    const overlay = document.getElementById('sidebar-overlay');
-    const isOpen  = drawer.classList.toggle('open');
-    overlay.classList.toggle('show', isOpen);
-  };
 
   // ── GAMIFICATION ────────────────────────────────────────────────
   const GM_LEVELS = [
@@ -3841,9 +3819,9 @@
   const FEATURE_HINTS = [
     {
       id: 'widgets',
-      getTarget: () => document.querySelector('.nav-btn-widgets'),
-      title: 'Widgets Panel',
-      body: 'Your goals, debt tracker, and budget tools live in here. Tap to open.',
+      getTarget: () => document.querySelector('.analytics-toggle'),
+      title: 'Analytics & Tools',
+      body: 'Your goals, debt tracker, budget tools, and spending breakdown all live here. Click the panel to open.',
       anchor: 'bottom-left',
     },
     {
@@ -4111,7 +4089,7 @@
   (function initSidebarDrag() {
     const CARD_IDS    = ['card-budget', 'card-goals', 'card-debts', 'card-calc'];
     const ORDER_KEY   = 'mm_sidebar_order';
-    const sidebar     = document.querySelector('.sidebar');
+    const sidebar     = document.getElementById('analytics-widgets');
     let dragSrc       = null;
 
     // Restore saved order
@@ -5871,7 +5849,7 @@
 
   // ── Mobile nav helper ────────────────────────────────────────────────────────
   window.scrollToSidebar = function () {
-    const sb = document.querySelector('.sidebar');
+    const sb = document.getElementById('analytics-widgets');
     if (sb) sb.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
