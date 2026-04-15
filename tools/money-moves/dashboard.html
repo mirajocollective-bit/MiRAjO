@@ -1014,7 +1014,7 @@
     @media (max-width: 768px) {
       body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
       .nav { height: 48px; padding: 0 16px; }
-      .nav-greeting, .nav-btn-forecast, .nav-btn-logout,
+      .nav-greeting, .nav-xp-wrap, .nav-btn-forecast, .nav-btn-logout,
       .nav-btn-settings, .float-calc-toggle, .forecast-strip-toggle { display: none; }
       .layout {
         grid-template-columns: 1fr !important;
@@ -1356,6 +1356,143 @@
       background: none; border: none; color: rgba(255,255,255,0.5); font-size: 20px;
       cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;
     }
+
+    /* ── XP Bar (nav) ── */
+    .nav-xp-wrap {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(18,32,18,0.05);
+      border: 1px solid rgba(18,32,18,0.1);
+      border-radius: 100px;
+      padding: 3px 10px 3px 6px;
+    }
+    .nav-level-badge {
+      background: var(--living-green); color: #fff;
+      font-size: 9px; font-weight: 800;
+      padding: 2px 7px; border-radius: 100px; letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .nav-xp-bar {
+      width: 56px; height: 4px;
+      background: rgba(18,32,18,0.1); border-radius: 100px; overflow: hidden;
+    }
+    .nav-xp-fill {
+      height: 100%; background: var(--living-green);
+      border-radius: 100px; transition: width 0.6s ease; width: 0%;
+    }
+    .nav-level-name {
+      font-size: 11px; font-weight: 600; color: var(--deep-forest);
+      max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* ── XP Float animation ── */
+    .xp-float {
+      position: fixed; font-size: 14px; font-weight: 800;
+      color: var(--living-green); pointer-events: none; z-index: 9999;
+      text-shadow: 0 1px 6px rgba(255,255,255,0.9);
+      animation: xpFloatUp 1.4s ease forwards;
+    }
+    @keyframes xpFloatUp {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      50%  { opacity: 1; transform: translateY(-40px) scale(1.25); }
+      100% { opacity: 0; transform: translateY(-75px) scale(0.9); }
+    }
+
+    /* ── Level Up Toast ── */
+    .levelup-toast {
+      position: fixed; top: 72px; left: 50%;
+      transform: translateX(-50%) translateY(-16px);
+      background: #0D0D0D; color: #fff;
+      padding: 18px 32px; border-radius: 16px;
+      text-align: center; z-index: 9999;
+      opacity: 0; pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.35);
+      min-width: 220px;
+    }
+    .levelup-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .levelup-trophy { font-size: 36px; margin-bottom: 6px; }
+    .levelup-label {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--living-green); font-weight: 700; margin-bottom: 4px;
+    }
+    .levelup-name {
+      font-family: 'Instrument Serif', serif; font-size: 22px; color: #fff;
+    }
+
+    /* ── Confetti (MM) ── */
+    @keyframes mmConfettiFall {
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── Beats to Budget Player ── */
+    .beats-player {
+      position: fixed; bottom: 24px; right: 24px; z-index: 400;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    @media (max-width: 768px) { .beats-player { bottom: 80px; right: 12px; } }
+    .beats-toggle {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 18px;
+      background: #0D0D0D; color: #fff;
+      border: none; border-radius: 100px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.2px;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .beats-toggle:hover { transform: scale(1.04); }
+    .beats-toggle.playing { background: var(--living-green); }
+    .beats-eq {
+      display: flex; align-items: flex-end; gap: 2px; height: 14px;
+    }
+    .beats-eq span {
+      display: block; width: 3px; background: currentColor; border-radius: 2px;
+      animation: eqBounce 0.8s ease-in-out infinite alternate;
+    }
+    .beats-eq span:nth-child(1) { height: 6px; animation-delay: 0s; }
+    .beats-eq span:nth-child(2) { height: 12px; animation-delay: 0.15s; }
+    .beats-eq span:nth-child(3) { height: 8px; animation-delay: 0.3s; }
+    .beats-eq span:nth-child(4) { height: 14px; animation-delay: 0.1s; }
+    @keyframes eqBounce { to { height: 3px; } }
+    .beats-eq.paused span { animation-play-state: paused; }
+
+    .beats-panel {
+      position: absolute; bottom: 54px; right: 0;
+      width: 300px; background: #0D0D0D; border-radius: 18px;
+      overflow: hidden; box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+      transform: scale(0.9) translateY(12px);
+      opacity: 0; pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      transform-origin: bottom right;
+    }
+    .beats-panel.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
+    .beats-panel-header {
+      padding: 14px 16px 6px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .beats-panel-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .beats-close {
+      background: none; border: none; color: rgba(255,255,255,0.35);
+      font-size: 16px; cursor: pointer; padding: 0; line-height: 1;
+    }
+    .beats-vibes {
+      display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px 12px;
+    }
+    .beats-vibe {
+      padding: 6px 13px; border-radius: 100px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.65); font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .beats-vibe:hover { background: rgba(255,255,255,0.14); color: #fff; }
+    .beats-vibe.active { background: var(--living-green); border-color: var(--living-green); color: #fff; }
+    .beats-embed { padding: 0 12px 14px; }
+    .beats-embed iframe { width: 100%; border-radius: 10px; display: block; }
   </style>
   <script src="/analytics.js"></script>
 </head>
@@ -1371,6 +1508,11 @@
   </div>
   <div class="nav-right">
     <span class="nav-greeting" id="nav-greeting">Hi there</span>
+    <div class="nav-xp-wrap" id="nav-xp-wrap" title="Your budget XP">
+      <span class="nav-level-badge" id="nav-level-badge">Lv 1</span>
+      <div class="nav-xp-bar"><div class="nav-xp-fill" id="nav-xp-fill"></div></div>
+      <span class="nav-level-name" id="nav-level-name">Budget Rookie</span>
+    </div>
     <button class="forecast-strip-toggle" id="strip-toggle-btn" onclick="toggleForecastStrip()" title="12-Month Forecast">📈 Forecast</button>
     <button class="nav-btn nav-btn-forecast" onclick="toggleForecast()">7-Year</button>
     <button class="nav-btn nav-btn-add" onclick="openModal()">+ Add</button>
@@ -1394,6 +1536,31 @@
   </div>
 </nav>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- Level Up Toast -->
+<div class="levelup-toast" id="levelup-toast">
+  <div class="levelup-trophy">🏆</div>
+  <div class="levelup-label">Level Up</div>
+  <div class="levelup-name" id="levelup-name">Budget Rookie</div>
+</div>
+
+<!-- Beats to Budget Player -->
+<div class="beats-player" id="beats-player">
+  <div class="beats-panel" id="beats-panel">
+    <div class="beats-panel-header">
+      <span class="beats-panel-title">Beats to Budget</span>
+      <button class="beats-close" onclick="toggleBeats()">✕</button>
+    </div>
+    <div class="beats-vibes" id="beats-vibes"></div>
+    <div class="beats-embed" id="beats-embed"></div>
+  </div>
+  <button class="beats-toggle" id="beats-toggle" onclick="toggleBeats()">
+    <div class="beats-eq paused" id="beats-eq">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    Beats to Budget
+  </button>
+</div>
 
 <!-- accounts-bar removed — now lives inside the calendar section -->
 
@@ -3479,6 +3646,181 @@
     const overlay = document.getElementById('sidebar-overlay');
     const isOpen  = drawer.classList.toggle('open');
     overlay.classList.toggle('show', isOpen);
+  };
+
+  // ── GAMIFICATION ────────────────────────────────────────────────
+  const GM_LEVELS = [
+    { level: 1,  name: 'Budget Rookie',   xp: 0    },
+    { level: 2,  name: 'Penny Wise',      xp: 80   },
+    { level: 3,  name: 'Money Moves',     xp: 200  },
+    { level: 4,  name: 'Budget Boss',     xp: 400  },
+    { level: 5,  name: 'Stack Master',    xp: 700  },
+    { level: 6,  name: 'Financial Flex',  xp: 1100 },
+    { level: 7,  name: 'Wealth Builder',  xp: 1600 },
+    { level: 8,  name: 'Money Maven',     xp: 2400 },
+    { level: 9,  name: 'CEO of Coins',    xp: 3500 },
+    { level: 10, name: 'GOAT',            xp: 5000 },
+  ];
+
+  function gmGetState() {
+    return JSON.parse(localStorage.getItem('mm_gm') || '{"xp":0}');
+  }
+  function gmSaveState(s) { localStorage.setItem('mm_gm', JSON.stringify(s)); }
+
+  function gmLevelInfo(xp) {
+    let cur = GM_LEVELS[0], next = GM_LEVELS[1];
+    for (let i = GM_LEVELS.length - 1; i >= 0; i--) {
+      if (xp >= GM_LEVELS[i].xp) { cur = GM_LEVELS[i]; next = GM_LEVELS[i + 1] || null; break; }
+    }
+    return { cur, next };
+  }
+
+  function gmUpdateNav() {
+    const { xp } = gmGetState();
+    const { cur, next } = gmLevelInfo(xp);
+    document.getElementById('nav-level-badge').textContent = `Lv ${cur.level}`;
+    document.getElementById('nav-level-name').textContent  = cur.name;
+    const pct = next ? Math.min(((xp - cur.xp) / (next.xp - cur.xp)) * 100, 100) : 100;
+    document.getElementById('nav-xp-fill').style.width = pct + '%';
+  }
+
+  function gmFloatXP(amount) {
+    const btn = document.querySelector('.modal-save');
+    const rect = btn?.getBoundingClientRect();
+    const el = document.createElement('div');
+    el.className = 'xp-float';
+    el.textContent = `+${amount} XP`;
+    el.style.left = (rect ? rect.left + rect.width / 2 : window.innerWidth / 2) + 'px';
+    el.style.top  = (rect ? rect.top - 10 : window.innerHeight / 2) + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+
+  function gmAwardXP(amount, soundType) {
+    const state = gmGetState();
+    const oldXP = state.xp;
+    state.xp += amount;
+    gmSaveState(state);
+    gmUpdateNav();
+    gmFloatXP(amount);
+    playMMSound(soundType || 'xp');
+    const oldLevel = gmLevelInfo(oldXP).cur.level;
+    const newLevel = gmLevelInfo(state.xp).cur;
+    if (newLevel.level > oldLevel) gmLevelUp(newLevel);
+  }
+
+  function gmLevelUp(levelInfo) {
+    const toast = document.getElementById('levelup-toast');
+    document.getElementById('levelup-name').textContent = levelInfo.name;
+    toast.classList.add('show');
+    playMMSound('levelup');
+    spawnMMConfetti();
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  function spawnMMConfetti() {
+    const colors = ['#256B42','#6DC48A','#C4A245','#F2EBD9','#1E4226','#fff'];
+    for (let i = 0; i < 70; i++) {
+      const el = document.createElement('div');
+      const size = 6 + Math.random() * 6;
+      el.style.cssText = `position:fixed;width:${size}px;height:${size}px;border-radius:2px;`
+        + `background:${colors[Math.floor(Math.random() * colors.length)]};`
+        + `left:${Math.random() * 100}vw;top:-12px;z-index:9999;pointer-events:none;`
+        + `animation:mmConfettiFall ${1.4 + Math.random() * 0.8}s linear forwards;`
+        + `animation-delay:${Math.random() * 0.4}s;`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2600);
+    }
+  }
+
+  function playMMSound(type) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const play = (freq, startT, dur, vol = 0.12, wave = 'triangle') => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = wave; osc.frequency.value = freq;
+        gain.gain.setValueAtTime(vol, ctx.currentTime + startT);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startT + dur);
+        osc.start(ctx.currentTime + startT);
+        osc.stop(ctx.currentTime + startT + dur);
+      };
+      if (type === 'income')  { play(523,0,0.18); play(659,0.09,0.18); play(784,0.18,0.3); }
+      else if (type === 'expense') { play(370,0,0.25,0.07,'sine'); }
+      else if (type === 'savings') { play(523,0,0.15); play(784,0.1,0.15); play(1047,0.2,0.3); }
+      else if (type === 'xp') { play(880,0,0.1,0.06,'sine'); }
+      else if (type === 'levelup') {
+        [523,659,784,1047].forEach((f,i) => play(f, i*0.1, 0.4, 0.18));
+      }
+    } catch(e) {}
+  }
+
+  // Hook XP into saveTransaction — called after successful save
+  const _origSave = window.saveTransaction;
+  window.saveTransaction = async function () {
+    // Read type from the active type tab before save clears it
+    const activeTab = document.querySelector('.type-tab.active');
+    const typeBefore = ['income','expense','transfer'].find(t => activeTab?.classList.contains(t)) || 'expense';
+    await _origSave.apply(this, arguments);
+    // Only award XP if modal actually closed (save succeeded)
+    const modal = document.getElementById('modal-overlay');
+    if (!modal?.classList.contains('open')) {
+      const xpMap = { income: 15, expense: 10, savings: 20, transfer: 5 };
+      const type = ['income','expense','savings','transfer'].includes(typeBefore) ? typeBefore : 'expense';
+      gmAwardXP(xpMap[type] || 10, type);
+    }
+  };
+
+  // Init XP bar on load
+  gmUpdateNav();
+
+  // ── BEATS TO BUDGET ─────────────────────────────────────────────
+  const BEATS_VIBES = [
+    { name: '🌙 Lo-Fi',      id: 'jfKfPfyJRdk' },
+    { name: '🔥 Hip Hop',    id: 'HolijBLAVQA'  },
+    { name: '✨ R&B',        id: 'UfNS_HbzMJA'  },
+    { name: '🎷 Jazz',       id: 'Dx5qFachd3A'  },
+  ];
+  let beatsOpen = false;
+  let beatsPlaying = false;
+  let beatsCurrentIdx = 0;
+
+  // Build vibe buttons
+  const vibesEl = document.getElementById('beats-vibes');
+  BEATS_VIBES.forEach((v, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'beats-vibe' + (i === 0 ? ' active' : '');
+    btn.textContent = v.name;
+    btn.onclick = () => selectVibe(i);
+    vibesEl.appendChild(btn);
+  });
+
+  function selectVibe(idx) {
+    beatsCurrentIdx = idx;
+    document.querySelectorAll('.beats-vibe').forEach((b, i) => b.classList.toggle('active', i === idx));
+    loadBeatsEmbed(idx, true);
+  }
+
+  function loadBeatsEmbed(idx, autoplay = false) {
+    const embedEl = document.getElementById('beats-embed');
+    const id = BEATS_VIBES[idx].id;
+    embedEl.innerHTML = `<iframe id="beats-iframe" width="100%" height="80"
+      src="https://www.youtube-nocookie.com/embed/${id}?enablejsapi=1${autoplay ? '&autoplay=1' : ''}&rel=0&modestbranding=1"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    if (autoplay) {
+      beatsPlaying = true;
+      document.getElementById('beats-toggle').classList.add('playing');
+      document.getElementById('beats-eq').classList.remove('paused');
+    }
+  }
+
+  window.toggleBeats = function () {
+    beatsOpen = !beatsOpen;
+    document.getElementById('beats-panel').classList.toggle('open', beatsOpen);
+    if (beatsOpen && !document.getElementById('beats-iframe')) {
+      loadBeatsEmbed(beatsCurrentIdx, false);
+    }
   };
 
   window.toggleAnalytics = function () {
