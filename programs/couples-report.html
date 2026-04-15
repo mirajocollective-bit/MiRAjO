@@ -855,6 +855,14 @@
       color: #ffffff;
       margin-bottom: 2px;
     }
+    .path-step-link {
+      text-decoration: none;
+      display: inline-block;
+    }
+    .path-step-link:hover {
+      color: var(--pink-lt);
+      text-decoration: underline;
+    }
     .path-step-note {
       font-size: 11px;
       color: rgba(255,255,255,0.5);
@@ -1513,18 +1521,17 @@ function showError(msg) {
 
 function buildSuggestedPath(unlocked, rd) {
   const DOMAIN_MODS = {
-    finances:     [{ num: '02', title: 'The Financial Playbook',       note: 'Money alignment, salary structure, and financial decision-making.' }],
-    business:     [{ num: '03', title: 'The Game Plan',                note: 'Shared vision and long-term business direction.' },
-                   { num: '04', title: 'Who Runs What',                note: 'Roles, responsibilities, and how decisions get made.' }],
-    family:       [{ num: '05', title: 'The Life Architecture',        note: 'Designing a home life that supports the business.' }],
-    relationship: [{ num: '06', title: 'Protect What You Built',       note: 'Intimacy, connection, and keeping the partnership strong.' },
-                   { num: '07', title: 'Getting on the Same Page',     note: 'Communication and conflict — the skills that prevent bleed-over.' }],
+    finances:     [{ num: '02', slug: 'the-financial-playbook',     title: 'The Financial Playbook',   note: 'Money alignment, salary structure, and financial decision-making.' }],
+    business:     [{ num: '03', slug: 'the-game-plan',              title: 'The Game Plan',            note: 'Shared vision and long-term business direction.' },
+                   { num: '04', slug: 'who-runs-what',              title: 'Who Runs What',            note: 'Roles, responsibilities, and how decisions get made.' }],
+    family:       [{ num: '05', slug: 'the-life-architecture',      title: 'The Life Architecture',    note: 'Designing a home life that supports the business.' }],
+    relationship: [{ num: '06', slug: 'protect-what-you-built',     title: 'Protect What You Built',   note: 'Intimacy, connection, and keeping the partnership strong.' },
+                   { num: '07', slug: 'getting-on-the-same-page',   title: 'Getting on the Same Page', note: 'Communication and conflict — the skills that prevent bleed-over.' }],
   };
   const tierRank = { needs: 0, partial: 1, aligned: 2 };
   const allDomains = ['finances', 'business', 'family', 'relationship'];
   const active = unlocked.includes('all') ? allDomains : allDomains.filter(d => unlocked.includes(d));
 
-  // Sort: needs attention first, then partial, then aligned
   active.sort((a, b) => {
     const ra = tierRank[alignmentInfo(a, unlocked, rd).tier];
     const rb = tierRank[alignmentInfo(b, unlocked, rd).tier];
@@ -1532,29 +1539,29 @@ function buildSuggestedPath(unlocked, rd) {
   });
 
   const steps = [];
-  steps.push({ circle: 'circle-always', tag: 'tag-always', tagLabel: 'Start Here', title: '01 · The Cost of Misalignment', note: 'Every couple begins here — this is the foundation everything else builds on.' });
+  steps.push({ circle: 'circle-always', tag: 'tag-always', tagLabel: 'Start Here', num: '01', title: 'The Cost of Misalignment', slug: 'the-cost-of-misalignment', note: 'Every couple begins here — this is the foundation everything else builds on.' });
 
   for (const domain of active) {
     const info = alignmentInfo(domain, unlocked, rd);
     const mods = DOMAIN_MODS[domain] || [];
-    const isNeeds = info.tier === 'needs';
+    const isNeeds   = info.tier === 'needs';
     const isPartial = info.tier === 'partial';
     const circleClass = isNeeds ? 'circle-priority' : isPartial ? 'circle-recommended' : 'circle-included';
     const tagClass    = isNeeds ? 'tag-priority'    : isPartial ? 'tag-recommended'    : 'tag-included';
-    const tagLabel    = isNeeds ? 'Priority'         : isPartial ? 'Recommended'        : 'Included';
+    const tagLabel    = isNeeds ? 'Priority'        : isPartial ? 'Recommended'        : 'Included';
     for (const m of mods) {
-      steps.push({ circle: circleClass, tag: tagClass, tagLabel, title: `${m.num} · ${m.title}`, note: m.note });
+      steps.push({ circle: circleClass, tag: tagClass, tagLabel, num: m.num, title: m.title, slug: m.slug, note: m.note });
     }
   }
 
-  steps.push({ circle: 'circle-always', tag: 'tag-always', tagLabel: 'Final Step', title: '08 · The Win', note: 'Close your course path. Celebrate the work and what you\'ve built together.' });
+  steps.push({ circle: 'circle-always', tag: 'tag-always', tagLabel: 'Final Step', num: '08', title: 'The Win', slug: 'the-win', note: 'Close your course path. Celebrate the work and what you\'ve built together.' });
 
   return steps.map(s => `
     <div class="path-step">
       <div class="path-step-circle ${s.circle}"></div>
       <div class="path-step-body">
         <div class="path-step-tag ${s.tag}">${s.tagLabel}</div>
-        <div class="path-step-module">${s.title}</div>
+        <a href="/programs/couples-course/${s.slug}" class="path-step-module path-step-link">${s.num} · ${s.title} →</a>
         <div class="path-step-note">${s.note}</div>
       </div>
     </div>`).join('');
