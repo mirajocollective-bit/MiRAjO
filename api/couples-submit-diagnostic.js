@@ -67,6 +67,19 @@ export default async function handler(req, res) {
   const bothDone = !!(partnerADone && partnerBDone);
 
   if (!bothDone) {
+    // One partner just finished — send reminder to the other
+    try {
+      const completedId  = user_id;
+      const waitingId    = user_id === couple.partner_a_user_id ? couple.partner_b_user_id : couple.partner_a_user_id;
+      const { data: completedProfile } = await supabase.auth.admin.getUserById(completedId);
+      const { data: waitingProfile   } = await supabase.auth.admin.getUserById(waitingId);
+      const completedName = completedProfile?.user?.user_metadata?.first_name || '';
+      const waitingEmail  = waitingProfile?.user?.email;
+      const waitingName   = waitingProfile?.user?.user_metadata?.first_name || '';
+      if (waitingEmail) {
+        await queueSequence(supabase, waitingEmail, 'diagnostic-reminder-cie', waitingName, { partner_name: completedName });
+      }
+    } catch (_) {}
     return res.status(200).json({ success: true, report_ready: false });
   }
 

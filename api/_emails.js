@@ -177,39 +177,40 @@ export const SEQUENCES = {
   'enrolled-couples-cie': [
     {
       step: 1, delayDays: 0,
-      subject: "You're in. Now let's get your partner in too.",
+      subject: "You're in. Here is what happens next.",
       body: (n, d) => wrap(
         greet(n) +
-        p(`You just made a decision most couples never make. You said: we are going to look at this honestly, together. That takes courage and it takes love.`) +
-        p(`Here is what happens next.`) +
-        p(`<strong style="color:#122012;">Step 1: Log in.</strong><br>Use the button below. Once you are in your dashboard, everything else will be waiting for you.`) +
-        p(`<strong style="color:#122012;">Step 2: Build your individual profile.</strong><br>Takes about five minutes. This is yours alone: your background, family situation, where the business is, and what you are hoping this course does for you both. Your partner will complete theirs separately.`) +
-        p(`<strong style="color:#122012;">Step 3: Invite your partner.</strong><br>From your dashboard, enter their email. They will get everything they need to set up their account and complete their own profile and assessment.`) +
-        p(`<strong style="color:#122012;">Step 4: Complete Module 1, then the Diagnostic.</strong><br>Module 1 is where everyone starts. Once you finish it, The Partnership Diagnostic unlocks. Answer honestly. Your partner will not see your responses.`) +
-        p(`<strong style="color:#122012;">Step 5: See your Partnership Report together.</strong><br>Once both of you have completed the diagnostic, your report generates automatically. Your profiles, your answers, your gaps, side by side. That is where the real work begins.`) +
+        p(`You just made a decision most couples never make. You said: we are going to look at this honestly, together. That is not a small thing.`) +
+        p(`Here is how the next few days go:`) +
+        p(`<strong style="color:#B82038;">Log in and build your profile.</strong><br>Takes about five minutes. This is yours alone: your background, your family situation, where the business is, and what you are hoping this does for you both. Your partner completes theirs separately, so be honest.`) +
+        p(`<strong style="color:#B82038;">Invite your partner.</strong><br>From your dashboard, enter their email. They will get everything they need to create their account and complete their side of things at their own pace.`) +
+        p(`<strong style="color:#B82038;">Start Module 1 together or separately.</strong><br>It is always available from day one. It sets up everything that comes next, including the Partnership Diagnostic.`) +
+        p(`<strong style="color:#B82038;">Take the Diagnostic privately.</strong><br>You each answer separately and honestly. Your partner will not see your responses. What generates from both sets of answers is your Partnership Report, and that you open together.`) +
+        p(`Your report shows exactly where you align, where the gaps are, and which course modules are built around your specific situation. That is where the real work starts.`) +
         btn('Log In and Get Started', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-confirm`) +
-        p(`If you have any questions at all, reply to this email. I read every one.`)
+        p(`Reply to this email any time. I read every one.`)
       ),
     },
     {
       step: 2, delayDays: 2,
-      subject: "Your partner hasn't joined yet.",
+      subject: "Quick check-in on where things stand.",
       body: (n) => wrap(
         greet(n) +
-        p(`You enrolled two days ago and your partner has not joined yet. That is okay. But the course cannot begin until both of you are in.`) +
-        p(`If you have not sent the invite, log in now and enter their email. It takes less than a minute.`) +
-        p(`If you already sent it, it might be worth a gentle nudge their way.`) +
-        btn('Log In to Invite Your Partner', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-confirm`)
+        p(`Just checking in. If your partner has not joined yet, no rush, but the course does not fully open until both of you are in.`) +
+        p(`If you have not sent the invite yet, log in and enter their email from your dashboard. It takes less than a minute and they get a clear, friendly email explaining exactly what they are joining.`) +
+        p(`If you already sent it, a gentle heads-up their way usually does the trick.`) +
+        btn('Go to Your Dashboard', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-confirm`)
       ),
     },
     {
-      step: 3, delayDays: 5,
-      subject: "Still waiting on your partner.",
+      step: 3, delayDays: 7,
+      subject: "Still here when you are both ready.",
       body: (n) => wrap(
         greet(n) +
-        p(`Five days in and your partner has not yet accepted their invite. The course is ready. The work is ready. The only thing missing is the two of you inside it together.`) +
-        p(`Sometimes one partner moves faster than the other. That is not a problem. It is information. Talk to them about why you signed up and what you are hoping this does for you both.`) +
-        p(`When they are ready, their invite link is still active. Log in to resend it if needed.`) +
+        p(`A week in and things are still getting started on your end. That happens. Life does not pause for course launches.`) +
+        p(`When both of you are ready, everything is waiting. The invite link is still active. The course is still yours. Nothing expires.`) +
+        p(`Sometimes one partner needs a little more time to feel ready to do this kind of work. That is worth a conversation in itself: why did you sign up, what are you hoping it does for you both, and what would make it feel like the right time?`) +
+        p(`That conversation is actually a good place to start.`) +
         btn('Log In', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/login`)
       ),
     },
@@ -218,29 +219,54 @@ export const SEQUENCES = {
   'invited-couples-cie': [
     {
       step: 1, delayDays: 0,
-      subject: (d) => `${d?.partner_name || 'Your partner'} invited you to something important.`,
+      subject: (d) => `${d?.partner_name || 'Your partner'} invited you to something they care about.`,
       body: (n, d) => wrap(
         greet(n) +
         p(`${d?.partner_name || 'Your partner'} just enrolled in Couples in Entrepreneurship and they want you in it with them.`) +
-        p(`That is not a small thing. They did not just buy a course. They said: I want us to be better at this together. Together being the operative word.`) +
-        p(`Here is how it works:`) +
-        p(`First, you each build your own individual profile. Five minutes, completely private. Your background, family situation, where the business is, what you are each hoping for. Then you each complete The Partnership Diagnostic separately across four areas: Business, Finances, Family, and Relationship. No shared answers. No pressure.`) +
-        p(`Once both of you are done, the system generates your Partnership Report. Your profiles and your diagnostic answers side by side, showing exactly where you align and where the gaps are. You open that report together.`) +
-        p(`From there, a joint course path unlocks built specifically around your gaps. Not a generic program. Yours.`) +
-        p(`It is not therapy. It is infrastructure for couples who are building something serious.`) +
+        p(`That is worth paying attention to. They did not just buy a course. They said: I want us to be better at this together. That takes some courage to say out loud.`) +
+        p(`Here is how it works: you each build your own individual profile separately and honestly, five minutes, completely private. Then you each take The Partnership Diagnostic across four areas: Business, Finances, Family, and Relationship. No shared answers, no pressure to agree on anything.`) +
+        p(`Once both of you are done, the system generates your Partnership Report. Your profiles and your answers side by side, showing where you align and where the gaps are. You open that together.`) +
+        p(`From there, a course path unlocks built around your specific gaps. Not a generic program. Yours.`) +
+        p(`It is not therapy. It is a practical framework for couples who are building something real together and want to do it without quietly grinding each other down in the process.`) +
         btn('Accept Your Invite', d?.invite_url || `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-join`) +
-        p(`If you have questions before you jump in, reply here. I am happy to talk through what this looks like for you both.`)
+        p(`Have questions before you jump in? Reply here. Happy to talk through what this looks like for you both.`)
       ),
     },
     {
-      step: 2, delayDays: 2,
-      subject: "A quick reminder from your partner.",
+      step: 2, delayDays: 3,
+      subject: (d) => `${d?.partner_name || 'Your partner'} is ready when you are.`,
       body: (n, d) => wrap(
         greet(n) +
-        p(`${d?.partner_name || 'Your partner'} is waiting on the other side of this.`) +
-        p(`They enrolled in Couples in Entrepreneurship and invited you two days ago. The course cannot generate your Partnership Report until both of you are in.`) +
-        p(`It takes less than five minutes to set up your account and get started on your side of the diagnostic. Everything else moves at your pace.`) +
-        btn('Join Now', d?.invite_url || `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-join`)
+        p(`${d?.partner_name || 'Your partner'} enrolled in Couples in Entrepreneurship a few days ago and your invite is still waiting.`) +
+        p(`No pressure, but they are on the other side of this ready to do the work. The report does not generate until both of you complete your side, so they are in a bit of a holding pattern.`) +
+        p(`Your side takes less than ten minutes to get started, and everything after that moves at your own pace.`) +
+        btn('Join and Get Started', d?.invite_url || `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-join`)
+      ),
+    },
+  ],
+
+  'diagnostic-reminder-cie': [
+    {
+      step: 1, delayDays: 0,
+      subject: (d) => `${d?.partner_name || 'Your partner'} finished the diagnostic. Your turn.`,
+      body: (n, d) => wrap(
+        greet(n) +
+        p(`${d?.partner_name || 'Your partner'} just completed The Partnership Diagnostic.`) +
+        p(`Your answers are the other half of the picture. Until both sides are in, the report cannot generate and neither of you can see where you actually stand together.`) +
+        p(`The diagnostic takes about 15 minutes. You will read through scenarios across Business, Finances, Family, and Relationship, and choose the response that most honestly reflects how you actually handle things, not how you wish you did.`) +
+        p(`Your individual answers stay private. What generates from both of yours together is what you will both see.`) +
+        btn('Take the Diagnostic Now', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-dashboard`)
+      ),
+    },
+    {
+      step: 2, delayDays: 4,
+      subject: "The report is waiting on you.",
+      body: (n, d) => wrap(
+        greet(n) +
+        p(`Your partner finished their diagnostic a few days ago. The Partnership Report is built and waiting, it just needs your answers to complete the picture.`) +
+        p(`Fifteen minutes. Honest answers. That is all it takes to unlock everything you enrolled for.`) +
+        p(`The work you both signed up for starts the moment that report generates.`) +
+        btn('Complete the Diagnostic', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-dashboard`)
       ),
     },
   ],
@@ -251,10 +277,34 @@ export const SEQUENCES = {
       subject: "Your Partnership Report is ready.",
       body: (n) => wrap(
         greet(n) +
-        p(`Both of you have completed The Partnership Diagnostic. Your Partnership Report is ready.`) +
-        p(`This is the moment. Find time to open it together, not separately. What you are about to see is where you align, where you do not, and what the course is going to help you build between those two things.`) +
-        p(`Do not read it and then summarize it to each other later. Sit down together. Open it together. That is the beginning of the work.`) +
-        btn('View Your Partnership Report', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-dashboard`)
+        p(`Both of you finished the diagnostic. Your Partnership Report is ready.`) +
+        p(`This is the part you enrolled for. Your profiles side by side, your diagnostic answers compared across Business, Finances, Family, and Relationship. Where you are aligned. Where the gaps are. And which course modules unlock based on what you two specifically need to work on.`) +
+        p(`One request: open it together. Not you reading it and summarizing it later, not two separate reads with a debrief. Sit down together and go through it at the same time. What you notice and what your partner notices will be different, and that difference is part of the work.`) +
+        p(`There is no good or bad score. There is only where you are starting from.`) +
+        btn('Open Your Partnership Report', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-report`)
+      ),
+    },
+    {
+      step: 2, delayDays: 2,
+      subject: "Did you open it together?",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Your Partnership Report has been ready for a couple of days. If you have not opened it yet, no stress, but it is worth carving out time this week.`) +
+        p(`If you did open it: what came up? Most couples are surprised by at least one thing. Sometimes it is a gap they did not expect. Sometimes it is an alignment they had not named. Either way, that moment of seeing it together is usually when the course starts to feel real.`) +
+        p(`Your modules are already unlocked based on your results. When you are ready to start working through them, your dashboard is waiting.`) +
+        btn('Go to Your Dashboard', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-dashboard`)
+      ),
+    },
+    {
+      step: 3, delayDays: 10,
+      subject: "Your course is open. Just checking in.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`It has been about ten days since your Partnership Report generated. Wanted to check in.`) +
+        p(`Your course path is already built around your specific gaps. The modules are unlocked. Module 1 is always available as your starting point.`) +
+        p(`If life got in the way of getting started, that is completely normal. This is not a race. But I do want to make sure you both get what you enrolled for.`) +
+        p(`Even one lesson a week moves the needle. The framework builds on itself, so starting small still works.`) +
+        btn('Start the Course', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/programs/couples-dashboard`)
       ),
     },
   ],
@@ -266,21 +316,22 @@ export const SEQUENCES = {
       body: (n) => wrap(
         greet(n) +
         p(`You finished. Both of you.`) +
-        p(`That matters more than it sounds. Most couples who feel the friction of building a business together never look at it directly. They manage around it, they avoid the hard conversations, they hope the business gets easier before the relationship gets harder.`) +
+        p(`That matters more than it sounds. Most couples who feel the friction of building a business together never look at it directly. They manage around it, they avoid the hard conversations, they keep moving and hope the business gets easier before the relationship gets harder.`) +
         p(`You did the opposite. You looked at it. You named it. You worked through it together.`) +
-        p(`That does not mean every tension is resolved. But you now have a shared language for it, a framework to return to, and proof that you can do hard things as a team.`) +
-        p(`If you want to go deeper, one-on-one coaching with me is the next step. It is not for everyone. But if you are serious about what you are building and who you are building it with, it might be for you.`) +
+        p(`That does not mean every tension is resolved. But you now have a shared language, a set of agreements you made together, and proof that you can do hard things as a team. That last part matters more over time than you might realize right now.`) +
+        p(`If you want to go deeper, coaching is the next step. It is not for everyone, but if you are serious about what you are building together, it might be for you.`) +
         btn('Learn About Coaching', `${process.env.SITE_URL || 'https://www.mirajoco.org'}/coaching`)
       ),
     },
     {
-      step: 2, delayDays: 4,
-      subject: "Four days out. What changed?",
+      step: 2, delayDays: 5,
+      subject: "Five days out. What is actually different?",
       body: (n) => wrap(
         greet(n) +
-        p(`It has been four days since you finished the course. I want to ask you something honest.`) +
-        p(`What is actually different? Not what you planned to change. Not what you talked about changing. What has genuinely shifted in how you and your partner are showing up for each other and for the business?`) +
-        p(`Reply to this email and tell me one thing. I read every reply.`)
+        p(`You finished the course five days ago. I want to ask you something honest.`) +
+        p(`What is actually different? Not what you planned to change. Not what you talked about changing. What has genuinely shifted in how you and your partner are showing up for each other and the business?`) +
+        p(`It does not have to be dramatic. Sometimes it is just one conversation that happened differently. One moment where you pointed to the agreement instead of arguing about what you meant. One time you caught yourself crossing into your partner's lane and stepped back.`) +
+        p(`Reply and tell me one thing. I read every reply.`)
       ),
     },
   ],
