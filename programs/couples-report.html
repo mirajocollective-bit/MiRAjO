@@ -335,6 +335,71 @@
     .dc-body { padding: 28px 32px; }
 
     /* ═══ ALIGNMENT CHART ═══ */
+    .chart-key {
+      background: #F9F9F9;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+    }
+    .chart-key-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .chart-key-scale {
+      display: flex;
+      gap: 0;
+      margin-bottom: 8px;
+    }
+    .chart-key-step {
+      flex: 1;
+      text-align: center;
+      padding: 5px 2px;
+      border-radius: 4px;
+    }
+    .chart-key-num {
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .chart-key-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+    .chart-key-step-1 { background: rgba(184,32,56,0.08); }
+    .chart-key-step-1 .chart-key-num,
+    .chart-key-step-1 .chart-key-label { color: #B82038; }
+    .chart-key-step-2 { background: rgba(200,100,0,0.08); }
+    .chart-key-step-2 .chart-key-num,
+    .chart-key-step-2 .chart-key-label { color: #C86400; }
+    .chart-key-step-3 { background: rgba(47,138,90,0.08); }
+    .chart-key-step-3 .chart-key-num,
+    .chart-key-step-3 .chart-key-label { color: #2F8A5A; }
+    .chart-key-step-4 { background: rgba(47,138,90,0.15); }
+    .chart-key-step-4 .chart-key-num,
+    .chart-key-step-4 .chart-key-label { color: #1E6B42; }
+    .chart-key-goal {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .chart-key-goal-line {
+      flex-shrink: 0;
+      width: 24px;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, #C4860A 0px, #C4860A 5px, transparent 5px, transparent 8px);
+    }
 
     /* ═══ COMPACT DOMAIN CARDS (inside 2x2 grid) ═══ */
     .domain-grid .domain-card { border-radius: 8px; }
@@ -1305,6 +1370,19 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
             <div class="rblock-sub">Your alignment snapshot across all four domains.</div>
           </div>
           <div class="rblock-body">
+            <div class="chart-key">
+              <div class="chart-key-title">How to read this chart</div>
+              <div class="chart-key-scale">
+                <div class="chart-key-step chart-key-step-1"><div class="chart-key-num">1</div><div class="chart-key-label">Avoidant</div></div>
+                <div class="chart-key-step chart-key-step-2"><div class="chart-key-num">2</div><div class="chart-key-label">Reactive</div></div>
+                <div class="chart-key-step chart-key-step-3"><div class="chart-key-num">3</div><div class="chart-key-label">Intentional</div></div>
+                <div class="chart-key-step chart-key-step-4"><div class="chart-key-num">4</div><div class="chart-key-label">Proactive</div></div>
+              </div>
+              <div class="chart-key-goal">
+                <div class="chart-key-goal-line"></div>
+                <span><strong style="color:#C4860A;">Goal line = 3.0</strong> — the intentional threshold. Scores at or above this mean you are actively working together in this area. Below it signals where the real work begins.</span>
+              </div>
+            </div>
             ${buildAlignmentSVG(unlocked, rd, isPartnerA, youLabel, partnerLabel)}
             <div class="overview-message" style="margin-top:10px;">
               <div class="overview-message-label">Before You Read</div>
@@ -1380,7 +1458,7 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
 
 function buildAlignmentSVG(unlocked, rd, isPartnerA, youLabel, partnerLabel) {
   const W = 300, rowH = 42, labelW = 76, barX = labelW + 6;
-  const barW = W - barX - 28, targetX = barX + (3.5 / 4) * barW;
+  const barW = W - barX - 28, targetX = barX + (3.0 / 4) * barW;
   const H = DOMAINS_META.length * rowH + 28; // extra for legend
   const f = v => v.toFixed(1);
 
@@ -1410,7 +1488,7 @@ function buildAlignmentSVG(unlocked, rd, isPartnerA, youLabel, partnerLabel) {
     <rect x="${barX + 50}" y="${legY}" width="10" height="8" rx="3" fill="#333333"/>
     <text x="${barX + 63}" y="${legY + 8}" font-size="9" fill="#666" font-family="Plus Jakarta Sans,sans-serif">${escHtml(partnerLabel)}</text>
     <line x1="${barX + 115}" y1="${legY + 4}" x2="${barX + 125}" y2="${legY + 4}" stroke="#C4860A" stroke-width="1.5" stroke-dasharray="3,2"/>
-    <text x="${barX + 128}" y="${legY + 8}" font-size="9" fill="#C4860A" font-family="Plus Jakarta Sans,sans-serif">Goal (3.5)</text>`;
+    <text x="${barX + 128}" y="${legY + 8}" font-size="9" fill="#C4860A" font-family="Plus Jakarta Sans,sans-serif">Goal (3.0)</text>`;
 
   return `<svg width="100%" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${rows}${legend}</svg>`;
 }
