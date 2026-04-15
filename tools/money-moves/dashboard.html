@@ -415,7 +415,22 @@
       padding: 0 16px 16px; gap: 0;
       border-left: 2px solid #111;
       border-bottom: 2px solid #111;
+      position: relative;
     }
+    .cal-loading-overlay {
+      position: absolute; inset: 0; z-index: 10;
+      background: rgba(255,255,255,0.72); backdrop-filter: blur(2px);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 0 0 12px 12px;
+    }
+    .cal-loading-overlay.hidden { display: none; }
+    .cal-spinner {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 3px solid rgba(37,107,66,0.15);
+      border-top-color: var(--living-green);
+      animation: calSpin 0.7s linear infinite;
+    }
+    @keyframes calSpin { to { transform: rotate(360deg); } }
 
     .cal-cell {
       height: 130px; border-radius: 0; padding: 8px 8px 6px;
@@ -1547,6 +1562,42 @@
     .beats-vibe.active { background: var(--living-green); border-color: var(--living-green); color: #fff; }
     .beats-embed { padding: 0 12px 14px; }
     .beats-embed iframe { width: 100%; border-radius: 10px; display: block; }
+    .beats-customize-toggle {
+      background: none; border: none; color: rgba(255,255,255,0.3);
+      font-size: 11px; cursor: pointer; padding: 0 14px 10px;
+      display: block; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .beats-customize-toggle:hover { color: rgba(255,255,255,0.6); }
+    .beats-customize-panel {
+      display: none; padding: 4px 12px 14px; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .beats-customize-panel.open { display: block; }
+    .beats-custom-row {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+    }
+    .beats-custom-label {
+      font-size: 11px; color: rgba(255,255,255,0.45); width: 70px; flex-shrink: 0;
+    }
+    .beats-custom-input {
+      flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px; color: #fff; font-size: 11px; padding: 5px 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif; outline: none;
+    }
+    .beats-custom-input:focus { border-color: var(--living-green); }
+    .beats-custom-input::placeholder { color: rgba(255,255,255,0.2); }
+    .beats-custom-save {
+      display: block; width: 100%; margin-top: 4px;
+      background: var(--living-green); color: #fff; border: none;
+      border-radius: 8px; padding: 7px; font-size: 12px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .beats-custom-reset {
+      display: block; width: 100%; margin-top: 6px;
+      background: none; color: rgba(255,255,255,0.3); border: none;
+      font-size: 11px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .beats-custom-reset:hover { color: rgba(255,255,255,0.6); }
   </style>
   <script src="/analytics.js"></script>
 </head>
@@ -1605,6 +1656,27 @@
     </div>
     <div class="beats-vibes" id="beats-vibes"></div>
     <div class="beats-embed" id="beats-embed"></div>
+    <button class="beats-customize-toggle" onclick="toggleBeatsCustomize()">✏ Customize vibes</button>
+    <div class="beats-customize-panel" id="beats-customize-panel">
+      <div class="beats-custom-row">
+        <span class="beats-custom-label">🌙 Lo-Fi</span>
+        <input class="beats-custom-input" id="bc-0" placeholder="Paste YouTube URL or video ID">
+      </div>
+      <div class="beats-custom-row">
+        <span class="beats-custom-label">🔥 Hip Hop</span>
+        <input class="beats-custom-input" id="bc-1" placeholder="Paste YouTube URL or video ID">
+      </div>
+      <div class="beats-custom-row">
+        <span class="beats-custom-label">✨ R&amp;B</span>
+        <input class="beats-custom-input" id="bc-2" placeholder="Paste YouTube URL or video ID">
+      </div>
+      <div class="beats-custom-row">
+        <span class="beats-custom-label">🎷 Jazz</span>
+        <input class="beats-custom-input" id="bc-3" placeholder="Paste YouTube URL or video ID">
+      </div>
+      <button class="beats-custom-save" onclick="saveBeatsCustom()">Save Vibes</button>
+      <button class="beats-custom-reset" onclick="resetBeatsCustom()">Reset to defaults</button>
+    </div>
   </div>
   <button class="beats-toggle" id="beats-toggle" onclick="toggleBeats()">
     <div class="beats-eq paused" id="beats-eq">
@@ -1912,7 +1984,11 @@
         <div class="cal-day-name">Fri</div>
         <div class="cal-day-name">Sat</div>
       </div>
-      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-grid" id="cal-grid">
+        <div class="cal-loading-overlay" id="cal-loading-overlay">
+          <div class="cal-spinner"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Mortgage Calculator -->
@@ -2725,6 +2801,10 @@
   document.getElementById('nav-greeting').textContent = `Hi, ${firstName}`;
   window._mmUser = user;
 
+  // Start members lookup immediately — runs in parallel with access check below
+  window._mmMembersPromise = supabase.from('mm_members')
+    .select('household_id').eq('user_id', user.id).eq('status', 'active').limit(1);
+
   // ── Subscription gate (server-side check to bypass RLS) ─────────────────────
   {
     const accessRes = await fetch('/api/mm-check-access', {
@@ -2831,9 +2911,10 @@
 
   // ── Load all ────────────────────────────────────────────────────────────────
   async function loadAll() {
-    const { data: members } = await supabase
-      .from('mm_members').select('household_id')
-      .eq('user_id', user.id).eq('status', 'active').limit(1);
+    const membersQuery = window._mmMembersPromise
+      || supabase.from('mm_members').select('household_id').eq('user_id', user.id).eq('status', 'active').limit(1);
+    window._mmMembersPromise = null;
+    const { data: members } = await membersQuery;
     if (!members?.length) {
       // Auto-provision — only attempt once per session to prevent reload loop
       if (!sessionStorage.getItem('mm_provision_attempted')) {
@@ -2875,6 +2956,7 @@
     renderAccountTabs();
     renderSummary();
     renderCalendar();
+    document.getElementById('cal-loading-overlay')?.classList.add('hidden');
     renderMode();
     renderBudget();
     renderAnalytics();
@@ -3937,13 +4019,41 @@
   setTimeout(initBeacons, 800);
 
   // ── BEATS TO BUDGET ─────────────────────────────────────────────
-  // To update a vibe: replace the id with any YouTube video ID (the part after ?v= in the URL)
-  const BEATS_VIBES = [
-    { name: '🌙 Lo-Fi',      id: 'jfKfPfyJRdk' },  // Lofi Girl 24/7
-    { name: '🔥 Hip Hop',    id: 'Nu_8h1LY07Q'  },  // Trap Soul + LoFi 24/7
-    { name: '✨ R&B',        id: 'WamzfT5E20c'  },  // After Hours R&B 24/7
-    { name: '🎷 Jazz',       id: 'HuFYqnbVbzY'  },  // Jazz Lofi Radio 24/7
+  const BEATS_DEFAULTS = [
+    { name: '🌙 Lo-Fi',   id: 'jfKfPfyJRdk' },
+    { name: '🔥 Hip Hop', id: 'Nu_8h1LY07Q'  },
+    { name: '✨ R&B',     id: 'WamzfT5E20c'  },
+    { name: '🎷 Jazz',    id: 'HuFYqnbVbzY'  },
   ];
+
+  function beatsGetCustomIds() {
+    return JSON.parse(localStorage.getItem('mm_beats_custom') || '{}');
+  }
+
+  function beatsGetVibes() {
+    const custom = beatsGetCustomIds();
+    return BEATS_DEFAULTS.map((v, i) => ({ name: v.name, id: custom[i] || v.id }));
+  }
+
+  function extractYtId(input) {
+    if (!input) return '';
+    input = input.trim();
+    // Full URL patterns
+    const patterns = [
+      /[?&]v=([a-zA-Z0-9_-]{11})/,
+      /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+      /embed\/([a-zA-Z0-9_-]{11})/,
+    ];
+    for (const re of patterns) {
+      const m = input.match(re);
+      if (m) return m[1];
+    }
+    // Bare 11-char ID
+    if (/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+    return '';
+  }
+
+  const BEATS_VIBES = beatsGetVibes();
   let beatsOpen = false;
   let beatsPlaying = false;
   let beatsCurrentIdx = 0;
@@ -3958,6 +4068,13 @@
     vibesEl.appendChild(btn);
   });
 
+  // Populate customize inputs with current custom values
+  const customIds = beatsGetCustomIds();
+  BEATS_DEFAULTS.forEach((v, i) => {
+    const inp = document.getElementById(`bc-${i}`);
+    if (inp && customIds[i]) inp.value = customIds[i];
+  });
+
   function selectVibe(idx) {
     beatsCurrentIdx = idx;
     document.querySelectorAll('.beats-vibe').forEach((b, i) => b.classList.toggle('active', i === idx));
@@ -3965,8 +4082,9 @@
   }
 
   function loadBeatsEmbed(idx, autoplay = false) {
+    const vibes = beatsGetVibes();
     const embedEl = document.getElementById('beats-embed');
-    const id = BEATS_VIBES[idx].id;
+    const id = vibes[idx].id;
     embedEl.innerHTML = `<iframe id="beats-iframe" width="100%" height="80"
       src="https://www.youtube-nocookie.com/embed/${id}?enablejsapi=1${autoplay ? '&autoplay=1' : ''}&rel=0&modestbranding=1"
       frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
@@ -3983,6 +4101,35 @@
     if (beatsOpen && !document.getElementById('beats-iframe')) {
       loadBeatsEmbed(beatsCurrentIdx, false);
     }
+  };
+
+  window.toggleBeatsCustomize = function () {
+    document.getElementById('beats-customize-panel').classList.toggle('open');
+  };
+
+  window.saveBeatsCustom = function () {
+    const saved = {};
+    BEATS_DEFAULTS.forEach((v, i) => {
+      const raw = document.getElementById(`bc-${i}`)?.value.trim();
+      const id  = extractYtId(raw);
+      if (id) saved[i] = id;
+    });
+    localStorage.setItem('mm_beats_custom', JSON.stringify(saved));
+    // Reload current vibe with new ID if panel is open
+    document.getElementById('beats-embed').innerHTML = '';
+    if (beatsOpen) loadBeatsEmbed(beatsCurrentIdx, false);
+    document.getElementById('beats-customize-panel').classList.remove('open');
+  };
+
+  window.resetBeatsCustom = function () {
+    localStorage.removeItem('mm_beats_custom');
+    BEATS_DEFAULTS.forEach((_, i) => {
+      const inp = document.getElementById(`bc-${i}`);
+      if (inp) inp.value = '';
+    });
+    document.getElementById('beats-embed').innerHTML = '';
+    if (beatsOpen) loadBeatsEmbed(beatsCurrentIdx, false);
+    document.getElementById('beats-customize-panel').classList.remove('open');
   };
 
   window.toggleAnalytics = function () {
