@@ -41,11 +41,11 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--cie-blush-lt);
+      background: #EFEFEF;
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
-      color: var(--cie-dark);
+      color: var(--black);
     }
 
     /* ═══ NAV ═══ */
@@ -76,46 +76,50 @@
     .dash-back:hover { background: rgba(255,255,255,0.18); }
 
     /* ═══ HERO ═══ */
-    .report-hero {
-      background: linear-gradient(180deg, var(--pink-bg) 0%, #ffffff 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 72px 40px 60px;
-      text-align: center;
+    .r-hero {
+      background: var(--black);
+      padding: 28px 40px 20px;
+      border-bottom: 2px solid var(--red);
     }
-    .report-hero-inner { max-width: 680px; margin: 0 auto; }
-    .report-eyebrow {
+    .r-hero-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .r-hero-eyebrow {
       font-size: 10px;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--cie-crimson);
-      font-weight: 600;
-      margin-bottom: 20px;
+      color: var(--pink);
+      font-weight: 700;
+      margin-bottom: 6px;
     }
-    .report-title {
+    .r-hero-title {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(32px, 5vw, 52px);
+      font-size: clamp(22px, 3vw, 34px);
       font-weight: 400;
-      color: var(--cie-dark);
+      color: #ffffff;
       line-height: 1.15;
-      margin-bottom: 16px;
+      margin: 0;
     }
-    .report-title em { font-style: italic; color: var(--cie-crimson); }
-    .report-date {
+    .r-hero-title em { font-style: italic; color: var(--pink); }
+    .r-hero-date { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .r-hero-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .r-hero-note {
+      max-width: 1240px;
+      margin: 0 auto;
       font-size: 13px;
-      color: var(--cie-muted);
-      margin-bottom: 40px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
-    .report-note {
-      background: rgba(13,13,13,0.03);
-      border: 1px solid var(--cie-border);
-      border-radius: 12px;
-      padding: 18px 24px;
-      font-size: 14px;
-      color: var(--cie-muted);
-      line-height: 1.7;
-      text-align: left;
-    }
-    .report-note strong { color: var(--cie-dark); }
+    .r-hero-note strong { color: rgba(255,255,255,0.75); }
 
     /* ═══ STATUS COLORS ═══ */
     .bar-aligned  { background: var(--aligned); }
@@ -131,50 +135,84 @@
     .bdot-partial  { background: var(--partial); }
     .bdot-needs    { background: var(--needs-work); }
 
-    /* ═══ SECTION LAYOUT ═══ */
-    .rs {
-      width: 100%;
-      border-bottom: 1px solid var(--border);
-    }
-    .rs-white  { background: #ffffff; }
-    .rs-tinted { background: #F9F9F9; }
-    .rs-dark   { background: var(--black); }
-    .rs-inner {
-      max-width: 960px;
+    /* ═══ REPORT BODY + GRID ═══ */
+    .r-body {
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 64px 40px;
+      padding: 24px 32px 48px;
     }
-    .rs-header {
-      margin-bottom: 36px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
+    .r-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+      align-items: start;
     }
-    .rs-eyebrow {
-      font-size: 10px;
+    .rblock {
+      background: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .rblock-head {
+      background: var(--black);
+      padding: 18px 24px;
+    }
+    .rblock-eyebrow {
+      font-size: 9px;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--red);
+      color: var(--pink);
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
-    .rs-dark .rs-eyebrow { color: var(--pink); }
-    .rs-title {
+    .rblock-title {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(24px, 3.5vw, 34px);
+      font-size: 22px;
       font-weight: 400;
-      color: var(--black);
+      color: #ffffff;
       line-height: 1.2;
     }
-    .rs-dark .rs-title { color: #ffffff; }
-    .rs-dark .rs-header { border-color: rgba(255,255,255,0.1); }
-    .rs-sub {
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.65;
-      margin-top: 8px;
-      max-width: 580px;
+    .rblock-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 3px;
     }
-    .rs-dark .rs-sub { color: rgba(255,255,255,0.5); }
+    .rblock-body {
+      padding: 24px;
+    }
+    .rblock-body-dark {
+      background: #1A1A1A;
+      padding: 24px;
+    }
+    .rblock-body .profile-section { margin-bottom: 0; }
+    .domain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .r-cta {
+      background: var(--black);
+      border-radius: 14px;
+      padding: 36px 32px;
+      text-align: center;
+    }
+    .r-cta-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(20px, 2.5vw, 26px);
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .r-cta-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .r-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
     /* ═══ OVERVIEW GRID ═══ */
     .overview-grid {
@@ -286,6 +324,14 @@
     }
     .badge-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .dc-body { padding: 28px 32px; }
+
+    /* ═══ COMPACT DOMAIN CARDS (inside 2x2 grid) ═══ */
+    .domain-grid .dc-header { padding: 16px 18px 12px; }
+    .domain-grid .dc-body   { padding: 16px 18px; }
+    .domain-grid .dc-domain-name { font-size: 20px; }
+    .domain-grid .rating-compare { padding: 14px 16px; gap: 12px; }
+    .domain-grid .rating-compare-label { display: none; }
+    .domain-grid .qa-answer { padding: 14px 16px; }
 
     /* ═══ DOWNLOAD BUTTON ═══ */
     .btn-download {
@@ -766,12 +812,18 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .r-grid-2 { grid-template-columns: 1fr; }
+      .domain-grid { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
       .dash-nav { padding: 14px 20px; }
       .dash-nav-logo img { height: 52px; }
       .dash-nav-name { display: none; }
-      .report-hero { padding: 48px 24px 40px; }
-      .rs-inner { padding: 48px 24px; }
+      .r-hero { padding: 20px 20px 16px; }
+      .r-body { padding: 16px 16px 40px; }
+      .r-grid-2 { grid-template-columns: 1fr; gap: 16px; }
+      .domain-grid { grid-template-columns: 1fr; }
       .overview-grid { grid-template-columns: 1fr 1fr; }
       .qa-answers { grid-template-columns: 1fr; }
       .qa-answer:first-child { border-right: none; border-bottom: 1px solid rgba(13,13,13,0.07); }
@@ -779,21 +831,21 @@
       .dc-header { flex-direction: column; align-items: flex-start; }
       .dc-header, .dc-body { padding: 20px 20px; }
       .profile-cols { grid-template-columns: 1fr; }
-      .suggested-path { padding: 40px 24px; }
     }
     @media (max-width: 480px) {
       .overview-grid { grid-template-columns: 1fr; }
+      .domain-grid { grid-template-columns: 1fr; }
     }
 
     /* ═══ PRINT / DOWNLOAD PDF ═══ */
     @media print {
-      .dash-nav, .btn-download, .hero-actions .btn-download, .report-cta { display: none !important; }
+      .dash-nav, .r-hero-actions, .r-cta { display: none !important; }
       body { background: #fff !important; }
-      .rs-dark { background: #1a1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .report-hero { background: #fff !important; border-bottom: 2px solid #0D0D0D; }
-      .domain-card, .overview-chip, .overview-message { break-inside: avoid; }
-      .rs { border-bottom: 1px solid #ddd; }
-      .rs-inner { padding: 40px 32px; }
+      .rblock-head, .rblock-body-dark, .r-hero { background: #1a1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .r-grid-2 { grid-template-columns: 1fr 1fr; }
+      .domain-grid { grid-template-columns: 1fr 1fr; }
+      .domain-card, .overview-chip, .overview-message, .rblock { break-inside: avoid; }
+      .r-body { padding: 16px; }
       a { color: inherit !important; text-decoration: none !important; }
     }
   </style>
@@ -1204,94 +1256,108 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
 
   const html = `
     <!-- HERO -->
-    <div class="report-hero">
-      <div class="report-hero-inner">
-        <div class="report-eyebrow">Couples in Entrepreneurship</div>
-        <h1 class="report-title">Your <em>Partnership Report</em></h1>
-        ${generated ? `<div class="report-date">Generated ${generated}</div>` : ''}
-        <div class="hero-actions">
+    <div class="r-hero">
+      <div class="r-hero-inner">
+        <div>
+          <div class="r-hero-eyebrow">Couples in Entrepreneurship</div>
+          <h1 class="r-hero-title">Your <em>Partnership Report</em></h1>
+          ${generated ? `<div class="r-hero-date">Generated ${generated}</div>` : ''}
+        </div>
+        <div class="r-hero-actions">
           <button onclick="window.print()" class="btn-download">&#8659; Download PDF</button>
-          <a href="/programs/couples-dashboard" class="btn-gold" style="font-size:13px;padding:11px 22px;">Go to Dashboard →</a>
-        </div>
-        <div class="report-note"><strong>Read this together.</strong> Don't summarize it to each other later. Sit down, open this page side by side, and go through it as a team. What you see here is where the work begins.</div>
-      </div>
-    </div>
-
-    <!-- SECTION 1: AT A GLANCE -->
-    <div class="rs rs-tinted">
-      <div class="rs-inner">
-        <div class="rs-header">
-          <div class="rs-eyebrow">Section 1</div>
-          <div class="rs-title">At a Glance</div>
-          <div class="rs-sub">Your alignment snapshot across all four domains.</div>
-        </div>
-        <div class="overview-grid">
-          ${DOMAINS_META.map(d => {
-            const info = alignmentInfo(d.key, unlocked, rd);
-            return `<div class="overview-chip">
-              <div class="overview-chip-bar ${info.chipClass}"></div>
-              <div class="overview-chip-domain">${d.label}</div>
-              <div class="overview-chip-status ${info.statusClass}">${info.label}</div>
-            </div>`;
-          }).join('')}
-        </div>
-        <div class="overview-message">
-          <div class="overview-message-label">Before You Read</div>
-          <div class="overview-message-title">${alignedCount === 4 ? 'You\'re more aligned than most.' : alignedCount >= 2 ? 'You\'ve got a strong foundation to build on.' : 'This is exactly why you\'re here.'}</div>
-          <div class="overview-message-body">${alignedCount === 4
-            ? 'All four domains show alignment. That doesn\'t mean there\'s nothing to work on — it means you\'ve got a strong base. Your course will help you protect it as the business grows.'
-            : `${4 - alignedCount} ${4 - alignedCount === 1 ? 'domain shows a gap' : 'domains show gaps'}. That\'s not a crisis — it\'s information. Your course path is built around exactly what you need. Read each domain honestly before you respond to each other.`
-          }</div>
+          <a href="/programs/couples-dashboard" class="btn-gold" style="font-size:13px;padding:11px 22px;">Dashboard →</a>
         </div>
       </div>
+      <div class="r-hero-note"><strong>Read this together.</strong> Sit down, open this page side by side, and go through it as a team. What you see here is where the work begins.</div>
     </div>
 
-    <!-- SECTION 2: WHERE TO BEGIN -->
-    <div class="rs rs-dark">
-      <div class="rs-inner">
-        <div class="rs-header">
-          <div class="rs-eyebrow">Section 2</div>
-          <div class="rs-title">Where to Begin</div>
-          <div class="rs-sub">Work through your unlocked modules in this order — each one builds on the last.</div>
+    <div class="r-body">
+
+      <!-- ROW 1: Sections 1 + 2 -->
+      <div class="r-grid-2">
+
+        <!-- Section 1: At a Glance -->
+        <div class="rblock">
+          <div class="rblock-head">
+            <div class="rblock-eyebrow">Section 1</div>
+            <div class="rblock-title">At a Glance</div>
+            <div class="rblock-sub">Your alignment snapshot across all four domains.</div>
+          </div>
+          <div class="rblock-body">
+            <div class="overview-grid">
+              ${DOMAINS_META.map(d => {
+                const info = alignmentInfo(d.key, unlocked, rd);
+                return `<div class="overview-chip">
+                  <div class="overview-chip-bar ${info.chipClass}"></div>
+                  <div class="overview-chip-domain">${d.label}</div>
+                  <div class="overview-chip-status ${info.statusClass}">${info.label}</div>
+                </div>`;
+              }).join('')}
+            </div>
+            <div class="overview-message">
+              <div class="overview-message-label">Before You Read</div>
+              <div class="overview-message-title">${alignedCount === 4 ? 'You\'re more aligned than most.' : alignedCount >= 2 ? 'You\'ve got a strong foundation to build on.' : 'This is exactly why you\'re here.'}</div>
+              <div class="overview-message-body">${alignedCount === 4
+                ? 'All four domains show alignment. That doesn\'t mean there\'s nothing to work on — it means you\'ve got a strong base. Your course will help you protect it as the business grows.'
+                : `${4 - alignedCount} ${4 - alignedCount === 1 ? 'domain shows a gap' : 'domains show gaps'}. That\'s not a crisis — it\'s information. Your course path is built around exactly what you need. Read each domain honestly before you respond to each other.`
+              }</div>
+            </div>
+          </div>
         </div>
-        <div class="path-steps">${buildSuggestedPath(unlocked, rd)}</div>
-      </div>
-    </div>
 
-    <!-- SECTION 3: ABOUT YOU BOTH -->
-    <div class="rs rs-white">
-      <div class="rs-inner">
-        <div class="rs-header">
-          <div class="rs-eyebrow">Section 3</div>
-          <div class="rs-title">About You Both</div>
-          <div class="rs-sub">Individual profiles completed separately. Differences are highlighted below.</div>
+        <!-- Section 2: Where to Begin -->
+        <div class="rblock">
+          <div class="rblock-head">
+            <div class="rblock-eyebrow">Section 2</div>
+            <div class="rblock-title">Where to Begin</div>
+            <div class="rblock-sub">Work through your modules in this order — each one builds on the last.</div>
+          </div>
+          <div class="rblock-body-dark">
+            <div class="path-steps">${buildSuggestedPath(unlocked, rd)}</div>
+          </div>
         </div>
-        ${renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)}
-      </div>
-    </div>
 
-    <!-- SECTION 4: DIAGNOSTIC RESULTS -->
-    <div class="rs rs-tinted">
-      <div class="rs-inner">
-        <div class="rs-header">
-          <div class="rs-eyebrow">Section 4</div>
-          <div class="rs-title">Your Diagnostic Results</div>
-          <div class="rs-sub">How each of you responded across the four domains — scores, labels, and your notes side by side.</div>
+      </div>
+
+      <!-- ROW 2: Sections 3 + 4 -->
+      <div class="r-grid-2">
+
+        <!-- Section 3: About You Both -->
+        <div class="rblock">
+          <div class="rblock-head">
+            <div class="rblock-eyebrow">Section 3</div>
+            <div class="rblock-title">About You Both</div>
+            <div class="rblock-sub">Individual profiles completed separately. Differences are highlighted.</div>
+          </div>
+          <div class="rblock-body">
+            ${renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)}
+          </div>
         </div>
-        <div class="domain-cards">${domainCardsHtml}</div>
-      </div>
-    </div>
 
-    <!-- CTA -->
-    <div class="rs rs-white">
-      <div class="rs-inner" style="text-align:center;padding-top:56px;padding-bottom:72px;">
-        <p style="font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,30px);color:var(--black);margin-bottom:10px;">Your course path is unlocked.</p>
-        <p style="font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto;">The modules built for your specific gaps are ready. Head to your dashboard to begin.</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <!-- Section 4: Diagnostic Results -->
+        <div class="rblock">
+          <div class="rblock-head">
+            <div class="rblock-eyebrow">Section 4</div>
+            <div class="rblock-title">Your Diagnostic Results</div>
+            <div class="rblock-sub">Scores and notes side by side across all four domains.</div>
+          </div>
+          <div class="rblock-body">
+            <div class="domain-grid">${domainCardsHtml}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="r-cta">
+        <div class="r-cta-title">Your course path is unlocked.</div>
+        <div class="r-cta-sub">The modules built for your specific gaps are ready. Head to your dashboard to begin.</div>
+        <div class="r-cta-actions">
           <a href="/programs/couples-dashboard" class="btn-gold">Go to My Dashboard →</a>
           <button onclick="window.print()" class="btn-download">&#8659; Download PDF</button>
         </div>
       </div>
+
     </div>
   `;
 
