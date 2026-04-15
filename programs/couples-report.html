@@ -901,7 +901,6 @@
   </style>
   <!-- Site Analytics -->
   <script src="/analytics.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -1341,7 +1340,7 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
           </div>
           <div class="rblock-body">
             <div class="chart-row">
-              <canvas id="alignment-chart" width="90" height="90"></canvas>
+              ${buildAlignmentSVG(unlocked, rd)}
               <div class="chart-legend">
                 ${DOMAINS_META.map(d => {
                   const info = alignmentInfo(d.key, unlocked, rd);
@@ -1425,66 +1424,37 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
   `;
 
   document.getElementById('page-body').innerHTML = html;
-  buildAlignmentChart(unlocked, rd);
 }
 
-function buildAlignmentChart(unlocked, rd) {
-  const canvas = document.getElementById('alignment-chart');
-  if (!canvas || typeof Chart === 'undefined') return;
-
-  const colors = DOMAINS_META.map(d => {
-    const tier = alignmentInfo(d.key, unlocked, rd).tier;
-    return tier === 'needs' ? '#B82038' : tier === 'partial' ? '#C4860A' : '#2F8A5A';
-  });
-
+function buildAlignmentSVG(unlocked, rd) {
+  const size = 100, cx = 50, cy = 50, outerR = 40, innerR = 24, gapDeg = 5;
   const alignedCount = DOMAINS_META.filter(d => alignmentInfo(d.key, unlocked, rd).tier === 'aligned').length;
 
-  new Chart(canvas, {
-    type: 'doughnut',
-    data: {
-      labels: DOMAINS_META.map(d => d.label),
-      datasets: [{
-        data: [25, 25, 25, 25],
-        backgroundColor: colors,
-        borderWidth: 3,
-        borderColor: '#ffffff',
-        hoverOffset: 4,
-      }]
-    },
-    options: {
-      cutout: '62%',
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: ctx => {
-              const info = alignmentInfo(DOMAINS_META[ctx.dataIndex].key, unlocked, rd);
-              return ` ${info.label}`;
-            }
-          }
-        }
-      },
-      animation: { duration: 600 }
-    },
-    plugins: [{
-      id: 'center-text',
-      afterDraw(chart) {
-        const { ctx, chartArea: { width, height, left, top } } = chart;
-        ctx.save();
-        const cx = left + width / 2;
-        const cy = top + height / 2;
-        ctx.font = 'bold 14px Plus Jakarta Sans, sans-serif';
-        ctx.fillStyle = '#0D0D0D';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(`${alignedCount}/4`, cx, cy - 5);
-        ctx.font = '9px Plus Jakarta Sans, sans-serif';
-        ctx.fillStyle = '#666666';
-        ctx.fillText('aligned', cx, cy + 7);
-        ctx.restore();
-      }
-    }]
-  });
+  function polar(r, deg) {
+    const rad = (deg - 90) * Math.PI / 180;
+    return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+  }
+
+  function segment(startDeg, endDeg, color) {
+    const [ox1, oy1] = polar(outerR, startDeg);
+    const [ox2, oy2] = polar(outerR, endDeg);
+    const [ix1, iy1] = polar(innerR, endDeg);
+    const [ix2, iy2] = polar(innerR, startDeg);
+    const f = v => v.toFixed(2);
+    return `<path d="M${f(ox1)},${f(oy1)} A${outerR},${outerR} 0 0 1 ${f(ox2)},${f(oy2)} L${f(ix1)},${f(iy1)} A${innerR},${innerR} 0 0 0 ${f(ix2)},${f(iy2)} Z" fill="${color}"/>`;
+  }
+
+  const segs = DOMAINS_META.map((d, i) => {
+    const tier = alignmentInfo(d.key, unlocked, rd).tier;
+    const color = tier === 'needs' ? '#B82038' : tier === 'partial' ? '#C4860A' : '#2F8A5A';
+    return segment(i * 90 + gapDeg / 2, (i + 1) * 90 - gapDeg / 2, color);
+  }).join('');
+
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+    ${segs}
+    <text x="${cx}" y="${cy - 6}" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="700" fill="#0D0D0D">${alignedCount}/4</text>
+    <text x="${cx}" y="${cy + 9}" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="9" fill="#666666">aligned</text>
+  </svg>`;
 }
 
 function showNotReady() {
