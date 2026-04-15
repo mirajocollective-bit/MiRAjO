@@ -804,7 +804,7 @@ const LABEL = {
   vision:  { 'lifestyle':'Lifestyle business','scale-sell':'Scale and sell','generational':'Generational legacy','not-sure':'Not decided yet' },
   risk:    { 'very-conservative':'Very Conservative','conservative':'Conservative','moderate':'Moderate','calculated-risk':'Calculated Risk-Taker','aggressive':'Aggressive' },
   fulltime:{ 'both':'Both full-time','one-of-us':'One of us is','neither':'Neither yet' },
-  visibility:{ 'very-private':'Very Private','mostly-private':'Mostly Private','selective':'Selective','comfortable':'Comfortable','personal-brand':'Building a Personal Brand' },
+  visibility:{ 'very-private':'Keeps it very private','mostly-private':'Mostly private','selective':'Selective about sharing','comfortable':'Comfortable sharing publicly','personal-brand':'Building a personal brand' },
   income:  { 'yes':'Primary income','shared':'One of our sources','no':'Other primary income' },
 };
 
@@ -927,7 +927,7 @@ function renderProfileSection(myProfile, partnerProfile, youLabel, partnerLabel)
     const visA = visOrder[myProfile.public_visibility] || 0;
     const visB = visOrder[partnerProfile.public_visibility] || 0;
     if (myProfile.public_visibility && partnerProfile.public_visibility && Math.abs(visA - visB) >= 2) {
-      gaps.push(`${escHtml(youLabel)} is <strong>${lbl('visibility', myProfile.public_visibility)?.toLowerCase()}</strong> about the business and relationship publicly. ${escHtml(partnerLabel)} is <strong>${lbl('visibility', partnerProfile.public_visibility)?.toLowerCase()}</strong>. This gap can create real friction in marketing and brand decisions.`);
+      gaps.push(`When it comes to sharing the business and relationship publicly, ${escHtml(youLabel)} is <strong>${lbl('visibility', myProfile.public_visibility)?.toLowerCase()}</strong> while ${escHtml(partnerLabel)} is <strong>${lbl('visibility', partnerProfile.public_visibility)?.toLowerCase()}</strong>. This gap creates friction in marketing, social media, and brand decisions.`);
     }
   }
 
