@@ -3323,9 +3323,9 @@
         else { openDayDetail(dateStr, dayTxns, runningBalance); }
       };
 
-      if (dayTxns.length === 1) {
-        // Single transaction — show inline, fits cleanly in the cell
-        const t = dayTxns[0];
+      // Show up to 2 transactions inline; overflow goes to "+N more" badge
+      const VISIBLE_MAX = 2;
+      dayTxns.slice(0, VISIBLE_MAX).forEach(t => {
         const exc = t.is_recurring ? getRecurException(t, dateStr) : null;
         const displayT = exc ? { ...t, amount: exc.amount ?? t.amount, description: exc.description ?? t.description } : t;
         const incoming = displayT.type === 'transfer' && displayT.transfer_to_account_id === selectedAccountId;
@@ -3349,11 +3349,12 @@
         });
         entry.addEventListener('dragend', () => entry.classList.remove('dragging'));
         cell.appendChild(entry);
-      } else if (dayTxns.length > 1) {
-        // Multiple transactions — show a count badge; clicking opens the day detail popup
+      });
+
+      if (dayTxns.length > VISIBLE_MAX) {
         const badge = document.createElement('div');
         badge.className = 'cal-txn-count';
-        badge.textContent = `${dayTxns.length} transactions`;
+        badge.textContent = `+${dayTxns.length - VISIBLE_MAX} more`;
         badge.addEventListener('click', (e) => { e.stopPropagation(); openDayDetail(dateStr, dayTxns, runningBalance); });
         cell.appendChild(badge);
       }
