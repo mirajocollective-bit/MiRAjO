@@ -119,4 +119,37 @@ INSERT INTO lessons (module_id, title, content, position) VALUES
   <li>An annual planning day — somewhere off-site, just the two of you</li>
 </ul>
 <p>The rhythm only works if it is on the calendar before you need it.</p>',
-6);
+6),
+
+('b75af360-0bee-428e-a800-74f6c97f1b6c', 'What Happens If the Vision Changes',
+'<p>You are building toward the same thing right now. That may not always be true.</p>
+
+<p>It does not mean your relationship is in trouble. It means you are two people with individual growth arcs who also share a business. Those arcs do not always stay parallel. One of you may want to scale. The other may want to simplify. One may want to exit in five years. The other may want to run this business for the rest of their working life.</p>
+
+<p>If you have not talked about this, you are not aligned — you just have not discovered the misalignment yet.</p>
+
+<h3>The conversations most couples avoid</h3>
+<ul>
+  <li><strong>What is your personal exit vision?</strong> Not the business exit plan — yours. At what point do you step back, slow down, hand it off, or stop entirely?</li>
+  <li><strong>What if one partner wants out before the other?</strong> Not as a threat. As a real question. If one of you needed to leave the business in the next two years — for health, for family, for a completely different opportunity — what would that mean for the business? For the other partner? For the relationship?</li>
+  <li><strong>What does success actually look like when you get there?</strong> Not revenue numbers. The feeling. The life. What are you building toward? Is that still the same answer for both of you?</li>
+</ul>
+
+<blockquote>The couples who handle vision changes well are not the ones who never have them. They are the ones who already had the conversation before the change arrived. When you have talked about it in advance, a shift in direction is a discussion. When you have not, it is a crisis.</blockquote>
+
+<h3>What to do with the hard answers</h3>
+<p>You might sit down with these questions and discover that you are completely aligned. Good. Name it and move on.</p>
+
+<p>You might discover a gap you did not know was there. That is also good — better now than three years from now when one of you has been silently carrying something that was never said.</p>
+
+<p>The goal of this conversation is not a decision. It is information. What does your partner actually want? What do you want? How close are those two things — and where do they diverge?</p>
+
+<h3>Take Action — Do This Together</h3>
+<p>Each of you answer these questions privately first, then share:</p>
+<ol>
+  <li>In ten years, where do you want to be with this business? Be specific about your role, your involvement, your workload.</li>
+  <li>If the business had to end or significantly change tomorrow, what would that mean for you personally?</li>
+  <li>Is there anything you want that you have not said out loud yet because you did not know how your partner would react?</li>
+</ol>
+<p>Take turns. Listen before you respond. The goal is to understand what your partner wants — not to negotiate yet, and not to protect your own position. Just see each other clearly.</p>',
+7);

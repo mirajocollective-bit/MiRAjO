@@ -128,4 +128,37 @@ INSERT INTO lessons (module_id, title, content, position) VALUES
   <li>Our reserve floor (do not touch without a conversation): __________</li>
 </ul>
 <p>Sign it. Date it. Set a calendar reminder to review it in 90 days.</p>',
-6);
+6),
+
+('29f3f2ac-a852-4de5-bb15-f80b76a0543a', 'When One of You Still Has a Job',
+'<p>Not every couple in entrepreneurship is all-in at the same time. For many, one partner is full-time in the business while the other is still working a job — contributing income to the household while also contributing time and energy to the business.</p>
+
+<p>This setup works. But it creates a specific kind of pressure that a standard financial conversation does not address.</p>
+
+<h3>What this dynamic actually looks like</h3>
+<ul>
+  <li>The employed partner is carrying the household financially, which creates a quiet weight — sometimes unspoken, sometimes very spoken</li>
+  <li>The full-time business partner is building something that does not yet pay what the job does, which creates its own quiet weight</li>
+  <li>Decisions about reinvestment, draws, and timelines carry different stakes for each of you — because you are not starting from the same financial position</li>
+  <li>One partner may feel like they have more say in financial decisions because they are the one with the stable income. The other may feel like their work is undervalued because it does not yet show up as cash.</li>
+</ul>
+
+<blockquote>This is not a power imbalance. It is a temporary structure with an implicit agreement — and like all implicit agreements, it needs to become explicit before it becomes a problem.</blockquote>
+
+<h3>The conversation you need to have</h3>
+<p>Three things to get on the table:</p>
+<ol>
+  <li><strong>The runway:</strong> How long is the employed partner willing to carry the household while the business builds? Not as a deadline or a threat — as a real agreement. What is the number? What is the timeline? When do you revisit this?</li>
+  <li><strong>The contribution:</strong> How do you value the full-time partner''s work in the business? Not just as sweat equity — as something with an actual number attached. If you were paying someone else to do it, what would it cost? That number matters for how you both think about what the business owes.</li>
+  <li><strong>The trigger:</strong> What does the business need to produce before the full-time partner starts drawing a real salary? Name the number. Do not leave it as "when things are going well." That phrase means something different to each of you.</li>
+</ol>
+
+<h3>Take Action</h3>
+<p>Have this conversation before you move on. If you are in the mixed-income situation right now, fill in these three agreements:</p>
+<ul>
+  <li>Our household runway agreement: __________</li>
+  <li>The value we assign to full-time business work: __________ per month</li>
+  <li>The business milestone that triggers a real draw: __________</li>
+</ul>
+<p>If you are both full-time in the business, or neither of you is yet, flag this lesson to revisit when the structure changes. It will.</p>',
+7);

@@ -107,4 +107,27 @@ INSERT INTO lessons (module_id, title, content, position) VALUES
 
 <h3>For Your Journal</h3>
 <p>Is there a lane you have technically handed over but still find yourself stepping into? What is driving that — is it a concern about outcomes, a trust issue, a habit? Name it honestly. You cannot fix a pattern you are not willing to see.</p>',
-5);
+5),
+
+('df656a1c-79d8-4d31-8944-b89f1e63e615', 'Your Roles Agreement',
+'<p>You have spent this entire module mapping, clarifying, and deciding. Now write it down.</p>
+
+<p>An unwritten agreement is a memory. Memories drift. When they drift in two different directions at once, you end up back in the same friction you started with — except now you both thought you had already settled it.</p>
+
+<p>Your Roles Agreement does not have to be formal. It does not have to be long. It has to be specific enough that both of you know what it says without having to interpret it.</p>
+
+<h3>What to include</h3>
+<ul>
+  <li><strong>Who owns what:</strong> List the core functions of your business. One name next to each — the person who has final say and is accountable for outcomes in that area.</li>
+  <li><strong>What requires both of you:</strong> Decisions above a certain dollar amount, anything that changes the direction of the business, anything that affects your personal finances. Write the actual threshold.</li>
+  <li><strong>Your disagreement protocol:</strong> One or two sentences. What happens when you cannot agree? Who has the tiebreaker in whose lane?</li>
+  <li><strong>How you review it:</strong> When will you revisit this agreement? Quarterly? After a major change in the business? Put a date on it now.</li>
+</ul>
+
+<blockquote>The goal is not a perfect document. The goal is something concrete enough to point to. When the conversation gets tense, the agreement becomes the reference — not memory, not whoever is louder.</blockquote>
+
+<h3>Take Action — Do This Together Now</h3>
+<p>Sit down and write your Roles Agreement before you close this module. It can be in a shared doc, a note on your phone, a printed page you both sign, whatever works for you. The format does not matter. What matters is that you both read the same version and agree that it reflects what you actually decided.</p>
+<p>When you are done, one of you reads it out loud. If anything feels off when you hear it out loud, fix it now. If it holds, you are aligned.</p>
+<p>Keep it somewhere both of you can find it. You will need it.',
+6);
