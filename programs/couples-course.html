@@ -796,11 +796,12 @@ async function init() {
   // Load user's profile for lesson filtering
   const { data: myProfile } = await db
     .from('partner_profiles')
-    .select('family_structure, faith_influence')
+    .select('family_structure, faith_influence, both_full_time')
     .eq('user_id', userId)
     .single();
   const familyStructure = myProfile?.family_structure || null;
   const faithInfluence  = myProfile?.faith_influence  || null;
+  const bothFullTime    = myProfile?.both_full_time    || null;
 
   // Load lessons
   const { data: lessons } = await db
@@ -818,6 +819,9 @@ async function init() {
     }
     if (c.field === 'faith_influence') {
       return faithInfluence && c.values.includes(faithInfluence);
+    }
+    if (c.field === 'both_full_time') {
+      return bothFullTime && c.values.includes(bothFullTime);
     }
     return true;
   });
