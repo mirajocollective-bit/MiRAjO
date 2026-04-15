@@ -114,14 +114,14 @@
     /* ── Main layout ── */
     .layout {
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: 1fr;
       gap: 14px;
       max-width: 1600px;
       margin: 0 auto;
       padding: 14px 24px 40px;
       transition: grid-template-columns 0.25s ease;
     }
-    .layout.analytics-open { grid-template-columns: 240px 1fr 300px; }
+    .layout.analytics-open { grid-template-columns: 240px 1fr; }
 
     /* ── Analytics Sidebar ── */
     .analytics-sidebar {
@@ -389,12 +389,12 @@
 
     .cal-grid {
       display: grid; grid-template-columns: repeat(7, 1fr);
-      grid-auto-rows: 110px;
+      grid-auto-rows: 130px;
       padding: 0 16px 16px; gap: 4px;
     }
 
     .cal-cell {
-      height: 110px; border-radius: 10px; padding: 6px 6px 20px;
+      height: 130px; border-radius: 10px; padding: 8px 8px 6px;
       cursor: pointer; transition: background 0.15s;
       position: relative; border: 1px solid transparent;
       overflow: hidden;
@@ -404,8 +404,8 @@
     .cal-cell.other-month { opacity: 0.25; pointer-events: none; }
 
     .cal-date-num {
-      font-size: 12px; font-weight: 600; color: #111; margin-bottom: 3px;
-      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #111; margin-bottom: 4px;
+      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
       border-radius: 50%;
     }
     .cal-cell.today .cal-date-num {
@@ -414,7 +414,7 @@
     }
 
     .cal-entry {
-      font-size: 11px; font-weight: 600; border-radius: 5px;
+      font-size: 11.5px; font-weight: 600; border-radius: 5px;
       padding: 3px 7px; margin-bottom: 2px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
       display: flex; align-items: center; gap: 3px;
@@ -427,12 +427,14 @@
     .cal-cell.drag-over { background: rgba(37,107,66,0.08) !important; outline: 2px dashed var(--living-green); }
 
     .cal-day-balance {
-      position: absolute; bottom: 5px; right: 6px;
-      font-size: 9px; font-weight: 700; padding: 1px 4px;
-      border-radius: 4px; background: rgba(18,32,18,0.04);
+      position: absolute; bottom: 7px; left: 8px; right: 8px;
+      font-size: 14px; font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .cal-day-balance.positive { color: #111; }
-    .cal-day-balance.negative { color: #111; }
+    .cal-day-balance.positive { color: #1a3a1a; }
+    .cal-day-balance.negative { color: #8B1A2A; }
 
     /* ── Forecast view ── */
     .forecast-view {
@@ -462,8 +464,41 @@
       font-size: 12px; letter-spacing: 0.5px; color: var(--dry-sage);
     }
 
-    /* ── Sidebar ── */
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
+    /* ── Sidebar drawer ── */
+    .sidebar {
+      position: fixed;
+      top: 52px;
+      right: 0;
+      width: 300px;
+      height: calc(100vh - 52px);
+      background: #f8f6f1;
+      border-left: 1px solid rgba(18,32,18,0.1);
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      box-shadow: -4px 0 24px rgba(18,32,18,0.08);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .sidebar-drawer-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--neutral); }
+    .sidebar-close-btn {
+      background: none; border: none; cursor: pointer; font-size: 18px;
+      color: var(--neutral); padding: 0 4px; line-height: 1;
+    }
+    .sidebar-overlay {
+      position: fixed; inset: 0; background: rgba(18,32,18,0.25);
+      z-index: 199; display: none;
+    }
+    .sidebar-overlay.show { display: block; }
+    .nav-btn-widgets { background: transparent; color: var(--deep-forest); border: 1px solid rgba(18,32,18,0.18); }
 
     .sidebar-card {
       background: #fff; border-radius: 14px;
@@ -972,8 +1007,8 @@
       .layout.analytics-open { grid-template-columns: 200px 1fr 280px; }
     }
     @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr 260px !important; }
-      .layout.analytics-open { grid-template-columns: 1fr 260px !important; }
+      .layout { grid-template-columns: 1fr !important; }
+      .layout.analytics-open { grid-template-columns: 1fr !important; }
       .analytics-sidebar { display: none !important; }
     }
     @media (max-width: 768px) {
@@ -990,8 +1025,8 @@
       .summary-bar { flex-wrap: wrap; }
       .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
       .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
-      .cal-grid { grid-auto-rows: 82px; }
-      .cal-cell { height: 82px; padding: 5px 5px 16px; }
+      .cal-grid { grid-auto-rows: 100px; }
+      .cal-cell { height: 100px; padding: 6px 6px 22px; }
       .cal-entry { font-size: 10px; padding: 2px 5px; }
       .float-calc { bottom: 72px; right: 12px; width: 240px; }
       .mobile-nav { display: flex; padding-bottom: max(8px, env(safe-area-inset-bottom, 8px)); height: auto; min-height: 62px; }
@@ -1009,8 +1044,8 @@
     }
     @media (max-width: 540px) {
       .sidebar { grid-template-columns: 1fr; }
-      .cal-grid { grid-auto-rows: 68px; }
-      .cal-cell { height: 68px; }
+      .cal-grid { grid-auto-rows: 80px; }
+      .cal-cell { height: 80px; }
       .cal-day-name { font-size: 10px; letter-spacing: 0; }
       .cal-grid { padding: 0 8px 12px; gap: 2px; }
       .summary-bar { gap: 6px; }
@@ -1354,9 +1389,11 @@
         <rect x="10.5" y="11" width="2" height="2" rx="0.5" fill="currentColor"/>
       </svg>
     </button>
+    <button class="nav-btn nav-btn-widgets" onclick="toggleSidebar()" title="Widgets &amp; Goals">⊞</button>
     <button class="nav-btn nav-btn-logout" onclick="logOut()" title="Log out">Log Out</button>
   </div>
 </nav>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- accounts-bar removed — now lives inside the calendar section -->
 
@@ -1991,8 +2028,12 @@
     </div>
   </div>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
+  <!-- Sidebar drawer -->
+  <div class="sidebar" id="sidebar-drawer">
+    <div class="sidebar-drawer-header">
+      <span class="sidebar-drawer-title">Widgets</span>
+      <button class="sidebar-close-btn" onclick="toggleSidebar()" title="Close">✕</button>
+    </div>
 
     <!-- Personality mode -->
     <div class="sidebar-card mode-card">
@@ -3432,6 +3473,13 @@
   document.addEventListener('click', e => {
     if (!e.target.closest('.cal-search-wrap')) clearCalSearch();
   });
+
+  window.toggleSidebar = function () {
+    const drawer  = document.getElementById('sidebar-drawer');
+    const overlay = document.getElementById('sidebar-overlay');
+    const isOpen  = drawer.classList.toggle('open');
+    overlay.classList.toggle('show', isOpen);
+  };
 
   window.toggleAnalytics = function () {
     const layout = document.querySelector('.layout');
