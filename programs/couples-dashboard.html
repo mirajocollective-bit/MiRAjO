@@ -729,11 +729,11 @@ async function renderDashboard(user) {
     .order('position');
 
   let unlockedDomains = report?.unlocked_domains || [];
-  const reportReady   = !!report;
+  let reportReady     = !!report;
   const bothComplete  = !!(myCompletion && partnerCompletion);
 
-  // If report exists but unlocked_domains is empty, recalculate now
-  if (reportReady && unlockedDomains.length === 0) {
+  // If both done but report missing or has no domains, generate/recalculate now
+  if (bothComplete && (!reportReady || unlockedDomains.length === 0)) {
     try {
       const recalc = await fetch('/api/cie-regenerate-report', {
         method: 'POST',
@@ -743,6 +743,7 @@ async function renderDashboard(user) {
       const recalcData = await recalc.json();
       if (recalcData.unlocked_domains?.length) {
         unlockedDomains = recalcData.unlocked_domains;
+        reportReady = true;
       }
     } catch (_) {}
   }

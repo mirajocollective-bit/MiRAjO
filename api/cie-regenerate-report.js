@@ -76,11 +76,13 @@ export default async function handler(req, res) {
     };
   }
 
-  // Update the existing report
+  // Upsert the report — creates it if it doesn't exist yet
   const { error } = await supabase
     .from('partnership_reports')
-    .update({ unlocked_domains, report_data })
-    .eq('couple_id', couple_id);
+    .upsert(
+      { couple_id, unlocked_domains, report_data, generated_at: new Date().toISOString() },
+      { onConflict: 'couple_id' }
+    );
 
   if (error) {
     console.error('Regenerate error:', error);
