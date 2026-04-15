@@ -481,6 +481,96 @@
     }
     .mc-btn-outline:hover { background: rgba(184,32,56,0.15); }
 
+    /* ═══ AGREEMENT CHECKLIST OVERLAY ═══ */
+    .agreement-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,16,32,0.97);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 890;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      padding: 40px 24px;
+      overflow-y: auto;
+    }
+    .agreement-overlay.show { opacity: 1; pointer-events: auto; }
+    .agreement-inner { max-width: 520px; width: 100%; text-align: left; }
+    .agreement-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cie-crimson);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .agreement-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(26px, 4vw, 40px);
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .agreement-sub {
+      font-size: 15px;
+      color: rgba(253,243,246,0.6);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .agreement-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+    .agreement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+    .agreement-item.checked {
+      border-color: rgba(93,190,138,0.5);
+      background: rgba(93,190,138,0.07);
+    }
+    .agreement-item input[type="checkbox"] { display: none; }
+    .ag-box {
+      width: 22px; height: 22px; min-width: 22px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      color: transparent;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+    .agreement-item.checked .ag-box {
+      background: #5DBE8A;
+      border-color: #5DBE8A;
+      color: #fff;
+    }
+    .ag-text { font-size: 14px; color: rgba(253,243,246,0.85); line-height: 1.6; }
+    .btn-confirm-agreements {
+      width: 100%;
+      padding: 16px;
+      background: var(--cie-crimson);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.2s, background 0.2s;
+    }
+    .btn-confirm-agreements.ready { opacity: 1; }
+    .btn-confirm-agreements.ready:hover { background: var(--cie-crimson-lt); }
+
     /* ═══ LOADING ═══ */
     .loading {
       display: flex; align-items: center; justify-content: center; min-height: 300px;
@@ -555,6 +645,19 @@
   <div class="mc-title" id="mc-title">Well done.</div>
   <p class="mc-sub" id="mc-sub">Keep going — your next module is ready.</p>
   <div class="mc-actions" id="mc-actions"></div>
+</div>
+
+<!-- AGREEMENT CHECKLIST OVERLAY -->
+<div class="agreement-overlay" id="ag-overlay">
+  <div class="agreement-inner">
+    <div class="agreement-eyebrow">Before You Move On</div>
+    <div class="agreement-title" id="ag-title">Make the agreements.</div>
+    <p class="agreement-sub">This module only works if you do the work. Check off each agreement — together, out loud, not just in your head.</p>
+    <div class="agreement-list" id="ag-list"></div>
+    <button class="btn-confirm-agreements" id="btn-confirm-ag" onclick="confirmAgreements()">
+      We made these agreements — mark module complete
+    </button>
+  </div>
 </div>
 
 <!-- TOP NAV -->
@@ -869,6 +972,92 @@ function openLesson(lessonId) {
   window.scrollTo({ top: 0 });
 }
 
+// ── MODULE AGREEMENTS ─────────────────────────────────────────────
+const MODULE_AGREEMENTS = {
+  1: [
+    "We've both named at least one area where we know misalignment is costing us.",
+    "We've each said out loud what we're hoping to get from this program — and we heard each other.",
+  ],
+  2: [
+    "We've agreed on how we handle surplus money — what goes back in and what comes out personal.",
+    "We've decided who has visibility into the finances and how often we review the numbers together.",
+    "We've named any debt or financial pressure that has been sitting in the background unspoken.",
+  ],
+  3: [
+    "We've talked about where we see this business in 3-5 years — and we know whether our answers match.",
+    "We've named at least one strategic decision we've been circling without actually making.",
+  ],
+  4: [
+    "We've written our Roles Agreement — who owns what, what requires both of us, and what happens when we disagree.",
+    "We've set a spending threshold that triggers a conversation before anyone moves.",
+  ],
+  5: [
+    "We've mapped out how home and family responsibilities are divided — actually decided, not assumed.",
+    "We've put at least one recurring protected time on the calendar that is not available for business.",
+  ],
+  6: [
+    "We've committed to one recurring time each week that belongs only to us as a couple.",
+    "We've agreed on at least one boundary rule we're both actually going to keep.",
+  ],
+  7: [
+    "We've named our default conflict pattern — what each of us does when things get tense.",
+    "We've agreed on a way to call time-out when a conversation starts going sideways.",
+    "We've named at least one thing we each need from the other during a hard business season.",
+  ],
+  8: [
+    "We've collected our agreements from every module into our Partnership Operating Agreement.",
+    "We've decided how often we'll review and update it together.",
+    "We've acknowledged what we built — as partners and as a couple.",
+  ],
+};
+
+function showAgreementChecklist() {
+  const pos = currentModule.position;
+  const agreements = MODULE_AGREEMENTS[pos];
+  if (!agreements) { showModuleComplete(); return; }
+
+  document.getElementById('ag-title').textContent = currentModule.title + ' — one more step.';
+
+  const list = document.getElementById('ag-list');
+  list.innerHTML = agreements.map((text, i) => `
+    <label class="agreement-item" id="ag-item-${i}" onclick="toggleAgreement(${i})">
+      <input type="checkbox" id="ag-cb-${i}">
+      <div class="ag-box" id="ag-box-${i}">✓</div>
+      <div class="ag-text">${text}</div>
+    </label>
+  `).join('');
+
+  document.getElementById('ag-overlay').classList.add('show');
+  updateConfirmBtn();
+}
+
+function toggleAgreement(i) {
+  const item  = document.getElementById(`ag-item-${i}`);
+  const cb    = document.getElementById(`ag-cb-${i}`);
+  cb.checked  = !cb.checked;
+  item.classList.toggle('checked', cb.checked);
+  updateConfirmBtn();
+}
+
+function updateConfirmBtn() {
+  const pos = currentModule.position;
+  const total = (MODULE_AGREEMENTS[pos] || []).length;
+  const checked = document.querySelectorAll('#ag-list .agreement-item.checked').length;
+  const btn = document.getElementById('btn-confirm-ag');
+  btn.classList.toggle('ready', checked === total);
+}
+
+function confirmAgreements() {
+  const pos = currentModule.position;
+  const total = (MODULE_AGREEMENTS[pos] || []).length;
+  const checked = document.querySelectorAll('#ag-list .agreement-item.checked').length;
+  if (checked < total) return;
+
+  localStorage.setItem(`cie_agreed_${currentModule.id}`, '1');
+  document.getElementById('ag-overlay').classList.remove('show');
+  showModuleComplete();
+}
+
 async function markComplete(lessonId, lessonIdx) {
   if (saving || completedSet.has(lessonId)) return;
   saving = true;
@@ -898,8 +1087,9 @@ async function markComplete(lessonId, lessonIdx) {
   const allDone = allLessons.every(l => completedSet.has(l.id));
 
   if (allDone) {
-    // Module complete
-    setTimeout(() => showModuleComplete(), 600);
+    // Show agreement checklist first, then module complete overlay
+    const alreadyAgreed = localStorage.getItem(`cie_agreed_${currentModule.id}`);
+    setTimeout(() => alreadyAgreed ? showModuleComplete() : showAgreementChecklist(), 600);
   } else {
     // Auto-advance only if lesson has no together_work (don't interrupt mid-reading)
     const currentLesson = allLessons[lessonIdx];
