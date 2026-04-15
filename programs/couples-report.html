@@ -1031,13 +1031,12 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
         <div class="course-path-sub">Based on your Partnership Report, these are the modules your course path includes. You both gain access to the same set.</div>
         <div class="module-list">
           ${MODULE_LIST.map(m => {
-            // All modules unlock when the report is generated — unlocked_domains drives priority display only
-            const isFoundation = m.always;
-            return `<div class="module-list-item unlocked">
+            const isUnlocked = m.always || m.always_if_report || unlocked.includes(m.unlock_domain) || unlocked.includes('all');
+            return `<div class="module-list-item ${isUnlocked ? 'unlocked' : 'locked'}">
               <div class="module-list-num">${String(m.num).padStart(2, '0')}</div>
               <div class="module-list-name">${escHtml(m.title)}</div>
-              <div class="module-list-badge ${isFoundation ? 'mbadge-foundation' : 'mbadge-unlocked'}">
-                ${isFoundation ? 'Foundation' : 'Unlocked'}
+              <div class="module-list-badge ${m.always ? 'mbadge-foundation' : isUnlocked ? 'mbadge-unlocked' : 'mbadge-locked'}">
+                ${m.always ? 'Foundation' : isUnlocked ? 'Unlocked' : 'Locked'}
               </div>
             </div>`;
           }).join('')}

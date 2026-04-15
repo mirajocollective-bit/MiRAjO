@@ -728,9 +728,24 @@ async function renderDashboard(user) {
     .eq('course_id', courseEnrollment?.course_id || '')
     .order('position');
 
-  const unlockedDomains = report?.unlocked_domains || [];
-  const reportReady     = !!report;
-  const bothComplete    = !!(myCompletion && partnerCompletion);
+  let unlockedDomains = report?.unlocked_domains || [];
+  const reportReady   = !!report;
+  const bothComplete  = !!(myCompletion && partnerCompletion);
+
+  // If report exists but unlocked_domains is empty, trigger recalculation silently
+  if (reportReady && unlockedDomains.length === 0 && bothComplete) {
+    try {
+      const recalc = await fetch('/api/couples-submit-diagnostic', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id, couple_id: coupleId }),
+      });
+      const recalcData = await recalc.json();
+      if (recalcData.unlocked_domains?.length) {
+        unlockedDomains = recalcData.unlocked_domains;
+      }
+    } catch (_) {}
+  }
 
   // Load how far through the diagnostic THIS user is (by domain)
   const { data: myAnswers } = await db
@@ -873,8 +888,11 @@ async function renderDashboard(user) {
   html += `<div class="modules-grid">`;
 
   for (const mod of MODULES) {
-    // All modules unlock once the report is ready — unlocked_domains drives priority display in the report, not gates here
-    const unlocked = reportReady;
+    // Modules unlock based on misalignment from the diagnostic report
+    let unlocked = false;
+    const isBookend = mod.num === 1 || mod.num === 8;
+    if (isBookend) unlocked = reportReady;
+    else unlocked = reportReady && (unlockedDomains.includes(mod.unlock_domain) || unlockedDomains.includes('all'));
 
     // Match to DB module for progress
     const dbMod = dbModules?.find(m => m.position === mod.num);

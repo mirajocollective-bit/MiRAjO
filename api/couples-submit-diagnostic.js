@@ -13,9 +13,12 @@ const supabase = createClient(
 
 const DOMAINS = ['business', 'finances', 'family', 'relationship'];
 
-// All domains unlock once both partners complete — the report uses scores to show priority areas
+// Unlock a domain's modules if either partner's avg is below 3.0,
+// or if there's a gap of 0.5+ between partners (meaningful misalignment).
+// If null scores (no answers), unlock by default.
 function shouldUnlock(avgA, avgB) {
-  return true;
+  if (avgA === null || avgB === null) return true;
+  return avgA < 3.0 || avgB < 3.0 || Math.abs(avgA - avgB) >= 0.5;
 }
 
 function average(scores) {
@@ -67,16 +70,18 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true, report_ready: false });
   }
 
-  // Both done — check if report already generated
+  // Both done — check if report already generated with valid unlocked_domains
   const { data: existingReport } = await supabase
     .from('partnership_reports')
-    .select('id')
+    .select('id, unlocked_domains')
     .eq('couple_id', couple_id)
     .single();
 
-  if (existingReport) {
+  // If report exists AND has unlocked domains already, nothing to do
+  if (existingReport && existingReport.unlocked_domains?.length > 0) {
     return res.status(200).json({ success: true, report_ready: true });
   }
+  // If report exists but unlocked_domains is empty, recalculate and update it
 
   // Load all diagnostic answers for this couple
   const { data: allAnswers } = await supabase
@@ -92,13 +97,16 @@ export default async function handler(req, res) {
     domainScores[row.domain][row.user_id].push(row.score);
   }
 
-  // Determine unlocked domains
+  // Determine unlocked domains based on misalignment
   const unlocked_domains = [];
   for (const domain of DOMAINS) {
     const avgA = average(domainScores[domain]?.[couple.partner_a_user_id]);
     const avgB = average(domainScores[domain]?.[couple.partner_b_user_id]);
     if (shouldUnlock(avgA, avgB)) unlocked_domains.push(domain);
   }
+
+  // If perfectly aligned everywhere, unlock all (no couple leaves with zero modules)
+  if (unlocked_domains.length === 0) unlocked_domains.push(...DOMAINS);
 
   if (unlocked_domains.length === DOMAINS.length) unlocked_domains.push('all');
 
@@ -115,34 +123,41 @@ export default async function handler(req, res) {
     };
   }
 
-  // Insert partnership report
-  const { error: reportError } = await supabase
-    .from('partnership_reports')
-    .insert({
-      couple_id,
-      unlocked_domains,
-      report_data,
-      generated_at: new Date().toISOString(),
-    });
+  // Insert new report, or update existing one that had empty unlocked_domains
+  let reportError;
+  if (existingReport) {
+    const { error } = await supabase
+      .from('partnership_reports')
+      .update({ unlocked_domains, report_data })
+      .eq('id', existingReport.id);
+    reportError = error;
+  } else {
+    const { error } = await supabase
+      .from('partnership_reports')
+      .insert({ couple_id, unlocked_domains, report_data, generated_at: new Date().toISOString() });
+    reportError = error;
+  }
 
   if (reportError) {
-    console.error('Report insert error:', reportError);
+    console.error('Report insert/update error:', reportError);
     return res.status(500).json({ error: 'Failed to generate report' });
   }
 
-  // Queue report-ready emails to both partners
-  const { data: partnerAProfile } = await supabase.auth.admin.getUserById(couple.partner_a_user_id);
-  const { data: partnerBProfile } = await supabase.auth.admin.getUserById(couple.partner_b_user_id);
+  // Queue report-ready emails — only when first generated, not on recalculation
+  if (!existingReport) {
+    const { data: partnerAProfile } = await supabase.auth.admin.getUserById(couple.partner_a_user_id);
+    const { data: partnerBProfile } = await supabase.auth.admin.getUserById(couple.partner_b_user_id);
 
-  const aEmail = partnerAProfile?.user?.email;
-  const bEmail = partnerBProfile?.user?.email;
-  const aName  = partnerAProfile?.user?.user_metadata?.first_name || '';
-  const bName  = partnerBProfile?.user?.user_metadata?.first_name || '';
+    const aEmail = partnerAProfile?.user?.email;
+    const bEmail = partnerBProfile?.user?.email;
+    const aName  = partnerAProfile?.user?.user_metadata?.first_name || '';
+    const bName  = partnerBProfile?.user?.user_metadata?.first_name || '';
 
-  const DASHBOARD = `${process.env.SITE_URL}/programs/couples-dashboard`;
+    const DASHBOARD = `${process.env.SITE_URL}/programs/couples-dashboard`;
 
-  if (aEmail) await queueSequence(supabase, aEmail, 'report-ready-cie', aName, { dashboard_url: DASHBOARD });
-  if (bEmail) await queueSequence(supabase, bEmail, 'report-ready-cie', bName, { dashboard_url: DASHBOARD });
+    if (aEmail) await queueSequence(supabase, aEmail, 'report-ready-cie', aName, { dashboard_url: DASHBOARD });
+    if (bEmail) await queueSequence(supabase, bEmail, 'report-ready-cie', bName, { dashboard_url: DASHBOARD });
+  }
 
   return res.status(200).json({ success: true, report_ready: true, unlocked_domains });
 }
