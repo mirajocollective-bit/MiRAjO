@@ -765,7 +765,16 @@ async function renderDashboard(user) {
 
   // Partner names
   const firstName  = (await db.auth.getUser()).data?.user?.user_metadata?.first_name || 'You';
-  const partnerLabel = 'Your Partner';
+  let partnerLabel = 'Your Partner';
+  try {
+    const nameResp = await fetch('/api/cie-couple-names', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: user.id, couple_id: coupleId }),
+    });
+    const nameData = await nameResp.json();
+    if (nameData.partner_name) partnerLabel = nameData.partner_name;
+  } catch (_) {}
 
   // ── JOURNEY STRIP ──
   const journeySteps = [
