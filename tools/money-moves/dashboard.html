@@ -6193,31 +6193,37 @@
   let hintIndex = 0;
   let hintTimer;
 
+  const HINT_INTERVAL = 5000;
+
   function renderHint(idx) {
-    const h = HINTS[idx];
-    document.getElementById('hint-icon').textContent = h.icon;
-    document.getElementById('hint-text').innerHTML = h.text;
-    document.querySelectorAll('.hint-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    const h = HINTS[idx % HINTS.length];
+    const iconEl = document.getElementById('hint-icon');
+    const textEl = document.getElementById('hint-text');
+    if (!iconEl || !textEl) return;
+    iconEl.textContent = h.icon;
+    textEl.innerHTML   = h.text;
+    document.querySelectorAll('.hint-dot').forEach((d, i) => d.classList.toggle('active', i === (idx % HINTS.length)));
   }
 
   function initHints() {
     const dotsEl = document.getElementById('hint-dots');
-    if (!dotsEl) return;
+    if (!dotsEl) { setTimeout(initHints, 300); return; }
     dotsEl.innerHTML = HINTS.map((_, i) =>
       `<div class="hint-dot${i === 0 ? ' active' : ''}" onclick="goHint(${i})"></div>`
     ).join('');
     renderHint(0);
-    hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, 6000);
+    clearInterval(hintTimer);
+    hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, HINT_INTERVAL);
   }
 
   window.goHint = function (idx) {
     clearInterval(hintTimer);
     hintIndex = idx;
     renderHint(idx);
-    hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, 6000);
+    hintTimer = setInterval(() => { hintIndex = (hintIndex + 1) % HINTS.length; renderHint(hintIndex); }, HINT_INTERVAL);
   };
 
-  try { initHints(); } catch(e) { setTimeout(initHints, 400); }
+  initHints();
 
   // ── Undo Toast ───────────────────────────────────────────────────────────────
   let _undoFn    = null;
