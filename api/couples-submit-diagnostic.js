@@ -4,7 +4,7 @@
 // determines unlocked modules, generates the Partnership Report, and queues emails.
 
 import { createClient } from '@supabase/supabase-js';
-import { queueSequence } from './_emails.js';
+import { triggerSequence } from './_emails.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -77,7 +77,7 @@ export default async function handler(req, res) {
       const waitingEmail  = waitingProfile?.user?.email;
       const waitingName   = waitingProfile?.user?.user_metadata?.first_name || '';
       if (waitingEmail) {
-        await queueSequence(supabase, waitingEmail, 'diagnostic-reminder-cie', waitingName, { partner_name: completedName });
+        await triggerSequence(supabase, waitingEmail, 'diagnostic-reminder-cie', waitingName, { partner_name: completedName });
       }
     } catch (_) {}
     return res.status(200).json({ success: true, report_ready: false });
@@ -168,8 +168,8 @@ export default async function handler(req, res) {
 
     const DASHBOARD = `${process.env.SITE_URL}/programs/couples-dashboard`;
 
-    if (aEmail) await queueSequence(supabase, aEmail, 'report-ready-cie', aName, { dashboard_url: DASHBOARD });
-    if (bEmail) await queueSequence(supabase, bEmail, 'report-ready-cie', bName, { dashboard_url: DASHBOARD });
+    if (aEmail) await triggerSequence(supabase, aEmail, 'report-ready-cie', aName, { dashboard_url: DASHBOARD });
+    if (bEmail) await triggerSequence(supabase, bEmail, 'report-ready-cie', bName, { dashboard_url: DASHBOARD });
   }
 
   return res.status(200).json({ success: true, report_ready: true, unlocked_domains });

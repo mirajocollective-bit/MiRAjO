@@ -513,6 +513,7 @@ export const SEQUENCES = {
 };
 
 // Insert a full sequence into the email_queue for a subscriber
+// Queue all steps (used internally or for sequences where step 1 is already sent).
 export async function queueSequence(supabase, email, sequenceName, firstName = '', extraData = {}) {
   const steps = SEQUENCES[sequenceName];
   if (!steps) { console.error(`[email-queue] Unknown sequence: ${sequenceName}`); return; }
@@ -529,4 +530,45 @@ export async function queueSequence(supabase, email, sequenceName, firstName = '
     .upsert(rows, { onConflict: 'email,sequence,step', ignoreDuplicates: true });
 
   if (error) console.error(`[email-queue] Failed to queue ${sequenceName} for ${email}:`, error.message);
+}
+
+// Send step 1 immediately via Resend, queue steps 2+ for the daily cron.
+// Use this at action trigger points (purchase, completion, etc.).
+export async function triggerSequence(supabase, email, sequenceName, firstName = '', extraData = {}) {
+  const steps = SEQUENCES[sequenceName];
+  if (!steps) { console.error(`[email-queue] Unknown sequence: ${sequenceName}`); return; }
+
+  const step1 = steps.find(s => s.step === 1);
+  if (step1) {
+    const subject = typeof step1.subject === 'function' ? step1.subject(extraData) : step1.subject;
+    const html    = step1.body(firstName, extraData);
+    const sent = await fetch('https://api.resend.com/emails', {
+      method:  'POST',
+      headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ from: 'Miranda J <mirandaj@mirajoco.org>', to: email, subject, html }),
+    });
+    if (!sent.ok) console.error(`[trigger-sequence] Resend error for ${sequenceName} step 1 to ${email}`);
+    // Record step 1 as sent so the cron does not resend it
+    await supabase.from('email_queue').upsert(
+      { email, first_name: firstName, sequence: sequenceName, step: 1,
+        send_after: new Date().toISOString(), extra_data: extraData,
+        sent_at: new Date().toISOString() },
+      { onConflict: 'email,sequence,step', ignoreDuplicates: true }
+    );
+  }
+
+  // Queue follow-up steps for the cron
+  const followUps = steps.filter(s => s.step > 1);
+  if (followUps.length) {
+    const now = new Date();
+    const rows = followUps.map(({ step, delayDays }) => {
+      const sendAfter = new Date(now);
+      sendAfter.setDate(sendAfter.getDate() + delayDays);
+      return { email, first_name: firstName, sequence: sequenceName, step, send_after: sendAfter.toISOString(), extra_data: extraData };
+    });
+    const { error } = await supabase
+      .from('email_queue')
+      .upsert(rows, { onConflict: 'email,sequence,step', ignoreDuplicates: true });
+    if (error) console.error(`[trigger-sequence] Failed to queue follow-ups for ${sequenceName}:`, error.message);
+  }
 }

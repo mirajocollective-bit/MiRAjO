@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
-import { queueSequence } from './_emails.js';
+import { triggerSequence, queueSequence } from './_emails.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const supabase = createClient(
@@ -110,7 +110,7 @@ export default async function handler(req, res) {
         });
 
       // Queue welcome email sequence for Partner A
-      await queueSequence(supabase, email, 'enrolled-couples-cie', firstName);
+      await triggerSequence(supabase, email, 'enrolled-couples-cie', firstName);
 
       console.log(`Couples enrollment: Partner A (${email}) enrolled, couple record created`);
     } else {
@@ -127,7 +127,7 @@ export default async function handler(req, res) {
         console.error('[stripe-webhook] Setup link error:', err.message);
       }
 
-      await queueSequence(supabase, email, 'enrolled-25d25n', firstName, { setup_link: setupLink });
+      await triggerSequence(supabase, email, 'enrolled-25d25n', firstName, { setup_link: setupLink });
 
       console.log(`Enrolled ${email} (${fullName}) in course ${courseSlug}`);
     }
