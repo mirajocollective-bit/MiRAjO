@@ -537,6 +537,15 @@
       font-family: 'Plus Jakarta Sans', sans-serif; padding: 0; opacity: 0.8;
     }
     .mode-change-btn:hover { opacity: 1; }
+    .mode-bottom-row { display: flex; align-items: center; justify-content: space-between; }
+    .mode-speak-btn {
+      background: none; border: none; cursor: pointer; font-size: 16px;
+      padding: 2px 4px; border-radius: 6px; transition: background 0.15s;
+      line-height: 1; margin-top: 8px;
+    }
+    .mode-speak-btn:hover { background: rgba(37,107,66,0.08); }
+    .mode-speak-btn.speaking { animation: speakPulse 0.6s ease-in-out infinite alternate; }
+    @keyframes speakPulse { from { opacity: 0.5; } to { opacity: 1; } }
 
     /* Budget */
     .budget-item { margin-bottom: 12px; }
@@ -1797,7 +1806,10 @@
             <div class="mode-name" id="mode-name">Mom Mode</div>
           </div>
           <div class="mode-msg" id="mode-msg">Add your first account and let's get to work.</div>
-          <button class="mode-change-btn" onclick="openModePickerModal()">Change your mode →</button>
+          <div class="mode-bottom-row">
+            <button class="mode-change-btn" onclick="openModePickerModal()">Change your mode →</button>
+            <button class="mode-speak-btn" id="mode-speak-btn" onclick="speakMode()" title="Hear your coaching">🔊</button>
+          </div>
         </div>
 
         <!-- Budget -->
@@ -2430,7 +2442,7 @@
     <!-- Hint bar -->
     <div class="hint-bar" id="hint-bar">
       <span class="hint-icon" id="hint-icon">💡</span>
-      <span class="hint-text" id="hint-text"></span>
+      <span class="hint-text" id="hint-text"><strong>Click any day</strong> on the calendar to quickly add a transaction on that date.</span>
       <div class="hint-dots" id="hint-dots"></div>
     </div>
 
@@ -4130,6 +4142,31 @@
     document.getElementById('beats-embed').innerHTML = '';
     if (beatsOpen) loadBeatsEmbed(beatsCurrentIdx, false);
     document.getElementById('beats-customize-panel').classList.remove('open');
+  };
+
+  // ── Mode Text-to-Speech ──────────────────────────────────────────────────────
+  window.speakMode = function () {
+    if (!window.speechSynthesis) return;
+    const btn = document.getElementById('mode-speak-btn');
+    // If already speaking, stop
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      btn?.classList.remove('speaking');
+      return;
+    }
+    const msg = document.getElementById('mode-msg')?.textContent?.trim();
+    if (!msg) return;
+    const utt = new SpeechSynthesisUtterance(msg);
+    utt.rate  = 0.92;
+    utt.pitch = 1.05;
+    // Pick a natural-sounding voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v => /Samantha|Karen|Google US English|en-US/i.test(v.name + v.lang));
+    if (preferred) utt.voice = preferred;
+    utt.onstart = () => btn?.classList.add('speaking');
+    utt.onend   = () => btn?.classList.remove('speaking');
+    utt.onerror = () => btn?.classList.remove('speaking');
+    window.speechSynthesis.speak(utt);
   };
 
   window.toggleAnalytics = function () {
@@ -6100,6 +6137,7 @@
 
   function initHints() {
     const dotsEl = document.getElementById('hint-dots');
+    if (!dotsEl) return;
     dotsEl.innerHTML = HINTS.map((_, i) =>
       `<div class="hint-dot${i === 0 ? ' active' : ''}" onclick="goHint(${i})"></div>`
     ).join('');
