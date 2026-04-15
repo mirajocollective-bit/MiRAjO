@@ -466,6 +466,13 @@
     .cal-entry[draggable] { cursor: grab; }
     .cal-entry.dragging { opacity: 0.3; cursor: grabbing; }
     .cal-cell.drag-over { background: rgba(37,107,66,0.08) !important; box-shadow: inset 0 0 0 2px var(--living-green); }
+    .cal-txn-count {
+      font-size: 10px; font-weight: 700; border-radius: 4px;
+      padding: 3px 7px; margin-top: 3px; cursor: pointer;
+      background: var(--deep-forest); color: #fff;
+      display: inline-block; white-space: nowrap;
+    }
+    .cal-txn-count:hover { background: var(--living-green); }
 
     .cal-day-balance {
       position: absolute; bottom: 4px; left: 6px; right: 6px;
@@ -3310,26 +3317,27 @@
       dateNum.textContent = d;
       cell.appendChild(dateNum);
 
-      dayTxns.slice(0, 4).forEach(t => {
-        // Apply exception override for this specific date if one exists
+      // Route cell click: empty → add modal; has transactions → day detail popup
+      cell.onclick = () => {
+        if (dayTxns.length === 0) { openModal(dateStr); }
+        else { openDayDetail(dateStr, dayTxns, runningBalance); }
+      };
+
+      if (dayTxns.length === 1) {
+        // Single transaction — show inline, fits cleanly in the cell
+        const t = dayTxns[0];
         const exc = t.is_recurring ? getRecurException(t, dateStr) : null;
         const displayT = exc ? { ...t, amount: exc.amount ?? t.amount, description: exc.description ?? t.description } : t;
-
         const incoming = displayT.type === 'transfer' && displayT.transfer_to_account_id === selectedAccountId;
         const sign = displayT.type === 'income' ? '+' : incoming ? '←' : displayT.type === 'transfer' ? '→' : '-';
-        const { emoji: txnEmoji, text: txnName } = parseEmojiFromDesc(displayT.description);
+        const { text: txnName } = parseEmojiFromDesc(displayT.description);
         const amt = `${sign}$${Number(displayT.amount).toFixed(0)}`;
         const recurMark = displayT.is_recurring ? '↻ ' : '';
-        const entryLabel = `${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
-
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${incoming ? 'income' : displayT.type}`;
-        entry.textContent = entryLabel;
-        entry.title = `${displayT.description || ''}${displayT.amount ? ' — ' + sign + '$' + Number(displayT.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''}`;
-        entry.addEventListener('click', (e) => {
-          e.stopPropagation();
-          openEditModal(displayT, dateStr);
-        });
+        entry.textContent = `${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
+        entry.title = `${displayT.description || ''} — ${sign}$${Number(displayT.amount).toLocaleString('en-US',{minimumFractionDigits:2})}`;
+        entry.addEventListener('click', (e) => { e.stopPropagation(); openEditModal(displayT, dateStr); });
         entry.setAttribute('draggable', 'true');
         entry.addEventListener('dragstart', (e) => {
           e.stopPropagation();
@@ -3341,16 +3349,13 @@
         });
         entry.addEventListener('dragend', () => entry.classList.remove('dragging'));
         cell.appendChild(entry);
-      });
-
-      if (dayTxns.length > 4) {
-        const more = document.createElement('div');
-        more.className   = 'cal-entry';
-        more.style.cssText = 'background:rgba(18,32,18,0.08);color:var(--living-green);cursor:pointer;font-weight:600;text-align:center;';
-        more.textContent = `+${dayTxns.length - 4} more`;
-        more.title = 'Click to see all';
-        more.addEventListener('click', (e) => { e.stopPropagation(); openDayDetail(dateStr, dayTxns, runningBalance); });
-        cell.appendChild(more);
+      } else if (dayTxns.length > 1) {
+        // Multiple transactions — show a count badge; clicking opens the day detail popup
+        const badge = document.createElement('div');
+        badge.className = 'cal-txn-count';
+        badge.textContent = `${dayTxns.length} transactions`;
+        badge.addEventListener('click', (e) => { e.stopPropagation(); openDayDetail(dateStr, dayTxns, runningBalance); });
+        cell.appendChild(badge);
       }
 
       // Show running balance on every day (even if no transactions that day)
