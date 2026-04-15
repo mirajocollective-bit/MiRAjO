@@ -411,7 +411,7 @@
 
     .cal-grid {
       display: grid; grid-template-columns: repeat(7, 1fr);
-      grid-auto-rows: 130px;
+      grid-auto-rows: 90px;
       padding: 0 16px 16px; gap: 0;
       border-left: 2px solid #111;
       border-bottom: 2px solid #111;
@@ -433,7 +433,7 @@
     @keyframes calSpin { to { transform: rotate(360deg); } }
 
     .cal-cell {
-      height: 130px; border-radius: 0; padding: 8px 8px 6px;
+      height: 90px; border-radius: 0; padding: 5px 6px 4px;
       cursor: pointer; transition: background 0.15s;
       position: relative;
       border-top: 2px solid #111;
@@ -445,8 +445,9 @@
     .cal-cell.other-month { opacity: 0.25; pointer-events: none; }
 
     .cal-date-num {
-      font-size: 13px; font-weight: 700; color: #111; margin-bottom: 4px;
-      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #111; margin-bottom: 2px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
       border-radius: 50%;
     }
     .cal-cell.today .cal-date-num {
@@ -455,8 +456,8 @@
     }
 
     .cal-entry {
-      font-size: 11.5px; font-weight: 600; border-radius: 5px;
-      padding: 3px 7px; margin-bottom: 2px;
+      font-size: 10px; font-weight: 600; border-radius: 4px;
+      padding: 2px 5px; margin-bottom: 1px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
       display: flex; align-items: center; gap: 3px;
     }
@@ -468,8 +469,9 @@
     .cal-cell.drag-over { background: rgba(37,107,66,0.08) !important; box-shadow: inset 0 0 0 2px var(--living-green); }
 
     .cal-day-balance {
-      position: absolute; bottom: 7px; left: 8px; right: 8px;
-      font-size: 14px; font-weight: 800;
+      position: absolute; bottom: 4px; left: 6px; right: 6px;
+      font-size: 11px; font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-family: 'Plus Jakarta Sans', sans-serif;
       letter-spacing: -0.3px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -1041,8 +1043,8 @@
       .summary-bar { flex-wrap: wrap; }
       .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
       .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
-      .cal-grid { grid-auto-rows: 100px; }
-      .cal-cell { height: 100px; padding: 6px 6px 22px; border-top-width: 1.5px; border-right-width: 1.5px; }
+      .cal-grid { grid-auto-rows: 80px; }
+      .cal-cell { height: 80px; padding: 4px 5px 18px; border-top-width: 1.5px; border-right-width: 1.5px; }
       .cal-grid { border-left-width: 1.5px; border-bottom-width: 1.5px; }
       .cal-entry { font-size: 10px; padding: 2px 5px; }
       .float-calc { bottom: 72px; right: 12px; width: 240px; }
@@ -1060,8 +1062,8 @@
       .cal-search-input:focus, .cal-search-input:not(:placeholder-shown) { width: 150px; color: var(--deep-forest); }
     }
     @media (max-width: 540px) {
-      .cal-grid { grid-auto-rows: 80px; }
-      .cal-cell { height: 80px; }
+      .cal-grid { grid-auto-rows: 68px; }
+      .cal-cell { height: 68px; }
       .cal-day-name { font-size: 10px; letter-spacing: 0; }
       .cal-grid { padding: 0 8px 12px; gap: 2px; }
       .summary-bar { gap: 6px; }
@@ -1632,6 +1634,7 @@
     <button class="nav-btn nav-btn-add" onclick="openModal()">+ Add</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/reports'">Reports</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/settings'">Settings</button>
+    <button class="nav-btn nav-btn-settings" id="tips-toggle-btn" onclick="toggleTips()" title="Feature tips on/off" style="font-size:14px; padding:6px 11px;">💡</button>
     <button class="nav-btn nav-btn-settings" onclick="openFaq()" title="Help & FAQ" style="font-size:16px; padding:6px 11px;">?</button>
     <button class="float-calc-toggle" id="calc-toggle-btn" onclick="toggleFloatCalc()" title="Calculator">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">
@@ -3936,6 +3939,7 @@
   let activeTooltip = null;
 
   function initBeacons() {
+    if (localStorage.getItem('mm_beacons_off') === '1') return;
     FEATURE_HINTS.forEach(hint => {
       if (localStorage.getItem(`mm_seen_${hint.id}`)) return;
       const target = hint.getTarget();
@@ -3997,7 +4001,10 @@
     tip.innerHTML += `
       <div class="ft-title">${hint.title}</div>
       <div class="ft-body">${hint.body}</div>
-      <button class="ft-dismiss" onclick="dismissBeacon('${hint.id}')">Got it</button>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
+        <button class="ft-dismiss" onclick="dismissBeacon('${hint.id}')">Got it</button>
+        <button class="ft-dismiss" style="background:rgba(18,32,18,0.08);color:var(--neutral);" onclick="turnOffBeacons()">Turn off tips</button>
+      </div>
     `;
 
     document.body.appendChild(tip);
@@ -4010,6 +4017,39 @@
   function dismissActiveTooltip() {
     if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
   }
+
+  // Update 💡 button appearance to reflect current state
+  function updateTipsBtn() {
+    const btn = document.getElementById('tips-toggle-btn');
+    if (!btn) return;
+    const off = localStorage.getItem('mm_beacons_off') === '1';
+    btn.style.opacity = off ? '0.4' : '1';
+    btn.title = off ? 'Feature tips are off — click to turn on' : 'Feature tips are on — click to turn off';
+  }
+
+  window.toggleTips = function () {
+    if (localStorage.getItem('mm_beacons_off') === '1') {
+      turnOnBeacons();
+    } else {
+      turnOffBeacons();
+    }
+    updateTipsBtn();
+  };
+
+  updateTipsBtn();
+
+  window.turnOffBeacons = function () {
+    localStorage.setItem('mm_beacons_off', '1');
+    document.querySelectorAll('.feature-beacon').forEach(b => b.remove());
+    dismissActiveTooltip();
+  };
+
+  window.turnOnBeacons = function () {
+    localStorage.removeItem('mm_beacons_off');
+    FEATURE_HINTS.forEach(h => localStorage.removeItem(`mm_seen_${h.id}`));
+    document.querySelectorAll('.feature-beacon').forEach(b => b.remove());
+    initBeacons();
+  };
 
   window.dismissBeacon = function (id) {
     localStorage.setItem(`mm_seen_${id}`, '1');
