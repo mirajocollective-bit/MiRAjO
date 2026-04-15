@@ -9,19 +9,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cie-dark:      #14090F;
-      --cie-crimson:   #B82038;
-      --cie-crimson-lt:#D43A56;
-      --cie-rose:      #D4607A;
-      --cie-blush:     #FBE8EE;
-      --cie-blush-lt:  #FDF3F6;
-      --cie-gold:      #C4A245;
-      --cie-gold-lt:   #D9B96A;
-      --cie-muted:     #7A6B74;
-      --cie-border:    rgba(184,32,56,0.15);
-      --aligned:       #5DBE8A;
-      --partial:       #D9B96A;
-      --needs-work:    #C07A72;
+      /* Dashboard-aligned palette */
+      --black:          #0D0D0D;
+      --white:          #FFFFFF;
+      --red:            #B82038;
+      --red-lt:         #D43A56;
+      --pink:           #E8547A;
+      --pink-lt:        #F2899E;
+      --pink-bg:        #FFF0F4;
+      --muted:          #666666;
+      --muted-lt:       #999999;
+      --border:         rgba(13,13,13,0.12);
+      --border-lt:      rgba(13,13,13,0.06);
+
+      /* Status colors */
+      --aligned:        #2F8A5A;
+      --partial:        #C4860A;
+      --needs-work:     #B82038;
+
+      /* Legacy aliases — all existing CSS rules resolve to the new palette */
+      --cie-dark:       #0D0D0D;
+      --cie-crimson:    #B82038;
+      --cie-crimson-lt: #D43A56;
+      --cie-rose:       #E8547A;
+      --cie-blush:      #FFF0F4;
+      --cie-blush-lt:   #FFFFFF;
+      --cie-gold:       #C4860A;
+      --cie-gold-lt:    #D9A030;
+      --cie-muted:      #666666;
+      --cie-border:     rgba(13,13,13,0.12);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -34,8 +50,8 @@
 
     /* ═══ NAV ═══ */
     .dash-nav {
-      background: #ffffff;
-      border-bottom: 1px solid var(--cie-border);
+      background: var(--black);
+      border-bottom: none;
       padding: 18px 40px;
       display: flex;
       align-items: center;
@@ -46,23 +62,23 @@
     }
     .dash-nav-logo img { height: 72px; width: auto; display: block; }
     .dash-nav-right { display: flex; align-items: center; gap: 16px; }
-    .dash-nav-name { font-size: 13px; color: var(--cie-muted); }
+    .dash-nav-name { font-size: 13px; color: rgba(255,255,255,0.55); }
     .dash-back {
       font-size: 12px;
-      color: var(--cie-crimson);
-      background: rgba(184,32,56,0.06);
-      border: 1px solid var(--cie-border);
+      color: #ffffff;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 6px;
       padding: 8px 16px;
       text-decoration: none;
       transition: all 0.2s;
     }
-    .dash-back:hover { background: rgba(184,32,56,0.12); }
+    .dash-back:hover { background: rgba(255,255,255,0.18); }
 
     /* ═══ HERO ═══ */
     .report-hero {
-      background: linear-gradient(180deg, var(--cie-blush) 0%, var(--cie-blush-lt) 100%);
-      border-bottom: 1px solid var(--cie-border);
+      background: linear-gradient(180deg, var(--pink-bg) 0%, #ffffff 100%);
+      border-bottom: 1px solid var(--border);
       padding: 72px 40px 60px;
       text-align: center;
     }
@@ -90,7 +106,7 @@
       margin-bottom: 40px;
     }
     .report-note {
-      background: rgba(184,32,56,0.05);
+      background: rgba(13,13,13,0.03);
       border: 1px solid var(--cie-border);
       border-radius: 12px;
       padding: 18px 24px;
@@ -269,7 +285,7 @@
     .rating-bar-track {
       flex: 1;
       height: 6px;
-      background: rgba(184,32,56,0.08);
+      background: rgba(13,13,13,0.07);
       border-radius: 3px;
       overflow: hidden;
     }
@@ -309,20 +325,20 @@
     /* Q&A grid */
     .qa-grid { display: flex; flex-direction: column; gap: 0; }
     .qa-row {
-      border: 1px solid rgba(184,32,56,0.1);
+      border: 1px solid rgba(13,13,13,0.08);
       border-bottom: none;
       overflow: hidden;
     }
     .qa-row:first-child { border-radius: 12px 12px 0 0; }
-    .qa-row:last-child  { border-radius: 0 0 12px 12px; border-bottom: 1px solid rgba(184,32,56,0.1); }
-    .qa-row:only-child  { border-radius: 12px; border-bottom: 1px solid rgba(184,32,56,0.1); }
+    .qa-row:last-child  { border-radius: 0 0 12px 12px; border-bottom: 1px solid rgba(13,13,13,0.08); }
+    .qa-row:only-child  { border-radius: 12px; border-bottom: 1px solid rgba(13,13,13,0.08); }
     .qa-question {
-      background: rgba(184,32,56,0.03);
+      background: rgba(13,13,13,0.02);
       padding: 16px 20px;
       font-size: 13px;
       font-weight: 600;
       color: var(--cie-dark);
-      border-bottom: 1px solid rgba(184,32,56,0.08);
+      border-bottom: 1px solid rgba(13,13,13,0.07);
       line-height: 1.5;
     }
     .qa-answers {
@@ -330,13 +346,13 @@
       grid-template-columns: 1fr 1fr;
     }
     .qa-answer {
-      padding: 18px 20px;
-      font-size: 14px;
+      padding: 20px 24px;
+      font-size: 15px;
       color: var(--cie-muted);
-      line-height: 1.75;
+      line-height: 1.8;
     }
     .qa-answer:first-child {
-      border-right: 1px solid rgba(184,32,56,0.08);
+      border-right: 1px solid rgba(13,13,13,0.07);
     }
     .qa-answer-who {
       font-size: 10px;
@@ -348,9 +364,9 @@
     .who-you     { color: var(--cie-crimson); }
     .who-partner { color: var(--cie-muted); }
     .qa-answer-text {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--cie-dark);
-      line-height: 1.75;
+      line-height: 1.8;
     }
     .qa-answer-text.empty { color: rgba(122,107,116,0.4); font-style: italic; }
 
@@ -394,7 +410,7 @@
       border: 1px solid transparent;
     }
     .module-list-item.unlocked {
-      background: rgba(184,32,56,0.05);
+      background: rgba(13,13,13,0.03);
       border-color: rgba(184,32,56,0.15);
     }
     .module-list-item.locked {
@@ -424,7 +440,7 @@
       border-radius: 12px;
       flex-shrink: 0;
     }
-    .mbadge-unlocked { background: rgba(184,32,56,0.08); color: var(--cie-crimson); border: 1px solid rgba(184,32,56,0.2); }
+    .mbadge-unlocked { background: rgba(13,13,13,0.07); color: var(--cie-crimson); border: 1px solid rgba(184,32,56,0.2); }
     .mbadge-foundation { background: rgba(93,190,138,0.1); color: var(--aligned); border: 1px solid rgba(93,190,138,0.2); }
     .mbadge-locked { background: transparent; color: var(--cie-muted); border: 1px solid rgba(122,107,116,0.15); }
 
@@ -469,8 +485,8 @@
     }
     .profile-col-header {
       padding: 16px 20px;
-      border-bottom: 1px solid rgba(184,32,56,0.08);
-      background: rgba(184,32,56,0.03);
+      border-bottom: 1px solid rgba(13,13,13,0.07);
+      background: rgba(13,13,13,0.02);
     }
     .profile-col-who {
       font-size: 10px;
@@ -488,7 +504,7 @@
     }
     .profile-field {
       padding: 13px 20px;
-      border-bottom: 1px solid rgba(184,32,56,0.06);
+      border-bottom: 1px solid rgba(13,13,13,0.04);
       display: flex;
       flex-direction: column;
       gap: 2px;
@@ -502,9 +518,9 @@
       font-weight: 600;
     }
     .profile-field-value {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--cie-dark);
-      line-height: 1.5;
+      line-height: 1.55;
     }
     .profile-field-value.empty {
       color: rgba(122,107,116,0.4);
@@ -525,31 +541,31 @@
       font-size: 11px;
       padding: 4px 10px;
       border-radius: 100px;
-      background: rgba(184,32,56,0.06);
+      background: rgba(13,13,13,0.04);
       border: 1px solid rgba(184,32,56,0.15);
       color: var(--cie-dark);
     }
     .profile-gap-row {
-      background: rgba(196,162,69,0.06);
-      border: 1px solid rgba(196,162,69,0.2);
+      background: var(--pink-bg);
+      border: 1px solid rgba(232,84,122,0.2);
       border-radius: 10px;
-      padding: 14px 18px;
+      padding: 16px 20px;
       margin-bottom: 10px;
-      font-size: 13px;
+      font-size: 15px;
       color: var(--cie-dark);
-      line-height: 1.6;
+      line-height: 1.7;
     }
     .profile-gap-row:last-child { margin-bottom: 0; }
     .profile-gap-label {
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--cie-gold);
+      color: var(--pink);
       font-weight: 700;
       margin-bottom: 4px;
     }
     .profile-no-data {
-      background: rgba(184,32,56,0.03);
+      background: rgba(13,13,13,0.02);
       border: 1px dashed rgba(184,32,56,0.15);
       border-radius: 10px;
       padding: 20px;
@@ -559,6 +575,93 @@
     }
     @media (max-width: 640px) {
       .profile-cols { grid-template-columns: 1fr; }
+    }
+
+    /* ═══ SUGGESTED PATH ═══ */
+    .suggested-path {
+      background: var(--black);
+      padding: 48px 40px;
+    }
+    .suggested-path-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .suggested-path-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--pink);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .suggested-path-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 3vw, 30px);
+      color: #ffffff;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .suggested-path-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      max-width: 560px;
+    }
+    .path-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .path-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .path-step:last-child { border-bottom: none; }
+    .path-step-circle {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .circle-priority { background: var(--red);  color: #ffffff; }
+    .circle-recommended { background: var(--pink); color: #ffffff; }
+    .circle-included  { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); }
+    .circle-always    { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15); }
+    .path-step-body { flex: 1; }
+    .path-step-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .tag-priority    { color: var(--red-lt); }
+    .tag-recommended { color: var(--pink-lt); }
+    .tag-included    { color: rgba(255,255,255,0.4); }
+    .tag-always      { color: rgba(255,255,255,0.3); }
+    .path-step-module {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 3px;
+    }
+    .path-step-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.55;
+    }
+    @media (max-width: 640px) {
+      .suggested-path { padding: 40px 24px; }
     }
 
     /* ═══ CTA ═══ */
@@ -602,7 +705,7 @@
       .summary-strip { grid-template-columns: 1fr 1fr; padding: 32px 24px 0; }
       .report-content { padding: 40px 24px 60px; }
       .qa-answers { grid-template-columns: 1fr; }
-      .qa-answer:first-child { border-right: none; border-bottom: 1px solid rgba(184,32,56,0.08); }
+      .qa-answer:first-child { border-right: none; border-bottom: 1px solid rgba(13,13,13,0.07); }
       .rating-compare { flex-direction: column; gap: 12px; }
       .course-path-section { padding: 28px 24px; }
       .domain-header { flex-direction: column; align-items: flex-start; }
@@ -987,6 +1090,17 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
       }).join('')}
     </div>
 
+    <div class="suggested-path">
+      <div class="suggested-path-inner">
+        <div class="suggested-path-eyebrow">Where to Begin</div>
+        <div class="suggested-path-title">Your Recommended Path</div>
+        <div class="suggested-path-sub">Your modules are unlocked based on where you misalign. Work through them in this order — each one builds on the last.</div>
+        <div class="path-steps">
+          ${buildSuggestedPath(unlocked, rd)}
+        </div>
+      </div>
+    </div>
+
     <div class="report-content">
 
       <div class="together-note">
@@ -1105,6 +1219,55 @@ function showError(msg) {
       <p style="font-size:14px;color:var(--cie-muted);margin-bottom:20px;">${msg}</p>
       <a href="mailto:programs@mirajoco.org" style="font-size:14px;color:var(--cie-crimson);">programs@mirajoco.org</a>
     </div>`;
+}
+
+function buildSuggestedPath(unlocked, rd) {
+  const DOMAIN_MODS = {
+    finances:     [{ num: '02', title: 'The Financial Playbook',       note: 'Money alignment, salary structure, and financial decision-making.' }],
+    business:     [{ num: '03', title: 'The Game Plan',                note: 'Shared vision and long-term business direction.' },
+                   { num: '04', title: 'Who Runs What',                note: 'Roles, responsibilities, and how decisions get made.' }],
+    family:       [{ num: '05', title: 'The Life Architecture',        note: 'Designing a home life that supports the business.' }],
+    relationship: [{ num: '06', title: 'Protect What You Built',       note: 'Intimacy, connection, and keeping the partnership strong.' },
+                   { num: '07', title: 'Getting on the Same Page',     note: 'Communication and conflict — the skills that prevent bleed-over.' }],
+  };
+  const tierRank = { needs: 0, partial: 1, aligned: 2 };
+  const allDomains = ['finances', 'business', 'family', 'relationship'];
+  const active = unlocked.includes('all') ? allDomains : allDomains.filter(d => unlocked.includes(d));
+
+  // Sort: needs attention first, then partial, then aligned
+  active.sort((a, b) => {
+    const ra = tierRank[alignmentInfo(a, unlocked, rd).tier];
+    const rb = tierRank[alignmentInfo(b, unlocked, rd).tier];
+    return ra - rb;
+  });
+
+  const steps = [];
+  steps.push({ circle: 'circle-always', tag: 'tag-always', tagLabel: 'Start Here', title: '01 · The Cost of Misalignment', note: 'Every couple begins here — this is the foundation everything else builds on.' });
+
+  for (const domain of active) {
+    const info = alignmentInfo(domain, unlocked, rd);
+    const mods = DOMAIN_MODS[domain] || [];
+    const isNeeds = info.tier === 'needs';
+    const isPartial = info.tier === 'partial';
+    const circleClass = isNeeds ? 'circle-priority' : isPartial ? 'circle-recommended' : 'circle-included';
+    const tagClass    = isNeeds ? 'tag-priority'    : isPartial ? 'tag-recommended'    : 'tag-included';
+    const tagLabel    = isNeeds ? 'Priority'         : isPartial ? 'Recommended'        : 'Included';
+    for (const m of mods) {
+      steps.push({ circle: circleClass, tag: tagClass, tagLabel, title: `${m.num} · ${m.title}`, note: m.note });
+    }
+  }
+
+  steps.push({ circle: 'circle-always', tag: 'tag-always', tagLabel: 'Final Step', title: '08 · The Win', note: 'Close your course path. Celebrate the work and what you\'ve built together.' });
+
+  return steps.map(s => `
+    <div class="path-step">
+      <div class="path-step-circle ${s.circle}"></div>
+      <div class="path-step-body">
+        <div class="path-step-tag ${s.tag}">${s.tagLabel}</div>
+        <div class="path-step-module">${s.title}</div>
+        <div class="path-step-note">${s.note}</div>
+      </div>
+    </div>`).join('');
 }
 
 function scoreLabel(avg) {
