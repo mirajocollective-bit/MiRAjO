@@ -689,20 +689,21 @@ async function renderDashboard(user) {
   const myCompletion     = completions?.find(c => c.user_id === user.id);
   const partnerCompletion = completions?.find(c => c.user_id === partnerId);
 
-  // Load partnership report
-  const { data: report } = await db
+  // Load partnership report — maybeSingle() returns null without error when no row exists
+  const { data: reportRows } = await db
     .from('partnership_reports')
     .select('id, generated_at, unlocked_domains')
     .eq('couple_id', coupleId)
-    .single();
+    .limit(1);
+  const report = reportRows?.[0] || null;
 
-  // Load module progress for THIS user
-  const { data: courseEnrollment } = await db
+  // Load enrollment — fetch all enrollments then find CIE one in JS
+  // (filtering on joined-table columns via .eq() doesn't work in PostgREST)
+  const { data: allEnrollments } = await db
     .from('enrollments')
     .select('course_id, courses(id, slug)')
-    .eq('user_id', user.id)
-    .eq('courses.slug', 'couples-in-entrepreneurship')
-    .single();
+    .eq('user_id', user.id);
+  const courseEnrollment = allEnrollments?.find(e => e.courses?.slug === 'couples-in-entrepreneurship') || null;
 
   let moduleProgress = {};
   if (courseEnrollment?.course_id) {
@@ -722,11 +723,11 @@ async function renderDashboard(user) {
   }
 
   // Load modules with lesson counts
-  const { data: dbModules } = await db
+  const { data: dbModules } = courseEnrollment?.course_id ? await db
     .from('modules')
     .select('id, unlock_domain, position, lessons(count)')
-    .eq('course_id', courseEnrollment?.course_id || '')
-    .order('position');
+    .eq('course_id', courseEnrollment.course_id)
+    .order('position') : { data: null };
 
   let unlockedDomains = report?.unlocked_domains || [];
   let reportReady     = !!report;

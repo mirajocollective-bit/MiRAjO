@@ -76,16 +76,29 @@ export default async function handler(req, res) {
     };
   }
 
-  // Upsert the report — creates it if it doesn't exist yet
-  const { error } = await supabase
+  // Check if report already exists
+  const { data: existing } = await supabase
     .from('partnership_reports')
-    .upsert(
-      { couple_id, unlocked_domains, report_data, generated_at: new Date().toISOString() },
-      { onConflict: 'couple_id' }
-    );
+    .select('id')
+    .eq('couple_id', couple_id)
+    .limit(1);
 
-  if (error) {
-    console.error('Regenerate error:', error);
+  let reportError;
+  if (existing?.length > 0) {
+    const { error } = await supabase
+      .from('partnership_reports')
+      .update({ unlocked_domains, report_data })
+      .eq('couple_id', couple_id);
+    reportError = error;
+  } else {
+    const { error } = await supabase
+      .from('partnership_reports')
+      .insert({ couple_id, unlocked_domains, report_data, generated_at: new Date().toISOString() });
+    reportError = error;
+  }
+
+  if (reportError) {
+    console.error('Regenerate error:', reportError);
     return res.status(500).json({ error: 'Failed to update report' });
   }
 
