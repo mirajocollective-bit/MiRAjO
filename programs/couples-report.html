@@ -284,8 +284,26 @@
       font-size: 12px;
       font-weight: 700;
       color: var(--cie-dark);
-      width: 16px;
+      width: auto;
+      min-width: 28px;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rating-bar-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--cie-muted);
+      white-space: nowrap;
+    }
+    .rating-scale-note {
+      font-size: 11px;
+      color: var(--cie-muted);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--cie-border);
+      width: 100%;
     }
 
     /* Q&A grid */
@@ -1011,14 +1029,15 @@ function renderReport(report, isPartnerA, youLabel, partnerLabel, userId, myProf
               <div class="rating-bar-row">
                 <div class="rating-bar-who">${escHtml(youLabel)}</div>
                 <div class="rating-bar-track"><div class="rating-bar-fill fill-you" style="width:${(avgYou / 4 * 100).toFixed(0)}%"></div></div>
-                <div class="rating-bar-val">${avgYou.toFixed(1)}</div>
+                <div class="rating-bar-val">${avgYou.toFixed(1)}<span class="rating-bar-label">${scoreLabel(avgYou)}</span></div>
               </div>
               <div class="rating-bar-row">
                 <div class="rating-bar-who">${escHtml(partnerLabel)}</div>
                 <div class="rating-bar-track"><div class="rating-bar-fill fill-partner" style="width:${(avgPartner / 4 * 100).toFixed(0)}%"></div></div>
-                <div class="rating-bar-val">${avgPartner.toFixed(1)}</div>
+                <div class="rating-bar-val">${avgPartner.toFixed(1)}<span class="rating-bar-label">${scoreLabel(avgPartner)}</span></div>
               </div>
             </div>
+            <div class="rating-scale-note">Scored 1–4 · 1 = avoidant, 2 = reactive, 3 = intentional, 4 = proactive</div>
           </div>` : ''}
 
           ${hasNotes ? `
@@ -1086,6 +1105,14 @@ function showError(msg) {
       <p style="font-size:14px;color:var(--cie-muted);margin-bottom:20px;">${msg}</p>
       <a href="mailto:programs@mirajoco.org" style="font-size:14px;color:var(--cie-crimson);">programs@mirajoco.org</a>
     </div>`;
+}
+
+function scoreLabel(avg) {
+  if (avg == null) return '';
+  if (avg < 1.75) return 'avoidant';
+  if (avg < 2.5)  return 'reactive';
+  if (avg < 3.25) return 'intentional';
+  return 'proactive';
 }
 
 function escHtml(str) {
