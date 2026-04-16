@@ -11,19 +11,19 @@
   "categories": ["finance", "productivity"],
   "icons": [
     {
-      "src": "/img/mm-icon-v1-512.png",
+      "src": "/img/mm-logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/img/mm-icon-v1-512.png",
+      "src": "/img/mm-logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/img/mm-icon-v1-512.png",
+      "src": "/img/mm-logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
