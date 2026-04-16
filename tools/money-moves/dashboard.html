@@ -1270,6 +1270,31 @@
       #m-home .summary-card           { min-width: 110px; }
       /* Expense amount needs to be bright on the dark green bar */
       #m-home .summary-amount.expense { color: #FF6B5E !important; }
+
+      /* ── Day-detail panel layout ────────────────────────────── */
+      /* No scrolling on the home panel itself — children scroll */
+      #m-home { overflow: hidden !important; }
+      /* Calendar fills remaining space above the day panel */
+      #m-home .calendar-section {
+        flex: 1 1 auto !important; min-height: 0; overflow: hidden;
+      }
+      /* Day panel: fixed strip at bottom of home */
+      #m-day-panel { flex: 0 0 220px; }
+
+      /* Cells: hide bar entries, show only count badge + balance */
+      #m-home .cal-entry { display: none !important; }
+      #m-home .cal-txn-count {
+        position: absolute; top: 3px; right: 3px;
+        background: rgba(37,107,66,0.85); color: #fff;
+        font-size: 7px; padding: 1px 5px; border-radius: 3px;
+        margin: 0; line-height: 1.6; pointer-events: none; display: block;
+      }
+      #m-home .cal-day-balance { font-size: 10px; font-weight: 800; }
+      /* Selected cell */
+      #m-home .cal-cell.m-selected {
+        background: rgba(37,107,66,0.07) !important;
+        box-shadow: inset 0 0 0 2px var(--living-green) !important;
+      }
     }
     @media (max-width: 540px) {
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
@@ -1921,6 +1946,68 @@
       font-size: 11px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
     }
     .beats-custom-reset:hover { color: rgba(255,255,255,0.6); }
+
+    /* ── Mobile Day Detail Panel ─────────────────────────────────────────────── */
+    @media (min-width: 769px) { #m-day-panel { display: none !important; } }
+    #m-day-panel {
+      overflow-y: auto; background: #fff;
+      border-top: 2px solid rgba(18,32,18,0.06);
+      -webkit-overflow-scrolling: touch;
+      display: flex; flex-direction: column;
+    }
+    #m-day-panel-hdr {
+      position: sticky; top: 0; z-index: 5;
+      background: #fff; border-bottom: 1px solid rgba(18,32,18,0.07);
+      padding: 7px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; flex-shrink: 0;
+    }
+    #m-day-panel-info { flex: 1; min-width: 0; }
+    #m-day-panel-date  { font-size: 13px; font-weight: 700; color: var(--deep-forest); display: block; }
+    #m-day-panel-total { font-size: 11px; font-weight: 700; display: block; }
+    #m-day-panel-total.pos { color: var(--income-color); }
+    #m-day-panel-total.neg { color: #FF6B5E; }
+    #m-day-panel-add {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--dry-sage); border: none;
+      color: var(--deep-forest); font-size: 22px; font-weight: 700; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(196,162,69,0.35);
+      -webkit-tap-highlight-color: transparent;
+    }
+    #m-day-panel-empty {
+      padding: 22px 20px; text-align: center;
+      font-size: 12px; color: var(--neutral); line-height: 1.7; flex: 1;
+    }
+    #m-day-panel-list { flex: 1; }
+    .m-txn-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; border-bottom: 1px solid rgba(18,32,18,0.06);
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
+    }
+    .m-txn-row:active { background: rgba(18,32,18,0.03); }
+    .m-txn-bar { width: 4px; height: 32px; border-radius: 3px; flex-shrink: 0; }
+    .m-txn-bar.income   { background: #6DC48A; }
+    .m-txn-bar.expense  { background: #C4A245; }
+    .m-txn-bar.transfer { background: #9ca3af; }
+    .m-txn-info { flex: 1; min-width: 0; }
+    .m-txn-name {
+      font-size: 13px; font-weight: 600; color: var(--deep-forest);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .m-txn-sub  { font-size: 10px; color: var(--neutral); margin-top: 1px; }
+    .m-txn-recur { font-size: 10px; color: var(--neutral); margin-left: 4px; }
+    .m-txn-amount { font-size: 14px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+    .m-txn-amount.income   { color: var(--income-color); }
+    .m-txn-amount.expense  { color: #FF6B5E; }
+    .m-txn-amount.transfer { color: var(--neutral); }
+    body.dark #m-day-panel { background: #0f1710; border-color: rgba(255,255,255,0.07); }
+    body.dark #m-day-panel-hdr { background: #0f1710; border-color: rgba(255,255,255,0.07); }
+    body.dark #m-day-panel-date { color: #e2ddd4; }
+    body.dark .m-txn-row { border-color: rgba(255,255,255,0.06); }
+    body.dark .m-txn-row:active { background: rgba(255,255,255,0.04); }
+    body.dark .m-txn-name { color: #e2ddd4; }
   </style>
   <script src="/analytics.js"></script>
 </head>
@@ -6845,15 +6932,49 @@
 (function () {
   const MOBILE = () => window.innerWidth <= 768;
 
+  // After renderCalendar runs: hide bar entries, add count badges, auto-select today
+  function refineMobileCells() {
+    if (!MOBILE()) return;
+    const grid = document.querySelector('#m-home .cal-grid');
+    if (!grid) return;
+
+    grid.querySelectorAll('.cal-cell:not(.other-month)').forEach(cell => {
+      // Hide inline entry bars (amounts in cells — now shown in panel below)
+      cell.querySelectorAll('.cal-entry').forEach(e => { e.style.display = 'none'; });
+      const count = cell.querySelectorAll('.cal-entry').length;
+
+      // Count badge: always show if any transactions
+      let badge = cell.querySelector('.cal-txn-count');
+      if (count > 0) {
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.className = 'cal-txn-count';
+          const bal = cell.querySelector('.cal-day-balance');
+          cell.insertBefore(badge, bal || null);
+        }
+        badge.textContent = count;
+        badge.style.display = 'block';
+        badge.onclick = null; // cell click handles selection
+      } else if (badge) {
+        badge.style.display = 'none';
+      }
+    });
+
+    // Auto-select today if nothing is currently selected
+    if (!grid.querySelector('.cal-cell.m-selected')) {
+      const todayCell = grid.querySelector('.cal-cell.today');
+      if (todayCell) todayCell.click();
+    }
+  }
+
   function initMobileApp() {
     if (!MOBILE()) {
-      // Remove splash on desktop
       const s = document.getElementById('m-splash');
       if (s) s.remove();
       return;
     }
 
-    // Show splash, fade after 1.6s
+    // Splash fade
     const splash = document.getElementById('m-splash');
     if (splash) {
       setTimeout(() => {
@@ -6862,28 +6983,44 @@
       }, 1600);
     }
 
-    // Build #m-app container
+    // ── Build #m-app ──────────────────────────────────────────────────────────
     const mApp = document.createElement('div');
     mApp.id = 'm-app';
     mApp.style.display = 'block';
 
-    // Panel: Home — summary bar + calendar section
+    // Panel: Home — summary bar + calendar + day detail panel
     const mHome = document.createElement('div');
     mHome.id = 'm-home';
     mHome.className = 'm-panel active';
+
     const summaryBar = document.querySelector('.summary-bar');
     const calSection = document.querySelector('.calendar-section');
     if (summaryBar) mHome.appendChild(summaryBar);
     if (calSection) mHome.appendChild(calSection);
 
-    // Panel: Budget — analytics sidebar (coaching, categories, goals, debts)
+    // Day detail panel — lives below the calendar
+    const dayPanel = document.createElement('div');
+    dayPanel.id = 'm-day-panel';
+    dayPanel.innerHTML =
+      '<div id="m-day-panel-hdr" style="display:none">' +
+        '<div id="m-day-panel-info">' +
+          '<span id="m-day-panel-date"></span>' +
+          '<span id="m-day-panel-total"></span>' +
+        '</div>' +
+        '<button id="m-day-panel-add" aria-label="Add transaction">+</button>' +
+      '</div>' +
+      '<div id="m-day-panel-empty">Tap any day to see transactions</div>' +
+      '<div id="m-day-panel-list"></div>';
+    mHome.appendChild(dayPanel);
+
+    // Panel: Budget — analytics sidebar
     const mBudget = document.createElement('div');
     mBudget.id = 'm-budget';
     mBudget.className = 'm-panel';
     const sidebar = document.querySelector('.analytics-sidebar');
     if (sidebar) mBudget.appendChild(sidebar);
 
-    // Panel: More — static nav links
+    // Panel: More — nav links
     const mMore = document.createElement('div');
     mMore.id = 'm-more';
     mMore.className = 'm-panel';
@@ -6898,7 +7035,7 @@
     mApp.appendChild(mBudget);
     mApp.appendChild(mMore);
 
-    // Hide desktop layout, insert mobile app
+    // Insert mobile app, hide desktop layout
     const layout = document.querySelector('.layout');
     if (layout) {
       layout.style.display = 'none';
@@ -6907,19 +7044,91 @@
       document.body.appendChild(mApp);
     }
 
-    // Show the mobile nav
+    // Show mobile nav
     const nav = document.getElementById('mobile-nav');
     if (nav) nav.style.display = 'flex';
-
-    // Set active nav button
     document.getElementById('mnb-home')?.classList.add('active');
+
+    // ── Override openDayDetail: panel below calendar instead of modal ─────────
+    const _origOpen = window.openDayDetail;
+    window.openDayDetail = function (dateStr, dayTxns, balance) {
+      if (!MOBILE()) { _origOpen && _origOpen(dateStr, dayTxns, balance); return; }
+
+      // Call original to set dayDetailDate (used by closeDayDetailAndAdd)
+      _origOpen && _origOpen(dateStr, dayTxns, balance);
+      // Immediately close the overlay it just opened
+      const overlay = document.getElementById('day-detail-overlay');
+      if (overlay) overlay.style.display = 'none';
+
+      // Highlight selected cell
+      document.querySelectorAll('#m-home .cal-cell.m-selected').forEach(c => c.classList.remove('m-selected'));
+      const cell = document.querySelector(`#m-home .cal-cell[data-date="${dateStr}"]`);
+      if (cell) cell.classList.add('m-selected');
+
+      // Wire up + button for this date
+      const addBtn = document.getElementById('m-day-panel-add');
+      if (addBtn) addBtn.onclick = () => window.closeDayDetailAndAdd && window.closeDayDetailAndAdd();
+
+      // Date label
+      const mths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const [y, m, d] = dateStr.split('-');
+      document.getElementById('m-day-panel-date').textContent =
+        `${mths[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
+
+      // Daily total — use parentheses for negative (matches reference app format)
+      const inc = dayTxns.filter(t => t.type === 'income').reduce((s,t) => s + Number(t.amount), 0);
+      const exp = dayTxns.filter(t => t.type !== 'income').reduce((s,t) => s + Number(t.amount), 0);
+      const net = inc - exp;
+      const totalEl = document.getElementById('m-day-panel-total');
+      totalEl.textContent = net >= 0
+        ? `Daily Total: +$${net.toLocaleString('en-US',{minimumFractionDigits:2})}`
+        : `Daily Total: ($${Math.abs(net).toLocaleString('en-US',{minimumFractionDigits:2})})`;
+      totalEl.className = net >= 0 ? 'pos' : 'neg';
+
+      document.getElementById('m-day-panel-hdr').style.display = 'flex';
+      document.getElementById('m-day-panel-empty').style.display = 'none';
+
+      // Transaction rows
+      const list = document.getElementById('m-day-panel-list');
+      if (!dayTxns.length) {
+        list.innerHTML = '';
+        const empty = document.getElementById('m-day-panel-empty');
+        empty.style.display = 'block';
+        empty.textContent = 'No transactions this day';
+        return;
+      }
+      list.innerHTML = dayTxns.map(t => {
+        const isIncome = t.type === 'income';
+        const isTransfer = t.type === 'transfer';
+        const barClass = isIncome ? 'income' : isTransfer ? 'transfer' : 'expense';
+        const amt = isIncome
+          ? `+$${Number(t.amount).toLocaleString('en-US',{minimumFractionDigits:2})}`
+          : `($${Number(t.amount).toLocaleString('en-US',{minimumFractionDigits:2})})`;
+        const recurBadge = t.is_recurring ? ' <span class="m-txn-recur">↻</span>' : '';
+        return '<div class="m-txn-row" onclick="window.closeDayDetailToEdit(\'' + t.id + '\')">' +
+          '<div class="m-txn-bar ' + barClass + '"></div>' +
+          '<div class="m-txn-info">' +
+            '<div class="m-txn-name">' + (t.description || '—') + recurBadge + '</div>' +
+            '<div class="m-txn-sub">' + t.type + (t.is_recurring ? ' · recurring' : '') + '</div>' +
+          '</div>' +
+          '<div class="m-txn-amount ' + barClass + '">' + amt + '</div>' +
+        '</div>';
+      }).join('');
+    };
+
+    // ── MutationObserver: refine cells after every calendar render ────────────
+    const grid = calSection && calSection.querySelector('.cal-grid');
+    if (grid) {
+      refineMobileCells();
+      const obs = new MutationObserver(() => refineMobileCells());
+      obs.observe(grid, { childList: true });
+    }
   }
 
   window.setMobilePanel = function (name) {
     if (!MOBILE()) return;
     document.querySelectorAll('.m-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.mobile-nav-btn:not(.mnb-add)').forEach(b => b.classList.remove('active'));
-
     if (name === 'home') {
       document.getElementById('m-home')?.classList.add('active');
       document.getElementById('mnb-home')?.classList.add('active');
@@ -6937,7 +7146,6 @@
     }
   };
 
-  // Run after everything has loaded and rendered
   if (document.readyState === 'complete') {
     initMobileApp();
   } else {
