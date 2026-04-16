@@ -1137,49 +1137,49 @@
       .layout.analytics-open { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 768px) {
-      body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); overflow-x: hidden; }
-      html { overflow-x: hidden; }
-      .nav { height: 48px; padding: 0 16px; }
+      body { padding-bottom: 0; overflow: hidden; height: 100dvh; }
+      html { overflow: hidden; height: 100dvh; }
+      /* Hide desktop layout elements — JS moves them into mobile panels */
+      .layout { display: none !important; }
+      .forecast-strip { display: none; }
+      /* Nav slimmed down */
+      .nav { height: 56px; padding: 0 16px; }
       .nav-greeting, .nav-xp-wrap, .nav-btn-forecast, .nav-btn-logout,
-      .nav-btn-settings, .float-calc-toggle, .forecast-strip-toggle { display: none; }
-      .layout {
-        display: flex; flex-direction: column;
-        padding: 12px 12px 80px; gap: 12px;
-      }
-      /* Show sidebar below calendar on mobile */
-      .analytics-sidebar {
-        display: block !important;
-        position: static !important;
-        width: 100%; order: 2;
-        border-radius: 16px;
-      }
-      .analytics-toggle  { display: none !important; }
-      .analytics-content { display: block !important; }
-      .analytics-widgets { padding: 0 10px 14px; }
-      .summary-bar { flex-wrap: wrap; }
-      .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
-      .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
-      .cal-grid { grid-auto-rows: 100px; }
-      .cal-cell { height: 100px; padding: 4px 5px 16px; border-top-width: 1.5px; border-right-width: 1.5px; overflow: hidden; }
-      .cal-grid { border-left-width: 1.5px; border-bottom-width: 1.5px; }
-      .cal-entry { font-size: 10px; padding: 2px 5px; }
-      .float-calc { bottom: 72px; right: 12px; width: 240px; }
-      .mobile-nav { display: flex; padding-bottom: max(8px, env(safe-area-inset-bottom, 8px)); height: auto; min-height: 62px; }
+      .nav-btn-settings, .float-calc-toggle, .forecast-strip-toggle,
+      .nav-btn-add { display: none; }
+      /* Mobile nav always visible */
+      .mobile-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+        padding-bottom: max(8px, env(safe-area-inset-bottom, 8px)); height: auto; min-height: 64px; z-index: 300; }
+      /* Forms + modals */
       .form-row { grid-template-columns: 1fr; }
       .modal { padding: 24px 20px; border-radius: 20px; }
-      /* Cal header: two rows so arrows always visible */
-      .cal-header { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 10px; }
-      .cal-header-left { justify-content: space-between; }
-      .cal-header > div:last-child { justify-content: space-between; }
-      /* View tabs: scrollable row so they never overflow the viewport */
-      .cal-view-toggle { overflow-x: auto; scrollbar-width: none; flex-shrink: 0; width: 100%; }
-      .cal-view-toggle::-webkit-scrollbar { display: none; }
-      .cal-view-btn { white-space: nowrap; flex-shrink: 0; }
-      /* Bigger nav arrow touch targets (Apple min 44px) */
-      .cal-nav-btn { width: 44px; height: 44px; font-size: 18px; }
-      /* Search collapses to icon; expands on focus */
-      .cal-search-input { width: 36px; padding: 0 10px; color: transparent; transition: width 0.25s, color 0.15s; }
-      .cal-search-input:focus, .cal-search-input:not(:placeholder-shown) { width: 150px; color: var(--deep-forest); }
+      /* Float calc above nav */
+      .float-calc { bottom: 76px; right: 12px; width: 240px; }
+      /* Calendar inside home panel fills the panel */
+      #m-home .cal-grid { grid-auto-rows: 82px; }
+      #m-home .cal-cell { height: 82px; padding: 4px 4px 14px; overflow: hidden; }
+      #m-home .cal-day-name { font-size: 10px; letter-spacing: 0; }
+      #m-home .cal-header { flex-direction: column; align-items: stretch; padding: 10px 14px; gap: 8px; }
+      #m-home .cal-header-left { justify-content: space-between; }
+      #m-home .cal-nav-btn { width: 44px; height: 44px; font-size: 18px; }
+      #m-home .cal-view-toggle { overflow-x: auto; scrollbar-width: none; width: 100%; }
+      #m-home .cal-view-toggle::-webkit-scrollbar { display: none; }
+      #m-home .cal-view-btn { white-space: nowrap; flex-shrink: 0; }
+      #m-home .cal-search-input { width: 36px; padding: 0 10px; color: transparent; transition: width 0.25s, color 0.15s; }
+      #m-home .cal-search-input:focus,
+      #m-home .cal-search-input:not(:placeholder-shown) { width: 140px; color: var(--deep-forest); }
+      /* Summary bar compact in home panel */
+      #m-home .summary-bar { flex-wrap: wrap; }
+      #m-home .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
+      #m-home .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
+      /* Thin colored bar entries on narrow calendar */
+      #m-home .cal-entry {
+        height: 5px; padding: 0; border-radius: 2px; margin-bottom: 2px; font-size: 0; line-height: 0; gap: 0; overflow: hidden;
+      }
+      #m-home .cal-entry.income   { background: var(--income-color) !important; color: transparent !important; }
+      #m-home .cal-entry.expense  { background: var(--expense-color) !important; color: transparent !important; }
+      #m-home .cal-entry.transfer { background: var(--neutral) !important; color: transparent !important; }
+      #m-home .cal-day-balance { font-size: 9px; left: 2px; right: 2px; bottom: 2px; letter-spacing: -0.5px; }
     }
     @media (max-width: 540px) {
       .cal-grid { grid-auto-rows: 82px; }
@@ -1202,6 +1202,96 @@
       /* Daily balance — tighter on narrow cells */
       .cal-day-balance { font-size: 9px; left: 2px; right: 2px; bottom: 2px; letter-spacing: -0.5px; }
     }
+
+    /* ── Splash Screen (mobile only) ── */
+    @media (min-width: 769px) { #m-splash { display: none !important; } }
+    #m-splash {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #122012;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      transition: opacity 0.6s ease;
+    }
+    #m-splash img { width: 140px; height: auto; }
+    #m-splash-title {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: 26px; color: #C4A245; letter-spacing: 0.02em;
+    }
+    #m-splash-sub {
+      font-size: 12px; color: rgba(242,235,217,0.45);
+      font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    #m-splash.fade-out { opacity: 0; pointer-events: none; }
+
+    /* ── Mobile App Panel System ── */
+    #m-app {
+      display: none; /* shown only on mobile via JS */
+      position: fixed;
+      top: 56px; bottom: 64px; left: 0; right: 0;
+      overflow: hidden;
+    }
+    .m-panel {
+      position: absolute; inset: 0;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+      display: none; flex-direction: column;
+    }
+    .m-panel.active { display: flex; }
+
+    /* Home panel */
+    #m-home { background: #f0f4f0; }
+    #m-home .summary-bar {
+      flex-shrink: 0; border-radius: 0; border-left: none; border-right: none; border-top: none;
+    }
+    #m-home .calendar-section {
+      flex: 1; border-radius: 0; box-shadow: none; border: none; min-height: 0;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    #m-home .cal-grid-outer { flex: 1; overflow-y: auto; }
+
+    /* Budget panel */
+    #m-budget { background: #f0f4f0; padding: 12px; gap: 12px; }
+    #m-budget .analytics-sidebar {
+      position: static !important; width: 100%; border-radius: 14px;
+      overflow: visible; box-shadow: 0 2px 12px rgba(18,32,18,0.08);
+    }
+    #m-budget .analytics-toggle { display: none !important; }
+    #m-budget .analytics-content { display: block !important; }
+    #m-budget .analytics-widgets { padding: 0 10px 16px; }
+
+    /* More panel */
+    #m-more { background: #f0f4f0; padding: 16px; gap: 0; }
+    .more-section {
+      background: #fff; border-radius: 14px; margin-bottom: 16px;
+      border: 1px solid rgba(18,32,18,0.06); overflow: hidden;
+    }
+    .more-section-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral); padding: 14px 16px 6px;
+    }
+    .more-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; width: 100%;
+      border-top: 1px solid rgba(18,32,18,0.05);
+      text-decoration: none; color: var(--deep-forest);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer; background: none; border-left: none; border-right: none; border-bottom: none;
+      text-align: left;
+    }
+    .more-row:first-of-type { border-top: none; }
+    .more-row-icon { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+    .more-row-chevron { margin-left: auto; color: var(--neutral); font-size: 16px; }
+
+    /* Dark mode panel adjustments */
+    body.dark #m-home { background: #0f1710; }
+    body.dark #m-budget { background: #0a1210; }
+    body.dark #m-budget .analytics-sidebar { background: #0f1a0f; border-color: rgba(255,255,255,0.06); }
+    body.dark #m-more { background: #0a1210; }
+    body.dark .more-section { background: #1a241a; border-color: rgba(255,255,255,0.07); }
+    body.dark .more-row { color: #e2ddd4; border-top-color: rgba(255,255,255,0.06); }
+
+    /* Mobile nav active state */
+    .mobile-nav-btn.active { color: var(--living-green); }
 
     /* ── Mortgage Calculator ── */
     .mortgage-view {
@@ -1750,6 +1840,13 @@
   <script src="/analytics.js"></script>
 </head>
 <body>
+
+<!-- Splash Screen (mobile only) -->
+<div id="m-splash">
+  <img src="/img/mm-logo.png" alt="Money Moves">
+  <div id="m-splash-title">Money Moves</div>
+  <div id="m-splash-sub">by MiRAjO</div>
+</div>
 
 <!-- Nav -->
 <nav class="nav">
@@ -6560,22 +6657,64 @@
   <button class="install-banner-close" onclick="dismissInstallBanner()">✕</button>
 </div>
 
+<!-- Mobile More Panel content (moved into panel by JS) -->
+<div id="m-more-content" style="display:none">
+  <div class="more-section">
+    <div class="more-section-title">Accounts</div>
+    <button class="more-row" onclick="openAccountModal()">
+      <span class="more-row-icon">🏦</span><span>Manage Accounts</span>
+      <span class="more-row-chevron">›</span>
+    </button>
+  </div>
+  <div class="more-section">
+    <div class="more-section-title">Music</div>
+    <button class="more-row" onclick="showBeatsPlayer(); setMobilePanel('home')">
+      <span class="more-row-icon">🎵</span><span>Beats to Budget</span>
+      <span class="more-row-chevron">›</span>
+    </button>
+  </div>
+  <div class="more-section">
+    <div class="more-section-title">Navigate</div>
+    <a class="more-row" href="/tools/money-moves/reports">
+      <span class="more-row-icon">📊</span><span>Reports</span>
+      <span class="more-row-chevron">›</span>
+    </a>
+    <a class="more-row" href="/tools/money-moves/settings">
+      <span class="more-row-icon">⚙️</span><span>Settings</span>
+      <span class="more-row-chevron">›</span>
+    </a>
+    <button class="more-row" onclick="openFaq()">
+      <span class="more-row-icon">❓</span><span>Help &amp; FAQ</span>
+      <span class="more-row-chevron">›</span>
+    </button>
+  </div>
+  <div class="more-section">
+    <button class="more-row" onclick="logOut()" style="color:#cc3333">
+      <span class="more-row-icon">🚪</span><span>Sign Out</span>
+    </button>
+  </div>
+</div>
+
 <!-- Mobile Bottom Nav -->
 <nav class="mobile-nav" id="mobile-nav">
-  <button class="mobile-nav-btn" onclick="window.location.href='/tools/money-moves/dashboard'">
-    <span class="mnb-icon">📅</span>Calendar
+  <button class="mobile-nav-btn active" id="mnb-home" onclick="setMobilePanel('home')">
+    <span class="mnb-icon">🏠</span>
+    <span>Home</span>
   </button>
-  <button class="mobile-nav-btn" onclick="scrollToSidebar()">
-    <span class="mnb-icon">📊</span>Budget
+  <button class="mobile-nav-btn" id="mnb-budget" onclick="setMobilePanel('budget')">
+    <span class="mnb-icon">💰</span>
+    <span>Budget</span>
   </button>
   <button class="mobile-nav-btn mnb-add" onclick="openModal()">
     <span class="mnb-icon">＋</span>
   </button>
-  <button class="mobile-nav-btn" onclick="setView('mortgage')">
-    <span class="mnb-icon">🏠</span>Mortgage
+  <button class="mobile-nav-btn" id="mnb-tools" onclick="setMobilePanel('tools')">
+    <span class="mnb-icon">🧮</span>
+    <span>Tools</span>
   </button>
-  <button class="mobile-nav-btn" onclick="openFaq()">
-    <span class="mnb-icon">❓</span>Help
+  <button class="mobile-nav-btn" id="mnb-more" onclick="setMobilePanel('more')">
+    <span class="mnb-icon">☰</span>
+    <span>More</span>
   </button>
 </nav>
 
@@ -6601,6 +6740,111 @@
     navigator.serviceWorker.register('/tools/money-moves/sw.js', { scope: '/tools/money-moves/' })
       .catch(e => console.warn('SW registration failed:', e));
   }
+</script>
+
+<script>
+// ── Mobile App Layout ────────────────────────────────────────────────────────
+(function () {
+  const MOBILE = () => window.innerWidth <= 768;
+
+  function initMobileApp() {
+    if (!MOBILE()) {
+      // Remove splash on desktop
+      const s = document.getElementById('m-splash');
+      if (s) s.remove();
+      return;
+    }
+
+    // Show splash, fade after 1.6s
+    const splash = document.getElementById('m-splash');
+    if (splash) {
+      setTimeout(() => {
+        splash.classList.add('fade-out');
+        setTimeout(() => splash.remove(), 650);
+      }, 1600);
+    }
+
+    // Build #m-app container
+    const mApp = document.createElement('div');
+    mApp.id = 'm-app';
+
+    // Panel: Home — summary bar + calendar section
+    const mHome = document.createElement('div');
+    mHome.id = 'm-home';
+    mHome.className = 'm-panel active';
+    const summaryBar = document.querySelector('.summary-bar');
+    const calSection = document.querySelector('.calendar-section');
+    if (summaryBar) mHome.appendChild(summaryBar);
+    if (calSection) mHome.appendChild(calSection);
+
+    // Panel: Budget — analytics sidebar (coaching, categories, goals, debts)
+    const mBudget = document.createElement('div');
+    mBudget.id = 'm-budget';
+    mBudget.className = 'm-panel';
+    const sidebar = document.querySelector('.analytics-sidebar');
+    if (sidebar) mBudget.appendChild(sidebar);
+
+    // Panel: More — static nav links
+    const mMore = document.createElement('div');
+    mMore.id = 'm-more';
+    mMore.className = 'm-panel';
+    const moreContent = document.getElementById('m-more-content');
+    if (moreContent) {
+      moreContent.style.display = 'block';
+      while (moreContent.firstChild) mMore.appendChild(moreContent.firstChild);
+      moreContent.remove();
+    }
+
+    mApp.appendChild(mHome);
+    mApp.appendChild(mBudget);
+    mApp.appendChild(mMore);
+
+    // Hide desktop layout, insert mobile app
+    const layout = document.querySelector('.layout');
+    if (layout) {
+      layout.style.display = 'none';
+      layout.parentNode.insertBefore(mApp, layout);
+    } else {
+      document.body.appendChild(mApp);
+    }
+
+    // Show the mobile nav
+    const nav = document.getElementById('mobile-nav');
+    if (nav) nav.style.display = 'flex';
+
+    // Set active nav button
+    document.getElementById('mnb-home')?.classList.add('active');
+  }
+
+  window.setMobilePanel = function (name) {
+    if (!MOBILE()) return;
+    document.querySelectorAll('.m-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.mobile-nav-btn:not(.mnb-add)').forEach(b => b.classList.remove('active'));
+
+    if (name === 'home') {
+      document.getElementById('m-home')?.classList.add('active');
+      document.getElementById('mnb-home')?.classList.add('active');
+      window.setView?.('calendar');
+    } else if (name === 'budget') {
+      document.getElementById('m-budget')?.classList.add('active');
+      document.getElementById('mnb-budget')?.classList.add('active');
+    } else if (name === 'tools') {
+      document.getElementById('m-home')?.classList.add('active');
+      document.getElementById('mnb-tools')?.classList.add('active');
+      window.setView?.('mortgage');
+    } else if (name === 'more') {
+      document.getElementById('m-more')?.classList.add('active');
+      document.getElementById('mnb-more')?.classList.add('active');
+    }
+  };
+
+  // Run after everything has loaded and rendered
+  if (document.readyState === 'complete') {
+    initMobileApp();
+  } else {
+    window.addEventListener('load', initMobileApp);
+  }
+})();
 </script>
 </body>
 </html>
