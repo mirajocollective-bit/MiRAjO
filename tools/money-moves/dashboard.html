@@ -32,7 +32,7 @@
       --forest-mid:     #a8cbb8;
       --living-green:   #6DC48A;
       --new-growth:     #8fe4a8;
-      --dry-sage:       #d4b464;
+      --dry-sage:       #ffffff;
       --warm-parchment: #1a241a;
       --soft-white:     #141e14;
       --neutral:        #9ca3af;
@@ -49,7 +49,7 @@
     body.dark .analytics-toggle  { color: #e2ddd4; }
     body.dark .cal-accounts-row  { border-bottom-color: rgba(255,255,255,0.07); background: #0f1710; }
     body.dark .account-tab       { background: #1a241a; color: #e2ddd4; border-color: rgba(255,255,255,0.1); }
-    body.dark .account-tab.active { background: var(--living-green); color: #fff; }
+    body.dark .account-tab.active { background: #E07020; color: #fff; border-color: #E07020; }
     body.dark .cal-header        { border-bottom-color: rgba(255,255,255,0.07); background: #0f1710; }
     body.dark .cal-grid          { border-color: rgba(255,255,255,0.18); }
     body.dark .cal-cell          { border-color: rgba(255,255,255,0.18); background: #0f1710; }
@@ -58,7 +58,7 @@
     body.dark .cal-cell.today    { background: rgba(109,196,138,0.12); }
     body.dark .cal-day-name      { color: #9ca3af; background: #0a1210; }
     body.dark .cal-entry         { background: #1e2e1e !important; color: #e2ddd4 !important; }
-    body.dark .cal-entry:hover   { background: #c8f0a8 !important; color: #111 !important; }
+    body.dark .cal-entry:hover   { background: #e8fcd4 !important; color: #111 !important; }
     body.dark .cal-txn-count     { background: #e2ddd4; color: #111; }
     body.dark .cal-txn-count:hover { background: var(--living-green); color: #fff; }
     body.dark .cal-day-balance.positive { color: #6DC48A; }
@@ -544,7 +544,7 @@
     .cal-entry.income  { background: #fff; color: #111; }
     .cal-entry.expense { background: #fff; color: #111; }
     .cal-entry.transfer { background: #fff; color: #111; }
-    .cal-entry:hover { background: #e8fcd4 !important; color: #111 !important; }
+    .cal-entry:hover { background: #111 !important; color: #fff !important; }
     .cal-entry[draggable] { cursor: grab; }
     .cal-entry.dragging { opacity: 0.3; cursor: grabbing; }
     .cal-cell.drag-over { background: rgba(37,107,66,0.08) !important; box-shadow: inset 0 0 0 2px var(--living-green); }
@@ -1517,15 +1517,16 @@
 
     .feature-tooltip {
       position: fixed;
-      background: #0D0D0D;
-      color: #fff;
+      background: #f0fce8;
+      color: #111;
       border-radius: 12px;
       padding: 14px 16px;
       width: 220px;
       z-index: 801;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
       font-family: 'Plus Jakarta Sans', sans-serif;
       animation: tooltipPop 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+      border: 1px solid rgba(37,107,66,0.15);
     }
     @keyframes tooltipPop {
       from { transform: scale(0.85); opacity: 0; }
@@ -1534,7 +1535,7 @@
     .ft-arrow {
       position: absolute;
       width: 10px; height: 10px;
-      background: #0D0D0D;
+      background: #f0fce8;
       transform: rotate(45deg);
     }
     .ft-title {
