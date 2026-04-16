@@ -76,6 +76,7 @@
     { "source": "/tools/money-moves/settings",        "destination": "/tools/money-moves/settings.html" },
     { "source": "/tools/money-moves/reports",         "destination": "/tools/money-moves/reports.html" },
     { "source": "/tools/money-moves/pricing",         "destination": "/tools/money-moves/pricing.html" },
-    { "source": "/tools/money-moves/delete-account",  "destination": "/tools/money-moves/delete-account.html" }
+    { "source": "/tools/money-moves/delete-account",  "destination": "/tools/money-moves/delete-account.html" },
+    { "source": "/tools/money-moves/feature-graphic", "destination": "/tools/money-moves/feature-graphic.html" }
   ]
 }
