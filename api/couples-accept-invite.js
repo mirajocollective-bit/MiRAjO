@@ -3,6 +3,7 @@
 // Validates token, creates Supabase account, links couple, enrolls Partner B
 
 import { createClient } from '@supabase/supabase-js';
+import { logSubscriber } from './_subscribers.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -125,6 +126,8 @@ export default async function handler(req, res) {
       redirectTo: `${process.env.SITE_URL}/programs/confirm?cie=1`,
     },
   });
+
+  await logSubscriber(supabase, invite.partner_b_email, first_name || '', 'course-cie');
 
   console.log(`Partner B (${invite.partner_b_email}) linked to couple ${couple.id}`);
   res.status(200).json({
