@@ -62,13 +62,8 @@
     body.dark .cal-txn-count:hover { background: var(--living-green); color: #fff; }
     body.dark .cal-day-balance.positive { color: #6DC48A; }
     body.dark .cal-day-balance.negative { color: #f87171; }
-    body.dark .summary-bar       { background: #0a1210; border-bottom-color: rgba(255,255,255,0.07); }
-    body.dark .summary-card      { border-right-color: rgba(255,255,255,0.07); }
-    body.dark .summary-label     { color: #9ca3af; }
-    body.dark .hint-bar          { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
-    body.dark .hint-text         { color: #a8cbb8; }
-    body.dark .hint-dot          { background: rgba(255,255,255,0.25); }
-    body.dark .hint-dot.active   { background: var(--living-green); }
+    body.dark .summary-bar       { background: #0a1210; }
+    body.dark .hint-bar          { background: #000; border-color: rgba(255,255,255,0.08); }
     body.dark .modal             { background: #1a241a; color: #e2ddd4; }
     body.dark .modal-title       { color: #e2ddd4; }
     body.dark input, body.dark select, body.dark textarea {
@@ -338,30 +333,30 @@
     .summary-bar {
       grid-column: 1 / -1;
       display: flex; align-items: center; gap: 0;
-      background: #fff; border-radius: 12px; padding: 0;
+      background: var(--deep-forest); border-radius: 12px; padding: 0;
       border: 1px solid rgba(18,32,18,0.06);
       box-shadow: 0 2px 8px rgba(18,32,18,0.07);
       overflow: hidden;
     }
     .summary-card {
-      flex: 1; padding: 10px 16px; border-right: 1px solid var(--border);
+      flex: 1; padding: 10px 16px; border-right: 1px solid rgba(255,255,255,0.1);
       min-width: 0;
     }
     .summary-card:last-of-type { border-right: none; }
     .summary-label {
       font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--neutral); margin-bottom: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 2px;
       white-space: nowrap;
     }
     .summary-amount {
       font-family: 'Instrument Serif', serif; font-size: 17px; line-height: 1.1;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff;
     }
-    .summary-amount.income  { color: var(--income-color); }
-    .summary-amount.expense { color: var(--expense-color); }
-    .summary-amount.balance { color: var(--deep-forest); }
-    .summary-amount.savings { color: var(--dry-sage); }
-    .summary-sub { font-size: 10px; color: var(--neutral); margin-top: 1px; white-space: nowrap; }
+    .summary-amount.income  { color: #fff; }
+    .summary-amount.expense { color: #fff; }
+    .summary-amount.balance { color: #fff; }
+    .summary-amount.savings { color: #fff; }
+    .summary-sub { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 1px; white-space: nowrap; }
 
     /* ── Calendar ── */
     .calendar-section {
@@ -875,18 +870,18 @@
     .hint-bar {
       display: flex; align-items: center; gap: 10px;
       padding: 9px 16px 10px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(196,162,69,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: #111;
     }
     .hint-icon { font-size: 15px; flex-shrink: 0; }
-    .hint-text { font-size: 12px; color: var(--forest-mid); line-height: 1.5; flex: 1; }
-    .hint-text strong { color: var(--dry-sage); font-weight: 700; }
+    .hint-text { font-size: 12px; color: #fff; line-height: 1.5; flex: 1; }
+    .hint-text strong { color: #E07020; font-weight: 700; }
     .hint-dots { display: flex; gap: 4px; margin-left: auto; }
     .hint-dot {
       width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(18,32,18,0.15); cursor: pointer; transition: background 0.2s;
+      background: rgba(255,255,255,0.25); cursor: pointer; transition: background 0.2s;
     }
-    .hint-dot.active { background: var(--dry-sage); }
+    .hint-dot.active { background: #E07020; }
 
     /* ── FAQ modal ── */
     .faq-overlay {
