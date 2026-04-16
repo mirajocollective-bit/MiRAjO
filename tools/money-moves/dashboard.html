@@ -90,8 +90,15 @@
     body.dark .calc-extra-label   { color: #a8cbb8; }
     body.dark .calc-amort-table th { background: #1e2e1e; color: #e2ddd4; }
     body.dark .calc-amort-table td { border-color: rgba(255,255,255,0.06); color: #e2ddd4; }
-    body.dark .forecast-view     { background: #0f1710; }
-    body.dark .forecast-strip    { background: #0a1210; border-color: rgba(255,255,255,0.07); }
+    body.dark .forecast-view      { background: #0f1710; }
+    body.dark .forecast-strip     { background: #0a1210; border-color: rgba(255,255,255,0.07); }
+    body.dark .nav-xp-wrap        { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.14); }
+    body.dark .nav-level-name     { color: #e2ddd4; }
+    body.dark .nav-xp-bar         { background: rgba(255,255,255,0.15); }
+    body.dark .summary-ratio-track { background: rgba(255,255,255,0.18); }
+    body.dark .summary-ratio-label { color: rgba(255,255,255,0.5); }
+    body.dark .calendar-section   { background: #0f1710; }
+    body.dark .progress-bar       { background: rgba(255,255,255,0.1); }
 
     /* ── Dark mode toggle button ──────────────────────────────────────────────── */
     .dark-toggle { font-size: 15px; padding: 6px 11px; cursor: pointer; background: transparent; border: 1px solid rgba(18,32,18,0.18); border-radius: 8px; }
@@ -1163,6 +1170,17 @@
       .cal-grid { padding: 0 8px 12px; gap: 2px; }
       .summary-bar { gap: 6px; }
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
+      /* Thin colored bar entries — text hidden on narrow cells */
+      .cal-entry {
+        height: 5px; padding: 0; border-radius: 2px;
+        margin-bottom: 2px; font-size: 0; line-height: 0;
+        gap: 0; overflow: hidden;
+      }
+      .cal-entry.income   { background: var(--income-color) !important; color: transparent !important; }
+      .cal-entry.expense  { background: var(--expense-color) !important; color: transparent !important; }
+      .cal-entry.transfer { background: var(--neutral) !important; color: transparent !important; }
+      .cal-entry:hover    { background: inherit !important; color: transparent !important; }
+      .cal-txn-count { font-size: 9px; padding: 2px 5px; margin-top: 2px; }
     }
 
     /* ── Mortgage Calculator ── */
@@ -1604,7 +1622,10 @@
       position: fixed; bottom: 24px; right: 24px; z-index: 400;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    @media (max-width: 768px) { .beats-player { bottom: 80px; right: 12px; } }
+    @media (max-width: 768px) {
+      .beats-player { bottom: 80px; right: 12px; }
+      .beats-panel  { max-height: calc(100vh - 180px); overflow-y: auto; width: 280px; bottom: 52px; }
+    }
     .beats-toggle {
       display: flex; align-items: center; gap: 8px;
       padding: 10px 18px;
