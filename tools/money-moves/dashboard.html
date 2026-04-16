@@ -1410,6 +1410,59 @@
     .more-row-icon { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
     .more-row-chevron { margin-left: auto; color: var(--neutral); font-size: 16px; }
 
+    /* Tools panel */
+    #m-tools { background: #f0f4f0; }
+    #m-tools-menu { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .m-tools-section-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--neutral); margin-bottom: 2px;
+    }
+    .m-tool-card {
+      display: flex; align-items: center; gap: 14px;
+      background: #fff; border-radius: 14px; padding: 14px 16px;
+      border: 1px solid rgba(18,32,18,0.07);
+      box-shadow: 0 1px 4px rgba(18,32,18,0.05);
+      cursor: pointer; width: 100%; text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: box-shadow 0.15s; -webkit-tap-highlight-color: transparent;
+    }
+    .m-tool-card:active { box-shadow: 0 0 0 2px var(--living-green); }
+    .m-tool-card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(37,107,66,0.1); display: flex; align-items: center;
+      justify-content: center; font-size: 22px; flex-shrink: 0;
+    }
+    .m-tool-card-body { flex: 1; min-width: 0; }
+    .m-tool-card-name { font-size: 15px; font-weight: 700; color: var(--deep-forest); margin-bottom: 2px; }
+    .m-tool-card-desc { font-size: 12px; color: var(--neutral); }
+    .m-tool-card-chevron { color: var(--neutral); font-size: 20px; flex-shrink: 0; margin-left: 4px; }
+
+    /* Tool detail (open state) */
+    #m-tool-detail { display: none; flex-direction: column; position: absolute; inset: 0; }
+    #m-tool-detail.active { display: flex; }
+    #m-tool-back-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 14px; background: #fff;
+      border-bottom: 1px solid rgba(18,32,18,0.08); flex-shrink: 0;
+    }
+    #m-tool-back-btn {
+      background: none; border: none; cursor: pointer; padding: 4px 10px 4px 0;
+      font-size: 15px; font-weight: 700; color: var(--living-green);
+      font-family: 'Plus Jakarta Sans', sans-serif; display: flex; align-items: center; gap: 4px;
+    }
+    #m-tool-back-name {
+      font-size: 15px; font-weight: 700; color: var(--deep-forest);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    #m-tool-content {
+      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+      background: #f0f4f0;
+    }
+    /* Override desktop tool layout widths for mobile */
+    #m-tool-content .mtg-body { grid-template-columns: 1fr; }
+    #m-tool-content .mtg-header-actions { flex-wrap: wrap; }
+    #m-tool-content .dti-body { grid-template-columns: 1fr; }
+
     /* Dark mode panel adjustments */
     body.dark #m-home { background: #0f1710; }
     body.dark #m-budget { background: #0a1210; }
@@ -1417,6 +1470,13 @@
     body.dark #m-more { background: #0a1210; }
     body.dark .more-section { background: #1a241a; border-color: rgba(255,255,255,0.07); }
     body.dark .more-row { color: #e2ddd4; border-top-color: rgba(255,255,255,0.06); }
+    body.dark #m-tools { background: #0a1210; }
+    body.dark .m-tool-card { background: #1a241a; border-color: rgba(255,255,255,0.07); }
+    body.dark .m-tool-card-name { color: #e2ddd4; }
+    body.dark .m-tool-card-icon { background: rgba(109,196,138,0.12); }
+    body.dark #m-tool-back-bar { background: #1a241a; border-color: rgba(255,255,255,0.07); }
+    body.dark #m-tool-back-name { color: #e2ddd4; }
+    body.dark #m-tool-content { background: #0a1210; }
 
     /* Mobile nav active state */
     .mobile-nav-btn.active { color: var(--living-green); }
@@ -4008,6 +4068,8 @@
     document.getElementById('mode-name').textContent = mode.name;
     document.getElementById('mode-msg').textContent  = msg;
   }
+
+  window.renderForecast = renderForecast;
 
   // ── Forecast Strip ───────────────────────────────────────────────────────────
   function renderForecastStrip() {
@@ -7058,6 +7120,69 @@
     const sidebar = document.querySelector('.analytics-sidebar');
     if (sidebar) mBudget.appendChild(sidebar);
 
+    // Panel: Tools — menu + individual tool views
+    const mTools = document.createElement('div');
+    mTools.id = 'm-tools';
+    mTools.className = 'm-panel';
+    mTools.style.position = 'relative'; // needed for absolute #m-tool-detail
+
+    // Tool menu
+    const toolMenu = document.createElement('div');
+    toolMenu.id = 'm-tools-menu';
+    toolMenu.innerHTML =
+      '<div class="m-tools-section-title">Calculators &amp; Views</div>' +
+      '<button class="m-tool-card" onclick="openMobileTool(\'mortgage\')">' +
+        '<div class="m-tool-card-icon">🏠</div>' +
+        '<div class="m-tool-card-body">' +
+          '<div class="m-tool-card-name">Mortgage Calculator</div>' +
+          '<div class="m-tool-card-desc">Monthly payment, interest &amp; lifetime cost</div>' +
+        '</div><span class="m-tool-card-chevron">›</span>' +
+      '</button>' +
+      '<button class="m-tool-card" onclick="openMobileTool(\'dti\')">' +
+        '<div class="m-tool-card-icon">📊</div>' +
+        '<div class="m-tool-card-body">' +
+          '<div class="m-tool-card-name">DTI Calculator</div>' +
+          '<div class="m-tool-card-desc">Check your debt-to-income ratio</div>' +
+        '</div><span class="m-tool-card-chevron">›</span>' +
+      '</button>' +
+      '<button class="m-tool-card" onclick="openMobileTool(\'forecast\')">' +
+        '<div class="m-tool-card-icon">📈</div>' +
+        '<div class="m-tool-card-body">' +
+          '<div class="m-tool-card-name">7-Year Forecast</div>' +
+          '<div class="m-tool-card-desc">Month-by-month cash flow projection</div>' +
+        '</div><span class="m-tool-card-chevron">›</span>' +
+      '</button>' +
+      '<button class="m-tool-card" onclick="toggleFloatCalc(); setMobilePanel(\'home\')">' +
+        '<div class="m-tool-card-icon">🧮</div>' +
+        '<div class="m-tool-card-body">' +
+          '<div class="m-tool-card-name">Calculator</div>' +
+          '<div class="m-tool-card-desc">Quick math without leaving your dashboard</div>' +
+        '</div><span class="m-tool-card-chevron">›</span>' +
+      '</button>';
+    mTools.appendChild(toolMenu);
+
+    // Tool detail overlay (back bar + scrollable content)
+    const toolDetail = document.createElement('div');
+    toolDetail.id = 'm-tool-detail';
+    const toolContent = document.createElement('div');
+    toolContent.id = 'm-tool-content';
+    toolDetail.innerHTML =
+      '<div id="m-tool-back-bar">' +
+        '<button id="m-tool-back-btn" onclick="backToToolsMenu()">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>' +
+          'Tools' +
+        '</button>' +
+        '<span id="m-tool-back-name"></span>' +
+      '</div>';
+    toolDetail.appendChild(toolContent);
+    mTools.appendChild(toolDetail);
+
+    // Move tool views into the detail content area (away from calendar-section)
+    ['mortgage-view','dti-view','forecast-view'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) toolContent.appendChild(el);
+    });
+
     // Panel: More — nav links
     const mMore = document.createElement('div');
     mMore.id = 'm-more';
@@ -7071,6 +7196,7 @@
 
     mApp.appendChild(mHome);
     mApp.appendChild(mBudget);
+    mApp.appendChild(mTools);
     mApp.appendChild(mMore);
 
     // Insert mobile app, hide desktop layout
@@ -7165,13 +7291,48 @@
       document.getElementById('mnb-budget')?.classList.add('active');
       window.renderAnalytics && window.renderAnalytics();
     } else if (name === 'tools') {
-      document.getElementById('m-home')?.classList.add('active');
+      document.getElementById('m-tools')?.classList.add('active');
       document.getElementById('mnb-tools')?.classList.add('active');
-      window.setView?.('mortgage');
+      window.backToToolsMenu && window.backToToolsMenu();
     } else if (name === 'more') {
       document.getElementById('m-more')?.classList.add('active');
       document.getElementById('mnb-more')?.classList.add('active');
     }
+  };
+
+  const TOOL_NAMES = { mortgage: 'Mortgage Calculator', dti: 'DTI Calculator', forecast: '7-Year Forecast' };
+
+  window.openMobileTool = function (name) {
+    const menu   = document.getElementById('m-tools-menu');
+    const detail = document.getElementById('m-tool-detail');
+    const label  = document.getElementById('m-tool-back-name');
+    if (!menu || !detail) return;
+    menu.style.display   = 'none';
+    detail.classList.add('active');
+    if (label) label.textContent = TOOL_NAMES[name] || name;
+    // Hide all tool views, then activate the selected one
+    ['mortgage-view','dti-view','forecast-view'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+    });
+    const target = document.getElementById(name + '-view');
+    if (target) target.classList.add('active');
+    // Trigger calculations
+    if (name === 'mortgage' && window.calcMortgage) window.calcMortgage();
+    if (name === 'dti'      && window.calcDTI)      window.calcDTI();
+    if (name === 'forecast' && window.renderForecast) window.renderForecast();
+  };
+
+  window.backToToolsMenu = function () {
+    const menu   = document.getElementById('m-tools-menu');
+    const detail = document.getElementById('m-tool-detail');
+    if (!menu || !detail) return;
+    menu.style.display = 'flex';
+    detail.classList.remove('active');
+    ['mortgage-view','dti-view','forecast-view'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+    });
   };
 
   if (document.readyState === 'complete') {
