@@ -798,6 +798,16 @@
           </div>
         </div>
 
+        <!-- Install App -->
+        <div id="install-section" style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border);display:none">
+          <div style="font-size:13px;font-weight:700;color:var(--deep-forest);margin-bottom:6px;letter-spacing:0.3px">Install App</div>
+          <div style="font-size:13px;color:var(--neutral);margin-bottom:14px;line-height:1.6">Add Money Moves to your home screen for instant access — works like a native app.</div>
+          <button class="save-btn" id="install-app-btn" onclick="triggerInstall()" style="background:var(--deep-forest);color:#fff">Add to Home Screen</button>
+          <div id="install-ios-hint" style="display:none;font-size:13px;color:var(--neutral);margin-top:10px;line-height:1.6">
+            On iPhone: tap the <strong>Share</strong> button in Safari, then tap <strong>Add to Home Screen</strong>.
+          </div>
+        </div>
+
         <div class="danger-zone">
           <div class="danger-title">Danger Zone</div>
           <div style="display:flex;flex-direction:column;gap:10px">
@@ -1450,6 +1460,49 @@
   // ── Init ─────────────────────────────────────────────────────────────────────
   loadAll();
 })();
+</script>
+
+<script>
+  // ── PWA Install ───────────────────────────────────────────────────────────────
+  let _settingsInstallPrompt = null;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+  if (!isStandalone) {
+    const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+    if (isIos) {
+      document.getElementById('install-section').style.display = 'block';
+      document.getElementById('install-app-btn').style.display = 'none';
+      document.getElementById('install-ios-hint').style.display = 'block';
+    } else {
+      window.addEventListener('beforeinstallprompt', e => {
+        e.preventDefault();
+        _settingsInstallPrompt = e;
+        document.getElementById('install-section').style.display = 'block';
+      });
+      // Also show the section always on Android so user knows they can use Chrome menu
+      if (/android/i.test(navigator.userAgent)) {
+        document.getElementById('install-section').style.display = 'block';
+      }
+    }
+  }
+
+  window.triggerInstall = async function () {
+    if (_settingsInstallPrompt) {
+      _settingsInstallPrompt.prompt();
+      const { outcome } = await _settingsInstallPrompt.userChoice;
+      if (outcome === 'accepted') {
+        document.getElementById('install-section').style.display = 'none';
+      }
+      _settingsInstallPrompt = null;
+    } else {
+      // Chrome suppressed the prompt — show manual instructions
+      const btn = document.getElementById('install-app-btn');
+      btn.style.display = 'none';
+      const hint = document.getElementById('install-ios-hint');
+      hint.style.display = 'block';
+      hint.innerHTML = 'Chrome is managing when the install prompt appears. To add now: tap the <strong>three-dot menu (⋮)</strong> in Chrome, then tap <strong>"Add to Home Screen"</strong> or <strong>"Install app"</strong>.';
+    }
+  };
 </script>
 </body>
 </html>
