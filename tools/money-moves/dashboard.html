@@ -1168,18 +1168,58 @@
       #m-home .cal-search-input { width: 36px; padding: 0 10px; color: transparent; transition: width 0.25s, color 0.15s; }
       #m-home .cal-search-input:focus,
       #m-home .cal-search-input:not(:placeholder-shown) { width: 140px; color: var(--deep-forest); }
-      /* Summary bar compact in home panel */
-      #m-home .summary-bar { flex-wrap: wrap; }
-      #m-home .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
-      #m-home .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
-      /* Thin colored bar entries on narrow calendar */
+      /* ── Home panel: make everything compact so calendar fits in one view ── */
+
+      /* Summary bar: single scrollable row, no wrapping */
+      #m-home .summary-bar {
+        flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; flex-shrink: 0;
+      }
+      #m-home .summary-bar::-webkit-scrollbar { display: none; }
+      #m-home .summary-card {
+        flex: 0 0 auto; min-width: 130px; padding: 8px 12px;
+        border-right: 1px solid rgba(255,255,255,0.1); border-bottom: none;
+      }
+      #m-home .summary-amount { font-size: 15px; }
+      #m-home .summary-label  { font-size: 8px; letter-spacing: 0.3px; }
+      #m-home .summary-sub    { font-size: 9px; }
+      #m-home .summary-ratio-wrap { display: none; }
+
+      /* Hide hint bar and view tabs on home */
+      #m-home .hint-bar        { display: none; }
+      #m-home .cal-view-toggle { display: none; }
+
+      /* Compact account tabs row */
+      #m-home .cal-accounts-row { padding: 5px 10px; gap: 5px; }
+      #m-home .account-tab      { padding: 4px 9px; font-size: 11px; }
+      #m-home .cal-net-worth    { margin-left: auto; }
+
+      /* Calendar header: single compact row */
+      #m-home .cal-header {
+        flex-direction: row !important; align-items: center !important;
+        padding: 6px 12px !important; gap: 8px !important; flex-wrap: nowrap;
+      }
+      #m-home .cal-header-left  { gap: 8px; }
+      #m-home .cal-month        { font-size: 18px; }
+      #m-home .cal-nav          { gap: 3px; }
+      #m-home .cal-nav-btn      { width: 34px; height: 34px; font-size: 14px; }
+      #m-home .cal-search-input { display: none; }
+
+      /* Day names row */
+      #m-home .cal-day-name { font-size: 9px; letter-spacing: 0; padding: 4px 0; }
+
+      /* Calendar cells — sized to show 5 rows without scrolling */
+      #m-home .cal-grid { grid-auto-rows: 72px; padding: 0; gap: 1px; border-left-width: 1px; border-bottom-width: 1px; }
+      #m-home .cal-cell { height: 72px; padding: 3px 3px 12px; border-top-width: 1px; border-right-width: 1px; overflow: hidden; }
+
+      /* Thin colored bar entries */
       #m-home .cal-entry {
-        height: 5px; padding: 0; border-radius: 2px; margin-bottom: 2px; font-size: 0; line-height: 0; gap: 0; overflow: hidden;
+        height: 5px; padding: 0; border-radius: 2px; margin-bottom: 2px;
+        font-size: 0; line-height: 0; gap: 0; overflow: hidden;
       }
       #m-home .cal-entry.income   { background: var(--income-color) !important; color: transparent !important; }
       #m-home .cal-entry.expense  { background: var(--expense-color) !important; color: transparent !important; }
       #m-home .cal-entry.transfer { background: var(--neutral) !important; color: transparent !important; }
-      #m-home .cal-day-balance { font-size: 9px; left: 2px; right: 2px; bottom: 2px; letter-spacing: -0.5px; }
+      #m-home .cal-day-balance { font-size: 8px; left: 2px; right: 2px; bottom: 2px; letter-spacing: -0.5px; }
     }
     @media (max-width: 540px) {
       .cal-grid { grid-auto-rows: 82px; }
