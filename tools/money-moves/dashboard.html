@@ -1119,13 +1119,17 @@
       -webkit-tap-highlight-color: transparent; transition: color 0.15s;
     }
     .mobile-nav-btn:hover, .mobile-nav-btn.active { color: var(--living-green); }
-    .mobile-nav-btn .mnb-icon { font-size: 20px; line-height: 1; }
+    .mobile-nav-btn .mnb-icon {
+      font-size: 20px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px;
+    }
     .mobile-nav-btn.mnb-add {
-      background: var(--dry-sage); border-radius: 14px; color: var(--deep-forest);
+      background: var(--dry-sage); color: var(--deep-forest);
       flex: 0 0 56px; height: 56px; align-self: center; border-radius: 16px;
       box-shadow: 0 4px 14px rgba(196,162,69,0.4);
     }
-    .mobile-nav-btn.mnb-add .mnb-icon { font-size: 24px; }
+    .mobile-nav-btn.mnb-add .mnb-icon { width: 24px; height: 24px; }
 
     /* ── Responsive ── */
     @media (max-width: 1100px) {
@@ -1211,18 +1215,18 @@
       #m-home .cal-grid { grid-auto-rows: 72px; padding: 0; gap: 1px; border-left-width: 1px; border-bottom-width: 1px; }
       #m-home .cal-cell { height: 72px; padding: 3px 3px 12px; border-top-width: 1px; border-right-width: 1px; overflow: hidden; }
 
-      /* Transaction bars — compact with amount visible */
+      /* Transaction bars — compact with amount visible, no christmas tree */
       #m-home .cal-entry {
         height: 13px; padding: 0 3px; border-radius: 2px;
         margin-bottom: 1px; font-size: 9px; line-height: 13px;
         font-weight: 700; overflow: hidden; white-space: nowrap;
         text-overflow: clip; gap: 0;
       }
-      #m-home .cal-entry.income   { background: rgba(37,107,66,0.15); color: #1a5c1a; }
-      #m-home .cal-entry.expense  { background: rgba(139,26,42,0.12);  color: #8B1A2A; }
-      #m-home .cal-entry.transfer { background: rgba(100,100,100,0.12); color: #555; }
+      #m-home .cal-entry.income   { background: rgba(109,196,138,0.2);  color: #155a2e; }
+      #m-home .cal-entry.expense  { background: rgba(196,162,69,0.22);  color: #6b4500; }
+      #m-home .cal-entry.transfer { background: rgba(100,100,100,0.11); color: #4a4a4a; }
       body.dark #m-home .cal-entry.income   { background: rgba(109,196,138,0.18); color: #6DC48A; }
-      body.dark #m-home .cal-entry.expense  { background: rgba(248,113,113,0.18); color: #f87171; }
+      body.dark #m-home .cal-entry.expense  { background: rgba(196,162,69,0.22);  color: #E0A832; }
       #m-home .cal-txn-count { font-size: 8px; padding: 1px 4px; margin-top: 1px; display: inline-block; }
 
       /* Balance number */
@@ -1238,26 +1242,47 @@
 
       /* Date number */
       #m-home .cal-date-num { font-size: 12px; width: 20px; height: 20px; }
+
+      /* Today — gold accent so it stands out from green income bars */
+      #m-home .cal-cell.today {
+        background: rgba(196,162,69,0.07) !important;
+        box-shadow: inset 0 0 0 1.5px #C4A245 !important;
+      }
+      #m-home .cal-cell.today .cal-date-num {
+        background: #C4A245 !important; color: #fff !important;
+        box-shadow: 0 2px 8px rgba(196,162,69,0.5) !important;
+      }
+      body.dark #m-home .cal-cell.today .cal-date-num {
+        background: #C4A245 !important; color: #fff !important;
+      }
+
+      /* Softer calendar grid borders */
+      #m-home .cal-grid { border-color: rgba(18,32,18,0.1); }
+      #m-home .cal-cell { border-color: rgba(18,32,18,0.1); }
+      body.dark #m-home .cal-grid { border-color: rgba(255,255,255,0.1); }
+      body.dark #m-home .cal-cell { border-color: rgba(255,255,255,0.1); }
+
+      /* Hide nav wordmark — icon is enough on mobile */
+      .nav-wordmark { display: none; }
+
+      /* Summary bar: bigger numbers, readable at a glance */
+      #m-home .summary-amount { font-size: 17px; }
+      #m-home .summary-card   { min-width: 110px; }
     }
     @media (max-width: 540px) {
-      .cal-grid { grid-auto-rows: 82px; }
-      .cal-cell { height: 82px; }
-      .cal-day-name { font-size: 10px; letter-spacing: 0; }
-      .cal-grid { padding: 0 8px 12px; gap: 2px; }
-      .summary-bar { gap: 6px; }
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
-      /* Thin colored bar entries — text hidden on narrow cells */
+      /* Entries: keep text readable on narrow phone cells */
       .cal-entry {
-        height: 5px; padding: 0; border-radius: 2px;
-        margin-bottom: 2px; font-size: 0; line-height: 0;
-        gap: 0; overflow: hidden;
+        height: 13px; padding: 0 3px; border-radius: 2px;
+        margin-bottom: 1px; font-size: 9px; line-height: 13px;
+        font-weight: 700; overflow: hidden; white-space: nowrap;
+        text-overflow: clip; gap: 0;
       }
-      .cal-entry.income   { background: var(--income-color) !important; color: transparent !important; }
-      .cal-entry.expense  { background: var(--expense-color) !important; color: transparent !important; }
-      .cal-entry.transfer { background: var(--neutral) !important; color: transparent !important; }
-      .cal-entry:hover    { background: inherit !important; color: transparent !important; }
-      .cal-txn-count { font-size: 9px; padding: 2px 5px; margin-top: 2px; }
-      /* Daily balance — tighter on narrow cells */
+      .cal-entry.income   { background: rgba(109,196,138,0.2) !important;  color: #155a2e !important; }
+      .cal-entry.expense  { background: rgba(196,162,69,0.22) !important;  color: #6b4500 !important; }
+      .cal-entry.transfer { background: rgba(100,100,100,0.11) !important; color: #4a4a4a !important; }
+      .cal-entry:hover    { background: #111 !important; color: #fff !important; }
+      .cal-txn-count { font-size: 8px; padding: 1px 4px; margin-top: 1px; }
       .cal-day-balance { font-size: 9px; left: 2px; right: 2px; bottom: 2px; letter-spacing: -0.5px; }
     }
 
@@ -6759,22 +6784,32 @@
 <!-- Mobile Bottom Nav -->
 <nav class="mobile-nav" id="mobile-nav">
   <button class="mobile-nav-btn active" id="mnb-home" onclick="setMobilePanel('home')">
-    <span class="mnb-icon">🏠</span>
+    <span class="mnb-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </span>
     <span>Home</span>
   </button>
   <button class="mobile-nav-btn" id="mnb-budget" onclick="setMobilePanel('budget')">
-    <span class="mnb-icon">💰</span>
+    <span class="mnb-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 18v1c0 1.1-.9 2-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v1h-9a2 2 0 00-2 2v8a2 2 0 002 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+    </span>
     <span>Budget</span>
   </button>
   <button class="mobile-nav-btn mnb-add" onclick="openModal()">
-    <span class="mnb-icon">＋</span>
+    <span class="mnb-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    </span>
   </button>
   <button class="mobile-nav-btn" id="mnb-tools" onclick="setMobilePanel('tools')">
-    <span class="mnb-icon">🧮</span>
+    <span class="mnb-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-7 3h5v2h-5V6zM7 6h2v2H7V6zm0 4h2v2H7v-2zm0 4h2v2H7v-2zm5 4h-2v-2h2v2zm0-4h-2v-2h2v2zm5 4h-2v-6h2v6zm0-8h-2v-2h2v2z"/></svg>
+    </span>
     <span>Tools</span>
   </button>
   <button class="mobile-nav-btn" id="mnb-more" onclick="setMobilePanel('more')">
-    <span class="mnb-icon">☰</span>
+    <span class="mnb-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </span>
     <span>More</span>
   </button>
 </nav>
