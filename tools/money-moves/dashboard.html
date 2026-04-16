@@ -1225,10 +1225,10 @@
 
     /* ── Mobile App Panel System ── */
     #m-app {
-      display: none; /* shown only on mobile via JS */
+      display: none; /* shown only on mobile via JS — set to block by initMobileApp */
       position: fixed;
       top: 56px; bottom: 64px; left: 0; right: 0;
-      overflow: hidden;
+      overflow: hidden; z-index: 200;
     }
     .m-panel {
       position: absolute; inset: 0;
@@ -1734,8 +1734,8 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
     @media (max-width: 768px) {
-      .beats-player { bottom: 80px; right: 12px; }
-      .beats-panel  { max-height: calc(100vh - 180px); overflow-y: auto; width: 280px; bottom: 52px; }
+      .beats-player { bottom: 76px; right: 12px; z-index: 150; }
+      .beats-panel  { max-height: calc(100vh - 180px); overflow-y: auto; width: 280px; bottom: 52px; z-index: 150; }
     }
     .beats-toggle {
       display: flex; align-items: center; gap: 8px;
@@ -6767,6 +6767,7 @@
     // Build #m-app container
     const mApp = document.createElement('div');
     mApp.id = 'm-app';
+    mApp.style.display = 'block';
 
     // Panel: Home — summary bar + calendar section
     const mHome = document.createElement('div');
