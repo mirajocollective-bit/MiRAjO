@@ -1266,8 +1266,10 @@
       .nav-wordmark { display: none; }
 
       /* Summary bar: bigger numbers, readable at a glance */
-      #m-home .summary-amount { font-size: 17px; }
-      #m-home .summary-card   { min-width: 110px; }
+      #m-home .summary-amount         { font-size: 17px; }
+      #m-home .summary-card           { min-width: 110px; }
+      /* Expense amount needs to be bright on the dark green bar */
+      #m-home .summary-amount.expense { color: #FF6B5E !important; }
     }
     @media (max-width: 540px) {
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
@@ -1934,7 +1936,7 @@
 <!-- Nav -->
 <nav class="nav">
   <div class="nav-left">
-    <a href="/tools/money-moves" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <a href="/tools/money-moves" style="display:flex;align-items:center;gap:8px;text-decoration:none;" onclick="if(window.innerWidth<=768){event.preventDefault();window.setMobilePanel&&setMobilePanel('home');}" aria-label="Money Moves Home">
       <img src="/img/mm-logo.png" alt="Money Moves" class="nav-icon">
       <span class="nav-wordmark">MONEY MOVES</span>
     </a>
