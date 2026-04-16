@@ -4210,6 +4210,7 @@
       rateEl.className   = `summary-ratio-rate${savingsRate < 0 ? ' negative' : ''}`;
     }
   }
+  window.renderAnalytics = renderAnalytics;
 
   // ── Transaction search ───────────────────────────────────────────────────────
   const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -4727,17 +4728,34 @@
     const msg = rawMsg.replace(/\p{Extended_Pictographic}/gu, '').replace(/\s+/g, ' ').trim();
     const modeKey = preferences?.personality_mode || 'default';
     const vp = MODE_VOICE[modeKey] || MODE_VOICE.default;
-    const utt = new SpeechSynthesisUtterance(msg);
-    utt.rate  = vp.rate;
-    utt.pitch = vp.pitch;
-    // Pick a natural-sounding voice if available
+
+    function doSpeak() {
+      window.speechSynthesis.cancel(); // clear any stale queue (Android quirk)
+      const utt = new SpeechSynthesisUtterance(msg);
+      utt.rate  = vp.rate;
+      utt.pitch = vp.pitch;
+      // Pick a natural-sounding voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find(v => /Samantha|Karen|Google US English|en-US/i.test(v.name + v.lang));
+      if (preferred) utt.voice = preferred;
+      utt.onstart = () => btn?.classList.add('speaking');
+      utt.onend   = () => btn?.classList.remove('speaking');
+      utt.onerror = () => btn?.classList.remove('speaking');
+      window.speechSynthesis.speak(utt);
+    }
+
+    // Android WebView returns empty voices array on first call — wait for voiceschanged
     const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find(v => /Samantha|Karen|Google US English|en-US/i.test(v.name + v.lang));
-    if (preferred) utt.voice = preferred;
-    utt.onstart = () => btn?.classList.add('speaking');
-    utt.onend   = () => btn?.classList.remove('speaking');
-    utt.onerror = () => btn?.classList.remove('speaking');
-    window.speechSynthesis.speak(utt);
+    if (voices.length > 0) {
+      doSpeak();
+    } else {
+      window.speechSynthesis.addEventListener('voiceschanged', function onVoices() {
+        window.speechSynthesis.removeEventListener('voiceschanged', onVoices);
+        doSpeak();
+      });
+      // Trigger voice list load (required on some Android WebViews)
+      window.speechSynthesis.getVoices();
+    }
   };
 
   window.toggleAnalytics = function () {
@@ -7145,6 +7163,7 @@
     } else if (name === 'budget') {
       document.getElementById('m-budget')?.classList.add('active');
       document.getElementById('mnb-budget')?.classList.add('active');
+      window.renderAnalytics && window.renderAnalytics();
     } else if (name === 'tools') {
       document.getElementById('m-home')?.classList.add('active');
       document.getElementById('mnb-tools')?.classList.add('active');
