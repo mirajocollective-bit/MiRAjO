@@ -2,6 +2,13 @@
 // Receives 90 Days to Clear applications and emails them to Miranda
 
 import { Resend } from 'resend';
+import { createClient } from '@supabase/supabase-js';
+import { logSubscriber } from './_subscribers.js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -94,6 +101,8 @@ export default async function handler(req, res) {
         </div>
       `,
     });
+
+    await logSubscriber(supabase, email, name.split(' ')[0], 'coaching-apply');
 
     return res.status(200).json({ ok: true });
 

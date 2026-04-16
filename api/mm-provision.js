@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { logSubscriber } from './_subscribers.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -103,5 +104,6 @@ export default async function handler(req, res) {
   });
 
   console.log(`mm-provision: provisioned account for ${user.email}`);
+  await logSubscriber(supabase, user.email, user.user_metadata?.first_name || '', 'money-moves');
   return res.status(200).json({ provisioned: true });
 }

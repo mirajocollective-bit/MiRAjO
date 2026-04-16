@@ -9,6 +9,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import { queueSequence, SEQUENCES } from './_emails.js';
+import { logSubscriber } from './_subscribers.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -96,6 +97,8 @@ export default async function handler(req, res) {
         .eq('sequence', sequenceName)
         .eq('step', 1);
     }
+
+    await logSubscriber(supabase, cleanEmail, cleanName, type);
 
     // Notify Miranda
     resend.emails.send({

@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import { triggerSequence, queueSequence } from './_emails.js';
+import { logSubscriber } from './_subscribers.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const supabase = createClient(
@@ -98,6 +99,9 @@ export default async function handler(req, res) {
       console.error('Enrollment error:', enrollError);
       return res.status(500).json({ error: 'Failed to enroll user' });
     }
+
+    const subscriberSource = courseSlug === 'couples-in-entrepreneurship' ? 'course-cie' : 'course-25d25n';
+    await logSubscriber(supabase, email, firstName, subscriberSource);
 
     if (courseSlug === 'couples-in-entrepreneurship') {
       // Create the couple record (partner B linked later via invite)

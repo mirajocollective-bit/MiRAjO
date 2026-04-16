@@ -1,5 +1,12 @@
-// Adds subscriber to Resend audience (replaces Kit form)
+// Adds subscriber to Resend audience and logs source to subscribers table
 import { Resend } from 'resend';
+import { createClient } from '@supabase/supabase-js';
+import { logSubscriber } from './_subscribers.js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -11,7 +18,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { email, first_name, turnstileToken } = req.body || {};
+  const { email, first_name, source, turnstileToken } = req.body || {};
 
   if (!email) return res.status(400).json({ error: 'Email is required' });
 
@@ -40,6 +47,7 @@ export default async function handler(req, res) {
       firstName: first_name || '',
       unsubscribed: false,
     });
+    await logSubscriber(supabase, email, first_name, source || 'newsletter');
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('[waitlist] Resend error:', err.message);
