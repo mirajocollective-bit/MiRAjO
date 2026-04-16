@@ -600,12 +600,12 @@
     .mode-icon { font-size: 28px; line-height: 1; }
     .mode-name { font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--deep-forest); }
     .mode-msg {
-      font-size: 12px; color: var(--deep-forest); line-height: 1.65;
+      font-size: 12px; color: #111; line-height: 1.65;
       background: rgba(37,107,66,0.05); border-radius: 10px; padding: 10px 12px;
       border-left: 3px solid var(--new-growth);
     }
     .mode-change-btn {
-      margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--living-green);
+      margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--deep-forest);
       background: none; border: none; cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif; padding: 0; opacity: 0.8;
     }
@@ -874,8 +874,8 @@
     /* ── Hint bar ── */
     .hint-bar {
       display: flex; align-items: center; gap: 10px;
-      padding: 10px 16px 12px;
-      border-top: 1px solid var(--border);
+      padding: 9px 16px 10px;
+      border-bottom: 1px solid var(--border);
       background: rgba(196,162,69,0.05);
     }
     .hint-icon { font-size: 15px; flex-shrink: 0; }
@@ -2008,6 +2008,13 @@
   <!-- Calendar -->
   <div class="calendar-section">
 
+    <!-- Hint bar (top) -->
+    <div class="hint-bar" id="hint-bar" role="status" aria-live="polite" aria-label="Tips">
+      <span class="hint-icon" id="hint-icon" aria-hidden="true">💡</span>
+      <span class="hint-text" id="hint-text"><strong>Click any day</strong> on the calendar to quickly add a transaction on that date.</span>
+      <div class="hint-dots" id="hint-dots" role="tablist" aria-label="Tip navigation"></div>
+    </div>
+
     <!-- Account pills -->
     <div class="cal-accounts-row" id="accounts-bar">
       <!-- Populated by JS -->
@@ -2514,12 +2521,6 @@
       </div><!-- /dti-inner -->
     </div><!-- /dti-view -->
 
-    <!-- Hint bar -->
-    <div class="hint-bar" id="hint-bar" role="status" aria-live="polite" aria-label="Tips">
-      <span class="hint-icon" id="hint-icon" aria-hidden="true">💡</span>
-      <span class="hint-text" id="hint-text"><strong>Click any day</strong> on the calendar to quickly add a transaction on that date.</span>
-      <div class="hint-dots" id="hint-dots" role="tablist" aria-label="Tip navigation"></div>
-    </div>
 
     <!-- Forecast table -->
     <div class="forecast-view" id="forecast-view">
@@ -3082,6 +3083,26 @@
     // Remove old tabs
     bar.querySelectorAll('.account-tab').forEach(t => t.remove());
 
+    // "All Accounts" tab
+    const totalBalance = accounts.reduce((sum, a) => {
+      const txnSum = transactions.filter(t => t.account_id === a.id)
+        .reduce((s,t) => s + (t.type==='income'?Number(t.amount):t.type==='expense'?-Number(t.amount):0), 0);
+      return sum + (a.type === 'credit' ? -(Number(a.current_balance) - txnSum) : Number(a.current_balance) + txnSum);
+    }, 0);
+    const allTab = document.createElement('div');
+    allTab.className = `account-tab${selectedAccountId === 'all' ? ' active' : ''}`;
+    allTab.dataset.id = 'all';
+    allTab.innerHTML = `
+      <div class="account-tab-top">
+        <div class="account-dot" style="background:#122012"></div>
+        <div class="account-tab-name">All Accounts</div>
+      </div>
+      <div class="account-tab-balance ${totalBalance >= 0 ? 'positive' : 'negative'}">
+        ${totalBalance >= 0 ? '' : '-'}$${Math.abs(totalBalance).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+      </div>`;
+    allTab.addEventListener('click', () => selectAccount('all'));
+    bar.insertBefore(allTab, addBtn);
+
     // Compute running balance per account = opening balance + all transactions
     const acctRunningBalance = {};
     accounts.forEach(acct => {
@@ -3290,15 +3311,20 @@
     const last  = new Date(currentYear, currentMonth + 1, 0);
 
     // ── Pre-compute running balance ──────────────────────────────────────────
-    // Sum all actual transactions for this account before this month
     const monthPrefix = `${currentYear}-${String(currentMonth + 1).padStart(2,'0')}`;
+    const isAllAccounts = selectedAccountId === 'all';
+
     const acctTxns = transactions
-      .filter(t => t.account_id === selectedAccountId && t.date)
+      .filter(t => (isAllAccounts ? t.type !== 'transfer' : t.account_id === selectedAccountId) && t.date)
       .sort((a, b) => (a.date < b.date ? -1 : 1));
 
-    // Start from opening balance, then add all transactions before this month
-    const selectedAcct = accounts.find(a => a.id === selectedAccountId);
-    let balanceBeforeMonth = selectedAcct ? Number(selectedAcct.current_balance) : 0;
+    let balanceBeforeMonth;
+    if (isAllAccounts) {
+      balanceBeforeMonth = accounts.reduce((sum, a) => sum + Number(a.current_balance), 0);
+    } else {
+      const selectedAcct = accounts.find(a => a.id === selectedAccountId);
+      balanceBeforeMonth = selectedAcct ? Number(selectedAcct.current_balance) : 0;
+    }
     acctTxns.forEach(t => {
       if (t.date < monthPrefix) {
         balanceBeforeMonth += t.type === 'income' ? Number(t.amount) : t.type === 'expense' ? -Number(t.amount) : 0;
@@ -3320,14 +3346,26 @@
       const isToday = d === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
 
       const dayTxns = transactions.filter(t => {
-        // Source account transactions (all types)
+        // All Accounts view — show income/expense from every account, no transfers
+        if (isAllAccounts) {
+          if (t.type === 'transfer') return false;
+          if (!t.date && !t.is_recurring) return false;
+          if (t.date === dateStr) {
+            if (t.is_recurring) {
+              const exc = getRecurException(t, dateStr);
+              if (exc?.skip) return false;
+              if (t.recur_end_date && new Date(dateStr+'T00:00:00') > new Date(t.recur_end_date+'T00:00:00')) return false;
+            }
+            return true;
+          }
+          return recurringMatchesDay(t, currentYear, currentMonth, d);
+        }
+        // Single account view
         if (t.account_id === selectedAccountId) {
           if (t.date === dateStr) {
             if (t.is_recurring) {
-              // Don't show original date if it's been skipped via exception
               const exc = getRecurException(t, dateStr);
               if (exc?.skip) return false;
-              // Don't show original date if recur_end_date was set before it (series killed by "this & future" edit)
               if (t.recur_end_date && new Date(dateStr + 'T00:00:00') > new Date(t.recur_end_date + 'T00:00:00')) return false;
             }
             return true;
