@@ -74,8 +74,22 @@
     body.dark .mode-name         { color: #e2ddd4; }
     body.dark .mode-msg          { color: #a8cbb8; }
     body.dark .budget-bar-bg     { background: rgba(255,255,255,0.1); }
-    body.dark .float-calc        { background: #1a241a; border-color: rgba(255,255,255,0.1); }
-    body.dark .calc-display      { background: #0f1710; color: #e2ddd4; border-color: rgba(255,255,255,0.1); }
+    body.dark .float-calc         { background: #1a241a; border-color: rgba(255,255,255,0.1); }
+    body.dark .float-calc-header  { background: #0f1a0f; }
+    body.dark .float-calc-display { background: #0a1210; }
+    body.dark .float-calc-grid    { background: rgba(255,255,255,0.06); }
+    body.dark .fc-btn             { background: #1e2e1e; color: #e2ddd4; }
+    body.dark .fc-btn:hover       { background: #263826; }
+    body.dark .fc-btn:active      { background: #2e4030; }
+    body.dark .fc-btn.fc-op       { color: #6DC48A; background: rgba(109,196,138,0.08); }
+    body.dark .fc-btn.fc-op:hover { background: rgba(109,196,138,0.18); }
+    body.dark .fc-btn.fc-fn       { color: #a8cbb8; background: #1e2e1e; }
+    body.dark .calc-display       { background: #0f1710; color: #e2ddd4; border-color: rgba(255,255,255,0.1); }
+    body.dark .calc-results       { background: #141e14; border-color: rgba(255,255,255,0.08); }
+    body.dark .calc-result-val    { color: #e2ddd4; }
+    body.dark .calc-extra-label   { color: #a8cbb8; }
+    body.dark .calc-amort-table th { background: #1e2e1e; color: #e2ddd4; }
+    body.dark .calc-amort-table td { border-color: rgba(255,255,255,0.06); color: #e2ddd4; }
     body.dark .forecast-view     { background: #0f1710; }
     body.dark .forecast-strip    { background: #0a1210; border-color: rgba(255,255,255,0.07); }
 
@@ -887,7 +901,7 @@
     /* ── FAQ modal ── */
     .faq-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(18,32,18,0.55); z-index: 300;
+      background: rgba(18,32,18,0.55); z-index: 600;
       align-items: center; justify-content: center; padding: 24px;
     }
     .faq-overlay.open { display: flex; }
@@ -974,6 +988,20 @@
     .faq-a li { margin-bottom: 4px; }
     .faq-a strong { color: var(--deep-forest); }
     .faq-nav-btn { background: transparent; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body.dark .faq-modal      { background: #1a241a; color: #e2ddd4; }
+    body.dark .faq-header h2  { color: #e2ddd4; }
+    body.dark .faq-header     { border-color: rgba(255,255,255,0.08); }
+    body.dark .faq-search-input { background: #0f1710; color: #e2ddd4; border-color: rgba(255,255,255,0.12); }
+    body.dark .faq-search-input:focus { background: #141e14; border-color: var(--living-green); }
+    body.dark .faq-section-title { border-color: rgba(255,255,255,0.08); }
+    body.dark .faq-q          { background: #141e14; border-color: rgba(255,255,255,0.1); color: #e2ddd4; }
+    body.dark .faq-q:hover    { background: rgba(109,196,138,0.08); border-color: rgba(109,196,138,0.2); }
+    body.dark .faq-q.open     { background: rgba(109,196,138,0.1); border-color: rgba(109,196,138,0.2); }
+    body.dark .faq-a          { background: #1a241a; border-color: rgba(255,255,255,0.08); color: #a8cbb8; }
+    body.dark .faq-a strong   { color: #e2ddd4; }
+    body.dark .faq-close      { border-color: rgba(255,255,255,0.1); color: #a8cbb8; }
+    body.dark .faq-close:hover { background: #263826; }
+    body.dark .faq-no-results strong { color: #e2ddd4; }
 
     /* ── Emoji picker ── */
     .desc-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; }
@@ -6053,6 +6081,27 @@
       </div>
     </div>
 
+    <!-- What's New -->
+    <div class="faq-section">
+      <div class="faq-section-title">What's New</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Dark mode — how do I turn it on? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click the <strong>🌙 moon icon</strong> in the top nav bar to switch to dark mode. Click again (becomes ☀️) to return to light mode. Your preference is saved — it will stay in dark mode next time you open Money Moves.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the All Accounts view? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click the <strong>All Accounts</strong> tab at the left of the account bar to see a combined calendar showing income and expenses from every account in one view. Transfers are excluded since they cancel out. The summary bar shows your total balance across all accounts. Use this to see your full financial picture at a glance.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What are the Beats to Budget music options? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Click <strong>Beats to Budget</strong> in the bottom-left corner to open the music player. Choose from five vibes: 🌙 Lo-Fi, 🔥 Hip Hop, ✨ R&amp;B, 🎷 Jazz, or 🙏 Gospel. Click <strong>Customize</strong> to swap any track with your own YouTube URL or video ID. Settings save automatically.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do the daily hints work? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">The hint bar at the top of the calendar rotates through tips and feature reminders every 5 seconds. Click any dot to jump to a specific hint. Tips cover things like drag-and-drop, recurring transactions, the forecast, and more — useful if you're still learning what Money Moves can do.</div>
+      </div>
+    </div>
+
     <!-- Your Account -->
     <div class="faq-section">
       <div class="faq-section-title">Your Account</div>
@@ -6075,6 +6124,23 @@
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">How do I log out? <span class="faq-chevron">▼</span></div>
         <div class="faq-a">Click <strong>Log Out</strong> in the top-right of the nav bar. Your data is saved automatically — nothing is lost when you log out.</div>
+      </div>
+    </div>
+
+    <!-- Contact Us -->
+    <div class="faq-section">
+      <div class="faq-section-title">Contact Us</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">I have a question that's not answered here — how do I reach you? <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">Email us directly at <strong><a href="mailto:support@mirajoco.org" style="color:var(--living-green)">support@mirajoco.org</a></strong> and we'll get back to you. Include your account email and a brief description of what you're seeing so we can help you faster.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">I found a bug or something isn't working right. <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">We want to know. Email <strong><a href="mailto:support@mirajoco.org" style="color:var(--living-green)">support@mirajoco.org</a></strong> with your account email and a description of what happened — including what you were doing when the issue occurred. Screenshots are always helpful if you can grab one.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">I have a feature request or idea. <span class="faq-chevron">▼</span></div>
+        <div class="faq-a">We genuinely love hearing these. Send your idea to <strong><a href="mailto:support@mirajoco.org" style="color:var(--living-green)">support@mirajoco.org</a></strong> — we read every email and the best ideas make it into future updates.</div>
       </div>
     </div>
 
@@ -6154,21 +6220,38 @@
     };
 
     // ── Drag to move ──────────────────────────────────────────────────────────
-    const header = document.getElementById('float-calc-header');
-    const panel  = document.getElementById('float-calc');
+    // Defer until DOM is ready (float-calc HTML is below this script block)
     let dragging = false, ox = 0, oy = 0;
 
-    header.addEventListener('mousedown', function (e) {
-      if (e.target.classList.contains('float-calc-close')) return;
-      dragging = true;
-      const rect = panel.getBoundingClientRect();
-      ox = e.clientX - rect.left;
-      oy = e.clientY - rect.top;
-      e.preventDefault();
+    document.addEventListener('DOMContentLoaded', function () {
+      const header = document.getElementById('float-calc-header');
+      const panel  = document.getElementById('float-calc');
+      if (!header || !panel) return;
+
+      header.addEventListener('mousedown', function (e) {
+        if (e.target.classList.contains('float-calc-close')) return;
+        dragging = true;
+        const rect = panel.getBoundingClientRect();
+        ox = e.clientX - rect.left;
+        oy = e.clientY - rect.top;
+        e.preventDefault();
+      });
+
+      // Touch drag
+      header.addEventListener('touchstart', function (e) {
+        if (e.target.classList.contains('float-calc-close')) return;
+        dragging = true;
+        const t = e.touches[0];
+        const rect = panel.getBoundingClientRect();
+        ox = t.clientX - rect.left;
+        oy = t.clientY - rect.top;
+      }, { passive: true });
     });
 
     document.addEventListener('mousemove', function (e) {
       if (!dragging) return;
+      const panel = document.getElementById('float-calc');
+      if (!panel) return;
       let x = e.clientX - ox;
       let y = e.clientY - oy;
       x = Math.max(0, Math.min(window.innerWidth  - panel.offsetWidth,  x));
@@ -6181,18 +6264,10 @@
 
     document.addEventListener('mouseup', function () { dragging = false; });
 
-    // Touch drag
-    header.addEventListener('touchstart', function (e) {
-      if (e.target.classList.contains('float-calc-close')) return;
-      dragging = true;
-      const t = e.touches[0];
-      const rect = panel.getBoundingClientRect();
-      ox = t.clientX - rect.left;
-      oy = t.clientY - rect.top;
-    }, { passive: true });
-
     document.addEventListener('touchmove', function (e) {
       if (!dragging) return;
+      const panel = document.getElementById('float-calc');
+      if (!panel) return;
       const t = e.touches[0];
       let x = t.clientX - ox;
       let y = t.clientY - oy;
