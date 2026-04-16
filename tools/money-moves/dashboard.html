@@ -1211,15 +1211,23 @@
       #m-home .cal-grid { grid-auto-rows: 72px; padding: 0; gap: 1px; border-left-width: 1px; border-bottom-width: 1px; }
       #m-home .cal-cell { height: 72px; padding: 3px 3px 12px; border-top-width: 1px; border-right-width: 1px; overflow: hidden; }
 
-      /* Thin colored bar entries */
-      #m-home .cal-entry {
-        height: 5px; padding: 0; border-radius: 2px; margin-bottom: 2px;
-        font-size: 0; line-height: 0; gap: 0; overflow: hidden;
+      /* Hide transaction bars — show only the balance number */
+      #m-home .cal-entry     { display: none !important; }
+      #m-home .cal-txn-count { display: none !important; }
+
+      /* Balance number: big and centred in the cell */
+      #m-home .cal-day-balance {
+        font-size: 11px; font-weight: 700;
+        bottom: 4px; left: 2px; right: 2px;
+        text-align: center; letter-spacing: -0.5px;
       }
-      #m-home .cal-entry.income   { background: var(--income-color) !important; color: transparent !important; }
-      #m-home .cal-entry.expense  { background: var(--expense-color) !important; color: transparent !important; }
-      #m-home .cal-entry.transfer { background: var(--neutral) !important; color: transparent !important; }
-      #m-home .cal-day-balance { font-size: 8px; left: 2px; right: 2px; bottom: 2px; letter-spacing: -0.5px; }
+      body.dark #m-home .cal-day-balance.positive { color: #6DC48A; }
+      body.dark #m-home .cal-day-balance.negative { color: #f87171; }
+      #m-home .cal-day-balance.positive { color: #1a5c1a; }
+      #m-home .cal-day-balance.negative { color: #991122; }
+
+      /* Date number larger */
+      #m-home .cal-date-num { font-size: 13px; width: 22px; height: 22px; }
     }
     @media (max-width: 540px) {
       .cal-grid { grid-auto-rows: 82px; }
