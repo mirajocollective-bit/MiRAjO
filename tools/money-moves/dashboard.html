@@ -3489,12 +3489,12 @@
         const displayT = exc ? { ...t, amount: exc.amount ?? t.amount, description: exc.description ?? t.description } : t;
         const incoming = displayT.type === 'transfer' && displayT.transfer_to_account_id === selectedAccountId;
         const sign = displayT.type === 'income' ? '+' : incoming ? '←' : displayT.type === 'transfer' ? '→' : '-';
-        const { text: txnName } = parseEmojiFromDesc(displayT.description);
+        const { emoji: txnEmoji, text: txnName } = parseEmojiFromDesc(displayT.description);
         const amt = `${sign}$${Number(displayT.amount).toFixed(0)}`;
         const recurMark = displayT.is_recurring ? '↻ ' : '';
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${incoming ? 'income' : displayT.type}`;
-        entry.textContent = `${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
+        entry.textContent = `${txnEmoji ? txnEmoji + ' ' : ''}${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
         entry.title = `${displayT.description || ''} — ${sign}$${Number(displayT.amount).toLocaleString('en-US',{minimumFractionDigits:2})}`;
         entry.addEventListener('click', (e) => { e.stopPropagation(); openEditModal(displayT, dateStr); });
         entry.setAttribute('draggable', 'true');
