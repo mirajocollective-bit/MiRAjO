@@ -641,6 +641,7 @@
     }
   </style>
   <script src="/analytics.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -889,6 +890,7 @@
       <input type="email" name="email" placeholder="Your email address" required autocomplete="email">
       <button type="submit">Subscribe</button>
     </form>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAACyf19GGVbAXiDCE" data-theme="light" style="margin-top:12px;"></div>
     <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
     <p id="newsletter-success">You're in. Notes incoming.</p>
   </div>
@@ -938,10 +940,16 @@
     btn.textContent = 'Subscribing...';
     btn.disabled = true;
     try {
+      const turnstileToken = turnstile.getResponse();
+      if (!turnstileToken) {
+        btn.textContent = 'Subscribe';
+        btn.disabled = false;
+        return;
+      }
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: 'notes-page' })
+        body: JSON.stringify({ email, source: 'notes-page', turnstileToken })
       });
       if (res.ok) {
         this.style.display = 'none';
