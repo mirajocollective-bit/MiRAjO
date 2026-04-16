@@ -26,6 +26,70 @@
       --border:         rgba(18,32,18,0.07);
     }
 
+    /* ── Dark mode overrides ─────────────────────────────────────────────────── */
+    body.dark {
+      --deep-forest:    #e2ddd4;
+      --forest-mid:     #a8cbb8;
+      --living-green:   #6DC48A;
+      --new-growth:     #8fe4a8;
+      --dry-sage:       #d4b464;
+      --warm-parchment: #1a241a;
+      --soft-white:     #141e14;
+      --neutral:        #9ca3af;
+      --border:         rgba(255,255,255,0.08);
+      background: #0f1710 !important;
+      color: #e2ddd4;
+    }
+    body.dark .nav          { background: #0a1210; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    body.dark .nav-brand    { color: #e2ddd4; }
+    body.dark .nav-btn-settings { border-color: rgba(255,255,255,0.15); color: #e2ddd4; }
+    body.dark .nav-btn-forecast { border-color: rgba(109,196,138,0.4); }
+    body.dark .nav-btn-logout   { border-color: rgba(255,255,255,0.1); color: #9ca3af; }
+    body.dark .analytics-sidebar { background: #0a1210; border-right: 1px solid rgba(255,255,255,0.07); }
+    body.dark .analytics-toggle  { color: #e2ddd4; }
+    body.dark .cal-accounts-row  { border-bottom-color: rgba(255,255,255,0.07); background: #0f1710; }
+    body.dark .account-tab       { background: #1a241a; color: #e2ddd4; border-color: rgba(255,255,255,0.1); }
+    body.dark .account-tab.active { background: var(--living-green); color: #fff; }
+    body.dark .cal-header        { border-bottom-color: rgba(255,255,255,0.07); background: #0f1710; }
+    body.dark .cal-grid          { border-color: rgba(255,255,255,0.18); }
+    body.dark .cal-cell          { border-color: rgba(255,255,255,0.18); background: #0f1710; }
+    body.dark .cal-cell:hover    { background: rgba(255,255,0,0.05); }
+    body.dark .cal-cell.today    { background: rgba(109,196,138,0.12); }
+    body.dark .cal-day-name      { color: #9ca3af; background: #0a1210; }
+    body.dark .cal-entry         { background: #1e2e1e !important; color: #e2ddd4 !important; }
+    body.dark .cal-entry:hover   { background: #e2ddd4 !important; color: #111 !important; }
+    body.dark .cal-txn-count     { background: #e2ddd4; color: #111; }
+    body.dark .cal-txn-count:hover { background: var(--living-green); color: #fff; }
+    body.dark .cal-day-balance.positive { color: #6DC48A; }
+    body.dark .cal-day-balance.negative { color: #f87171; }
+    body.dark .summary-bar       { background: #0a1210; border-bottom-color: rgba(255,255,255,0.07); }
+    body.dark .summary-card      { border-right-color: rgba(255,255,255,0.07); }
+    body.dark .summary-label     { color: #9ca3af; }
+    body.dark .hint-bar          { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+    body.dark .hint-text         { color: #a8cbb8; }
+    body.dark .hint-dot          { background: rgba(255,255,255,0.25); }
+    body.dark .hint-dot.active   { background: var(--living-green); }
+    body.dark .modal             { background: #1a241a; color: #e2ddd4; }
+    body.dark .modal-title       { color: #e2ddd4; }
+    body.dark input, body.dark select, body.dark textarea {
+      background: #0f1710; color: #e2ddd4; border-color: rgba(255,255,255,0.15);
+    }
+    body.dark .mode-card         { background: #1a241a; }
+    body.dark .mode-name         { color: #e2ddd4; }
+    body.dark .mode-msg          { color: #a8cbb8; }
+    body.dark .budget-bar-bg     { background: rgba(255,255,255,0.1); }
+    body.dark .float-calc        { background: #1a241a; border-color: rgba(255,255,255,0.1); }
+    body.dark .calc-display      { background: #0f1710; color: #e2ddd4; border-color: rgba(255,255,255,0.1); }
+    body.dark .forecast-view     { background: #0f1710; }
+    body.dark .forecast-strip    { background: #0a1210; border-color: rgba(255,255,255,0.07); }
+
+    /* ── Dark mode toggle button ──────────────────────────────────────────────── */
+    .dark-toggle { font-size: 15px; padding: 6px 11px; cursor: pointer; background: transparent; border: 1px solid rgba(18,32,18,0.18); border-radius: 8px; }
+    body.dark .dark-toggle { border-color: rgba(255,255,255,0.15); }
+
+    /* ── Accessibility focus styles ───────────────────────────────────────────── */
+    :focus-visible { outline: 2px solid var(--living-green); outline-offset: 2px; border-radius: 4px; }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -1641,8 +1705,9 @@
     <button class="nav-btn nav-btn-add" onclick="openModal()">+ Add</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/reports'">Reports</button>
     <button class="nav-btn nav-btn-settings" onclick="window.location.href='/tools/money-moves/settings'">Settings</button>
-    <button class="nav-btn nav-btn-settings" id="tips-toggle-btn" onclick="toggleTips()" title="Feature tips on/off" style="font-size:14px; padding:6px 11px;">💡</button>
-    <button class="nav-btn nav-btn-settings" onclick="openFaq()" title="Help & FAQ" style="font-size:16px; padding:6px 11px;">?</button>
+    <button class="nav-btn nav-btn-settings" id="tips-toggle-btn" onclick="toggleTips()" title="Feature tips on/off" aria-label="Toggle feature tips" style="font-size:14px; padding:6px 11px;">💡</button>
+    <button class="nav-btn dark-toggle" id="dark-toggle-btn" onclick="toggleDarkMode()" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    <button class="nav-btn nav-btn-settings" onclick="openFaq()" title="Help & FAQ" aria-label="Help and FAQ" style="font-size:16px; padding:6px 11px;">?</button>
     <button class="float-calc-toggle" id="calc-toggle-btn" onclick="toggleFloatCalc()" title="Calculator">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">
         <rect x="2" y="1" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/>
@@ -1818,7 +1883,7 @@
           <div class="mode-msg" id="mode-msg">Add your first account and let's get to work.</div>
           <div class="mode-bottom-row">
             <button class="mode-change-btn" onclick="openModePickerModal()">Change your mode →</button>
-            <button class="mode-speak-btn" id="mode-speak-btn" onclick="speakMode()" title="Hear your coach">🔊</button>
+            <button class="mode-speak-btn" id="mode-speak-btn" onclick="speakMode()" title="Hear your coach" aria-label="Hear your coach message">🔊</button>
           </div>
         </div>
 
@@ -2006,7 +2071,7 @@
         <div class="cal-day-name">Fri</div>
         <div class="cal-day-name">Sat</div>
       </div>
-      <div class="cal-grid" id="cal-grid">
+      <div class="cal-grid" id="cal-grid" role="grid" aria-label="Budget calendar">
         <div class="cal-loading-overlay" id="cal-loading-overlay">
           <div class="cal-spinner"></div>
         </div>
@@ -2450,10 +2515,10 @@
     </div><!-- /dti-view -->
 
     <!-- Hint bar -->
-    <div class="hint-bar" id="hint-bar">
-      <span class="hint-icon" id="hint-icon">💡</span>
+    <div class="hint-bar" id="hint-bar" role="status" aria-live="polite" aria-label="Tips">
+      <span class="hint-icon" id="hint-icon" aria-hidden="true">💡</span>
       <span class="hint-text" id="hint-text"><strong>Click any day</strong> on the calendar to quickly add a transaction on that date.</span>
-      <div class="hint-dots" id="hint-dots"></div>
+      <div class="hint-dots" id="hint-dots" role="tablist" aria-label="Tip navigation"></div>
     </div>
 
     <!-- Forecast table -->
@@ -3284,7 +3349,11 @@
       const cell = document.createElement('div');
       cell.className = `cal-cell${isToday ? ' today' : ''}`;
       cell.dataset.date = dateStr;
+      cell.setAttribute('role', 'gridcell');
+      cell.setAttribute('tabindex', '0');
+      cell.setAttribute('aria-label', `${months[currentMonth]} ${d}${dayTxns.length ? `, ${dayTxns.length} transaction${dayTxns.length > 1 ? 's' : ''}` : ', no transactions'}`);
       cell.onclick   = () => openModal(dateStr);
+      cell.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cell.click(); } });
       let dragCount = 0;
       cell.addEventListener('dragenter', (e) => { e.preventDefault(); dragCount++; cell.classList.add('drag-over'); });
       cell.addEventListener('dragover',  (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; });
@@ -4032,6 +4101,24 @@
     btn.style.opacity = off ? '0.4' : '1';
     btn.title = off ? 'Feature tips are off — click to turn on' : 'Feature tips are on — click to turn off';
   }
+
+  // ── Dark mode ────────────────────────────────────────────────────────────────
+  function applyDarkMode(on) {
+    document.body.classList.toggle('dark', on);
+    const btn = document.getElementById('dark-toggle-btn');
+    if (btn) btn.textContent = on ? '☀️' : '🌙';
+  }
+  (function initDarkMode() {
+    const saved = localStorage.getItem('mm_dark_mode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyDarkMode(saved !== null ? saved === '1' : prefersDark);
+  })();
+  window.toggleDarkMode = function () {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('mm_dark_mode', isDark ? '1' : '0');
+    const btn = document.getElementById('dark-toggle-btn');
+    if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+  };
 
   window.toggleTips = function () {
     if (localStorage.getItem('mm_beacons_off') === '1') {
