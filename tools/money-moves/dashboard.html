@@ -1822,13 +1822,30 @@
       <button class="beats-custom-reset" onclick="resetBeatsCustom()">Reset to defaults</button>
     </div>
   </div>
-  <button class="beats-toggle" id="beats-toggle" onclick="toggleBeats()">
-    <div class="beats-eq paused" id="beats-eq">
-      <span></span><span></span><span></span><span></span>
-    </div>
-    Beats to Budget
-  </button>
+  <div style="display:flex;align-items:center;gap:6px">
+    <button class="beats-toggle" id="beats-toggle" onclick="toggleBeats()">
+      <div class="beats-eq paused" id="beats-eq">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      Beats to Budget
+    </button>
+    <button id="beats-hide-btn" onclick="hideBeatsPlayer()" title="Hide player"
+      style="background:#0D0D0D;border:none;color:rgba(255,255,255,0.5);font-size:14px;
+             width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;
+             align-items:center;justify-content:center;flex-shrink:0;line-height:1">✕</button>
+  </div>
 </div>
+
+<!-- Beats restore tab -->
+<button id="beats-show-tab" onclick="showBeatsPlayer()" title="Show Beats to Budget"
+  style="display:none;position:fixed;bottom:80px;right:12px;z-index:400;
+         background:#0D0D0D;border:none;color:rgba(255,255,255,0.6);
+         font-size:11px;font-weight:700;letter-spacing:0.5px;
+         padding:7px 12px;border-radius:100px;cursor:pointer;
+         align-items:center;gap:5px;box-shadow:0 4px 16px rgba(0,0,0,0.3);
+         font-family:'Plus Jakarta Sans',sans-serif">
+  🎵 Beats
+</button>
 
 <!-- accounts-bar removed — now lives inside the calendar section -->
 
@@ -4331,6 +4348,24 @@
       loadBeatsEmbed(beatsCurrentIdx, false);
     }
   };
+
+  window.hideBeatsPlayer = function () {
+    document.getElementById('beats-player').style.display = 'none';
+    document.getElementById('beats-show-tab').style.display = 'flex';
+    beatsOpen = false;
+    document.getElementById('beats-panel').classList.remove('open');
+    localStorage.setItem('mm_beats_hidden', '1');
+  };
+  window.showBeatsPlayer = function () {
+    document.getElementById('beats-player').style.display = '';
+    document.getElementById('beats-show-tab').style.display = 'none';
+    localStorage.removeItem('mm_beats_hidden');
+  };
+  // Restore hidden state
+  if (localStorage.getItem('mm_beats_hidden')) {
+    document.getElementById('beats-player').style.display = 'none';
+    document.getElementById('beats-show-tab').style.display = 'flex';
+  }
 
   window.toggleBeatsCustomize = function () {
     document.getElementById('beats-customize-panel').classList.toggle('open');
