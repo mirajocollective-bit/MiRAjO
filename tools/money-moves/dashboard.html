@@ -1130,7 +1130,6 @@
     @media (max-width: 900px) {
       .layout { grid-template-columns: 1fr !important; }
       .layout.analytics-open { grid-template-columns: 1fr !important; }
-      .analytics-sidebar { display: none !important; }
     }
     @media (max-width: 768px) {
       body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
@@ -1138,10 +1137,19 @@
       .nav-greeting, .nav-xp-wrap, .nav-btn-forecast, .nav-btn-logout,
       .nav-btn-settings, .float-calc-toggle, .forecast-strip-toggle { display: none; }
       .layout {
-        grid-template-columns: 1fr !important;
+        display: flex; flex-direction: column;
         padding: 12px 12px 80px; gap: 12px;
       }
-      .analytics-sidebar { display: none !important; }
+      /* Show sidebar below calendar on mobile */
+      .analytics-sidebar {
+        display: block !important;
+        position: static !important;
+        width: 100%; order: 2;
+        border-radius: 16px;
+      }
+      .analytics-toggle  { display: none !important; }
+      .analytics-content { display: block !important; }
+      .analytics-widgets { padding: 0 10px 14px; }
       .summary-bar { flex-wrap: wrap; }
       .summary-card { flex: 1 1 40%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); }
       .summary-ratio-wrap { flex: 1 1 100%; max-width: 100%; }
@@ -6308,7 +6316,7 @@
 
   // ── Mobile nav helper ────────────────────────────────────────────────────────
   window.scrollToSidebar = function () {
-    const sb = document.getElementById('analytics-widgets');
+    const sb = document.getElementById('analytics-sidebar');
     if (sb) sb.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
