@@ -3685,7 +3685,10 @@
         const recurMark = displayT.is_recurring ? '↻ ' : '';
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${incoming ? 'income' : displayT.type}`;
-        entry.textContent = `${txnEmoji ? txnEmoji + ' ' : ''}${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
+        const isMobile = window.innerWidth <= 768;
+        entry.textContent = isMobile
+          ? `${sign}$${Number(displayT.amount).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}`
+          : `${txnEmoji ? txnEmoji + ' ' : ''}${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
         entry.title = `${displayT.description || ''} — ${sign}$${Number(displayT.amount).toLocaleString('en-US',{minimumFractionDigits:2})}`;
         entry.addEventListener('click', (e) => { e.stopPropagation(); openEditModal(displayT, dateStr); });
         entry.setAttribute('draggable', 'true');
