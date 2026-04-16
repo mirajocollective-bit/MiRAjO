@@ -1279,14 +1279,15 @@
         flex: 1 1 auto !important; min-height: 0; overflow: hidden;
       }
       /* Day panel: fixed strip at bottom of home */
-      #m-day-panel { flex: 0 0 220px; }
+      #m-day-panel { flex: 0 0 auto; max-height: 42%; min-height: 160px; }
 
       /* Cells: hide bar entries, show only count badge + balance */
       #m-home .cal-entry { display: none !important; }
-      #m-home .cal-txn-count {
+      #m-home .cal-txn-count { display: none !important; } /* hide desktop overflow badge */
+      #m-home .m-txn-badge {
         position: absolute; top: 3px; right: 3px;
         background: rgba(37,107,66,0.85); color: #fff;
-        font-size: 7px; padding: 1px 5px; border-radius: 3px;
+        font-size: 8px; font-weight: 700; padding: 1px 5px; border-radius: 4px;
         margin: 0; line-height: 1.6; pointer-events: none; display: block;
       }
       #m-home .cal-day-balance { font-size: 10px; font-weight: 800; }
@@ -1312,7 +1313,7 @@
       .cal-nav-divider, .cal-nav-year-label { display: none !important; }
 
       /* Day panel fixed height */
-      #m-day-panel { flex: 0 0 200px; }
+      #m-day-panel { flex: 0 0 auto; max-height: 42%; min-height: 160px; }
     }
     @media (max-width: 540px) {
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
@@ -3947,7 +3948,8 @@
 
       const cell = document.createElement('div');
       cell.className = `cal-cell${isToday ? ' today' : ''}`;
-      cell.dataset.date = dateStr;
+      cell.dataset.date     = dateStr;
+      cell.dataset.txnCount = dayTxns.length;
       cell.setAttribute('role', 'gridcell');
       cell.setAttribute('tabindex', '0');
       cell.setAttribute('aria-label', `${months[currentMonth]} ${d}${dayTxns.length ? `, ${dayTxns.length} transaction${dayTxns.length > 1 ? 's' : ''}` : ', no transactions'}`);
@@ -7257,22 +7259,25 @@
     if (!grid) return;
 
     grid.querySelectorAll('.cal-cell:not(.other-month)').forEach(cell => {
-      // Hide inline entry bars (amounts in cells — now shown in panel below)
+      // Hide inline entry bars — transactions shown in the panel below instead
       cell.querySelectorAll('.cal-entry').forEach(e => { e.style.display = 'none'; });
-      const count = cell.querySelectorAll('.cal-entry').length;
+      // Also hide the desktop "+N more" overflow badge
+      cell.querySelectorAll('.cal-txn-count').forEach(b => { b.style.display = 'none'; });
 
-      // Count badge: always show if any transactions
-      let badge = cell.querySelector('.cal-txn-count');
+      // Use the stamped total count (not the capped 2-entry DOM count)
+      const count = parseInt(cell.dataset.txnCount || '0', 10);
+
+      // Rebuild our own mobile count badge
+      let badge = cell.querySelector('.m-txn-badge');
       if (count > 0) {
         if (!badge) {
           badge = document.createElement('div');
-          badge.className = 'cal-txn-count';
+          badge.className = 'm-txn-badge';
           const bal = cell.querySelector('.cal-day-balance');
           cell.insertBefore(badge, bal || null);
         }
         badge.textContent = count;
         badge.style.display = 'block';
-        badge.onclick = null; // cell click handles selection
       } else if (badge) {
         badge.style.display = 'none';
       }
