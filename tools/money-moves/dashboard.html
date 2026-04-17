@@ -2040,16 +2040,20 @@
     /* ── Mobile Day Detail Panel ─────────────────────────────────────────────── */
     @media (min-width: 769px) { #m-day-panel { display: none !important; } }
     #m-day-panel {
-      overflow-y: auto; background: #fff;
+      background: #fff;
       border-top: 2px solid rgba(15,32,87,0.06);
-      -webkit-overflow-scrolling: touch;
+      display: flex; flex-direction: column;
+      overflow: hidden;
     }
     #m-day-panel-hdr {
-      position: sticky; top: 0; z-index: 5;
+      flex-shrink: 0;
       background: #fff; border-bottom: 1px solid rgba(15,32,87,0.07);
       padding: 7px 14px;
       display: flex; align-items: center; justify-content: space-between;
-      gap: 10px; flex-shrink: 0;
+      gap: 10px;
+    }
+    #m-day-panel-scroll {
+      flex: 1; overflow-y: scroll; -webkit-overflow-scrolling: touch;
     }
     #m-day-panel-info { flex: 1; min-width: 0; }
     #m-day-panel-date  { font-size: 13px; font-weight: 700; color: var(--deep-forest); display: block; }
@@ -7316,8 +7320,10 @@
         '</div>' +
         '<button id="m-day-panel-add" aria-label="Add transaction">+</button>' +
       '</div>' +
-      '<div id="m-day-panel-empty">Tap any day to see transactions</div>' +
-      '<div id="m-day-panel-list"></div>';
+      '<div id="m-day-panel-scroll">' +
+        '<div id="m-day-panel-empty">Tap any day to see transactions</div>' +
+        '<div id="m-day-panel-list"></div>' +
+      '</div>';
     mHome.appendChild(dayPanel);
 
     // Panel: Budget — analytics sidebar
