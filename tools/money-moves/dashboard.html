@@ -1441,12 +1441,13 @@
     .m-tool-card-chevron { color: var(--neutral); font-size: 20px; flex-shrink: 0; margin-left: 4px; }
 
     /* Tool detail (open state) */
-    #m-tool-detail { display: none; flex-direction: column; position: absolute; inset: 0; }
-    #m-tool-detail.active { display: flex; }
+    #m-tool-detail { display: none; position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+    #m-tool-detail.active { display: block; }
     #m-tool-back-bar {
       display: flex; align-items: center; gap: 10px;
       padding: 11px 14px; background: #fff;
-      border-bottom: 1px solid rgba(15,32,87,0.08); flex-shrink: 0;
+      border-bottom: 1px solid rgba(15,32,87,0.08);
+      position: sticky; top: 0; z-index: 5;
     }
     #m-tool-back-btn {
       background: none; border: none; cursor: pointer; padding: 4px 10px 4px 0;
@@ -1458,8 +1459,8 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
     #m-tool-content {
-      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
       background: #f0f4f0;
+      min-height: 100%;
     }
     /* Override desktop tool layout widths for mobile */
     #m-tool-content .mtg-body { grid-template-columns: 1fr; }
@@ -7582,9 +7583,9 @@
     if (name === 'dti'      && window.calcDTI)         window.calcDTI();
     if (name === 'debt'     && window.calcDebt)        window.calcDebt();
     if (name === 'forecast' && window.renderForecast)  window.renderForecast();
-    // Scroll tool content to top
-    const tc = document.getElementById('m-tool-content');
-    if (tc) tc.scrollTop = 0;
+    // Scroll tool detail to top (scroll happens at detail level now)
+    const td = document.getElementById('m-tool-detail');
+    if (td) td.scrollTop = 0;
   };
 
   window.backToToolsMenu = function () {
