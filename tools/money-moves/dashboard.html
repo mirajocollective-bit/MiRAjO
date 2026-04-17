@@ -1441,13 +1441,13 @@
     .m-tool-card-chevron { color: var(--neutral); font-size: 20px; flex-shrink: 0; margin-left: 4px; }
 
     /* Tool detail (open state) */
-    #m-tool-detail { display: none; position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+    #m-tool-detail { display: none; position: absolute; inset: 0; }
     #m-tool-detail.active { display: block; }
     #m-tool-back-bar {
       display: flex; align-items: center; gap: 10px;
-      padding: 11px 14px; background: #fff;
-      border-bottom: 1px solid rgba(15,32,87,0.08);
-      position: sticky; top: 0; z-index: 5;
+      padding: 0 14px; height: 44px;
+      background: #fff; border-bottom: 1px solid rgba(15,32,87,0.08);
+      position: absolute; top: 0; left: 0; right: 0; z-index: 5;
     }
     #m-tool-back-btn {
       background: none; border: none; cursor: pointer; padding: 4px 10px 4px 0;
@@ -1459,8 +1459,9 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
     #m-tool-content {
+      position: absolute; top: 44px; left: 0; right: 0; bottom: 0;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
       background: #f0f4f0;
-      min-height: 100%;
     }
     /* Override desktop tool layout widths for mobile */
     #m-tool-content .mtg-body { grid-template-columns: 1fr; }
