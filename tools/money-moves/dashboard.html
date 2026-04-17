@@ -1281,7 +1281,7 @@
         flex: 1 1 auto !important; min-height: 0; overflow: hidden;
       }
       /* Day panel: fixed strip at bottom of home */
-      #m-day-panel { flex: 0 0 auto; max-height: 42%; min-height: 160px; }
+      #m-day-panel { flex: 0 0 44%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
       /* Cells: hide bar entries, show only count badge + balance */
       #m-home .cal-entry { display: none !important; }
@@ -1315,7 +1315,7 @@
       .cal-nav-divider, .cal-nav-year-label { display: none !important; }
 
       /* Day panel fixed height */
-      #m-day-panel { flex: 0 0 auto; max-height: 42%; min-height: 160px; }
+      #m-day-panel { flex: 0 0 44%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
     }
     @media (max-width: 540px) {
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
@@ -2354,89 +2354,6 @@
           <button class="goal-add-btn" style="margin-top:12px" onclick="window.location.href='/tools/money-moves/settings#debts'">+ Add a Debt</button>
         </div>
 
-        <!-- Debt Payoff Calculator -->
-        <div class="sidebar-card" id="card-calc" data-card-id="card-calc" draggable="true">
-          <div class="calc-toggle-row">
-            <div class="card-title-row" style="margin-bottom:0;flex:1;cursor:pointer" onclick="toggleDebtCalc()">
-              <span class="sidebar-title" style="margin-bottom:0">💳 Debt Payoff Calculator</span>
-              <span class="calc-chevron" id="calc-chevron">▼</span>
-            </div>
-            <span class="drag-handle" title="Drag to reorder" style="margin-left:8px">⠿</span>
-          </div>
-          <div class="calc-body" id="calc-body" style="display:none">
-
-            <select class="calc-select" id="calc-debt-select" onchange="fillCalcFromDebt()">
-              <option value="">— Manual entry —</option>
-            </select>
-
-            <div class="calc-fields">
-              <div class="calc-field">
-                <label>Balance ($)</label>
-                <input type="number" id="calc-balance" placeholder="5000" min="0" step="0.01" oninput="runCalc()">
-              </div>
-              <div class="calc-field">
-                <label>APR (%)</label>
-                <input type="number" id="calc-rate" placeholder="19.99" min="0" step="0.01" oninput="runCalc()">
-              </div>
-              <div class="calc-field">
-                <label>Min Payment ($)</label>
-                <input type="number" id="calc-payment" placeholder="150" min="0" step="0.01" oninput="runCalc()">
-              </div>
-              <div class="calc-field">
-                <label>Start Month</label>
-                <input type="month" id="calc-start" oninput="runCalc()">
-              </div>
-            </div>
-
-            <div class="calc-extra-row">
-              <span class="calc-extra-label">+ Extra / mo</span>
-              <input type="number" class="calc-extra-input" id="calc-extra" placeholder="0" min="0" step="5" oninput="runCalc()">
-              <span style="font-size:11px;color:var(--neutral)">= see savings</span>
-            </div>
-
-            <div class="calc-results" id="calc-results" style="display:none">
-              <div class="calc-result-row">
-                <span class="calc-result-label">Payoff date</span>
-                <span class="calc-result-val" id="cr-payoff">—</span>
-              </div>
-              <div class="calc-result-row">
-                <span class="calc-result-label">Months left</span>
-                <span class="calc-result-val" id="cr-months">—</span>
-              </div>
-              <div class="calc-result-row">
-                <span class="calc-result-label">Total paid</span>
-                <span class="calc-result-val" id="cr-total">—</span>
-              </div>
-              <div class="calc-result-row">
-                <span class="calc-result-label">Total interest</span>
-                <span class="calc-result-val warn" id="cr-interest">—</span>
-              </div>
-            </div>
-
-            <div class="calc-savings-banner" id="calc-savings-banner">
-              <p id="calc-savings-text"></p>
-            </div>
-
-            <button class="calc-amort-toggle" id="calc-amort-btn" onclick="toggleAmort()" style="display:none">
-              Show full amortization schedule ▼
-            </button>
-            <div class="calc-amort-wrap" id="calc-amort-wrap">
-              <table class="calc-amort-table">
-                <thead>
-                  <tr>
-                    <th>Month</th>
-                    <th>Payment</th>
-                    <th>Principal</th>
-                    <th>Interest</th>
-                    <th>Balance</th>
-                  </tr>
-                </thead>
-                <tbody id="calc-amort-body"></tbody>
-              </table>
-            </div>
-
-          </div>
-        </div>
 
       </div><!-- /analytics-widgets -->
 
@@ -2979,6 +2896,13 @@
 
         <div class="dti-body">
 
+          <!-- Debt selector -->
+          <div class="mtg-inputs" style="margin-bottom:0">
+            <select class="calc-select" id="debt-tool-select" onchange="fillDebtToolFromSelect()" style="margin-bottom:14px">
+              <option value="">— Select a debt or enter manually —</option>
+            </select>
+          </div>
+
           <!-- Inputs -->
           <div class="dti-inputs mtg-inputs">
             <div class="mtg-section-label">Debt Details</div>
@@ -3013,6 +2937,15 @@
                 <div class="mtg-input-wrap">
                   <span class="mtg-prefix">$</span>
                   <input class="mtg-input" type="number" id="debt-extra" placeholder="0" min="0" oninput="calcDebt()">
+                </div>
+              </div>
+            </div>
+
+            <div class="mtg-field-group">
+              <div class="mtg-field">
+                <label class="mtg-label">Start Month</label>
+                <div class="mtg-input-wrap">
+                  <input class="mtg-input" type="month" id="debt-start" oninput="calcDebt()">
                 </div>
               </div>
             </div>
@@ -5054,7 +4987,7 @@
 
   // ── Sidebar drag-to-reorder ──────────────────────────────────────────────────
   (function initSidebarDrag() {
-    const CARD_IDS    = ['card-budget', 'card-goals', 'card-debts', 'card-calc'];
+    const CARD_IDS    = ['card-budget', 'card-goals', 'card-debts'];
     const ORDER_KEY   = 'mm_sidebar_order';
     const sidebar     = document.getElementById('analytics-widgets');
     let dragSrc       = null;
@@ -6322,7 +6255,8 @@
   (function () {
     function fmtMo(n) { return n == null ? '—' : '$' + Math.round(n).toLocaleString(); }
     function payoffDate(months) {
-      const d = new Date();
+      const startVal = document.getElementById('debt-start')?.value;
+      const d = startVal ? new Date(startVal + '-01') : new Date();
       d.setMonth(d.getMonth() + Math.ceil(months));
       return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     }
@@ -6401,11 +6335,49 @@
     };
 
     window.resetDebt = function () {
-      ['debt-balance','debt-rate','debt-payment','debt-extra'].forEach(id => {
-        document.getElementById(id).value = '';
+      ['debt-balance','debt-rate','debt-payment','debt-extra','debt-start'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
       });
+      const sel = document.getElementById('debt-tool-select');
+      if (sel) sel.value = '';
       document.getElementById('debt-results').style.display = 'none';
       document.getElementById('debt-error').style.display   = 'none';
+    };
+
+    window.populateDebtToolSelect = function () {
+      const sel = document.getElementById('debt-tool-select');
+      if (!sel) return;
+      let html = '<option value="">— Select a debt or enter manually —</option>';
+      if (typeof debts !== 'undefined' && debts.length) {
+        html += `<optgroup label="Your Tracked Debts">` +
+          debts.map(d => `<option value="${d.id}">${(typeof DEBT_ICONS !== 'undefined' ? DEBT_ICONS[d.type] : '') || '📋'} ${d.name}</option>`).join('') +
+          `</optgroup>`;
+      }
+      if (typeof CALC_PRESETS !== 'undefined') {
+        html += `<optgroup label="Common Debt Types">` +
+          CALC_PRESETS.map(p => `<option value="${p.id}">${p.label}</option>`).join('') +
+          `</optgroup>`;
+      }
+      sel.innerHTML = html;
+    };
+
+    window.fillDebtToolFromSelect = function () {
+      const id     = document.getElementById('debt-tool-select').value;
+      const debt   = (typeof debts !== 'undefined') ? debts.find(d => d.id === id) : null;
+      const preset = (typeof CALC_PRESETS !== 'undefined') ? CALC_PRESETS.find(p => p.id === id) : null;
+
+      if (debt) {
+        document.getElementById('debt-balance').value = debt.current_balance || '';
+        document.getElementById('debt-rate').value    = debt.interest_rate   || '';
+        document.getElementById('debt-payment').value = debt.minimum_payment || '';
+      } else if (preset) {
+        document.getElementById('debt-balance').value = '';
+        document.getElementById('debt-rate').value    = preset.apr || '';
+        document.getElementById('debt-payment').value = '';
+        document.getElementById('debt-balance').focus();
+      }
+      calcDebt();
     };
   })();
 
@@ -7582,10 +7554,11 @@
     });
     const target = document.getElementById(name + '-view');
     if (target) target.classList.add('active');
-    if (name === 'mortgage' && window.calcMortgage)    window.calcMortgage();
-    if (name === 'dti'      && window.calcDTI)         window.calcDTI();
-    if (name === 'debt'     && window.calcDebt)        window.calcDebt();
-    if (name === 'forecast' && window.renderForecast)  window.renderForecast();
+    if (name === 'mortgage' && window.calcMortgage)           window.calcMortgage();
+    if (name === 'dti'      && window.calcDTI)                window.calcDTI();
+    if (name === 'debt'     && window.populateDebtToolSelect) window.populateDebtToolSelect();
+    if (name === 'debt'     && window.calcDebt)               window.calcDebt();
+    if (name === 'forecast' && window.renderForecast)         window.renderForecast();
     // Scroll tool detail to top (scroll happens at detail level now)
     const td = document.getElementById('m-tool-detail');
     if (td) td.scrollTop = 0;
