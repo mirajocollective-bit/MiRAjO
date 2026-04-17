@@ -7467,12 +7467,31 @@
 
       document.getElementById('m-day-panel-hdr').style.display = 'flex';
 
-      const list = document.getElementById('m-day-panel-list');
+      const list  = document.getElementById('m-day-panel-list');
       const empty = document.getElementById('m-day-panel-empty');
+      const panel = document.getElementById('m-day-panel');
+
+      // Helper: apply a pixel height cap so Android WebView scrolls reliably.
+      // overflow-y on a flex item with % max-height is buggy on Android — must
+      // use an explicit pixel height that is smaller than the content.
+      function applyPanelHeightCap() {
+        const mHomeEl = document.getElementById('m-home');
+        if (!mHomeEl || !panel) return;
+        panel.style.height     = '';          // clear previous cap
+        panel.style.overflowY  = '';
+        const naturalH = panel.getBoundingClientRect().height; // forces reflow
+        const maxPx    = Math.floor(mHomeEl.clientHeight * 0.42);
+        if (naturalH > maxPx) {
+          panel.style.height    = maxPx + 'px';
+          panel.style.overflowY = 'scroll';
+        }
+      }
+
       if (!dayTxns.length) {
         list.innerHTML = '';
         empty.textContent = 'No transactions this day';
         empty.style.display = 'block';
+        applyPanelHeightCap();
         return;
       }
       empty.style.display = 'none';
@@ -7493,14 +7512,7 @@
         '</div>';
       }).join('');
 
-      // Cap panel height to 42% of home panel so overflow-y scroll works on Android
-      // (percentage max-height on flex items is unreliable in Android WebView)
-      const mHomeEl = document.getElementById('m-home');
-      const panel   = document.getElementById('m-day-panel');
-      if (mHomeEl && panel) {
-        const maxPx = Math.floor(mHomeEl.clientHeight * 0.42);
-        panel.style.maxHeight = maxPx + 'px';
-      }
+      applyPanelHeightCap();
     };
 
     // ── MutationObserver: refine cells after every calendar render ────────────
