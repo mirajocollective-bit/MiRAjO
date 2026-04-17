@@ -7285,9 +7285,11 @@
     });
 
     // Auto-select today if nothing is currently selected
+    // On mobile: only click if today has transactions (avoid opening add-transaction modal automatically)
     if (!grid.querySelector('.cal-cell.m-selected')) {
       const todayCell = grid.querySelector('.cal-cell.today');
-      if (todayCell) todayCell.click();
+      const txnCount  = parseInt(todayCell?.dataset.txnCount || '0', 10);
+      if (todayCell && (!window._mDayPanel || txnCount > 0)) todayCell.click();
     }
   }
 
