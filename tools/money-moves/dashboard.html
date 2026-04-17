@@ -1280,8 +1280,8 @@
       #m-home .calendar-section {
         flex: 1 1 auto !important; min-height: 0; overflow: hidden;
       }
-      /* Day panel: fixed strip at bottom of home */
-      #m-day-panel { flex: 0 0 44%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      /* Day panel: auto-height, capped in JS for reliable Android scroll */
+      #m-day-panel { flex: 0 0 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
       /* Cells: hide bar entries, show only count badge + balance */
       #m-home .cal-entry { display: none !important; }
@@ -1314,8 +1314,8 @@
       [title="Jump to today"] { display: none !important; }
       .cal-nav-divider, .cal-nav-year-label { display: none !important; }
 
-      /* Day panel fixed height */
-      #m-day-panel { flex: 0 0 44%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      /* Day panel: auto-height, JS caps to 42% for reliable Android scroll */
+      #m-day-panel { flex: 0 0 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; }
     }
     @media (max-width: 540px) {
       .float-calc { right: 8px; bottom: 70px; width: 232px; }
@@ -7492,6 +7492,15 @@
           '<div class="m-txn-amount ' + barClass + '">' + amt + '</div>' +
         '</div>';
       }).join('');
+
+      // Cap panel height to 42% of home panel so overflow-y scroll works on Android
+      // (percentage max-height on flex items is unreliable in Android WebView)
+      const mHomeEl = document.getElementById('m-home');
+      const panel   = document.getElementById('m-day-panel');
+      if (mHomeEl && panel) {
+        const maxPx = Math.floor(mHomeEl.clientHeight * 0.42);
+        panel.style.maxHeight = maxPx + 'px';
+      }
     };
 
     // ── MutationObserver: refine cells after every calendar render ────────────
