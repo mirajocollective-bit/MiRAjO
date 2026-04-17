@@ -343,6 +343,14 @@
     .footer-bottom a { color: rgba(242,235,217,0.3); text-decoration: underline; }
     .footer-bottom a:hover { color: var(--warm-parchment); }
 
+    /* ═══ FAQ ═══ */
+    .article-faq { margin-top: 64px; }
+    .faq-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--living-green); margin-bottom: 28px; }
+    .faq-item { border-top: 1px solid var(--border-light); padding: 24px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-light); margin-bottom: 0; }
+    .faq-question { font-size: 16px; font-weight: 700; color: var(--deep-forest); margin-bottom: 12px; line-height: 1.4; }
+    .faq-answer { font-size: 16px; color: var(--text-body); line-height: 1.85; }
+
     @media (max-width: 640px) {
       .site-nav { padding: 14px 20px; }
       .nav-logo img { height: 44px; }
@@ -356,6 +364,38 @@
   </style>
   <script src="/analytics.js"></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between internal and external validation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "External validation is when you need something outside yourself — a person, a grade, a sign, a reading — to confirm that you are on the right track. Internal validation is when your own knowing is enough. One keeps you dependent. The other keeps you grounded. You can use external input without being controlled by it. The key is which one gets the final say."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I stop seeking approval from others?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Notice when you reach. When you are about to check what someone thinks before you make a move — pause there. Ask what you actually believe. The habit of reaching out breaks when you practice the discomfort of deciding alone. It gets easier. But only if you do it repeatedly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I know if I am living from external or internal dialogue?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ask yourself this: if everyone in your life disappeared tomorrow, would you still know what to do? If the answer is no — if you would freeze without the feedback, the advice, the signs — you are living externally. Internal dialogue means you have a direction even in silence."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -441,6 +481,23 @@
 
     <p class="last-line">When external is loud, return to silence. When silence feels uncomfortable, stay long enough to find your voice again.</p>
 
+  </div>
+
+  <!-- FAQ -->
+  <div class="article-faq">
+    <div class="faq-eyebrow">Common Questions</div>
+    <div class="faq-item">
+      <p class="faq-question">What is the difference between internal and external validation?</p>
+      <p class="faq-answer">External validation is when you need something outside yourself — a person, a grade, a sign, a reading — to confirm that you are on the right track. Internal validation is when your own knowing is enough. One keeps you dependent. The other keeps you grounded. You can use external input without being controlled by it. The key is which one gets the final say.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">How do I stop seeking approval from others?</p>
+      <p class="faq-answer">Notice when you reach. When you are about to check what someone thinks before you make a move — pause there. Ask what you actually believe. The habit of reaching out breaks when you practice the discomfort of deciding alone. It gets easier. But only if you do it repeatedly.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">How do I know if I am living from external or internal dialogue?</p>
+      <p class="faq-answer">Ask yourself this: if everyone in your life disappeared tomorrow, would you still know what to do? If the answer is no — if you would freeze without the feedback, the advice, the signs — you are living externally. Internal dialogue means you have a direction even in silence.</p>
+    </div>
   </div>
 
   <div class="article-share">

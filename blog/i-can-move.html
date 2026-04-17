@@ -347,6 +347,14 @@
     .footer-bottom a { color: rgba(242,235,217,0.3); text-decoration: underline; }
     .footer-bottom a:hover { color: var(--warm-parchment); }
 
+    /* ═══ FAQ ═══ */
+    .article-faq { margin-top: 64px; }
+    .faq-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--living-green); margin-bottom: 28px; }
+    .faq-item { border-top: 1px solid var(--border-light); padding: 24px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-light); margin-bottom: 0; }
+    .faq-question { font-size: 16px; font-weight: 700; color: var(--deep-forest); margin-bottom: 12px; line-height: 1.4; }
+    .faq-answer { font-size: 16px; color: var(--text-body); line-height: 1.85; }
+
     @media (max-width: 640px) {
       .site-nav { padding: 14px 20px; }
       .nav-logo img { height: 44px; }
@@ -360,6 +368,38 @@
   </style>
   <script src="/analytics.js"></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you keep going after losing someone close to you?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You don't wait until you feel ready. You move because the alternative is staying still forever. Grief doesn't leave — it changes shape. I carry Ricardo every day. The movement isn't about forgetting him. It's about honoring that he never got to keep moving."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you stop letting people's opinions control you?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You find something that hurts more than their rejection. When you've buried your best friend at 21, someone unfollowing you or pulling back access stops having weight. Perspective is built through real loss. The freedom comes when you stop needing their approval to know your own value."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you be angry and grieving at the same time?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. And you don't have to resolve it. I have been angry about Ricardo for 24 years and I am still grieving him. Those two things live in the same space and they are both true. Trying to resolve them is what keeps people stuck. Let them coexist."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -442,6 +482,23 @@
 
   <div class="article-dedication">
     Ricardo M. — you would have been a force. I'm still moving for both of us.
+  </div>
+
+  <!-- FAQ -->
+  <div class="article-faq">
+    <div class="faq-eyebrow">Common Questions</div>
+    <div class="faq-item">
+      <p class="faq-question">How do you keep going after losing someone close to you?</p>
+      <p class="faq-answer">You don't wait until you feel ready. You move because the alternative is staying still forever. Grief doesn't leave — it changes shape. I carry Ricardo every day. The movement isn't about forgetting him. It's about honoring that he never got to keep moving.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">How do you stop letting people's opinions control you?</p>
+      <p class="faq-answer">You find something that hurts more than their rejection. When you've buried your best friend at 21, someone unfollowing you or pulling back access stops having weight. Perspective is built through real loss. The freedom comes when you stop needing their approval to know your own value.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">Can you be angry and grieving at the same time?</p>
+      <p class="faq-answer">Yes. And you don't have to resolve it. I have been angry about Ricardo for 24 years and I am still grieving him. Those two things live in the same space and they are both true. Trying to resolve them is what keeps people stuck. Let them coexist.</p>
+    </div>
   </div>
 
   <!-- Share -->

@@ -206,6 +206,14 @@
       margin-bottom: 0;
     }
 
+    /* ═══ FAQ ═══ */
+    .article-faq { margin-top: 64px; }
+    .faq-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--living-green); margin-bottom: 28px; }
+    .faq-item { border-top: 1px solid var(--border-light); padding: 24px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-light); margin-bottom: 0; }
+    .faq-question { font-size: 16px; font-weight: 700; color: var(--deep-forest); margin-bottom: 12px; line-height: 1.4; }
+    .faq-answer { font-size: 16px; color: var(--text-body); line-height: 1.85; }
+
     .article-share {
       margin-top: 64px;
       padding-top: 32px;
@@ -340,6 +348,38 @@
   </style>
   <script src="/analytics.js"></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a simple grounding exercise for when you feel overwhelmed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Stop and ask four questions. What do you hear right now? What do you smell? What do you feel in your body? What do you see? Not to analyze the answers — just to notice them. That act of noticing pulls your mind out of what's coming and back into what is. The nervous system follows. The urgency softens."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does being present reduce overwhelm?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because overwhelm is almost never about the present moment. It is about the weight of everything you are projecting forward. When the mind races ahead and the body stays behind, everything feels impossible. The present moment is the only place where the next step is visible. You cannot see it from tomorrow."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I stay present when I have too much to do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You don't stay present by ignoring what needs to be done. You stay present by refusing to solve everything at once. One thing at a time is not a productivity tip — it is the only way the brain can actually function without shutting down. Stop. Breathe. Do the next right thing from a grounded place."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -409,6 +449,23 @@
 
     <p class="last-line">The present moment is not asking you to do more. It is asking you to be here.</p>
 
+  </div>
+
+  <!-- FAQ -->
+  <div class="article-faq">
+    <div class="faq-eyebrow">Common Questions</div>
+    <div class="faq-item">
+      <p class="faq-question">What is a simple grounding exercise for when you feel overwhelmed?</p>
+      <p class="faq-answer">Stop and ask four questions. What do you hear right now? What do you smell? What do you feel in your body? What do you see? Not to analyze the answers — just to notice them. That act of noticing pulls your mind out of what's coming and back into what is. The nervous system follows. The urgency softens.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">Why does being present reduce overwhelm?</p>
+      <p class="faq-answer">Because overwhelm is almost never about the present moment. It is about the weight of everything you are projecting forward. When the mind races ahead and the body stays behind, everything feels impossible. The present moment is the only place where the next step is visible. You cannot see it from tomorrow.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">How do I stay present when I have too much to do?</p>
+      <p class="faq-answer">You don't stay present by ignoring what needs to be done. You stay present by refusing to solve everything at once. One thing at a time is not a productivity tip — it is the only way the brain can actually function without shutting down. Stop. Breathe. Do the next right thing from a grounded place.</p>
+    </div>
   </div>
 
   <div class="article-share">

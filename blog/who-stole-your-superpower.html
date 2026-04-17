@@ -337,6 +337,14 @@
     .footer-bottom a { color: rgba(242,235,217,0.3); text-decoration: underline; }
     .footer-bottom a:hover { color: var(--warm-parchment); }
 
+    /* ═══ FAQ ═══ */
+    .article-faq { margin-top: 64px; }
+    .faq-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--living-green); margin-bottom: 28px; }
+    .faq-item { border-top: 1px solid var(--border-light); padding: 24px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-light); margin-bottom: 0; }
+    .faq-question { font-size: 16px; font-weight: 700; color: var(--deep-forest); margin-bottom: 12px; line-height: 1.4; }
+    .faq-answer { font-size: 16px; color: var(--text-body); line-height: 1.85; }
+
     @media (max-width: 640px) {
       .site-nav { padding: 14px 20px; }
       .nav-logo img { height: 44px; }
@@ -350,6 +358,38 @@
   </style>
   <script src="/analytics.js"></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does it mean to have a superpower in personal development?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your superpower is the thing you knew before anyone taught it to you. The instinct. The knowing. The ability to sense what is true before you have evidence. Most people had it as children and gave it away piece by piece to fit in. Reclaiming it starts with remembering the moments you just knew."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you rebuild trust in yourself after being betrayed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You stop asking what you could have done differently and start remembering what you already felt. In almost every betrayal, there was a moment your body knew. You overrode it. The work is not starting over — it is learning to listen the first time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do we suppress our intuition to fit in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because belonging feels safer than being right. At 11 years old I did not want to talk about the mysteries of the universe. I wanted friends. So I talked about boys and makeup and crawled into the box they needed me in. The cost of that performance is your connection to yourself. And it compounds."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -445,6 +485,23 @@
   </div>
 
   <!-- Share -->
+  <!-- FAQ -->
+  <div class="article-faq">
+    <div class="faq-eyebrow">Common Questions</div>
+    <div class="faq-item">
+      <p class="faq-question">What does it mean to have a superpower in personal development?</p>
+      <p class="faq-answer">Your superpower is the thing you knew before anyone taught it to you. The instinct. The knowing. The ability to sense what is true before you have evidence. Most people had it as children and gave it away piece by piece to fit in. Reclaiming it starts with remembering the moments you just knew.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">How do you rebuild trust in yourself after being betrayed?</p>
+      <p class="faq-answer">You stop asking what you could have done differently and start remembering what you already felt. In almost every betrayal, there was a moment your body knew. You overrode it. The work is not starting over — it is learning to listen the first time.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">Why do we suppress our intuition to fit in?</p>
+      <p class="faq-answer">Because belonging feels safer than being right. At 11 years old I did not want to talk about the mysteries of the universe. I wanted friends. So I talked about boys and makeup and crawled into the box they needed me in. The cost of that performance is your connection to yourself. And it compounds.</p>
+    </div>
+  </div>
+
   <div class="article-share">
     <div class="share-label">Share this note</div>
     <div class="share-buttons">

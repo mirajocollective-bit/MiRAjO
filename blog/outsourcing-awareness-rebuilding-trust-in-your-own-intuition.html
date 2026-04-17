@@ -223,6 +223,14 @@
       margin-bottom: 0;
     }
 
+    /* ═══ FAQ ═══ */
+    .article-faq { margin-top: 64px; }
+    .faq-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--living-green); margin-bottom: 28px; }
+    .faq-item { border-top: 1px solid var(--border-light); padding: 24px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-light); margin-bottom: 0; }
+    .faq-question { font-size: 16px; font-weight: 700; color: var(--deep-forest); margin-bottom: 12px; line-height: 1.4; }
+    .faq-answer { font-size: 16px; color: var(--text-body); line-height: 1.85; }
+
     .article-share {
       margin-top: 64px;
       padding-top: 32px;
@@ -357,6 +365,38 @@
   </style>
   <script src="/analytics.js"></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does it mean to outsource your awareness?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It means you have handed your inner knowing to something or someone outside of you. The crystal. The horoscope. The psychic. The reading. None of those things are inherently wrong. They become a problem when they replace your own sense of what is true. When you cannot make a decision without external confirmation, you have outsourced your awareness."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I rebuild trust in my own intuition?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Start noticing again. Not analyzing — noticing. Notice your breathing when you walk into a room. Notice when your body tenses around certain people. Notice when peace shows up without a reason. The muscle of intuition weakens when unused. You rebuild it by paying attention to the small signals before the big ones."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it wrong to use astrology, crystals, or psychics for guidance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Tools are tools. The problem is when the tool becomes the authority. When you cannot move without checking your chart, or you defer your gut feeling to a reading, you are no longer in relationship with your own knowing. Use external tools as conversation partners, not decision-makers. You are still the one who lives with the outcome."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -442,6 +482,23 @@
 
     <p class="last-line">Spiritual growth is not about finding more answers outside of yourself. It is about remembering you already have access to them.</p>
 
+  </div>
+
+  <!-- FAQ -->
+  <div class="article-faq">
+    <div class="faq-eyebrow">Common Questions</div>
+    <div class="faq-item">
+      <p class="faq-question">What does it mean to outsource your awareness?</p>
+      <p class="faq-answer">It means you have handed your inner knowing to something or someone outside of you. The crystal. The horoscope. The psychic. The reading. None of those things are inherently wrong. They become a problem when they replace your own sense of what is true. When you cannot make a decision without external confirmation, you have outsourced your awareness.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">How do I rebuild trust in my own intuition?</p>
+      <p class="faq-answer">Start noticing again. Not analyzing — noticing. Notice your breathing when you walk into a room. Notice when your body tenses around certain people. Notice when peace shows up without a reason. The muscle of intuition weakens when unused. You rebuild it by paying attention to the small signals before the big ones.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">Is it wrong to use astrology, crystals, or psychics for guidance?</p>
+      <p class="faq-answer">No. Tools are tools. The problem is when the tool becomes the authority. When you cannot move without checking your chart, or you defer your gut feeling to a reading, you are no longer in relationship with your own knowing. Use external tools as conversation partners, not decision-makers. You are still the one who lives with the outcome.</p>
+    </div>
   </div>
 
   <div class="article-share">
