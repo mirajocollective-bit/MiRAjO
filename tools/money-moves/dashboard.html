@@ -1285,12 +1285,8 @@
         min-height: 0; overflow: hidden;
         display: flex; flex-direction: column;
       }
-      /* Day panel: always 200px tall, always scrollable */
-      #m-day-panel {
-        overflow-y: scroll !important;
-        -webkit-overflow-scrolling: touch;
-        height: 200px !important;
-      }
+      /* Day panel: fixed 200px row via grid — inner scroll div handles overflow */
+      #m-day-panel { overflow: hidden !important; }
 
       /* Cells: hide bar entries, show only count badge + balance */
       #m-home .cal-entry { display: none !important; }
@@ -2053,7 +2049,8 @@
       gap: 10px;
     }
     #m-day-panel-scroll {
-      flex: 1; overflow-y: scroll; -webkit-overflow-scrolling: touch;
+      flex: 1; min-height: 0;
+      overflow-y: scroll; -webkit-overflow-scrolling: touch;
     }
     #m-day-panel-info { flex: 1; min-width: 0; }
     #m-day-panel-date  { font-size: 13px; font-weight: 700; color: var(--deep-forest); display: block; }
