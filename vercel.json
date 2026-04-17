@@ -28,7 +28,8 @@
   ],
   "rewrites": [
     { "source": "/blog",                    "destination": "/blog.html" },
-    { "source": "/blog/i-can-move",         "destination": "/blog/i-can-move.html" },
+    { "source": "/blog/i-can-move",                  "destination": "/blog/i-can-move.html" },
+    { "source": "/blog/who-stole-your-superpower",   "destination": "/blog/who-stole-your-superpower.html" },
     { "source": "/25daysand25nights", "destination": "/25daysand25nights.html" },
     { "source": "/events",          "destination": "/events.html" },
     { "source": "/philosophy",      "destination": "/philosophy.html" },
