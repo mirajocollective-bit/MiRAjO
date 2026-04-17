@@ -1441,7 +1441,7 @@
     .m-tool-card-chevron { color: var(--neutral); font-size: 20px; flex-shrink: 0; margin-left: 4px; }
 
     /* Tool detail (open state) */
-    #m-tool-detail { display: none; flex-direction: column; flex: 1; min-height: 0; }
+    #m-tool-detail { display: none; flex-direction: column; position: absolute; inset: 0; }
     #m-tool-detail.active { display: flex; }
     #m-tool-back-bar {
       display: flex; align-items: center; gap: 10px;
@@ -2034,7 +2034,6 @@
       overflow-y: auto; background: #fff;
       border-top: 2px solid rgba(15,32,87,0.06);
       -webkit-overflow-scrolling: touch;
-      display: flex; flex-direction: column;
     }
     #m-day-panel-hdr {
       position: sticky; top: 0; z-index: 5;
@@ -2059,9 +2058,9 @@
     }
     #m-day-panel-empty {
       padding: 22px 20px; text-align: center;
-      font-size: 12px; color: var(--neutral); line-height: 1.7; flex: 1;
+      font-size: 12px; color: var(--neutral); line-height: 1.7;
     }
-    #m-day-panel-list { flex: 1; }
+    #m-day-panel-list { display: block; }
     .m-txn-row {
       display: flex; align-items: center; gap: 12px;
       padding: 10px 14px; border-bottom: 1px solid rgba(15,32,87,0.06);
