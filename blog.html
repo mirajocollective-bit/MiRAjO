@@ -346,9 +346,6 @@
       transition: transform 0.2s, box-shadow 0.3s;
     }
     .note-feature:hover { transform: translateY(-4px); box-shadow: 0 16px 56px rgba(18,32,18,0.13); }
-    .note-feature-img { aspect-ratio: 4/3; overflow: hidden; }
-    .note-feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
-    .note-feature:hover .note-feature-img img { transform: scale(1.04); }
     .note-feature-body {
       padding: 48px 44px;
       display: flex;
@@ -391,10 +388,10 @@
     .note-read svg { width: 16px; height: 16px; stroke: currentColor; transition: transform 0.2s; }
     .note-feature:hover .note-read svg, .note-card:hover .note-read svg { transform: translateX(4px); }
 
-    /* Grid cards */
+    /* Grid cards — text only */
     .notes-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
     .note-card {
@@ -406,19 +403,35 @@
       transition: transform 0.2s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
+      border-left: 3px solid transparent;
     }
+    .note-card.cat-self   { border-left-color: var(--cat-personal); }
+    .note-card.cat-faith  { border-left-color: var(--cat-spiritual); }
+    .note-card.cat-build  { border-left-color: var(--cat-business); }
+    .note-card.cat-money  { border-left-color: var(--cat-finance); }
     .note-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(18,32,18,0.11); }
-    .note-card-img { aspect-ratio: 16/9; overflow: hidden; }
-    .note-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
-    .note-card:hover .note-card-img img { transform: scale(1.05); }
-    .note-card-body { padding: 24px 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .note-card-body { padding: 32px 28px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .note-card-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px;
+      color: rgba(18,32,18,0.06);
+      line-height: 1;
+      font-weight: 400;
+      margin-bottom: -8px;
+    }
     .note-card-meta { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted-light); font-weight: 600; display: flex; align-items: center; gap: 8px; }
     .note-card-title {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(16px, 1.5vw, 19px);
+      font-size: clamp(17px, 1.6vw, 21px);
       color: var(--deep-forest);
       font-weight: 400;
-      line-height: 1.35;
+      line-height: 1.3;
+    }
+    .note-card-excerpt {
+      font-size: 13px;
+      color: var(--text-muted-light);
+      line-height: 1.7;
+      font-style: italic;
       flex: 1;
     }
 
@@ -618,8 +631,7 @@
 
       .notes-section { padding: 56px 24px; }
       .note-feature { grid-template-columns: 1fr; }
-      .note-feature-img { aspect-ratio: 16/9; }
-      .note-feature-body { padding: 28px 24px; }
+      .note-feature-body { padding: 28px 24px !important; }
       .notes-grid { grid-template-columns: 1fr; }
 
       .books-section { padding: 64px 24px; }
@@ -637,7 +649,6 @@
       .themes-grid { grid-template-columns: repeat(3, 1fr); }
       .notes-grid { grid-template-columns: repeat(2, 1fr); }
       .note-feature { grid-template-columns: 1fr; }
-      .note-feature-img { aspect-ratio: 16/9; }
     }
   </style>
   <script src="/analytics.js"></script>
@@ -771,33 +782,33 @@
     </div>
 
     <!-- Feature note -->
-    <a href="https://www.mirajoco.org/blog/the-leadership-time-trap-are-you-stuck-in-a-loop" class="note-feature" data-aos="fade-up">
-      <div class="note-feature-img">
-        <img src="img/ExternalvsInternal.jpeg" alt="The Leadership Time Trap" loading="lazy">
-      </div>
-      <div class="note-feature-body">
-        <div class="note-meta">01 &nbsp;·&nbsp; <span class="cat-tag cat-building">On Building</span></div>
-        <div class="note-feature-title">The Leadership Time Trap: Are You Stuck in a Loop?</div>
-        <p class="note-feature-excerpt">Most leaders think they have a time problem. They don't. They have a clarity problem wearing a time problem's clothes.</p>
-        <div class="note-read read-building">
+    <a href="https://www.mirajoco.org/blog/i-can-move" class="note-feature" data-aos="fade-up">
+      <div class="note-feature-body" style="padding:56px 52px;background:var(--warm-parchment);">
+        <div class="note-meta">Most Recent &nbsp;·&nbsp; <span class="cat-tag cat-self">On Self</span></div>
+        <div class="note-feature-title">I Can Move</div>
+        <p class="note-feature-excerpt">I buried my best friend at 21 over an argument. Whatever you're holding against me will never be that serious. I lost him and I still had to move. I can move.</p>
+        <div class="note-read read-self">
           Read the note
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </div>
       </div>
+      <div class="note-feature-body" style="padding:56px 52px;background:#fff;justify-content:flex-end;gap:12px;">
+        <p style="font-family:'Instrument Serif',serif;font-size:clamp(18px,2vw,24px);color:var(--text-muted-light);font-style:italic;line-height:1.6;">"He was the first person who ever saw me in my raw form and didn't flinch."</p>
+        <p style="font-size:13px;color:var(--text-muted-light);letter-spacing:0.5px;">April 16, 2026 &nbsp;·&nbsp; Miranda Johnson</p>
+      </div>
     </a>
 
-    <!-- 4 grid cards -->
+    <!-- 4 grid cards — text only -->
     <div class="notes-grid">
 
-      <a href="https://www.mirajoco.org/blog/3-levels-of-life-can-you-pass-the-test" class="note-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="note-card-img">
-          <img src="img/Superpower.jpg" alt="3 Levels of Life" loading="lazy">
-        </div>
+      <a href="https://www.mirajoco.org/blog/who-stole-your-superpower" class="note-card cat-self" data-aos="fade-up" data-aos-delay="0">
         <div class="note-card-body">
-          <div class="note-card-meta">02 &nbsp;·&nbsp; <span class="cat-tag cat-self">On Self</span></div>
-          <div class="note-card-title">3 Levels of Life: Can You Pass the Test?</div>
+          <div class="note-card-num">02</div>
+          <div class="note-card-meta"><span class="cat-tag cat-self">On Self</span></div>
+          <div class="note-card-title">Who Stole Your Superpower?</div>
+          <p class="note-card-excerpt">"My insides screamed no so loud, but I pushed that feeling way down and tried harder to align with what they were doing."</p>
           <div class="note-read read-self">
             Read
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -807,13 +818,12 @@
         </div>
       </a>
 
-      <a href="https://www.mirajoco.org/blog/what-if-you-didn-t-have-to-suffer" class="note-card" data-aos="fade-up" data-aos-delay="80">
-        <div class="note-card-img">
-          <img src="img/blog.jpeg" alt="What If You Didn't Have to Suffer" loading="lazy">
-        </div>
+      <a href="https://www.mirajoco.org/blog/internal-vs-external-dialogue" class="note-card cat-self" data-aos="fade-up" data-aos-delay="80">
         <div class="note-card-body">
-          <div class="note-card-meta">03 &nbsp;·&nbsp; <span class="cat-tag cat-self">On Self</span></div>
-          <div class="note-card-title">What If You Didn't Have to Suffer?</div>
+          <div class="note-card-num">03</div>
+          <div class="note-card-meta"><span class="cat-tag cat-self">On Self</span></div>
+          <div class="note-card-title">Internal vs External Dialogue: Can You Trust Yourself?</div>
+          <p class="note-card-excerpt">"External can advise. Internal can decide. External can cheer. Internal can carry."</p>
           <div class="note-read read-self">
             Read
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -823,13 +833,12 @@
         </div>
       </a>
 
-      <a href="https://www.mirajoco.org/blog/practice-being-in-the-present-moment" class="note-card" data-aos="fade-up" data-aos-delay="160">
-        <div class="note-card-img">
-          <img src="img/blo5.png" alt="Practice Being in the Present Moment" loading="lazy">
-        </div>
+      <a href="https://www.mirajoco.org/blog/practice-being-in-the-present-moment" class="note-card cat-faith" data-aos="fade-up" data-aos-delay="160">
         <div class="note-card-body">
-          <div class="note-card-meta">04 &nbsp;·&nbsp; <span class="cat-tag cat-faith">On Faith</span></div>
+          <div class="note-card-num">04</div>
+          <div class="note-card-meta"><span class="cat-tag cat-faith">On Self</span></div>
           <div class="note-card-title">Practice Being in the Present Moment</div>
+          <p class="note-card-excerpt">"You do not have to be busy to be overwhelmed. You simply have to feel out of your body."</p>
           <div class="note-read read-faith">
             Read
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -839,14 +848,13 @@
         </div>
       </a>
 
-      <a href="https://www.mirajoco.org/blog/outsourcing-awareness-rebuilding-trust-in-your-own-intuition" class="note-card" data-aos="fade-up" data-aos-delay="240">
-        <div class="note-card-img">
-          <img src="img/blog2.png" alt="Outsourcing Awareness" loading="lazy">
-        </div>
+      <a href="https://www.mirajoco.org/blog/outsourcing-awareness-rebuilding-trust-in-your-own-intuition" class="note-card cat-self" data-aos="fade-up" data-aos-delay="240">
         <div class="note-card-body">
-          <div class="note-card-meta">05 &nbsp;·&nbsp; <span class="cat-tag cat-building">On Building</span></div>
+          <div class="note-card-num">05</div>
+          <div class="note-card-meta"><span class="cat-tag cat-self">On Self</span></div>
           <div class="note-card-title">Outsourcing Awareness: Rebuilding Trust in Your Own Intuition</div>
-          <div class="note-read read-building">
+          <p class="note-card-excerpt">"You are not lost. You just outsourced your awareness."</p>
+          <div class="note-read read-self">
             Read
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
