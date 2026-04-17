@@ -7428,9 +7428,11 @@
     toolDetail.appendChild(toolContent);
     mTools.appendChild(toolDetail);
 
-    // Move tool views into the detail content area (away from calendar-section)
+    // Move tool views into the detail content area
+    // NOTE: calSection was already moved to mHome (detached from document),
+    // so we must search mHome — document.getElementById won't find them.
     ['mortgage-view','dti-view','debt-view','forecast-view'].forEach(id => {
-      const el = document.getElementById(id);
+      const el = mHome.querySelector('#' + id) || document.getElementById(id);
       if (el) toolContent.appendChild(el);
     });
 
