@@ -430,18 +430,87 @@
     }
     .new-debt-title { font-size: 14px; font-weight: 700; color: var(--expense-color); margin-bottom: 14px; }
 
-    /* ── Responsive ── */
-    @media (max-width: 800px) {
-      .layout { grid-template-columns: 1fr; }
-      .settings-nav { position: static; display: flex; gap: 6px; flex-wrap: wrap; }
+    /* ── Responsive: Mobile (Android-first) ── */
+    @media (max-width: 768px) {
+      /* Nav — slim mobile header */
+      .nav { height: 52px; padding: 0 16px; }
+      .nav-logo { height: 28px; }
+      .nav-product { display: none; }
+      .nav-back { font-size: 14px; font-weight: 600; }
+
+      /* Layout — single column, no outer padding (sections go edge-to-edge) */
+      .layout {
+        grid-template-columns: 1fr;
+        padding: 0 0 48px;
+        gap: 0;
+        max-width: 100%;
+      }
+
+      /* Settings nav — horizontal scrollable pill tabs */
+      .settings-nav {
+        position: sticky; top: 52px; z-index: 50;
+        display: flex; flex-direction: row; flex-wrap: nowrap;
+        overflow-x: auto; scrollbar-width: none;
+        -webkit-overflow-scrolling: touch; touch-action: pan-x;
+        background: #fff; border-bottom: 1px solid var(--border);
+        padding: 10px 12px; gap: 8px;
+      }
+      .settings-nav::-webkit-scrollbar { display: none; }
       .settings-nav-title { display: none; }
-      .mode-grid { grid-template-columns: 1fr 1fr; }
-      .account-grid, .new-goal-fields { grid-template-columns: 1fr; }
+      .settings-nav a {
+        flex-shrink: 0; white-space: nowrap;
+        padding: 7px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
+        border: 1px solid var(--border); margin-bottom: 0;
+        background: var(--soft-white);
+      }
+      .settings-nav a:hover { background: rgba(37,107,66,0.07); }
+      .settings-nav a.active {
+        background: var(--living-green); color: #fff;
+        border-color: var(--living-green);
+      }
+
+      /* Sections — edge-to-edge cards with reduced padding */
+      .settings-sections { gap: 0; }
+      .section {
+        border-radius: 0; border-left: none; border-right: none;
+        border-top: none; margin-bottom: 8px;
+        box-shadow: none;
+      }
+      .section-header { padding: 16px 16px 12px; }
+      .section-title { font-size: 17px; }
+      .section-body { padding: 16px; }
+
+      /* Collapse all multi-column grids */
+      .mode-grid          { grid-template-columns: 1fr 1fr; }
+      .account-grid       { grid-template-columns: 1fr; }
+      .goal-fields        { grid-template-columns: 1fr; }
+      .new-goal-fields    { grid-template-columns: 1fr; }
+      .debt-fields        { grid-template-columns: 1fr 1fr; }
+
+      /* Invite row — stack on mobile */
+      .invite-row { flex-direction: column; }
+      .invite-btn { width: 100%; }
+
+      /* Add category row — wrap */
+      .add-cat-row { flex-wrap: wrap; }
+      .add-cat-input { flex: 1 1 100%; }
+
+      /* Threshold row — allow wrap */
+      .threshold-row { flex-wrap: wrap; gap: 12px; }
+
+      /* Bigger touch targets for inputs */
+      .acct-input, .acct-select,
+      .form-input, .form-select,
+      .add-cat-input, .add-cat-select,
+      .invite-input { font-size: 16px; padding: 13px 14px; }
+
+      /* Toast clears the bottom */
+      .toast { bottom: 16px; max-width: calc(100% - 32px); white-space: normal; text-align: center; }
     }
-    @media (max-width: 500px) {
-      .layout { padding: 16px 16px 60px; gap: 16px; }
-      .mode-grid { grid-template-columns: 1fr; }
-      .goal-fields { grid-template-columns: 1fr; }
+
+    @media (max-width: 400px) {
+      .mode-grid  { grid-template-columns: 1fr; }
+      .debt-fields { grid-template-columns: 1fr; }
     }
   </style>
   <script src="/analytics.js"></script>
