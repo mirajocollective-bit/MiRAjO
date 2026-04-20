@@ -908,8 +908,8 @@
         <div class="gauge-indicator" id="gaugeIndicator"></div>
       </div>
       <div class="gauge-labels">
-        <span>Disconnected</span>
-        <span>Drifting</span>
+        <span>Ready to Reset</span>
+        <span>Getting Clearer</span>
         <span>Connected</span>
       </div>
     </div>
@@ -1135,7 +1135,7 @@
     scoreEl.className = 'result-score-num ' + result;
 
     const badge = document.getElementById('resultBadge');
-    const labels = { red: 'Disconnected', yellow: 'Drifting', green: 'Connected' };
+    const labels = { red: 'Ready to Reset', yellow: 'Getting Clearer', green: 'In Your Stride' };
     badge.textContent = labels[result];
     badge.className = 'result-badge ' + result;
 
@@ -1146,22 +1146,22 @@
 
     const copies = {
       red: {
-        title: 'Disconnected. You\'ve been running on empty.',
-        body: 'This feeling has a name. It\'s not a personality flaw and it\'s not permanent, but it is real, and it\'s been real for a while. You\'re not lost. You just haven\'t had the structure to find your way back to yourself.',
-        ctaH: '25 Days and 25 Nights was built for exactly this.',
-        ctaB: 'One day at a time, one practice at a time, reconnecting to the life that\'s actually yours. Not a quick fix. A real one.'
+        title: 'Ready to reset. You have more than you think.',
+        body: 'Something feels off and you know it. That awareness is not weakness. It is the beginning. You have not lost anything. You just need the structure to reconnect with what is already yours.',
+        ctaH: '25 Days and 25 Nights was built for this moment.',
+        ctaB: 'One day at a time, one practice at a time. Not a quick fix. A real one. The tools are already in you. This is how you learn to use them.'
       },
       yellow: {
-        title: 'Drifting. You know something feels off.',
-        body: 'You have moments of clarity. You know what you want in theory. But the gap between where you are and where you want to be feels wider than it should. That gap doesn\'t close by itself.',
-        ctaH: 'Stop drifting. Start moving with intention.',
-        ctaB: '25 Days and 25 Nights gives you the daily structure to close the gap between who you are and who you know you\'re supposed to be.'
+        title: 'Getting clearer. You already know what needs attention.',
+        body: 'You have moments of real clarity. You know where you want to go. The gap between here and there is not about ability. It is about consistency and structure. You already have what it takes.',
+        ctaH: '25 Days and 25 Nights gives you the daily structure.',
+        ctaB: 'Twenty-five days of intentional practice to close the gap between who you are and who you know yourself to be.'
       },
       green: {
-        title: 'Connected. And ready to go deeper.',
-        body: 'You\'re self-aware, intentional, and moving in the right direction. You\'re not stuck. You\'re ready. The question is whether you\'re building with the same intentionality you live with.',
-        ctaH: 'Stop settling for good when great is available.',
-        ctaB: '25 Days and 25 Nights will push you further. This isn\'t for people who are lost. It\'s for people who are ready to stop coasting and start compounding.'
+        title: 'In your stride. Build from here.',
+        body: 'You are self-aware, intentional, and moving in the right direction. This is not the finish line. This is the foundation. The question is what you build on top of it.',
+        ctaH: '25 Days and 25 Nights will take you further.',
+        ctaB: 'This is for people who are ready. You already have the momentum. Let us show you how to compound it.'
       }
     };
 
@@ -1239,7 +1239,7 @@
 <section style="background:#122012;padding:64px 40px;text-align:center;">
   <div style="max-width:680px;margin:0 auto;">
     <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:#6DC48A;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:24px;">The MiRAjO Mission</div>
-    <blockquote style="font-family:'Instrument Serif',serif;font-size:clamp(18px,2.2vw,24px);color:#F2EBD9;line-height:1.85;font-weight:400;font-style:italic;margin:0 0 32px;border:none;padding:0;">Peace — turning chaos into peace. Bringing this home. No more feeling like you don't have the tools you need. You do have them. We are not hiding tools from you — we are giving you everything you need, because you have all you need in your hands. You just need someone to show you how to use them. That's why the seed matters. Planting brings the harvest.</blockquote>
+    <blockquote style="font-family:'Instrument Serif',serif;font-size:clamp(18px,2.2vw,24px);color:#F2EBD9;line-height:1.85;font-weight:400;font-style:italic;margin:0 0 32px;border:none;padding:0;">Peace. Turning chaos into peace. Bringing this home. No more feeling like you don't have the tools you need. You do have them. We are not hiding tools from you. We are giving you everything you need, because you have all you need in your hands. You just need someone to show you how to use them. That is why the seed matters. Planting brings the harvest.</blockquote>
     <div style="font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#6DC48A;font-family:'Plus Jakarta Sans',sans-serif;">You already have everything you need. We'll show you how to use it.</div>
   </div>
 </section>

@@ -1,4 +1,4 @@
-// api/newsletter-send.js — send a broadcast to the full Resend audience
+// api/newsletter-send.js — create and send/schedule/draft a Resend broadcast
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -11,13 +11,12 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Admin auth
   const auth = (req.headers['authorization'] || '').replace('Bearer ', '').trim();
   if (auth !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const { subject, html, name } = req.body || {};
+  const { subject, html, name, scheduledAt, draftOnly } = req.body || {};
   if (!subject || !html) return res.status(400).json({ error: 'subject and html are required' });
 
   try {
@@ -30,9 +29,22 @@ export default async function handler(req, res) {
       name: name || subject,
     });
 
-    await resend.broadcasts.send(broadcast.data.id);
+    // Draft only — create without sending
+    if (draftOnly) {
+      return res.status(200).json({ ok: true, id: broadcast.data.id, status: 'draft' });
+    }
 
-    return res.status(200).json({ ok: true, id: broadcast.data.id });
+    // Send now or scheduled
+    const sendOptions = scheduledAt ? { scheduledAt } : {};
+    await resend.broadcasts.send(broadcast.data.id, sendOptions);
+
+    return res.status(200).json({
+      ok: true,
+      id: broadcast.data.id,
+      status: scheduledAt ? 'scheduled' : 'sent',
+      scheduledAt: scheduledAt || null,
+    });
+
   } catch (err) {
     console.error('[newsletter-send]', err.message);
     return res.status(500).json({ error: err.message });

@@ -14,43 +14,35 @@ export default async function handler(req, res) {
 
   const key = process.env.RESEND_API_KEY;
   const audienceId = process.env.RESEND_AUDIENCE_ID;
+  // Contacts imported via CSV don't appear in the contacts API — store base count as env var
+  const baseCount = parseInt(process.env.NEWSLETTER_BASE_COUNT || '0', 10);
   const headers = { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' };
 
   try {
-    // Paginate through all contacts to get accurate count
-    let total = 0;
-    let active = 0;
-    let cursor = null;
-    let hasMore = true;
+    // Count contacts added via API (new opt-ins from website forms)
+    const contactsRes = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, { headers });
+    const contactsData = await contactsRes.json();
+    const apiContacts = Array.isArray(contactsData.data) ? contactsData.data : [];
+    const apiActive = apiContacts.filter(c => c.unsubscribed === false).length;
 
-    while (hasMore) {
-      const url = cursor
-        ? `https://api.resend.com/audiences/${audienceId}/contacts?cursor=${cursor}`
-        : `https://api.resend.com/audiences/${audienceId}/contacts`;
-
-      const r = await fetch(url, { headers });
-      const data = await r.json();
-
-      const contacts = data.data || [];
-      total += contacts.length;
-      active += contacts.filter(c => !c.unsubscribed).length;
-      hasMore = data.has_more || false;
-      cursor = contacts.length > 0 ? contacts[contacts.length - 1].id : null;
-      if (!hasMore) break;
-    }
+    // Total = bulk-imported base + new API opt-ins
+    const total = baseCount + apiContacts.length;
+    const subscribers = baseCount + apiActive;
 
     // Get recent broadcasts
     const broadcastsRes = await fetch('https://api.resend.com/broadcasts', { headers });
     const broadcastsData = await broadcastsRes.json();
-    const broadcasts = (broadcastsData.data || []).slice(0, 10).map(b => ({
-      id: b.id,
-      name: b.name,
-      subject: b.subject,
-      status: b.status,
-      created_at: b.created_at,
-    }));
+    const broadcasts = broadcastsRes.ok
+      ? (broadcastsData.data || []).slice(0, 10).map(b => ({
+          id: b.id,
+          name: b.name,
+          subject: b.subject,
+          status: b.status,
+          created_at: b.created_at,
+        }))
+      : [];
 
-    return res.status(200).json({ subscribers: active, total, broadcasts });
+    return res.status(200).json({ subscribers, total, broadcasts });
 
   } catch (err) {
     console.error('[newsletter-stats]', err.message);
