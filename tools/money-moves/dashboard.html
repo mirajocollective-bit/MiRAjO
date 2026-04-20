@@ -1275,11 +1275,11 @@
       #m-home .summary-amount.expense { color: #FF6B5E !important; }
 
       /* ── Day-detail panel layout ────────────────────────────── */
-      /* CSS Grid: 3 rows — summary (auto) | calendar (fills space) | panel (200px fixed) */
+      /* CSS Grid: 3 rows — summary (auto) | calendar (fills space) | panel (230px fixed) */
       /* Grid enforces row sizes explicitly — no flex fighting on Android WebView */
       #m-home {
         display: grid !important;
-        grid-template-rows: auto 1fr 200px;
+        grid-template-rows: auto 1fr 230px;
         overflow: hidden !important;
       }
       #m-home .calendar-section {
@@ -1362,7 +1362,7 @@
     #m-app {
       display: none; /* shown only on mobile via JS — set to block by initMobileApp */
       position: fixed;
-      top: 56px; bottom: 64px; left: 0; right: 0;
+      top: 56px; bottom: max(64px, calc(env(safe-area-inset-bottom, 0px) + 56px)); left: 0; right: 0;
       overflow: hidden; z-index: 200;
     }
     .m-panel {
