@@ -1437,62 +1437,212 @@
 
 <!-- ═══ THE SUITE ═══ -->
 <style>
-  .areas-section { background: #fff; padding: 80px 40px; }
-  .areas-inner { max-width: 1100px; margin: 0 auto; }
-  .areas-header { text-align: center; margin-bottom: 48px; }
+  .areas-section { background: #fff; padding: 80px 0; overflow: hidden; }
+  .areas-header { text-align: center; margin-bottom: 48px; padding: 0 40px; }
   .areas-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--living-green); font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 14px; }
   .areas-headline { font-family: 'Instrument Serif', serif; font-size: clamp(26px, 3vw, 38px); color: var(--deep-forest); font-weight: 400; }
-  .areas-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
-  .area-card {
-    display: flex; flex-direction: column;
-    background: var(--soft-white); border: 1px solid var(--border-light);
-    border-radius: 16px; padding: 28px 20px;
-    text-decoration: none; color: inherit;
-    transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+
+  /* Slider */
+  .areas-slider-wrap { position: relative; }
+  .areas-track-outer { overflow: hidden; padding: 12px 0 28px; }
+  .areas-track {
+    display: flex;
+    gap: 20px;
+    padding: 0 40px;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
   }
-  .area-card:hover { box-shadow: 0 8px 32px rgba(18,32,18,0.1); border-color: var(--living-green); transform: translateY(-3px); }
-  .area-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--living-green); font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 10px; }
-  .area-title { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--deep-forest); line-height: 1.45; flex: 1; margin-bottom: 20px; }
-  .area-arrow { font-size: 16px; color: var(--living-green); font-weight: 700; }
-  @media (max-width: 900px) { .areas-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 600px) { .areas-section { padding: 56px 20px; } .areas-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .area-card { padding: 20px 16px; } .area-title { font-size: 16px; } }
-  @media (max-width: 380px) { .areas-grid { grid-template-columns: 1fr; } }
+
+  /* Cards */
+  .area-card {
+    flex: 0 0 calc(20% - 16px);
+    min-width: 220px;
+    display: flex; flex-direction: column;
+    border-radius: 20px; padding: 32px 24px 28px;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .area-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0.06);
+    opacity: 0;
+    transition: opacity 0.25s;
+    border-radius: 20px;
+  }
+  .area-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.22); }
+  .area-card:hover::before { opacity: 1; }
+
+  /* Card color variants */
+  .area-card-1 { background: #122012; }
+  .area-card-2 { background: #1E4226; }
+  .area-card-3 { background: #256B42; }
+  .area-card-4 { background: #C4A245; }
+  .area-card-5 { background: #6DC48A; }
+
+  .area-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;
+    margin-bottom: 16px;
+  }
+  .area-card-1 .area-label,
+  .area-card-2 .area-label,
+  .area-card-3 .area-label { color: #6DC48A; }
+  .area-card-4 .area-label,
+  .area-card-5 .area-label { color: #122012; }
+
+  .area-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px; line-height: 1.45;
+    flex: 1; margin-bottom: 28px;
+  }
+  .area-card-1 .area-title,
+  .area-card-2 .area-title,
+  .area-card-3 .area-title { color: #F2EBD9; }
+  .area-card-4 .area-title,
+  .area-card-5 .area-title { color: #122012; }
+
+  .area-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    font-size: 16px; font-weight: 700;
+    transition: transform 0.2s;
+  }
+  .area-card:hover .area-arrow { transform: translateX(4px); }
+  .area-card-1 .area-arrow,
+  .area-card-2 .area-arrow,
+  .area-card-3 .area-arrow { background: rgba(255,255,255,0.1); color: #F2EBD9; }
+  .area-card-4 .area-arrow,
+  .area-card-5 .area-arrow { background: rgba(18,32,18,0.12); color: #122012; }
+
+  /* Dots */
+  .areas-dots {
+    display: flex; justify-content: center; gap: 8px;
+    margin-top: 4px;
+  }
+  .areas-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #D0CDCA; border: none; cursor: pointer;
+    padding: 0; transition: background 0.2s, transform 0.2s;
+  }
+  .areas-dot.active { background: var(--living-green); transform: scale(1.3); }
+
+  @media (max-width: 900px) {
+    .area-card { flex: 0 0 calc(33.33% - 14px); min-width: 200px; }
+  }
+  @media (max-width: 600px) {
+    .areas-section { padding: 56px 0; }
+    .areas-header { padding: 0 24px; }
+    .areas-track { padding: 0 24px; gap: 14px; }
+    .area-card { flex: 0 0 calc(80vw); min-width: 0; }
+  }
 </style>
-<section class="areas-section" id="suite" data-aos="fade-up">
-  <div class="areas-inner">
-    <div class="areas-header">
-      <div class="areas-eyebrow">The MiRAjO Suite</div>
-      <h2 class="areas-headline">Which area is calling you?</h2>
+<section class="areas-section" id="suite">
+  <div class="areas-header" data-aos="fade-up">
+    <div class="areas-eyebrow">The MiRAjO Suite</div>
+    <h2 class="areas-headline">Which area is calling you?</h2>
+  </div>
+  <div class="areas-slider-wrap" data-aos="fade-up" data-aos-delay="100">
+    <div class="areas-track-outer">
+      <div class="areas-track" id="areasTrack">
+        <a href="https://drivamor.com" target="_blank" rel="noopener" class="area-card area-card-1">
+          <div class="area-label">Know Yourself</div>
+          <div class="area-title">Who are you when no one's watching?</div>
+          <div class="area-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mirajoco.org/25daysand25nights" class="area-card area-card-2">
+          <div class="area-label">Grow Yourself</div>
+          <div class="area-title">You've started over before. This time you finish.</div>
+          <div class="area-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mirajoco.org/couplesinentrepreneurship" class="area-card area-card-3">
+          <div class="area-label">Build Together</div>
+          <div class="area-title">Growing the business. Straining the relationship.</div>
+          <div class="area-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mirajoco.org/tools/money-moves" class="area-card area-card-4">
+          <div class="area-label">Own Your Money</div>
+          <div class="area-title">Stop chasing money. Make a plan for it.</div>
+          <div class="area-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mirajoco.org/coaching" class="area-card area-card-5">
+          <div class="area-label">Go Further</div>
+          <div class="area-title">You know what to do. You need someone to hold you to it.</div>
+          <div class="area-arrow">&rarr;</div>
+        </a>
+      </div>
     </div>
-    <div class="areas-grid">
-      <a href="https://drivamor.com" target="_blank" rel="noopener" class="area-card">
-        <div class="area-label">Know Yourself</div>
-        <div class="area-title">Who are you when no one's watching?</div>
-        <div class="area-arrow">&rarr;</div>
-      </a>
-      <a href="https://www.mirajoco.org/25daysand25nights" class="area-card">
-        <div class="area-label">Grow Yourself</div>
-        <div class="area-title">You've started over before. This time you finish.</div>
-        <div class="area-arrow">&rarr;</div>
-      </a>
-      <a href="https://www.mirajoco.org/couplesinentrepreneurship" class="area-card">
-        <div class="area-label">Build Together</div>
-        <div class="area-title">Growing the business. Straining the relationship.</div>
-        <div class="area-arrow">&rarr;</div>
-      </a>
-      <a href="https://www.mirajoco.org/tools/money-moves" class="area-card">
-        <div class="area-label">Own Your Money</div>
-        <div class="area-title">Stop chasing money. Make a plan for it.</div>
-        <div class="area-arrow">&rarr;</div>
-      </a>
-      <a href="https://www.mirajoco.org/coaching" class="area-card">
-        <div class="area-label">Go Further</div>
-        <div class="area-title">You know what to do. You need someone to hold you to it.</div>
-        <div class="area-arrow">&rarr;</div>
-      </a>
+    <div class="areas-dots" id="areasDots">
+      <button class="areas-dot active" onclick="areaGoTo(0)"></button>
+      <button class="areas-dot" onclick="areaGoTo(1)"></button>
+      <button class="areas-dot" onclick="areaGoTo(2)"></button>
+      <button class="areas-dot" onclick="areaGoTo(3)"></button>
+      <button class="areas-dot" onclick="areaGoTo(4)"></button>
     </div>
   </div>
 </section>
+<script>
+(function() {
+  var track = document.getElementById('areasTrack');
+  var dots = document.querySelectorAll('.areas-dot');
+  var current = 0;
+  var total = 5;
+  var autoTimer;
+
+  function getVisible() {
+    var w = window.innerWidth;
+    if (w >= 900) return 3;
+    if (w >= 600) return 2;
+    return 1;
+  }
+
+  function goTo(idx) {
+    var visible = getVisible();
+    var max = total - visible;
+    idx = Math.max(0, Math.min(idx, max));
+    current = idx;
+    var cards = track.querySelectorAll('.area-card');
+    if (!cards.length) return;
+    var cardW = cards[0].offsetWidth + 20;
+    track.style.transform = 'translateX(-' + (idx * cardW) + 'px)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  }
+
+  function next() {
+    var visible = getVisible();
+    var max = total - visible;
+    goTo(current >= max ? 0 : current + 1);
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(next, 3200);
+  }
+
+  function stopAuto() {
+    clearInterval(autoTimer);
+  }
+
+  window.areaGoTo = function(idx) { stopAuto(); goTo(idx); startAuto(); };
+
+  /* Touch swipe */
+  var startX = 0;
+  track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; stopAuto(); }, { passive: true });
+  track.addEventListener('touchend', function(e) {
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? next() : goTo(current - 1);
+    startAuto();
+  }, { passive: true });
+
+  /* Pause on hover */
+  track.parentElement.addEventListener('mouseenter', stopAuto);
+  track.parentElement.addEventListener('mouseleave', startAuto);
+
+  startAuto();
+  window.addEventListener('resize', function() { goTo(current); });
+})();
+</script>
 
 <!-- ═══ FROM MIRANDA ═══ -->
 <section class="miranda-section">
