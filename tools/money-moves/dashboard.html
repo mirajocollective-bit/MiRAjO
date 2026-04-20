@@ -1309,9 +1309,9 @@
       .nav-xp-wrap { display: none !important; }
 
       /* Compress calendar header rows to save vertical space */
-      #m-home .cal-accounts-row  { padding: 3px 8px; }
-      #m-home .cal-header { padding: 4px 10px !important; }
-      #m-home .cal-days-header { padding: 4px 8px 3px; }
+      #m-home .cal-accounts-row  { padding: 3px 8px; flex-shrink: 0; }
+      #m-home .cal-header { padding: 4px 10px !important; flex-shrink: 0; }
+      #m-home .cal-days-header { padding: 4px 8px 3px; flex-shrink: 0; }
       #m-home .cal-day-name { font-size: 9px; padding: 0; }
       #m-home .cal-month { font-size: 16px; }
 
@@ -1382,7 +1382,7 @@
       flex: 1; border-radius: 0; box-shadow: none; border: none; min-height: 0;
       display: flex; flex-direction: column; overflow: hidden;
     }
-    #m-home .cal-grid-outer { flex: 1; overflow-y: auto; touch-action: pan-y; overscroll-behavior: contain; }
+    #m-home .cal-grid-outer { flex: 1; min-height: 0; overflow-y: auto; touch-action: pan-y; overscroll-behavior: contain; }
 
     /* Budget panel */
     #m-budget { background: #f0f4f0; padding: 12px; gap: 12px; }
