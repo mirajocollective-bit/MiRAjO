@@ -780,7 +780,7 @@
     /* ── Add Transaction Modal ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(15,32,87,0.5); z-index: 200;
+      background: rgba(15,32,87,0.5); z-index: 400;
       align-items: center; justify-content: center; padding: 24px;
     }
     .modal-overlay.open { display: flex; }
@@ -1158,7 +1158,8 @@
         padding-bottom: max(8px, env(safe-area-inset-bottom, 8px)); height: auto; min-height: 64px; z-index: 300; }
       /* Forms + modals */
       .form-row { grid-template-columns: 1fr; }
-      .modal { padding: 24px 20px; border-radius: 20px; }
+      .modal { padding: 24px 20px; border-radius: 20px; max-height: calc(100dvh - 140px); }
+      .modal-overlay { padding: 16px; }
       /* Float calc above nav */
       .float-calc { bottom: 76px; right: 12px; width: 240px; }
       /* Calendar inside home panel fills the panel */
