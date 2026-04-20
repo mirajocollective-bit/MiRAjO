@@ -1458,64 +1458,65 @@
     flex: 0 0 calc(20% - 16px);
     min-width: 220px;
     display: flex; flex-direction: column;
-    border-radius: 20px; padding: 32px 24px 28px;
-    text-decoration: none;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    position: relative;
+    border-radius: 16px; padding: 0;
+    text-decoration: none; color: #122012;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(18,32,18,0.07);
+    border: 2px solid transparent;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     overflow: hidden;
   }
-  .area-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: rgba(255,255,255,0.06);
-    opacity: 0;
-    transition: opacity 0.25s;
-    border-radius: 20px;
-  }
-  .area-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.22); }
-  .area-card:hover::before { opacity: 1; }
+  .area-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.14); }
 
-  /* Card color variants */
-  .area-card-1 { background: #122012; }
-  .area-card-2 { background: #1E4226; }
-  .area-card-3 { background: #256B42; }
-  .area-card-4 { background: #C4A245; }
-  .area-card-5 { background: #6DC48A; }
+  /* Colored top bar */
+  .area-card-top {
+    height: 6px; width: 100%;
+    flex-shrink: 0;
+  }
+  .area-card-1 .area-card-top { background: #B82038; }
+  .area-card-2 .area-card-top { background: #256B42; }
+  .area-card-3 .area-card-top { background: #E8547A; }
+  .area-card-4 .area-card-top { background: #2563EB; }
+  .area-card-5 .area-card-top { background: #C4724A; }
+
+  .area-card:hover.area-card-1 { border-color: #B82038; }
+  .area-card:hover.area-card-2 { border-color: #256B42; }
+  .area-card:hover.area-card-3 { border-color: #E8547A; }
+  .area-card:hover.area-card-4 { border-color: #2563EB; }
+  .area-card:hover.area-card-5 { border-color: #C4724A; }
+
+  .area-card-body { padding: 24px 22px 20px; display: flex; flex-direction: column; flex: 1; }
 
   .area-label {
     font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
     text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
-  .area-card-1 .area-label,
-  .area-card-2 .area-label,
-  .area-card-3 .area-label { color: #6DC48A; }
-  .area-card-4 .area-label,
-  .area-card-5 .area-label { color: #122012; }
+  .area-card-1 .area-label { color: #B82038; }
+  .area-card-2 .area-label { color: #256B42; }
+  .area-card-3 .area-label { color: #E8547A; }
+  .area-card-4 .area-label { color: #2563EB; }
+  .area-card-5 .area-label { color: #C4724A; }
 
   .area-title {
     font-family: 'Instrument Serif', serif;
-    font-size: 20px; line-height: 1.45;
-    flex: 1; margin-bottom: 28px;
+    font-size: 19px; line-height: 1.45; color: #122012;
+    flex: 1; margin-bottom: 24px;
   }
-  .area-card-1 .area-title,
-  .area-card-2 .area-title,
-  .area-card-3 .area-title { color: #F2EBD9; }
-  .area-card-4 .area-title,
-  .area-card-5 .area-title { color: #122012; }
 
   .area-arrow {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px; border-radius: 50%;
-    font-size: 16px; font-weight: 700;
+    width: 34px; height: 34px; border-radius: 50%;
+    font-size: 15px; font-weight: 700; color: #fff;
     transition: transform 0.2s;
+    flex-shrink: 0;
   }
   .area-card:hover .area-arrow { transform: translateX(4px); }
-  .area-card-1 .area-arrow,
-  .area-card-2 .area-arrow,
-  .area-card-3 .area-arrow { background: rgba(255,255,255,0.1); color: #F2EBD9; }
-  .area-card-4 .area-arrow,
-  .area-card-5 .area-arrow { background: rgba(18,32,18,0.12); color: #122012; }
+  .area-card-1 .area-arrow { background: #B82038; }
+  .area-card-2 .area-arrow { background: #256B42; }
+  .area-card-3 .area-arrow { background: #E8547A; }
+  .area-card-4 .area-arrow { background: #2563EB; }
+  .area-card-5 .area-arrow { background: #C4724A; }
 
   /* Dots */
   .areas-dots {
@@ -1548,29 +1549,44 @@
     <div class="areas-track-outer">
       <div class="areas-track" id="areasTrack">
         <a href="https://drivamor.com" target="_blank" rel="noopener" class="area-card area-card-1">
-          <div class="area-label">Know Yourself</div>
-          <div class="area-title">Who are you when no one's watching?</div>
-          <div class="area-arrow">&rarr;</div>
+          <div class="area-card-top"></div>
+          <div class="area-card-body">
+            <div class="area-label">Know Yourself</div>
+            <div class="area-title">Who are you when no one's watching?</div>
+            <div class="area-arrow">&rarr;</div>
+          </div>
         </a>
         <a href="https://www.mirajoco.org/25daysand25nights" class="area-card area-card-2">
-          <div class="area-label">Grow Yourself</div>
-          <div class="area-title">You've started over before. This time you finish.</div>
-          <div class="area-arrow">&rarr;</div>
+          <div class="area-card-top"></div>
+          <div class="area-card-body">
+            <div class="area-label">Grow Yourself</div>
+            <div class="area-title">You've started over before. This time you finish.</div>
+            <div class="area-arrow">&rarr;</div>
+          </div>
         </a>
         <a href="https://www.mirajoco.org/couplesinentrepreneurship" class="area-card area-card-3">
-          <div class="area-label">Build Together</div>
-          <div class="area-title">Growing the business. Straining the relationship.</div>
-          <div class="area-arrow">&rarr;</div>
+          <div class="area-card-top"></div>
+          <div class="area-card-body">
+            <div class="area-label">Build Together</div>
+            <div class="area-title">Growing the business. Straining the relationship.</div>
+            <div class="area-arrow">&rarr;</div>
+          </div>
         </a>
         <a href="https://www.mirajoco.org/tools/money-moves" class="area-card area-card-4">
-          <div class="area-label">Own Your Money</div>
-          <div class="area-title">Stop chasing money. Make a plan for it.</div>
-          <div class="area-arrow">&rarr;</div>
+          <div class="area-card-top"></div>
+          <div class="area-card-body">
+            <div class="area-label">Own Your Money</div>
+            <div class="area-title">Stop chasing money. Make a plan for it.</div>
+            <div class="area-arrow">&rarr;</div>
+          </div>
         </a>
         <a href="https://www.mirajoco.org/coaching" class="area-card area-card-5">
-          <div class="area-label">Go Further</div>
-          <div class="area-title">You know what to do. You need someone to hold you to it.</div>
-          <div class="area-arrow">&rarr;</div>
+          <div class="area-card-top"></div>
+          <div class="area-card-body">
+            <div class="area-label">Go Further</div>
+            <div class="area-title">You know what to do. You need someone to hold you to it.</div>
+            <div class="area-arrow">&rarr;</div>
+          </div>
         </a>
       </div>
     </div>
