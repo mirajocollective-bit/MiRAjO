@@ -12,3 +12,7 @@ ios/App/App.xcarchive
 # Environment
 .env
 .env.local
+
+# Android signing keys
+*.keystore
+*.jks
