@@ -253,17 +253,18 @@
   function showError() {
     document.getElementById('spinner').style.display = 'none';
 
-    // If the user just completed Stripe checkout but lost their session
-    // (can happen with Google/LinkedIn OAuth + some browsers), don't show
-    // a confusing "link expired" error — their payment went through fine.
+    // User just completed Stripe checkout but has no session yet —
+    // the invite email is on its way. Show clear instructions.
     const params = new URLSearchParams(window.location.search);
     if (params.get('checkout') === 'success') {
       document.getElementById('title').textContent = 'Payment confirmed!';
       document.getElementById('sub').className = 'sub';
       document.getElementById('sub').innerHTML =
-        'Your subscription is active. Sign in to access your account.';
+        'Check your email &mdash; we sent a setup link to your inbox.<br>' +
+        '<span style="font-size:13px;opacity:0.75;">Look for an email from <strong>programs@mirajoco.org</strong>. ' +
+        'It may take 1&ndash;2 minutes. Check your spam folder if you don\'t see it.</span>';
       const backLink = document.getElementById('back-link');
-      backLink.textContent = '→ Sign in';
+      backLink.textContent = 'Already set up? Sign in here';
       backLink.href = '/tools/money-moves/login';
       backLink.style.display = 'inline-block';
       return;

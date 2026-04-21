@@ -78,26 +78,60 @@ export default async function handler(req, res) {
     }
 
     // Find or create Supabase auth user
-    const { data: { users: existingUsers } } = await supabase.auth.admin.listUsers();
-    const existingUser = existingUsers?.find(u => u.email === email);
-
+    // Always try invite first — works for new users and re-invites unconfirmed users.
+    // If the user already has a confirmed account, fall back to a magic link via Resend.
     let userId;
-    if (existingUser) {
-      userId = existingUser.id;
-    } else {
-      // Invite user — they'll get a link to set up their password
-      const { data: invited, error: inviteErr } = await supabase.auth.admin.inviteUserByEmail(email, {
-        data: { product: 'money-moves' },
-        redirectTo: `${process.env.SITE_URL}/tools/money-moves/confirm?setup=1`,
-      });
-      if (inviteErr) {
-        console.error('Money Moves invite error:', inviteErr);
-        return res.status(500).json({ error: inviteErr.message });
-      }
+    const { data: invited, error: inviteErr } = await supabase.auth.admin.inviteUserByEmail(email, {
+      data: { product: 'money-moves' },
+      redirectTo: `${process.env.SITE_URL}/tools/money-moves/confirm?setup=1`,
+    });
+
+    if (!inviteErr) {
       userId = invited.user.id;
+    } else {
+      // User already confirmed — look them up and send a magic link via Resend
+      console.log(`Money Moves: user exists (${inviteErr.message}), sending magic link to ${email}`);
+
+      const { data: { users: allUsers } } = await supabase.auth.admin.listUsers({ perPage: 1000 });
+      const existingUser = allUsers?.find(u => u.email === email);
+
+      if (!existingUser) {
+        console.error('Money Moves: could not locate existing user', email);
+        return res.status(200).json({ received: true });
+      }
+      userId = existingUser.id;
+
+      // Generate a magic link so they can access the account immediately
+      const { data: linkData, error: linkErr } = await supabase.auth.admin.generateLink({
+        type: 'magiclink',
+        email,
+        options: { redirectTo: `${process.env.SITE_URL}/tools/money-moves/dashboard?welcome=1` },
+      });
+
+      if (!linkErr && linkData?.properties?.action_link) {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: 'Miranda J <programs@mirajoco.org>',
+            to: email,
+            subject: 'Your Money Moves subscription is active',
+            html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;">
+              <img src="https://www.mirajoco.org/img/logo-horizontal.png" alt="MiRAjO" style="height:48px;margin-bottom:32px;">
+              <h2 style="font-size:22px;color:#122012;margin:0 0 16px;">Your account is ready.</h2>
+              <p style="font-size:15px;color:#3A4E38;line-height:1.75;margin:0 0 24px;">Your Money Moves subscription is active. Click below to access your dashboard — no password needed for this link.</p>
+              <a href="${linkData.properties.action_link}" style="display:inline-block;padding:14px 32px;background:#122012;color:#F2EBD9;text-decoration:none;border-radius:8px;font-size:14px;font-weight:700;">Access Money Moves &rarr;</a>
+              <p style="font-size:13px;color:#999;margin-top:32px;">This link expires in 24 hours. After that, use <a href="${process.env.SITE_URL}/tools/money-moves/login" style="color:#256B42;">the login page</a> to sign in.</p>
+            </div>`,
+          }),
+        });
+        console.log(`Money Moves: magic link sent to existing user ${email}`);
+      } else {
+        console.error('Money Moves: generateLink failed for', email, linkErr);
+      }
     }
 
-    // Record subscription (no unique constraint on user_id, so check first)
+    // Record subscription (check first to avoid duplicates)
     const subData = {
       stripe_customer_id:     customerId,
       stripe_subscription_id: subscription.id,
@@ -115,36 +149,45 @@ export default async function handler(req, res) {
       await supabase.from('mm_subscriptions').insert({ user_id: userId, ...subData });
     }
 
-    // Create household
-    const { data: household, error: hhErr } = await supabase
+    // Create household only if one doesn't already exist for this user
+    const { data: existingHousehold } = await supabase
       .from('mm_households')
-      .insert({ owner_id: userId, name: 'My Household' })
       .select('id')
-      .single();
+      .eq('owner_id', userId)
+      .maybeSingle();
 
-    if (hhErr) {
-      console.error('Money Moves household error:', hhErr);
-      return res.status(500).json({ error: hhErr.message });
+    let householdId;
+    if (existingHousehold) {
+      householdId = existingHousehold.id;
+    } else {
+      const { data: household, error: hhErr } = await supabase
+        .from('mm_households')
+        .insert({ owner_id: userId, name: 'My Household' })
+        .select('id')
+        .single();
+
+      if (hhErr) {
+        console.error('Money Moves household error:', hhErr);
+        return res.status(500).json({ error: hhErr.message });
+      }
+      householdId = household.id;
+
+      // Seed defaults only for new households
+      const accountRows = DEFAULT_ACCOUNTS.map(a => ({ ...a, household_id: householdId }));
+      await supabase.from('mm_accounts').insert(accountRows);
+
+      const categoryRows = DEFAULT_CATEGORIES.map(c => ({ ...c, household_id: householdId }));
+      await supabase.from('mm_categories').insert(categoryRows);
     }
 
-    const householdId = household.id;
-
-    // Add owner as member
-    await supabase.from('mm_members').insert({
+    // Add owner as member (ignore if already exists)
+    await supabase.from('mm_members').upsert({
       household_id: householdId,
       user_id:      userId,
       email,
       role:   'owner',
       status: 'active',
-    });
-
-    // Seed default accounts (Checking + Savings)
-    const accountRows = DEFAULT_ACCOUNTS.map(a => ({ ...a, household_id: householdId }));
-    await supabase.from('mm_accounts').insert(accountRows);
-
-    // Seed default categories
-    const categoryRows = DEFAULT_CATEGORIES.map(c => ({ ...c, household_id: householdId }));
-    await supabase.from('mm_categories').insert(categoryRows);
+    }, { onConflict: 'household_id,user_id', ignoreDuplicates: true });
 
     // Create default preferences
     await supabase.from('mm_preferences').upsert({
