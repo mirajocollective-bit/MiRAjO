@@ -137,7 +137,7 @@ export default async function handler(req, res) {
       stripe_subscription_id: subscription.id,
       plan,
       billing,
-      status:     'active',
+      status:     subscription.status,
       period_end: periodEnd,
       updated_at: new Date().toISOString(),
     };
