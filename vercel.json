@@ -41,7 +41,7 @@
     { "source": "/about/contact",   "destination": "/coaching" },
     { "source": "/about/terms",     "destination": "/about/terms.html" },
     { "source": "/about/privacy",   "destination": "/about/privacy.html" },
-    { "source": "/coaching",          "destination": "/coaching.html" },
+    { "source": "/coaching",          "destination": "/speaking" },
     { "source": "/programs/login",    "destination": "/programs/login.html" },
     { "source": "/programs/confirm",  "destination": "/programs/confirm.html" },
     { "source": "/programs/dashboard",    "destination": "/programs/dashboard.html" },
