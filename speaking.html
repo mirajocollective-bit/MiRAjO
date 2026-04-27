@@ -186,6 +186,33 @@
     .format-rate { font-size: 22px; font-weight: 700; color: var(--mint); margin-bottom: 12px; }
     .format-desc { font-size: 13px; color: rgba(242,235,217,0.55); line-height: 1.7; }
 
+    /* ── BIO SECTION ── */
+    .bio-grid { display: grid; grid-template-columns: 1fr 340px; gap: 72px; align-items: start; }
+    .bio-pull-quote {
+      font-family: 'Instrument Serif', serif; font-size: clamp(22px, 2.6vw, 32px);
+      color: var(--parchment); font-style: italic; line-height: 1.5;
+      border-left: 4px solid var(--gold); padding-left: 28px; margin-bottom: 36px;
+    }
+    .bio-body { font-size: 15px; color: rgba(242,235,217,0.68); line-height: 1.9; margin-bottom: 20px; }
+    .bio-sidebar { display: flex; flex-direction: column; gap: 16px; padding-top: 4px; }
+    .bio-stat-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(109,196,138,0.18);
+      border-radius: 12px; padding: 22px 24px;
+    }
+    .bio-stat-label {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--mint); font-weight: 700; margin-bottom: 10px;
+    }
+    .bio-stat-num {
+      font-family: 'Instrument Serif', serif; font-size: 38px;
+      color: var(--parchment); line-height: 1; margin-bottom: 8px;
+    }
+    .bio-stat-sub { font-size: 13px; color: rgba(242,235,217,0.45); line-height: 1.65; }
+    .bio-stat-quote {
+      font-family: 'Instrument Serif', serif; font-size: 15px;
+      color: rgba(242,235,217,0.75); font-style: italic; line-height: 1.65;
+    }
+
     /* ── QUOTE ── */
     .quote-block {
       font-family: 'Instrument Serif', serif; font-size: clamp(22px, 2.8vw, 36px);
@@ -337,7 +364,7 @@
       .hero-right::before { display: none; }
       .hero-left { padding: 56px 28px; }
       .section { padding: 56px 28px; }
-      .framework-grid, .get-grid, .formats-grid, .engagements-grid, .contact-grid { grid-template-columns: 1fr; }
+      .framework-grid, .get-grid, .formats-grid, .engagements-grid, .contact-grid, .bio-grid { grid-template-columns: 1fr; }
       .cta-wrap { grid-template-columns: 1fr; gap: 40px; padding: 56px 28px; }
       .kit-footer { padding: 24px 28px; flex-direction: column; gap: 10px; text-align: center; }
       .print-bar { padding: 12px 20px; }
@@ -500,10 +527,32 @@
   </div>
 </section>
 
-<!-- WHAT SHE BRINGS -->
+<!-- ABOUT MIRANDA -->
 <section class="section section-forest" style="padding-top:0;">
-  <div class="quote-block">
-    Miranda does not show up with a slide deck and a handshake. She shows up knowing your people, having done the work, ready to meet them exactly where they are. That is what twenty years of building real companies in hard markets teaches you. The room always knows the difference.
+  <div class="section-label">About Miranda</div>
+  <div class="bio-grid">
+    <div>
+      <p class="bio-pull-quote">People love to lead with the struggle story.<br>Mine leads with purpose.</p>
+      <p class="bio-body">Miranda Johnson was called before she had a reason to be. At 16, sitting in a church in Charleston, South Carolina, she faced circumstances that could have written her whole life in one word. What she felt instead was the future pulling. She decided &mdash; not because anyone confirmed it yet, but because she already knew &mdash; that she was going to live long enough, build long enough, and stand in front of enough rooms to prove what was already true.</p>
+      <p class="bio-body">That is not a struggle story. It is a purpose story. And it explains everything that came after.</p>
+      <p class="bio-body">Two trucking companies built from scratch. Twelve years running operations inside one of the most demanding industries there is. Two books written. A behavioral framework developed and tested with real teams in real rooms. Director of Women Impact Network across 16 Tampa Bay chapters. COO of Tampa Business Club. Curriculum designed for organizations before they knew they needed it.</p>
+      <p class="bio-body" style="margin-bottom:0;">None of that is the point. The point is the room &mdash; the people in it, what they are trying to become, and whether anyone will give them the language to do it. Miranda applies before she advises. She listens before she speaks. She has tried to walk away from this work. She always comes back.</p>
+    </div>
+    <div class="bio-sidebar">
+      <div class="bio-stat-card">
+        <div class="bio-stat-label">In the room since</div>
+        <div class="bio-stat-num">2003</div>
+        <div class="bio-stat-sub">20+ years building companies before standing on stages. She applies before she advises.</div>
+      </div>
+      <div class="bio-stat-card">
+        <div class="bio-stat-label">The core belief</div>
+        <div class="bio-stat-quote">&ldquo;I have all I need in my hands. There is nothing new that needs to be created to win in life.&rdquo;</div>
+      </div>
+      <div class="bio-stat-card">
+        <div class="bio-stat-label">Called, not chosen</div>
+        <div class="bio-stat-quote">&ldquo;God won&rsquo;t let me do anything else. I&rsquo;ve tried. I always end up right back here.&rdquo;</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -686,10 +735,10 @@
   </div>
 
   <div class="os-right">
-    <div class="os-tagline">"Your team already has what it needs. They just don't have the language for it yet."</div>
+    <div class="os-tagline">&ldquo;I have all I need in my hands. There is nothing new that needs to be created to win in life.&rdquo;</div>
 
     <div class="os-bio">
-      Miranda Johnson is a multi-industry entrepreneur who has been building companies for over 20 years, starting in construction, expanding into real estate, then transportation, where she built two trucking companies from the ground up. She is the founder of MiRAjO Collective, author of <em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>, Director of Women Impact Network across 16 Tampa Bay chapters, COO of Tampa Business Club, and Events Chair for the Tampa Bay Latin Chamber of Commerce. She brings real operational experience and a proprietary behavioral framework to every engagement.
+      Miranda Johnson was called before she had a reason to be. Two trucking companies built from scratch. Twelve years running operations inside one of the most demanding industries there is. Two books published. A behavioral framework developed and tested in real rooms with real teams. 20+ speaking engagements across Tampa Bay, two universities, and regional chambers. She is the founder of MiRAjO Collective, author of <em>The Pain Principle</em> and <em>LeadLoud</em>, Director of Women Impact Network across 16 Tampa Bay chapters, and COO of Tampa Business Club. She applies before she advises. She shows up to every room with one job: give people the language for what they already know.
     </div>
 
     <div class="os-right-label">What Companies Get</div>
