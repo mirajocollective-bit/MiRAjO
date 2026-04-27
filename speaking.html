@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miranda Johnson — Corporate Speaking & Facilitation | MiRAjO</title>
+  <meta name="description" content="Miranda Johnson brings a proprietary wiring framework to corporate teams, leadership retreats, and ERGs. Half-day and full-day engagements. Based in Tampa Bay, FL. Book at mirajoco.org.">
+  <link rel="canonical" href="https://www.mirajoco.org/speaking">
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest:     #122012;
+      --green:      #256B42;
+      --green-lt:   #339158;
+      --mint:       #6DC48A;
+      --mint-tint:  #EBF7F0;
+      --gold:       #C4A245;
+      --parchment:  #F2EBD9;
+      --soft-white: #FAF7F2;
+      --white:      #FFFFFF;
+      --muted:      #5A6E58;
+      --border:     rgba(18,32,18,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; }
+    body {
+      background: var(--soft-white);
+      color: var(--forest);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PRINT BAR ── */
+    .print-bar {
+      background: var(--green);
+      padding: 12px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .print-bar-note { font-size: 13px; color: var(--white); font-weight: 600; }
+    .print-btn {
+      background: var(--white); color: var(--green); border: none;
+      border-radius: 6px; padding: 10px 24px; font-size: 13px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s;
+    }
+    .print-btn:hover { background: var(--parchment); }
+
+    /* ── NAV ── */
+    .site-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 40px; background: #fff; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo img { height: 56px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--forest); }
+    .nav-cta {
+      display: inline-block; font-size: 12px; padding: 9px 22px; background: #fff;
+      color: var(--green); border: 1.5px solid var(--green); border-radius: 6px;
+      font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s, color 0.3s;
+    }
+    .nav-cta:hover { background: var(--green); color: #fff; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--forest); }
+    .mobile-menu {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 20px; flex-direction: column; gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 99;
+    }
+    .site-nav.nav-open .mobile-menu { display: flex; }
+    .nav-hamburger .icon-close { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-open { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-close { display: block; }
+    .mobile-menu a { font-size: 14px; color: var(--forest); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .nav-cta { text-align: center; margin-top: 8px; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: calc(100% + 12px); left: 50%;
+      transform: translateX(-50%); background: #1e2e1e;
+      border: 1px solid rgba(168,192,160,0.2); border-radius: 10px;
+      padding: 8px 0; min-width: 180px; z-index: 200;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 13px; color: rgba(242,235,217,0.6); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
+    .nav-dropdown-menu a:hover { color: var(--parchment); background: rgba(168,192,160,0.08); }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid; grid-template-columns: 1fr 400px; min-height: 560px; background: var(--forest);
+    }
+    .hero-left {
+      padding: 80px 64px; display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid rgba(242,235,217,0.08);
+    }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 6px; text-transform: uppercase;
+      color: var(--mint); font-weight: 700; margin-bottom: 28px;
+    }
+    .hero-name {
+      font-family: 'Instrument Serif', serif; font-size: clamp(48px, 5.5vw, 80px);
+      color: var(--parchment); font-weight: 400; line-height: 0.95;
+      margin-bottom: 28px; letter-spacing: -1px;
+    }
+    .hero-name em { color: var(--mint); font-style: italic; }
+    .hero-tagline {
+      font-size: 17px; color: rgba(242,235,217,0.6); font-style: italic;
+      margin-bottom: 40px; line-height: 1.5; font-family: 'Instrument Serif', serif;
+    }
+    .hero-roles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
+    .hero-role {
+      font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--mint);
+      background: rgba(109,196,138,0.1); border: 1px solid rgba(109,196,138,0.25);
+      border-radius: 4px; padding: 6px 14px; font-weight: 600;
+    }
+    .hero-contact { font-size: 14px; color: rgba(242,235,217,0.5); }
+    .hero-contact a { color: var(--mint); text-decoration: none; }
+    .hero-contact a:hover { text-decoration: underline; }
+    .hero-right { position: relative; overflow: hidden; }
+    .hero-right img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .hero-right::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 60px;
+      background: linear-gradient(to right, var(--forest), transparent); z-index: 1;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 80px; }
+    .section-white { background: var(--white); }
+    .section-mint  { background: var(--mint-tint); }
+    .section-forest { background: var(--forest); color: var(--parchment); }
+    .section-label {
+      font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
+      font-weight: 700; color: var(--green-lt); margin-bottom: 36px;
+    }
+    .section-forest .section-label { color: var(--mint); }
+
+    /* ── FRAMEWORK ── */
+    .framework-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .framework-card {
+      background: var(--white); border-radius: 12px; padding: 32px;
+      border: 1px solid var(--border); transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .framework-card:hover { border-color: var(--mint); box-shadow: 0 4px 20px rgba(109,196,138,0.12); }
+    .framework-num { font-size: 11px; letter-spacing: 2px; color: var(--mint); font-weight: 700; margin-bottom: 12px; }
+    .framework-title {
+      font-family: 'Instrument Serif', serif; font-size: 21px;
+      font-weight: 400; color: var(--forest); margin-bottom: 10px; line-height: 1.2;
+    }
+    .framework-desc { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+
+    /* ── WHAT YOU GET ── */
+    .get-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .get-card {
+      background: var(--white); border-radius: 12px; padding: 32px 28px;
+      border: 1px solid var(--border); text-align: center;
+      box-shadow: 0 2px 12px rgba(18,32,18,0.04);
+    }
+    .get-icon { font-size: 32px; margin-bottom: 16px; }
+    .get-title { font-family: 'Instrument Serif', serif; font-size: 19px; font-weight: 400; color: var(--forest); margin-bottom: 10px; }
+    .get-desc { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+
+    /* ── FORMATS ── */
+    .formats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .format-card {
+      border-radius: 12px; padding: 32px 28px;
+      border: 1px solid rgba(242,235,217,0.12); background: rgba(255,255,255,0.04);
+    }
+    .format-tag {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      font-weight: 700; color: var(--mint); margin-bottom: 12px;
+    }
+    .format-name {
+      font-family: 'Instrument Serif', serif; font-size: 20px;
+      font-weight: 400; color: var(--parchment); margin-bottom: 8px; line-height: 1.2;
+    }
+    .format-rate { font-size: 22px; font-weight: 700; color: var(--mint); margin-bottom: 12px; }
+    .format-desc { font-size: 13px; color: rgba(242,235,217,0.55); line-height: 1.7; }
+
+    /* ── QUOTE ── */
+    .quote-block {
+      font-family: 'Instrument Serif', serif; font-size: clamp(22px, 2.8vw, 36px);
+      color: var(--parchment); font-style: italic; line-height: 1.55;
+      max-width: 820px; padding-left: 36px; border-left: 4px solid var(--gold);
+    }
+
+    /* ── PAST ENGAGEMENTS ── */
+    .engagements-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .engagement-item {
+      display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px;
+      background: var(--white); border-radius: 10px; border: 1px solid var(--border);
+    }
+    .engagement-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--mint); flex-shrink: 0; margin-top: 6px;
+    }
+    .engagement-name { font-size: 14px; font-weight: 600; color: var(--forest); line-height: 1.3; margin-bottom: 3px; }
+    .engagement-org { font-size: 12px; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+    .contact-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+    .contact-value { font-size: 15px; color: var(--forest); font-weight: 500; }
+    .contact-value a { color: var(--green-lt); text-decoration: none; }
+    .contact-value a:hover { text-decoration: underline; }
+
+    /* ── CTA ── */
+    .cta-wrap {
+      background: var(--green); padding: 80px; display: grid;
+      grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .cta-eyebrow { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--mint); font-weight: 700; margin-bottom: 20px; }
+    .cta-heading { font-family: 'Instrument Serif', serif; font-size: clamp(30px, 3.5vw, 46px); color: var(--white); font-weight: 400; line-height: 1.15; margin-bottom: 20px; }
+    .cta-heading em { color: rgba(109,196,138,0.85); font-style: italic; }
+    .cta-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.75; }
+    .cta-contact { display: flex; flex-direction: column; gap: 24px; }
+    .cta-contact-item { font-size: 15px; color: rgba(255,255,255,0.8); }
+    .cta-contact-item a { color: var(--mint); text-decoration: none; font-weight: 600; }
+    .cta-contact-item a:hover { text-decoration: underline; }
+    .cta-contact-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700; margin-bottom: 4px; }
+
+    /* ── FOOTER ── */
+    .kit-footer {
+      background: var(--forest); padding: 28px 80px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .kit-footer-brand { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--white); font-weight: 400; }
+    .kit-footer-note { font-size: 12px; color: rgba(242,235,217,0.45); letter-spacing: 0.5px; }
+
+    /* ── ONE-SHEET (printed) ── */
+    .os { display: none; }
+
+    @media print {
+      @page { size: letter landscape; margin: 0; }
+
+      nav, .print-bar, .hero, section, .cta-wrap, .kit-footer { display: none !important; }
+      body { margin: 0; padding: 0; background: #fff; }
+
+      .os {
+        display: flex !important;
+        width: 11in; height: 8.5in;
+        overflow: hidden;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+
+      .os-left {
+        width: 38%; background: #122012;
+        padding: 0.55in 0.45in 0.45in;
+        display: flex; flex-direction: column; overflow: hidden;
+      }
+      .os-right {
+        width: 62%; background: #fff;
+        padding: 0.55in 0.5in 0.45in 0.5in;
+        display: flex; flex-direction: column; overflow: hidden;
+      }
+
+      /* Left panel */
+      .os-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; border-radius: 8pt; margin-bottom: 16pt; }
+
+      .os-name {
+        font-family: 'Instrument Serif', Georgia, serif; font-size: 28pt;
+        color: #F2EBD9; line-height: 1.0; font-weight: normal; margin: 0 0 4pt;
+      }
+      .os-name em { font-style: italic; color: #6DC48A; }
+      .os-title { font-size: 9pt; color: #6DC48A; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 2pt; }
+      .os-sub { font-size: 8.5pt; color: rgba(242,235,217,0.55); margin: 0 0 10pt; line-height: 1.4; }
+      .os-divider { border: none; border-top: 1px solid rgba(109,196,138,0.3); margin: 0 0 10pt; }
+
+      .os-left-label {
+        font-size: 7.5pt; letter-spacing: 2.5px; text-transform: uppercase; color: #6DC48A;
+        font-weight: 700; margin: 0 0 6pt; border-top: 1px solid rgba(109,196,138,0.2); padding-top: 7pt;
+      }
+      .os-left-label:first-of-type { border-top: none; padding-top: 0; }
+
+      .os-engagement { margin-bottom: 5pt; }
+      .os-eng-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 10pt; color: #F2EBD9; line-height: 1.3; }
+      .os-eng-org { font-size: 8pt; color: rgba(109,196,138,0.75); }
+
+      .os-press { font-size: 9.5pt; color: rgba(242,235,217,0.7); line-height: 1.6; }
+
+      .os-contact-bar {
+        margin-top: auto; padding-top: 8pt; border-top: 2px solid #256B42;
+        font-size: 9pt; color: #6DC48A; font-weight: 700; letter-spacing: 0.3px;
+        display: flex; flex-direction: column; gap: 3pt;
+      }
+
+      /* Right panel */
+      .os-tagline {
+        font-family: 'Instrument Serif', Georgia, serif; font-size: 15pt;
+        color: #122012; font-style: italic; line-height: 1.4;
+        border-left: 3pt solid #C4A245; padding-left: 10pt; margin: 0 0 10pt;
+      }
+
+      .os-bio { font-size: 9.5pt; color: #3A4E38; line-height: 1.7; margin: 0 0 10pt; }
+
+      .os-right-label {
+        font-size: 7.5pt; letter-spacing: 2.5px; text-transform: uppercase;
+        color: #339158; font-weight: 700; margin: 0 0 6pt;
+        border-top: 1px solid rgba(18,32,18,0.1); padding-top: 7pt;
+      }
+
+      .os-what-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6pt; margin-bottom: 0; }
+      .os-what-item {
+        background: #F2EBD9; border-radius: 4pt; padding: 7pt 8pt;
+      }
+      .os-what-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 9.5pt; color: #122012; line-height: 1.3; margin-bottom: 2pt; }
+      .os-what-rate { font-size: 8.5pt; color: #256B42; font-weight: 700; margin-bottom: 3pt; }
+      .os-what-desc { font-size: 7.5pt; color: #5A6E58; line-height: 1.5; }
+
+      .os-topics { margin: 0; padding: 0; }
+      .os-topic {
+        font-size: 9.5pt; color: #122012; padding: 3.5pt 0 3.5pt 8pt;
+        border-left: 2pt solid #6DC48A; margin-bottom: 4pt; line-height: 1.4;
+      }
+
+      .os-bottom-bar {
+        margin-top: auto; background: #122012; border-radius: 6pt;
+        padding: 8pt 12pt; display: flex; justify-content: space-between; align-items: center;
+      }
+      .os-bottom-quote { font-family: 'Instrument Serif', Georgia, serif; font-size: 9pt; color: rgba(242,235,217,0.8); font-style: italic; }
+      .os-bottom-book { font-size: 8pt; font-weight: 700; color: #6DC48A; letter-spacing: 0.5px; text-align: right; }
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 65vw; }
+      .hero-right::before { display: none; }
+      .hero-left { padding: 56px 28px; }
+      .section { padding: 56px 28px; }
+      .framework-grid, .get-grid, .formats-grid, .engagements-grid, .contact-grid { grid-template-columns: 1fr; }
+      .cta-wrap { grid-template-columns: 1fr; gap: 40px; padding: 56px 28px; }
+      .kit-footer { padding: 24px 28px; flex-direction: column; gap: 10px; text-align: center; }
+      .print-bar { padding: 12px 20px; }
+    }
+    @media (max-width: 600px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRINT BAR -->
+<div class="print-bar">
+  <span class="print-bar-note">Miranda Johnson — Corporate One-Sheet 2026</span>
+  <button class="print-btn" onclick="window.print()">Download as PDF</button>
+</div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="https://www.mirajoco.org" class="nav-logo">
+    <img src="img/logo-horizontal.png" alt="MiRAjO Collective">
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://www.mirajoco.org/philosophy">Philosophy</a></li>
+    <li class="nav-dropdown">
+      <a href="https://www.mirajoco.org/programs">Programs</a>
+      <div class="nav-dropdown-menu">
+        <a href="https://www.mirajoco.org/25daysand25nights">25 Days &amp; 25 Nights</a>
+        <a href="https://www.mirajoco.org/couplesinentrepreneurship">Couples in Entrepreneurship</a>
+        <a href="https://www.90daysidehustle.com" target="_blank">90 Day Side Hustle</a>
+      </div>
+    </li>
+    <li><a href="https://www.mirajoco.org/blog">Writing</a></li>
+    <li><a href="https://www.mirajoco.org/events">Events</a></li>
+    <li><a href="https://www.mirajoco.org/speaking" class="active">Speaking</a></li>
+    <li><a href="https://www.mirajoco.org/coaching">Work With Me</a></li>
+  </ul>
+  <div>
+    <a href="#book" class="nav-cta">Book Miranda</a>
+  </div>
+  <button class="nav-hamburger" onclick="this.closest('.site-nav').classList.toggle('nav-open')" aria-label="Menu">
+    <svg class="icon-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg class="icon-close" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <div class="mobile-menu">
+    <a href="https://www.mirajoco.org/philosophy">Philosophy</a>
+    <a href="https://www.mirajoco.org/programs">Programs</a>
+    <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 25 Days &amp; 25 Nights</a>
+    <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="padding-left:20px;font-size:13px;opacity:0.8">↳ Couples in Entrepreneurship</a>
+    <a href="https://www.90daysidehustle.com" target="_blank" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 90 Day Side Hustle</a>
+    <a href="https://www.mirajoco.org/blog">Writing</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="https://www.mirajoco.org/speaking" class="active">Speaking</a>
+    <a href="https://www.mirajoco.org/coaching">Work With Me</a>
+    <a href="#book" class="nav-cta">Book Miranda</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Corporate Speaking &amp; Facilitation</div>
+    <h1 class="hero-name">Miranda<br><em>Johnson</em></h1>
+    <p class="hero-tagline">"Your team already has what it needs. They just don't have the language for it yet."</p>
+    <div class="hero-roles">
+      <span class="hero-role">Keynote Speaker</span>
+      <span class="hero-role">Workshop Facilitator</span>
+      <span class="hero-role">Author</span>
+      <span class="hero-role">Founder, MiRAjO Collective</span>
+      <span class="hero-role">St. Petersburg, FL</span>
+    </div>
+    <div class="hero-contact">
+      <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://www.mirajoco.org/speaking">mirajoco.org/speaking</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="img/miranda-standing.jpeg" alt="Miranda Johnson">
+  </div>
+</div>
+
+<!-- THE FRAMEWORK -->
+<section class="section section-white">
+  <div class="section-label">The Framework</div>
+  <p style="font-size:17px;color:var(--muted);max-width:760px;line-height:1.85;margin-bottom:48px;">
+    Most performance problems are not strategy problems. They are wiring problems. People work, lead, relate, and build differently based on how they are wired. Miranda brings a proprietary behavioral framework called <strong style="color:var(--forest);">DrivAmor</strong> that gives teams a shared language for how they think, how they conflict, and how they collaborate. One half-day. Permanent shift in how your people see each other.
+  </p>
+  <div class="framework-grid">
+    <div class="framework-card">
+      <div class="framework-num">Drive Mode</div>
+      <div class="framework-title">How people execute and lead</div>
+      <p class="framework-desc">Four distinct drive profiles that explain why some people sprint and others sustain, why some lead from the front and others build from behind. Not better or worse. Just different wiring.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">Amor Code</div>
+      <div class="framework-title">How people connect and relate</div>
+      <p class="framework-desc">Five relational types that explain communication breakdowns, conflict patterns, and why some teams feel like family and others feel like friction. The missing layer in most team development work.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">20 Combined Profiles</div>
+      <div class="framework-title">No two people are the same</div>
+      <p class="framework-desc">Drive and Amor intersect into 20 unique profiles, each with a name, a set of strengths, and a set of blind spots. Your team walks away knowing exactly how they are built and how to work with each other.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">The Outcome</div>
+      <div class="framework-title">A shared language, not a report</div>
+      <p class="framework-desc">Miranda does not hand people a PDF and leave. The debrief is facilitated, the insights are applied to real work, and the language stays. Teams reference it in meetings months after the engagement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOUR COMPANY GETS -->
+<section class="section section-mint">
+  <div class="section-label">What Your Company Gets</div>
+  <div class="get-grid">
+    <div class="get-card">
+      <div class="get-icon">&#127775;</div>
+      <div class="get-title">The Assessment</div>
+      <p class="get-desc">Every attendee takes the DrivAmor assessment before the session. Miranda arrives knowing your team's wiring. No cold reads. No generic content.</p>
+    </div>
+    <div class="get-card">
+      <div class="get-icon">&#127908;</div>
+      <div class="get-title">The Facilitation</div>
+      <p class="get-desc">Miranda runs the room. Live debrief, real conversation, applied insights. Not a lecture. A session your people will talk about the following Monday.</p>
+    </div>
+    <div class="get-card">
+      <div class="get-icon">&#128218;</div>
+      <div class="get-title">The Language</div>
+      <p class="get-desc">Your team leaves with a shared framework they can reference. Conflict drops. Collaboration improves. Leaders stop guessing and start understanding.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ENGAGEMENT FORMATS -->
+<section class="section section-forest">
+  <div class="section-label">Engagement Formats</div>
+  <div class="formats-grid">
+    <div class="format-card">
+      <div class="format-tag">Keynote</div>
+      <div class="format-name">The Wiring Talk</div>
+      <div class="format-rate">Starting at $4,500</div>
+      <p class="format-desc">45&ndash;90 minutes. Conference stage, company all-hands, or leadership summit. Miranda delivers the framework, the story, and the insight that shifts the room. Best for 50+ audiences.</p>
+    </div>
+    <div class="format-card">
+      <div class="format-tag">Half-Day Workshop</div>
+      <div class="format-name">DrivAmor Team Facilitation</div>
+      <div class="format-rate">Starting at $5,000</div>
+      <p class="format-desc">3&ndash;4 hours. Assessment pre-work, live facilitated debrief, applied team exercises. Every person leaves knowing their profile and how to work with every other type in the room.</p>
+    </div>
+    <div class="format-card">
+      <div class="format-tag">Full-Day or ERG</div>
+      <div class="format-name">Deep Dive Facilitation</div>
+      <div class="format-rate">Starting at $10,000</div>
+      <p class="format-desc">Full-day leadership retreats, ERG programming, or women&rsquo;s leadership series. Multi-session engagements available for ongoing organizational partnerships.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT SHE BRINGS -->
+<section class="section section-forest" style="padding-top:0;">
+  <div class="quote-block">
+    Miranda does not show up with a slide deck and a handshake. She shows up knowing your people, having done the work, ready to meet them exactly where they are. That is what twenty years of building real companies in hard markets teaches you. The room always knows the difference.
+  </div>
+</section>
+
+<!-- SIGNATURE TALKS -->
+<section class="section section-white">
+  <div class="section-label">Signature Talk Topics</div>
+  <div class="framework-grid">
+    <div class="framework-card">
+      <div class="framework-num">01</div>
+      <div class="framework-title">Know Your Wiring, Change Your Results</div>
+      <p class="framework-desc">The DrivAmor keynote. Why most performance problems are wiring problems, and what shifts when people finally understand how they are built.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">02</div>
+      <div class="framework-title">The Pain Principle</div>
+      <p class="framework-desc">How your hardest chapter is your most credible asset. For teams navigating change, loss, or transition who need permission to use what they have been through.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">03</div>
+      <div class="framework-title">Authenticity is the New Blue Check</div>
+      <p class="framework-desc">Why leaders who perform for approval are losing. What leading from identity looks like in a world of curated everything. Strong fit for women&rsquo;s leadership and ERG audiences.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">04</div>
+      <div class="framework-title">Seedtime and Harvest</div>
+      <p class="framework-desc">A framework for the messy middle. The season before the result, and how to stay committed to the work when the outcome is not yet visible. Ideal for leadership retreats.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PAST ENGAGEMENTS -->
+<section class="section section-mint">
+  <div class="section-label">Speaking Engagements</div>
+  <div class="engagements-grid">
+    <div class="engagement-item">
+      <div class="engagement-dot"></div>
+      <div>
+        <div class="engagement-name">Power Women Expo 2026</div>
+        <div class="engagement-org">Women Impact Network (WIN)</div>
+      </div>
+    </div>
+    <div class="engagement-item">
+      <div class="engagement-dot"></div>
+      <div>
+        <div class="engagement-name">Fail Forward 2026</div>
+        <div class="engagement-org">Tampa Bay Latin Chamber of Commerce</div>
+      </div>
+    </div>
+    <div class="engagement-item">
+      <div class="engagement-dot"></div>
+      <div>
+        <div class="engagement-name">Tampa Bay Business Expo 2024</div>
+        <div class="engagement-org">Tampa Business Club</div>
+      </div>
+    </div>
+    <div class="engagement-item">
+      <div class="engagement-dot"></div>
+      <div>
+        <div class="engagement-name">Unleash Your Inner Sales Person</div>
+        <div class="engagement-org">Schiller International University</div>
+      </div>
+    </div>
+    <div class="engagement-item">
+      <div class="engagement-dot"></div>
+      <div>
+        <div class="engagement-name">How to Pivot in Business</div>
+        <div class="engagement-org">University of South Florida</div>
+      </div>
+    </div>
+    <div class="engagement-item">
+      <div class="engagement-dot"></div>
+      <div>
+        <div class="engagement-name">Local Stories Live</div>
+        <div class="engagement-org">Hillsborough County</div>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:28px;font-size:13px;color:var(--muted);">As seen in: <strong>Plastiq Magazine &nbsp;&middot;&nbsp; Voyage Tampa &nbsp;&middot;&nbsp; Voyage Houston &nbsp;&middot;&nbsp; Tampa Bay Connects</strong></p>
+</section>
+
+<!-- CONTACT -->
+<section class="section section-white" id="book">
+  <div class="section-label">Book Miranda</div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-label">Email</div>
+      <div class="contact-value"><a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a></div>
+    </div>
+    <div>
+      <div class="contact-label">Website</div>
+      <div class="contact-value"><a href="https://www.mirajoco.org/speaking">mirajoco.org/speaking</a></div>
+    </div>
+    <div>
+      <div class="contact-label">LinkedIn</div>
+      <div class="contact-value"><a href="https://www.linkedin.com/in/miranda-johnson-mirajocollective">linkedin.com/in/miranda-johnson-mirajocollective</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div>
+    <div class="cta-eyebrow">Book Miranda</div>
+    <h2 class="cta-heading">Bring the right<br><em>conversation</em><br>to your room.</h2>
+    <p class="cta-sub">Half-day, full-day, keynote, or ERG series. Miranda shows up prepared, assessed, and ready to move your people. Reach out and she will respond within 48 hours.</p>
+  </div>
+  <div class="cta-contact">
+    <div class="cta-contact-item">
+      <div class="cta-contact-label">Email</div>
+      <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a>
+    </div>
+    <div class="cta-contact-item">
+      <div class="cta-contact-label">Speaking Page</div>
+      <a href="https://www.mirajoco.org/speaking">mirajoco.org/speaking</a>
+    </div>
+    <div class="cta-contact-item">
+      <div class="cta-contact-label">Media Kit</div>
+      <a href="https://www.mirajoco.org/media-kit">mirajoco.org/media-kit</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT ONE-SHEET (landscape, hidden on screen) -->
+<div class="os">
+  <div class="os-left">
+    <img src="img/miranda-standing.jpeg" alt="Miranda Johnson" class="os-photo">
+    <div class="os-name">Miranda<br><em>Johnson</em></div>
+    <div class="os-title">Keynote Speaker &middot; Workshop Facilitator &middot; Author</div>
+    <div class="os-sub">Founder, MiRAjO Collective &middot; St. Petersburg, FL</div>
+    <hr class="os-divider">
+
+    <div class="os-left-label" style="border-top:none;padding-top:0;">Speaking Engagements</div>
+    <div class="os-engagement"><div class="os-eng-name">Power Women Expo 2026</div><div class="os-eng-org">Women Impact Network</div></div>
+    <div class="os-engagement"><div class="os-eng-name">Fail Forward 2026</div><div class="os-eng-org">Tampa Bay Latin Chamber of Commerce</div></div>
+    <div class="os-engagement"><div class="os-eng-name">Tampa Bay Business Expo 2024</div><div class="os-eng-org">Tampa Business Club</div></div>
+    <div class="os-engagement"><div class="os-eng-name">Unleash Your Inner Sales Person</div><div class="os-eng-org">Schiller International University</div></div>
+    <div class="os-engagement"><div class="os-eng-name">How to Pivot in Business</div><div class="os-eng-org">University of South Florida</div></div>
+
+    <div class="os-left-label">As Seen In</div>
+    <div class="os-press">Plastiq Magazine &middot; Voyage Tampa &middot; Voyage Houston &middot; Tampa Bay Connects</div>
+
+    <div class="os-contact-bar">
+      <span>mirandaj@mirajoco.org</span>
+      <span>mirajoco.org/speaking</span>
+    </div>
+  </div>
+
+  <div class="os-right">
+    <div class="os-tagline">"Your team already has what it needs. They just don't have the language for it yet."</div>
+
+    <div class="os-bio">
+      Miranda Johnson is a multi-industry entrepreneur who has been building companies for over 20 years, starting in construction, expanding into real estate, then transportation, where she built two trucking companies from the ground up. She is the founder of MiRAjO Collective, author of <em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>, Director of Women Impact Network across 16 Tampa Bay chapters, COO of Tampa Business Club, and Events Chair for the Tampa Bay Latin Chamber of Commerce. She brings real operational experience and a proprietary behavioral framework to every engagement.
+    </div>
+
+    <div class="os-right-label">What Companies Get</div>
+    <div class="os-what-grid">
+      <div class="os-what-item">
+        <div class="os-what-name">Keynote</div>
+        <div class="os-what-rate">From $4,500</div>
+        <div class="os-what-desc">45&ndash;90 min. Conference, all-hands, summit. The wiring framework delivered live.</div>
+      </div>
+      <div class="os-what-item">
+        <div class="os-what-name">Half-Day Workshop</div>
+        <div class="os-what-rate">From $5,000</div>
+        <div class="os-what-desc">DrivAmor assessment + facilitated team debrief. Every person knows their profile.</div>
+      </div>
+      <div class="os-what-item">
+        <div class="os-what-name">Full-Day / ERG</div>
+        <div class="os-what-rate">From $10,000</div>
+        <div class="os-what-desc">Deep leadership facilitation, retreats, or ERG/women&rsquo;s leadership series.</div>
+      </div>
+    </div>
+
+    <div class="os-right-label">Signature Topics</div>
+    <div class="os-topics">
+      <div class="os-topic"><strong>Know Your Wiring, Change Your Results.</strong> The DrivAmor framework applied to your team.</div>
+      <div class="os-topic"><strong>The Pain Principle.</strong> How your hardest chapter becomes your most credible asset.</div>
+      <div class="os-topic"><strong>Authenticity is the New Blue Check.</strong> Leading from identity, not performance. Strong ERG fit.</div>
+      <div class="os-topic"><strong>Seedtime and Harvest.</strong> For teams in the messy middle. Staying committed before the result is visible.</div>
+    </div>
+
+    <div class="os-bottom-bar">
+      <div class="os-bottom-quote">"I do not come to rooms to impress. I come to be useful."</div>
+      <div class="os-bottom-book">Book: mirandaj@mirajoco.org<br>mirajoco.org/speaking</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="kit-footer">
+  <div class="kit-footer-brand">Miranda Johnson &middot; MiRAjO Collective</div>
+  <div class="kit-footer-note">mirajoco.org/speaking &middot; 2026</div>
+</div>
+
+<script src="/analytics.js"></script>
+</body>
+</html>
