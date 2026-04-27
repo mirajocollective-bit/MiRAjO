@@ -65,6 +65,7 @@
     { "source": "/couples-scorecard",            "destination": "/couples-scorecard.html" },
     { "source": "/alignment-audit",              "destination": "/alignment-audit.html" },
     { "source": "/media-kit",                    "destination": "/media-kit.html" },
+    { "source": "/speaking",                     "destination": "/speaking.html" },
     { "source": "/admin",                        "destination": "/admin/dashboard.html" },
     { "source": "/admin/dashboard",              "destination": "/admin/dashboard.html" },
     { "source": "/tools/money-moves",           "destination": "/tools/money-moves/login.html" },
