@@ -17,7 +17,7 @@ function checkAuth(req) {
 async function getOrganizerEvents(organizerId, apiKey) {
   const headers = { Authorization: `Bearer ${apiKey}` };
   const events = [];
-  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?time_filter=all&order_by=start_asc`;
+  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc`;
 
   while (url) {
     const res = await fetch(url, { headers });
@@ -29,7 +29,7 @@ async function getOrganizerEvents(organizerId, apiKey) {
     events.push(...(data.events || []));
     const cont = data.pagination?.continuation;
     url = data.pagination?.has_more_items && cont
-      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?time_filter=all&order_by=start_asc&continuation=${cont}`
+      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc&continuation=${cont}`
       : null;
   }
   return events;
