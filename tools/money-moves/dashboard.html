@@ -602,6 +602,8 @@
       display: none; padding: 24px;
     }
     .forecast-view.active { display: block; }
+    /* Let the calendar section expand to show all 84 rows when forecast is active */
+    .calendar-section.forecast-mode { overflow: visible; }
     .forecast-title {
       font-family: 'Instrument Serif', serif; font-size: 18px;
       margin-bottom: 6px; color: var(--text-primary);
@@ -5993,6 +5995,8 @@
   // ── View toggle ──────────────────────────────────────────────────────────────
   window.setView = function (view) {
     currentView = view;
+    const calSection = document.querySelector('.calendar-section');
+    if (calSection) calSection.classList.toggle('forecast-mode', view === 'forecast');
     document.getElementById('calendar-view').style.display = view === 'calendar' ? 'block' : 'none';
     document.getElementById('forecast-view').classList.toggle('active', view === 'forecast');
     document.getElementById('mortgage-view').classList.toggle('active', view === 'mortgage');
