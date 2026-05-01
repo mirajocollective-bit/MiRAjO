@@ -3122,6 +3122,9 @@
       </label>
       <span style="font-size:13px;color:var(--deep-forest)">Recurring transaction</span>
     </div>
+    <div id="recur-one-note" style="display:none;padding:8px 12px;background:rgba(37,99,235,0.06);border-left:3px solid var(--living-green);border-radius:6px;font-size:12px;color:var(--forest-mid);margin-top:4px">
+      Your recurring pattern is preserved — saving changes to this date only.
+    </div>
     <div id="recur-group" style="display:none">
       <div class="form-group">
         <label class="form-label">Repeats</label>
@@ -5316,10 +5319,21 @@
   };
 
   window.openModal = function (dateStr) {
-    editingTxnId = null;
+    editingTxnId      = null;
+    editingTxn        = null;
+    editingDate       = null;
+    editingRecurScope = null;
+    modalSnapshot     = null;
+    window._recurExcSave        = null;
+    window._recurFutureOriginal = null;
     setEmoji('');
+    setType('expense');
     document.getElementById('modal-title').textContent = 'Add Transaction';
     document.getElementById('txn-delete-btn').style.display = 'none';
+    ['txn-desc','txn-amount','txn-notes'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('txn-recurring').checked = false;
+    document.getElementById('recur-group').style.display = 'none';
+    document.getElementById('recur-one-note').style.display = 'none';
     document.getElementById('txn-date').value = dateStr || new Date().toISOString().split('T')[0];
     document.getElementById('modal-overlay').classList.add('open');
     populateModalSelects();
@@ -5436,6 +5450,7 @@
     ['txn-desc','txn-amount','txn-notes','recur-end-date','recur-end-count','recur-end-amount','recur-second-date'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('txn-recurring').checked = false;
     document.getElementById('recur-group').style.display = 'none';
+    document.getElementById('recur-one-note').style.display = 'none';
     document.getElementById('recur-second-date-grp').style.display = 'none';
     document.getElementById('recur-end-type').value = '';
     ['recur-end-date-grp','recur-end-count-grp','recur-end-amount-grp'].forEach(id => document.getElementById(id).style.display = 'none');
@@ -5551,10 +5566,13 @@
       setType(t.type || 'expense');
       document.getElementById('txn-date').value   = date;
       document.getElementById('txn-amount').value = t.amount || '';
-      document.getElementById('txn-desc').value   = t.description || '';
+      const parsedOne = parseEmojiFromDesc(t.description);
+      setEmoji(parsedOne.emoji);
+      document.getElementById('txn-desc').value   = parsedOne.text;
       document.getElementById('txn-notes').value  = t.notes || '';
       document.getElementById('txn-recurring').checked          = false;
       document.getElementById('recur-group').style.display      = 'none';
+      document.getElementById('recur-one-note').style.display   = 'block';
       document.getElementById('txn-delete-btn').style.display = 'block';
       document.getElementById('txn-delete-btn').textContent   = 'Remove This Occurrence';
       editingRecurScope = 'one';
@@ -5617,7 +5635,9 @@
       setType(t.type || 'expense');
       document.getElementById('txn-date').value     = date;
       document.getElementById('txn-amount').value   = t.amount || '';
-      document.getElementById('txn-desc').value     = t.description || '';
+      const parsedFut = parseEmojiFromDesc(t.description);
+      setEmoji(parsedFut.emoji);
+      document.getElementById('txn-desc').value     = parsedFut.text;
       document.getElementById('txn-notes').value    = t.notes || '';
       document.getElementById('txn-recurring').checked         = true;
       document.getElementById('recur-group').style.display     = 'block';
@@ -5640,7 +5660,9 @@
       setType(t.type || 'expense');
       document.getElementById('txn-date').value     = t.date || '';
       document.getElementById('txn-amount').value   = t.amount || '';
-      document.getElementById('txn-desc').value     = t.description || '';
+      const parsedAll = parseEmojiFromDesc(t.description);
+      setEmoji(parsedAll.emoji);
+      document.getElementById('txn-desc').value     = parsedAll.text;
       document.getElementById('txn-notes').value    = t.notes || '';
       document.getElementById('txn-recurring').checked = !!t.is_recurring;
       document.getElementById('recur-group').style.display = t.is_recurring ? 'block' : 'none';
