@@ -1021,6 +1021,9 @@
       } else {
         result.style.color = '#256B42';
         result.textContent = `Done — ${data.added} new contacts added, ${data.duplicates} duplicates skipped (${data.total} unique attendees across ${data.events} events).`;
+        if (data.attendeeError) {
+          result.textContent += ` Attendee fetch note: ${data.attendeeError}`;
+        }
       }
     } catch (e) {
       result.style.color = '#c0392b';

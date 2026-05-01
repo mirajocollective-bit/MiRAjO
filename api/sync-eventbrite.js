@@ -17,7 +17,7 @@ function checkAuth(req) {
 async function getOrganizerEvents(organizerId, apiKey) {
   const headers = { Authorization: `Bearer ${apiKey}` };
   const events = [];
-  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc`;
+  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?time_filter=all&order_by=start_asc`;
 
   while (url) {
     const res = await fetch(url, { headers });
@@ -29,7 +29,7 @@ async function getOrganizerEvents(organizerId, apiKey) {
     events.push(...(data.events || []));
     const cont = data.pagination?.continuation;
     url = data.pagination?.has_more_items && cont
-      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc&continuation=${cont}`
+      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?time_filter=all&order_by=start_asc&continuation=${cont}`
       : null;
   }
   return events;
@@ -39,10 +39,15 @@ async function getEventAttendees(eventId, apiKey) {
   const headers = { Authorization: `Bearer ${apiKey}` };
   const attendees = [];
   let url = `https://www.eventbriteapi.com/v3/events/${eventId}/attendees/?expand=profile`;
+  const errors = [];
 
   while (url) {
     const res = await fetch(url, { headers });
-    if (!res.ok) break;
+    if (!res.ok) {
+      const body = await res.text();
+      errors.push(`${res.status}: ${body}`);
+      break;
+    }
     const data = await res.json();
     attendees.push(...(data.attendees || []));
     const cont = data.pagination?.continuation;
@@ -50,6 +55,8 @@ async function getEventAttendees(eventId, apiKey) {
       ? `https://www.eventbriteapi.com/v3/events/${eventId}/attendees/?expand=profile&continuation=${cont}`
       : null;
   }
+
+  if (errors.length) console.warn(`[sync-eventbrite] attendees ${eventId}:`, errors[0]);
   return attendees;
 }
 
@@ -78,8 +85,9 @@ export default async function handler(req, res) {
 
     // Collect all attendees across all events
     const seen = new Map(); // email -> { first_name, last_name }
+    const attendeeErrors = [];
     for (const event of events) {
-      const attendees = await getEventAttendees(event.id, apiKey);
+      const attendees = await getEventAttendees(event.id, apiKey, attendeeErrors);
       for (const a of attendees) {
         const email = (a.profile?.email || '').trim().toLowerCase();
         if (!email || seen.has(email)) continue;
@@ -91,7 +99,7 @@ export default async function handler(req, res) {
     }
 
     if (seen.size === 0) {
-      return res.status(200).json({ added: 0, duplicates: 0, total: 0, events: events.length });
+      return res.status(200).json({ added: 0, duplicates: 0, total: 0, events: events.length, attendeeError: attendeeErrors[0] || null });
     }
 
     // Check which emails already exist in subscribers table
