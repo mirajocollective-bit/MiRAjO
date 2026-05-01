@@ -68,9 +68,9 @@
       --text-body-light: #4A5A48;
       --border-light: rgba(42,58,42,0.08);
       --border-dark: rgba(237,232,223,0.12);
-      /* 25D25N — forest dark + soft lavender + gold */
-      --p-dark: #0D1A0F;
-      --p-dark-mid: #121F13;
+      /* 25D25N — deep purple + soft lavender + gold */
+      --p-dark: #0F0820;
+      --p-dark-mid: #160F28;
       --p-deep: #1A1228;
       --p-mid: #8E7BC4;
       --p-light: #BDB0E0;
@@ -161,7 +161,7 @@
       display: none;
       position: absolute;
       top: 100%; left: 0; right: 0;
-      background: #0D1A0F;
+      background: var(--p-dark);
       border-bottom: 1px solid rgba(189,176,224,0.1);
       padding: 20px;
       flex-direction: column;
@@ -193,7 +193,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 60% 30%, rgba(74,124,89,0.12) 0%, transparent 60%),
+      background: radial-gradient(ellipse at 60% 30%, rgba(142,123,196,0.15) 0%, transparent 60%),
                   radial-gradient(ellipse at 20% 75%, rgba(189,176,224,0.09) 0%, transparent 50%),
                   radial-gradient(ellipse at 80% 80%, rgba(201,169,110,0.07) 0%, transparent 45%);
       pointer-events: none;
@@ -398,7 +398,7 @@
       text-decoration: none;
       transition: all 0.3s;
     }
-    .pillar-btn:hover { background: var(--p-light); color: #0D1A0F; border-color: var(--p-light); }
+    .pillar-btn:hover { background: var(--p-light); color: var(--p-dark); border-color: var(--p-light); }
 
     /* ═══ 7 CURRENTS ═══ */
     .currents-section { background: var(--p-dark-mid); padding: 100px 40px; }
@@ -806,7 +806,7 @@
       animation: heroRingPulse 8s ease-in-out infinite;
     }
     .hero-ring-1 { width: 340px; height: 340px; top: 8%; right: 6%; border-color: rgba(189,176,224,0.09); animation-delay: 0s; }
-    .hero-ring-2 { width: 220px; height: 220px; bottom: 12%; left: 5%; border-color: rgba(74,124,89,0.1); animation-delay: -3s; }
+    .hero-ring-2 { width: 220px; height: 220px; bottom: 12%; left: 5%; border-color: rgba(142,123,196,0.12); animation-delay: -3s; }
     .hero-ring-3 { width: 160px; height: 160px; top: 18%; left: 12%; border-color: rgba(201,169,110,0.07); animation-delay: -5.5s; }
     @keyframes heroRingPulse {
       0%,100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
@@ -943,7 +943,7 @@
       top: calc(100% + 12px);
       left: 50%;
       transform: translateX(-50%);
-      background: #121F13;
+      background: var(--p-dark-mid);
       border: 1px solid rgba(189,176,224,0.12);
       border-radius: 10px;
       padding: 8px 0;
@@ -1293,17 +1293,17 @@
     <div id="credentials-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto;" class="founding-grid">
       <div class="testimonial-card" data-aos="fade-up" data-aos-delay="0">
         <div style="font-family:'Instrument Serif',serif;font-size:52px;color:var(--gold);opacity:0.35;line-height:1;margin-bottom:16px;">20</div>
-        <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(237,232,223,0.45);margin-bottom:12px;">Years</p>
+        <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(58,50,40,0.5);margin-bottom:12px;">Years</p>
         <p style="font-size:15px;color:#3A3228;line-height:1.75;">Two decades building businesses, raising five daughters, and rebuilding herself every time life required it. This framework came from living it.</p>
       </div>
       <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
         <div style="font-family:'Instrument Serif',serif;font-size:52px;color:var(--gold);opacity:0.35;line-height:1;margin-bottom:16px;">2</div>
-        <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(237,232,223,0.45);margin-bottom:12px;">Published Books</p>
+        <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(58,50,40,0.5);margin-bottom:12px;">Published Books</p>
         <p style="font-size:15px;color:#3A3228;line-height:1.75;"><em>The Pain Principle</em> and <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em>. Miranda has been writing the map she now teaches through.</p>
       </div>
       <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
         <div style="font-family:'Instrument Serif',serif;font-size:52px;color:var(--gold);opacity:0.35;line-height:1;margin-bottom:16px;">2yr</div>
-        <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(237,232,223,0.45);margin-bottom:12px;">In Research</p>
+        <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(58,50,40,0.5);margin-bottom:12px;">In Research</p>
         <p style="font-size:15px;color:#3A3228;line-height:1.75;">25 Days and 25 Nights is the result of two years of deep personal research into nature's laws and how they govern human performance, energy, and alignment.</p>
       </div>
     </div>
