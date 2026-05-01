@@ -21,13 +21,15 @@ export default async function handler(req, res) {
     .eq('user_id', user.id)
     .maybeSingle();
 
-  // 'active' status means Stripe (or an admin) has confirmed this is a paying account —
-  // trust it regardless of period_end (webhooks update status when payment fails/cancels).
-  // 'trialing' accounts still need period_end checked since no payment has been collected yet.
-  const hasActive    = sub && sub.status === 'active';
-  const hasValidTrial = sub && sub.status === 'trialing' && new Date(sub.period_end) >= new Date();
+  // Real Stripe subscribers (non-pending ID): trust status — Stripe updates it to
+  // past_due/canceled when payment fails, so period_end is irrelevant for them.
+  const isPending     = !sub || sub.stripe_subscription_id === 'pending';
+  const realSubActive = !isPending && sub && ['active', 'trialing'].includes(sub.status);
 
-  if (!hasActive && !hasValidTrial) {
+  // Trial/manual accounts ('pending' ID): status='active' + period_end not yet passed.
+  const trialActive = isPending && sub && sub.status === 'active' && new Date(sub.period_end) >= new Date();
+
+  if (!realSubActive && !trialActive) {
     return res.status(200).json({ access: false, reason: 'no_subscription' });
   }
 
