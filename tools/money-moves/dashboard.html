@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-title" content="Money Moves">
   <meta name="theme-color" content="#0F2057">
   <title>Dashboard — Money Moves by MiRAjO</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --deep-forest:    #0F2057;
@@ -23,7 +23,9 @@
       --income-color:   #059669;
       --expense-color:  #EF4444;
       --neutral:        #64748B;
-      --border:         rgba(15,32,87,0.08);
+      --border:         rgba(0,0,0,0.06);
+      --text-primary:   #111;
+      --num-font:       'DM Mono', 'Geist Mono', ui-monospace, monospace;
     }
 
     /* ── Dark mode overrides ─────────────────────────────────────────────────── */
@@ -38,7 +40,8 @@
       --income-color:   #34D399;
       --expense-color:  #F87171;
       --neutral:        #94A3B8;
-      --border:         rgba(255,255,255,0.08);
+      --border:         rgba(255,255,255,0.07);
+      --text-primary:   #E2E8FF;
       background: #070F2B !important;
       color: #E2E8FF;
     }
@@ -271,7 +274,8 @@
       text-transform: uppercase; color: var(--neutral);
     }
     .analytics-section-total {
-      font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--deep-forest);
+      font-family: var(--num-font); font-size: 15px; color: var(--text-primary);
+      font-variant-numeric: tabular-nums; font-weight: 500; letter-spacing: -0.3px;
     }
     .analytics-section-arrow { font-size: 10px; color: var(--neutral); transition: transform 0.2s; }
     .analytics-section-arrow.closed { transform: rotate(-90deg); }
@@ -279,13 +283,31 @@
     .analytics-cat-list { padding: 0 12px 10px; display: flex; flex-direction: column; gap: 7px; overflow: hidden; }
     .analytics-cat-list.hidden { display: none; }
     .analytics-cat-row { display: flex; flex-direction: column; gap: 3px; }
-    .analytics-cat-top { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; }
+    .analytics-cat-top { display: flex; justify-content: space-between; align-items: center; gap: 4px; }
+    .analytics-cat-check {
+      width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid var(--border);
+      appearance: none; -webkit-appearance: none; cursor: pointer; flex-shrink: 0;
+      background: transparent; transition: all 0.15s;
+    }
+    .analytics-cat-check:checked {
+      background: var(--dry-sage); border-color: var(--dry-sage);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 10 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23fff' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: 70%; background-position: center; background-repeat: no-repeat;
+    }
+    /* Calendar highlight/dim when category filter is active */
+    .cal-entry.cat-highlight {
+      outline: 2px solid var(--dry-sage) !important;
+      background: rgba(245,158,11,0.10) !important;
+      color: #111 !important;
+    }
+    .cat-filter-active .cal-entry:not(.cat-highlight) { opacity: 0.25; }
     .analytics-cat-name {
-      font-size: 12px; color: var(--deep-forest); font-weight: 500;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;
+      font-size: 12px; color: var(--text-primary); font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px;
+      cursor: pointer;
     }
     .analytics-cat-amounts { display: flex; align-items: baseline; gap: 2px; white-space: nowrap; }
-    .analytics-cat-spent { font-size: 12px; font-weight: 600; color: var(--deep-forest); }
+    .analytics-cat-spent { font-family: var(--num-font); font-size: 11px; font-weight: 500; color: var(--text-primary); font-variant-numeric: tabular-nums; }
     .analytics-cat-budget-lbl {
       font-size: 10px; color: var(--neutral); cursor: pointer; text-decoration: underline dotted;
     }
@@ -300,7 +322,7 @@
       padding: 11px 14px; background: rgba(15,32,87,0.02);
     }
     .analytics-savings-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--neutral); }
-    .analytics-savings-val { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--living-green); font-weight: 400; }
+    .analytics-savings-val { font-family: var(--num-font); font-size: 16px; color: var(--living-green); font-weight: 500; font-variant-numeric: tabular-nums; }
     .analytics-savings-val.negative { color: var(--expense-color); }
 
     /* ── Forecast Strip ── */
@@ -321,7 +343,8 @@
       text-transform: uppercase; color: var(--neutral);
     }
     .forecast-strip-balance {
-      font-family: 'Instrument Serif', serif; font-size: 15px; color: var(--deep-forest);
+      font-family: var(--num-font); font-size: 14px; color: var(--text-primary);
+      font-variant-numeric: tabular-nums; font-weight: 500;
     }
     .forecast-strip-svg { width: 100%; display: block; }
     .forecast-tooltip {
@@ -378,8 +401,9 @@
       white-space: nowrap;
     }
     .summary-amount {
-      font-family: 'Instrument Serif', serif; font-size: 17px; line-height: 1.1;
+      font-family: var(--num-font); font-size: 16px; font-weight: 500; line-height: 1.1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff;
+      font-variant-numeric: tabular-nums; letter-spacing: -0.5px;
     }
     .summary-amount.income  { color: #fff; }
     .summary-amount.expense { color: var(--expense-color); }
@@ -565,10 +589,9 @@
 
     .cal-day-balance {
       position: absolute; bottom: 4px; left: 6px; right: 6px;
-      font-size: 11px; font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      letter-spacing: -0.3px;
+      font-size: 10px; font-weight: 500;
+      font-family: var(--num-font);
+      font-variant-numeric: tabular-nums; letter-spacing: -0.3px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .cal-day-balance.positive { color: #1a3a1a; }
@@ -581,17 +604,19 @@
     .forecast-view.active { display: block; }
     .forecast-title {
       font-family: 'Instrument Serif', serif; font-size: 18px;
-      margin-bottom: 6px; color: var(--deep-forest);
+      margin-bottom: 6px; color: var(--text-primary);
     }
     .forecast-sub { font-size: 13px; color: var(--neutral); margin-bottom: 20px; }
     .forecast-table { width: 100%; border-collapse: collapse; }
     .forecast-table th {
       font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
       color: var(--neutral); padding: 8px 12px; text-align: left;
-      border-bottom: 2px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
     .forecast-table td {
-      padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border);
+      padding: 8px 12px; font-family: var(--num-font); font-size: 12px;
+      font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
     }
     .forecast-table tr:last-child td { border-bottom: none; }
     .forecast-table tr:hover td { background: rgba(15,32,87,0.02); }
@@ -3973,6 +3998,7 @@
         const recurMark = displayT.is_recurring ? '↻ ' : '';
         const entry = document.createElement('div');
         entry.className   = `cal-entry ${incoming ? 'income' : displayT.type}`;
+        if (displayT.category_id) entry.dataset.catId = displayT.category_id;
         const isMobile = window.innerWidth <= 768;
         entry.textContent = isMobile
           ? `${sign}$${Number(displayT.amount).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}`
@@ -4019,28 +4045,35 @@
 
   // ── 7-Year Forecast ──────────────────────────────────────────────────────────
   function renderForecast() {
-    const acct = accounts.find(a => a.id === selectedAccountId);
-    if (!acct) return;
+    const isAll = selectedAccountId === 'all';
+    const acct  = isAll ? null : accounts.find(a => a.id === selectedAccountId);
+    if (!isAll && !acct) return;
 
+    const acctLabel = isAll ? 'all accounts' : acct.name;
     document.getElementById('forecast-sub').textContent =
-      `Based on recurring transactions for ${acct.name}. Projected from today for 7 years.`;
+      `Based on recurring transactions for ${acctLabel}. All 84 months shown.`;
 
-    const recurring = transactions.filter(t => t.account_id === selectedAccountId && t.is_recurring && t.recur_frequency);
+    const recurring = transactions.filter(t =>
+      (isAll || t.account_id === selectedAccountId) && t.is_recurring && t.recur_frequency);
 
     const monthlyIncome  = sumMonthly(recurring.filter(t => t.type === 'income'));
     const monthlyExpense = sumMonthly(recurring.filter(t => t.type === 'expense'));
 
     const body    = document.getElementById('forecast-body');
     body.innerHTML = '';
+    const txnFilter = t => isAll || t.account_id === selectedAccountId;
     const txnSum  = transactions
-      .filter(t => t.account_id === selectedAccountId)
+      .filter(txnFilter)
       .reduce((s, t) => s + (t.type === 'income' ? Number(t.amount) : t.type === 'expense' ? -Number(t.amount) : 0), 0);
-    let balance   = Number(acct.current_balance) + txnSum;
+    const baseBalance = isAll
+      ? accounts.reduce((s, a) => s + Number(a.current_balance), 0)
+      : Number(acct.current_balance);
+    let balance   = baseBalance + txnSum;
     const now     = new Date();
     const months  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-    for (let m = 0; m < 84; m++) { // 84 months = 7 years
-      const d    = new Date(now.getFullYear(), now.getMonth() + m + 1, 1);
+    for (let m = 0; m < 84; m++) { // 84 months = 7 years, starting current month
+      const d    = new Date(now.getFullYear(), now.getMonth() + m, 1);
       const net  = monthlyIncome - monthlyExpense;
       balance   += net;
 
@@ -4317,12 +4350,14 @@
 
     // Income list
     const incomeSorted = Object.values(incomeMap).sort((a, b) => b.amount - a.amount);
-    document.getElementById('analytics-income-list').innerHTML = incomeSorted.length
+    const incListEl = document.getElementById('analytics-income-list');
+    incListEl.innerHTML = incomeSorted.length
       ? incomeSorted.map(c => `
           <div class="analytics-cat-row">
             <div class="analytics-cat-top">
+              <input type="checkbox" class="analytics-cat-check" data-cat-id="${c.dbCatId || ''}" onchange="applyCatHighlight()" title="Highlight transactions">
               <span class="analytics-cat-name" title="${c.name}">${c.name}</span>
-              <span class="analytics-cat-spent income">+$${c.amount.toLocaleString('en-US', { maximumFractionDigits: 0 })}</span>
+              <span class="analytics-cat-spent income" style="margin-left:auto">+$${c.amount.toLocaleString('en-US', { maximumFractionDigits: 0 })}</span>
             </div>
           </div>`).join('')
       : '<div style="font-size:12px;color:var(--neutral);padding:2px 0">No income this month</div>';
@@ -4330,7 +4365,8 @@
 
     // Expense list
     const expSorted = Object.values(expenseMap).sort((a, b) => b.amount - a.amount);
-    document.getElementById('analytics-expense-list').innerHTML = expSorted.length
+    const expListEl = document.getElementById('analytics-expense-list');
+    expListEl.innerHTML = expSorted.length
       ? expSorted.map(c => {
           const hasBudget = c.budget > 0;
           const pct       = hasBudget ? Math.min((c.amount / c.budget) * 100, 120) : 0;
@@ -4341,8 +4377,9 @@
           return `
             <div class="analytics-cat-row">
               <div class="analytics-cat-top">
+                <input type="checkbox" class="analytics-cat-check" data-cat-id="${c.dbCatId || ''}" onchange="applyCatHighlight()" title="Highlight transactions">
                 <span class="analytics-cat-name" title="${c.name}">${c.name}</span>
-                <span class="analytics-cat-amounts">
+                <span class="analytics-cat-amounts" style="margin-left:auto">
                   <span class="analytics-cat-spent">$${c.amount.toLocaleString('en-US', { maximumFractionDigits: 0 })}</span>
                   ${budgetLbl}
                 </span>
@@ -4374,6 +4411,24 @@
     }
   }
   window.renderAnalytics = renderAnalytics;
+
+  // ── Category highlight filter ────────────────────────────────────────────────
+  window.applyCatHighlight = function () {
+    const checked = [...document.querySelectorAll('.analytics-cat-check:checked')]
+      .map(cb => cb.dataset.catId).filter(Boolean);
+    const grid = document.getElementById('cal-grid');
+    const entries = document.querySelectorAll('.cal-entry');
+    if (checked.length === 0) {
+      grid.classList.remove('cat-filter-active');
+      entries.forEach(e => e.classList.remove('cat-highlight'));
+    } else {
+      grid.classList.add('cat-filter-active');
+      entries.forEach(e => {
+        const match = checked.includes(e.dataset.catId || '');
+        e.classList.toggle('cat-highlight', match);
+      });
+    }
+  };
 
   // ── Transaction search ───────────────────────────────────────────────────────
   const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -6574,9 +6629,11 @@
     currentMonth += dir;
     if (currentMonth > 11) { currentMonth = 0;  currentYear++; }
     if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
+    document.getElementById('cal-grid').classList.remove('cat-filter-active');
     renderCalendar();
     renderSummary();
     renderBudget();
+    renderAnalytics();
     renderMode();
   };
 
