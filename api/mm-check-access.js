@@ -21,11 +21,13 @@ export default async function handler(req, res) {
     .eq('user_id', user.id)
     .maybeSingle();
 
-  const isPending = !sub || sub.stripe_subscription_id === 'pending';
-  const trialExpired = isPending && sub && new Date(sub.period_end) < new Date();
-  const realSubActive = sub && ['active', 'trialing'].includes(sub.status) && sub.stripe_subscription_id !== 'pending';
+  // 'active' status means Stripe (or an admin) has confirmed this is a paying account —
+  // trust it regardless of period_end (webhooks update status when payment fails/cancels).
+  // 'trialing' accounts still need period_end checked since no payment has been collected yet.
+  const hasActive    = sub && sub.status === 'active';
+  const hasValidTrial = sub && sub.status === 'trialing' && new Date(sub.period_end) >= new Date();
 
-  if (!realSubActive && (!sub || trialExpired)) {
+  if (!hasActive && !hasValidTrial) {
     return res.status(200).json({ access: false, reason: 'no_subscription' });
   }
 
