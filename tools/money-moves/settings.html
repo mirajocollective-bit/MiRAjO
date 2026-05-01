@@ -425,6 +425,11 @@
     .debt-delete-btn:hover { background: rgba(192,57,43,0.06); }
     .debt-payoff-bar { margin-top: 12px; }
     .debt-payoff-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--neutral); margin-bottom: 4px; }
+    .debt-promo-info { font-size: 12px; margin-top: 8px; padding: 6px 10px; border-radius: 6px; font-weight: 500; }
+    .debt-promo-info.promo-active { background: rgba(37,107,66,0.08); color: var(--living-green); }
+    .debt-promo-info.promo-expired { background: rgba(192,57,43,0.06); color: #C0392B; }
+    .debt-promo-add-btn { font-size: 12px; color: var(--living-green); background: none; border: none; cursor: pointer; padding: 4px 0; font-family: inherit; }
+    .debt-promo-add-btn:hover { text-decoration: underline; }
     .new-debt-form {
       border: 2px dashed rgba(192,57,43,0.2); border-radius: 14px; padding: 20px; margin-top: 4px;
     }
@@ -751,6 +756,22 @@
             <div>
               <label class="form-label">Payoff Goal Date</label>
               <input type="date" class="form-input" id="nd-goaldate">
+            </div>
+          </div>
+          <div style="margin-bottom:16px">
+            <label style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--neutral);cursor:pointer">
+              <input type="checkbox" id="nd-has-promo" onchange="document.getElementById('nd-promo-fields').style.display = this.checked ? 'grid' : 'none'">
+              This debt has a promotional rate (e.g. 0% APR for 12 months)
+            </label>
+            <div id="nd-promo-fields" style="display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+              <div>
+                <label class="form-label">Promo Rate (%)</label>
+                <input type="number" class="form-input" id="nd-promo-rate" placeholder="e.g. 0" min="0" step="0.01">
+              </div>
+              <div>
+                <label class="form-label">Promo End Date</label>
+                <input type="date" class="form-input" id="nd-promo-end">
+              </div>
             </div>
           </div>
           <button class="save-btn" onclick="addDebt()">Add Debt</button>
@@ -1345,6 +1366,9 @@
     list.innerHTML = debts.map(d => {
       const pct = d.original_amount ? Math.max(0, Math.min(100, (1 - Number(d.current_balance) / Number(d.original_amount)) * 100)) : 0;
       const goalDate = d.payoff_goal_date ? new Date(d.payoff_goal_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '';
+      const hasPromo = d.promo_rate != null;
+      const promoActive = hasPromo && d.promo_end_date && new Date(d.promo_end_date + 'T12:00:00') > new Date();
+      const promoEndFmt = d.promo_end_date ? new Date(d.promo_end_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
       return `
         <div class="debt-row" data-debt-id="${d.id}">
           <div class="debt-row-top">
@@ -1362,7 +1386,7 @@
                 onchange="updateDebtField('${d.id}', 'current_balance', this.value)">
             </div>
             <div class="debt-field">
-              <label>APR (%)</label>
+              <label>${hasPromo ? 'Rate After Promo (%)' : 'APR (%)'}</label>
               <input type="number" value="${d.interest_rate || ''}" placeholder="—" min="0" step="0.01"
                 onchange="updateDebtField('${d.id}', 'interest_rate', this.value)">
             </div>
@@ -1385,6 +1409,30 @@
               <button class="debt-delete-btn" onclick="markDebtPaid('${d.id}')">Mark Paid Off</button>
             </div>
           </div>
+          ${hasPromo ? `
+          <div class="debt-promo-info ${promoActive ? 'promo-active' : 'promo-expired'}">
+            ${promoActive
+              ? `${d.promo_rate}% promotional rate — ends ${promoEndFmt}. Reverts to ${d.interest_rate != null ? d.interest_rate + '%' : '—'} after.`
+              : `Promotional rate ended ${promoEndFmt}.`}
+          </div>
+          <div class="debt-fields" style="margin-top:8px">
+            <div class="debt-field">
+              <label>Promo Rate (%)</label>
+              <input type="number" value="${d.promo_rate}" placeholder="0" min="0" step="0.01"
+                onchange="updateDebtField('${d.id}', 'promo_rate', this.value)">
+            </div>
+            <div class="debt-field">
+              <label>Promo End Date</label>
+              <input type="date" value="${d.promo_end_date || ''}"
+                onchange="updateDebtField('${d.id}', 'promo_end_date', this.value)">
+            </div>
+            <div class="debt-field" style="display:flex;align-items:flex-end">
+              <button class="debt-delete-btn" onclick="clearDebtPromo('${d.id}')">Remove Promo</button>
+            </div>
+          </div>` : `
+          <div style="margin-top:8px">
+            <button class="debt-promo-add-btn" onclick="addDebtPromo('${d.id}')">+ Add promotional rate</button>
+          </div>`}
           ${d.original_amount ? `
           <div class="debt-payoff-bar" style="margin-top:12px">
             <div class="debt-payoff-row">
@@ -1400,41 +1448,48 @@
   }
 
   window.addDebt = async function () {
-    const name     = document.getElementById('nd-name').value.trim();
-    const type     = document.getElementById('nd-type').value;
-    const balance  = parseFloat(document.getElementById('nd-balance').value)  || 0;
-    const original = parseFloat(document.getElementById('nd-original').value) || null;
-    const apr      = parseFloat(document.getElementById('nd-apr').value)      || null;
-    const minpay   = parseFloat(document.getElementById('nd-minpay').value)   || null;
-    const dueday   = parseInt(document.getElementById('nd-dueday').value)     || null;
-    const goaldate = document.getElementById('nd-goaldate').value             || null;
+    const name      = document.getElementById('nd-name').value.trim();
+    const type      = document.getElementById('nd-type').value;
+    const balance   = parseFloat(document.getElementById('nd-balance').value)    || 0;
+    const original  = parseFloat(document.getElementById('nd-original').value)   || null;
+    const apr       = parseFloat(document.getElementById('nd-apr').value)        || null;
+    const minpay    = parseFloat(document.getElementById('nd-minpay').value)     || null;
+    const dueday    = parseInt(document.getElementById('nd-dueday').value)       || null;
+    const goaldate  = document.getElementById('nd-goaldate').value               || null;
+    const hasPromo  = document.getElementById('nd-has-promo').checked;
+    const promoRate = hasPromo ? (parseFloat(document.getElementById('nd-promo-rate').value) ?? null) : null;
+    const promoEnd  = hasPromo ? (document.getElementById('nd-promo-end').value || null) : null;
 
     if (!name || balance === null) return toast('Debt name and current balance are required.', true);
 
     const { data, error } = await supabase.from('mm_debts').insert({
       household_id:    householdId,
       name, type,
-      current_balance: balance,
-      original_amount: original,
-      interest_rate:   apr,
-      minimum_payment: minpay,
-      due_day:         dueday,
+      current_balance:  balance,
+      original_amount:  original,
+      interest_rate:    apr,
+      minimum_payment:  minpay,
+      due_day:          dueday,
       payoff_goal_date: goaldate,
+      promo_rate:       promoRate,
+      promo_end_date:   promoEnd,
       status: 'active',
     }).select().single();
 
     if (error) return toast('Error adding debt.', true);
     debts.push(data);
-    ['nd-name','nd-balance','nd-original','nd-apr','nd-minpay','nd-dueday','nd-goaldate'].forEach(id => {
+    ['nd-name','nd-balance','nd-original','nd-apr','nd-minpay','nd-dueday','nd-goaldate','nd-promo-rate','nd-promo-end'].forEach(id => {
       document.getElementById(id).value = '';
     });
+    document.getElementById('nd-has-promo').checked = false;
+    document.getElementById('nd-promo-fields').style.display = 'none';
     renderDebts();
     toast('Debt added!');
   };
 
   window.updateDebtField = async function (id, field, value) {
-    const parsed = ['current_balance','interest_rate','minimum_payment'].includes(field)
-      ? parseFloat(value) || 0
+    const parsed = ['current_balance','interest_rate','minimum_payment','promo_rate'].includes(field)
+      ? (value === '' ? null : parseFloat(value))
       : field === 'due_day' ? parseInt(value) || null
       : value || null;
 
@@ -1454,6 +1509,21 @@
     debts = debts.filter(d => d.id !== id);
     renderDebts();
     toast('Debt marked as paid off!');
+  };
+
+  window.addDebtPromo = async function (id) {
+    await supabase.from('mm_debts').update({ promo_rate: 0, promo_end_date: null }).eq('id', id);
+    const d = debts.find(d => d.id === id);
+    if (d) { d.promo_rate = 0; d.promo_end_date = null; }
+    renderDebts();
+  };
+
+  window.clearDebtPromo = async function (id) {
+    await supabase.from('mm_debts').update({ promo_rate: null, promo_end_date: null }).eq('id', id);
+    const d = debts.find(d => d.id === id);
+    if (d) { d.promo_rate = null; d.promo_end_date = null; }
+    renderDebts();
+    toast('Promotional rate removed.');
   };
 
   // ── Nav highlight on scroll ──────────────────────────────────────────────────

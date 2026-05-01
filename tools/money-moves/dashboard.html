@@ -2932,6 +2932,7 @@
                   <input class="mtg-input" type="number" id="debt-rate" placeholder="0.00" min="0" step="0.01" oninput="calcDebt()">
                   <span class="mtg-suffix">%</span>
                 </div>
+                <div id="debt-promo-note" style="display:none;font-size:11.5px;color:var(--living-green);margin-top:5px;padding:5px 8px;background:rgba(37,107,66,0.08);border-radius:6px;font-weight:500"></div>
               </div>
             </div>
 
@@ -4985,15 +4986,22 @@
   function renderDebts() {
     const list = document.getElementById('debt-list');
     if (!debts.length) { list.innerHTML = '<p style="font-size:13px;color:var(--neutral);opacity:0.7">No debts tracked yet.</p>'; return; }
-    list.innerHTML = debts.map(d => `
+    list.innerHTML = debts.map(d => {
+      const promoActive = d.promo_rate != null && d.promo_end_date && new Date(d.promo_end_date + 'T12:00:00') > new Date();
+      const rateLabel = promoActive
+        ? `${d.promo_rate}% promo until ${new Date(d.promo_end_date + 'T12:00:00').toLocaleDateString('en-US',{month:'short',year:'numeric'})} · then ${d.interest_rate != null ? d.interest_rate + '%' : '—'}`
+        : (d.interest_rate ? `${d.interest_rate}% APR` : '');
+      const minLabel = d.minimum_payment ? `· Min $${Number(d.minimum_payment).toFixed(0)}/mo` : '';
+      return `
       <div class="debt-item">
         <div class="debt-icon">${DEBT_ICONS[d.type] || '📋'}</div>
         <div class="debt-info">
           <div class="debt-name">${d.name}</div>
-          <div class="debt-detail">${d.interest_rate ? `${d.interest_rate}% APR` : ''} ${d.minimum_payment ? `· Min $${Number(d.minimum_payment).toFixed(0)}/mo` : ''}</div>
+          <div class="debt-detail">${[rateLabel, minLabel].filter(Boolean).join(' ')}</div>
         </div>
         <div class="debt-balance">$${Number(d.current_balance).toLocaleString('en-US', { minimumFractionDigits: 0 })}</div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
 
   // ── Sidebar drag-to-reorder ──────────────────────────────────────────────────
@@ -6297,46 +6305,67 @@
 
       if (!P || !M) { errEl.style.display = 'none'; resultsEl.style.display = 'none'; return; }
 
-      const r = apr / 100 / 12;
-      const minPayment = r > 0 ? P * r : 0;
+      const promo = window._debtPromoInfo || null;
+      const startVal = document.getElementById('debt-start')?.value;
 
-      if (M <= minPayment) {
+      // Amortization loop — handles promo rate switch automatically
+      function amortize(balance, payment) {
+        const startDate = startVal ? new Date(startVal + '-01') : new Date();
+        let bal = balance, totalInterest = 0, month = 0;
+        while (bal > 0.005 && month < 600) {
+          const d = new Date(startDate.getFullYear(), startDate.getMonth() + month, 1);
+          const effectiveApr = (promo && d < promo.endDate) ? promo.rate : apr;
+          const r = effectiveApr / 100 / 12;
+          const interest = bal * r;
+          if (payment <= interest && r > 0) return null;
+          const principal = Math.min(payment - interest, bal);
+          totalInterest += interest;
+          bal -= principal;
+          month++;
+        }
+        return { months: month, totalInterest };
+      }
+
+      const std = amortize(P, M);
+      if (!std) {
         errEl.style.display = 'block';
-        errEl.textContent   = 'Monthly payment is too low to cover the interest. Increase your payment above $' + (minPayment + 0.01).toFixed(2) + '/mo.';
+        const minPay = P * apr / 100 / 12;
+        errEl.textContent = 'Monthly payment is too low to cover the interest. Increase your payment above $' + (minPay + 0.01).toFixed(2) + '/mo.';
         resultsEl.style.display = 'none';
         return;
       }
       errEl.style.display = 'none';
 
-      // Standard
-      const stdMonths   = calcMonths(P, r, M);
-      const stdTotal    = M * stdMonths;
-      const stdInterest = stdTotal - P;
+      const stdInterest = std.totalInterest;
+      const stdMonths   = std.months;
+      const stdTotal    = P + stdInterest;
 
       document.getElementById('debt-std-date').textContent     = payoffDate(stdMonths);
       document.getElementById('debt-std-months').textContent   = monthsLabel(stdMonths);
       document.getElementById('debt-std-interest').textContent = fmtMo(stdInterest);
       document.getElementById('debt-std-total').textContent    = fmtMo(stdTotal);
 
-      // With extra payment
       const extraCard   = document.getElementById('debt-extra-card');
       const savingsCard = document.getElementById('debt-savings-card');
       if (E > 0) {
-        const extMonths   = calcMonths(P, r, M + E);
-        const extTotal    = (M + E) * extMonths;
-        const extInterest = extTotal - P;
-        const savedMo     = stdMonths - extMonths;
-        const savedInt    = stdInterest - extInterest;
+        const ext = amortize(P, M + E);
+        if (ext) {
+          const extInterest = ext.totalInterest;
+          const extMonths   = ext.months;
+          const extTotal    = P + extInterest;
+          const savedMo     = stdMonths - extMonths;
+          const savedInt    = stdInterest - extInterest;
 
-        document.getElementById('debt-ext-date').textContent     = payoffDate(extMonths);
-        document.getElementById('debt-ext-months').textContent   = monthsLabel(extMonths);
-        document.getElementById('debt-ext-interest').textContent = fmtMo(extInterest);
-        document.getElementById('debt-ext-total').textContent    = fmtMo(extTotal);
-        document.getElementById('debt-save-time').textContent    = monthsLabel(savedMo) + ' faster';
-        document.getElementById('debt-save-interest').textContent = fmtMo(savedInt);
+          document.getElementById('debt-ext-date').textContent      = payoffDate(extMonths);
+          document.getElementById('debt-ext-months').textContent    = monthsLabel(extMonths);
+          document.getElementById('debt-ext-interest').textContent  = fmtMo(extInterest);
+          document.getElementById('debt-ext-total').textContent     = fmtMo(extTotal);
+          document.getElementById('debt-save-time').textContent     = monthsLabel(savedMo) + ' faster';
+          document.getElementById('debt-save-interest').textContent = fmtMo(savedInt);
 
-        extraCard.style.display   = '';
-        savingsCard.style.display = '';
+          extraCard.style.display   = '';
+          savingsCard.style.display = '';
+        }
       } else {
         extraCard.style.display   = 'none';
         savingsCard.style.display = 'none';
@@ -6377,16 +6406,31 @@
       const id     = document.getElementById('debt-tool-select').value;
       const debt   = (typeof debts !== 'undefined') ? debts.find(d => d.id === id) : null;
       const preset = (typeof CALC_PRESETS !== 'undefined') ? CALC_PRESETS.find(p => p.id === id) : null;
+      const noteEl = document.getElementById('debt-promo-note');
+
+      window._debtPromoInfo = null;
 
       if (debt) {
-        document.getElementById('debt-balance').value = debt.current_balance || '';
-        document.getElementById('debt-rate').value    = debt.interest_rate   || '';
-        document.getElementById('debt-payment').value = debt.minimum_payment || '';
+        document.getElementById('debt-balance').value  = debt.current_balance  || '';
+        document.getElementById('debt-rate').value     = debt.interest_rate    || '';
+        document.getElementById('debt-payment').value  = debt.minimum_payment  || '';
+
+        const promoActive = debt.promo_rate != null && debt.promo_end_date && new Date(debt.promo_end_date + 'T12:00:00') > new Date();
+        if (promoActive) {
+          window._debtPromoInfo = { rate: debt.promo_rate, endDate: new Date(debt.promo_end_date + 'T12:00:00') };
+          const endFmt = new Date(debt.promo_end_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          if (noteEl) { noteEl.textContent = `${debt.promo_rate}% promo rate active until ${endFmt} — calculator adjusts automatically`; noteEl.style.display = ''; }
+        } else {
+          if (noteEl) noteEl.style.display = 'none';
+        }
       } else if (preset) {
-        document.getElementById('debt-balance').value = '';
-        document.getElementById('debt-rate').value    = preset.apr || '';
-        document.getElementById('debt-payment').value = '';
+        document.getElementById('debt-balance').value  = '';
+        document.getElementById('debt-rate').value     = preset.apr || '';
+        document.getElementById('debt-payment').value  = '';
         document.getElementById('debt-balance').focus();
+        if (noteEl) noteEl.style.display = 'none';
+      } else {
+        if (noteEl) noteEl.style.display = 'none';
       }
       calcDebt();
     };
