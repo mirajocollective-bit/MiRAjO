@@ -17,15 +17,20 @@ function checkAuth(req) {
 async function getOrganizerEvents(organizerId, apiKey) {
   const headers = { Authorization: `Bearer ${apiKey}` };
   const events = [];
-  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?status=all&page_size=200&order_by=start_desc`;
+  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc&page_size=50`;
 
   while (url) {
     const res = await fetch(url, { headers });
-    if (!res.ok) throw new Error(`Events fetch failed: ${res.status}`);
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`Events fetch failed: ${res.status} — ${body}`);
+    }
     const data = await res.json();
     events.push(...(data.events || []));
-    url = data.pagination?.has_more_items ? data.pagination.continuation : null;
-    if (url) url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?continuation=${url}&status=all&page_size=200`;
+    const cont = data.pagination?.continuation;
+    url = data.pagination?.has_more_items && cont
+      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc&page_size=50&continuation=${cont}`
+      : null;
   }
   return events;
 }
