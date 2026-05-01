@@ -587,6 +587,26 @@
       </div>
     </div>
 
+    <!-- Eventbrite Sync -->
+    <div class="panel grid-full">
+      <div class="panel-header">
+        <span class="panel-title">Contacts — Eventbrite Sync</span>
+      </div>
+      <div class="panel-body" style="padding:24px 32px">
+        <p style="font-size:13px;color:var(--muted);margin:0 0 16px;line-height:1.7">
+          Pulls all attendees from every Eventbrite event into your Supabase subscribers table and Resend audience.
+          Duplicates are skipped automatically.
+        </p>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button onclick="syncEventbrite()" id="eb-sync-btn"
+            style="padding:12px 22px;background:var(--deep-forest);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;">
+            Sync Eventbrite Attendees
+          </button>
+          <span id="eb-sync-result" style="font-size:13px;line-height:1.7"></span>
+        </div>
+      </div>
+    </div>
+
     <!-- Analytics -->
     <div class="panel grid-full analytics-panel">
       <div class="panel-header">
@@ -978,6 +998,37 @@
       msg.style.color = '#E88080'; msg.textContent = 'Network error. Try again.';
     }
     btn.disabled = false; btn.textContent = 'Send to All Subscribers';
+  }
+
+  async function syncEventbrite() {
+    const btn = document.getElementById('eb-sync-btn');
+    const result = document.getElementById('eb-sync-result');
+    btn.disabled = true;
+    btn.textContent = 'Syncing...';
+    result.style.color = 'var(--muted)';
+    result.textContent = 'Fetching all events and attendees — this may take a moment...';
+
+    try {
+      const res = await fetch('/api/sync-eventbrite', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${authToken}` },
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        result.style.color = '#c0392b';
+        result.textContent = `Error: ${data.error}`;
+      } else {
+        result.style.color = '#256B42';
+        result.textContent = `Done — ${data.added} new contacts added, ${data.duplicates} duplicates skipped (${data.total} unique attendees across ${data.events} events).`;
+      }
+    } catch (e) {
+      result.style.color = '#c0392b';
+      result.textContent = 'Network error. Try again.';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Sync Eventbrite Attendees';
   }
 
   async function fixUserSub() {
