@@ -14,23 +14,36 @@ function checkAuth(req) {
   return token && token === process.env.ADMIN_PASSWORD;
 }
 
-async function getOrganizerEvents(organizerId, apiKey) {
-  const headers = { Authorization: `Bearer ${apiKey}` };
-  const events = [];
-  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc`;
+async function fetchEventPage(url, apiKey) {
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${apiKey}` } });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`${res.status} — ${body}`);
+  }
+  return res.json();
+}
 
-  while (url) {
-    const res = await fetch(url, { headers });
-    if (!res.ok) {
-      const body = await res.text();
-      throw new Error(`Events fetch failed: ${res.status} — ${body}`);
+async function getOrganizerEvents(organizerId, apiKey) {
+  const seenIds = new Set();
+  const events = [];
+
+  // Fetch live/upcoming and ended events separately
+  for (const status of ['live', 'ended']) {
+    let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?status=${status}&order_by=start_asc`;
+    try {
+      while (url) {
+        const data = await fetchEventPage(url, apiKey);
+        for (const e of (data.events || [])) {
+          if (!seenIds.has(e.id)) { seenIds.add(e.id); events.push(e); }
+        }
+        const cont = data.pagination?.continuation;
+        url = data.pagination?.has_more_items && cont
+          ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?status=${status}&order_by=start_asc&continuation=${cont}`
+          : null;
+      }
+    } catch (err) {
+      console.warn(`[sync-eventbrite] status=${status} fetch failed:`, err.message);
     }
-    const data = await res.json();
-    events.push(...(data.events || []));
-    const cont = data.pagination?.continuation;
-    url = data.pagination?.has_more_items && cont
-      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue,ticket_classes&order_by=start_asc&continuation=${cont}`
-      : null;
   }
   return events;
 }
