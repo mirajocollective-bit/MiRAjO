@@ -17,7 +17,7 @@ function checkAuth(req) {
 async function getOrganizerEvents(organizerId, apiKey) {
   const headers = { Authorization: `Bearer ${apiKey}` };
   const events = [];
-  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc&page_size=50`;
+  let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc`;
 
   while (url) {
     const res = await fetch(url, { headers });
@@ -29,7 +29,7 @@ async function getOrganizerEvents(organizerId, apiKey) {
     events.push(...(data.events || []));
     const cont = data.pagination?.continuation;
     url = data.pagination?.has_more_items && cont
-      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc&page_size=50&continuation=${cont}`
+      ? `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&order_by=start_asc&continuation=${cont}`
       : null;
   }
   return events;
@@ -38,7 +38,7 @@ async function getOrganizerEvents(organizerId, apiKey) {
 async function getEventAttendees(eventId, apiKey) {
   const headers = { Authorization: `Bearer ${apiKey}` };
   const attendees = [];
-  let url = `https://www.eventbriteapi.com/v3/events/${eventId}/attendees/?expand=profile&page_size=500`;
+  let url = `https://www.eventbriteapi.com/v3/events/${eventId}/attendees/?expand=profile`;
 
   while (url) {
     const res = await fetch(url, { headers });
@@ -47,7 +47,7 @@ async function getEventAttendees(eventId, apiKey) {
     attendees.push(...(data.attendees || []));
     const cont = data.pagination?.continuation;
     url = data.pagination?.has_more_items && cont
-      ? `https://www.eventbriteapi.com/v3/events/${eventId}/attendees/?expand=profile&page_size=500&continuation=${cont}`
+      ? `https://www.eventbriteapi.com/v3/events/${eventId}/attendees/?expand=profile&continuation=${cont}`
       : null;
   }
   return attendees;
