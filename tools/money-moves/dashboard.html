@@ -3978,7 +3978,7 @@
           ? `${sign}$${Number(displayT.amount).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}`
           : `${txnEmoji ? txnEmoji + ' ' : ''}${recurMark}${amt}${txnName ? ' ' + txnName : ''}`;
         entry.title = `${displayT.description || ''} — ${sign}$${Number(displayT.amount).toLocaleString('en-US',{minimumFractionDigits:2})}`;
-        entry.addEventListener('click', (e) => { e.stopPropagation(); openViewModal(displayT, dateStr); });
+        entry.addEventListener('click', (e) => { e.stopPropagation(); openEditModal(displayT, dateStr, true); });
         entry.addEventListener('contextmenu', (e) => { e.preventDefault(); e.stopPropagation(); openEditModal(displayT, dateStr); });
         entry.setAttribute('draggable', 'true');
         entry.addEventListener('dragstart', (e) => {
@@ -5383,13 +5383,17 @@
     document.getElementById('txn-view-overlay').style.display = 'none';
   };
 
-  window.openEditModal = function (t, calendarDate) {
+  window.openEditModal = function (t, calendarDate, skipPrompt) {
     editingTxn  = t;
     editingDate = calendarDate || t.date;
 
-    // Always show scope prompt for recurring transactions
     if (t.is_recurring) {
-      document.getElementById('recur-edit-overlay').style.display = 'flex';
+      if (skipPrompt) {
+        // Left-click path: go straight to "all occurrences" edit, no scope prompt
+        handleRecurEdit('all');
+      } else {
+        document.getElementById('recur-edit-overlay').style.display = 'flex';
+      }
       return;
     }
 
@@ -5570,7 +5574,7 @@
       setEmoji(parsedOne.emoji);
       document.getElementById('txn-desc').value   = parsedOne.text;
       document.getElementById('txn-notes').value  = t.notes || '';
-      document.getElementById('txn-recurring').checked          = false;
+      document.getElementById('txn-recurring').checked          = true;
       document.getElementById('recur-group').style.display      = 'none';
       document.getElementById('recur-one-note').style.display   = 'block';
       document.getElementById('txn-delete-btn').style.display = 'block';
@@ -5652,25 +5656,33 @@
 
     if (scope === 'all') {
       // Open normal edit modal for the original transaction
-      editingTxnId = t.id;
+      // Use the canonical row from transactions[] so date is always the true start date,
+      // not a virtual occurrence date from a future-month spread.
+      const orig = transactions.find(tx => tx.id === t.id) || t;
+      editingTxnId = orig.id;
       editingRecurScope = 'all';
       document.getElementById('modal-title').textContent = 'Edit Transaction';
       document.getElementById('txn-delete-btn').style.display = 'block';
       document.getElementById('txn-delete-btn').textContent   = 'Delete';
-      setType(t.type || 'expense');
-      document.getElementById('txn-date').value     = t.date || '';
-      document.getElementById('txn-amount').value   = t.amount || '';
-      const parsedAll = parseEmojiFromDesc(t.description);
+      setType(orig.type || 'expense');
+      document.getElementById('txn-date').value     = orig.date || '';
+      document.getElementById('txn-amount').value   = orig.amount || '';
+      const parsedAll = parseEmojiFromDesc(orig.description);
       setEmoji(parsedAll.emoji);
       document.getElementById('txn-desc').value     = parsedAll.text;
-      document.getElementById('txn-notes').value    = t.notes || '';
-      document.getElementById('txn-recurring').checked = !!t.is_recurring;
-      document.getElementById('recur-group').style.display = t.is_recurring ? 'block' : 'none';
-      if (t.recur_frequency) document.getElementById('txn-frequency').value = t.recur_frequency;
+      document.getElementById('txn-notes').value    = orig.notes || '';
+      document.getElementById('txn-recurring').checked = !!orig.is_recurring;
+      document.getElementById('recur-group').style.display = orig.is_recurring ? 'block' : 'none';
+      if (orig.recur_frequency) document.getElementById('txn-frequency').value = orig.recur_frequency;
+      document.getElementById('recur-end-type').value = orig.recur_end_type || '';
+      toggleRecurEnd();
+      if (orig.recur_end_date)   document.getElementById('recur-end-date').value   = orig.recur_end_date;
+      if (orig.recur_end_count)  document.getElementById('recur-end-count').value  = orig.recur_end_count;
+      if (orig.recur_end_amount) document.getElementById('recur-end-amount').value = orig.recur_end_amount;
       document.getElementById('modal-overlay').classList.add('open');
       populateModalSelects();
-      document.getElementById('txn-account').value  = t.account_id || '';
-      document.getElementById('txn-category').value = t.category_id || '';
+      document.getElementById('txn-account').value  = orig.account_id || '';
+      document.getElementById('txn-category').value = orig.category_id || '';
       setTimeout(() => { modalSnapshot = snapshotModal(); }, 0);
     }
   };
