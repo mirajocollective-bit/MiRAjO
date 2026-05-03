@@ -193,9 +193,9 @@
     .account-tab:hover { background: #F3F4F6; color: #111827; border-color: #D1D5DB; }
     .account-tab.active { background: #111827; color: #fff; border-color: #111827; }
     .account-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .account-tab-name { font-size: 11px; font-weight: 600; }
+    .account-tab-name { font-size: 11px; font-weight: 500; }
     .account-tab-balance {
-      font-size: 10px; font-weight: 500; font-family: var(--num-font);
+      font-size: 10px; font-weight: 400; font-family: var(--num-font);
       font-variant-numeric: tabular-nums;
     }
     .account-tab-balance.positive { color: inherit; }
@@ -216,7 +216,7 @@
       padding-left: 12px; border-left: 1px solid #E4E7EC;
     }
     .cal-nw-label { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #9CA3AF; font-family: 'Inter', sans-serif; }
-    .cal-nw-val { font-size: 13px; font-weight: 600; font-family: var(--num-font); font-variant-numeric: tabular-nums; color: #111827; }
+    .cal-nw-val { font-size: 13px; font-weight: 400; font-family: var(--num-font); font-variant-numeric: tabular-nums; color: #111827; }
     .cal-nw-val.positive { color: #1A5C38; }
     .cal-nw-val.negative { color: #7B1D1D; }
 
@@ -419,7 +419,7 @@
       white-space: nowrap; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
     }
     .summary-amount {
-      font-family: var(--num-font); font-size: 15px; font-weight: 600; line-height: 1.1;
+      font-family: var(--num-font); font-size: 15px; font-weight: 400; line-height: 1.1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111827;
       font-variant-numeric: tabular-nums; letter-spacing: -0.5px;
     }
@@ -612,7 +612,7 @@
 
     .cal-day-balance {
       position: absolute; bottom: 3px; left: 6px; right: 6px;
-      font-size: 10px; font-weight: 500;
+      font-size: 10px; font-weight: 400;
       font-family: var(--num-font);
       font-variant-numeric: tabular-nums; letter-spacing: -0.3px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -622,10 +622,10 @@
 
     /* ── Calendar min/max balance highlights — subtle, data-grade ── */
     .cal-cell.day-bal-highest { background: rgba(22,101,52,0.05); }
-    .cal-cell.day-bal-highest .cal-day-balance { color: #1A5C38 !important; font-weight: 700; }
+    .cal-cell.day-bal-highest .cal-day-balance { color: #1A5C38 !important; font-weight: 400; }
     .cal-cell.day-bal-highest .cal-date-num::after { content: '▲'; font-size: 7px; color: #1A5C38; margin-left: 1px; vertical-align: top; }
     .cal-cell.day-bal-lowest  { background: rgba(127,29,29,0.04); }
-    .cal-cell.day-bal-lowest  .cal-day-balance { color: #7B1D1D !important; font-weight: 700; }
+    .cal-cell.day-bal-lowest  .cal-day-balance { color: #7B1D1D !important; font-weight: 400; }
     .cal-cell.day-bal-lowest  .cal-date-num::after { content: '▼'; font-size: 7px; color: #7B1D1D; margin-left: 1px; vertical-align: top; }
     body.dark .cal-cell.day-bal-highest { background: rgba(22,101,52,0.16); }
     body.dark .cal-cell.day-bal-lowest  { background: rgba(127,29,29,0.18); }
@@ -1310,7 +1310,7 @@
 
       /* Balance number */
       #m-home .cal-day-balance {
-        font-size: 9px; font-weight: 600;
+        font-size: 9px; font-weight: 400;
         bottom: 2px; left: 2px; right: 2px;
         text-align: center; letter-spacing: -0.5px;
         font-family: var(--num-font);
@@ -1378,7 +1378,7 @@
         font-size: 8px; font-weight: 700; padding: 1px 5px; border-radius: 4px;
         margin: 0; line-height: 1.6; pointer-events: none; display: block;
       }
-      #m-home .cal-day-balance { font-size: 10px; font-weight: 800; }
+      #m-home .cal-day-balance { font-size: 10px; font-weight: 400; }
       /* Selected cell */
       #m-home .cal-cell.m-selected {
         background: rgba(37,99,235,0.07) !important;
