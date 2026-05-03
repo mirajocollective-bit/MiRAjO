@@ -1,7 +1,7 @@
 // Money Moves Service Worker
 // Caches the app shell for fast loads and offline access
 
-const CACHE  = 'mm-v4';
+const CACHE  = 'mm-v5';
 const SHELL  = [
   '/tools/money-moves/dashboard',
   '/tools/money-moves/login',

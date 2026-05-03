@@ -8,15 +8,15 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Money Moves">
-  <meta name="theme-color" content="#0F2057">
+  <meta name="theme-color" content="#111111">
   <title>Dashboard — Money Moves by MiRAjO</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --deep-forest:    #0F2057;
-      --forest-mid:     #1A3A8F;
-      --living-green:   #2563EB;
-      --new-growth:     #60A5FA;
+      --deep-forest:    #111111;
+      --forest-mid:     #374151;
+      --living-green:   #111111;
+      --new-growth:     #9CA3AF;
       --dry-sage:       #F59E0B;
       --warm-parchment: #EEF2FF;
       --soft-white:     #F8FAFF;
@@ -164,7 +164,7 @@
     .nav-right { display: flex; align-items: center; gap: 8px; }
     .nav-greeting { font-size: 13px; color: var(--neutral); }
     .nav-btn {
-      font-size: 12px; font-weight: 600; padding: 6px 12px;
+      font-size: 12px; font-weight: 500; padding: 6px 12px;
       border-radius: 7px; border: none; cursor: pointer;
       font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.2s;
     }
@@ -177,7 +177,7 @@
     /* ── Account pills (inside calendar) ── */
     .cal-accounts-row {
       display: flex; align-items: center; gap: 6px;
-      padding: 10px 20px; border-bottom: 1px solid var(--border);
+      padding: 7px 16px; border-bottom: 1px solid var(--border);
       overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap;
     }
     .cal-accounts-row::-webkit-scrollbar { display: none; }
@@ -199,7 +199,7 @@
       font-variant-numeric: tabular-nums;
     }
     .account-tab-balance.positive { color: inherit; }
-    .account-tab-balance.negative { color: #9B1C1C; }
+    .account-tab-balance.negative { color: inherit; }
     .account-tab-top { display: contents; }
     .account-tab-type { display: none; }
 
@@ -217,8 +217,8 @@
     }
     .cal-nw-label { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #9CA3AF; font-family: 'IBM Plex Sans', sans-serif; }
     .cal-nw-val { font-size: 13px; font-weight: 400; font-family: var(--num-font); font-variant-numeric: tabular-nums; color: #111827; }
-    .cal-nw-val.positive { color: #1A5C38; }
-    .cal-nw-val.negative { color: #7B1D1D; }
+    .cal-nw-val.positive { color: #111; }
+    .cal-nw-val.negative { color: #111; }
 
     /* ── Main layout ── */
     .layout {
@@ -227,7 +227,7 @@
       gap: 14px;
       max-width: 1600px;
       margin: 0 auto;
-      padding: 14px 24px 40px;
+      padding: 8px 16px 24px;
       transition: grid-template-columns 0.25s ease;
     }
     .layout.analytics-open { grid-template-columns: 280px 1fr; }
@@ -396,7 +396,7 @@
     .summary-ratio-fill.over { background: #e67e22; }
     .summary-ratio-labels { display: flex; justify-content: space-between; }
     .summary-ratio-label { font-size: 10px; color: var(--neutral); }
-    .summary-ratio-rate { font-size: 10px; font-weight: 700; color: var(--living-green); }
+    .summary-ratio-rate { font-size: 10px; font-weight: 400; color: var(--neutral); }
     .summary-ratio-rate.negative { color: var(--expense-color); }
 
     /* ── Summary bar ── */
@@ -409,22 +409,22 @@
       overflow: hidden;
     }
     .summary-card {
-      flex: 1; padding: 12px 16px; border-right: 1px solid #E4E7EC;
+      flex: 1; padding: 8px 12px; border-right: 1px solid #E4E7EC;
       min-width: 0;
     }
     .summary-card:last-of-type { border-right: none; }
     .summary-label {
-      font-size: 9px; font-weight: 600; letter-spacing: 0.8px;
+      font-size: 9px; font-weight: 500; letter-spacing: 0.8px;
       text-transform: uppercase; color: #9CA3AF; margin-bottom: 3px;
       white-space: nowrap; font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
     .summary-amount {
-      font-family: var(--num-font); font-size: 15px; font-weight: 400; line-height: 1.1;
+      font-family: var(--num-font); font-size: 13px; font-weight: 400; line-height: 1.1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111827;
       font-variant-numeric: tabular-nums; letter-spacing: -0.5px;
     }
-    .summary-amount.income  { color: #1A5C38; }
-    .summary-amount.expense { color: #7B1D1D; }
+    .summary-amount.income  { color: #111; }
+    .summary-amount.expense { color: #111; }
     .summary-amount.balance { color: #111827; }
     .summary-amount.savings { color: #111827; }
     .summary-sub { font-size: 10px; color: #9CA3AF; margin-top: 2px; white-space: nowrap; }
@@ -439,16 +439,16 @@
 
     .cal-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px; border-bottom: 1px solid #E4E7EC;
+      padding: 10px 16px; border-bottom: 1px solid #E4E7EC;
     }
     .cal-header-left { display: flex; align-items: center; gap: 16px; }
-    .cal-month { font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+    .cal-month { font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: -0.3px; }
     .cal-view-toggle {
       display: flex; background: var(--soft-white); border-radius: 8px; padding: 3px; gap: 2px;
     }
     .cal-view-btn {
       padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer;
-      font-size: 12px; font-weight: 600; background: transparent;
+      font-size: 12px; font-weight: 400; background: transparent;
       color: var(--neutral); font-family: 'IBM Plex Sans', sans-serif;
       transition: all 0.2s;
     }
@@ -464,7 +464,7 @@
     }
     .cal-nav-btn:hover { background: var(--soft-white); }
     .cal-nav-divider { width: 1px; height: 20px; background: rgba(15,32,87,0.1); margin: 0 2px; }
-    .cal-nav-year-label { font-size: 12px; font-weight: 700; color: var(--neutral); padding: 0 2px; }
+    .cal-nav-year-label { font-size: 12px; font-weight: 400; color: var(--neutral); padding: 0 2px; }
 
     /* ── Transaction search ── */
     .cal-search-wrap { position: relative; }
@@ -489,7 +489,7 @@
       max-height: 360px; overflow-y: auto; width: 320px;
     }
     .cal-search-results.open { display: block; }
-    .sr-header { padding: 10px 14px 6px; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--neutral); border-bottom: 1px solid var(--border); }
+    .sr-header { padding: 10px 14px 6px; font-size: 10px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--neutral); border-bottom: 1px solid var(--border); }
     .sr-row {
       display: flex; align-items: center; gap: 10px; padding: 10px 14px;
       cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border);
@@ -497,16 +497,16 @@
     .sr-row:last-child { border-bottom: none; }
     .sr-row:hover { background: rgba(37,99,235,0.05); }
     .sr-emoji { font-size: 18px; flex-shrink: 0; width: 24px; text-align: center; }
-    .sr-desc { flex: 1; font-size: 13px; font-weight: 600; color: var(--deep-forest); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sr-desc { flex: 1; font-size: 13px; font-weight: 400; color: var(--deep-forest); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .sr-sub { font-size: 11px; color: var(--neutral); }
-    .sr-amt { font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .sr-amt { font-size: 13px; font-weight: 400; white-space: nowrap; }
     .sr-amt.income { color: var(--income-color); }
     .sr-amt.expense { color: var(--expense-color); }
     .sr-empty { padding: 20px; text-align: center; font-size: 13px; color: var(--neutral); }
 
     /* ── Jump-to dropdown ── */
     .cal-jump-wrap { position: relative; }
-    .cal-month { font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; cursor: pointer; user-select: none; }
+    .cal-month { font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: -0.3px; cursor: pointer; user-select: none; }
     .cal-month:hover { color: #374151; }
     .cal-month::after { content: ' ▾'; font-size: 11px; color: #9CA3AF; vertical-align: middle; font-weight: 400; }
     .cal-jump-dropdown {
@@ -571,7 +571,7 @@
       border-right: 1px solid #DDE1E8;
     }
     .cal-cell:hover { background: #F7F8FA; }
-    .cal-cell.today { background: rgba(15,32,87,0.03); box-shadow: inset 0 0 0 1.5px #0F2057; }
+    .cal-cell.today { background: rgba(0,0,0,0.03); box-shadow: inset 0 0 0 1.5px #111; }
     .cal-cell.other-month { opacity: 0.18; pointer-events: none; }
 
     .cal-date-num {
@@ -581,8 +581,8 @@
       border-radius: 50%;
     }
     .cal-cell.today .cal-date-num {
-      background: #0F2057; color: #fff; font-weight: 700;
-      box-shadow: 0 1px 4px rgba(15,32,87,0.28);
+      background: #111; color: #fff; font-weight: 500;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     }
 
     /* Left-border data indicators — no pill fills, no sticker colors */
@@ -594,21 +594,21 @@
       display: block; color: #1F2937;
       font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
-    .cal-entry.income   { border-left-color: #166534; color: #14532D; }
-    .cal-entry.expense  { border-left-color: #9B1C1C; color: #6B1A1A; }
+    .cal-entry.income   { border-left-color: transparent; color: #1F2937; }
+    .cal-entry.expense  { border-left-color: transparent; color: #1F2937; }
     .cal-entry.transfer { border-left-color: #9CA3AF; color: #4B5563; }
-    .cal-entry:hover { background: #0F2057 !important; color: #fff !important; border-left-color: #0F2057 !important; }
+    .cal-entry:hover { background: #1F2937 !important; color: #fff !important; border-left-color: #1F2937 !important; }
     .cal-entry[draggable] { cursor: grab; }
     .cal-entry.dragging { opacity: 0.3; cursor: grabbing; }
-    .cal-cell.drag-over { background: rgba(15,32,87,0.04) !important; box-shadow: inset 0 0 0 1.5px #0F2057; }
+    .cal-cell.drag-over { background: rgba(0,0,0,0.04) !important; box-shadow: inset 0 0 0 1.5px #111; }
     .cal-txn-count {
-      font-size: 9px; font-weight: 600; border-radius: 3px;
+      font-size: 9px; font-weight: 400; border-radius: 3px;
       padding: 1px 5px; margin-top: 2px; cursor: pointer;
       background: #374151; color: #fff; letter-spacing: 0.2px;
       display: inline-block; white-space: nowrap;
       font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
-    .cal-txn-count:hover { background: #0F2057; }
+    .cal-txn-count:hover { background: #111; }
 
     .cal-day-balance {
       position: absolute; bottom: 3px; left: 6px; right: 6px;
@@ -617,16 +617,16 @@
       font-variant-numeric: tabular-nums; letter-spacing: -0.3px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .cal-day-balance.positive { color: #1A5C38; }
-    .cal-day-balance.negative { color: #7B1D1D; }
+    .cal-day-balance.positive { color: #374151; }
+    .cal-day-balance.negative { color: #374151; }
 
     /* ── Calendar min/max balance highlights — subtle, data-grade ── */
     .cal-cell.day-bal-highest { background: rgba(22,101,52,0.05); }
-    .cal-cell.day-bal-highest .cal-day-balance { color: #1A5C38 !important; font-weight: 400; }
-    .cal-cell.day-bal-highest .cal-date-num::after { content: '▲'; font-size: 7px; color: #1A5C38; margin-left: 1px; vertical-align: top; }
+    .cal-cell.day-bal-highest .cal-day-balance { color: #111 !important; font-weight: 400; }
+    .cal-cell.day-bal-highest .cal-date-num::after { content: '▲'; font-size: 7px; color: #166534; margin-left: 1px; vertical-align: top; }
     .cal-cell.day-bal-lowest  { background: rgba(127,29,29,0.04); }
-    .cal-cell.day-bal-lowest  .cal-day-balance { color: #7B1D1D !important; font-weight: 400; }
-    .cal-cell.day-bal-lowest  .cal-date-num::after { content: '▼'; font-size: 7px; color: #7B1D1D; margin-left: 1px; vertical-align: top; }
+    .cal-cell.day-bal-lowest  .cal-day-balance { color: #111 !important; font-weight: 400; }
+    .cal-cell.day-bal-lowest  .cal-date-num::after { content: '▼'; font-size: 7px; color: #9B1C1C; margin-left: 1px; vertical-align: top; }
     body.dark .cal-cell.day-bal-highest { background: rgba(22,101,52,0.16); }
     body.dark .cal-cell.day-bal-lowest  { background: rgba(127,29,29,0.18); }
 
@@ -685,7 +685,7 @@
       padding: 14px 16px;
     }
     .sidebar-title {
-      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      font-size: 10px; font-weight: 500; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--neutral); margin-bottom: 10px;
     }
 
@@ -722,7 +722,7 @@
     .budget-item { margin-bottom: 12px; }
     .budget-item:last-child { margin-bottom: 0; }
     .budget-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
-    .budget-name { font-weight: 600; color: var(--deep-forest); }
+    .budget-name { font-weight: 400; color: var(--deep-forest); }
     .budget-amt  { color: var(--neutral); }
     .progress-bar { height: 5px; background: rgba(15,32,87,0.07); border-radius: 99px; overflow: hidden; }
     .progress-fill { height: 100%; border-radius: 99px; background: var(--living-green); transition: width 0.5s ease; }
@@ -749,9 +749,9 @@
     .debt-item:last-child { border-bottom: none; }
     .debt-icon { font-size: 18px; }
     .debt-info { flex: 1; }
-    .debt-name { font-size: 13px; font-weight: 600; color: var(--deep-forest); }
+    .debt-name { font-size: 13px; font-weight: 400; color: var(--deep-forest); }
     .debt-detail { font-size: 11px; color: var(--neutral); margin-top: 1px; }
-    .debt-balance { font-size: 13px; font-weight: 700; color: var(--expense-color); }
+    .debt-balance { font-size: 13px; font-weight: 400; color: var(--expense-color); }
 
     /* ── Sidebar drag-to-reorder ── */
     .sidebar-card[draggable="true"] { cursor: default; }
@@ -1323,14 +1323,14 @@
       /* Date number */
       #m-home .cal-date-num { font-size: 11px; width: 22px; height: 22px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500; }
 
-      /* Today — navy accent, corporate */
+      /* Today — black accent, corporate */
       #m-home .cal-cell.today {
-        background: rgba(15,32,87,0.04) !important;
-        box-shadow: inset 0 0 0 1.5px #0F2057 !important;
+        background: rgba(0,0,0,0.03) !important;
+        box-shadow: inset 0 0 0 1.5px #111 !important;
       }
       #m-home .cal-cell.today .cal-date-num {
-        background: #0F2057 !important; color: #fff !important;
-        box-shadow: 0 1px 5px rgba(15,32,87,0.35) !important;
+        background: #111 !important; color: #fff !important;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.2) !important;
       }
       body.dark #m-home .cal-cell.today {
         background: rgba(79,127,219,0.10) !important;
@@ -1411,10 +1411,10 @@
         text-overflow: clip; background: transparent;
         border-left: 2px solid transparent;
       }
-      .cal-entry.income   { border-left-color: #166534 !important; color: #14532D !important; background: transparent !important; }
-      .cal-entry.expense  { border-left-color: #9B1C1C !important; color: #6B1A1A !important; background: transparent !important; }
+      .cal-entry.income   { border-left-color: transparent !important; color: #1F2937 !important; background: transparent !important; }
+      .cal-entry.expense  { border-left-color: transparent !important; color: #1F2937 !important; background: transparent !important; }
       .cal-entry.transfer { border-left-color: #9CA3AF !important; color: #4B5563 !important; background: transparent !important; }
-      .cal-entry:hover    { background: #0F2057 !important; color: #fff !important; border-left-color: #0F2057 !important; }
+      .cal-entry:hover    { background: #1F2937 !important; color: #fff !important; border-left-color: #1F2937 !important; }
       .cal-txn-count { font-size: 8px; padding: 1px 4px; margin-top: 1px; }
       .cal-day-balance { font-size: 9px; left: 2px; right: 2px; bottom: 2px; letter-spacing: -0.5px; }
     }
@@ -3714,7 +3714,7 @@
     allTab.dataset.id = 'all';
     allTab.innerHTML = `
       <div class="account-tab-top">
-        <div class="account-dot" style="background:#0F2057"></div>
+        <div class="account-dot" style="background:#111"></div>
         <div class="account-tab-name">All Accounts</div>
       </div>
       <div class="account-tab-balance ${totalBalance >= 0 ? 'positive' : 'negative'}">
