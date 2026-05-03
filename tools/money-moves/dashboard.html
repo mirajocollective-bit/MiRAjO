@@ -50,12 +50,13 @@
     body.dark .nav-btn-settings { border-color: rgba(255,255,255,0.15); color: #e2ddd4; }
     body.dark .nav-btn-forecast { border-color: rgba(96,165,250,0.4); }
     body.dark .nav-btn-logout   { border-color: rgba(255,255,255,0.1); color: #9ca3af; }
-    body.dark .nav-btn-add      { color: #fff !important; background: #2563EB !important; }
+    body.dark .nav-btn-add      { background: #E2E8F0 !important; color: #111827 !important; }
     body.dark .analytics-sidebar { background: #050D28; border-right: 1px solid rgba(255,255,255,0.07); }
     body.dark .analytics-toggle  { color: #E2E8FF; }
     body.dark .cal-accounts-row  { border-bottom-color: rgba(255,255,255,0.07); background: #070F2B; }
-    body.dark .account-tab       { background: #0F1A3A; color: #E2E8FF; border-color: rgba(255,255,255,0.1); }
-    body.dark .account-tab.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+    body.dark .account-tab        { background: #161B22; color: #9CA3AF; border-color: rgba(255,255,255,0.08); }
+    body.dark .account-tab:hover  { background: #1F2937; color: #E2E8F0; }
+    body.dark .account-tab.active { background: #E2E8F0; color: #111827; border-color: #E2E8F0; }
     body.dark .cal-header        { border-bottom-color: rgba(255,255,255,0.07); background: #070F2B; }
     body.dark .cal-grid          { border-color: rgba(255,255,255,0.09); }
     body.dark .cal-cell          { border-color: rgba(255,255,255,0.09); background: #070F2B; }
@@ -71,8 +72,23 @@
     body.dark .cal-txn-count:hover { background: #4F7FDB; color: #fff; }
     body.dark .cal-day-balance.positive { color: #6EBF95; }
     body.dark .cal-day-balance.negative { color: #E0909E; }
-    body.dark .summary-bar       { background: #050D28; }
-    body.dark .hint-bar          { background: #000; border-color: rgba(255,255,255,0.08); }
+    body.dark .summary-bar       { background: #0D1117; border-color: rgba(255,255,255,0.08); }
+    body.dark .summary-card      { border-right-color: rgba(255,255,255,0.07); }
+    body.dark .summary-label     { color: #4B5563; }
+    body.dark .summary-amount    { color: #E2E8F0; }
+    body.dark .summary-amount.income  { color: #6EBF95; }
+    body.dark .summary-amount.expense { color: #E0909E; }
+    body.dark .summary-amount.balance,
+    body.dark .summary-amount.savings { color: #E2E8F0; }
+    body.dark .hint-bar          { background: #0D1117; border-color: rgba(255,255,255,0.06); }
+    body.dark .hint-text         { color: #6B7280; }
+    body.dark .hint-text strong  { color: #CBD5E1; }
+    body.dark .hint-dot          { background: rgba(255,255,255,0.1); }
+    body.dark .hint-dot.active   { background: #6B7280; }
+    body.dark .cal-net-worth     { border-left-color: rgba(255,255,255,0.07); }
+    body.dark .cal-nw-val        { color: #E2E8F0; }
+    body.dark .cal-nw-val.positive { color: #6EBF95; }
+    body.dark .cal-nw-val.negative { color: #E0909E; }
     body.dark .modal             { background: #0F1A3A; color: #e2ddd4; }
     body.dark .modal-title       { color: #e2ddd4; }
     body.dark input, body.dark select, body.dark textarea {
@@ -153,10 +169,10 @@
       font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s;
     }
     .nav-btn:hover { opacity: 0.8; }
-    .nav-btn-add      { background: var(--dry-sage); color: var(--deep-forest); }
-    .nav-btn-settings { background: transparent; color: var(--deep-forest); border: 1px solid rgba(15,32,87,0.18); }
-    .nav-btn-forecast { background: transparent; color: var(--living-green); border: 1px solid rgba(37,99,235,0.3); }
-    .nav-btn-logout   { background: transparent; color: var(--neutral); border: 1px solid rgba(15,32,87,0.12); font-size: 12px; white-space: nowrap; }
+    .nav-btn-add      { background: #111827; color: #fff; }
+    .nav-btn-settings { background: transparent; color: #374151; border: 1px solid #D1D5DB; }
+    .nav-btn-forecast { background: transparent; color: #374151; border: 1px solid #D1D5DB; }
+    .nav-btn-logout   { background: transparent; color: #9CA3AF; border: 1px solid #E5E7EB; font-size: 12px; white-space: nowrap; }
 
     /* ── Account pills (inside calendar) ── */
     .cal-accounts-row {
@@ -168,41 +184,41 @@
 
     .account-tab {
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 10px; border-radius: 20px; cursor: pointer; white-space: nowrap;
-      border: 1.5px solid transparent;
-      background: var(--soft-white);
-      transition: all 0.18s; position: relative;
-      font-size: 12px; font-weight: 600; color: var(--deep-forest);
+      padding: 5px 12px; border-radius: 4px; cursor: pointer; white-space: nowrap;
+      border: 1px solid #E4E7EC; background: #fff;
+      transition: all 0.15s; position: relative;
+      font-size: 11px; font-weight: 500; color: #6B7280;
+      font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
     }
-    .account-tab:hover { background: rgba(15,32,87,0.05); }
-    .account-tab.active { border-color: var(--living-green); background: rgba(37,99,235,0.07); color: var(--living-green); }
-    .account-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .account-tab-name { font-size: 12px; font-weight: 700; }
+    .account-tab:hover { background: #F3F4F6; color: #111827; border-color: #D1D5DB; }
+    .account-tab.active { background: #111827; color: #fff; border-color: #111827; }
+    .account-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .account-tab-name { font-size: 11px; font-weight: 600; }
     .account-tab-balance {
-      font-size: 11px; font-weight: 600; font-family: 'Instrument Serif', serif;
+      font-size: 10px; font-weight: 500; font-family: var(--num-font);
+      font-variant-numeric: tabular-nums;
     }
     .account-tab-balance.positive { color: inherit; }
-    .account-tab-balance.negative { color: var(--expense-color); }
-    /* hide unused elements still generated by JS */
+    .account-tab-balance.negative { color: #9B1C1C; }
     .account-tab-top { display: contents; }
     .account-tab-type { display: none; }
 
     .cal-acct-add {
-      padding: 5px 10px; border-radius: 20px; border: 1.5px dashed rgba(15,32,87,0.2);
-      background: transparent; cursor: pointer; font-size: 11px; font-weight: 600;
-      color: var(--neutral); font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 5px 10px; border-radius: 4px; border: 1px dashed #D1D5DB;
+      background: transparent; cursor: pointer; font-size: 11px; font-weight: 500;
+      color: #9CA3AF; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
       white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
     }
-    .cal-acct-add:hover { border-color: var(--living-green); color: var(--living-green); }
+    .cal-acct-add:hover { border-color: #6B7280; color: #374151; }
 
     .cal-net-worth {
       display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0;
-      padding-left: 12px; border-left: 1px solid var(--border);
+      padding-left: 12px; border-left: 1px solid #E4E7EC;
     }
-    .cal-nw-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--neutral); }
-    .cal-nw-val { font-size: 13px; font-weight: 700; font-family: 'Instrument Serif', serif; }
-    .cal-nw-val.positive { color: var(--income-color); }
-    .cal-nw-val.negative { color: var(--expense-color); }
+    .cal-nw-label { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #9CA3AF; font-family: 'Inter', sans-serif; }
+    .cal-nw-val { font-size: 13px; font-weight: 600; font-family: var(--num-font); font-variant-numeric: tabular-nums; color: #111827; }
+    .cal-nw-val.positive { color: #1A5C38; }
+    .cal-nw-val.negative { color: #7B1D1D; }
 
     /* ── Main layout ── */
     .layout {
@@ -387,31 +403,31 @@
     .summary-bar {
       grid-column: 1 / -1;
       display: flex; align-items: center; gap: 0;
-      background: var(--deep-forest); border-radius: 12px; padding: 0;
-      border: 1px solid rgba(15,32,87,0.06);
-      box-shadow: 0 2px 8px rgba(15,32,87,0.07);
+      background: #fff; border-radius: 8px; padding: 0;
+      border: 1px solid #E4E7EC;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       overflow: hidden;
     }
     .summary-card {
-      flex: 1; padding: 10px 16px; border-right: 1px solid rgba(255,255,255,0.1);
+      flex: 1; padding: 12px 16px; border-right: 1px solid #E4E7EC;
       min-width: 0;
     }
     .summary-card:last-of-type { border-right: none; }
     .summary-label {
-      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--new-growth); margin-bottom: 2px;
-      white-space: nowrap;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.8px;
+      text-transform: uppercase; color: #9CA3AF; margin-bottom: 3px;
+      white-space: nowrap; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
     }
     .summary-amount {
-      font-family: var(--num-font); font-size: 16px; font-weight: 500; line-height: 1.1;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff;
+      font-family: var(--num-font); font-size: 15px; font-weight: 600; line-height: 1.1;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111827;
       font-variant-numeric: tabular-nums; letter-spacing: -0.5px;
     }
-    .summary-amount.income  { color: #fff; }
-    .summary-amount.expense { color: var(--expense-color); }
-    .summary-amount.balance { color: #fff; }
-    .summary-amount.savings { color: #fff; }
-    .summary-sub { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 1px; white-space: nowrap; }
+    .summary-amount.income  { color: #1A5C38; }
+    .summary-amount.expense { color: #7B1D1D; }
+    .summary-amount.balance { color: #111827; }
+    .summary-amount.savings { color: #111827; }
+    .summary-sub { font-size: 10px; color: #9CA3AF; margin-top: 2px; white-space: nowrap; }
 
     /* ── Calendar ── */
     .calendar-section {
@@ -956,19 +972,19 @@
     /* ── Hint bar ── */
     .hint-bar {
       display: flex; align-items: center; gap: 10px;
-      padding: 9px 16px 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      background: #111;
+      padding: 8px 16px 9px;
+      border-bottom: 1px solid #E4E7EC;
+      background: #F9FAFB;
     }
-    .hint-icon { font-size: 15px; flex-shrink: 0; }
-    .hint-text { font-size: 12px; color: #fff; line-height: 1.5; flex: 1; }
-    .hint-text strong { color: #E07020; font-weight: 700; }
+    .hint-icon { font-size: 13px; flex-shrink: 0; opacity: 0.5; }
+    .hint-text { font-size: 11px; color: #6B7280; line-height: 1.5; flex: 1; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif; }
+    .hint-text strong { color: #111827; font-weight: 600; }
     .hint-dots { display: flex; gap: 4px; margin-left: auto; }
     .hint-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(255,255,255,0.25); cursor: pointer; transition: background 0.2s;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #D1D5DB; cursor: pointer; transition: background 0.2s;
     }
-    .hint-dot.active { background: #E07020; }
+    .hint-dot.active { background: #374151; }
 
     /* ── FAQ modal ── */
     .faq-overlay {
@@ -1334,10 +1350,9 @@
       .nav-wordmark { display: none; }
 
       /* Summary bar: readable but compact */
-      #m-home .summary-amount         { font-size: 15px; }
-      #m-home .summary-card           { min-width: 100px; padding: 6px 10px; }
-      /* Expense amount needs to be bright on the dark green bar */
-      #m-home .summary-amount.expense { color: #FF6B5E !important; }
+      #m-home .summary-amount         { font-size: 14px; }
+      #m-home .summary-card           { min-width: 100px; padding: 8px 10px; }
+      #m-home .summary-amount.expense { color: #7B1D1D !important; }
 
       /* ── Day-detail panel layout ────────────────────────────── */
       /* CSS Grid: 3 rows — summary (auto) | calendar (fills space) | panel (185px fixed) */
@@ -1440,7 +1455,7 @@
     .m-panel.active { display: flex; }
 
     /* Home panel */
-    #m-home { background: #f0f4f0; }
+    #m-home { background: #F3F4F6; }
     #m-home .summary-bar {
       flex-shrink: 0; border-radius: 0; border-left: none; border-right: none; border-top: none;
     }
