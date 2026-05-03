@@ -1,7 +1,7 @@
 // Money Moves Service Worker
 // Caches the app shell for fast loads and offline access
 
-const CACHE  = 'mm-v3';
+const CACHE  = 'mm-v4';
 const SHELL  = [
   '/tools/money-moves/dashboard',
   '/tools/money-moves/login',
@@ -11,7 +11,7 @@ const SHELL  = [
   '/tools/money-moves/manifest.json',
   '/img/favicon.png',
   '/img/logo-horizontal.png',
-  'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap',
+  'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap',
 ];
 
 // Install — cache the app shell
