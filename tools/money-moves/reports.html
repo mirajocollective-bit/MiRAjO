@@ -39,22 +39,25 @@
       box-shadow: 0 1px 6px rgba(0,0,0,0.04);
       padding: 0 32px; height: 52px;
       display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
+      position: sticky; top: 0; z-index: 100; flex-shrink: 0;
     }
     .nav-left { display: flex; align-items: center; gap: 10px; }
     .nav-icon  { height: 42px; width: 42px; object-fit: contain; }
     .nav-wordmark { font-family: 'Instrument Serif', serif; font-size: 18px; font-weight: 400; letter-spacing: 1px; color: #111; }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .nav-greeting { font-size: 13px; color: #6B7280; }
+    .nav-btn { font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 7px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.2s; background: transparent; color: #374151; border: 1px solid #D1D5DB; }
+    .nav-btn:hover { opacity: 0.75; }
+    .nav-btn-add { background: #F59E0B !important; color: #111 !important; border: none !important; }
+    .nav-btn-active { background: #111 !important; color: #fff !important; border-color: #111 !important; }
+    .nav-xp-wrap { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.09); border-radius: 100px; padding: 3px 10px 3px 6px; }
+    .nav-level-badge { background: #F59E0B; color: #111; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 100px; white-space: nowrap; }
+    .nav-xp-bar { width: 56px; height: 4px; background: rgba(0,0,0,0.08); border-radius: 100px; overflow: hidden; }
+    .nav-xp-fill { height: 100%; background: #F59E0B; border-radius: 100px; transition: width 0.6s; width: 0%; }
+    .nav-level-name { font-size: 11px; font-weight: 500; color: #111; max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dark-toggle { font-size: 15px; padding: 6px 11px; cursor: pointer; background: transparent; border: 1px solid rgba(0,0,0,0.12); border-radius: 8px; }
     .nav-back { font-size: 13px; color: #6B7280; text-decoration: none; transition: color 0.2s; }
     .nav-back:hover { color: #111; }
-    .export-btn {
-      font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px;
-      border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
-      transition: opacity 0.2s;
-    }
-    .export-btn:hover { opacity: 0.8; }
-    .export-csv { background: var(--dry-sage); color: var(--deep-forest); }
-    .export-pdf { background: var(--warm-parchment); color: var(--deep-forest); }
 
     /* ── Filters bar ── */
     .filters-bar {
@@ -234,12 +237,22 @@
 <!-- Nav -->
 <nav class="nav">
   <div class="nav-left">
-    <a href="/tools/money-moves/dashboard">
+    <a href="/tools/money-moves/dashboard" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
       <img src="/img/mm-logo.png" alt="Money Moves" class="nav-icon">
+      <span class="nav-wordmark">MONEY MOVES</span>
     </a>
-    <span class="nav-wordmark">MONEY MOVES</span>
   </div>
   <div class="nav-right">
+    <span class="nav-greeting" id="nav-greeting">Hi there</span>
+    <div class="nav-xp-wrap" id="nav-xp-wrap">
+      <span class="nav-level-badge" id="nav-level-badge">Lv 1</span>
+      <div class="nav-xp-bar"><div class="nav-xp-fill" id="nav-xp-fill"></div></div>
+      <span class="nav-level-name" id="nav-level-name">Budget Rookie</span>
+    </div>
+    <button class="nav-btn" onclick="window.location.href='/tools/money-moves/dashboard'">📈 Forecast</button>
+    <button class="nav-btn nav-btn-add" onclick="window.location.href='/tools/money-moves/dashboard'">+ Add</button>
+    <button class="nav-btn nav-btn-active">Reports</button>
+    <button class="nav-btn" onclick="window.location.href='/tools/money-moves/settings'">Settings</button>
     <div class="export-wrap" id="export-wrap">
       <button class="export-main" onclick="toggleExportMenu()">Export ▾</button>
       <div class="export-menu" id="export-menu">
@@ -252,7 +265,8 @@
         <button onclick="exportPDF('transactions'); closeExportMenu()">Transaction List (.pdf)</button>
       </div>
     </div>
-    <a href="/tools/money-moves/dashboard" class="nav-back">← Dashboard</a>
+    <button class="dark-toggle" id="dark-toggle-btn" onclick="toggleDarkMode()" title="Toggle dark mode">🌙</button>
+    <button class="nav-btn" onclick="logOut()">Log Out</button>
   </div>
 </nav>
 
@@ -1022,6 +1036,40 @@
   // ── Init ─────────────────────────────────────────────────────────────────────
   loadAll();
 })();
+</script>
+
+<script>
+(async function() {
+  const GM_LEVELS = [
+    { level:1, name:'Budget Rookie', xp:0 }, { level:2, name:'Penny Wise', xp:80 },
+    { level:3, name:'Money Moves', xp:200 }, { level:4, name:'Budget Boss', xp:400 },
+    { level:5, name:'Stack Master', xp:700 }, { level:6, name:'Financial Flex', xp:1100 },
+    { level:7, name:'Wealth Builder', xp:1600 }, { level:8, name:'Money Maven', xp:2400 },
+    { level:9, name:'CEO of Coins', xp:3500 }, { level:10, name:'GOAT', xp:5000 },
+  ];
+  try {
+    const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { session } } = await db.auth.getSession();
+    if (session) {
+      const user = session.user;
+      const firstName = user.user_metadata?.first_name || user.email.split('@')[0];
+      document.getElementById('nav-greeting').textContent = 'Hi, ' + firstName;
+      window._mmLogout = async () => { await db.auth.signOut(); window.location.href = '/tools/money-moves/login'; };
+    }
+  } catch(e) {}
+  const state = JSON.parse(localStorage.getItem('mm_gm') || '{"xp":0}');
+  let cur = GM_LEVELS[0], next = GM_LEVELS[1];
+  for (let i = GM_LEVELS.length - 1; i >= 0; i--) {
+    if (state.xp >= GM_LEVELS[i].xp) { cur = GM_LEVELS[i]; next = GM_LEVELS[i+1] || null; break; }
+  }
+  document.getElementById('nav-level-badge').textContent = 'Lv ' + cur.level;
+  document.getElementById('nav-level-name').textContent = cur.name;
+  const pct = next ? Math.min(((state.xp - cur.xp) / (next.xp - cur.xp)) * 100, 100) : 100;
+  document.getElementById('nav-xp-fill').style.width = pct + '%';
+  if (localStorage.getItem('mm_dark') === '1') document.body.classList.add('dark');
+})();
+function logOut() { if (window._mmLogout) window._mmLogout(); }
+function toggleDarkMode() { const on = document.body.classList.toggle('dark'); localStorage.setItem('mm_dark', on ? '1' : '0'); }
 </script>
 </body>
 </html>
