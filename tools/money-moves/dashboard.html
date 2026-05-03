@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-title" content="Money Moves">
   <meta name="theme-color" content="#0F2057">
   <title>Dashboard — Money Moves by MiRAjO</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
       --deep-forest:    #0F2057;
@@ -139,7 +139,7 @@
 
     body {
       background: #E8E4DC;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest);
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
@@ -166,7 +166,7 @@
     .nav-btn {
       font-size: 12px; font-weight: 600; padding: 6px 12px;
       border-radius: 7px; border: none; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s;
+      font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.2s;
     }
     .nav-btn:hover { opacity: 0.8; }
     .nav-btn-add      { background: #111827; color: #fff; }
@@ -188,7 +188,7 @@
       border: 1px solid #E4E7EC; background: #fff;
       transition: all 0.15s; position: relative;
       font-size: 11px; font-weight: 500; color: #6B7280;
-      font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
     .account-tab:hover { background: #F3F4F6; color: #111827; border-color: #D1D5DB; }
     .account-tab.active { background: #111827; color: #fff; border-color: #111827; }
@@ -206,7 +206,7 @@
     .cal-acct-add {
       padding: 5px 10px; border-radius: 4px; border: 1px dashed #D1D5DB;
       background: transparent; cursor: pointer; font-size: 11px; font-weight: 500;
-      color: #9CA3AF; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+      color: #9CA3AF; font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
       white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
     }
     .cal-acct-add:hover { border-color: #6B7280; color: #374151; }
@@ -215,7 +215,7 @@
       display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0;
       padding-left: 12px; border-left: 1px solid #E4E7EC;
     }
-    .cal-nw-label { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #9CA3AF; font-family: 'Inter', sans-serif; }
+    .cal-nw-label { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #9CA3AF; font-family: 'IBM Plex Sans', sans-serif; }
     .cal-nw-val { font-size: 13px; font-weight: 400; font-family: var(--num-font); font-variant-numeric: tabular-nums; color: #111827; }
     .cal-nw-val.positive { color: #1A5C38; }
     .cal-nw-val.negative { color: #7B1D1D; }
@@ -367,7 +367,7 @@
     .forecast-strip-svg { width: 100%; display: block; }
     .forecast-tooltip {
       position: absolute; background: var(--deep-forest); color: var(--warm-parchment);
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 600;
       padding: 5px 9px; border-radius: 7px; pointer-events: none;
       white-space: nowrap; display: none; z-index: 50;
       transform: translate(-50%, -100%); margin-top: -6px;
@@ -376,7 +376,7 @@
       font-size: 12px; font-weight: 600; padding: 5px 12px;
       border-radius: 7px; border: 1px solid rgba(15,32,87,0.14);
       background: transparent; color: var(--neutral); cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s;
+      font-family: 'IBM Plex Sans', sans-serif; transition: all 0.15s;
     }
     .forecast-strip-toggle:hover { background: var(--soft-white); color: var(--deep-forest); }
     .forecast-strip-toggle.strip-active { background: var(--soft-white); color: var(--living-green); border-color: rgba(37,99,235,0.25); }
@@ -416,7 +416,7 @@
     .summary-label {
       font-size: 9px; font-weight: 600; letter-spacing: 0.8px;
       text-transform: uppercase; color: #9CA3AF; margin-bottom: 3px;
-      white-space: nowrap; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+      white-space: nowrap; font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
     .summary-amount {
       font-family: var(--num-font); font-size: 15px; font-weight: 400; line-height: 1.1;
@@ -442,14 +442,14 @@
       padding: 16px 20px; border-bottom: 1px solid #E4E7EC;
     }
     .cal-header-left { display: flex; align-items: center; gap: 16px; }
-    .cal-month { font-family: 'Inter', 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+    .cal-month { font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
     .cal-view-toggle {
       display: flex; background: var(--soft-white); border-radius: 8px; padding: 3px; gap: 2px;
     }
     .cal-view-btn {
       padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer;
       font-size: 12px; font-weight: 600; background: transparent;
-      color: var(--neutral); font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--neutral); font-family: 'IBM Plex Sans', sans-serif;
       transition: all 0.2s;
     }
     .cal-view-btn.active { background: #fff; color: var(--deep-forest); box-shadow: 0 1px 4px rgba(15,32,87,0.1); }
@@ -471,7 +471,7 @@
     .cal-search-input {
       height: 34px; padding: 0 32px 0 12px; border-radius: 8px;
       border: 1px solid rgba(15,32,87,0.14); background: var(--soft-white);
-      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest); outline: none; width: 180px;
       transition: border-color 0.2s, width 0.25s, box-shadow 0.2s;
     }
@@ -506,7 +506,7 @@
 
     /* ── Jump-to dropdown ── */
     .cal-jump-wrap { position: relative; }
-    .cal-month { font-family: 'Inter', 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; cursor: pointer; user-select: none; }
+    .cal-month { font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; cursor: pointer; user-select: none; }
     .cal-month:hover { color: #374151; }
     .cal-month::after { content: ' ▾'; font-size: 11px; color: #9CA3AF; vertical-align: middle; font-weight: 400; }
     .cal-jump-dropdown {
@@ -519,14 +519,14 @@
     .cal-jump-row { display: flex; gap: 8px; margin-bottom: 12px; }
     .cal-jump-select {
       flex: 1; padding: 8px 10px; border: 1px solid rgba(15,32,87,0.15); border-radius: 8px;
-      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: var(--deep-forest);
       background: var(--soft-white); outline: none; cursor: pointer;
     }
     .cal-jump-select:focus { border-color: var(--living-green); }
     .cal-jump-btn {
       width: 100%; padding: 10px; background: var(--deep-forest); color: var(--warm-parchment);
       border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s;
+      font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.2s;
     }
     .cal-jump-btn:hover { opacity: 0.85; }
 
@@ -537,7 +537,7 @@
     .cal-day-name {
       text-align: center; font-size: 10px; font-weight: 600;
       letter-spacing: 0.6px; text-transform: uppercase;
-      color: #9CA3AF; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+      color: #9CA3AF; font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
 
     .cal-grid {
@@ -576,7 +576,7 @@
 
     .cal-date-num {
       font-size: 11px; font-weight: 500; color: #374151; margin-bottom: 2px;
-      font-family: 'Inter', 'Plus Jakarta Sans', sans-serif; letter-spacing: 0;
+      font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; letter-spacing: 0;
       width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
       border-radius: 50%;
     }
@@ -592,7 +592,7 @@
       background: transparent; border-left: 2px solid transparent;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
       display: block; color: #1F2937;
-      font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
     .cal-entry.income   { border-left-color: #166534; color: #14532D; }
     .cal-entry.expense  { border-left-color: #9B1C1C; color: #6B1A1A; }
@@ -606,7 +606,7 @@
       padding: 1px 5px; margin-top: 2px; cursor: pointer;
       background: #374151; color: #fff; letter-spacing: 0.2px;
       display: inline-block; white-space: nowrap;
-      font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
     }
     .cal-txn-count:hover { background: #0F2057; }
 
@@ -646,7 +646,7 @@
     .forecast-range-btn {
       padding: 4px 14px; border-radius: 20px; border: 1.5px solid var(--border);
       background: transparent; font-size: 12px; font-weight: 600; color: var(--neutral);
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s;
+      cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; transition: all 0.15s;
     }
     .forecast-range-btn.active { background: var(--deep-forest); color: var(--warm-parchment); border-color: var(--deep-forest); }
     #forecast-chart { display: block; width: 100%; border-radius: 10px; }
@@ -705,7 +705,7 @@
     .mode-change-btn {
       margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--deep-forest);
       background: none; border: none; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; padding: 0; opacity: 0.8;
+      font-family: 'IBM Plex Sans', sans-serif; padding: 0; opacity: 0.8;
     }
     .mode-change-btn:hover { opacity: 1; }
     .mode-bottom-row { display: flex; align-items: center; justify-content: space-between; }
@@ -740,7 +740,7 @@
       width: 100%; padding: 11px; border: 1px dashed rgba(37,99,235,0.3);
       border-radius: 10px; background: transparent; color: var(--living-green);
       font-size: 13px; font-weight: 600; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s; margin-top: 4px;
+      font-family: 'IBM Plex Sans', sans-serif; transition: background 0.2s; margin-top: 4px;
     }
     .goal-add-btn:hover { background: rgba(37,99,235,0.05); }
 
@@ -780,7 +780,7 @@
     .calc-body { margin-top: 12px; }
     .calc-select {
       width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
-      font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      font-size: 12px; font-family: 'IBM Plex Sans', sans-serif; color: var(--deep-forest);
       background: var(--soft-white); outline: none; margin-bottom: 10px; cursor: pointer;
     }
     .calc-select:focus { border-color: var(--living-green); }
@@ -791,7 +791,7 @@
     }
     .calc-field input {
       width: 100%; padding: 7px 9px; border: 1px solid var(--border); border-radius: 7px;
-      font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      font-size: 12px; font-family: 'IBM Plex Sans', sans-serif; color: var(--deep-forest);
       background: #fff; outline: none; transition: border-color 0.15s;
     }
     .calc-field input:focus { border-color: var(--living-green); }
@@ -803,7 +803,7 @@
     .calc-extra-label { font-size: 11px; font-weight: 600; color: var(--deep-forest); flex-shrink: 0; }
     .calc-extra-input {
       flex: 1; padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px;
-      font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--deep-forest);
+      font-size: 12px; font-family: 'IBM Plex Sans', sans-serif; color: var(--deep-forest);
       background: #fff; outline: none; min-width: 0;
     }
     .calc-extra-input:focus { border-color: var(--dry-sage); }
@@ -832,7 +832,7 @@
     .calc-amort-toggle {
       width: 100%; padding: 7px; border: 1px solid var(--border); border-radius: 8px;
       background: transparent; font-size: 11px; font-weight: 600; color: var(--neutral);
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s;
+      cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; transition: background 0.15s;
       margin-bottom: 8px;
     }
     .calc-amort-toggle:hover { background: rgba(15,32,87,0.03); }
@@ -872,7 +872,7 @@
     .type-tab {
       flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border);
       background: transparent; font-size: 13px; font-weight: 600; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; color: var(--neutral); transition: all 0.2s;
+      font-family: 'IBM Plex Sans', sans-serif; color: var(--neutral); transition: all 0.2s;
     }
     .type-tab.active.income  { background: rgba(37,99,235,0.1);  border-color: var(--income-color);  color: var(--income-color); }
     .type-tab.active.expense { background: rgba(192,57,43,0.1);  border-color: var(--expense-color); color: var(--expense-color); }
@@ -882,7 +882,7 @@
     .form-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--neutral); display: block; margin-bottom: 5px; }
     .form-input, .form-select {
       width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px;
-      font-size: 14px; color: var(--deep-forest); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; color: var(--deep-forest); font-family: 'IBM Plex Sans', sans-serif;
       outline: none; background: #fff; transition: border-color 0.2s;
     }
     .form-input:focus, .form-select:focus { border-color: var(--living-green); }
@@ -900,13 +900,13 @@
     .modal-cancel {
       flex: 1; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
       background: transparent; font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; color: var(--neutral); transition: background 0.2s;
+      font-family: 'IBM Plex Sans', sans-serif; color: var(--neutral); transition: background 0.2s;
     }
     .modal-cancel:hover { background: var(--soft-white); }
     .modal-save {
       flex: 2; padding: 9px 12px; background: var(--new-growth); color: #fff;
       border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.2s;
+      font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.2s;
     }
     .modal-save:hover { opacity: 0.85; }
 
@@ -917,7 +917,7 @@
       display: flex; align-items: center; gap: 16px;
       padding: 12px 18px; border-radius: 12px;
       box-shadow: 0 6px 24px rgba(15,32,87,0.25);
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 13px;
       opacity: 0; transition: opacity 0.25s, transform 0.25s; z-index: 9999;
       pointer-events: none; white-space: nowrap;
     }
@@ -926,7 +926,7 @@
     }
     .undo-toast button {
       background: none; border: 1px solid rgba(242,235,217,0.4); border-radius: 6px;
-      color: var(--new-growth); font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--new-growth); font-family: 'IBM Plex Sans', sans-serif;
       font-size: 12px; font-weight: 700; padding: 4px 10px; cursor: pointer;
       transition: background 0.15s;
     }
@@ -977,7 +977,7 @@
       background: #F9FAFB;
     }
     .hint-icon { font-size: 13px; flex-shrink: 0; opacity: 0.5; }
-    .hint-text { font-size: 11px; color: #6B7280; line-height: 1.5; flex: 1; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif; }
+    .hint-text { font-size: 11px; color: #6B7280; line-height: 1.5; flex: 1; font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif; }
     .hint-text strong { color: #111827; font-weight: 600; }
     .hint-dots { display: flex; gap: 4px; margin-left: auto; }
     .hint-dot {
@@ -1020,7 +1020,7 @@
     .faq-search-input {
       width: 100%; padding: 11px 36px 11px 14px;
       border: 1px solid rgba(15,32,87,0.15); border-radius: 10px;
-      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest); background: var(--soft-white); outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
@@ -1075,7 +1075,7 @@
     .faq-a ul { padding-left: 18px; margin-top: 6px; }
     .faq-a li { margin-bottom: 4px; }
     .faq-a strong { color: var(--deep-forest); }
-    .faq-nav-btn { background: transparent; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .faq-nav-btn { background: transparent; border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; }
     body.dark .faq-modal      { background: #0F1A3A; color: #e2ddd4; }
     body.dark .faq-header h2  { color: #e2ddd4; }
     body.dark .faq-header     { border-color: rgba(255,255,255,0.08); }
@@ -1124,7 +1124,7 @@
     .emoji-clear {
       margin-top: 8px; width: 100%; padding: 7px; border: 1px solid var(--border);
       border-radius: 8px; background: #fff; font-size: 12px; font-weight: 600;
-      color: var(--neutral); cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--neutral); cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
       transition: background 0.15s;
     }
     .emoji-clear:hover { background: rgba(15,32,87,0.04); }
@@ -1158,7 +1158,7 @@
     }
     .fc-btn {
       background: #fff; border: none; cursor: pointer; padding: 0;
-      font-size: 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-family: 'IBM Plex Sans', sans-serif;
       font-weight: 500; color: var(--deep-forest); height: 52px;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.1s; -webkit-tap-highlight-color: transparent;
@@ -1175,7 +1175,7 @@
       font-size: 12px; font-weight: 600; padding: 7px 14px;
       border-radius: 8px; border: 1px solid rgba(15,32,87,0.18);
       background: transparent; color: var(--deep-forest); cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s;
+      font-family: 'IBM Plex Sans', sans-serif; transition: all 0.15s;
     }
     .float-calc-toggle:hover { background: var(--soft-white); }
     .float-calc-toggle.calc-active { background: var(--deep-forest); color: var(--warm-parchment); border-color: var(--deep-forest); }
@@ -1190,7 +1190,7 @@
     .mobile-nav-btn {
       flex: 1; display: flex; flex-direction: column; align-items: center;
       justify-content: center; gap: 3px; border: none; background: transparent;
-      cursor: pointer; color: var(--neutral); font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; color: var(--neutral); font-family: 'IBM Plex Sans', sans-serif;
       font-size: 10px; font-weight: 600; padding: 8px 4px;
       -webkit-tap-highlight-color: transparent; transition: color 0.15s;
     }
@@ -1299,7 +1299,7 @@
         font-weight: 400; overflow: hidden; white-space: nowrap;
         text-overflow: clip; background: transparent;
         border-left: 2px solid transparent;
-        font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+        font-family: 'IBM Plex Sans', 'IBM Plex Sans', sans-serif;
       }
       #m-home .cal-entry.income   { border-left-color: #166534; color: #14532D; }
       #m-home .cal-entry.expense  { border-left-color: #9B1C1C; color: #6B1A1A; }
@@ -1321,7 +1321,7 @@
       #m-home .cal-day-balance.negative { color: #7B1D1D; }
 
       /* Date number */
-      #m-home .cal-date-num { font-size: 11px; width: 22px; height: 22px; font-family: 'Inter', sans-serif; font-weight: 500; }
+      #m-home .cal-date-num { font-size: 11px; width: 22px; height: 22px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500; }
 
       /* Today — navy accent, corporate */
       #m-home .cal-cell.today {
@@ -1435,7 +1435,7 @@
     }
     #m-splash-sub {
       font-size: 12px; color: rgba(242,235,217,0.45);
-      font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.1em; text-transform: uppercase;
+      font-family: 'IBM Plex Sans', sans-serif; letter-spacing: 0.1em; text-transform: uppercase;
     }
     #m-splash.fade-out { opacity: 0; pointer-events: none; }
 
@@ -1490,7 +1490,7 @@
       padding: 14px 16px; width: 100%;
       border-top: 1px solid rgba(15,32,87,0.05);
       text-decoration: none; color: var(--deep-forest);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 14px; font-weight: 500;
       cursor: pointer; background: none; border-left: none; border-right: none; border-bottom: none;
       text-align: left;
@@ -1512,7 +1512,7 @@
       border: 1px solid rgba(15,32,87,0.07);
       box-shadow: 0 1px 4px rgba(15,32,87,0.05);
       cursor: pointer; width: 100%; text-align: left;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       transition: box-shadow 0.15s; -webkit-tap-highlight-color: transparent;
     }
     .m-tool-card:active { box-shadow: 0 0 0 2px var(--living-green); }
@@ -1538,11 +1538,11 @@
     #m-tool-back-btn {
       background: none; border: none; cursor: pointer; padding: 4px 10px 4px 0;
       font-size: 15px; font-weight: 700; color: var(--living-green);
-      font-family: 'Plus Jakarta Sans', sans-serif; display: flex; align-items: center; gap: 4px;
+      font-family: 'IBM Plex Sans', sans-serif; display: flex; align-items: center; gap: 4px;
     }
     #m-tool-back-name {
       font-size: 15px; font-weight: 700; color: var(--deep-forest);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
     }
     #m-tool-content {
       position: absolute; top: 44px; left: 0; right: 0; bottom: 0;
@@ -1595,7 +1595,7 @@
       display: inline-flex; align-items: center; gap: 6px;
       padding: 7px 14px; border-radius: 8px; border: 1px solid rgba(15,32,87,0.18);
       background: transparent; color: var(--deep-forest); cursor: pointer;
-      font-size: 12px; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif;
       transition: all 0.15s; white-space: nowrap;
     }
     .mtg-action-btn:hover { background: var(--soft-white); }
@@ -1649,7 +1649,7 @@
     .mtg-input {
       flex: 1; min-width: 0; padding: 9px 8px;
       border: none; outline: none; font-size: 13px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest); background: transparent;
     }
     .mtg-input[readonly] { color: var(--neutral); cursor: default; }
@@ -1658,7 +1658,7 @@
     .mtg-select {
       width: 100%; padding: 9px 10px;
       border: 1px solid rgba(15,32,87,0.14); border-radius: 9px;
-      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest); background: #fff; outline: none; cursor: pointer;
       transition: border-color 0.18s;
     }
@@ -1733,7 +1733,7 @@
       width: 100%; padding: 12px 16px; border-radius: 10px;
       border: 1px solid rgba(15,32,87,0.12); background: #fff; cursor: pointer;
       font-size: 12px; font-weight: 700; color: var(--deep-forest);
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s;
+      font-family: 'IBM Plex Sans', sans-serif; transition: background 0.15s;
     }
     .mtg-amort-toggle:hover { background: var(--soft-white); }
     .mtg-amort-wrap {
@@ -1862,14 +1862,14 @@
       background: var(--deep-forest); color: #fff; border-radius: 14px;
       padding: 14px 16px; align-items: center; gap: 12px;
       box-shadow: 0 8px 24px rgba(15,32,87,0.3);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
     }
     .install-banner.visible { display: flex; }
     .install-banner-text { flex: 1; font-size: 13px; font-weight: 500; line-height: 1.4; }
     .install-banner-text strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 2px; }
     .install-banner-btn {
       padding: 8px 14px; border-radius: 8px; border: none; cursor: pointer;
-      font-weight: 700; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
       background: var(--dry-sage); color: var(--deep-forest); white-space: nowrap;
     }
     .install-banner-close {
@@ -1911,7 +1911,7 @@
       width: 220px;
       z-index: 801;
       box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       animation: tooltipPop 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
       border: 1px solid rgba(37,99,235,0.15);
     }
@@ -1935,7 +1935,7 @@
       background: rgba(255,255,255,0.1); border: none;
       color: #fff; border-radius: 7px; padding: 8px;
       font-size: 12px; font-weight: 700; cursor: pointer;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       transition: background 0.15s;
     }
     .ft-dismiss:hover { background: rgba(255,255,255,0.18); }
@@ -2010,7 +2010,7 @@
     /* ── Beats to Budget Player ── */
     .beats-player {
       position: fixed; bottom: 24px; right: 24px; z-index: 400;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
     }
     @media (max-width: 768px) {
       .beats-player { bottom: 76px; right: 12px; z-index: 150; }
@@ -2022,7 +2022,7 @@
       background: #0D0D0D; color: #fff;
       border: none; border-radius: 100px;
       font-size: 13px; font-weight: 700; letter-spacing: 0.2px;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
       transition: transform 0.2s, background 0.2s;
     }
@@ -2073,7 +2073,7 @@
       border: 1px solid rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.65); font-size: 12px; font-weight: 600;
       cursor: pointer; transition: all 0.15s;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
     }
     .beats-vibe:hover { background: rgba(255,255,255,0.14); color: #fff; }
     .beats-vibe.active { background: var(--living-green); border-color: var(--living-green); color: #fff; }
@@ -2082,7 +2082,7 @@
     .beats-customize-toggle {
       background: none; border: none; color: rgba(255,255,255,0.3);
       font-size: 11px; cursor: pointer; padding: 0 14px 10px;
-      display: block; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif;
+      display: block; text-align: left; font-family: 'IBM Plex Sans', sans-serif;
       letter-spacing: 0.5px;
     }
     .beats-customize-toggle:hover { color: rgba(255,255,255,0.6); }
@@ -2099,7 +2099,7 @@
     .beats-custom-input {
       flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
       border-radius: 6px; color: #fff; font-size: 11px; padding: 5px 8px;
-      font-family: 'Plus Jakarta Sans', sans-serif; outline: none;
+      font-family: 'IBM Plex Sans', sans-serif; outline: none;
     }
     .beats-custom-input:focus { border-color: var(--living-green); }
     .beats-custom-input::placeholder { color: rgba(255,255,255,0.2); }
@@ -2107,12 +2107,12 @@
       display: block; width: 100%; margin-top: 4px;
       background: var(--living-green); color: #fff; border: none;
       border-radius: 8px; padding: 7px; font-size: 12px; font-weight: 700;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
     }
     .beats-custom-reset {
       display: block; width: 100%; margin-top: 6px;
       background: none; color: rgba(255,255,255,0.3); border: none;
-      font-size: 11px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
     }
     .beats-custom-reset:hover { color: rgba(255,255,255,0.6); }
 
@@ -2296,7 +2296,7 @@
          font-size:11px;font-weight:700;letter-spacing:0.5px;
          padding:7px 12px;border-radius:100px;cursor:pointer;
          align-items:center;gap:5px;box-shadow:0 4px 16px rgba(0,0,0,0.3);
-         font-family:'Plus Jakarta Sans',sans-serif">
+         font-family:'IBM Plex Sans',sans-serif">
   🎵 Beats
 </button>
 
@@ -2507,7 +2507,7 @@
         <div class="cal-nav">
           <button class="cal-nav-btn" title="Previous year" onclick="changeYear(-1)">&#171;</button>
           <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8592;</button>
-          <button class="cal-nav-btn" onclick="goToToday()" title="Jump to today" style="font-size:10px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;width:auto;padding:0 8px;color:var(--living-green);border-color:rgba(37,99,235,0.25);">Today</button>
+          <button class="cal-nav-btn" onclick="goToToday()" title="Jump to today" style="font-size:10px;font-weight:700;font-family:'IBM Plex Sans',sans-serif;width:auto;padding:0 8px;color:var(--living-green);border-color:rgba(37,99,235,0.25);">Today</button>
           <button class="cal-nav-btn" onclick="changeMonth(1)">&#8594;</button>
           <button class="cal-nav-btn" title="Next year" onclick="changeYear(1)">&#187;</button>
         </div>
@@ -3256,7 +3256,7 @@
     </div>
     <div class="modal-actions">
       <button class="modal-cancel" onclick="closeModal()">Cancel</button>
-      <button id="txn-delete-btn" onclick="deleteTransaction()" style="display:none;flex:1;padding:9px 12px;background:none;color:var(--neutral);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Delete</button>
+      <button id="txn-delete-btn" onclick="deleteTransaction()" style="display:none;flex:1;padding:9px 12px;background:none;color:var(--neutral);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Delete</button>
       <button class="modal-save"   onclick="saveTransaction()">Save</button>
     </div>
   </div>
@@ -3268,11 +3268,11 @@
     <div class="modal-title">Edit Recurring Transaction</div>
     <p style="font-size:14px;color:var(--neutral);margin-bottom:20px;line-height:1.6">This is a recurring transaction. What would you like to change?</p>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <button onclick="handleRecurEdit('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
-      <button onclick="handleRecurEdit('future')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">This and all future occurrences</button>
-      <button onclick="handleRecurEdit('all')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">All occurrences</button>
+      <button onclick="handleRecurEdit('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
+      <button onclick="handleRecurEdit('future')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">This and all future occurrences</button>
+      <button onclick="handleRecurEdit('all')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">All occurrences</button>
     </div>
-    <button onclick="document.getElementById('recur-edit-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
+    <button onclick="document.getElementById('recur-edit-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
   </div>
 </div>
 
@@ -3282,10 +3282,10 @@
     <div class="modal-title">Move Recurring Transaction</div>
     <p style="font-size:14px;color:var(--neutral);margin-bottom:20px;line-height:1.6">Which occurrences do you want to move?</p>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <button onclick="handleRecurDrag('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
-      <button onclick="handleRecurDrag('all')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">All occurrences</button>
+      <button onclick="handleRecurDrag('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
+      <button onclick="handleRecurDrag('all')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">All occurrences</button>
     </div>
-    <button onclick="document.getElementById('recur-drag-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
+    <button onclick="document.getElementById('recur-drag-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
   </div>
 </div>
 
@@ -3295,11 +3295,11 @@
     <div class="modal-title">Remove Recurring Transaction</div>
     <p style="font-size:14px;color:var(--neutral);margin-bottom:20px;line-height:1.6">This is a recurring transaction. What would you like to remove?</p>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <button onclick="handleRecurDelete('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
-      <button onclick="handleRecurDelete('future')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">This and all future occurrences</button>
-      <button onclick="handleRecurDelete('all')" style="padding:9px 13px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;text-align:left;color:var(--neutral)">Remove entirely (all occurrences)</button>
+      <button onclick="handleRecurDelete('one')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">Just this occurrence</button>
+      <button onclick="handleRecurDelete('future')" style="padding:13px;background:var(--soft-white);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;color:var(--deep-forest)">This and all future occurrences</button>
+      <button onclick="handleRecurDelete('all')" style="padding:9px 13px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:500;text-align:left;color:var(--neutral)">Remove entirely (all occurrences)</button>
     </div>
-    <button onclick="document.getElementById('recur-delete-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
+    <button onclick="document.getElementById('recur-delete-overlay').style.display='none'" style="margin-top:14px;width:100%;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:var(--neutral)">Cancel</button>
   </div>
 </div>
 
@@ -3313,7 +3313,7 @@
     <div id="day-detail-list" style="display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto;"></div>
     <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
       <span id="day-detail-balance" style="font-size:13px;color:var(--neutral)"></span>
-      <button onclick="closeDayDetailAndAdd()" style="padding:10px 20px;background:var(--deep-forest);color:var(--warm-parchment);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">+ Add Transaction</button>
+      <button onclick="closeDayDetailAndAdd()" style="padding:10px 20px;background:var(--deep-forest);color:var(--warm-parchment);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">+ Add Transaction</button>
     </div>
   </div>
 </div>
@@ -3349,19 +3349,19 @@
       <div style="font-size:12px;color:var(--neutral);line-height:1.6">Removing this account will <strong style="color:#C0392B">hide all of its transactions</strong> from your calendar and reports. Your data is kept in case you need to restore it, but you won't see it again without contacting support.</div>
     </div>
     <div style="display:flex;gap:10px">
-      <button onclick="document.getElementById('remove-acct-overlay').style.display='none'" style="flex:1;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;color:var(--neutral)">Cancel</button>
-      <button id="remove-acct-confirm-btn" onclick="confirmRemoveAccount()" style="flex:1;padding:12px;background:#C0392B;border:none;border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#fff">Yes, Remove Account</button>
+      <button onclick="document.getElementById('remove-acct-overlay').style.display='none'" style="flex:1;padding:12px;background:none;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;color:var(--neutral)">Cancel</button>
+      <button id="remove-acct-confirm-btn" onclick="confirmRemoveAccount()" style="flex:1;padding:12px;background:#C0392B;border:none;border-radius:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:700;color:#fff">Yes, Remove Account</button>
     </div>
   </div>
 </div>
 
 <!-- Account context menu -->
 <div id="acct-ctx-menu" style="display:none;position:fixed;z-index:400;background:#fff;border:1px solid rgba(15,32,87,0.1);border-radius:12px;box-shadow:0 8px 32px rgba(15,32,87,0.18);padding:6px;min-width:180px">
-  <button onclick="openEditBalanceModal()" style="width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--deep-forest);text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px">
+  <button onclick="openEditBalanceModal()" style="width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600;color:var(--deep-forest);text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px">
     <span>✏️</span> Edit Opening Balance
   </button>
   <div style="height:1px;background:rgba(15,32,87,0.07);margin:3px 0"></div>
-  <button id="acct-ctx-remove" onclick="openRemoveAccountModal()" style="width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#C0392B;text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px">
+  <button id="acct-ctx-remove" onclick="openRemoveAccountModal()" style="width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600;color:#C0392B;text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px">
     <span>🗑</span> Remove Account
   </button>
 </div>
@@ -3413,7 +3413,7 @@
         </div>
       </div>
     </div>
-    <button onclick="dismissOnboarding()" style="width:100%;padding:13px;border:none;border-radius:10px;background:var(--living-green);color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
+    <button onclick="dismissOnboarding()" style="width:100%;padding:13px;border:none;border-radius:10px;background:var(--living-green);color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif">
       Got it, let's go!
     </button>
   </div>
@@ -3921,7 +3921,7 @@
           <div style="font-size:40px;">🏦</div>
           <div style="font-family:'Instrument Serif',serif;font-size:22px;color:var(--deep-forest)">Start by adding an account</div>
           <div style="font-size:14px;color:var(--neutral);max-width:300px;line-height:1.6">Your calendar unlocks once you add at least one account — checking, savings, or any account you track.</div>
-          <button onclick="openAccountModal()" style="margin-top:8px;padding:13px 28px;background:var(--deep-forest);color:var(--warm-parchment);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">+ Add Your First Account</button>
+          <button onclick="openAccountModal()" style="margin-top:8px;padding:13px 28px;background:var(--deep-forest);color:var(--warm-parchment);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">+ Add Your First Account</button>
         </div>`;
       return;
     }
