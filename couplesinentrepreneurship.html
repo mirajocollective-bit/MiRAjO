@@ -131,23 +131,103 @@
       overflow-x: hidden;
     }
 
+    /* ═══ PROMO BAR ═══ */
+    .promo-bar {
+      background: var(--cie-crimson);
+      text-align: center;
+      padding: 10px 20px;
+      position: relative;
+      z-index: 101;
+    }
+    .promo-bar a {
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .promo-bar-pulse {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: bar-pulse 1.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes bar-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.7); }
+    }
+    .promo-bar-arrow {
+      font-size: 14px;
+      animation: arrow-bounce 1.4s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes arrow-bounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+
     /* ═══ NAV ═══ */
     .site-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 40px;
+      padding: 14px 40px;
       background: #ffffff;
       border-bottom: 1px solid rgba(13,13,13,0.1);
       position: sticky;
       top: 0;
       z-index: 100;
+      gap: 24px;
     }
-    .nav-logo img { height: 64px; width: auto; display: block; }
+    .nav-logo img { height: 52px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 24px; list-style: none; margin: 0 auto; }
+    .nav-links a {
+      font-size: 13px;
+      color: #2A3545;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #0D0D0D; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #256B42;
+      border: 1px solid rgba(37,107,66,0.3);
+      border-radius: 10px;
+      padding: 8px 0;
+      min-width: 200px;
+      z-index: 200;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 13px;
+      color: #ffffff;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .nav-dropdown-menu a:hover { background: rgba(255,255,255,0.12); }
     .nav-cta {
       display: inline-block;
-      font-size: 13px;
-      padding: 10px 24px;
+      font-size: 12px;
+      padding: 9px 20px;
       background: var(--cie-crimson);
       color: #ffffff;
       border-radius: 6px;
@@ -157,8 +237,15 @@
       transition: background 0.2s;
       cursor: pointer;
       border: none;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .nav-cta:hover { background: var(--cie-crimson-lt); }
+    .nav-login-link {
+      font-size: 13px; color: rgba(13,13,13,0.5); text-decoration: none;
+      font-weight: 500; transition: color 0.2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .nav-login-link:hover { color: var(--cie-dark); }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
     .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--cie-dark); }
     .mobile-menu {
@@ -171,6 +258,7 @@
       flex-direction: column;
       gap: 16px;
       z-index: 99;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     }
     .site-nav.nav-open .mobile-menu { display: flex; }
     .mobile-menu a { font-size: 14px; color: #0D0D0D; text-decoration: none; padding: 8px 0; border-bottom: 1px solid rgba(13,13,13,0.08); font-weight: 400; display: block; }
@@ -179,11 +267,6 @@
     .nav-hamburger .icon-close { display: none; }
     .site-nav.nav-open .nav-hamburger .icon-open { display: none; }
     .site-nav.nav-open .nav-hamburger .icon-close { display: block; }
-    .nav-login-link {
-      font-size: 13px; color: rgba(13,13,13,0.55); text-decoration: none;
-      font-weight: 500; transition: color 0.2s; white-space: nowrap;
-    }
-    .nav-login-link:hover { color: var(--cie-dark); }
 
     /* ═══ HERO ═══ */
     .hero {
@@ -842,10 +925,9 @@
 
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
-      .site-nav { padding: 12px 16px; }
+      .site-nav { padding: 12px 16px; gap: 12px; }
       .nav-logo img { height: 36px; }
-      #navEnroll { font-size: 11px; padding: 8px 14px; }
-      .nav-login-link { font-size: 11px; }
+      .nav-links, .nav-login-link { display: none; }
       .nav-hamburger { display: block; }
       section { padding: 40px 24px; }
       .founding-creds { grid-template-columns: 1fr !important; }
@@ -877,11 +959,32 @@
 </head>
 <body>
 
+  <!-- DRIVAMOR PROMO BAR -->
+  <div class="promo-bar">
+    <a href="https://drivamor.com" target="_blank" rel="noopener">
+      <span class="promo-bar-pulse"></span>
+      Take the free DrivAmor Quiz before you enroll — discover your Drive Mode and Amor Code
+      <span class="promo-bar-arrow">→</span>
+    </a>
+  </div>
+
   <!-- NAV -->
   <nav class="site-nav">
-    <a href="/" class="nav-logo">
+    <a href="https://www.mirajoco.org" class="nav-logo">
       <img src="/img/logo-horizontal.png" alt="MiRAjO">
     </a>
+    <ul class="nav-links">
+      <li class="nav-dropdown">
+        <a href="https://www.mirajoco.org/25daysand25nights">Programs</a>
+        <div class="nav-dropdown-menu">
+          <a href="https://www.mirajoco.org/25daysand25nights">25 Days &amp; 25 Nights</a>
+          <a href="https://www.mirajoco.org/couplesinentrepreneurship">Couples in Entrepreneurship</a>
+        </div>
+      </li>
+      <li><a href="https://www.mirajoco.org/speaking">Speaking</a></li>
+      <li><a href="https://www.mirajoco.org/events">Events</a></li>
+      <li><a href="https://www.mirajoco.org/blog">Notes</a></li>
+    </ul>
     <a href="/programs/login" class="nav-login-link">Login</a>
     <button class="nav-cta" id="navEnroll">Enroll Now</button>
     <button class="nav-hamburger" aria-label="Menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')">
@@ -890,12 +993,12 @@
     </button>
     <div class="mobile-menu">
       <a href="https://www.mirajoco.org/25daysand25nights">Programs</a>
-      <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="padding-left:20px;font-size:13px;opacity:0.75">↳ Couples in Entrepreneurship</a>
-      <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.75">↳ 25 Days &amp; 25 Nights</a>
+      <a href="https://www.mirajoco.org/25daysand25nights" style="padding-left:20px;font-size:13px;opacity:0.8">↳ 25 Days &amp; 25 Nights</a>
+      <a href="https://www.mirajoco.org/couplesinentrepreneurship" style="padding-left:20px;font-size:13px;opacity:0.8">↳ Couples in Entrepreneurship</a>
       <a href="https://www.mirajoco.org/speaking">Speaking</a>
       <a href="https://www.mirajoco.org/events">Events</a>
       <a href="https://www.mirajoco.org/blog">Notes</a>
-      <a href="/programs/login" class="nav-cta" style="margin-top:4px;">Login</a>
+      <a href="/programs/login">Login to Course</a>
       <button class="nav-cta" onclick="startCheckout()">Enroll Now</button>
     </div>
   </nav>
@@ -934,9 +1037,8 @@
           <p>"By the time the workday is over, we are too tired to actually be together."</p>
         </div>
       </div>
-      <div style="text-align:center;margin-top:48px;" data-aos="fade-up" data-aos-delay="100">
-        <p style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.5vw,26px);color:#1A1A1A;margin-bottom:24px;">If that sounds like you, you are not in crisis. You are in a gap this course is built to close.</p>
-        <button class="btn-primary" onclick="startCheckout()">Enroll Both Partners</button>
+      <div style="text-align:center;margin-top:40px;" data-aos="fade-up" data-aos-delay="100">
+        <p style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.5vw,26px);color:#1A1A1A;">If that sounds like you, you are not in crisis. You are in a gap this course is built to close.</p>
       </div>
     </div>
   </section>
@@ -1034,42 +1136,22 @@
         <div class="domain-card business" data-aos="fade-up" data-aos-delay="80">
           <div class="domain-icon">📈</div>
           <h3>Business</h3>
-          <p>You can love the same business and have completely different visions for where it is going. The scenarios in this domain surface that before it costs you: how decisions get made, who is carrying what, and whether both of you feel like you have a real seat at the table.</p>
-          <ul class="domain-questions">
-            <li>Do you both see the same long-term vision?</li>
-            <li>How does one partner's strength become the other's silence?</li>
-            <li>When one person does more, does the other know?</li>
-          </ul>
+          <p>How decisions get made, who is carrying what, and whether both of you feel like you have a real seat at the table. You can love the same business and have completely different visions for where it is going.</p>
         </div>
         <div class="domain-card relationship" data-aos="fade-up" data-aos-delay="120">
           <div class="domain-icon">🤝</div>
           <h3>Relationship</h3>
-          <p>Intimacy, connection, and shared values are not soft topics. They are the foundation of everything. This domain looks at what happens to the relationship when the business gets louder and whether both partners are even aware of it.</p>
-          <ul class="domain-questions">
-            <li>Does the business feel more important than the relationship?</li>
-            <li>Are you filling in gaps about what your partner believes?</li>
-            <li>When did you stop choosing each other first?</li>
-          </ul>
+          <p>What happens to the relationship when the business gets louder. Intimacy, connection, and shared values are not soft topics. They are the foundation of everything else.</p>
         </div>
         <div class="domain-card money" data-aos="fade-up" data-aos-delay="160">
           <div class="domain-icon">💰</div>
           <h3>Finances</h3>
-          <p>The tension is rarely about the numbers. It is about what the numbers mean to each person. This domain reads how both partners think about money, what they do when things are tight, and what they do when there is more than expected.</p>
-          <ul class="domain-questions">
-            <li>What happens when there is surplus and no agreement on how to use it?</li>
-            <li>Who holds the financial anxiety and who holds the financial decisions?</li>
-            <li>What does financial security actually mean to each of you?</li>
-          </ul>
+          <p>The tension is rarely about the numbers. It is about what the numbers mean to each person. This domain reads how both partners think about money and what they do when things shift.</p>
         </div>
         <div class="domain-card family" data-aos="fade-up" data-aos-delay="200">
           <div class="domain-icon">🏡</div>
           <h3>Family</h3>
-          <p>Home life does not pause for the business. When the load is uneven, the resentment builds quietly and then loudly. This domain names it, including the dynamics that come with blended families, young children, and different ideas about what home is supposed to feel like.</p>
-          <ul class="domain-questions">
-            <li>Who is carrying the home and is that the agreement you both agreed to?</li>
-            <li>How does your family structure shape what you each need from this business?</li>
-            <li>What are you each protecting your kids from without telling the other?</li>
-          </ul>
+          <p>Home life does not pause for the business. When the load is uneven, resentment builds quietly and then loudly. This domain names what neither partner wants to say out loud.</p>
         </div>
       </div>
     </div>
@@ -1082,7 +1164,7 @@
       <h2 class="section-title" style="color:#0D0D0D;max-width:600px;margin-left:auto;margin-right:auto;">I built this course<br><em style="color:var(--cie-crimson);font-style:italic;">because I lived the problem.</em></h2>
 
       <!-- Miranda's quote -->
-      <div style="max-width:720px;margin:0 auto 64px;background:#FFF0F4;border:1px solid rgba(184,32,56,0.18);border-radius:20px;padding:48px 56px;text-align:left;" data-aos="fade-up" data-aos-delay="80">
+      <div style="max-width:720px;margin:0 auto 48px;background:#FFF0F4;border:1px solid rgba(184,32,56,0.18);border-radius:20px;padding:32px 40px;text-align:left;" data-aos="fade-up" data-aos-delay="80">
         <div style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,28px);color:#0D0D0D;line-height:1.6;font-style:italic;margin-bottom:32px;">
           "We were in competition with each other, forgetting we were both working toward the same shared goals. It looked like divorce and missed opportunities to bond and comfort each other. We were not aligned on how long we wanted to stay in the business together, or what each person's individual goals even were."
         </div>
@@ -1126,9 +1208,8 @@
         <div class="miranda-content" data-aos="fade-left" data-aos-delay="80">
           <p class="section-eyebrow">Your instructor</p>
           <h2 class="section-title">Miranda Johnson</h2>
-          <p>Miranda Johnson is a speaker, strategist, and author who has spent over 25 years building businesses, navigating partnerships, and living through the intersection of work, family, and marriage. She knows firsthand that the personal and the professional are not separate, they are deeply, sometimes painfully, intertwined.</p>
-          <p>Couples in Entrepreneurship was built from those real conversations: the ones where it was not just the business that was struggling, it was the partnership behind it. This course is her answer to a gap that no generic couples program or business course had ever addressed honestly.</p>
-          <p>CIE is grounded in <em>The Pain Principle</em>, the five-stage framework Miranda has been living and teaching for over 25 years. She is also the author of <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em> and the founder of MiRAjO Collective.</p>
+          <p>Miranda Johnson is a speaker, strategist, and author who has spent over 25 years building businesses, navigating partnerships, and living at the intersection of work, family, and marriage. The personal and the professional are not separate. She knows that firsthand.</p>
+          <p>CIE is grounded in <em>The Pain Principle</em>, the five-stage framework Miranda has been living for over 25 years. She is also the author of <em>LeadLoud: 11 Commandments of the Next-Gen Leader</em> and the founder of MiRAjO Collective.</p>
         </div>
       </div>
     </div>
@@ -1225,70 +1306,6 @@
             <p>What you have built together and what you are taking forward. This is the close, the celebration, and the commitment to keep building the way you just learned how.</p>
           </div>
           <span class="module-tag foundation">Foundation</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT'S INCLUDED -->
-  <section class="included">
-    <div class="container">
-      <p class="section-eyebrow" data-aos="fade-up">What's included</p>
-      <h2 class="section-title" data-aos="fade-up" data-aos-delay="60">Everything both of you need. One price.</h2>
-      <div class="included-grid">
-        <div class="included-item" data-aos="fade-up" data-aos-delay="80">
-          <div class="included-icon">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div>
-            <h4>Individual Partner Profiles</h4>
-            <p>Each partner builds a private profile covering background, family structure, business stage, financial picture, and personal goals. Yours alone, surfaced together in your report.</p>
-          </div>
-        </div>
-        <div class="included-item" data-aos="fade-up" data-aos-delay="100">
-          <div class="included-icon">
-            <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-          </div>
-          <div>
-            <h4>The Partnership Diagnostic</h4>
-            <p>32 real scenarios across all four domains. Your answers are private until both partners submit.</p>
-          </div>
-        </div>
-        <div class="included-item" data-aos="fade-up" data-aos-delay="100">
-          <div class="included-icon">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
-          </div>
-          <div>
-            <h4>The Partnership Report</h4>
-            <p>Your auto-generated alignment report, color-coded by domain. Both perspectives, side by side.</p>
-          </div>
-        </div>
-        <div class="included-item" data-aos="fade-up" data-aos-delay="120">
-          <div class="included-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          </div>
-          <div>
-            <h4>Adaptive Joint Course</h4>
-            <p>Up to 8 modules, unlocked based on your specific gaps. Built around what your report actually found.</p>
-          </div>
-        </div>
-        <div class="included-item" data-aos="fade-up" data-aos-delay="140">
-          <div class="included-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <div>
-            <h4>Two Separate Accounts</h4>
-            <p>Each partner gets their own login, their own dashboard, and their own progress tracking. One purchase, two seats.</p>
-          </div>
-        </div>
-        <div class="included-item" data-aos="fade-up" data-aos-delay="160">
-          <div class="included-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div>
-            <h4>Lifetime Access</h4>
-            <p>The business will change. Come back to the course as it does. Your access never expires.</p>
-          </div>
         </div>
       </div>
     </div>
