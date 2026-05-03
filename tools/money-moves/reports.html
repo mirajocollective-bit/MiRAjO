@@ -5,28 +5,28 @@
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reports — Money Moves by MiRAjO</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
-      --deep-forest:    #122012;
-      --forest-mid:     #1E4226;
-      --living-green:   #256B42;
-      --new-growth:     #6DC48A;
-      --dry-sage:       #C4A245;
-      --warm-parchment: #F2EBD9;
-      --soft-white:     #FAF7F2;
-      --income-color:   #256B42;
-      --expense-color:  #C0392B;
+      --deep-forest:    #111111;
+      --forest-mid:     #374151;
+      --living-green:   #111111;
+      --new-growth:     #9CA3AF;
+      --dry-sage:       #F59E0B;
+      --warm-parchment: #F5F5F4;
+      --soft-white:     #FAFAFA;
+      --income-color:   #059669;
+      --expense-color:  #EF4444;
       --neutral:        #6b7280;
-      --border:         rgba(18,32,18,0.07);
+      --border:         rgba(0,0,0,0.07);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--soft-white);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #E8E4DC;
+      font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest);
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
@@ -34,20 +34,22 @@
 
     /* ── Nav ── */
     .nav {
-      background: linear-gradient(135deg, #4A6B4E, #2A3A2A);
-      padding: 0 32px; height: 64px;
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+      padding: 0 32px; height: 52px;
       display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 100;
     }
     .nav-left { display: flex; align-items: center; gap: 12px; }
-    .nav-logo  { height: 40px; width: auto; }
-    .nav-product { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dry-sage); }
+    .nav-logo  { height: 36px; width: auto; }
+    .nav-product { font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF; }
     .nav-right { display: flex; align-items: center; gap: 12px; }
-    .nav-back { font-size: 13px; color: rgba(242,235,217,0.7); text-decoration: none; transition: color 0.2s; }
-    .nav-back:hover { color: var(--warm-parchment); }
+    .nav-back { font-size: 13px; color: #6B7280; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #111; }
     .export-btn {
       font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px;
-      border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
       transition: opacity 0.2s;
     }
     .export-btn:hover { opacity: 0.8; }
@@ -63,7 +65,7 @@
     .filter-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--neutral); }
     .filter-select {
       padding: 8px 14px; border: 1px solid var(--border); border-radius: 10px;
-      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest); background: #fff; outline: none; cursor: pointer;
       transition: border-color 0.2s;
     }
@@ -131,8 +133,8 @@
       border-top: 2px solid var(--border);
     }
     .pl-net-row td {
-      background: var(--deep-forest); color: var(--warm-parchment);
-      font-weight: 700; font-size: 15px;
+      background: #111; color: #fff;
+      font-weight: 500; font-size: 15px;
     }
     .pl-net-row td:not(:first-child) { text-align: right; }
 
@@ -176,7 +178,7 @@
     /* ── Date input ── */
     .filter-input {
       padding: 8px 10px; border: 1px solid var(--border); border-radius: 10px;
-      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest); background: #fff; outline: none;
       transition: border-color 0.2s; cursor: pointer;
     }
@@ -187,9 +189,9 @@
     /* ── Export dropdown ── */
     .export-wrap { position: relative; }
     .export-main {
-      font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 8px;
-      border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--dry-sage); color: var(--deep-forest);
+      font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 8px;
+      border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
+      background: #F59E0B; color: #111;
       transition: opacity 0.2s; white-space: nowrap;
     }
     .export-main:hover { opacity: 0.85; }
@@ -203,7 +205,7 @@
     .export-menu button {
       display: block; width: 100%; text-align: left;
       padding: 12px 16px; border: none; background: none; cursor: pointer;
-      font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest); transition: background 0.15s;
     }
     .export-menu button:hover { background: var(--soft-white); }

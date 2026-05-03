@@ -7,21 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Money Moves">
-  <meta name="theme-color" content="#122012">
+  <meta name="theme-color" content="#111111">
   <title>Confirming... — Money Moves by MiRAjO</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --deep-forest:    #122012;
-      --living-green:   #256B42;
-      --new-growth:     #6DC48A;
-      --dry-sage:       #C4A245;
-      --warm-parchment: #F2EBD9;
+      --deep-forest:    #111111;
+      --living-green:   #111111;
+      --new-growth:     #9CA3AF;
+      --dry-sage:       #F59E0B;
+      --warm-parchment: #F5F5F4;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--new-growth);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #E8E4DC;
+      font-family: 'IBM Plex Sans', sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -31,23 +31,23 @@
     }
     .card {
       background: #fff;
-      border-radius: 24px;
-      padding: 56px 48px;
+      border-radius: 16px;
+      padding: 48px 40px;
       max-width: 480px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 4px 40px rgba(18,32,18,0.12);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.1);
     }
     .logo { height: 64px; width: auto; margin: 0 auto 8px; display: block; }
     .badge {
-      font-size: 11px; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--dry-sage); margin-bottom: 32px;
+      font-size: 11px; font-weight: 500; letter-spacing: 3px;
+      text-transform: uppercase; color: #9CA3AF; margin-bottom: 32px;
       display: block;
     }
     .spinner {
       width: 40px; height: 40px;
-      border: 3px solid rgba(37,107,66,0.15);
-      border-top-color: var(--living-green);
+      border: 3px solid rgba(0,0,0,0.1);
+      border-top-color: #111;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       margin: 0 auto 24px;
@@ -57,26 +57,26 @@
       font-family: 'Instrument Serif', serif;
       font-size: 28px; color: var(--deep-forest); margin-bottom: 12px;
     }
-    .sub { font-size: 14px; color: var(--living-green); opacity: 0.75; line-height: 1.7; }
+    .sub { font-size: 14px; color: #6B7280; line-height: 1.7; }
     .error { font-size: 14px; color: #c0392b; line-height: 1.7; }
     .back {
       display: inline-block; margin-top: 28px; font-size: 13px;
-      color: var(--living-green); text-decoration: none; opacity: 0.7;
+      color: #6B7280; text-decoration: none; opacity: 0.7;
     }
     .back:hover { opacity: 1; }
     .resend-input {
       width: 100%; padding: 14px 18px; margin-top: 16px;
-      border: 1px solid rgba(37,107,66,0.25); border-radius: 10px;
-      font-size: 15px; font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--deep-forest); background: #f5faf7; outline: none;
+      border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;
+      font-size: 14px; font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--deep-forest); background: #FAFAFA; outline: none;
       transition: border-color 0.2s;
     }
-    .resend-input:focus { border-color: var(--living-green); }
+    .resend-input:focus { border-color: #111; }
     .set-pw-btn {
-      width: 100%; margin-top: 14px; padding: 16px;
-      background: var(--deep-forest); color: var(--warm-parchment);
-      border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      width: 100%; margin-top: 14px; padding: 14px;
+      background: #F59E0B; color: #111;
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 500;
+      cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
       transition: opacity 0.2s;
     }
     .set-pw-btn:hover { opacity: 0.85; }

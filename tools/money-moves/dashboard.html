@@ -854,15 +854,15 @@
     /* ── Add Transaction Modal ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(15,32,87,0.5); z-index: 400;
+      background: rgba(0,0,0,0.45); z-index: 400;
       align-items: center; justify-content: center; padding: 24px;
     }
     .modal-overlay.open { display: flex; }
 
     .modal {
-      background: #fff; border-radius: 24px; padding: 36px;
+      background: #fff; border-radius: 16px; padding: 32px;
       width: 100%; max-width: 500px;
-      box-shadow: 0 20px 60px rgba(15,32,87,0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
       max-height: 90vh; overflow-y: auto;
     }
 
@@ -871,15 +871,15 @@
     .type-tabs { display: flex; gap: 6px; margin-bottom: 18px; }
     .type-tab {
       flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border);
-      background: transparent; font-size: 13px; font-weight: 600; cursor: pointer;
+      background: transparent; font-size: 13px; font-weight: 400; cursor: pointer;
       font-family: 'IBM Plex Sans', sans-serif; color: var(--neutral); transition: all 0.2s;
     }
-    .type-tab.active.income  { background: rgba(37,99,235,0.1);  border-color: var(--income-color);  color: var(--income-color); }
-    .type-tab.active.expense { background: rgba(192,57,43,0.1);  border-color: var(--expense-color); color: var(--expense-color); }
-    .type-tab.active.transfer { background: rgba(107,114,128,0.1); border-color: var(--neutral); color: var(--neutral); }
+    .type-tab.active.income  { background: rgba(5,150,105,0.07);  border-color: var(--income-color);  color: var(--income-color); }
+    .type-tab.active.expense { background: rgba(239,68,68,0.07);  border-color: var(--expense-color); color: var(--expense-color); }
+    .type-tab.active.transfer { background: rgba(0,0,0,0.04); border-color: var(--neutral); color: var(--neutral); }
 
     .form-group { margin-bottom: 14px; }
-    .form-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--neutral); display: block; margin-bottom: 5px; }
+    .form-label { font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--neutral); display: block; margin-bottom: 5px; }
     .form-input, .form-select {
       width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px;
       font-size: 14px; color: var(--deep-forest); font-family: 'IBM Plex Sans', sans-serif;
@@ -904,8 +904,8 @@
     }
     .modal-cancel:hover { background: var(--soft-white); }
     .modal-save {
-      flex: 2; padding: 9px 12px; background: var(--new-growth); color: #fff;
-      border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+      flex: 2; padding: 9px 12px; background: #F59E0B; color: #111;
+      border: none; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer;
       font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.2s;
     }
     .modal-save:hover { opacity: 0.85; }
@@ -3385,7 +3385,7 @@
 </div>
 
 <!-- Onboarding Modal -->
-<div class="modal-overlay" id="onboarding-overlay" style="display:none;z-index:9999;background:rgba(15,32,87,0.6)">
+<div class="modal-overlay" id="onboarding-overlay" style="display:none;z-index:9999;background:rgba(0,0,0,0.5)">
   <div class="modal" style="max-width:440px;padding:32px 28px">
     <div style="font-size:24px;margin-bottom:4px">👋 Welcome to Money Moves!</div>
     <div style="font-size:13px;color:var(--neutral);margin-bottom:24px">Here's how to get started in 3 steps.</div>
