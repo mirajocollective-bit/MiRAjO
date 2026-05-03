@@ -38,9 +38,9 @@
       display: flex; align-items: center; justify-content: space-between;
       height: 52px; position: sticky; top: 0; z-index: 100;
     }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
-    .nav-logo { height: 36px; width: auto; }
-    .nav-product { font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF; }
+    .nav-left { display: flex; align-items: center; gap: 10px; }
+    .nav-icon  { height: 42px; width: 42px; object-fit: contain; }
+    .nav-wordmark { font-family: 'Instrument Serif', serif; font-size: 18px; font-weight: 400; letter-spacing: 1px; color: #111; }
     .nav-back {
       font-size: 13px; color: #6B7280; text-decoration: none;
       transition: color 0.2s;
@@ -441,9 +441,9 @@
     @media (max-width: 768px) {
       /* Nav — slim mobile header */
       .nav { height: 52px; padding: 0 16px; }
-      .nav-logo { height: 28px; }
-      .nav-product { display: none; }
-      .nav-back { font-size: 14px; font-weight: 600; }
+      .nav-icon { height: 32px; width: 32px; }
+      .nav-wordmark { display: none; }
+      .nav-back { font-size: 13px; }
 
       /* Layout — single column, no outer padding (sections go edge-to-edge) */
       .layout {
@@ -528,11 +528,11 @@
 <nav class="nav">
   <div class="nav-left">
     <a href="/tools/money-moves/dashboard">
-      <img src="/img/mm-logo.png" alt="Money Moves" class="nav-logo">
+      <img src="/img/mm-logo.png" alt="Money Moves" class="nav-icon">
     </a>
-    <span class="nav-product">Money Moves</span>
+    <span class="nav-wordmark">MONEY MOVES</span>
   </div>
-  <a href="/tools/money-moves/dashboard" class="nav-back">← Back to Dashboard</a>
+  <a href="/tools/money-moves/dashboard" class="nav-back">← Dashboard</a>
 </nav>
 
 <div class="layout">
