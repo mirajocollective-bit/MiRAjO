@@ -51,7 +51,7 @@
     body.dark .nav-btn-forecast { border-color: rgba(255,255,255,0.15); color: #F0EDE6; }
     body.dark .nav-btn-logout   { border-color: rgba(255,255,255,0.1); color: #8A8580; }
     body.dark .nav-btn-add      { background: #F59E0B !important; color: #111 !important; }
-    body.dark .analytics-sidebar { background: #1E1E1E; border-right: 1px solid rgba(255,255,255,0.08); }
+    body.dark .analytics-sidebar { background: #1E1E1E; border-right: 1px solid rgba(255,255,255,0.08); border-radius: 0; }
     body.dark .analytics-toggle  { color: #F0EDE6; }
     body.dark .cal-accounts-row  { border-bottom-color: rgba(255,255,255,0.08); background: #141414; }
     body.dark .account-tab        { background: #252525; color: #8A8580; border-color: rgba(255,255,255,0.08); }
@@ -140,7 +140,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #E8E4DC;
+      background: #1E1B18;
       font-family: 'IBM Plex Sans', sans-serif;
       color: var(--deep-forest);
       -webkit-font-smoothing: antialiased;
@@ -226,20 +226,19 @@
     .layout {
       display: grid;
       grid-template-columns: 40px 1fr;
-      gap: 14px;
+      gap: 0;
       max-width: 1600px;
       margin: 0 auto;
-      padding: 8px 16px 24px;
+      padding: 0;
       transition: grid-template-columns 0.25s ease;
     }
     .layout.analytics-open { grid-template-columns: 280px 1fr; }
 
     /* ── Analytics Sidebar ── */
     .analytics-sidebar {
-      align-self: start; position: sticky; top: 24px;
-      background: #fff; border-radius: 16px;
-      border: 1px solid rgba(15,32,87,0.06);
-      box-shadow: 0 4px 16px rgba(15,32,87,0.08);
+      align-self: start; position: sticky; top: 52px;
+      background: #fff; border-radius: 0;
+      border-right: 1px solid rgba(0,0,0,0.07);
       overflow: hidden;
     }
     .analytics-toggle {
@@ -348,9 +347,8 @@
     /* ── Forecast Strip ── */
     .forecast-strip {
       grid-column: 1 / -1;
-      background: #fff; border-radius: 12px;
-      border: 1px solid rgba(15,32,87,0.06);
-      box-shadow: 0 2px 8px rgba(15,32,87,0.07);
+      background: #fff; border-radius: 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
       overflow: hidden; display: none;
     }
     .forecast-strip.strip-open { display: block; }
@@ -405,9 +403,8 @@
     .summary-bar {
       grid-column: 1 / -1;
       display: flex; align-items: center; gap: 0;
-      background: #fff; border-radius: 8px; padding: 0;
-      border: 1px solid #E4E7EC;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      background: #fff; border-radius: 0; padding: 0;
+      border-bottom: 1px solid #E4E7EC;
       overflow: hidden;
     }
     .summary-card {
@@ -433,9 +430,8 @@
 
     /* ── Calendar ── */
     .calendar-section {
-      background: #fff; border-radius: 8px;
-      border: 1px solid #E4E7EC;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      background: #fff; border-radius: 0;
+      border: none;
       overflow: hidden;
     }
 
