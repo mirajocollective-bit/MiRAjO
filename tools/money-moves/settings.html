@@ -15,6 +15,8 @@
       --dry-sage:       #F59E0B;
       --warm-parchment: #F5F5F4;
       --soft-white:     #FAFAFA;
+      --income-color:   #059669;
+      --expense-color:  #EF4444;
       --neutral:        #6b7280;
       --border:         rgba(0,0,0,0.07);
     }
@@ -95,7 +97,6 @@
     }
     .settings-nav a:hover { background: rgba(0,0,0,0.04); color: var(--deep-forest); }
     .settings-nav a.active { background: rgba(0,0,0,0.06); color: var(--deep-forest); font-weight: 500; border-left: 2px solid #F59E0B; padding-left: 8px; }
-    .settings-nav .nav-icon { font-size: 14px; }
 
     /* ── Sections ── */
     .settings-sections { display: flex; flex-direction: column; gap: 14px; }
@@ -333,7 +334,7 @@
     }
     .invite-input:focus { border-color: var(--living-green); }
     .invite-btn {
-      padding: 9px 16px; background: var(--living-green); color: #fff;
+      padding: 9px 16px; background: #F59E0B; color: #111;
       border: none; border-radius: 8px; font-size: 13px; font-weight: 500;
       cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
       white-space: nowrap; transition: opacity 0.2s;
@@ -376,7 +377,7 @@
 
     /* ── Buttons ── */
     .save-btn {
-      padding: 10px 20px; background: var(--deep-forest); color: var(--warm-parchment);
+      padding: 10px 20px; background: #F59E0B; color: #111;
       border: none; border-radius: 8px; font-size: 13px; font-weight: 600;
       cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
       transition: opacity 0.2s;
@@ -432,7 +433,7 @@
     .debt-field input:focus, .debt-field select:focus { border-color: var(--living-green); }
     .debt-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 8px; }
     .debt-save-btn {
-      padding: 6px 12px; background: var(--living-green); color: #fff; border: none;
+      padding: 6px 12px; background: #F59E0B; color: #111; border: none;
       border-radius: 7px; font-size: 12px; font-weight: 500; cursor: pointer;
       font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.2s;
     }
@@ -488,10 +489,10 @@
         border: 1px solid var(--border); margin-bottom: 0;
         background: var(--soft-white);
       }
-      .settings-nav a:hover { background: rgba(37,107,66,0.07); }
+      .settings-nav a:hover { background: rgba(0,0,0,0.04); }
       .settings-nav a.active {
-        background: var(--living-green); color: #fff;
-        border-color: var(--living-green);
+        background: #F59E0B; color: #111;
+        border-color: #F59E0B;
       }
 
       /* Sections — edge-to-edge cards with reduced padding */
@@ -571,13 +572,13 @@
   <!-- Sidebar nav -->
   <nav class="settings-nav">
     <div class="settings-nav-title">Settings</div>
-    <a href="#mode"     class="active"><span class="nav-icon">🎭</span> Your Mode</a>
-    <a href="#budget"          ><span class="nav-icon">📊</span> Budget</a>
-    <a href="#goals"           ><span class="nav-icon">🎯</span> Goals</a>
-    <a href="#family"          ><span class="nav-icon">👨‍👩‍👧</span> Family</a>
-    <a href="#debts"           ><span class="nav-icon">💳</span> Debts</a>
-    <a href="#notifications"   ><span class="nav-icon">🔔</span> Notifications</a>
-    <a href="#account"         ><span class="nav-icon">👤</span> Account</a>
+    <a href="#mode"          class="active">Your Mode</a>
+    <a href="#budget"        >Budget</a>
+    <a href="#goals"         >Goals</a>
+    <a href="#family"        >Family</a>
+    <a href="#debts"         >Debts</a>
+    <a href="#notifications" >Notifications</a>
+    <a href="#account"       >Account</a>
   </nav>
 
   <!-- Settings sections -->
