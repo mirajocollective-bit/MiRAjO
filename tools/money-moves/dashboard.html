@@ -65,14 +65,14 @@
     body.dark .cal-cell:hover    { background: rgba(245,158,11,0.07); }
     body.dark .cal-cell.today    { background: rgba(255,32,32,0.08); }
     body.dark .cal-day-name      { color: #8A8580; background: #1E1E1E; }
-    body.dark .cal-entry.income   { background: transparent !important; border-left-color: #34D399 !important; color: #6EE7B7 !important; }
-    body.dark .cal-entry.expense  { background: transparent !important; border-left-color: #F87171 !important; color: #FCA5A5 !important; }
+    body.dark .cal-entry.income   { background: transparent !important; border-left-color: #34D399 !important; color: #C8C0B8 !important; }
+    body.dark .cal-entry.expense  { background: transparent !important; border-left-color: #F87171 !important; color: #C8C0B8 !important; }
     body.dark .cal-entry.transfer { background: transparent !important; border-left-color: #6B7280 !important; color: #9CA3AF !important; }
     body.dark .cal-entry:hover    { background: rgba(245,158,11,0.14) !important; color: #F0EDE6 !important; border-left-color: #F59E0B !important; }
     body.dark .cal-txn-count     { background: #333; color: #F0EDE6; }
     body.dark .cal-txn-count:hover { background: #F59E0B; color: #111; }
-    body.dark .cal-day-balance.positive { color: #6EBF95; }
-    body.dark .cal-day-balance.negative { color: #E0909E; }
+    body.dark .cal-day-balance.positive { color: #C8C0B8; }
+    body.dark .cal-day-balance.negative { color: #C8C0B8; }
     body.dark .summary-bar       { background: #1E1E1E; border-color: rgba(255,255,255,0.08); }
     body.dark .summary-card      { border-right-color: rgba(255,255,255,0.08); }
     body.dark .summary-label     { color: #5A5550; }
@@ -130,6 +130,8 @@
     body.dark .cal-cell.today .cal-date-num { background: #FF2020; color: #fff; box-shadow: 0 2px 6px rgba(255,32,32,0.4); }
     body.dark .cal-cell.day-bal-highest { background: rgba(22,163,74,0.12); }
     body.dark .cal-cell.day-bal-lowest  { background: rgba(245,158,11,0.12); }
+    body.dark .cal-cell.day-bal-highest .cal-day-balance { color: #C8C0B8 !important; }
+    body.dark .cal-cell.day-bal-lowest  .cal-day-balance { color: #C8C0B8 !important; }
 
     /* ── Dark mode toggle button ──────────────────────────────────────────────── */
     .dark-toggle { font-size: 15px; padding: 6px 11px; cursor: pointer; background: transparent; border: 1px solid rgba(15,32,87,0.18); border-radius: 8px; }
@@ -1313,8 +1315,8 @@
       #m-home .cal-entry.income   { border-left-color: #166534; color: #14532D; }
       #m-home .cal-entry.expense  { border-left-color: #9B1C1C; color: #6B1A1A; }
       #m-home .cal-entry.transfer { border-left-color: #9CA3AF; color: #4B5563; }
-      body.dark #m-home .cal-entry.income   { border-left-color: #34D399 !important; color: #6EE7B7 !important; background: transparent !important; }
-      body.dark #m-home .cal-entry.expense  { border-left-color: #F87171 !important; color: #FCA5A5 !important; background: transparent !important; }
+      body.dark #m-home .cal-entry.income   { border-left-color: #34D399 !important; color: #C8C0B8 !important; background: transparent !important; }
+      body.dark #m-home .cal-entry.expense  { border-left-color: #F87171 !important; color: #C8C0B8 !important; background: transparent !important; }
       #m-home .cal-txn-count { font-size: 8px; padding: 1px 4px; margin-top: 1px; display: inline-block; }
 
       /* Balance number */
@@ -1324,8 +1326,8 @@
         text-align: center; letter-spacing: -0.5px;
         font-family: var(--num-font);
       }
-      body.dark #m-home .cal-day-balance.positive { color: #6EBF95; }
-      body.dark #m-home .cal-day-balance.negative { color: #E0909E; }
+      body.dark #m-home .cal-day-balance.positive { color: #C8C0B8; }
+      body.dark #m-home .cal-day-balance.negative { color: #C8C0B8; }
       #m-home .cal-day-balance.positive { color: #1A5C38; }
       #m-home .cal-day-balance.negative { color: #7B1D1D; }
 
