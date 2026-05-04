@@ -68,6 +68,7 @@
     { "source": "/speaking",                     "destination": "/speaking.html" },
     { "source": "/admin",                        "destination": "/admin/dashboard.html" },
     { "source": "/admin/dashboard",              "destination": "/admin/dashboard.html" },
+    { "source": "/crm",                          "destination": "/crm/index.html" },
     { "source": "/tools/money-moves",           "destination": "/tools/money-moves/login.html" },
     { "source": "/tools/money-moves/login",     "destination": "/tools/money-moves/login.html" },
     { "source": "/tools/money-moves/confirm",   "destination": "/tools/money-moves/confirm.html" },
