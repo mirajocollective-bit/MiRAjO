@@ -22,7 +22,14 @@ export default async function handler(req, res) {
       phone_number_collection: { enabled: true },
       line_items: [
         {
-          price: 'price_1TCtXJGUBsX8ruvFuVwKGXwD',
+          price_data: {
+            currency: 'usd',
+            unit_amount: 79700,
+            product_data: {
+              name: '25 Days & 25 Nights',
+              description: '25-day personal development program. Daily video lessons, evening reflection, journal prompts, movement, nutrition, and the 7 Currents of Nature\'s Law framework. 365-day access.',
+            },
+          },
           quantity: 1,
         },
       ],

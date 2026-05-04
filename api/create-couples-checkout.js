@@ -22,7 +22,14 @@ export default async function handler(req, res) {
       phone_number_collection: { enabled: true },
       line_items: [
         {
-          price: 'price_1TEKuWGUBsX8ruvFcGLbB5FK', // $997 live
+          price_data: {
+            currency: 'usd',
+            unit_amount: 149700,
+            product_data: {
+              name: 'Couples in Entrepreneurship',
+              description: 'The operating system for couples building a business together. Partnership Diagnostic, custom Partnership Report, and adaptive joint course path. Both partners included.',
+            },
+          },
           quantity: 1,
         },
       ],
