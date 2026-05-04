@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiRAjO CRM</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-forest: #122012;
+      --living-green: #256B42;
+      --new-growth:   #6DC48A;
+      --border:       #E8EDE8;
+      --muted:        #6B7B6B;
+      --bg:           #F4F6F4;
+      --white:        #fff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--deep-forest); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* ── LOGIN ── */
+    #login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--deep-forest); }
+    .login-card { background: #fff; border-radius: 16px; padding: 48px 40px; width: 100%; max-width: 360px; text-align: center; }
+    .login-card h1 { font-family: 'Instrument Serif', serif; font-size: 24px; font-weight: 400; margin-bottom: 6px; }
+    .login-card p { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+    .login-card input { width: 100%; padding: 13px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 12px; }
+    .login-card input:focus { border-color: var(--living-green); }
+    .login-card button { width: 100%; padding: 13px; background: var(--living-green); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .login-error { display: none; margin-top: 12px; font-size: 13px; color: #c0392b; }
+
+    /* ── APP ── */
+    #app { display: none; height: 100vh; display: none; flex-direction: column; }
+
+    /* TOP BAR */
+    .topbar { background: var(--deep-forest); height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
+    .topbar-left { display: flex; align-items: center; gap: 16px; }
+    .topbar-title { font-family: 'Instrument Serif', serif; font-size: 20px; color: #fff; font-weight: 400; }
+    .topbar-count { font-size: 12px; color: rgba(255,255,255,0.45); }
+    .topbar-right { display: flex; gap: 10px; }
+    .btn-sm { padding: 8px 16px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: opacity 0.15s; }
+    .btn-sm:hover { opacity: 0.85; }
+    .btn-outline { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2) !important; }
+    .btn-green { background: var(--living-green); color: #fff; }
+    .btn-white { background: #fff; color: var(--deep-forest); }
+
+    /* FILTERS BAR */
+    .filters-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 340px; }
+    .search-wrap input { width: 100%; padding: 9px 14px 9px 36px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; outline: none; background: var(--bg); }
+    .search-wrap input:focus { border-color: var(--living-green); background: #fff; }
+    .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .filter-select { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; background: var(--bg); color: var(--deep-forest); outline: none; cursor: pointer; }
+    .filter-select:focus { border-color: var(--living-green); }
+    .filter-clear { font-size: 12px; color: var(--muted); cursor: pointer; text-decoration: underline; white-space: nowrap; }
+    .filter-clear:hover { color: var(--deep-forest); }
+
+    /* MAIN LAYOUT */
+    .main { display: flex; flex: 1; overflow: hidden; }
+
+    /* CONTACTS LIST */
+    .contacts-panel { width: 100%; flex-shrink: 0; overflow-y: auto; background: #fff; border-right: 1px solid var(--border); transition: width 0.2s; }
+    .contacts-panel.with-detail { width: 420px; }
+    .contact-row { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+    .contact-row:hover { background: var(--bg); }
+    .contact-row.active { background: #EBF4EF; }
+    .contact-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--living-green); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .contact-info { flex: 1; min-width: 0; }
+    .contact-name { font-size: 14px; font-weight: 600; color: var(--deep-forest); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .contact-email { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .contact-meta { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+    .tag-badge { padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #EBF4EF; color: var(--living-green); white-space: nowrap; }
+    .source-badge { padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; background: #F0F0F0; color: var(--muted); white-space: nowrap; }
+
+    /* PAGINATION */
+    .pagination { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); background: #fff; }
+    .pagination-info { font-size: 13px; color: var(--muted); }
+    .pagination-btns { display: flex; gap: 8px; }
+    .page-btn { padding: 6px 14px; border: 1px solid var(--border); border-radius: 7px; font-size: 13px; font-family: inherit; background: #fff; cursor: pointer; }
+    .page-btn:hover:not(:disabled) { background: var(--bg); }
+    .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* DETAIL PANEL */
+    .detail-panel { flex: 1; overflow-y: auto; background: var(--bg); display: none; }
+    .detail-panel.open { display: block; }
+    .detail-header { background: #fff; padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 16px; }
+    .detail-avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--living-green); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .detail-name { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 2px; }
+    .detail-email { font-size: 13px; color: var(--muted); }
+    .detail-close { margin-left: auto; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); padding: 0 4px; line-height: 1; }
+    .detail-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; }
+    .detail-section { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+    .detail-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 14px; }
+    .detail-field { display: flex; justify-content: space-between; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; gap: 12px; }
+    .detail-field:last-child { border-bottom: none; padding-bottom: 0; }
+    .detail-label { color: var(--muted); font-weight: 500; flex-shrink: 0; }
+    .detail-value { color: var(--deep-forest); text-align: right; word-break: break-word; }
+
+    /* TAGS EDITOR */
+    .tags-editor { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tag-pill { display: flex; align-items: center; gap: 5px; padding: 4px 10px; background: #EBF4EF; color: var(--living-green); border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .tag-remove { cursor: pointer; font-size: 14px; line-height: 1; color: var(--living-green); }
+    .tag-add-row { display: flex; gap: 8px; }
+    .tag-input { flex: 1; padding: 8px 12px; border: 1px solid var(--border); border-radius: 7px; font-size: 13px; font-family: inherit; outline: none; }
+    .tag-input:focus { border-color: var(--living-green); }
+    .tag-add-btn { padding: 8px 14px; background: var(--living-green); color: #fff; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+    /* NOTES */
+    .notes-textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 100px; outline: none; color: var(--deep-forest); }
+    .notes-textarea:focus { border-color: var(--living-green); }
+    .notes-save-btn { margin-top: 10px; padding: 9px 20px; background: var(--living-green); color: #fff; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .notes-saved { font-size: 12px; color: var(--living-green); margin-left: 10px; }
+
+    /* IMPORT MODAL */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 16px; padding: 32px; width: 90%; max-width: 560px; }
+    .modal h2 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+    .modal p { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+    .file-drop { border: 2px dashed var(--border); border-radius: 10px; padding: 36px 24px; text-align: center; cursor: pointer; transition: border-color 0.15s; }
+    .file-drop:hover, .file-drop.drag { border-color: var(--living-green); background: #F0FAF4; }
+    .file-drop p { font-size: 14px; color: var(--muted); margin: 0; }
+    .file-drop strong { color: var(--living-green); }
+    #csv-file-input { display: none; }
+    .import-result { margin-top: 16px; font-size: 13px; line-height: 1.7; }
+    .modal-footer { margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; }
+    .btn-cancel { padding: 10px 20px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; cursor: pointer; }
+
+    /* EMPTY / LOADING */
+    .empty-state { padding: 60px 24px; text-align: center; color: var(--muted); font-size: 14px; }
+    .loading-row { padding: 20px 24px; text-align: center; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <img src="/img/logo-horizontal.png" alt="MiRAjO" style="height:36px;margin-bottom:28px;">
+    <h1>Contacts CRM</h1>
+    <p>Sign in to access your contacts</p>
+    <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">Sign In</button>
+    <div class="login-error" id="login-error">Incorrect password</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Contacts</span>
+      <span class="topbar-count" id="total-count"></span>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-sm btn-outline" onclick="logout()">Sign Out</button>
+      <button class="btn-sm btn-green" onclick="openImport()">+ Import CSV</button>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <div class="search-wrap">
+      <svg class="search-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Search name or email..." oninput="debounceLoad()">
+    </div>
+    <select class="filter-select" id="filter-source" onchange="loadContacts(1)">
+      <option value="">All Sources</option>
+    </select>
+    <select class="filter-select" id="filter-state" onchange="loadContacts(1)">
+      <option value="">All States</option>
+    </select>
+    <span class="filter-clear" onclick="clearFilters()">Clear filters</span>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- CONTACTS LIST -->
+    <div class="contacts-panel" id="contacts-panel">
+      <div id="contacts-list"><div class="loading-row">Loading...</div></div>
+      <div class="pagination" id="pagination" style="display:none">
+        <span class="pagination-info" id="pagination-info"></span>
+        <div class="pagination-btns">
+          <button class="page-btn" id="prev-btn" onclick="changePage(-1)">← Prev</button>
+          <button class="page-btn" id="next-btn" onclick="changePage(1)">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <div class="detail-panel" id="detail-panel">
+      <div class="detail-header">
+        <div class="detail-avatar" id="detail-avatar"></div>
+        <div>
+          <div class="detail-name" id="detail-name"></div>
+          <div class="detail-email" id="detail-email"></div>
+        </div>
+        <button class="detail-close" onclick="closeDetail()">×</button>
+      </div>
+      <div class="detail-body">
+
+        <!-- Info -->
+        <div class="detail-section">
+          <div class="detail-section-title">Contact Info</div>
+          <div class="detail-field"><span class="detail-label">Phone</span><span class="detail-value" id="d-phone">—</span></div>
+          <div class="detail-field"><span class="detail-label">City</span><span class="detail-value" id="d-city">—</span></div>
+          <div class="detail-field"><span class="detail-label">State</span><span class="detail-value" id="d-state">—</span></div>
+          <div class="detail-field"><span class="detail-label">Country</span><span class="detail-value" id="d-country">—</span></div>
+          <div class="detail-field"><span class="detail-label">Source</span><span class="detail-value" id="d-source">—</span></div>
+          <div class="detail-field"><span class="detail-label">Event</span><span class="detail-value" id="d-event">—</span></div>
+          <div class="detail-field"><span class="detail-label">Date</span><span class="detail-value" id="d-date">—</span></div>
+          <div class="detail-field"><span class="detail-label">Added</span><span class="detail-value" id="d-created">—</span></div>
+        </div>
+
+        <!-- Tags -->
+        <div class="detail-section">
+          <div class="detail-section-title">Tags</div>
+          <div class="tags-editor" id="tags-editor"></div>
+          <div class="tag-add-row">
+            <input type="text" class="tag-input" id="tag-input" placeholder="Add a tag..." onkeydown="if(event.key==='Enter')addTag()">
+            <button class="tag-add-btn" onclick="addTag()">Add</button>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="detail-section">
+          <div class="detail-section-title">Notes</div>
+          <textarea class="notes-textarea" id="notes-textarea" placeholder="Add notes about this contact..."></textarea>
+          <div style="display:flex;align-items:center;">
+            <button class="notes-save-btn" onclick="saveNotes()">Save Notes</button>
+            <span class="notes-saved" id="notes-saved" style="display:none">Saved</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT MODAL -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal">
+    <h2>Import Eventbrite CSV</h2>
+    <p>Download your attendee list from Eventbrite → Reports → Attendees → Export, then upload it here. Duplicates are skipped automatically.</p>
+    <div class="file-drop" id="file-drop" onclick="document.getElementById('csv-file-input').click()"
+      ondragover="event.preventDefault();this.classList.add('drag')"
+      ondragleave="this.classList.remove('drag')"
+      ondrop="handleDrop(event)">
+      <p>Drop your CSV here or <strong>click to browse</strong></p>
+      <p id="file-name" style="margin-top:8px;font-size:12px;"></p>
+    </div>
+    <input type="file" id="csv-file-input" accept=".csv" onchange="handleFileSelect(event)">
+    <div class="import-result" id="import-result"></div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeImport()">Cancel</button>
+      <button class="btn-sm btn-green" onclick="runImport()" id="import-btn">Import</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let authToken = '';
+  let currentPage = 1;
+  let totalContacts = 0;
+  let pageSize = 50;
+  let activeContact = null;
+  let csvData = null;
+  let searchTimer = null;
+
+  // ── AUTH ──
+  async function login() {
+    const pw = document.getElementById('pw-input').value;
+    if (!pw) return;
+    const res = await fetch('/api/admin-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: 'admin', password: pw }),
+    });
+    if (res.ok) {
+      authToken = pw;
+      sessionStorage.setItem('mj_crm_token', pw);
+      showApp();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem('mj_crm_token');
+    location.reload();
+  }
+
+  function showApp() {
+    document.getElementById('login-screen').style.display = 'none';
+    const app = document.getElementById('app');
+    app.style.display = 'flex';
+    loadContacts(1);
+  }
+
+  // ── CONTACTS ──
+  async function loadContacts(page = 1) {
+    currentPage = page;
+    document.getElementById('contacts-list').innerHTML = '<div class="loading-row">Loading...</div>';
+
+    const search = document.getElementById('search-input').value.trim();
+    const source = document.getElementById('filter-source').value;
+    const state  = document.getElementById('filter-state').value;
+
+    const params = new URLSearchParams({ page });
+    if (search) params.set('search', search);
+    if (source) params.set('source', source);
+    if (state)  params.set('state', state);
+
+    const res = await fetch('/api/contacts-list?' + params, {
+      headers: { Authorization: 'Bearer ' + authToken },
+    });
+    const data = await res.json();
+
+    totalContacts = data.total || 0;
+    document.getElementById('total-count').textContent = totalContacts.toLocaleString() + ' contacts';
+
+    // Populate filter dropdowns once
+    const srcEl = document.getElementById('filter-source');
+    const stEl  = document.getElementById('filter-state');
+    if (srcEl.options.length <= 1 && data.filters?.sources?.length) {
+      data.filters.sources.forEach(s => {
+        const o = document.createElement('option'); o.value = s; o.textContent = s; srcEl.appendChild(o);
+      });
+    }
+    if (stEl.options.length <= 1 && data.filters?.states?.length) {
+      data.filters.states.forEach(s => {
+        const o = document.createElement('option'); o.value = s; o.textContent = s; stEl.appendChild(o);
+      });
+    }
+
+    renderContacts(data.contacts || []);
+    renderPagination(data.total, page, data.pageSize);
+  }
+
+  function renderContacts(contacts) {
+    const list = document.getElementById('contacts-list');
+    if (!contacts.length) {
+      list.innerHTML = '<div class="empty-state">No contacts found.</div>';
+      return;
+    }
+    list.innerHTML = contacts.map(c => {
+      const initials = ((c.first_name?.[0] || '') + (c.last_name?.[0] || '')).toUpperCase() || c.email[0].toUpperCase();
+      const name = [c.first_name, c.last_name].filter(Boolean).join(' ') || c.email;
+      const isActive = activeContact?.id === c.id ? 'active' : '';
+      const tagBadge = c.tags?.[0] ? `<span class="tag-badge">${c.tags[0]}</span>` : '';
+      const srcBadge = c.source ? `<span class="source-badge">${c.source}</span>` : '';
+      return `<div class="contact-row ${isActive}" onclick="openDetail(${JSON.stringify(c).replace(/"/g, '&quot;')})">
+        <div class="contact-avatar">${initials}</div>
+        <div class="contact-info">
+          <div class="contact-name">${name}</div>
+          <div class="contact-email">${c.email}</div>
+        </div>
+        <div class="contact-meta">${tagBadge}${srcBadge}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderPagination(total, page, ps) {
+    const pg = document.getElementById('pagination');
+    const totalPages = Math.ceil(total / ps);
+    if (total <= ps) { pg.style.display = 'none'; return; }
+    pg.style.display = 'flex';
+    const start = (page - 1) * ps + 1;
+    const end = Math.min(page * ps, total);
+    document.getElementById('pagination-info').textContent = `${start}–${end} of ${total.toLocaleString()}`;
+    document.getElementById('prev-btn').disabled = page <= 1;
+    document.getElementById('next-btn').disabled = page >= totalPages;
+  }
+
+  function changePage(dir) { loadContacts(currentPage + dir); }
+  function debounceLoad() { clearTimeout(searchTimer); searchTimer = setTimeout(() => loadContacts(1), 350); }
+  function clearFilters() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('filter-source').value = '';
+    document.getElementById('filter-state').value = '';
+    loadContacts(1);
+  }
+
+  // ── DETAIL ──
+  function openDetail(contact) {
+    activeContact = contact;
+    document.getElementById('contacts-panel').classList.add('with-detail');
+    document.getElementById('detail-panel').classList.add('open');
+
+    const name = [contact.first_name, contact.last_name].filter(Boolean).join(' ') || contact.email;
+    const initials = ((contact.first_name?.[0] || '') + (contact.last_name?.[0] || '')).toUpperCase() || contact.email[0].toUpperCase();
+
+    document.getElementById('detail-avatar').textContent = initials;
+    document.getElementById('detail-name').textContent = name;
+    document.getElementById('detail-email').textContent = contact.email;
+    document.getElementById('d-phone').textContent   = contact.phone   || '—';
+    document.getElementById('d-city').textContent    = contact.city    || '—';
+    document.getElementById('d-state').textContent   = contact.state   || '—';
+    document.getElementById('d-country').textContent = contact.country || '—';
+    document.getElementById('d-source').textContent  = contact.source  || '—';
+    document.getElementById('d-event').textContent   = contact.event_attended || '—';
+    document.getElementById('d-date').textContent    = contact.event_date || '—';
+    document.getElementById('d-created').textContent = contact.created_at ? new Date(contact.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+    document.getElementById('notes-textarea').value  = contact.notes || '';
+    document.getElementById('notes-saved').style.display = 'none';
+
+    renderTags(contact.tags || []);
+    document.querySelectorAll('.contact-row').forEach(r => r.classList.remove('active'));
+    event.currentTarget?.classList.add('active');
+  }
+
+  function closeDetail() {
+    activeContact = null;
+    document.getElementById('contacts-panel').classList.remove('with-detail');
+    document.getElementById('detail-panel').classList.remove('open');
+    document.querySelectorAll('.contact-row').forEach(r => r.classList.remove('active'));
+  }
+
+  // ── TAGS ──
+  function renderTags(tags) {
+    document.getElementById('tags-editor').innerHTML = tags.map(t =>
+      `<div class="tag-pill">${t}<span class="tag-remove" onclick="removeTag('${t}')">×</span></div>`
+    ).join('');
+  }
+
+  async function addTag() {
+    const input = document.getElementById('tag-input');
+    const tag = input.value.trim().toLowerCase().replace(/\s+/g, '-');
+    if (!tag || !activeContact) return;
+    const tags = [...new Set([...(activeContact.tags || []), tag])];
+    await updateContact({ tags });
+    input.value = '';
+  }
+
+  async function removeTag(tag) {
+    if (!activeContact) return;
+    const tags = (activeContact.tags || []).filter(t => t !== tag);
+    await updateContact({ tags });
+  }
+
+  async function saveNotes() {
+    const notes = document.getElementById('notes-textarea').value;
+    await updateContact({ notes });
+    document.getElementById('notes-saved').style.display = 'inline';
+    setTimeout(() => document.getElementById('notes-saved').style.display = 'none', 2000);
+  }
+
+  async function updateContact(updates) {
+    const res = await fetch('/api/contacts-update', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + authToken },
+      body: JSON.stringify({ id: activeContact.id, ...updates }),
+    });
+    const data = await res.json();
+    if (data.contact) {
+      activeContact = data.contact;
+      if (updates.tags !== undefined) renderTags(data.contact.tags || []);
+    }
+  }
+
+  // ── IMPORT ──
+  function openImport() { document.getElementById('import-modal').classList.add('open'); }
+  function closeImport() {
+    document.getElementById('import-modal').classList.remove('open');
+    document.getElementById('import-result').innerHTML = '';
+    document.getElementById('file-name').textContent = '';
+    csvData = null;
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('file-drop').classList.remove('drag');
+    const file = e.dataTransfer.files[0];
+    if (file) parseCSV(file);
+  }
+
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) parseCSV(file);
+  }
+
+  function parseCSV(file) {
+    document.getElementById('file-name').textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      const lines = text.split('\n').filter(l => l.trim());
+      if (lines.length < 2) { document.getElementById('import-result').textContent = 'CSV appears empty.'; return; }
+
+      // Parse headers (handle tabs and commas)
+      const sep = lines[0].includes('\t') ? '\t' : ',';
+      const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+
+      const idx = {
+        first:   headers.findIndex(h => h.includes('first')),
+        last:    headers.findIndex(h => h.includes('last')),
+        email:   headers.findIndex(h => h.includes('email')),
+        phone:   headers.findIndex(h => h.includes('phone')),
+        city:    headers.findIndex(h => h.includes('city')),
+        state:   headers.findIndex(h => h.includes('state')),
+        country: headers.findIndex(h => h.includes('country')),
+        event:   headers.findIndex(h => h.includes('event name')),
+        date:    headers.findIndex(h => h.includes('event start') || h.includes('event date')),
+      };
+
+      if (idx.email === -1) { document.getElementById('import-result').textContent = 'Could not find an email column.'; return; }
+
+      const contacts = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(sep).map(c => c.trim().replace(/^"|"$/g, ''));
+        const email = idx.email >= 0 ? cols[idx.email] : '';
+        if (!email || !email.includes('@')) continue;
+        contacts.push({
+          email,
+          first_name:     idx.first   >= 0 ? cols[idx.first]   : '',
+          last_name:      idx.last    >= 0 ? cols[idx.last]     : '',
+          phone:          idx.phone   >= 0 ? cols[idx.phone]    : '',
+          city:           idx.city    >= 0 ? cols[idx.city]     : '',
+          state:          idx.state   >= 0 ? cols[idx.state]    : '',
+          country:        idx.country >= 0 ? cols[idx.country]  : '',
+          event_attended: idx.event   >= 0 ? cols[idx.event]    : '',
+          event_date:     idx.date    >= 0 ? cols[idx.date]     : '',
+          source: 'eventbrite',
+          tags: [],
+        });
+      }
+
+      csvData = contacts;
+      document.getElementById('import-result').innerHTML = `<span style="color:var(--living-green)">Found <strong>${contacts.length}</strong> contacts — click Import to add them.</span>`;
+    };
+    reader.readAsText(file);
+  }
+
+  async function runImport() {
+    if (!csvData || csvData.length === 0) { document.getElementById('import-result').textContent = 'Select a CSV file first.'; return; }
+    const btn = document.getElementById('import-btn');
+    btn.disabled = true; btn.textContent = 'Importing...';
+
+    const res = await fetch('/api/contacts-import', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + authToken },
+      body: JSON.stringify({ contacts: csvData }),
+    });
+    const data = await res.json();
+    btn.disabled = false; btn.textContent = 'Import';
+
+    if (res.ok) {
+      document.getElementById('import-result').innerHTML = `<span style="color:var(--living-green)"><strong>${data.imported}</strong> contacts imported. ${data.skipped ? data.skipped + ' skipped.' : ''}</span>`;
+      loadContacts(1);
+    } else {
+      document.getElementById('import-result').innerHTML = `<span style="color:#c0392b">Error: ${data.error}</span>`;
+    }
+  }
+
+  // ── INIT ──
+  window.addEventListener('load', () => {
+    const saved = sessionStorage.getItem('mj_crm_token');
+    if (saved) { authToken = saved; showApp(); }
+  });
+
+  document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+</body>
+</html>
