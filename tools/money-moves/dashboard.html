@@ -28,105 +28,107 @@
       --num-font:       'IBM Plex Sans', sans-serif;
     }
 
-    /* ── Dark mode overrides ─────────────────────────────────────────────────── */
+    /* ── Dark mode overrides — black/charcoal/amber, no blue ───────────────── */
     body.dark {
-      --deep-forest:    #E2E8FF;
-      --forest-mid:     #93C5FD;
-      --living-green:   #60A5FA;
-      --new-growth:     #BFDBFE;
-      --dry-sage:       #FCD34D;
-      --warm-parchment: #0F1A3A;
-      --soft-white:     #070F2B;
+      --deep-forest:    #F0EDE6;
+      --forest-mid:     #C4BEB6;
+      --living-green:   #F0EDE6;
+      --new-growth:     #7A7570;
+      --dry-sage:       #F59E0B;
+      --warm-parchment: #1E1E1E;
+      --soft-white:     #141414;
       --income-color:   #34D399;
       --expense-color:  #F87171;
-      --neutral:        #94A3B8;
-      --border:         rgba(255,255,255,0.07);
-      --text-primary:   #E2E8FF;
-      background: #070F2B !important;
-      color: #E2E8FF;
+      --neutral:        #8A8580;
+      --border:         rgba(255,255,255,0.08);
+      --text-primary:   #F0EDE6;
+      background: #141414 !important;
+      color: #F0EDE6;
     }
-    body.dark .nav          { background: #050D28; border-bottom: 1px solid rgba(255,255,255,0.07); }
-    body.dark .nav-brand    { color: #e2ddd4; }
-    body.dark .nav-btn-settings { border-color: rgba(255,255,255,0.15); color: #e2ddd4; }
-    body.dark .nav-btn-forecast { border-color: rgba(96,165,250,0.4); }
-    body.dark .nav-btn-logout   { border-color: rgba(255,255,255,0.1); color: #9ca3af; }
+    body.dark .nav          { background: #1E1E1E; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    body.dark .nav-brand    { color: #F0EDE6; }
+    body.dark .nav-btn-settings { border-color: rgba(255,255,255,0.15); color: #F0EDE6; }
+    body.dark .nav-btn-forecast { border-color: rgba(255,255,255,0.15); color: #F0EDE6; }
+    body.dark .nav-btn-logout   { border-color: rgba(255,255,255,0.1); color: #8A8580; }
     body.dark .nav-btn-add      { background: #F59E0B !important; color: #111 !important; }
-    body.dark .analytics-sidebar { background: #050D28; border-right: 1px solid rgba(255,255,255,0.07); }
-    body.dark .analytics-toggle  { color: #E2E8FF; }
-    body.dark .cal-accounts-row  { border-bottom-color: rgba(255,255,255,0.07); background: #070F2B; }
-    body.dark .account-tab        { background: #161B22; color: #9CA3AF; border-color: rgba(255,255,255,0.08); }
-    body.dark .account-tab:hover  { background: #1F2937; color: #E2E8F0; }
-    body.dark .account-tab.active { background: #161B22; color: #E2E8F0; border-color: #FF2020; box-shadow: 0 0 0 1px #FF2020; }
-    body.dark .cal-header        { border-bottom-color: rgba(255,255,255,0.07); background: #070F2B; }
+    body.dark .analytics-sidebar { background: #1E1E1E; border-right: 1px solid rgba(255,255,255,0.08); }
+    body.dark .analytics-toggle  { color: #F0EDE6; }
+    body.dark .cal-accounts-row  { border-bottom-color: rgba(255,255,255,0.08); background: #141414; }
+    body.dark .account-tab        { background: #252525; color: #8A8580; border-color: rgba(255,255,255,0.08); }
+    body.dark .account-tab:hover  { background: #2E2E2E; color: #F0EDE6; }
+    body.dark .account-tab.active { background: #252525; color: #F0EDE6; border-color: #FF2020; box-shadow: 0 0 0 1px #FF2020; }
+    body.dark .cal-header        { border-bottom-color: rgba(255,255,255,0.08); background: #141414; }
     body.dark .cal-grid          { border-color: rgba(255,255,255,0.09); }
-    body.dark .cal-cell          { border-color: rgba(255,255,255,0.09); background: #070F2B; }
-    body.dark .cal-date-num      { color: #CBD5E1; }
-    body.dark .cal-cell:hover    { background: rgba(255,255,255,0.03); }
-    body.dark .cal-cell.today    { background: rgba(79,127,219,0.10); box-shadow: inset 0 0 0 1.5px #4F7FDB; }
-    body.dark .cal-day-name      { color: #94A3B8; background: #050D28; }
+    body.dark .cal-cell          { border-color: rgba(255,255,255,0.09); background: #141414; }
+    body.dark .cal-date-num      { color: #C8C0B8; }
+    body.dark .cal-cell:hover    { background: rgba(245,158,11,0.07); }
+    body.dark .cal-cell.today    { background: rgba(255,32,32,0.08); }
+    body.dark .cal-day-name      { color: #8A8580; background: #1E1E1E; }
     body.dark .cal-entry.income   { background: transparent !important; border-left-color: #34D399 !important; color: #6EE7B7 !important; }
     body.dark .cal-entry.expense  { background: transparent !important; border-left-color: #F87171 !important; color: #FCA5A5 !important; }
     body.dark .cal-entry.transfer { background: transparent !important; border-left-color: #6B7280 !important; color: #9CA3AF !important; }
-    body.dark .cal-entry:hover    { background: #1A3A8F !important; color: #fff !important; border-left-color: #1A3A8F !important; }
-    body.dark .cal-txn-count     { background: #374151; color: #E2E8F0; }
-    body.dark .cal-txn-count:hover { background: #4F7FDB; color: #fff; }
+    body.dark .cal-entry:hover    { background: rgba(245,158,11,0.14) !important; color: #F0EDE6 !important; border-left-color: #F59E0B !important; }
+    body.dark .cal-txn-count     { background: #333; color: #F0EDE6; }
+    body.dark .cal-txn-count:hover { background: #F59E0B; color: #111; }
     body.dark .cal-day-balance.positive { color: #6EBF95; }
     body.dark .cal-day-balance.negative { color: #E0909E; }
-    body.dark .summary-bar       { background: #0D1117; border-color: rgba(255,255,255,0.08); }
-    body.dark .summary-card      { border-right-color: rgba(255,255,255,0.07); }
-    body.dark .summary-label     { color: #4B5563; }
-    body.dark .summary-amount    { color: #E2E8F0; }
+    body.dark .summary-bar       { background: #1E1E1E; border-color: rgba(255,255,255,0.08); }
+    body.dark .summary-card      { border-right-color: rgba(255,255,255,0.08); }
+    body.dark .summary-label     { color: #5A5550; }
+    body.dark .summary-amount    { color: #F0EDE6; }
     body.dark .summary-amount.income  { color: #6EBF95; }
     body.dark .summary-amount.expense { color: #E0909E; }
     body.dark .summary-amount.balance,
-    body.dark .summary-amount.savings { color: #E2E8F0; }
-    body.dark .hint-bar          { background: #0D1117; border-color: rgba(255,255,255,0.06); }
-    body.dark .hint-text         { color: #6B7280; }
-    body.dark .hint-text strong  { color: #CBD5E1; }
+    body.dark .summary-amount.savings { color: #F0EDE6; }
+    body.dark .hint-bar          { background: #1E1E1E; border-color: rgba(255,255,255,0.08); }
+    body.dark .hint-text         { color: #6B6560; }
+    body.dark .hint-text strong  { color: #C8C0B8; }
     body.dark .hint-dot          { background: rgba(255,255,255,0.1); }
-    body.dark .hint-dot.active   { background: #6B7280; }
-    body.dark .cal-net-worth     { border-left-color: rgba(255,255,255,0.07); }
-    body.dark .cal-nw-val        { color: #E2E8F0; }
+    body.dark .hint-dot.active   { background: #6B6560; }
+    body.dark .cal-net-worth     { border-left-color: rgba(255,255,255,0.08); }
+    body.dark .cal-nw-val        { color: #F0EDE6; }
     body.dark .cal-nw-val.positive { color: #6EBF95; }
     body.dark .cal-nw-val.negative { color: #E0909E; }
-    body.dark .modal             { background: #0F1A3A; color: #e2ddd4; }
-    body.dark .modal-title       { color: #e2ddd4; }
+    body.dark .modal             { background: #1E1E1E; color: #F0EDE6; }
+    body.dark .modal-title       { color: #F0EDE6; }
     body.dark input, body.dark select, body.dark textarea {
-      background: #070F2B; color: #e2ddd4; border-color: rgba(255,255,255,0.15);
+      background: #252525; color: #F0EDE6; border-color: rgba(255,255,255,0.15);
     }
-    body.dark .mode-card         { background: #0F1A3A; }
-    body.dark .mode-name         { color: #e2ddd4; }
-    body.dark .mode-msg          { color: #a8cbb8; }
+    body.dark .mode-card         { background: #252525; }
+    body.dark .mode-name         { color: #F0EDE6; }
+    body.dark .mode-msg          { color: #8A8580; }
     body.dark .budget-bar-bg     { background: rgba(255,255,255,0.1); }
-    body.dark .float-calc         { background: #0F1A3A; border-color: rgba(255,255,255,0.1); }
-    body.dark .float-calc-header  { background: #070F2B; }
-    body.dark .float-calc-display { background: #050D28; }
+    body.dark .float-calc         { background: #1E1E1E; border-color: rgba(255,255,255,0.1); }
+    body.dark .float-calc-header  { background: #141414; }
+    body.dark .float-calc-display { background: #0A0A0A; }
     body.dark .float-calc-grid    { background: rgba(255,255,255,0.06); }
-    body.dark .fc-btn             { background: #1e2e1e; color: #e2ddd4; }
-    body.dark .fc-btn:hover       { background: #263826; }
-    body.dark .fc-btn:active      { background: #2e4030; }
-    body.dark .fc-btn.fc-op       { color: #60A5FA; background: rgba(96,165,250,0.08); }
-    body.dark .fc-btn.fc-op:hover { background: rgba(96,165,250,0.18); }
-    body.dark .fc-btn.fc-fn       { color: #a8cbb8; background: #1e2e1e; }
-    body.dark .calc-display       { background: #070F2B; color: #e2ddd4; border-color: rgba(255,255,255,0.1); }
-    body.dark .calc-results       { background: #141e14; border-color: rgba(255,255,255,0.08); }
-    body.dark .calc-result-val    { color: #e2ddd4; }
-    body.dark .calc-extra-label   { color: #a8cbb8; }
-    body.dark .calc-amort-table th { background: #1e2e1e; color: #e2ddd4; }
-    body.dark .calc-amort-table td { border-color: rgba(255,255,255,0.06); color: #e2ddd4; }
-    body.dark .forecast-view      { background: #070F2B; }
-    body.dark .forecast-strip     { background: #050D28; border-color: rgba(255,255,255,0.07); }
+    body.dark .fc-btn             { background: #252525; color: #F0EDE6; }
+    body.dark .fc-btn:hover       { background: #333; }
+    body.dark .fc-btn:active      { background: #3A3A3A; }
+    body.dark .fc-btn.fc-op       { color: #F59E0B; background: rgba(245,158,11,0.08); }
+    body.dark .fc-btn.fc-op:hover { background: rgba(245,158,11,0.18); }
+    body.dark .fc-btn.fc-fn       { color: #8A8580; background: #252525; }
+    body.dark .calc-display       { background: #0A0A0A; color: #F0EDE6; border-color: rgba(255,255,255,0.1); }
+    body.dark .calc-results       { background: #1E1E1E; border-color: rgba(255,255,255,0.08); }
+    body.dark .calc-result-val    { color: #F0EDE6; }
+    body.dark .calc-extra-label   { color: #8A8580; }
+    body.dark .calc-amort-table th { background: #252525; color: #F0EDE6; }
+    body.dark .calc-amort-table td { border-color: rgba(255,255,255,0.08); color: #F0EDE6; }
+    body.dark .forecast-view      { background: #141414; }
+    body.dark .forecast-strip     { background: #1E1E1E; border-color: rgba(255,255,255,0.08); }
     body.dark .nav-xp-wrap        { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.14); }
-    body.dark .nav-level-name     { color: #e2ddd4; }
+    body.dark .nav-level-name     { color: #F0EDE6; }
     body.dark .nav-xp-bar         { background: rgba(255,255,255,0.15); }
     body.dark .summary-ratio-track { background: rgba(255,255,255,0.18); }
     body.dark .summary-ratio-label { color: rgba(255,255,255,0.5); }
-    body.dark .calendar-section   { background: #0D1117; border-color: rgba(255,255,255,0.08); }
+    body.dark .calendar-section   { background: #1E1E1E; border-color: rgba(255,255,255,0.08); }
     body.dark .progress-bar       { background: rgba(255,255,255,0.1); }
-    body.dark .cal-view-toggle    { background: #0F1A3A; }
-    body.dark .cal-view-btn       { color: #9ca3af; }
-    body.dark .cal-view-btn.active { background: #2e4030; color: #e2ddd4; box-shadow: none; }
-    body.dark .cal-cell.today .cal-date-num { background: #4F7FDB; color: #fff; box-shadow: 0 2px 6px rgba(79,127,219,0.4); }
+    body.dark .cal-view-toggle    { background: #252525; }
+    body.dark .cal-view-btn       { color: #8A8580; }
+    body.dark .cal-view-btn.active { background: #333; color: #F0EDE6; box-shadow: none; }
+    body.dark .cal-cell.today .cal-date-num { background: #FF2020; color: #fff; box-shadow: 0 2px 6px rgba(255,32,32,0.4); }
+    body.dark .cal-cell.day-bal-highest { background: rgba(22,163,74,0.12); }
+    body.dark .cal-cell.day-bal-lowest  { background: rgba(245,158,11,0.12); }
 
     /* ── Dark mode toggle button ──────────────────────────────────────────────── */
     .dark-toggle { font-size: 15px; padding: 6px 11px; cursor: pointer; background: transparent; border: 1px solid rgba(15,32,87,0.18); border-radius: 8px; }
@@ -597,7 +599,7 @@
     .cal-entry.income   { border-left-color: transparent; color: #1F2937; }
     .cal-entry.expense  { border-left-color: transparent; color: #1F2937; }
     .cal-entry.transfer { border-left-color: #9CA3AF; color: #4B5563; }
-    .cal-entry:hover { background: #1F2937 !important; color: #fff !important; border-left-color: #1F2937 !important; }
+    .cal-entry:hover { background: rgba(245,158,11,0.12) !important; color: #111 !important; border-left-color: #F59E0B !important; }
     .cal-entry[draggable] { cursor: grab; }
     .cal-entry.dragging { opacity: 0.3; cursor: grabbing; }
     .cal-cell.drag-over { background: rgba(0,0,0,0.04) !important; box-shadow: inset 0 0 0 1.5px #111; }
@@ -620,15 +622,13 @@
     .cal-day-balance.positive { color: #374151; }
     .cal-day-balance.negative { color: #374151; }
 
-    /* ── Calendar min/max balance highlights — subtle, data-grade ── */
-    .cal-cell.day-bal-highest { background: rgba(22,101,52,0.05); }
+    /* ── Calendar min/max balance highlights ── */
+    .cal-cell.day-bal-highest { background: rgba(22,163,74,0.09); }
     .cal-cell.day-bal-highest .cal-day-balance { color: #111 !important; font-weight: 400; }
-    .cal-cell.day-bal-highest .cal-date-num::after { content: '▲'; font-size: 7px; color: #166534; margin-left: 1px; vertical-align: top; }
-    .cal-cell.day-bal-lowest  { background: rgba(127,29,29,0.04); }
+    .cal-cell.day-bal-highest .cal-date-num::after { content: '▲'; font-size: 7px; color: #15803D; margin-left: 1px; vertical-align: top; }
+    .cal-cell.day-bal-lowest  { background: rgba(245,158,11,0.12); }
     .cal-cell.day-bal-lowest  .cal-day-balance { color: #111 !important; font-weight: 400; }
-    .cal-cell.day-bal-lowest  .cal-date-num::after { content: '▼'; font-size: 7px; color: #9B1C1C; margin-left: 1px; vertical-align: top; }
-    body.dark .cal-cell.day-bal-highest { background: rgba(22,101,52,0.16); }
-    body.dark .cal-cell.day-bal-lowest  { background: rgba(127,29,29,0.18); }
+    .cal-cell.day-bal-lowest  .cal-date-num::after { content: '▼'; font-size: 7px; color: #D97706; margin-left: 1px; vertical-align: top; }
 
     /* ── Forecast view ── */
     .forecast-view {
