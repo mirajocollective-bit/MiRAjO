@@ -158,6 +158,7 @@
     </div>
     <div class="topbar-right">
       <button class="btn-sm btn-outline" onclick="logout()">Sign Out</button>
+      <button class="btn-sm btn-outline" onclick="syncResend()" id="resend-sync-btn">Sync Resend</button>
       <button class="btn-sm btn-green" onclick="openImport()">+ Import CSV</button>
     </div>
   </div>
@@ -556,6 +557,30 @@
     } else {
       document.getElementById('import-result').innerHTML = `<span style="color:#c0392b">Error: ${data.error}</span>`;
     }
+  }
+
+  // ── RESEND SYNC ──
+  async function syncResend() {
+    const btn = document.getElementById('resend-sync-btn');
+    btn.disabled = true;
+    btn.textContent = 'Syncing...';
+    try {
+      const res = await fetch('/api/sync-resend-contacts', {
+        method: 'POST',
+        headers: { Authorization: 'Bearer ' + authToken },
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert(`Done — ${data.imported} new contacts added, ${data.skipped} already existed (${data.total} total in Resend).`);
+        loadContacts(1);
+      } else {
+        alert('Error: ' + data.error);
+      }
+    } catch (e) {
+      alert('Network error. Try again.');
+    }
+    btn.disabled = false;
+    btn.textContent = 'Sync Resend';
   }
 
   // ── INIT ──
