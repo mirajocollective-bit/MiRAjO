@@ -392,7 +392,7 @@ export const SEQUENCES = {
         greet(n) +
         p(`If you are still here, you are still thinking about it.`) +
         p(`That is how it works. The scorecard surfaced something you already knew was there. The question is what you do with it.`) +
-        p(`Couples in Entrepreneurship is $997 for both of you: one purchase, two accounts, lifetime access. It is not cheap. But a single session with a couples therapist who understands business costs more than that and gives you nothing to take home.`) +
+        p(`Couples in Entrepreneurship is $1,497 for both of you: one purchase, two accounts, lifetime access. It is not cheap. But a single session with a couples therapist who understands business costs more than that and gives you nothing to take home.`) +
         p(`This gives you eight modules, a shared diagnostic, a Partnership Report built on your actual answers, and a course path designed around your specific gaps. Not a generic program. Yours.`) +
         btn('Enroll in Couples in Entrepreneurship', 'https://www.mirajoco.org/couplesinentrepreneurship') +
         p(`If it is not the right time, that is okay. But if it is, do not wait until the gap is wider.`)

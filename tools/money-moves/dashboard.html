@@ -145,6 +145,7 @@
       color: var(--deep-forest);
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* ── Nav ── */
@@ -262,7 +263,16 @@
     }
     .layout.analytics-open .analytics-toggle-icon { transform: rotate(180deg); }
     .analytics-toggle:hover { background: rgba(15,32,87,0.03); }
-    .analytics-content { display: none; }
+    .analytics-content {
+      display: none;
+      overflow-y: auto;
+      max-height: calc(100vh - 100px);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,0,0,0.18) transparent;
+    }
+    .analytics-content::-webkit-scrollbar { width: 4px; }
+    .analytics-content::-webkit-scrollbar-track { background: transparent; }
+    .analytics-content::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 4px; }
     .layout.analytics-open .analytics-content { display: block; }
 
     .analytics-tools-divider {

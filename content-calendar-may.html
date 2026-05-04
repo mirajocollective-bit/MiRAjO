@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiRAjO Content Calendar — May 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #ffffff;
+      color: #111827;
+      padding: 32px;
+    }
+
+    .cal-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    .cal-subtitle {
+      font-size: 13px;
+      color: #111827;
+      margin-bottom: 16px;
+    }
+
+    .platform-note {
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: #111827;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #111827;
+    }
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+
+    /* CALENDAR */
+    .calendar {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #d1d5db;
+    }
+
+    .cal-days-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: #1f2937;
+    }
+    .cal-day-label {
+      padding: 10px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+    .cal-day-label.post-day { color: #ffffff; }
+
+    .cal-week {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border-top: 1px solid #d1d5db;
+    }
+
+    .cal-cell {
+      min-height: 160px;
+      padding: 8px;
+      border-right: 1px solid #d1d5db;
+      background: #ffffff;
+    }
+    .cal-cell:last-child { border-right: none; }
+    .cal-cell.empty { background: #f9fafb; }
+    .cal-cell.weekend { background: #f9fafb; }
+    .cal-cell.holiday { background: #fffbeb; }
+
+    .date-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .holiday-badge {
+      font-size: 9px;
+      background: #fde68a;
+      color: #111827;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    .post-card {
+      border-radius: 6px;
+      padding: 8px 10px;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .post-type {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #111827;
+      margin-bottom: 3px;
+    }
+    .post-topic {
+      font-size: 11px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+    .post-desc {
+      font-size: 10px;
+      color: #111827;
+      line-height: 1.5;
+      margin-bottom: 5px;
+    }
+    .platforms {
+      display: flex;
+      gap: 3px;
+      flex-wrap: wrap;
+    }
+    .platform-tag {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #111827;
+      border: 1px solid rgba(0,0,0,0.2);
+      text-transform: uppercase;
+    }
+
+    /* PASTEL BACKGROUNDS — black text throughout */
+    .thought      { background: #dbeafe; } /* blue */
+    .event        { background: #ffedd5; } /* orange */
+    .pain-points  { background: #ede9fe; } /* purple */
+    .video        { background: #fee2e2; } /* red */
+    .programs     { background: #ccfbf1; } /* teal */
+
+    .thought .platform-tag     { background: #bfdbfe; }
+    .event .platform-tag       { background: #fed7aa; }
+    .pain-points .platform-tag { background: #ddd6fe; }
+    .video .platform-tag       { background: #fecaca; }
+    .programs .platform-tag    { background: #99f6e4; }
+
+    /* ARTICLE BAR */
+    .article-bar {
+      margin-top: 16px;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .article-bar .post-type  { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #111827; margin-bottom: 4px; }
+    .article-bar .post-topic { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+    .article-bar .post-desc  { font-size: 12px; color: #111827; line-height: 1.6; }
+
+    .cal-footer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    @media print {
+      body { padding: 16px; }
+      .calendar { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cal-title">MiRAjO Content Calendar — May 2026</div>
+<div class="cal-subtitle">Theme: The Trap of Instant Gratification &nbsp;|&nbsp; The Pain Principle, Chapter 10</div>
+
+<div class="platform-note">
+  <strong>Platforms:</strong> LinkedIn — all 4 post days + article end of month &nbsp;|&nbsp; Instagram — all 4 post days &nbsp;|&nbsp; TikTok — Monday (audio) + Friday (video)
+  &nbsp;&nbsp;&nbsp;
+  <strong>Assistant note:</strong> Topics and captions are set. You have full creative direction on visuals, graphics, and video editing. Batch Miranda's 4 videos in one session.
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#dbeafe;"></div> Thought Monday (Voice Audio)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffedd5;"></div> Event Promo</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ede9fe;"></div> Pain Points (Curated / Meme / Repost)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;"></div> Miranda Video (60 sec)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ccfbf1;"></div> Programs Promo</div>
+</div>
+
+<div class="calendar">
+
+  <div class="cal-days-header">
+    <div class="cal-day-label">Sunday</div>
+    <div class="cal-day-label post-day">Monday</div>
+    <div class="cal-day-label">Tuesday</div>
+    <div class="cal-day-label post-day">Wednesday</div>
+    <div class="cal-day-label post-day">Thursday</div>
+    <div class="cal-day-label post-day">Friday</div>
+    <div class="cal-day-label">Saturday</div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="cal-week">
+    <div class="cal-cell empty"></div>
+
+    <div class="cal-cell">
+      <div class="date-num">4</div>
+      <div class="post-card thought">
+        <div class="post-type">Thought Monday</div>
+        <div class="post-topic">"That's just how they are."</div>
+        <div class="post-desc">The real cost of choosing peace over truth. Voice audio + visual.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell empty"><div class="date-num">5</div></div>
+
+    <div class="cal-cell">
+      <div class="date-num">6</div>
+      <div class="post-card event">
+        <div class="post-type">Event Promo</div>
+        <div class="post-topic">Feel Everything, Fear Nothing</div>
+        <div class="post-desc">June 4 at 7pm ET. You have been putting this off. Register at link in bio.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">7</div>
+      <div class="post-card pain-points">
+        <div class="post-type">Pain Points</div>
+        <div class="post-topic">Staying for security</div>
+        <div class="post-desc">Meme or repost: financial fear keeping people stuck. Caption: "Security is not the same as safety."</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">8</div>
+      <div class="post-card video">
+        <div class="post-type">Miranda Video</div>
+        <div class="post-topic">"You can't induce at 6 months."</div>
+        <div class="post-desc">The pregnant woman analogy. You cannot rush what is still being built.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell weekend"><div class="date-num">9</div></div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="cal-week">
+    <div class="cal-cell weekend"><div class="date-num">10</div></div>
+
+    <div class="cal-cell">
+      <div class="date-num">11</div>
+      <div class="post-card thought">
+        <div class="post-type">Thought Monday</div>
+        <div class="post-topic">"You chose the show."</div>
+        <div class="post-desc">The binge vs the build. Every small choice is a vote your future is counting. Voice audio + visual.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell empty"><div class="date-num">12</div></div>
+
+    <div class="cal-cell">
+      <div class="date-num">13</div>
+      <div class="post-card programs">
+        <div class="post-type">Programs Promo</div>
+        <div class="post-topic">25 Days and 25 Nights</div>
+        <div class="post-desc">If you keep choosing comfort over the reset, nothing changes. This is where it starts. Link in bio.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">14</div>
+      <div class="post-card pain-points">
+        <div class="post-type">Pain Points</div>
+        <div class="post-topic">Procrastination vs progress</div>
+        <div class="post-desc">Meme: choosing easy over important. Caption: "You keep picking the comfortable thing. And calling it a bad day."</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">15</div>
+      <div class="post-card video">
+        <div class="post-type">Miranda Video</div>
+        <div class="post-topic">"Your future is counting your votes."</div>
+        <div class="post-desc">Every choice to pick easy over important adds up. You are building something either way.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell weekend"><div class="date-num">16</div></div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="cal-week">
+    <div class="cal-cell weekend"><div class="date-num">17</div></div>
+
+    <div class="cal-cell">
+      <div class="date-num">18</div>
+      <div class="post-card thought">
+        <div class="post-type">Thought Monday</div>
+        <div class="post-topic">"Saying nothing is a decision."</div>
+        <div class="post-desc">Avoiding conflict is still choosing. Every time you let it slide you decide their comfort matters more than your peace. Voice audio.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell empty"><div class="date-num">19</div></div>
+
+    <div class="cal-cell">
+      <div class="date-num">20</div>
+      <div class="post-card event">
+        <div class="post-type">Event Promo</div>
+        <div class="post-topic">Feel Everything, Fear Nothing — 2 weeks out</div>
+        <div class="post-desc">June 4 at 7pm ET. Two weeks. Have you registered yet? Link in bio.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">21</div>
+      <div class="post-card pain-points">
+        <div class="post-type">Pain Points</div>
+        <div class="post-topic">Keeping the peace vs living in it</div>
+        <div class="post-desc">Meme: conflict avoidance and resentment. Caption: "Temporary peace is not the same as actual peace."</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">22</div>
+      <div class="post-card video">
+        <div class="post-type">Miranda Video</div>
+        <div class="post-topic">"Temporary peace is not actual peace."</div>
+        <div class="post-desc">There is a difference between keeping the peace and living in it. One is a choice. The other is a life.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell weekend"><div class="date-num">23</div></div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="cal-week">
+    <div class="cal-cell weekend"><div class="date-num">24</div></div>
+
+    <div class="cal-cell holiday">
+      <div class="date-num">25 <span class="holiday-badge">Memorial Day</span></div>
+      <div class="post-card thought">
+        <div class="post-type">Thought Monday</div>
+        <div class="post-topic">"The seed needs the ground."</div>
+        <div class="post-desc">You cannot harvest what you refused to plant. You cannot plant what you are not willing to wait for. Voice audio.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell empty"><div class="date-num">26</div></div>
+
+    <div class="cal-cell">
+      <div class="date-num">27</div>
+      <div class="post-card programs">
+        <div class="post-type">Programs Promo</div>
+        <div class="post-topic">Couples in Entrepreneurship</div>
+        <div class="post-desc">You can build the business and keep the relationship. But not without the work. Link in bio.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">28</div>
+      <div class="post-card pain-points">
+        <div class="post-type">Pain Points</div>
+        <div class="post-topic">Trusting the process</div>
+        <div class="post-desc">Meme: delayed gratification and patience. Caption: "You are not behind. You are in month 6. Stop trying to deliver early."</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell">
+      <div class="date-num">29</div>
+      <div class="post-card video">
+        <div class="post-type">Miranda Video</div>
+        <div class="post-topic">"You are not behind."</div>
+        <div class="post-desc">Stop trying to deliver early. You are in month 6. The harvest is coming. But it needs its time.</div>
+        <div class="platforms">
+          <span class="platform-tag">LinkedIn</span>
+          <span class="platform-tag">IG</span>
+          <span class="platform-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cell weekend"><div class="date-num">30</div></div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="cal-week">
+    <div class="cal-cell weekend"><div class="date-num">31</div></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+  </div>
+
+</div>
+
+<div class="article-bar">
+  <div class="post-type">LinkedIn Article — Publish Last Week of May</div>
+  <div class="post-topic">Why You Are Not Lazy. You Just Cannot Hurt Yourself.</div>
+  <div class="post-desc">Longer-form article from Miranda pulling together the full Chapter 10 theme. Publish as a LinkedIn Article (not a post) the last week of May. Builds thought leadership and search visibility.</div>
+</div>
+
+<div class="cal-footer">MiRAjO Collective &nbsp;&middot;&nbsp; Content Calendar May 2026 &nbsp;&middot;&nbsp; The Pain Principle: Chapter 10</div>
+
+</body>
+</html>
