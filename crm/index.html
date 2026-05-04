@@ -140,6 +140,7 @@
     <img src="/img/logo-horizontal.png" alt="MiRAjO" style="height:36px;margin-bottom:28px;">
     <h1>Contacts CRM</h1>
     <p>Sign in to access your contacts</p>
+    <input type="text" id="un-input" placeholder="Username" onkeydown="if(event.key==='Enter')login()" style="margin-bottom:12px;">
     <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">Sign In</button>
     <div class="login-error" id="login-error">Incorrect password</div>
@@ -273,12 +274,13 @@
 
   // ── AUTH ──
   async function login() {
+    const un = document.getElementById('un-input').value.trim();
     const pw = document.getElementById('pw-input').value;
-    if (!pw) return;
+    if (!un || !pw) return;
     const res = await fetch('/api/admin-auth', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: 'admin', password: pw }),
+      body: JSON.stringify({ username: un, password: pw }),
     });
     if (res.ok) {
       authToken = pw;
