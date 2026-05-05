@@ -28,18 +28,32 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
-      headers: { Authorization: `Bearer ${apiKey}` },
-    });
+    // Fetch all contacts — Resend may paginate so collect all pages
+    let resendContacts = [];
+    let page = 1;
+    const perPage = 100;
 
-    if (!response.ok) {
-      const body = await response.text();
-      throw new Error(`Resend API error: ${response.status} — ${body}`);
+    while (true) {
+      const response = await fetch(
+        `https://api.resend.com/audiences/${audienceId}/contacts?page=${page}&per_page=${perPage}`,
+        { headers: { Authorization: `Bearer ${apiKey}` } }
+      );
+
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`Resend API error: ${response.status} — ${body}`);
+      }
+
+      const json = await response.json();
+      // Handle both { data: [...] } and { contacts: [...] } response shapes
+      const batch = json.data || json.contacts || (Array.isArray(json) ? json : []);
+      if (batch.length === 0) break;
+      resendContacts = resendContacts.concat(batch);
+      if (batch.length < perPage) break; // last page
+      page++;
     }
 
-    const { data: resendContacts } = await response.json();
-
-    if (!resendContacts || resendContacts.length === 0) {
+    if (resendContacts.length === 0) {
       return res.status(200).json({ imported: 0, skipped: 0, total: 0 });
     }
 
