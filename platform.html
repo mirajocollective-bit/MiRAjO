@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiRAjO Collective — Entrepreneur Training Suite | Programs for Organizations & Institutions</title>
+  <meta name="description" content="MiRAjO Collective delivers a complete entrepreneur training suite for corporations, schools, and government agencies. Programs in mindset, launch, financial literacy, leadership, and team development.">
+  <link rel="canonical" href="https://www.mirajoco.org/platform">
+  <meta property="og:title" content="MiRAjO Collective — Entrepreneur Training Suite">
+  <meta property="og:description" content="A complete training system built for entrepreneurs, organizations, and institutions. Six program tracks. Three packages. One platform.">
+  <meta property="og:url" content="https://www.mirajoco.org/platform">
+  <meta property="og:site_name" content="MiRAjO Collective">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "MiRAjO Collective LLC",
+    "url": "https://www.mirajoco.org",
+    "description": "MiRAjO Collective delivers entrepreneur development training programs for corporations, schools, and government agencies.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "100 2nd Ave S., Suite 205N #1043",
+      "addressLocality": "St. Petersburg",
+      "addressRegion": "FL",
+      "postalCode": "33701",
+      "addressCountry": "US"
+    },
+    "founder": { "@type": "Person", "name": "Miranda Johnson" },
+    "hasCredential": "NAICS 611430, 611699, 611710"
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest:     #122012;
+      --green:      #256B42;
+      --green-lt:   #339158;
+      --mint:       #6DC48A;
+      --mint-tint:  #EBF7F0;
+      --gold:       #C4A245;
+      --parchment:  #F2EBD9;
+      --soft-white: #FAF7F2;
+      --white:      #FFFFFF;
+      --muted:      #5A6E58;
+      --border:     rgba(18,32,18,0.09);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; }
+    body {
+      background: var(--soft-white);
+      color: var(--forest);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    .site-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 40px; background: #fff; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo img { height: 56px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--forest); }
+    .nav-cta {
+      display: inline-block; font-size: 12px; padding: 9px 22px; background: #fff;
+      color: var(--green); border: 1.5px solid var(--green); border-radius: 6px;
+      font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s, color 0.3s;
+    }
+    .nav-cta:hover { background: var(--green); color: #fff; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--forest); }
+    .mobile-menu {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 20px; flex-direction: column; gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 99;
+    }
+    .site-nav.nav-open .mobile-menu { display: flex; }
+    .mobile-menu a { font-size: 14px; color: var(--forest); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .nav-cta { text-align: center; margin-top: 8px; }
+    .nav-hamburger .icon-close { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-open { display: none; }
+    .site-nav.nav-open .nav-hamburger .icon-close { display: block; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: calc(100% + 12px); left: 50%;
+      transform: translateX(-50%); background: #1e2e1e;
+      border: 1px solid rgba(168,192,160,0.2); border-radius: 10px;
+      padding: 8px 0; min-width: 180px; z-index: 200;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 13px; color: rgba(242,235,217,0.6); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
+    .nav-dropdown-menu a:hover { color: var(--parchment); }
+
+    /* HERO */
+    .hero {
+      background: var(--forest); padding: 88px 80px 80px;
+      display: grid; grid-template-columns: 1fr 420px; gap: 80px; align-items: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 6px; text-transform: uppercase;
+      color: var(--mint); font-weight: 700; margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 5vw, 68px);
+      color: var(--parchment); font-weight: 400; line-height: 1.0;
+      margin-bottom: 28px; letter-spacing: -1px;
+    }
+    .hero-title em { color: var(--mint); font-style: italic; }
+    .hero-sub {
+      font-size: 17px; color: rgba(242,235,217,0.62);
+      line-height: 1.75; margin-bottom: 44px; max-width: 520px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block; padding: 15px 36px; background: var(--green);
+      color: #fff; border-radius: 8px; font-size: 14px; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--green-lt); }
+    .btn-ghost {
+      display: inline-block; padding: 15px 36px; background: transparent;
+      color: var(--parchment); border: 1.5px solid rgba(242,235,217,0.3);
+      border-radius: 8px; font-size: 14px; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.3px; transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--mint); color: var(--mint); }
+    .hero-right { display: flex; flex-direction: column; gap: 16px; }
+    .hero-stat {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(109,196,138,0.2);
+      border-radius: 12px; padding: 22px 26px;
+    }
+    .hero-stat-num {
+      font-family: 'Instrument Serif', serif; font-size: 42px;
+      color: var(--mint); line-height: 1; margin-bottom: 6px;
+    }
+    .hero-stat-label { font-size: 13px; color: rgba(242,235,217,0.55); line-height: 1.5; }
+
+    /* WHO */
+    .who { background: var(--white); padding: 80px; }
+    .section-label {
+      font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
+      font-weight: 700; color: var(--green-lt); margin-bottom: 40px;
+    }
+    .who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .who-card {
+      border-radius: 14px; padding: 36px 28px;
+      border: 1px solid var(--border); background: var(--soft-white);
+    }
+    .who-icon { font-size: 28px; margin-bottom: 16px; }
+    .who-title {
+      font-family: 'Instrument Serif', serif; font-size: 22px;
+      font-weight: 400; color: var(--forest); margin-bottom: 10px;
+    }
+    .who-desc { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+
+    /* PACKAGES */
+    .packages { background: var(--forest); padding: 80px; }
+    .packages .section-label { color: var(--mint); }
+    .packages-intro {
+      font-size: 17px; color: rgba(242,235,217,0.6);
+      max-width: 680px; line-height: 1.8; margin-bottom: 52px;
+    }
+    .packages-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .pkg-card {
+      border-radius: 16px; padding: 36px 30px;
+      border: 1px solid rgba(242,235,217,0.1);
+      background: rgba(255,255,255,0.04);
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s;
+    }
+    .pkg-card:hover { border-color: rgba(109,196,138,0.4); }
+    .pkg-card.featured {
+      background: var(--green); border-color: var(--green);
+    }
+    .pkg-badge {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      font-weight: 700; color: var(--mint); margin-bottom: 14px;
+    }
+    .pkg-card.featured .pkg-badge { color: rgba(255,255,255,0.7); }
+    .pkg-name {
+      font-family: 'Instrument Serif', serif; font-size: 26px;
+      font-weight: 400; color: var(--parchment); margin-bottom: 8px; line-height: 1.1;
+    }
+    .pkg-tagline { font-size: 13px; color: rgba(242,235,217,0.5); margin-bottom: 28px; line-height: 1.6; }
+    .pkg-card.featured .pkg-tagline { color: rgba(255,255,255,0.7); }
+    .pkg-includes { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mint); font-weight: 700; margin-bottom: 14px; }
+    .pkg-card.featured .pkg-includes { color: rgba(255,255,255,0.6); }
+    .pkg-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; }
+    .pkg-list li { font-size: 13.5px; color: rgba(242,235,217,0.75); padding-left: 18px; position: relative; line-height: 1.5; }
+    .pkg-card.featured .pkg-list li { color: rgba(255,255,255,0.85); }
+    .pkg-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
+    .pkg-card.featured .pkg-list li::before { background: rgba(255,255,255,0.6); }
+    .pkg-cta {
+      display: block; text-align: center; padding: 13px 24px;
+      border-radius: 8px; font-size: 13px; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.3px; transition: all 0.2s;
+      border: 1.5px solid rgba(109,196,138,0.4); color: var(--mint);
+    }
+    .pkg-cta:hover { background: var(--mint); color: var(--forest); border-color: var(--mint); }
+    .pkg-card.featured .pkg-cta { background: #fff; color: var(--green); border-color: #fff; }
+    .pkg-card.featured .pkg-cta:hover { background: var(--parchment); }
+
+    /* PROGRAMS */
+    .programs { background: var(--soft-white); padding: 80px; }
+    .programs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .prog-card {
+      background: var(--white); border-radius: 12px; padding: 28px 28px;
+      border: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start;
+    }
+    .prog-num {
+      font-family: 'Instrument Serif', serif; font-size: 36px;
+      color: var(--mint); line-height: 1; flex-shrink: 0; width: 48px;
+    }
+    .prog-name {
+      font-family: 'Instrument Serif', serif; font-size: 19px;
+      font-weight: 400; color: var(--forest); margin-bottom: 6px; line-height: 1.2;
+    }
+    .prog-track {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--green-lt); font-weight: 700; margin-bottom: 8px;
+    }
+    .prog-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+    /* CREDENTIALS */
+    .credentials { background: var(--mint-tint); padding: 80px; }
+    .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .cred-list { display: flex; flex-direction: column; gap: 14px; }
+    .cred-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 20px; background: var(--white);
+      border-radius: 10px; border: 1px solid var(--border);
+    }
+    .cred-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 5px; }
+    .cred-text { font-size: 13.5px; color: var(--forest); line-height: 1.6; }
+    .cred-text strong { display: block; font-weight: 600; }
+    .naics-box {
+      background: var(--white); border-radius: 14px; padding: 32px;
+      border: 1px solid var(--border);
+    }
+    .naics-title { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; color: var(--forest); margin-bottom: 20px; }
+    .naics-list { display: flex; flex-direction: column; gap: 12px; }
+    .naics-item { font-size: 13px; color: var(--muted); padding: 10px 14px; background: var(--soft-white); border-radius: 8px; }
+    .naics-item strong { color: var(--forest); display: block; font-size: 14px; margin-bottom: 2px; }
+    .naics-note { margin-top: 20px; font-size: 12px; color: var(--muted); line-height: 1.7; padding-top: 16px; border-top: 1px solid var(--border); }
+
+    /* CTA SECTION */
+    .cta-section { background: var(--green); padding: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .cta-eyebrow { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--mint); font-weight: 700; margin-bottom: 20px; }
+    .cta-heading { font-family: 'Instrument Serif', serif; font-size: clamp(30px,3.5vw,48px); color: #fff; font-weight: 400; line-height: 1.15; margin-bottom: 20px; }
+    .cta-heading em { color: rgba(109,196,138,0.9); font-style: italic; }
+    .cta-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+    .cta-contact { display: flex; flex-direction: column; gap: 24px; }
+    .cta-contact-item { font-size: 15px; color: rgba(255,255,255,0.85); }
+    .cta-contact-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700; margin-bottom: 6px; }
+    .cta-contact-item a { color: var(--mint); text-decoration: none; font-weight: 600; font-size: 16px; }
+    .cta-contact-item a:hover { text-decoration: underline; }
+    .cta-btn {
+      display: inline-block; margin-top: 8px; padding: 16px 40px;
+      background: #fff; color: var(--green); border-radius: 8px;
+      font-size: 14px; font-weight: 700; text-decoration: none; transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--parchment); }
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--forest); padding: 32px 80px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-brand { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--white); font-weight: 400; }
+    .footer-note { font-size: 12px; color: rgba(242,235,217,0.35); }
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 64px 40px; }
+      .hero-right { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+      .packages-grid, .who-grid { grid-template-columns: 1fr; }
+      .programs-grid, .cred-grid, .cta-section { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 700px) {
+      .site-nav { padding: 14px 20px; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: block; }
+      .hero, .who, .packages, .programs, .credentials, .cta-section { padding: 56px 20px; }
+      .site-footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+      .hero-right { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="https://www.mirajoco.org" class="nav-logo">
+    <img src="img/logo-horizontal.png" alt="MiRAjO Collective">
+  </a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="#">Programs</a>
+      <div class="nav-dropdown-menu">
+        <a href="https://www.mirajoco.org/25daysand25nights">25 Days &amp; 25 Nights</a>
+        <a href="https://www.mirajoco.org/couplesinentrepreneurship">Couples in Entrepreneurship</a>
+      </div>
+    </li>
+    <li><a href="https://www.mirajoco.org/speaking">Speaking</a></li>
+    <li><a href="https://www.mirajoco.org/events">Events</a></li>
+    <li><a href="https://www.mirajoco.org/platform" class="active">Platform</a></li>
+    <li><a href="https://www.mirajoco.org/blog">Notes</a></li>
+  </ul>
+  <a href="#proposal" class="nav-cta">Request a Proposal</a>
+  <button class="nav-hamburger" onclick="this.closest('.site-nav').classList.toggle('nav-open')" aria-label="Menu">
+    <svg class="icon-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg class="icon-close" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <div class="mobile-menu">
+    <a href="https://www.mirajoco.org/25daysand25nights">25 Days &amp; 25 Nights</a>
+    <a href="https://www.mirajoco.org/couplesinentrepreneurship">Couples in Entrepreneurship</a>
+    <a href="https://www.mirajoco.org/speaking">Speaking</a>
+    <a href="https://www.mirajoco.org/events">Events</a>
+    <a href="https://www.mirajoco.org/platform" class="active">Platform</a>
+    <a href="https://www.mirajoco.org/blog">Notes</a>
+    <a href="#proposal" class="nav-cta">Request a Proposal</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">MiRAjO Collective — Entrepreneur Training Suite</div>
+    <h1 class="hero-title">Built by a builder.<br><em>Delivered</em> at scale.</h1>
+    <p class="hero-sub">A complete entrepreneur development system for corporations, schools, and government agencies. Six program tracks. Three packages. One platform. Built from 25 years of operating real companies in construction, trucking, and technology.</p>
+    <div class="hero-ctas">
+      <a href="#proposal" class="btn-primary">Request a Proposal</a>
+      <a href="#packages" class="btn-ghost">View Packages</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat">
+      <div class="hero-stat-num">25+</div>
+      <div class="hero-stat-label">Years building and operating companies across construction, trucking, real estate, and technology</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">50+</div>
+      <div class="hero-stat-label">Employees hired and managed across multimillion-dollar blue collar operations</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">6</div>
+      <div class="hero-stat-label">Program tracks covering mindset, launch, finance, leadership, team wiring, and partnership</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="who">
+  <div class="section-label">Who This Is For</div>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-icon">&#127970;</div>
+      <div class="who-title">Corporations</div>
+      <p class="who-desc">HR and L&amp;D teams looking to develop entrepreneurial thinking, financial wellness, and leadership capability in their workforce. Delivered as a packaged program with admin reporting and completion tracking.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">&#127979;</div>
+      <div class="who-title">Schools &amp; Universities</div>
+      <p class="who-desc">Community colleges, universities, and secondary schools building or expanding entrepreneurship curriculum. MiRAjO programs are classroom-ready, self-paced, and built to integrate into existing programs.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">&#127963;</div>
+      <div class="who-title">Government &amp; Workforce Development</div>
+      <p class="who-desc">Workforce development boards, SBA partners, and government agencies funding entrepreneur education and financial literacy programs. NAICS registered. Capable of delivering eLearning and in-person cohorts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages" id="packages">
+  <div class="section-label">Program Packages</div>
+  <p class="packages-intro">Buy what your organization needs or the full suite. All packages include facilitator support, progress tracking, and completion certificates. Corporate and government pricing available upon request.</p>
+  <div class="packages-grid">
+
+    <div class="pkg-card">
+      <div class="pkg-badge">Package 01</div>
+      <div class="pkg-name">Foundation</div>
+      <p class="pkg-tagline">Mindset, money basics, and the first steps of entrepreneurship.</p>
+      <div class="pkg-includes">Includes</div>
+      <ul class="pkg-list">
+        <li>The Pain Principle — mindset &amp; transition framework</li>
+        <li>New Entrepreneur Onboarding Track</li>
+        <li>Financial Literacy — Personal (budgeting, habits, decisions)</li>
+        <li>Money Moves tool access</li>
+        <li>Completion certificates</li>
+        <li>Progress tracking dashboard</li>
+      </ul>
+      <a href="#proposal" class="pkg-cta">Request Pricing</a>
+    </div>
+
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Package 02 — Most Requested</div>
+      <div class="pkg-name">Builder</div>
+      <p class="pkg-tagline">Everything in Foundation plus business launch, operations, and leadership.</p>
+      <div class="pkg-includes">Includes Everything in Foundation, Plus</div>
+      <ul class="pkg-list">
+        <li>90 Day Side Hustle — flagship business launch program</li>
+        <li>Financial Literacy — Business (cash flow, P&amp;L, growth)</li>
+        <li>LeadLoud — next-gen leadership principles</li>
+        <li>DrivAmor behavioral assessment</li>
+        <li>Cohort management for groups</li>
+        <li>Organization admin dashboard</li>
+      </ul>
+      <a href="#proposal" class="pkg-cta">Request Pricing</a>
+    </div>
+
+    <div class="pkg-card">
+      <div class="pkg-badge">Package 03</div>
+      <div class="pkg-name">Full Suite</div>
+      <p class="pkg-tagline">The complete MiRAjO program — every track, enterprise reporting, and compliance exports.</p>
+      <div class="pkg-includes">Includes Everything in Builder, Plus</div>
+      <ul class="pkg-list">
+        <li>Couples in Entrepreneurship (partnership track)</li>
+        <li>25 Days &amp; 25 Nights (individual self-paced)</li>
+        <li>Full compliance reporting and exports</li>
+        <li>Individual learner drill-down reporting</li>
+        <li>White-label option available</li>
+        <li>Dedicated facilitator support</li>
+      </ul>
+      <a href="#proposal" class="pkg-cta">Request Pricing</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs">
+  <div class="section-label">The Program Tracks</div>
+  <div class="programs-grid">
+
+    <div class="prog-card">
+      <div class="prog-num">01</div>
+      <div>
+        <div class="prog-track">Mindset &amp; Transition</div>
+        <div class="prog-name">The Pain Principle</div>
+        <p class="prog-desc">A 5-stage framework for navigating change, transition, and the pivot. Built from almost 30 years of real experience. The foundation of every MiRAjO program. Available as a keynote, workshop, or self-paced course.</p>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-num">02</div>
+      <div>
+        <div class="prog-track">Entrepreneur Launch</div>
+        <div class="prog-name">90 Day Side Hustle</div>
+        <p class="prog-desc">The flagship business launch program. Delivered in-person, online, or as a hybrid cohort. Covers business validation, operations, marketing, and financial setup. Designed for aspiring and early-stage entrepreneurs.</p>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-num">03</div>
+      <div>
+        <div class="prog-track">Financial Literacy</div>
+        <div class="prog-name">Personal &amp; Business Finance</div>
+        <p class="prog-desc">Two tracks in one. Personal financial literacy covers budgeting, habits, debt, and savings. Business financial literacy covers cash flow, profit and loss, pricing, and growth finance. Includes access to the Money Moves budgeting tool.</p>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-num">04</div>
+      <div>
+        <div class="prog-track">Leadership Development</div>
+        <div class="prog-name">LeadLoud</div>
+        <p class="prog-desc">Based on the published book LeadLoud: 11 Commandments of the Next-Gen Leader. A practical leadership framework for emerging leaders, managers, and entrepreneurs who lead teams.</p>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-num">05</div>
+      <div>
+        <div class="prog-track">Team &amp; Behavioral Assessment</div>
+        <div class="prog-name">DrivAmor</div>
+        <p class="prog-desc">A proprietary behavioral assessment that identifies how individuals are wired to lead (Drive Mode) and relate (Amor Code). 20 combined profiles. Used for team development, conflict reduction, and leadership coaching.</p>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-num">06</div>
+      <div>
+        <div class="prog-track">Partnership &amp; Co-Founders</div>
+        <div class="prog-name">Couples in Entrepreneurship</div>
+        <p class="prog-desc">A program for couples and co-founders building a business together. Covers communication, role definition, financial alignment, and conflict resolution in a business partnership context.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="credentials">
+  <div class="section-label">Qualifications &amp; Past Performance</div>
+  <div class="cred-grid">
+    <div class="cred-list">
+      <div class="cred-item">
+        <div class="cred-dot"></div>
+        <div class="cred-text"><strong>25+ Years Operating Experience</strong>Construction (7 years), trucking (15 years), real estate, financial education, and technology — across multiple successful companies.</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-dot"></div>
+        <div class="cred-text"><strong>Published Author</strong>The Pain Principle and LeadLoud: 11 Commandments of the Next-Gen Leader — both in active use as curriculum foundations.</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-dot"></div>
+        <div class="cred-text"><strong>COO, Women Impact Network (WIN)</strong>16 chapters across Tampa Bay. Active organizational leadership and program development at scale.</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-dot"></div>
+        <div class="cred-text"><strong>COO, Tampa Business Club</strong>Curriculum design and event facilitation for Tampa Bay's business community.</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-dot"></div>
+        <div class="cred-text"><strong>Mentor &amp; Facilitator — Techstars + BUP Innovation</strong>Hackathon facilitation and startup mentorship in technology and innovation environments.</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-dot"></div>
+        <div class="cred-text"><strong>University &amp; Chamber Engagements</strong>University of South Florida, Schiller International University, Tampa Bay Latin Chamber of Commerce.</div>
+      </div>
+    </div>
+    <div class="naics-box">
+      <div class="naics-title">NAICS &amp; Contracting Information</div>
+      <div class="naics-list">
+        <div class="naics-item">
+          <strong>611430 — Professional &amp; Management Development Training</strong>
+          Primary code for all leadership, entrepreneurship, and workforce development programs.
+        </div>
+        <div class="naics-item">
+          <strong>611699 — Miscellaneous Schools &amp; Instruction</strong>
+          Self-paced and cohort-based online course delivery.
+        </div>
+        <div class="naics-item">
+          <strong>611710 — Educational Support Services</strong>
+          Curriculum development, facilitation, and program design for institutions.
+        </div>
+      </div>
+      <div class="naics-note">
+        MiRAjO Collective LLC is a woman-owned small business based in St. Petersburg, FL.<br>
+        SAM.gov registration in process. Capability statement available upon request.<br>
+        All programs available for in-person, online, or hybrid delivery.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPOSAL CTA -->
+<section class="cta-section" id="proposal">
+  <div>
+    <div class="cta-eyebrow">Work With MiRAjO Collective</div>
+    <h2 class="cta-heading">Let's build<br>something <em>real</em><br>for your people.</h2>
+    <p class="cta-sub">Whether you are a corporation looking to develop your workforce, a school building an entrepreneurship program, or a government agency seeking a qualified training provider — we want to hear from you. Respond to your inquiry within 48 hours.</p>
+  </div>
+  <div class="cta-contact">
+    <div class="cta-contact-item">
+      <div class="cta-contact-label">Email</div>
+      <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a>
+    </div>
+    <div class="cta-contact-item">
+      <div class="cta-contact-label">Organization</div>
+      MiRAjO Collective LLC<br>
+      100 2nd Ave S., Suite 205N #1043<br>
+      St. Petersburg, FL 33701
+    </div>
+    <div class="cta-contact-item">
+      <div class="cta-contact-label">Capability Statement</div>
+      Available upon request — includes full program descriptions, past performance, and NAICS codes.
+    </div>
+    <a href="mailto:mirandaj@mirajoco.org?subject=MiRAjO%20Collective%20Program%20Inquiry&body=Organization%20name%3A%0AContact%20name%3A%0AType%20of%20inquiry%20(corporate%2C%20school%2C%20government)%3A%0APrograms%20of%20interest%3A%0ATimeline%3A" class="cta-btn">Send an Inquiry</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">MiRAjO Collective LLC</div>
+  <div class="footer-note">mirajoco.org/platform &nbsp;&middot;&nbsp; St. Petersburg, FL &nbsp;&middot;&nbsp; 2026</div>
+</footer>
+
+<script src="/analytics.js"></script>
+<script>
+  document.querySelector('.nav-hamburger').addEventListener('click', function() {
+    this.closest('.site-nav').classList.toggle('nav-open');
+  });
+</script>
+</body>
+</html>

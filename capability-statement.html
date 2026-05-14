@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiRAjO Collective — Capability Statement</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest:    #122012;
+      --green:     #256B42;
+      --green-lt:  #339158;
+      --mint:      #6DC48A;
+      --gold:      #C4A245;
+      --parchment: #F2EBD9;
+      --soft:      #FAF7F2;
+      --white:     #FFFFFF;
+      --muted:     #5A6E58;
+      --border:    rgba(18,32,18,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--soft);
+      color: var(--forest);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* PRINT BAR */
+    .print-bar {
+      background: var(--green); padding: 12px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .print-bar-note { font-size: 13px; color: #fff; font-weight: 600; }
+    .print-btn {
+      background: #fff; color: var(--green); border: none;
+      border-radius: 6px; padding: 10px 24px; font-size: 13px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .print-btn:hover { background: var(--parchment); }
+
+    /* SCREEN LAYOUT */
+    .screen-wrap { max-width: 900px; margin: 40px auto; padding: 0 24px 60px; }
+
+    /* HEADER */
+    .cs-header {
+      background: var(--forest); border-radius: 16px;
+      padding: 48px 52px; margin-bottom: 20px;
+      display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start;
+    }
+    .cs-org-label {
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--mint); font-weight: 700; margin-bottom: 10px;
+    }
+    .cs-org-name {
+      font-family: 'Instrument Serif', serif; font-size: 36px;
+      color: var(--parchment); font-weight: 400; line-height: 1.05;
+      margin-bottom: 6px;
+    }
+    .cs-org-sub { font-size: 13px; color: rgba(242,235,217,0.5); margin-bottom: 20px; }
+    .cs-tagline {
+      font-family: 'Instrument Serif', serif; font-size: 17px;
+      color: rgba(242,235,217,0.75); font-style: italic;
+      border-left: 3px solid var(--gold); padding-left: 16px;
+      line-height: 1.5; max-width: 480px;
+    }
+    .cs-certs { display: flex; flex-direction: column; gap: 10px; min-width: 220px; }
+    .cs-cert {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(109,196,138,0.25);
+      border-radius: 10px; padding: 14px 18px;
+    }
+    .cs-cert-label {
+      font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--mint); font-weight: 700; margin-bottom: 5px;
+    }
+    .cs-cert-value { font-size: 12px; color: rgba(242,235,217,0.8); line-height: 1.5; }
+
+    /* STATS ROW */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px;
+    }
+    .stat-card {
+      background: var(--white); border-radius: 12px; padding: 22px 20px;
+      border: 1px solid var(--border); text-align: center;
+    }
+    .stat-num {
+      font-family: 'Instrument Serif', serif; font-size: 34px;
+      color: var(--green); line-height: 1; margin-bottom: 6px;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+    /* SECTIONS */
+    .cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .cs-section {
+      background: var(--white); border-radius: 14px; padding: 28px 28px;
+      border: 1px solid var(--border);
+    }
+    .cs-section.full { grid-column: 1 / -1; }
+    .cs-section.forest { background: var(--forest); border-color: transparent; }
+    .cs-section-label {
+      font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+      font-weight: 700; color: var(--green-lt); margin-bottom: 16px;
+    }
+    .cs-section.forest .cs-section-label { color: var(--mint); }
+
+    /* CORE COMPETENCIES */
+    .comp-list { display: flex; flex-direction: column; gap: 10px; }
+    .comp-item {
+      display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px;
+      background: var(--soft); border-radius: 8px;
+    }
+    .comp-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); flex-shrink: 0; margin-top: 5px; }
+    .comp-text { font-size: 13px; color: var(--forest); line-height: 1.55; }
+    .comp-text strong { display: block; font-weight: 600; margin-bottom: 1px; }
+
+    /* PROGRAMS */
+    .prog-list { display: flex; flex-direction: column; gap: 10px; }
+    .prog-item { padding: 12px 14px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(109,196,138,0.15); }
+    .prog-name { font-size: 13px; font-weight: 700; color: var(--parchment); margin-bottom: 2px; }
+    .prog-track { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mint); font-weight: 600; margin-bottom: 4px; }
+    .prog-desc { font-size: 12px; color: rgba(242,235,217,0.6); line-height: 1.55; }
+
+    /* PAST PERFORMANCE */
+    .perf-list { display: flex; flex-direction: column; gap: 8px; }
+    .perf-item { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .perf-item:last-child { border-bottom: none; }
+    .perf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px; }
+    .perf-name { font-size: 13px; font-weight: 600; color: var(--forest); margin-bottom: 1px; }
+    .perf-org { font-size: 12px; color: var(--muted); }
+
+    /* CODES */
+    .codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .code-group-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 10px; }
+    .code-list { display: flex; flex-direction: column; gap: 6px; }
+    .code-item { font-size: 12px; color: var(--forest); padding: 8px 12px; background: var(--soft); border-radius: 6px; }
+    .code-item strong { color: var(--green); margin-right: 6px; }
+
+    /* CONTACT FOOTER */
+    .cs-footer {
+      background: var(--green); border-radius: 14px; padding: 32px 36px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+    }
+    .cf-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 6px; }
+    .cf-value { font-size: 13px; color: #fff; line-height: 1.65; }
+    .cf-value a { color: var(--mint); text-decoration: none; }
+
+    /* PRINT */
+    @media print {
+      @page { size: letter portrait; margin: 0.4in; }
+      body { background: #fff; font-size: 11px; }
+      .print-bar { display: none; }
+      .screen-wrap { max-width: 100%; margin: 0; padding: 0; }
+      .cs-header { border-radius: 8px; padding: 28px 32px; }
+      .cs-org-name { font-size: 26px; }
+      .stat-num { font-size: 26px; }
+      .cs-section, .stat-card { border-radius: 8px; padding: 18px 20px; }
+      .cs-footer { border-radius: 8px; padding: 20px 24px; }
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @media (max-width: 700px) {
+      .cs-header { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .cs-grid { grid-template-columns: 1fr; }
+      .codes-grid { grid-template-columns: 1fr; }
+      .cs-footer { grid-template-columns: 1fr; }
+      .print-bar { padding: 12px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRINT BAR -->
+<div class="print-bar">
+  <span class="print-bar-note">MiRAjO Collective LLC — Capability Statement 2026</span>
+  <button class="print-btn" onclick="window.print()">Download as PDF</button>
+</div>
+
+<div class="screen-wrap">
+
+  <!-- HEADER -->
+  <div class="cs-header">
+    <div>
+      <div class="cs-org-label">Capability Statement</div>
+      <div class="cs-org-name">MiRAjO Collective LLC</div>
+      <div class="cs-org-sub">St. Petersburg, FL &nbsp;&middot;&nbsp; Woman-Owned &nbsp;&middot;&nbsp; Minority-Owned &nbsp;&middot;&nbsp; DM/DWBE Certified</div>
+      <div class="cs-tagline">"A complete entrepreneur training system — built from 25 years of operating real companies, delivered at scale for organizations and institutions."</div>
+    </div>
+    <div class="cs-certs">
+      <div class="cs-cert">
+        <div class="cs-cert-label">Hillsborough County</div>
+        <div class="cs-cert-value">DM/DWBE Certified<br>Vendor #21551367<br>Valid through 2/5/2028</div>
+      </div>
+      <div class="cs-cert">
+        <div class="cs-cert-label">Pinellas County</div>
+        <div class="cs-cert-value">DM/DWBE Certified<br>Disadvantaged Minority /<br>Woman Business Enterprise</div>
+      </div>
+      <div class="cs-cert">
+        <div class="cs-cert-label">City of St. Petersburg</div>
+        <div class="cs-cert-value">Licensed Educational Provider<br>Online &amp; In-Person Instruction<br>Authorized to Charge Students</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">25+</div>
+      <div class="stat-label">Years operating companies in construction, trucking, real estate &amp; technology</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Employees hired and managed across multimillion-dollar operations</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Curriculum tracks covering mindset, launch, finance, leadership, assessment &amp; partnership</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Published books — The Pain Principle and LeadLoud — used as curriculum foundations</div>
+    </div>
+  </div>
+
+  <!-- CORE COMPETENCIES + PROGRAMS -->
+  <div class="cs-grid">
+
+    <div class="cs-section">
+      <div class="cs-section-label">Core Competencies</div>
+      <div class="comp-list">
+        <div class="comp-item">
+          <div class="comp-dot"></div>
+          <div class="comp-text"><strong>Entrepreneur Development Training</strong>End-to-end curriculum from mindset and launch through operations, leadership, and financial management.</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-dot"></div>
+          <div class="comp-text"><strong>Financial Literacy Education</strong>Personal and business financial literacy programs. Practical tools, budgeting systems, and decision-making frameworks for entrepreneurs and employees.</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-dot"></div>
+          <div class="comp-text"><strong>Leadership Development</strong>Applied leadership curriculum based on published frameworks. Designed for emerging leaders, managers, and entrepreneurs who lead teams.</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-dot"></div>
+          <div class="comp-text"><strong>Curriculum Design &amp; Facilitation</strong>Custom program design for organizations and institutions. In-person, online, and hybrid delivery. Cohort and self-paced formats available.</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-dot"></div>
+          <div class="comp-text"><strong>Behavioral Assessment &amp; Team Development</strong>Proprietary DrivAmor assessment identifying individual Drive and Amor profiles. Used for team building, conflict reduction, and leadership coaching.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section forest">
+      <div class="cs-section-label">Program Suite</div>
+      <div class="prog-list">
+        <div class="prog-item">
+          <div class="prog-track">Mindset &amp; Transition</div>
+          <div class="prog-name">The Pain Principle</div>
+          <div class="prog-desc">5-stage framework for navigating change, transition, and the pivot. Built from almost 30 years of real experience. Keynote, workshop, or self-paced.</div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-track">Business Launch — Flagship</div>
+          <div class="prog-name">90 Day Side Hustle</div>
+          <div class="prog-desc">Cohort-based entrepreneur launch program. In-person, online, or hybrid. Covers validation, operations, marketing, and financial setup.</div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-track">Financial Literacy</div>
+          <div class="prog-name">Personal &amp; Business Finance</div>
+          <div class="prog-desc">Two-track financial literacy curriculum. Personal: budgeting, debt, savings. Business: cash flow, P&amp;L, pricing, growth. Includes Money Moves tool.</div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-track">Leadership Development</div>
+          <div class="prog-name">LeadLoud</div>
+          <div class="prog-desc">Based on published book. 11 leadership commandments for next-gen leaders, managers, and entrepreneurs.</div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-track">Behavioral Assessment</div>
+          <div class="prog-name">DrivAmor</div>
+          <div class="prog-desc">Proprietary team wiring assessment. 20 combined profiles. Used for team development and leadership coaching.</div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-track">Partnership Track</div>
+          <div class="prog-name">Couples in Entrepreneurship</div>
+          <div class="prog-desc">For couples and co-founders building together. Communication, role definition, financial alignment.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PAST PERFORMANCE + CODES -->
+  <div class="cs-grid">
+
+    <div class="cs-section">
+      <div class="cs-section-label">Past Performance</div>
+      <div class="perf-list">
+        <div class="perf-item">
+          <div class="perf-dot"></div>
+          <div>
+            <div class="perf-name">How to Pivot in Business</div>
+            <div class="perf-org">University of South Florida</div>
+          </div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-dot"></div>
+          <div>
+            <div class="perf-name">Unleash Your Inner Sales Person</div>
+            <div class="perf-org">Schiller International University</div>
+          </div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-dot"></div>
+          <div>
+            <div class="perf-name">Curriculum Design &amp; Event Facilitation</div>
+            <div class="perf-org">Tampa Bay Latin Chamber of Commerce</div>
+          </div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-dot"></div>
+          <div>
+            <div class="perf-name">COO — Program Development &amp; Operations</div>
+            <div class="perf-org">Tampa Business Club</div>
+          </div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-dot"></div>
+          <div>
+            <div class="perf-name">COO — 16 Chapters, Tampa Bay Region</div>
+            <div class="perf-org">Women Impact Network (WIN)</div>
+          </div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-dot"></div>
+          <div>
+            <div class="perf-name">Mentor &amp; Facilitator</div>
+            <div class="perf-org">Techstars + BUP Innovation Hackathon</div>
+          </div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-dot"></div>
+          <div>
+            <div class="perf-name">Local Stories Live — Entrepreneurship</div>
+            <div class="perf-org">Hillsborough County</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <div class="cs-section-label">Commodity &amp; Classification Codes</div>
+      <div class="codes-grid">
+        <div>
+          <div class="code-group-label">NIGP Codes (State &amp; Local)</div>
+          <div class="code-list">
+            <div class="code-item"><strong>91838</strong>Education &amp; Training Consulting</div>
+            <div class="code-item"><strong>92416</strong>Course Development Services</div>
+            <div class="code-item"><strong>92435</strong>In-Service Training, Employees</div>
+            <div class="code-item"><strong>92417</strong>Distance Learning / Online Training</div>
+            <div class="code-item"><strong>92418</strong>Financial Literacy Education</div>
+            <div class="code-item"><strong>91836</strong>Business Development Training</div>
+            <div class="code-item"><strong>92436</strong>Leadership Development Training</div>
+          </div>
+        </div>
+        <div>
+          <div class="code-group-label">NAICS Codes (Federal)</div>
+          <div class="code-list">
+            <div class="code-item"><strong>611430</strong>Professional &amp; Management Development Training</div>
+            <div class="code-item"><strong>611699</strong>Miscellaneous Schools &amp; Instruction</div>
+            <div class="code-item"><strong>611710</strong>Educational Support Services</div>
+          </div>
+          <div class="code-group-label" style="margin-top:14px;">Certifications</div>
+          <div class="code-list">
+            <div class="code-item"><strong>DM/DWBE</strong>Hillsborough County #21551367</div>
+            <div class="code-item"><strong>DM/DWBE</strong>Pinellas County</div>
+            <div class="code-item"><strong>WOSB</strong>Woman-Owned Small Business</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DIFFERENTIATORS -->
+  <div class="cs-grid" style="margin-bottom:16px;">
+    <div class="cs-section full">
+      <div class="cs-section-label">What Sets MiRAjO Collective Apart</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--green);margin-bottom:8px;">Built From Real Operations</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">MiRAjO is not a consulting firm that studies entrepreneurship. Our founder built and operated multimillion-dollar companies in construction and trucking for over 25 years before developing any curriculum. Every program is tested in the real world first.</div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--green);margin-bottom:8px;">Published Frameworks</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">Two published books — The Pain Principle and LeadLoud — form the curriculum foundation. Programs are not loosely assembled content. They are structured frameworks with clear stages, measurable outcomes, and completion paths.</div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--green);margin-bottom:8px;">Dual-County Certified Provider</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">DM/DWBE certified in both Hillsborough and Pinellas counties. Licensed educational provider in the City of St. Petersburg. Qualified for minority set-aside, woman-owned, and disadvantaged business contracts at the local, state, and federal levels.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT FOOTER -->
+  <div class="cs-footer">
+    <div>
+      <div class="cf-label">Organization</div>
+      <div class="cf-value">MiRAjO Collective LLC<br>100 2nd Ave S., Suite 205N #1043<br>St. Petersburg, FL 33701</div>
+    </div>
+    <div>
+      <div class="cf-label">Contact</div>
+      <div class="cf-value">
+        Miranda Johnson, CEO<br>
+        <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a><br>
+        813-928-9282
+      </div>
+    </div>
+    <div>
+      <div class="cf-label">Platform &amp; Programs</div>
+      <div class="cf-value">
+        <a href="https://www.mirajoco.org/platform">mirajoco.org/platform</a><br>
+        <a href="https://www.mirajoco.org/speaking">mirajoco.org/speaking</a><br>
+        SAM.gov registration in process
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelector('.print-btn').addEventListener('click', () => window.print());
+</script>
+</body>
+</html>
