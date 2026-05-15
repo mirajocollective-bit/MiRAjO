@@ -130,6 +130,10 @@
     .perf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px; }
     .perf-name { font-size: 13px; font-weight: 600; color: var(--forest); margin-bottom: 1px; }
     .perf-org { font-size: 12px; color: var(--muted); }
+    .perf-date { font-size: 11px; color: var(--green-lt); font-weight: 600; margin-bottom: 2px; }
+    .perf-desc { font-size: 11px; color: var(--muted); line-height: 1.5; margin-top: 3px; }
+    .perf-ref { font-size: 10px; color: var(--muted); font-style: italic; margin-top: 3px; }
+    .perf-category { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--green-lt); padding: 12px 0 8px; border-top: 1px solid var(--border); margin-top: 6px; }
 
     /* CODES */
     .codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -293,96 +297,214 @@
 
   </div>
 
-  <!-- PAST PERFORMANCE + CODES -->
-  <div class="cs-grid">
+  <!-- PAST PERFORMANCE -->
+  <div class="cs-section" style="margin-bottom:16px;">
+    <div class="cs-section-label">Past Performance</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
 
-    <div class="cs-section">
-      <div class="cs-section-label">Past Performance</div>
-      <div class="perf-list">
-        <div class="perf-item">
-          <div class="perf-dot"></div>
-          <div>
-            <div class="perf-name">How to Pivot in Business</div>
-            <div class="perf-org">University of South Florida</div>
+      <!-- LEFT: Government + Education -->
+      <div>
+        <div class="perf-category" style="border-top:none;padding-top:0;margin-top:0;">Government &amp; Public Sector</div>
+        <div class="perf-list">
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">October 2024</div>
+              <div class="perf-name">MOU Partnership — Workforce &amp; Financial Literacy</div>
+              <div class="perf-org">Tampa Housing Authority</div>
+              <div class="perf-desc">Formal Memorandum of Understanding to deliver workforce development and financial literacy programming to residents and staff.</div>
+              <div class="perf-ref">Ref: Leroy Moore, SVP/COO &middot; Margaret Jones, Director of Assisted Housing</div>
+            </div>
+          </div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">June 2025</div>
+              <div class="perf-name">MOU Partnership — Community Education &amp; Workforce</div>
+              <div class="perf-org">St. Petersburg Housing Authority</div>
+              <div class="perf-desc">Formal Memorandum of Understanding for community education and workforce programming for residents.</div>
+              <div class="perf-ref">Ref: Michael Lundy, President/CEO &middot; Danielle Thomas, SVP/COO</div>
+            </div>
+          </div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">August 2023</div>
+              <div class="perf-name">Subject Matter Expert — Women in Business &amp; Entrepreneurship</div>
+              <div class="perf-org">Hillsborough County — Local Stories Live</div>
+              <div class="perf-desc">Invited panelist to audience of 75–100 community members and business owners. Engaged county civic and government leadership.</div>
+            </div>
           </div>
         </div>
-        <div class="perf-item">
-          <div class="perf-dot"></div>
-          <div>
-            <div class="perf-name">Unleash Your Inner Sales Person</div>
-            <div class="perf-org">Schiller International University</div>
+
+        <div class="perf-category">Higher Education &amp; Youth Development</div>
+        <div class="perf-list">
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">November 2023</div>
+              <div class="perf-name">Guest Lecturer — The Art of Pivoting</div>
+              <div class="perf-org">University of South Florida</div>
+              <div class="perf-desc">Invited by Dr. Genevieve Dobson to present entrepreneurial pivoting to graduating business students.</div>
+            </div>
           </div>
-        </div>
-        <div class="perf-item">
-          <div class="perf-dot"></div>
-          <div>
-            <div class="perf-name">Curriculum Design &amp; Event Facilitation</div>
-            <div class="perf-org">Tampa Bay Latin Chamber of Commerce</div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">February 2026</div>
+              <div class="perf-name">Professional Development — Sales &amp; Networking Training</div>
+              <div class="perf-org">Schiller International University</div>
+              <div class="perf-desc">Delivered sales fundamentals, cold outreach, and networking training to the university's professional recruitment team.</div>
+              <div class="perf-ref">Ref: Dr. Genevieve Dobson &middot; Carlos Pérez Valarino, Head of Student Recruitment</div>
+            </div>
           </div>
-        </div>
-        <div class="perf-item">
-          <div class="perf-dot"></div>
-          <div>
-            <div class="perf-name">COO — Program Development &amp; Operations</div>
-            <div class="perf-org">Tampa Business Club</div>
-          </div>
-        </div>
-        <div class="perf-item">
-          <div class="perf-dot"></div>
-          <div>
-            <div class="perf-name">COO — 16 Chapters, Tampa Bay Region</div>
-            <div class="perf-org">Women Impact Network (WIN)</div>
-          </div>
-        </div>
-        <div class="perf-item">
-          <div class="perf-dot"></div>
-          <div>
-            <div class="perf-name">Mentor &amp; Facilitator</div>
-            <div class="perf-org">Techstars + BUP Innovation Hackathon</div>
-          </div>
-        </div>
-        <div class="perf-item">
-          <div class="perf-dot"></div>
-          <div>
-            <div class="perf-name">Local Stories Live — Entrepreneurship</div>
-            <div class="perf-org">Hillsborough County</div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-name">Youth Entrepreneurship — Future Leaders Program</div>
+              <div class="perf-org">Think Big for Kids</div>
+              <div class="perf-desc">Classroom instruction on business niche identification for high school and college-bound students. Conducted scholarship candidate interviews.</div>
+              <div class="perf-ref">Ref: Cindy Jacobsen &middot; Diana Lindsay</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="cs-section">
-      <div class="cs-section-label">Commodity &amp; Classification Codes</div>
-      <div class="codes-grid">
-        <div>
-          <div class="code-group-label">NIGP Codes (State &amp; Local)</div>
-          <div class="code-list">
-            <div class="code-item"><strong>91838</strong>Education &amp; Training Consulting</div>
-            <div class="code-item"><strong>92416</strong>Course Development Services</div>
-            <div class="code-item"><strong>92435</strong>In-Service Training, Employees</div>
-            <div class="code-item"><strong>92417</strong>Distance Learning / Online Training</div>
-            <div class="code-item"><strong>92418</strong>Financial Literacy Education</div>
-            <div class="code-item"><strong>91836</strong>Business Development Training</div>
-            <div class="code-item"><strong>92436</strong>Leadership Development Training</div>
+      <!-- RIGHT: Financial + Community -->
+      <div>
+        <div class="perf-category" style="border-top:none;padding-top:0;margin-top:0;">Financial Institutions</div>
+        <div class="perf-list">
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-name">Financial Literacy &amp; Microenterprise Development</div>
+              <div class="perf-org">Suncoast Credit Union</div>
+              <div class="perf-desc">Partnered on financial literacy programming and microenterprise development support across Tampa Bay.</div>
+              <div class="perf-ref">Ref: Jennifer Wade Bolivar, Chief Retail Officer &middot; Brandon Martinez, Microenterprise Development Specialist</div>
+            </div>
+          </div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-name">Business Development &amp; Financial Education</div>
+              <div class="perf-org">Lake Michigan Credit Union — Florida</div>
+              <div class="perf-desc">Collaborated with Florida market leadership on business development and financial education initiatives.</div>
+              <div class="perf-ref">Ref: Christopher Bellido, Market Leader</div>
+            </div>
+          </div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-name">Affordable Housing Education &amp; Funding Facilitation</div>
+              <div class="perf-org">Buy It Rent It Profit (Bryan Chavis)</div>
+              <div class="perf-desc">Strategic partner in all planning and strategy sessions. Facilitated funding partnerships with Suncoast Credit Union and Lake Michigan Credit Union to support affordable housing education programming.</div>
+            </div>
           </div>
         </div>
-        <div>
-          <div class="code-group-label">NAICS Codes (Federal)</div>
-          <div class="code-list">
-            <div class="code-item"><strong>611430</strong>Professional &amp; Management Development Training</div>
-            <div class="code-item"><strong>611699</strong>Miscellaneous Schools &amp; Instruction</div>
-            <div class="code-item"><strong>611710</strong>Educational Support Services</div>
+
+        <div class="perf-category">Community &amp; Civic Organizations</div>
+        <div class="perf-list">
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">2023–Present</div>
+              <div class="perf-name">Chief Operating Officer — Regional Women's Leadership</div>
+              <div class="perf-org">Women Impact Network (WIN)</div>
+              <div class="perf-desc">Oversee 16 regional chapters, 20+ brand ambassadors, and leadership initiatives across Tampa Bay with expansion into additional cities.</div>
+            </div>
           </div>
-          <div class="code-group-label" style="margin-top:14px;">Certifications</div>
-          <div class="code-list">
-            <div class="code-item"><strong>DM/DWBE</strong>Hillsborough County #21551367</div>
-            <div class="code-item"><strong>DM/DWBE</strong>Pinellas County</div>
-            <div class="code-item"><strong>WOSB</strong>Woman-Owned Small Business</div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">2023–Present</div>
+              <div class="perf-name">Program Developer &amp; Featured Speaker</div>
+              <div class="perf-org">Tampa Business Club</div>
+              <div class="perf-desc">Co-developed Small Business Expo, Power Women Expo, and Summer Business Expo. Featured presenter on AI in the Workplace and Entrepreneurship. Engaged county mayors and Lieutenant Governor of Florida.</div>
+              <div class="perf-ref">Ref: Roberto Borrero, Founder</div>
+            </div>
+          </div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-date">2023–Present</div>
+              <div class="perf-name">Program Consultant — Minority Business Development</div>
+              <div class="perf-org">Tampa Bay Latin Chamber of Commerce</div>
+              <div class="perf-desc">Design and facilitate programs serving underserved Hispanic business owners in Pinellas County. Coordinate with Hillsborough County Economic Development — Small Business Programs.</div>
+              <div class="perf-ref">Ref: Diana Walker, President (also Special Projects Coordinator, Hillsborough County Economic Development)</div>
+            </div>
+          </div>
+          <div class="perf-item">
+            <div class="perf-dot"></div>
+            <div>
+              <div class="perf-name">Mentor &amp; Facilitator</div>
+              <div class="perf-org">Techstars + BUP Innovation Hackathon</div>
+              <div class="perf-desc">Mentored early-stage entrepreneurs and facilitated sessions at the regional innovation hackathon.</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
+    </div>
+  </div>
+
+  <!-- CODES -->
+  <div class="cs-section" style="margin-bottom:16px;">
+    <div class="cs-section-label">Commodity &amp; Classification Codes</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
+      <div>
+        <div class="code-group-label">NAICS Codes — Federal <span style="color:var(--green);font-style:italic;">(Primary: 611430)</span></div>
+        <div class="code-list">
+          <div class="code-item"><strong>611430</strong>Professional &amp; Management Development Training</div>
+          <div class="code-item"><strong>611699</strong>All Other Miscellaneous Schools &amp; Instruction</div>
+          <div class="code-item"><strong>611710</strong>Educational Support Services</div>
+          <div class="code-item"><strong>611519</strong>Other Technical &amp; Trade Schools</div>
+          <div class="code-item"><strong>541611</strong>Administrative Management Consulting</div>
+          <div class="code-item"><strong>541612</strong>Human Resources Consulting</div>
+          <div class="code-item"><strong>541618</strong>Other Management Consulting</div>
+          <div class="code-item"><strong>711510</strong>Independent Artists, Writers &amp; Performers</div>
+          <div class="code-item"><strong>522390</strong>Credit Intermediation / Financial Literacy</div>
+          <div class="code-item"><strong>541990</strong>All Other Professional &amp; Technical Services</div>
+          <div class="code-item"><strong>624310</strong>Vocational Rehabilitation Services</div>
+          <div class="code-item"><strong>624190</strong>Other Individual &amp; Family Services</div>
+        </div>
+      </div>
+      <div>
+        <div class="code-group-label">PSC Codes — Federal Product &amp; Service</div>
+        <div class="code-list">
+          <div class="code-item"><strong>U001</strong>Education &amp; Training — General</div>
+          <div class="code-item"><strong>U004</strong>Professional Development Training</div>
+          <div class="code-item"><strong>U005</strong>Management &amp; Supervisory Development</div>
+          <div class="code-item"><strong>U006</strong>Specialized Skill Training</div>
+          <div class="code-item"><strong>U009</strong>Financial Training</div>
+          <div class="code-item"><strong>U010</strong>Leadership Development</div>
+          <div class="code-item"><strong>U099</strong>Training — Other</div>
+          <div class="code-item"><strong>R408</strong>Program Evaluation &amp; Development</div>
+          <div class="code-item"><strong>R499</strong>Other Professional Services</div>
+          <div class="code-item"><strong>R706</strong>Support Professional: Education &amp; Training</div>
+        </div>
+        <div class="code-group-label" style="margin-top:14px;">NIGP Codes — State &amp; Local</div>
+        <div class="code-list">
+          <div class="code-item"><strong>91838</strong>Education &amp; Training Consulting</div>
+          <div class="code-item"><strong>92416</strong>Course Development Services</div>
+          <div class="code-item"><strong>92435</strong>In-Service Training, Employees</div>
+        </div>
+      </div>
+      <div>
+        <div class="code-group-label">Certifications</div>
+        <div class="code-list">
+          <div class="code-item"><strong>DM/DWBE</strong>Hillsborough County #21551367 — Valid through 2/5/2028</div>
+          <div class="code-item"><strong>DM/DWBE</strong>Pinellas County — Disadvantaged Minority / Woman Business Enterprise</div>
+          <div class="code-item"><strong>WOSB</strong>Woman-Owned Small Business</div>
+          <div class="code-item"><strong>African American</strong>Owned &amp; Operated</div>
+        </div>
+        <div class="code-group-label" style="margin-top:14px;">SAM.gov Registration</div>
+        <div class="code-list">
+          <div class="code-item"><strong>UEI</strong>PSKHR8QRDK48</div>
+          <div class="code-item"><strong>CAGE</strong>Pending — registration submitted 2026-05-14</div>
+          <div class="code-item"><strong>Status</strong>Active — annual renewal required</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- DIFFERENTIATORS -->
@@ -424,8 +546,8 @@
       <div class="cf-label">Platform &amp; Programs</div>
       <div class="cf-value">
         <a href="https://www.mirajoco.org/platform">mirajoco.org/platform</a><br>
-        <a href="https://www.mirajoco.org/speaking">mirajoco.org/speaking</a><br>
-        SAM.gov registration in process
+        <a href="https://www.mirajoco.org/capability-statement">mirajoco.org/capability-statement</a><br>
+        SAM.gov UEI: PSKHR8QRDK48
       </div>
     </div>
   </div>
