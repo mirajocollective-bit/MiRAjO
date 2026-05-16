@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFP Tracker — MiRAjO Collective</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #122012; --green: #256B42; --green-lt: #339158;
+      --mint: #6DC48A; --gold: #C4A245; --parchment: #F2EBD9;
+      --soft: #FAF7F2; --white: #FFFFFF; --muted: #5A6E58;
+      --border: rgba(18,32,18,0.1); --red: #C0392B;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--soft); color: var(--forest); -webkit-font-smoothing: antialiased; }
+
+    .header { background: var(--forest); padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .header-title { font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--parchment); }
+    .header-sub { font-size: 12px; color: rgba(242,235,217,0.5); margin-top: 4px; }
+
+    .wrap { max-width: 1100px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .search-bar {
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px 24px; margin-bottom: 24px;
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    }
+    .search-bar input {
+      flex: 1; min-width: 200px; padding: 10px 14px; border: 1px solid var(--border);
+      border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; color: var(--forest); background: var(--soft);
+    }
+    .search-bar input:focus { outline: none; border-color: var(--green); }
+    .btn {
+      background: var(--green); color: #fff; border: none; border-radius: 8px;
+      padding: 10px 24px; font-size: 14px; font-weight: 700; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn:hover { background: var(--green-lt); }
+    .btn-outline {
+      background: transparent; color: var(--green); border: 1.5px solid var(--green);
+    }
+    .btn-outline:hover { background: var(--green); color: #fff; }
+
+    .status-bar {
+      font-size: 13px; color: var(--muted); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    }
+    .badge-green { background: rgba(37,107,66,0.1); color: var(--green); }
+    .badge-gold { background: rgba(196,162,69,0.15); color: #8B6914; }
+    .badge-blue { background: rgba(37,99,235,0.1); color: #1D4ED8; }
+    .badge-gray { background: rgba(90,110,88,0.1); color: var(--muted); }
+
+    .rfp-list { display: flex; flex-direction: column; gap: 16px; }
+    .rfp-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px 28px; transition: box-shadow 0.2s;
+    }
+    .rfp-card:hover { box-shadow: 0 4px 20px rgba(18,32,18,0.08); }
+    .rfp-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+    .rfp-title { font-size: 15px; font-weight: 700; color: var(--forest); line-height: 1.4; }
+    .rfp-agency { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .rfp-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .rfp-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .rfp-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .rfp-deadline { font-size: 12px; color: var(--muted); }
+    .rfp-deadline strong { color: var(--forest); }
+    .rfp-link {
+      font-size: 13px; font-weight: 600; color: var(--green);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+    }
+    .rfp-link:hover { color: var(--green-lt); }
+
+    .empty { text-align: center; padding: 60px 20px; }
+    .empty-title { font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--forest); margin-bottom: 12px; }
+    .empty-sub { font-size: 14px; color: var(--muted); }
+
+    .loading { text-align: center; padding: 60px; font-size: 14px; color: var(--muted); }
+
+    .urgent { border-left: 4px solid var(--red); }
+    .urgent .rfp-deadline strong { color: var(--red); }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">RFP Tracker</div>
+    <div class="header-sub">MiRAjO Collective — Federal Contract Opportunities</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="search-bar">
+    <input type="text" id="keyword" placeholder="Search keyword (e.g. workforce training, financial literacy...)" value="professional development training">
+    <button class="btn" onclick="search()">Search SAM.gov</button>
+    <button class="btn btn-outline" onclick="clearAndSearch()">Reset</button>
+  </div>
+
+  <div class="status-bar" id="status">Enter a keyword and click Search to find federal training opportunities.</div>
+
+  <div class="rfp-list" id="results"></div>
+</div>
+
+<script>
+  const KEYWORDS = [
+    'professional development training',
+    'workforce development training',
+    'leadership development',
+    'financial literacy training',
+    'entrepreneurship training',
+    'small business training',
+  ];
+
+  async function search(kw) {
+    const keyword = kw || document.getElementById('keyword').value || 'professional development training';
+    const status = document.getElementById('status');
+    const results = document.getElementById('results');
+
+    status.textContent = 'Searching SAM.gov...';
+    results.innerHTML = '<div class="loading">Searching federal opportunities...</div>';
+
+    try {
+      const res = await fetch(`/api/rfp-search?keyword=${encodeURIComponent(keyword)}`);
+      const data = await res.json();
+
+      status.textContent = `Found ${data.count} matching opportunities for "${keyword}"`;
+      results.innerHTML = '';
+
+      if (data.count === 0) {
+        results.innerHTML = `
+          <div class="empty">
+            <div class="empty-title">No matches found</div>
+            <div class="empty-sub">Try a different keyword or broader search term</div>
+          </div>`;
+        return;
+      }
+
+      for (const opp of data.results) {
+        const daysLeft = getDaysLeft(opp.deadline);
+        const urgent = daysLeft !== null && daysLeft <= 7;
+        results.innerHTML += `
+          <div class="rfp-card ${urgent ? 'urgent' : ''}">
+            <div class="rfp-top">
+              <div>
+                <div class="rfp-title">${opp.title || 'Untitled'}</div>
+                <div class="rfp-agency">${opp.agency || 'Federal Agency'}</div>
+              </div>
+            </div>
+            <div class="rfp-meta">
+              ${opp.setAside && opp.setAside !== 'None' ? `<span class="badge badge-green">${opp.setAside}</span>` : ''}
+              ${opp.naics ? `<span class="badge badge-gray">NAICS ${opp.naics}</span>` : ''}
+              ${opp.type ? `<span class="badge badge-blue">${opp.type}</span>` : ''}
+            </div>
+            ${opp.description ? `<div class="rfp-desc">${opp.description}...</div>` : ''}
+            <div class="rfp-footer">
+              <div class="rfp-deadline">
+                Posted: ${formatDate(opp.posted)} &nbsp;&middot;&nbsp;
+                Deadline: <strong>${opp.deadline ? formatDate(opp.deadline) : 'See listing'}</strong>
+                ${daysLeft !== null ? ` (${daysLeft} days left)` : ''}
+              </div>
+              <a class="rfp-link" href="${opp.link}" target="_blank">View on SAM.gov &rarr;</a>
+            </div>
+          </div>`;
+      }
+    } catch (e) {
+      status.textContent = 'Error connecting to SAM.gov API. Check your API key in environment variables.';
+      results.innerHTML = '';
+    }
+  }
+
+  function clearAndSearch() {
+    document.getElementById('keyword').value = 'professional development training';
+    search('professional development training');
+  }
+
+  function getDaysLeft(deadline) {
+    if (!deadline) return null;
+    const d = new Date(deadline);
+    const now = new Date();
+    const diff = Math.ceil((d - now) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : null;
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return 'N/A';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  document.getElementById('keyword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') search();
+  });
+</script>
+</body>
+</html>
