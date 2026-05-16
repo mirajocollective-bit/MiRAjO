@@ -92,53 +92,46 @@
 <div class="header">
   <div>
     <div class="header-title">RFP Tracker</div>
-    <div class="header-sub">MiRAjO Collective — Federal Contract Opportunities</div>
+    <div class="header-sub">MiRAjO Collective — Federal Training & Education Opportunities</div>
   </div>
 </div>
 
 <div class="wrap">
 
   <div class="search-bar">
-    <input type="text" id="keyword" placeholder="Search keyword (e.g. workforce training, financial literacy...)" value="professional development training">
-    <button class="btn" onclick="search()">Search SAM.gov</button>
-    <button class="btn btn-outline" onclick="clearAndSearch()">Reset</button>
+    <input type="text" id="keyword" placeholder="Narrow by keyword (e.g. financial literacy, coaching...)">
+    <button class="btn" onclick="search()">Filter Results</button>
+    <button class="btn btn-outline" onclick="clearAndSearch()">Show All</button>
   </div>
 
-  <div class="status-bar" id="status">Enter a keyword and click Search to find federal training opportunities.</div>
+  <div class="status-bar" id="status">Loading federal training opportunities...</div>
 
   <div class="rfp-list" id="results"></div>
 </div>
 
 <script>
-  const KEYWORDS = [
-    'professional development training',
-    'workforce development training',
-    'leadership development',
-    'financial literacy training',
-    'entrepreneurship training',
-    'small business training',
-  ];
-
-  async function search(kw) {
-    const keyword = kw || document.getElementById('keyword').value || 'professional development training';
+  async function search() {
+    const keyword = document.getElementById('keyword').value.trim();
     const status = document.getElementById('status');
     const results = document.getElementById('results');
 
-    status.textContent = 'Searching SAM.gov...';
+    status.textContent = 'Scanning SAM.gov for training & education opportunities...';
     results.innerHTML = '<div class="loading">Searching federal opportunities...</div>';
 
     try {
-      const res = await fetch(`/api/rfp-search?keyword=${encodeURIComponent(keyword)}`);
+      const url = keyword ? `/api/rfp-search?keyword=${encodeURIComponent(keyword)}` : '/api/rfp-search';
+      const res = await fetch(url);
       const data = await res.json();
 
-      status.textContent = `Found ${data.count} matching opportunities for "${keyword}"`;
+      const updated = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+      status.textContent = `${data.count} training & education opportunities — updated ${updated}`;
       results.innerHTML = '';
 
       if (data.count === 0) {
         results.innerHTML = `
           <div class="empty">
-            <div class="empty-title">No matches found</div>
-            <div class="empty-sub">Try a different keyword or broader search term</div>
+            <div class="empty-title">No active opportunities found</div>
+            <div class="empty-sub">Check back tomorrow — new opportunities post daily. Try clearing the keyword filter.</div>
           </div>`;
         return;
       }
@@ -146,39 +139,42 @@
       for (const opp of data.results) {
         const daysLeft = getDaysLeft(opp.deadline);
         const urgent = daysLeft !== null && daysLeft <= 7;
+        const title = (opp.title || 'Untitled').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const agency = (opp.agency || 'Federal Agency').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const desc = (opp.description || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         results.innerHTML += `
           <div class="rfp-card ${urgent ? 'urgent' : ''}">
             <div class="rfp-top">
               <div>
-                <div class="rfp-title">${opp.title || 'Untitled'}</div>
-                <div class="rfp-agency">${opp.agency || 'Federal Agency'}</div>
+                <div class="rfp-title">${title}</div>
+                <div class="rfp-agency">${agency}</div>
               </div>
             </div>
             <div class="rfp-meta">
-              ${opp.setAside && opp.setAside !== 'None' ? `<span class="badge badge-green">${opp.setAside}</span>` : ''}
+              ${opp.setAside && opp.setAside !== 'None' ? `<span class="badge badge-green">${opp.setAsideDesc || opp.setAside}</span>` : ''}
               ${opp.naics ? `<span class="badge badge-gray">NAICS ${opp.naics}</span>` : ''}
               ${opp.type ? `<span class="badge badge-blue">${opp.type}</span>` : ''}
             </div>
-            ${opp.description ? `<div class="rfp-desc">${opp.description}...</div>` : ''}
+            ${desc ? `<div class="rfp-desc">${desc}...</div>` : ''}
             <div class="rfp-footer">
               <div class="rfp-deadline">
                 Posted: ${formatDate(opp.posted)} &nbsp;&middot;&nbsp;
                 Deadline: <strong>${opp.deadline ? formatDate(opp.deadline) : 'See listing'}</strong>
-                ${daysLeft !== null ? ` (${daysLeft} days left)` : ''}
+                ${daysLeft !== null ? ` &nbsp;<strong style="color:${urgent?'var(--red)':'inherit'}">(${daysLeft}d left)</strong>` : ''}
               </div>
-              <a class="rfp-link" href="${opp.link}" target="_blank">View on SAM.gov &rarr;</a>
+              <a class="rfp-link" href="${opp.link}" target="_blank" rel="noopener">View on SAM.gov &rarr;</a>
             </div>
           </div>`;
       }
     } catch (e) {
-      status.textContent = 'Error connecting to SAM.gov API. Check your API key in environment variables.';
+      status.textContent = 'Error connecting to SAM.gov API.';
       results.innerHTML = '';
     }
   }
 
   function clearAndSearch() {
-    document.getElementById('keyword').value = 'professional development training';
-    search('professional development training');
+    document.getElementById('keyword').value = '';
+    search();
   }
 
   function getDaysLeft(deadline) {
@@ -198,6 +194,9 @@
   document.getElementById('keyword').addEventListener('keydown', e => {
     if (e.key === 'Enter') search();
   });
+
+  // Auto-load on open
+  document.addEventListener('DOMContentLoaded', search);
 </script>
 </body>
 </html>
