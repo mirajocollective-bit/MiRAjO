@@ -40,6 +40,7 @@
     .site-nav.nav-open .mobile-menu { display: flex; }
     .mobile-menu a { font-size: 14px; color: var(--forest); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--border); }
     .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .nav-cta { color: var(--green); border-bottom: none; margin-top: 4px; text-align: center; }
     .nav-hamburger .icon-close { display: none; }
     .site-nav.nav-open .nav-hamburger .icon-open { display: none; }
     .site-nav.nav-open .nav-hamburger .icon-close { display: block; }
@@ -179,7 +180,7 @@
     .proof-stat { background: rgba(255,255,255,0.05); border: 1px solid rgba(109,196,138,0.15); border-radius: 14px; padding: 24px 20px; }
     .proof-stat-num { font-family: 'Instrument Serif', serif; font-size: 42px; color: var(--mint); line-height: 1; margin-bottom: 6px; }
     .proof-stat-label { font-size: 12px; color: rgba(242,235,217,0.45); line-height: 1.5; }
-    .proof-photo .img-ph { height: 480px; }
+    .proof-photo .img-ph { height: 300px; margin-bottom: 16px; }
 
     /* ── PRICING ── */
     .pricing { background: var(--soft); padding: 96px 0; }
@@ -229,7 +230,7 @@
     .cta-form input, .cta-form select, .cta-form textarea { width: 100%; padding: 14px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
     .cta-form input::placeholder, .cta-form select::placeholder, .cta-form textarea::placeholder { color: rgba(255,255,255,0.45); }
     .cta-form input:focus, .cta-form select:focus, .cta-form textarea:focus { border-color: var(--mint); background: rgba(255,255,255,0.15); }
-    .cta-form select { cursor: pointer; }
+    .cta-form select { cursor: pointer; -webkit-appearance: none; appearance: none; }
     .cta-form select option { background: var(--forest); color: var(--parchment); }
     .cta-form textarea { resize: vertical; min-height: 100px; }
     .cta-submit { padding: 15px 36px; background: #fff; color: var(--green); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.2s; text-align: center; }
@@ -259,6 +260,7 @@
       .pricing-grid { grid-template-columns: 1fr; }
       .pricing-individual { flex-direction: column; text-align: left; }
       .pricing-individual-price { text-align: left; }
+      .site-footer { flex-wrap: wrap; gap: 16px; padding: 32px 40px; }
     }
     @media (max-width: 700px) {
       .site-nav { padding: 14px 20px; }
@@ -696,7 +698,7 @@
     <div>
       <div class="proof-photo">
         <!-- IMAGE: Miranda — strong, confident, warm. Professional but real. Speaking photo, candid at whiteboard, or intentional headshot. This is the face of the hub — make it count. -->
-        <div class="img-ph img-ph-dark" style="height:300px;margin-bottom:16px;">
+        <div class="img-ph img-ph-dark">
           <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
           Miranda Johnson — strong, confident, warm. This photo matters.
         </div>
@@ -816,10 +818,10 @@
     </div>
     <div>
       <form class="cta-form" onsubmit="handleDemoRequest(event)">
-        <input type="text" id="demo-name" placeholder="Your name" required>
-        <input type="text" id="demo-org" placeholder="Organization name" required>
-        <input type="email" id="demo-email" placeholder="Email address" required>
-        <select id="demo-type">
+        <input type="text" id="demo-name" placeholder="Your name" aria-label="Your name" required>
+        <input type="text" id="demo-org" placeholder="Organization name" aria-label="Organization name" required>
+        <input type="email" id="demo-email" placeholder="Email address" aria-label="Email address" required>
+        <select id="demo-type" aria-label="Organization type">
           <option value="" disabled selected>Organization type</option>
           <option>Chamber of Commerce</option>
           <option>SBDC / Women's Business Center</option>
@@ -828,7 +830,7 @@
           <option>Government / Workforce Development</option>
           <option>Other</option>
         </select>
-        <textarea id="demo-message" placeholder="What are you looking to do for your members? (optional)"></textarea>
+        <textarea id="demo-message" placeholder="What are you looking to do for your members? (optional)" aria-label="Message"></textarea>
         <button type="submit" class="cta-submit">Request a Demo</button>
         <div class="cta-alt">Or email directly: <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a></div>
       </form>
