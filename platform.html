@@ -4,34 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MiRAjO Collective — Entrepreneur Training Suite | Programs for Organizations & Institutions</title>
-  <meta name="description" content="MiRAjO Collective delivers a complete entrepreneur training suite for corporations, schools, and government agencies. Programs in mindset, launch, financial literacy, leadership, and team development.">
+  <title>The MiRAjO Entrepreneurship Hub — A Complete Learning Environment for Organizations</title>
+  <meta name="description" content="MiRAjO Collective's Entrepreneurship Hub is a complete ecosystem of assessments, courses, tools, and resources — licensed by chambers, SBDCs, CDFIs, and incubators for their members.">
   <link rel="canonical" href="https://www.mirajoco.org/platform">
-  <meta property="og:title" content="MiRAjO Collective — Entrepreneur Training Suite">
-  <meta property="og:description" content="A complete training system built for entrepreneurs, organizations, and institutions. Six program tracks. Three packages. One platform.">
-  <meta property="og:url" content="https://www.mirajoco.org/platform">
-  <meta property="og:site_name" content="MiRAjO Collective">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "MiRAjO Collective LLC",
-    "url": "https://www.mirajoco.org",
-    "description": "MiRAjO Collective delivers entrepreneur development training programs for corporations, schools, and government agencies.",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "100 2nd Ave S., Suite 205N #1043",
-      "addressLocality": "St. Petersburg",
-      "addressRegion": "FL",
-      "postalCode": "33701",
-      "addressCountry": "US"
-    },
-    "founder": { "@type": "Person", "name": "Miranda Johnson" },
-    "hasCredential": "NAICS 611430, 611699, 611710"
-  }
-  </script>
-
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -42,258 +17,263 @@
       --mint-tint:  #EBF7F0;
       --gold:       #C4A245;
       --parchment:  #F2EBD9;
-      --soft-white: #FAF7F2;
+      --soft:       #FAF7F2;
       --white:      #FFFFFF;
       --muted:      #5A6E58;
       --border:     rgba(18,32,18,0.09);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { overflow-x: hidden; }
-    body {
-      background: var(--soft-white);
-      color: var(--forest);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--soft); color: var(--forest); -webkit-font-smoothing: antialiased; }
 
-    /* NAV */
-    .site-nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 40px; background: #fff; border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; z-index: 100;
-    }
+    /* ── NAV ── */
+    .site-nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 40px; background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
     .nav-logo img { height: 56px; width: auto; display: block; }
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--forest); }
-    .nav-cta {
-      display: inline-block; font-size: 12px; padding: 9px 22px; background: #fff;
-      color: var(--green); border: 1.5px solid var(--green); border-radius: 6px;
-      font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s, color 0.3s;
-    }
+    .nav-cta { display: inline-block; font-size: 12px; padding: 9px 22px; background: #fff; color: var(--green); border: 1.5px solid var(--green); border-radius: 6px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s, color 0.3s; }
     .nav-cta:hover { background: var(--green); color: #fff; }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
     .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--forest); }
-    .mobile-menu {
-      display: none; position: absolute; top: 100%; left: 0; right: 0;
-      background: #fff; border-bottom: 1px solid var(--border);
-      padding: 20px; flex-direction: column; gap: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 99;
-    }
+    .mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 20px; flex-direction: column; gap: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 99; }
     .site-nav.nav-open .mobile-menu { display: flex; }
     .mobile-menu a { font-size: 14px; color: var(--forest); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--border); }
     .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu .nav-cta { text-align: center; margin-top: 8px; }
     .nav-hamburger .icon-close { display: none; }
     .site-nav.nav-open .nav-hamburger .icon-open { display: none; }
     .site-nav.nav-open .nav-hamburger .icon-close { display: block; }
-    .nav-dropdown { position: relative; }
-    .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
-    .nav-dropdown-menu {
-      display: none; position: absolute; top: calc(100% + 12px); left: 50%;
-      transform: translateX(-50%); background: #1e2e1e;
-      border: 1px solid rgba(168,192,160,0.2); border-radius: 10px;
-      padding: 8px 0; min-width: 180px; z-index: 200;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-    }
-    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
-    .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 13px; color: rgba(242,235,217,0.6); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
-    .nav-dropdown-menu a:hover { color: var(--parchment); }
 
-    /* HERO */
-    .hero {
-      background: var(--forest); padding: 88px 80px 80px;
-      display: grid; grid-template-columns: 1fr 420px; gap: 80px; align-items: center;
-    }
-    .hero-eyebrow {
-      font-size: 11px; letter-spacing: 6px; text-transform: uppercase;
-      color: var(--mint); font-weight: 700; margin-bottom: 24px;
-    }
-    .hero-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(40px, 5vw, 68px);
-      color: var(--parchment); font-weight: 400; line-height: 1.0;
-      margin-bottom: 28px; letter-spacing: -1px;
-    }
-    .hero-title em { color: var(--mint); font-style: italic; }
-    .hero-sub {
-      font-size: 17px; color: rgba(242,235,217,0.62);
-      line-height: 1.75; margin-bottom: 44px; max-width: 520px;
-    }
-    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-block; padding: 15px 36px; background: var(--green);
-      color: #fff; border-radius: 8px; font-size: 14px; font-weight: 700;
-      text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s;
-    }
-    .btn-primary:hover { background: var(--green-lt); }
-    .btn-ghost {
-      display: inline-block; padding: 15px 36px; background: transparent;
-      color: var(--parchment); border: 1.5px solid rgba(242,235,217,0.3);
-      border-radius: 8px; font-size: 14px; font-weight: 600;
-      text-decoration: none; letter-spacing: 0.3px; transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--mint); color: var(--mint); }
-    .hero-right { display: flex; flex-direction: column; gap: 16px; }
-    .hero-stat {
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(109,196,138,0.2);
-      border-radius: 12px; padding: 22px 26px;
-    }
-    .hero-stat-num {
-      font-family: 'Instrument Serif', serif; font-size: 42px;
-      color: var(--mint); line-height: 1; margin-bottom: 6px;
-    }
-    .hero-stat-label { font-size: 13px; color: rgba(242,235,217,0.55); line-height: 1.5; }
-
-    /* WHO */
-    .who { background: var(--white); padding: 80px; }
-    .section-label {
-      font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
-      font-weight: 700; color: var(--green-lt); margin-bottom: 40px;
-    }
-    .who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .who-card {
-      border-radius: 14px; padding: 36px 28px;
-      border: 1px solid var(--border); background: var(--soft-white);
-    }
-    .who-icon { font-size: 28px; margin-bottom: 16px; }
-    .who-title {
-      font-family: 'Instrument Serif', serif; font-size: 22px;
-      font-weight: 400; color: var(--forest); margin-bottom: 10px;
-    }
-    .who-desc { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
-
-    /* PACKAGES */
-    .packages { background: var(--forest); padding: 80px; }
-    .packages .section-label { color: var(--mint); }
-    .packages-intro {
-      font-size: 17px; color: rgba(242,235,217,0.6);
-      max-width: 680px; line-height: 1.8; margin-bottom: 52px;
-    }
-    .packages-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .pkg-card {
-      border-radius: 16px; padding: 36px 30px;
-      border: 1px solid rgba(242,235,217,0.1);
-      background: rgba(255,255,255,0.04);
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-ph {
+      background: rgba(18,32,18,0.04);
+      border: 2px dashed rgba(37,107,66,0.25);
+      border-radius: 12px;
       display: flex; flex-direction: column;
-      transition: border-color 0.2s;
+      align-items: center; justify-content: center;
+      gap: 8px; text-align: center; padding: 20px;
+      color: var(--green); font-size: 11px;
+      letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
     }
-    .pkg-card:hover { border-color: rgba(109,196,138,0.4); }
-    .pkg-card.featured {
-      background: var(--green); border-color: var(--green);
+    .img-ph svg { width: 28px; height: 28px; opacity: 0.4; }
+    .img-ph-dark {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(109,196,138,0.2);
+      color: rgba(109,196,138,0.6);
     }
-    .pkg-badge {
-      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-      font-weight: 700; color: var(--mint); margin-bottom: 14px;
-    }
-    .pkg-card.featured .pkg-badge { color: rgba(255,255,255,0.7); }
-    .pkg-name {
-      font-family: 'Instrument Serif', serif; font-size: 26px;
-      font-weight: 400; color: var(--parchment); margin-bottom: 8px; line-height: 1.1;
-    }
-    .pkg-tagline { font-size: 13px; color: rgba(242,235,217,0.5); margin-bottom: 28px; line-height: 1.6; }
-    .pkg-card.featured .pkg-tagline { color: rgba(255,255,255,0.7); }
-    .pkg-includes { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mint); font-weight: 700; margin-bottom: 14px; }
-    .pkg-card.featured .pkg-includes { color: rgba(255,255,255,0.6); }
-    .pkg-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; }
-    .pkg-list li { font-size: 13.5px; color: rgba(242,235,217,0.75); padding-left: 18px; position: relative; line-height: 1.5; }
-    .pkg-card.featured .pkg-list li { color: rgba(255,255,255,0.85); }
-    .pkg-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
-    .pkg-card.featured .pkg-list li::before { background: rgba(255,255,255,0.6); }
-    .pkg-cta {
-      display: block; text-align: center; padding: 13px 24px;
-      border-radius: 8px; font-size: 13px; font-weight: 700;
-      text-decoration: none; letter-spacing: 0.3px; transition: all 0.2s;
-      border: 1.5px solid rgba(109,196,138,0.4); color: var(--mint);
-    }
-    .pkg-cta:hover { background: var(--mint); color: var(--forest); border-color: var(--mint); }
-    .pkg-card.featured .pkg-cta { background: #fff; color: var(--green); border-color: #fff; }
-    .pkg-card.featured .pkg-cta:hover { background: var(--parchment); }
 
-    /* PROGRAMS */
-    .programs { background: var(--soft-white); padding: 80px; }
-    .programs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .prog-card {
-      background: var(--white); border-radius: 12px; padding: 28px 28px;
-      border: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start;
-    }
-    .prog-num {
-      font-family: 'Instrument Serif', serif; font-size: 36px;
-      color: var(--mint); line-height: 1; flex-shrink: 0; width: 48px;
-    }
-    .prog-name {
-      font-family: 'Instrument Serif', serif; font-size: 19px;
-      font-weight: 400; color: var(--forest); margin-bottom: 6px; line-height: 1.2;
-    }
-    .prog-track {
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--green-lt); font-weight: 700; margin-bottom: 8px;
-    }
-    .prog-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+    /* ── SHARED ── */
+    .eyebrow { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; font-weight: 700; }
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .btn-primary { display: inline-block; padding: 15px 36px; background: var(--green); color: #fff; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--green-lt); }
+    .btn-ghost-light { display: inline-block; padding: 15px 36px; background: transparent; color: var(--parchment); border: 1.5px solid rgba(242,235,217,0.3); border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+    .btn-ghost-light:hover { border-color: var(--mint); color: var(--mint); }
+    .status-live { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: rgba(109,196,138,0.15); color: var(--green); }
+    .status-soon { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: rgba(196,162,69,0.15); color: #8B6914; }
 
-    /* CREDENTIALS */
-    .credentials { background: var(--mint-tint); padding: 80px; }
-    .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-    .cred-list { display: flex; flex-direction: column; gap: 14px; }
-    .cred-item {
-      display: flex; gap: 14px; align-items: flex-start;
-      padding: 16px 20px; background: var(--white);
-      border-radius: 10px; border: 1px solid var(--border);
-    }
-    .cred-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 5px; }
-    .cred-text { font-size: 13.5px; color: var(--forest); line-height: 1.6; }
-    .cred-text strong { display: block; font-weight: 600; }
-    .naics-box {
-      background: var(--white); border-radius: 14px; padding: 32px;
-      border: 1px solid var(--border);
-    }
-    .naics-title { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; color: var(--forest); margin-bottom: 20px; }
-    .naics-list { display: flex; flex-direction: column; gap: 12px; }
-    .naics-item { font-size: 13px; color: var(--muted); padding: 10px 14px; background: var(--soft-white); border-radius: 8px; }
-    .naics-item strong { color: var(--forest); display: block; font-size: 14px; margin-bottom: 2px; }
-    .naics-note { margin-top: 20px; font-size: 12px; color: var(--muted); line-height: 1.7; padding-top: 16px; border-top: 1px solid var(--border); }
+    /* ── HERO ── */
+    .hero { background: var(--forest); padding: 0; overflow: hidden; }
+    .hero-inner { display: grid; grid-template-columns: 1fr 480px; min-height: 620px; }
+    .hero-content { padding: 88px 64px 88px 80px; display: flex; flex-direction: column; justify-content: center; }
+    .hero-eyebrow { color: var(--mint); margin-bottom: 24px; }
+    .hero-title { font-family: 'Instrument Serif', serif; font-size: clamp(42px, 5vw, 68px); color: var(--parchment); font-weight: 400; line-height: 1.0; margin-bottom: 28px; letter-spacing: -1px; }
+    .hero-title em { color: var(--mint); font-style: italic; }
+    .hero-sub { font-size: 17px; color: rgba(242,235,217,0.62); line-height: 1.8; margin-bottom: 44px; max-width: 520px; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-image { position: relative; overflow: hidden; }
+    .hero-image .img-ph { height: 100%; border-radius: 0; border: none; border-left: 2px dashed rgba(109,196,138,0.2); }
 
-    /* CTA SECTION */
-    .cta-section { background: var(--green); padding: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .cta-eyebrow { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--mint); font-weight: 700; margin-bottom: 20px; }
-    .cta-heading { font-family: 'Instrument Serif', serif; font-size: clamp(30px,3.5vw,48px); color: #fff; font-weight: 400; line-height: 1.15; margin-bottom: 20px; }
+    /* ── PROBLEM STRIP ── */
+    .problem { background: var(--green); padding: 56px 0; }
+    .problem-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
+    .problem-intro { grid-column: 1 / -1; }
+    .problem-intro h2 { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 3vw, 42px); color: #fff; font-weight: 400; line-height: 1.2; margin-bottom: 12px; }
+    .problem-intro p { font-size: 16px; color: rgba(255,255,255,0.65); line-height: 1.75; max-width: 680px; }
+    .problem-point { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 24px; }
+    .problem-point h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .problem-point p { font-size: 13.5px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+    /* ── WHAT IT IS ── */
+    .what { background: var(--soft); padding: 96px 0; }
+    .what-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .what-eyebrow { color: var(--green-lt); margin-bottom: 20px; }
+    .what h2 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.5vw, 52px); color: var(--forest); font-weight: 400; line-height: 1.1; margin-bottom: 24px; }
+    .what h2 em { color: var(--green); font-style: italic; }
+    .what p { font-size: 15px; color: var(--muted); line-height: 1.85; margin-bottom: 20px; }
+    .what-flow { display: flex; flex-direction: column; gap: 0; }
+    .flow-step { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid var(--border); }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-num { font-family: 'Instrument Serif', serif; font-size: 40px; color: var(--mint); line-height: 1; flex-shrink: 0; width: 48px; }
+    .flow-text h4 { font-size: 15px; font-weight: 700; color: var(--forest); margin-bottom: 6px; }
+    .flow-text p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .what-visual { display: flex; flex-direction: column; gap: 16px; }
+    .what-visual .img-ph { height: 340px; }
+
+    /* ── PILLARS ── */
+    .pillars { background: var(--forest); padding: 96px 0; }
+    .pillars-head { max-width: 1200px; margin: 0 auto; padding: 0 48px; margin-bottom: 56px; }
+    .pillars-head .eyebrow { color: var(--mint); margin-bottom: 20px; }
+    .pillars-head h2 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.5vw, 52px); color: var(--parchment); font-weight: 400; line-height: 1.1; margin-bottom: 16px; }
+    .pillars-head p { font-size: 16px; color: rgba(242,235,217,0.55); line-height: 1.8; max-width: 640px; }
+    .pillars-grid { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .pillar-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(242,235,217,0.08); border-radius: 16px; overflow: hidden; transition: border-color 0.2s, background 0.2s; }
+    .pillar-card:hover { border-color: rgba(109,196,138,0.3); background: rgba(255,255,255,0.06); }
+    .pillar-card.wide { grid-column: span 3; display: grid; grid-template-columns: 380px 1fr; }
+    .pillar-image { height: 200px; }
+    .pillar-card.wide .pillar-image { height: 100%; }
+    .pillar-image .img-ph { height: 100%; border-radius: 0; border: none; border-bottom: 1px dashed rgba(109,196,138,0.15); }
+    .pillar-card.wide .pillar-image .img-ph { border-bottom: none; border-right: 1px dashed rgba(109,196,138,0.15); }
+    .pillar-body { padding: 24px 24px 28px; }
+    .pillar-card.wide .pillar-body { padding: 32px 36px; display: flex; flex-direction: column; justify-content: center; }
+    .pillar-num { font-family: 'Instrument Serif', serif; font-size: 13px; color: rgba(109,196,138,0.5); letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
+    .pillar-name { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--parchment); font-weight: 400; margin-bottom: 4px; line-height: 1.2; }
+    .pillar-card.wide .pillar-name { font-size: 28px; }
+    .pillar-line { font-size: 13px; color: rgba(242,235,217,0.45); margin-bottom: 16px; line-height: 1.6; }
+    .pillar-items { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+    .pillar-items li { font-size: 12.5px; color: rgba(242,235,217,0.65); padding-left: 16px; position: relative; line-height: 1.5; }
+    .pillar-items li::before { content: ''; position: absolute; left: 0; top: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--mint); opacity: 0.6; }
+    .pillar-card.wide .pillar-items { display: grid; grid-template-columns: 1fr 1fr; }
+    .pillar-statuses { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ── WHO ── */
+    .who { background: var(--white); padding: 96px 0; }
+    .who-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .who-head { margin-bottom: 56px; }
+    .who-head .eyebrow { color: var(--green-lt); margin-bottom: 20px; }
+    .who-head h2 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.5vw, 52px); color: var(--forest); font-weight: 400; line-height: 1.1; margin-bottom: 16px; }
+    .who-head p { font-size: 16px; color: var(--muted); line-height: 1.8; max-width: 600px; }
+    .who-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .who-card { border-radius: 16px; border: 1px solid var(--border); background: var(--soft); overflow: hidden; display: grid; grid-template-columns: 140px 1fr; }
+    .who-card-image .img-ph { height: 100%; border-radius: 0; border: none; border-right: 1px dashed rgba(37,107,66,0.15); }
+    .who-card-body { padding: 28px 28px 28px 24px; }
+    .who-card-title { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--forest); font-weight: 400; margin-bottom: 8px; }
+    .who-card-desc { font-size: 13px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+    .who-card-detail { font-size: 12px; color: var(--green); font-weight: 600; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--mint-tint); padding: 96px 0; }
+    .how-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .how-head { margin-bottom: 56px; }
+    .how-head .eyebrow { color: var(--green-lt); margin-bottom: 20px; }
+    .how-head h2 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.5vw, 52px); color: var(--forest); font-weight: 400; line-height: 1.1; }
+    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; }
+    .how-steps::before { content: ''; position: absolute; top: 40px; left: calc(16.66% + 16px); right: calc(16.66% + 16px); height: 1px; background: rgba(37,107,66,0.2); }
+    .how-step { text-align: center; }
+    .how-step-num { width: 80px; height: 80px; border-radius: 50%; background: var(--green); color: #fff; font-family: 'Instrument Serif', serif; font-size: 36px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; position: relative; z-index: 1; }
+    .how-step h3 { font-size: 17px; font-weight: 700; color: var(--forest); margin-bottom: 10px; }
+    .how-step p { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+
+    /* ── PROOF ── */
+    .proof { background: var(--forest); padding: 96px 0; }
+    .proof-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 420px; gap: 80px; align-items: center; }
+    .proof-eyebrow { color: var(--mint); margin-bottom: 20px; }
+    .proof h2 { font-family: 'Instrument Serif', serif; font-size: clamp(30px, 3.5vw, 48px); color: var(--parchment); font-weight: 400; line-height: 1.1; margin-bottom: 28px; }
+    .proof h2 em { color: var(--mint); font-style: italic; }
+    .proof-points { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+    .proof-point { display: flex; gap: 14px; align-items: flex-start; }
+    .proof-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); flex-shrink: 0; margin-top: 6px; }
+    .proof-point p { font-size: 14px; color: rgba(242,235,217,0.72); line-height: 1.65; }
+    .proof-point strong { color: var(--parchment); }
+    .proof-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .proof-stat { background: rgba(255,255,255,0.05); border: 1px solid rgba(109,196,138,0.15); border-radius: 14px; padding: 24px 20px; }
+    .proof-stat-num { font-family: 'Instrument Serif', serif; font-size: 42px; color: var(--mint); line-height: 1; margin-bottom: 6px; }
+    .proof-stat-label { font-size: 12px; color: rgba(242,235,217,0.45); line-height: 1.5; }
+    .proof-photo .img-ph { height: 480px; }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--soft); padding: 96px 0; }
+    .pricing-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .pricing-head { margin-bottom: 56px; }
+    .pricing-head .eyebrow { color: var(--green-lt); margin-bottom: 20px; }
+    .pricing-head h2 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.5vw, 52px); color: var(--forest); font-weight: 400; line-height: 1.1; margin-bottom: 16px; }
+    .pricing-head p { font-size: 16px; color: var(--muted); line-height: 1.8; max-width: 600px; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
+    .price-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 36px 30px; display: flex; flex-direction: column; }
+    .price-card.featured { background: var(--forest); border-color: var(--forest); }
+    .price-tier { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; color: var(--green-lt); margin-bottom: 12px; }
+    .price-card.featured .price-tier { color: var(--mint); }
+    .price-name { font-family: 'Instrument Serif', serif; font-size: 28px; color: var(--forest); font-weight: 400; margin-bottom: 6px; }
+    .price-card.featured .price-name { color: var(--parchment); }
+    .price-who { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
+    .price-card.featured .price-who { color: rgba(242,235,217,0.5); }
+    .price-amount { margin-bottom: 28px; }
+    .price-num { font-family: 'Instrument Serif', serif; font-size: 52px; color: var(--forest); line-height: 1; }
+    .price-card.featured .price-num { color: var(--mint); }
+    .price-per { font-size: 13px; color: var(--muted); }
+    .price-card.featured .price-per { color: rgba(242,235,217,0.45); }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 32px; }
+    .price-features li { font-size: 13.5px; color: var(--muted); padding-left: 20px; position: relative; line-height: 1.5; }
+    .price-card.featured .price-features li { color: rgba(242,235,217,0.7); }
+    .price-features li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 12px; }
+    .price-card.featured .price-features li::before { color: var(--mint); }
+    .price-cta { display: block; text-align: center; padding: 14px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; border: 1.5px solid var(--green); color: var(--green); transition: all 0.2s; }
+    .price-cta:hover { background: var(--green); color: #fff; }
+    .price-card.featured .price-cta { background: var(--mint); color: var(--forest); border-color: var(--mint); }
+    .price-card.featured .price-cta:hover { background: #fff; }
+    .pricing-individual { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 32px 36px; display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+    .pricing-individual h3 { font-family: 'Instrument Serif', serif; font-size: 24px; font-weight: 400; color: var(--forest); margin-bottom: 6px; }
+    .pricing-individual p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .pricing-individual-price { text-align: right; flex-shrink: 0; }
+    .pricing-individual-price .price-num { font-size: 40px; }
+    .pricing-individual-price .price-per { display: block; margin-bottom: 12px; }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--green); padding: 96px 0; }
+    .cta-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .cta-eyebrow { color: var(--mint); margin-bottom: 20px; }
+    .cta-heading { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.5vw, 52px); color: #fff; font-weight: 400; line-height: 1.1; margin-bottom: 20px; }
     .cta-heading em { color: rgba(109,196,138,0.9); font-style: italic; }
     .cta-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.8; }
-    .cta-contact { display: flex; flex-direction: column; gap: 24px; }
-    .cta-contact-item { font-size: 15px; color: rgba(255,255,255,0.85); }
-    .cta-contact-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700; margin-bottom: 6px; }
-    .cta-contact-item a { color: var(--mint); text-decoration: none; font-weight: 600; font-size: 16px; }
-    .cta-contact-item a:hover { text-decoration: underline; }
-    .cta-btn {
-      display: inline-block; margin-top: 8px; padding: 16px 40px;
-      background: #fff; color: var(--green); border-radius: 8px;
-      font-size: 14px; font-weight: 700; text-decoration: none; transition: background 0.2s;
-    }
-    .cta-btn:hover { background: var(--parchment); }
+    .cta-form { display: flex; flex-direction: column; gap: 14px; }
+    .cta-form input, .cta-form select, .cta-form textarea { width: 100%; padding: 14px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
+    .cta-form input::placeholder, .cta-form select::placeholder, .cta-form textarea::placeholder { color: rgba(255,255,255,0.45); }
+    .cta-form input:focus, .cta-form select:focus, .cta-form textarea:focus { border-color: var(--mint); background: rgba(255,255,255,0.15); }
+    .cta-form select { cursor: pointer; }
+    .cta-form select option { background: var(--forest); color: var(--parchment); }
+    .cta-form textarea { resize: vertical; min-height: 100px; }
+    .cta-submit { padding: 15px 36px; background: #fff; color: var(--green); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.2s; text-align: center; }
+    .cta-submit:hover { background: var(--parchment); }
+    .cta-alt { margin-top: 4px; font-size: 12px; color: rgba(255,255,255,0.45); text-align: center; }
+    .cta-alt a { color: var(--mint); text-decoration: none; }
 
-    /* FOOTER */
-    .site-footer {
-      background: var(--forest); padding: 32px 80px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .footer-brand { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--white); font-weight: 400; }
-    .footer-note { font-size: 12px; color: rgba(242,235,217,0.35); }
+    /* ── FOOTER ── */
+    .site-footer { background: var(--forest); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-brand { font-family: 'Instrument Serif', serif; font-size: 18px; color: #fff; font-weight: 400; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 12px; color: rgba(242,235,217,0.35); text-decoration: none; }
+    .footer-links a:hover { color: rgba(242,235,217,0.7); }
+    .footer-note { font-size: 12px; color: rgba(242,235,217,0.25); }
 
+    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .hero { grid-template-columns: 1fr; gap: 48px; padding: 64px 40px; }
-      .hero-right { display: grid; grid-template-columns: 1fr 1fr 1fr; }
-      .packages-grid, .who-grid { grid-template-columns: 1fr; }
-      .programs-grid, .cred-grid, .cta-section { grid-template-columns: 1fr; gap: 32px; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-image { height: 300px; }
+      .hero-content { padding: 64px 40px; }
+      .what-inner, .proof-inner, .cta-inner { grid-template-columns: 1fr; gap: 48px; }
+      .pillars-grid { grid-template-columns: 1fr 1fr; }
+      .pillar-card.wide { grid-column: span 2; grid-template-columns: 280px 1fr; }
+      .who-grid { grid-template-columns: 1fr; }
+      .how-steps { grid-template-columns: 1fr; }
+      .how-steps::before { display: none; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-individual { flex-direction: column; text-align: left; }
+      .pricing-individual-price { text-align: left; }
     }
     @media (max-width: 700px) {
       .site-nav { padding: 14px 20px; }
       .nav-links, .nav-cta { display: none; }
       .nav-hamburger { display: block; }
-      .hero, .who, .packages, .programs, .credentials, .cta-section { padding: 56px 20px; }
-      .site-footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
-      .hero-right { grid-template-columns: 1fr 1fr; }
+      .section-wrap, .pillars-head, .pillars-grid, .who-inner, .how-inner, .proof-inner, .pricing-inner, .cta-inner { padding: 0 20px; }
+      .problem-inner { padding: 0 20px; grid-template-columns: 1fr; }
+      .pillars-grid { grid-template-columns: 1fr; padding: 0 20px; }
+      .pillar-card.wide { grid-column: span 1; grid-template-columns: 1fr; }
+      .who-card { grid-template-columns: 1fr; }
+      .who-card-image { height: 160px; }
+      .who-card-image .img-ph { border-right: none; border-bottom: 1px dashed rgba(37,107,66,0.15); }
+      .hero-content { padding: 56px 20px; }
+      .site-footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+      .footer-links { justify-content: center; }
     }
   </style>
 </head>
@@ -305,287 +285,568 @@
     <img src="img/logo-horizontal.png" alt="MiRAjO Collective">
   </a>
   <ul class="nav-links">
-    <li class="nav-dropdown">
-      <a href="#">Programs</a>
-      <div class="nav-dropdown-menu">
-        <a href="https://www.mirajoco.org/25daysand25nights">25 Days &amp; 25 Nights</a>
-        <a href="https://www.mirajoco.org/couplesinentrepreneurship">Couples in Entrepreneurship</a>
-      </div>
-    </li>
+    <li><a href="https://www.mirajoco.org/programs">Programs</a></li>
     <li><a href="https://www.mirajoco.org/speaking">Speaking</a></li>
     <li><a href="https://www.mirajoco.org/events">Events</a></li>
-    <li><a href="https://www.mirajoco.org/platform" class="active">Platform</a></li>
+    <li><a href="https://www.mirajoco.org/platform" class="active">The Hub</a></li>
     <li><a href="https://www.mirajoco.org/blog">Notes</a></li>
   </ul>
-  <a href="#proposal" class="nav-cta">Request a Proposal</a>
-  <button class="nav-hamburger" onclick="this.closest('.site-nav').classList.toggle('nav-open')" aria-label="Menu">
+  <a href="#demo" class="nav-cta">Request a Demo</a>
+  <button class="nav-hamburger" aria-label="Menu">
     <svg class="icon-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
     <svg class="icon-close" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
   </button>
   <div class="mobile-menu">
-    <a href="https://www.mirajoco.org/25daysand25nights">25 Days &amp; 25 Nights</a>
-    <a href="https://www.mirajoco.org/couplesinentrepreneurship">Couples in Entrepreneurship</a>
+    <a href="https://www.mirajoco.org/programs">Programs</a>
     <a href="https://www.mirajoco.org/speaking">Speaking</a>
     <a href="https://www.mirajoco.org/events">Events</a>
-    <a href="https://www.mirajoco.org/platform" class="active">Platform</a>
+    <a href="https://www.mirajoco.org/platform">The Hub</a>
     <a href="https://www.mirajoco.org/blog">Notes</a>
-    <a href="#proposal" class="nav-cta">Request a Proposal</a>
+    <a href="#demo" class="nav-cta">Request a Demo</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div>
-    <div class="hero-eyebrow">MiRAjO Collective — Entrepreneur Training Suite</div>
-    <h1 class="hero-title">Built by a builder.<br><em>Delivered</em> at scale.</h1>
-    <p class="hero-sub">A complete entrepreneur development system for corporations, schools, and government agencies. Six program tracks. Three packages. One platform. Built from 25 years of operating real companies in construction, trucking, and technology.</p>
-    <div class="hero-ctas">
-      <a href="#proposal" class="btn-primary">Request a Proposal</a>
-      <a href="#packages" class="btn-ghost">View Packages</a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="eyebrow hero-eyebrow">MiRAjO Entrepreneurship Hub</div>
+      <h1 class="hero-title">Everything the entrepreneur<br>of <em>today</em> actually needs.</h1>
+      <p class="hero-sub">A complete learning environment — assessments, courses, tools, and real resources — that your organization licenses for your members. Not a course catalog. A living ecosystem built from 25 years of real business experience.</p>
+      <div class="hero-ctas">
+        <a href="#demo" class="btn-primary">Request a Demo</a>
+        <a href="#pillars" class="btn-ghost-light">Explore the Hub</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <!-- IMAGE: Warm, immersive entrepreneurship environment. Community feel. Real people working, connecting, building. NOT corporate stock. Suggested: candid community photo, Miranda with entrepreneurs, or energetic workspace scene. -->
+      <div class="img-ph img-ph-dark">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 20.25h18M5.25 6.75h.008v.008H5.25V6.75z"/></svg>
+        Hero Image — Entrepreneur community, warm + real
+      </div>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-stat">
-      <div class="hero-stat-num">25+</div>
-      <div class="hero-stat-label">Years building and operating companies across construction, trucking, real estate, and technology</div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="problem-inner">
+    <div class="problem-intro">
+      <h2>Most programs teach strategy.<br>None of them teach the whole person.</h2>
+      <p>Entrepreneurs don't just need a business plan. They need to understand themselves, manage their money, lead their team, protect their relationships, and take care of their life — all at the same time. The MiRAjO Hub was built for that reality.</p>
     </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">50+</div>
-      <div class="hero-stat-label">Employees hired and managed across multimillion-dollar blue collar operations</div>
+    <div class="problem-point">
+      <h3>Scattered tools, no clear path</h3>
+      <p>Your members search for resources from a dozen different places. Nothing connects. No one guides them through what to do first.</p>
     </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">6</div>
-      <div class="hero-stat-label">Program tracks covering mindset, launch, finance, leadership, team wiring, and partnership</div>
+    <div class="problem-point">
+      <h3>Content built for classrooms, not real life</h3>
+      <p>Generic training misses the actual experience of entrepreneurship — the fear, the money stress, the relationship strain, the self-doubt at 2am.</p>
     </div>
+    <div class="problem-point">
+      <h3>No tools that stay with them</h3>
+      <p>A workshop ends. A PDF gets ignored. Entrepreneurs need an environment they return to as they grow — with tools that work in real time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT IS -->
+<section class="what">
+  <div class="what-inner">
+    <div>
+      <div class="eyebrow what-eyebrow">What the Hub Is</div>
+      <h2>One place. Every stage<br>of the <em>entrepreneur's journey.</em></h2>
+      <p>The MiRAjO Entrepreneurship Hub is a living ecosystem — not a course catalog. Members start with an assessment that reveals how they're wired, then explore 7 pillars of content built specifically around what entrepreneurs face in real life.</p>
+      <p>Every piece of content connects. Courses lead to tools. Tools lead to communities. Assessments lead to the right starting point. And as Miranda creates more content, the hub gets more valuable — not more overwhelming.</p>
+      <div class="what-flow">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-text">
+            <h4>Assess</h4>
+            <p>Members start with DrivAmor — a proprietary assessment revealing how they lead and relate. Results suggest where to begin across the 7 pillars.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-text">
+            <h4>Explore</h4>
+            <p>All 7 pillars are fully visible and navigable. Members follow suggestions or explore freely — courses, books, tools, and curated resources all in one environment.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-text">
+            <h4>Grow — and return</h4>
+            <p>The hub grows with them. As Miranda adds content, members get more. As they evolve, the hub meets them at the next stage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="what-visual">
+      <!-- IMAGE: Simple flow diagram or hub dashboard mockup showing the 7 pillars. Can be a screenshot of the actual hub once built, or a clean illustrated mockup. Warm green tones. -->
+      <div class="img-ph" style="height:200px;">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg>
+        Hub Dashboard Mockup — screenshot when built
+      </div>
+      <!-- IMAGE: Miranda in a teaching/facilitation moment. Real, confident, not posed. Could be a speaking photo, workshop photo, or candid shot. -->
+      <div class="img-ph" style="height:180px;">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        Miranda — teaching moment, workshop, or speaking
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 PILLARS -->
+<section class="pillars" id="pillars">
+  <div class="pillars-head">
+    <div class="eyebrow">The 7 Pillars</div>
+    <h2>Built around the full life<br>of the entrepreneur.</h2>
+    <p>Seven areas. Every course, tool, book, and resource in the hub lives inside one of them. Members can start anywhere — and everything connects.</p>
+  </div>
+  <div class="pillars-grid">
+
+    <!-- PILLAR 1 -->
+    <div class="pillar-card">
+      <div class="pillar-image">
+        <!-- IMAGE: Introspective, self-discovery feel. Person looking inward, mirror metaphor, quiet confidence. Warm tones. -->
+        <div class="img-ph img-ph-dark">Know Yourself — introspective, mirror, self-discovery</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-num">Pillar 01</div>
+        <div class="pillar-name">Know Yourself</div>
+        <div class="pillar-line">Understand how you're wired before you build anything else.</div>
+        <ul class="pillar-items">
+          <li>DrivAmor Drive + Amor Assessment</li>
+          <li>Emotional Intelligence Assessment</li>
+          <li>Leadership Style Assessment</li>
+          <li>Social IQ & Reading the Room</li>
+        </ul>
+        <div class="pillar-statuses">
+          <span class="status-live">Live</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 2 -->
+    <div class="pillar-card">
+      <div class="pillar-image">
+        <!-- IMAGE: Growth from roots. Strength emerging. Seed becoming something. Earthy, grounded, not corporate. -->
+        <div class="img-ph img-ph-dark">The Foundation — roots, emergence, strength</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-num">Pillar 02</div>
+        <div class="pillar-name">The Foundation</div>
+        <div class="pillar-line">Mindset, transition, and the truth about starting over.</div>
+        <ul class="pillar-items">
+          <li>The Pain Principle — 5-stage framework</li>
+          <li>Bracing for Impact</li>
+          <li>Is It Too Late? / Pass the Test</li>
+          <li>I Fucked Up — and What Came Next</li>
+        </ul>
+        <div class="pillar-statuses">
+          <span class="status-live">Live</span>
+          <span class="status-soon">Expanding</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 3 -->
+    <div class="pillar-card">
+      <div class="pillar-image">
+        <!-- IMAGE: Financial clarity for real people. NOT Wall Street. A person reviewing their budget, feeling in control. Warm, human. -->
+        <div class="img-ph img-ph-dark">Money — real people, financial clarity, not Wall Street</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-num">Pillar 03</div>
+        <div class="pillar-name">Money</div>
+        <div class="pillar-line">Personal finance, business finance, and the tools to manage both.</div>
+        <ul class="pillar-items">
+          <li>Money Moves budgeting tool</li>
+          <li>Financial Literacy course</li>
+          <li>My Passion Doesn't Pay — and what to do</li>
+          <li>Business Diagnostic Assessment</li>
+        </ul>
+        <div class="pillar-statuses">
+          <span class="status-live">Live</span>
+          <span class="status-soon">Course Coming</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 4 -->
+    <div class="pillar-card">
+      <div class="pillar-image">
+        <!-- IMAGE: Hands creating, building something. Energy of construction without being literal construction. Maker energy. -->
+        <div class="img-ph img-ph-dark">Build — hands creating, maker energy, forward motion</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-num">Pillar 04</div>
+        <div class="pillar-name">Build</div>
+        <div class="pillar-line">From idea to operating business — the real steps, in the right order.</div>
+        <ul class="pillar-items">
+          <li>90 Day Side Hustle program</li>
+          <li>Starting a Business Checklist</li>
+          <li>Young & Qualified</li>
+          <li>Anonymous CEO (coming)</li>
+        </ul>
+        <div class="pillar-statuses">
+          <span class="status-live">Live</span>
+          <span class="status-soon">Expanding</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 5 -->
+    <div class="pillar-card">
+      <div class="pillar-image">
+        <!-- IMAGE: Someone leading a room, forward motion, confident presence. Not a boardroom — a real space with real people. -->
+        <div class="img-ph img-ph-dark">Lead — someone leading a room, real presence, forward</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-num">Pillar 05</div>
+        <div class="pillar-name">Lead</div>
+        <div class="pillar-line">Next-gen leadership for people who never expected to lead.</div>
+        <ul class="pillar-items">
+          <li>LeadLoud: 11 Commandments</li>
+          <li>25 Days & 25 Nights course</li>
+          <li>Handling Yes / The Disrespect</li>
+          <li>Leadership assessments</li>
+        </ul>
+        <div class="pillar-statuses">
+          <span class="status-live">Live</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 6 -->
+    <div class="pillar-card">
+      <div class="pillar-image">
+        <!-- IMAGE: Two people building something together. Partnership, not romance stock photo. Could be two entrepreneurs, co-founders, a couple at a whiteboard. Real. -->
+        <div class="img-ph img-ph-dark">Relationships — two people building together, real partnership</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-num">Pillar 06</div>
+        <div class="pillar-name">Relationships</div>
+        <div class="pillar-line">Business strains relationships. Here's how to protect both.</div>
+        <ul class="pillar-items">
+          <li>Couples in Entrepreneurship course</li>
+          <li>Human Connection</li>
+          <li>Knight vs. King (coming)</li>
+          <li>Communication & Collaboration tools</li>
+        </ul>
+        <div class="pillar-statuses">
+          <span class="status-live">Live</span>
+          <span class="status-soon">Expanding</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 7 — WIDE -->
+    <div class="pillar-card wide">
+      <div class="pillar-image">
+        <!-- IMAGE: A person at rest but grounded. Balance, faith, and vitality. Could be someone outdoors, in prayer, resting with intention. Warm, soft light. NOT a yoga stock photo. -->
+        <div class="img-ph img-ph-dark">Life — grounded person, rest with intention, faith + vitality</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-num">Pillar 07</div>
+        <div class="pillar-name">Life</div>
+        <div class="pillar-line">The stuff every entrepreneur deals with that no business program ever talks about.</div>
+        <ul class="pillar-items">
+          <li>The Rested Brain</li>
+          <li>Her Vitality</li>
+          <li>My Faith Matters</li>
+          <li>Technology & AI for Entrepreneurs</li>
+          <li>Technology Anxiety — navigating what's changing</li>
+          <li>Music Is Inspiration</li>
+          <li>The Legacy Isn't My Children</li>
+          <li>Health & Wellness resources</li>
+        </ul>
+        <div class="pillar-statuses">
+          <span class="status-soon">Building Now</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- WHO IT'S FOR -->
 <section class="who">
-  <div class="section-label">Who This Is For</div>
-  <div class="who-grid">
-    <div class="who-card">
-      <div class="who-icon">&#127970;</div>
-      <div class="who-title">Corporations</div>
-      <p class="who-desc">HR and L&amp;D teams looking to develop entrepreneurial thinking, financial wellness, and leadership capability in their workforce. Delivered as a packaged program with admin reporting and completion tracking.</p>
+  <div class="who-inner">
+    <div class="who-head">
+      <div class="eyebrow">Who Licenses the Hub</div>
+      <h2>Organizations that already serve entrepreneurs — and need the tools to do it better.</h2>
+      <p>The hub is licensed by organizations, not sold seat by seat. One agreement gives your entire membership access to the full ecosystem.</p>
     </div>
-    <div class="who-card">
-      <div class="who-icon">&#127979;</div>
-      <div class="who-title">Schools &amp; Universities</div>
-      <p class="who-desc">Community colleges, universities, and secondary schools building or expanding entrepreneurship curriculum. MiRAjO programs are classroom-ready, self-paced, and built to integrate into existing programs.</p>
-    </div>
-    <div class="who-card">
-      <div class="who-icon">&#127963;</div>
-      <div class="who-title">Government &amp; Workforce Development</div>
-      <p class="who-desc">Workforce development boards, SBA partners, and government agencies funding entrepreneur education and financial literacy programs. NAICS registered. Capable of delivering eLearning and in-person cohorts.</p>
-    </div>
-  </div>
-</section>
+    <div class="who-grid">
 
-<!-- PACKAGES -->
-<section class="packages" id="packages">
-  <div class="section-label">Program Packages</div>
-  <p class="packages-intro">Buy what your organization needs or the full suite. All packages include facilitator support, progress tracking, and completion certificates. Corporate and government pricing available upon request.</p>
-  <div class="packages-grid">
-
-    <div class="pkg-card">
-      <div class="pkg-badge">Package 01</div>
-      <div class="pkg-name">Foundation</div>
-      <p class="pkg-tagline">Mindset, money basics, and the first steps of entrepreneurship.</p>
-      <div class="pkg-includes">Includes</div>
-      <ul class="pkg-list">
-        <li>The Pain Principle — mindset &amp; transition framework</li>
-        <li>New Entrepreneur Onboarding Track</li>
-        <li>Financial Literacy — Personal (budgeting, habits, decisions)</li>
-        <li>Money Moves tool access</li>
-        <li>Completion certificates</li>
-        <li>Progress tracking dashboard</li>
-      </ul>
-      <a href="#proposal" class="pkg-cta">Request Pricing</a>
-    </div>
-
-    <div class="pkg-card featured">
-      <div class="pkg-badge">Package 02 — Most Requested</div>
-      <div class="pkg-name">Builder</div>
-      <p class="pkg-tagline">Everything in Foundation plus business launch, operations, and leadership.</p>
-      <div class="pkg-includes">Includes Everything in Foundation, Plus</div>
-      <ul class="pkg-list">
-        <li>90 Day Side Hustle — flagship business launch program</li>
-        <li>Financial Literacy — Business (cash flow, P&amp;L, growth)</li>
-        <li>LeadLoud — next-gen leadership principles</li>
-        <li>DrivAmor behavioral assessment</li>
-        <li>Cohort management for groups</li>
-        <li>Organization admin dashboard</li>
-      </ul>
-      <a href="#proposal" class="pkg-cta">Request Pricing</a>
-    </div>
-
-    <div class="pkg-card">
-      <div class="pkg-badge">Package 03</div>
-      <div class="pkg-name">Full Suite</div>
-      <p class="pkg-tagline">The complete MiRAjO program — every track, enterprise reporting, and compliance exports.</p>
-      <div class="pkg-includes">Includes Everything in Builder, Plus</div>
-      <ul class="pkg-list">
-        <li>Couples in Entrepreneurship (partnership track)</li>
-        <li>25 Days &amp; 25 Nights (individual self-paced)</li>
-        <li>Full compliance reporting and exports</li>
-        <li>Individual learner drill-down reporting</li>
-        <li>White-label option available</li>
-        <li>Dedicated facilitator support</li>
-      </ul>
-      <a href="#proposal" class="pkg-cta">Request Pricing</a>
-    </div>
-
-  </div>
-</section>
-
-<!-- PROGRAMS -->
-<section class="programs">
-  <div class="section-label">The Program Tracks</div>
-  <div class="programs-grid">
-
-    <div class="prog-card">
-      <div class="prog-num">01</div>
-      <div>
-        <div class="prog-track">Mindset &amp; Transition</div>
-        <div class="prog-name">The Pain Principle</div>
-        <p class="prog-desc">A 5-stage framework for navigating change, transition, and the pivot. Built from almost 30 years of real experience. The foundation of every MiRAjO program. Available as a keynote, workshop, or self-paced course.</p>
-      </div>
-    </div>
-
-    <div class="prog-card">
-      <div class="prog-num">02</div>
-      <div>
-        <div class="prog-track">Entrepreneur Launch</div>
-        <div class="prog-name">90 Day Side Hustle</div>
-        <p class="prog-desc">The flagship business launch program. Delivered in-person, online, or as a hybrid cohort. Covers business validation, operations, marketing, and financial setup. Designed for aspiring and early-stage entrepreneurs.</p>
-      </div>
-    </div>
-
-    <div class="prog-card">
-      <div class="prog-num">03</div>
-      <div>
-        <div class="prog-track">Financial Literacy</div>
-        <div class="prog-name">Personal &amp; Business Finance</div>
-        <p class="prog-desc">Two tracks in one. Personal financial literacy covers budgeting, habits, debt, and savings. Business financial literacy covers cash flow, profit and loss, pricing, and growth finance. Includes access to the Money Moves budgeting tool.</p>
-      </div>
-    </div>
-
-    <div class="prog-card">
-      <div class="prog-num">04</div>
-      <div>
-        <div class="prog-track">Leadership Development</div>
-        <div class="prog-name">LeadLoud</div>
-        <p class="prog-desc">Based on the published book LeadLoud: 11 Commandments of the Next-Gen Leader. A practical leadership framework for emerging leaders, managers, and entrepreneurs who lead teams.</p>
-      </div>
-    </div>
-
-    <div class="prog-card">
-      <div class="prog-num">05</div>
-      <div>
-        <div class="prog-track">Team &amp; Behavioral Assessment</div>
-        <div class="prog-name">DrivAmor</div>
-        <p class="prog-desc">A proprietary behavioral assessment that identifies how individuals are wired to lead (Drive Mode) and relate (Amor Code). 20 combined profiles. Used for team development, conflict reduction, and leadership coaching.</p>
-      </div>
-    </div>
-
-    <div class="prog-card">
-      <div class="prog-num">06</div>
-      <div>
-        <div class="prog-track">Partnership &amp; Co-Founders</div>
-        <div class="prog-name">Couples in Entrepreneurship</div>
-        <p class="prog-desc">A program for couples and co-founders building a business together. Covers communication, role definition, financial alignment, and conflict resolution in a business partnership context.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CREDENTIALS -->
-<section class="credentials">
-  <div class="section-label">Qualifications &amp; Past Performance</div>
-  <div class="cred-grid">
-    <div class="cred-list">
-      <div class="cred-item">
-        <div class="cred-dot"></div>
-        <div class="cred-text"><strong>25+ Years Operating Experience</strong>Construction (7 years), trucking (15 years), real estate, financial education, and technology — across multiple successful companies.</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-dot"></div>
-        <div class="cred-text"><strong>Published Author</strong>The Pain Principle and LeadLoud: 11 Commandments of the Next-Gen Leader — both in active use as curriculum foundations.</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-dot"></div>
-        <div class="cred-text"><strong>COO, Women Impact Network (WIN)</strong>16 chapters across Tampa Bay. Active organizational leadership and program development at scale.</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-dot"></div>
-        <div class="cred-text"><strong>COO, Tampa Business Club</strong>Curriculum design and event facilitation for Tampa Bay's business community.</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-dot"></div>
-        <div class="cred-text"><strong>Mentor &amp; Facilitator — Techstars + BUP Innovation</strong>Hackathon facilitation and startup mentorship in technology and innovation environments.</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-dot"></div>
-        <div class="cred-text"><strong>University &amp; Chamber Engagements</strong>University of South Florida, Schiller International University, Tampa Bay Latin Chamber of Commerce.</div>
-      </div>
-    </div>
-    <div class="naics-box">
-      <div class="naics-title">NAICS &amp; Contracting Information</div>
-      <div class="naics-list">
-        <div class="naics-item">
-          <strong>611430 — Professional &amp; Management Development Training</strong>
-          Primary code for all leadership, entrepreneurship, and workforce development programs.
+      <div class="who-card">
+        <div class="who-card-image">
+          <!-- IMAGE: Chamber of commerce feel — local business community, handshakes, networking. Real and warm, not corporate. -->
+          <div class="img-ph" style="height:100%;min-height:140px;">Chamber image</div>
         </div>
-        <div class="naics-item">
-          <strong>611699 — Miscellaneous Schools &amp; Instruction</strong>
-          Self-paced and cohort-based online course delivery.
-        </div>
-        <div class="naics-item">
-          <strong>611710 — Educational Support Services</strong>
-          Curriculum development, facilitation, and program design for institutions.
+        <div class="who-card-body">
+          <div class="who-card-title">Chambers of Commerce</div>
+          <div class="who-card-desc">Your members are business owners who need more than a networking event. Give them a hub they return to every week — and make your chamber the reason they grew.</div>
+          <div class="who-card-detail">Pinellas, Hillsborough, Tampa Bay, and beyond</div>
         </div>
       </div>
-      <div class="naics-note">
-        MiRAjO Collective LLC is a woman-owned small business based in St. Petersburg, FL.<br>
-        SAM.gov registration in process. Capability statement available upon request.<br>
-        All programs available for in-person, online, or hybrid delivery.
+
+      <div class="who-card">
+        <div class="who-card-image">
+          <!-- IMAGE: SBDC / workforce development feel — someone being coached, learning, growing. Community setting. -->
+          <div class="img-ph" style="height:100%;min-height:140px;">SBDC / workforce image</div>
+        </div>
+        <div class="who-card-body">
+          <div class="who-card-title">SBDCs & Women's Business Centers</div>
+          <div class="who-card-desc">Federally funded to serve entrepreneurs. The hub becomes your curriculum — ready to deploy to every cohort, with progress tracking your team can report on.</div>
+          <div class="who-card-detail">NAICS 611430, 611699, 611710 registered</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-image">
+          <!-- IMAGE: CDFI / community lending feel — entrepreneur receiving support, community investment energy. -->
+          <div class="img-ph" style="height:100%;min-height:140px;">CDFI / community lender image</div>
+        </div>
+        <div class="who-card-body">
+          <div class="who-card-title">CDFIs & Community Lenders</div>
+          <div class="who-card-desc">You fund entrepreneurs. The hub helps them build the foundation to actually succeed with that funding — financial literacy, mindset, operations, and leadership all in one place.</div>
+          <div class="who-card-detail">Financial literacy + business development tracks included</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-image">
+          <!-- IMAGE: Incubator / accelerator energy — cohort, whiteboard, early-stage startup energy. Collaborative and focused. -->
+          <div class="img-ph" style="height:100%;min-height:140px;">Incubator / accelerator image</div>
+        </div>
+        <div class="who-card-body">
+          <div class="who-card-title">Incubators & Accelerators</div>
+          <div class="who-card-desc">Every cohort needs a foundation layer. The hub handles mindset, money, leadership, and self-awareness so your programming can go deeper on strategy and growth.</div>
+          <div class="who-card-detail">Cohort management + admin dashboard included</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <div class="how-head">
+      <div class="eyebrow">How It Works</div>
+      <h2>Simple for your organization.<br>Powerful for your members.</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <h3>Your organization licenses the hub</h3>
+        <p>One annual agreement gives your entire membership access. We set up your organization's admin portal, add your branding, and onboard your team in a 30-minute call.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <h3>Your members get full access</h3>
+        <p>They log in, take the DrivAmor assessment, and get a suggested starting path across the 7 pillars. Every course, tool, and resource is available from day one.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <h3>You get the credit for their growth</h3>
+        <p>Your admin dashboard shows member activity, completions, and engagement. You report real impact to your board. And Miranda comes to speak — you bring the room.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROPOSAL CTA -->
-<section class="cta-section" id="proposal">
-  <div>
-    <div class="cta-eyebrow">Work With MiRAjO Collective</div>
-    <h2 class="cta-heading">Let's build<br>something <em>real</em><br>for your people.</h2>
-    <p class="cta-sub">Whether you are a corporation looking to develop your workforce, a school building an entrepreneurship program, or a government agency seeking a qualified training provider — we want to hear from you. Respond to your inquiry within 48 hours.</p>
+<!-- PROOF -->
+<section class="proof">
+  <div class="proof-inner">
+    <div>
+      <div class="eyebrow proof-eyebrow">Built by Someone Who Actually Did It</div>
+      <h2>Not a <em>framework.</em><br>A life's work.</h2>
+      <div class="proof-points">
+        <div class="proof-point">
+          <div class="proof-dot"></div>
+          <p><strong>25+ years operating real companies</strong> — construction (7 years, subcontracted for DR Horton and Ryland Homes), trucking (15 years, two companies, 20 trucks nationwide, $8.5M gross)</p>
+        </div>
+        <div class="proof-point">
+          <div class="proof-dot"></div>
+          <p><strong>Published author</strong> — The Pain Principle and LeadLoud: 11 Commandments of the Next-Gen Leader, both active curriculum foundations in the hub</p>
+        </div>
+        <div class="proof-point">
+          <div class="proof-dot"></div>
+          <p><strong>COO, Women Impact Network</strong> — 16 chapters across Tampa Bay, 20+ ambassadors, active organizational leadership at scale</p>
+        </div>
+        <div class="proof-point">
+          <div class="proof-dot"></div>
+          <p><strong>Mentor & Facilitator, Techstars + BUP Innovation Hackathon</strong> — startup mentorship in technology and innovation environments</p>
+        </div>
+        <div class="proof-point">
+          <div class="proof-dot"></div>
+          <p><strong>Licensed Real Estate Broker (FL) + Commercial CDL-A</strong> — credentials that come from operating, not consulting</p>
+        </div>
+        <div class="proof-point">
+          <div class="proof-dot"></div>
+          <p><strong>SAM.gov registered</strong> — UEI: PSKHR8QRDK48 | NAICS 611430, 611699, 611710 | Woman-Owned Small Business</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="proof-photo">
+        <!-- IMAGE: Miranda — strong, confident, warm. Professional but real. Speaking photo, candid at whiteboard, or intentional headshot. This is the face of the hub — make it count. -->
+        <div class="img-ph img-ph-dark" style="height:300px;margin-bottom:16px;">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+          Miranda Johnson — strong, confident, warm. This photo matters.
+        </div>
+      </div>
+      <div class="proof-stats">
+        <div class="proof-stat">
+          <div class="proof-stat-num">25+</div>
+          <div class="proof-stat-label">Years building and operating companies across 5 industries</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-num">$9.5M</div>
+          <div class="proof-stat-label">Combined gross revenue across all businesses</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-num">47K+</div>
+          <div class="proof-stat-label">Reach through Tampa Bay Business Club and WIN</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-num">40+</div>
+          <div class="proof-stat-label">Hub resources, assessments, and courses — and growing</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="cta-contact">
-    <div class="cta-contact-item">
-      <div class="cta-contact-label">Email</div>
-      <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-head">
+      <div class="eyebrow">Organization Licensing</div>
+      <h2>One price. Your whole membership.</h2>
+      <p>Annual licenses give your entire member base full hub access. No per-seat complexity. No usage limits. Miranda speaks at your events — included in Enterprise.</p>
     </div>
-    <div class="cta-contact-item">
-      <div class="cta-contact-label">Organization</div>
-      MiRAjO Collective LLC<br>
-      100 2nd Ave S., Suite 205N #1043<br>
-      St. Petersburg, FL 33701
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-name">Community</div>
+        <div class="price-who">For small chambers and local organizations — up to 50 members</div>
+        <div class="price-amount">
+          <div class="price-num">$2,500</div>
+          <div class="price-per">per year</div>
+        </div>
+        <ul class="price-features">
+          <li>Full hub access for up to 50 members</li>
+          <li>All 7 pillars — every course and resource</li>
+          <li>DrivAmor assessment for all members</li>
+          <li>Organization admin dashboard</li>
+          <li>Progress and completion tracking</li>
+          <li>Onboarding call included</li>
+        </ul>
+        <a href="#demo" class="price-cta">Request Pricing</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-tier">Most Popular</div>
+        <div class="price-name">Growth</div>
+        <div class="price-who">For SBDCs, CDFIs, and mid-size chambers — up to 150 members</div>
+        <div class="price-amount">
+          <div class="price-num">$4,800</div>
+          <div class="price-per">per year</div>
+        </div>
+        <ul class="price-features">
+          <li>Full hub access for up to 150 members</li>
+          <li>All 7 pillars — every course and resource</li>
+          <li>DrivAmor + all assessments for all members</li>
+          <li>Cohort management and reporting</li>
+          <li>Compliance-ready exports for grant reporting</li>
+          <li>Priority support + quarterly check-in call</li>
+        </ul>
+        <a href="#demo" class="price-cta">Request Pricing</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-name">Full Access</div>
+        <div class="price-who">For large organizations, incubators, and multi-location chambers — unlimited members</div>
+        <div class="price-amount">
+          <div class="price-num" style="font-size:36px;line-height:1.2;">Custom</div>
+          <div class="price-per">contact for pricing</div>
+        </div>
+        <ul class="price-features">
+          <li>Unlimited member access</li>
+          <li>White-label option available</li>
+          <li>Custom curriculum tracks for your cohorts</li>
+          <li>Miranda Johnson speaking engagement — included</li>
+          <li>Dedicated facilitator support</li>
+          <li>Full reporting and analytics suite</li>
+        </ul>
+        <a href="#demo" class="price-cta">Schedule a Call</a>
+      </div>
+
     </div>
-    <div class="cta-contact-item">
-      <div class="cta-contact-label">Capability Statement</div>
-      Available upon request — includes full program descriptions, past performance, and NAICS codes.
+
+    <div class="pricing-individual">
+      <div>
+        <h3>Individual Access</h3>
+        <p>Entrepreneurs who find MiRAjO on their own — not through an organization — can subscribe directly. Full hub access, all 7 pillars, all tools.</p>
+      </div>
+      <div class="pricing-individual-price">
+        <div class="price-num">$19</div>
+        <span class="price-per">per month &nbsp;·&nbsp; or $149/year</span>
+        <a href="https://www.mirajoco.org/programs" class="price-cta" style="min-width:160px;">Get Access</a>
+      </div>
     </div>
-    <a href="mailto:mirandaj@mirajoco.org?subject=MiRAjO%20Collective%20Program%20Inquiry&body=Organization%20name%3A%0AContact%20name%3A%0AType%20of%20inquiry%20(corporate%2C%20school%2C%20government)%3A%0APrograms%20of%20interest%3A%0ATimeline%3A" class="cta-btn">Send an Inquiry</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="demo">
+  <div class="cta-inner">
+    <div>
+      <div class="eyebrow cta-eyebrow">Let's Build Something Real</div>
+      <h2 class="cta-heading">Show your members<br>what a real <em>entrepreneurship<br>environment</em> looks like.</h2>
+      <p class="cta-sub">We'll walk you through the full hub in 30 minutes. You'll see every pillar, every tool, the admin dashboard, and how onboarding works. No pressure — just a real look at what your members would have access to.</p>
+    </div>
+    <div>
+      <form class="cta-form" onsubmit="handleDemoRequest(event)">
+        <input type="text" id="demo-name" placeholder="Your name" required>
+        <input type="text" id="demo-org" placeholder="Organization name" required>
+        <input type="email" id="demo-email" placeholder="Email address" required>
+        <select id="demo-type">
+          <option value="" disabled selected>Organization type</option>
+          <option>Chamber of Commerce</option>
+          <option>SBDC / Women's Business Center</option>
+          <option>CDFI / Community Lender</option>
+          <option>Incubator or Accelerator</option>
+          <option>Government / Workforce Development</option>
+          <option>Other</option>
+        </select>
+        <textarea id="demo-message" placeholder="What are you looking to do for your members? (optional)"></textarea>
+        <button type="submit" class="cta-submit">Request a Demo</button>
+        <div class="cta-alt">Or email directly: <a href="mailto:mirandaj@mirajoco.org">mirandaj@mirajoco.org</a></div>
+      </form>
+    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-brand">MiRAjO Collective LLC</div>
-  <div class="footer-note">mirajoco.org/platform &nbsp;&middot;&nbsp; St. Petersburg, FL &nbsp;&middot;&nbsp; 2026</div>
+  <div class="footer-links">
+    <a href="https://www.mirajoco.org">Home</a>
+    <a href="https://www.mirajoco.org/programs">Programs</a>
+    <a href="https://www.mirajoco.org/speaking">Speaking</a>
+    <a href="https://www.mirajoco.org/capability-statement">Capability Statement</a>
+    <a href="https://www.mirajoco.org/about/terms">Terms</a>
+  </div>
+  <div class="footer-note">St. Petersburg, FL &nbsp;·&nbsp; SAM.gov UEI: PSKHR8QRDK48 &nbsp;·&nbsp; WOSB</div>
 </footer>
 
 <script src="/analytics.js"></script>
@@ -593,6 +854,42 @@
   document.querySelector('.nav-hamburger').addEventListener('click', function() {
     this.closest('.site-nav').classList.toggle('nav-open');
   });
+
+  async function handleDemoRequest(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.cta-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const body = {
+      name: document.getElementById('demo-name').value,
+      org: document.getElementById('demo-org').value,
+      email: document.getElementById('demo-email').value,
+      type: document.getElementById('demo-type').value,
+      message: document.getElementById('demo-message').value,
+    };
+
+    try {
+      const res = await fetch('/api/demo-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (res.ok) {
+        btn.textContent = 'Request Sent!';
+        e.target.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      // Fallback to mailto
+      const subject = encodeURIComponent(`Hub Demo Request — ${body.org}`);
+      const bodyText = encodeURIComponent(`Name: ${body.name}\nOrg: ${body.org}\nEmail: ${body.email}\nType: ${body.type}\n\n${body.message}`);
+      window.location.href = `mailto:mirandaj@mirajoco.org?subject=${subject}&body=${bodyText}`;
+      btn.textContent = 'Request a Demo';
+      btn.disabled = false;
+    }
+  }
 </script>
 </body>
 </html>
