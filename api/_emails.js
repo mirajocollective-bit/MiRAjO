@@ -1,9 +1,11 @@
 // Course email sequences — content + queue helper
 // Sends via Resend. Queue populated on enrollment/completion events.
 
-const LOGIN = 'https://www.mirajoco.org/programs/login';
-const CERT  = 'https://www.mirajoco.org/programs/certificate';
-const LOGO  = 'https://www.mirajoco.org/img/logo-horizontal.png';
+const LOGIN    = 'https://www.mirajoco.org/programs/login';
+const CERT     = 'https://www.mirajoco.org/programs/certificate';
+const LOGO     = 'https://www.mirajoco.org/img/logo-horizontal.png';
+const MM_DASH  = 'https://www.mirajoco.org/tools/money-moves/dashboard';
+const MM_PRICE = 'https://www.mirajoco.org/tools/money-moves/pricing';
 
 function wrap(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -475,6 +477,177 @@ export const SEQUENCES = {
         p(`But you bought this for a reason. That reason did not go away just because things got busy.`) +
         p(`Ten minutes. That is all Day 1 asks for. Log back in and give yourself ten minutes today.`) +
         btn('Pick Up Where You Left Off', LOGIN)
+      ),
+    },
+  ],
+
+  // ── MONEY MOVES — TRIAL (free 30-day) ────────────────────────────
+  'mm-trial': [
+    {
+      step: 1, delayDays: 0,
+      subject: "You're in. Let's build something real.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Welcome to Money Moves.`) +
+        p(`I'm Miranda — founder of MiRAjO — and I built this tool because I was tired of budgets that looked good on paper and fell apart in real life. Spreadsheets, apps, color-coded notebooks... none of it stuck.`) +
+        p(`What changed everything was putting my money on a <em>calendar</em> — the same place I run my business, manage my family, and plan my week. When I could see my money the way I see my time, everything got clearer.`) +
+        p(`<strong style="color:#122012;">Here's how to start today:</strong><br>1. Add your first income entry<br>2. Drop in your top three recurring bills<br>3. Leave $50–$100 unassigned as your buffer`) +
+        p(`That's it. Start there.`) +
+        p(`Your 30-day trial is active. I'll send tips over the next few weeks to make sure you get real value out of it.`) +
+        btn('Open Your Money Moves Calendar', MM_DASH) +
+        p(`Let's get to work.`)
+      ),
+    },
+    {
+      step: 2, delayDays: 3,
+      subject: "The #1 reason budgets don't work (it's not discipline)",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Most people think they're bad with money because they lack discipline.`) +
+        p(`That's not it.`) +
+        p(`The real problem is <em>timing</em>. You know the bills are coming. You just don't see them until they're already due — and by then the money is already somewhere else.`) +
+        p(`A budget on a calendar fixes this. When you can see that your car insurance hits on the 15th, your rent on the 1st, and your kids' activity fees on the 22nd — all in one view — you stop being reactive and start being prepared.`) +
+        p(`<strong style="color:#122012;">This week's move:</strong> Add every recurring expense you have into your Money Moves calendar — even the ones you never forget. Seeing them all together usually surprises people. Most find at least one they were mentally underestimating.`) +
+        btn('Log In and Check', MM_DASH)
+      ),
+    },
+    {
+      step: 3, delayDays: 7,
+      subject: "One week in — are you using this yet?",
+      body: (n) => wrap(
+        greet(n) +
+        p(`One week in. How's it going?`) +
+        p(`If you've added your income and your bills, you're already ahead of where most people start. But I want to make sure you're using the part of Money Moves that makes the biggest difference: <strong style="color:#122012;">seeing the gap.</strong>`) +
+        p(`When your income and expenses are both on the calendar, you can see — day by day — when you're flush and when things get tight. That gap is your planning window. That's where you make decisions <em>before</em> the pressure hits.`) +
+        p(`If you haven't mapped out a full month yet, this weekend is a good time. Fifteen minutes. That's all it takes.`) +
+        btn('Open Your Calendar', MM_DASH) +
+        p(`Still getting set up? Reply to this email — I read every one.`)
+      ),
+    },
+    {
+      step: 4, delayDays: 14,
+      subject: "You don't need a perfect budget. You need a working one.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Two weeks in. Quick check: are you still logging in?`) +
+        p(`If yes — keep going. Consistency is the whole game.`) +
+        p(`If things got busy and you fell off — that's okay. Open it up today. Don't catch up, don't backfill. Just start from today. A working budget you actually use beats a perfect one you abandoned.`) +
+        p(`Here's a tip I give every client: <strong style="color:#122012;">don't budget to zero.</strong> Leave a buffer — even $50 or $100 — unassigned at all times. That buffer is your peace of mind. It handles the thing you forgot. It keeps you from blowing your whole plan over one unexpected expense.`) +
+        p(`Money doesn't have to be stressful. It just has to be visible.`) +
+        btn('Open Money Moves', MM_DASH)
+      ),
+    },
+    {
+      step: 5, delayDays: 21,
+      subject: "9 days left — here's what happens after your trial ends",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Your trial wraps up in 9 days.`) +
+        p(`I want to be straight with you: if you don't upgrade before Day 30, your access will pause and your calendar data won't be editable. I don't want you to lose the work you've put in.`) +
+        p(`Here's what it costs to keep going:`) +
+        p(`<strong style="color:#122012;">Individual:</strong> $7/month or $59/year (save $25)<br><strong style="color:#122012;">Family:</strong> $10/month or $84/year (save $36)`) +
+        p(`That's less than most people spend on one impulse purchase. And the return — knowing where your money is, every single day — is worth far more than that.`) +
+        btn('Keep My Access', MM_PRICE) +
+        p(`Questions? Hit reply. I'll answer personally.`)
+      ),
+    },
+    {
+      step: 6, delayDays: 29,
+      subject: "Today's the last day of your trial",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Today's the day.`) +
+        p(`Your 30-day trial ends tonight. If you want to keep access to your Money Moves calendar — and everything you've built in it — now's the time.`) +
+        p(`I built Money Moves for people who are serious about getting clear on their finances. Not perfect. Not making six figures. Just serious.`) +
+        p(`If that's you, I'd love to keep working with you.`) +
+        p(`<strong style="color:#122012;">Individual — $7/month or $59/year</strong><br><strong style="color:#122012;">Family — $10/month or $84/year</strong>`) +
+        btn('Upgrade Now', MM_PRICE) +
+        p(`Either way — thank you for giving it a try. You took a real step, and that matters.`) +
+        p(`<em style="color:#888;">"You already have everything you need. We'll show you how to use it."</em>`)
+      ),
+    },
+  ],
+
+  // ── MONEY MOVES — PAID SUBSCRIBER ────────────────────────────────
+  'mm-paid': [
+    {
+      step: 1, delayDays: 0,
+      subject: "You're officially in. Welcome.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`You didn't just sign up — you made a decision. That matters.`) +
+        p(`A lot of people talk about getting their finances together. You actually did something about it. I want to make sure you get everything this tool has to offer.`) +
+        p(`<strong style="color:#122012;">Your quick-start plan:</strong><br>1. Add all income sources — even irregular ones. Estimate if you have to.<br>2. Enter every recurring bill — subscriptions, utilities, loan payments, all of it.<br>3. Leave $50–$100 unassigned as your buffer. That's your breathing room.`) +
+        p(`Once those three things are in, your calendar will start telling you something real.`) +
+        btn('Open Your Money Moves Calendar', MM_DASH) +
+        p(`I'll be checking in over the next few weeks with tips. You can always reply to any of these — I read them.`)
+      ),
+    },
+    {
+      step: 2, delayDays: 3,
+      subject: "Why the calendar method works when everything else doesn't",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Traditional budgets assign money to <em>categories</em>. That works on paper, but real life doesn't run on categories — it runs on dates.`) +
+        p(`The calendar method works because it matches how money actually flows. Your paycheck hits on Friday. Your rent is due Monday. Your electric bill auto-drafts on the 18th. When you can see all of that together, you don't need willpower — you just need to look.`) +
+        p(`<strong style="color:#122012;">This week's move:</strong> Look at next month right now. What's the biggest expense hitting in the first 10 days? Do you have what you need to cover it?`) +
+        p(`If yes — you're already ahead. If not — you've got time to adjust. That's the whole system.`) +
+        btn('Open Your Calendar', MM_DASH)
+      ),
+    },
+    {
+      step: 3, delayDays: 7,
+      subject: "A money habit that takes 5 minutes a week",
+      body: (n) => wrap(
+        greet(n) +
+        p(`One week in. Here's a habit worth building:`) +
+        p(`<strong style="color:#122012;">Every Sunday, spend 5 minutes in your calendar.</strong>`) +
+        p(`Look at the week ahead. Check what's coming in, what's going out, and whether anything needs to move. That's it. No spreadsheets. No stress. Just a quick scan so nothing catches you off guard.`) +
+        p(`Five minutes of awareness beats five hours of damage control every time.`) +
+        p(`People who do this weekly report less financial stress, fewer overdrafts, and more confidence in their decisions — not because they earned more, but because they <em>knew more</em>.`) +
+        btn('Open Money Moves', MM_DASH)
+      ),
+    },
+    {
+      step: 4, delayDays: 14,
+      subject: "Are you tracking one-time expenses?",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Two weeks in — I want to ask you something:`) +
+        p(`Are you logging your one-time expenses, or just your recurring bills?`) +
+        p(`Most people set up their recurring bills and feel good. But the irregular stuff — birthdays, car repairs, school supplies, that one thing you just had to have — is where budgets actually break down.`) +
+        p(`<strong style="color:#122012;">Here's the fix:</strong> Add one-time expenses to your calendar as soon as you know about them. Even if they're three weeks away. Seeing them in advance changes how you spend in the meantime.`) +
+        p(`What's coming up in the next 30 days that isn't on your calendar yet?`) +
+        btn('Add It Now', MM_DASH)
+      ),
+    },
+    {
+      step: 5, delayDays: 21,
+      subject: "Three weeks in. You're building something real.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`Three weeks. That's not nothing.`) +
+        p(`Most people abandon a new financial habit in the first week. You're still here. That tells me you're serious about building something that lasts.`) +
+        p(`I want to make sure you know about everything MiRAjO offers, because Money Moves is just one part of a bigger ecosystem:`) +
+        p(`<strong style="color:#122012;">25 Days &amp; 25 Nights</strong> — for people ready to close the gap between who they are and who they know they can be. Daily practice, real questions, real work.`) +
+        p(`<strong style="color:#122012;">Couples in Entrepreneurship</strong> — for couples building a business together. Because love and business overlap more than people admit, and that overlap deserves a real framework.`) +
+        p(`These aren't random products. They're tools for the same person — someone building a real life, not just a highlight reel.`) +
+        btn('See Everything at MiRAjO', 'https://www.mirajoco.org')
+      ),
+    },
+    {
+      step: 6, delayDays: 30,
+      subject: "One month. A note from me.",
+      body: (n) => wrap(
+        greet(n) +
+        p(`One month.`) +
+        p(`I want to say something that doesn't get said enough in the personal finance space:`) +
+        p(`Getting clear on your money is an act of self-respect. It's not about being rich. It's not about being perfect. It's about deciding that your future is worth paying attention to <em>today.</em>`) +
+        p(`That's what you've been doing for the last 30 days.`) +
+        p(`Keep going. The clarity you're building right now compounds — just like the money will when you give it direction.`) +
+        p(`If you ever want to share what's working or have a question, reply here. I'm a real person and I read these.`) +
+        p(`Thank you for trusting MiRAjO with something this important.`) +
+        p(`<em style="color:#888;">"You already have everything you need. We'll show you how to use it."</em>`)
       ),
     },
   ],

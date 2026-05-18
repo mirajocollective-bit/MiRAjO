@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { triggerSequence } from './_emails.js';
 
 const stripe  = new Stripe(process.env.STRIPE_SECRET_KEY);
 const supabase = createClient(
@@ -195,6 +196,15 @@ export default async function handler(req, res) {
       personality_mode: 'mom',
       updated_at:       new Date().toISOString(),
     }, { onConflict: 'user_id' });
+
+    // Cancel any pending trial emails and start the paid sequence
+    await supabase.from('email_queue')
+      .delete()
+      .eq('email', email)
+      .eq('sequence', 'mm-trial')
+      .is('sent_at', null);
+    const firstName = customer.name?.split(' ')[0] || '';
+    await triggerSequence(supabase, email, 'mm-paid', firstName);
 
     console.log(`Money Moves: provisioned account for ${email} (${plan} / ${billing})`);
   }
