@@ -113,19 +113,6 @@
     .library-head .eyebrow { color: var(--mint); margin-bottom: 20px; }
     .library-head h2 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.5vw, 54px); color: var(--parchment); font-weight: 400; line-height: 1.08; margin-bottom: 14px; }
     .library-head p { font-size: 16px; color: rgba(242,235,217,0.5); line-height: 1.8; max-width: 640px; }
-    .library-filters { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: flex; gap: 8px; margin-bottom: 36px; }
-    .lib-filter-btn { padding: 9px 22px; border-radius: 24px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid rgba(109,196,138,0.25); background: transparent; color: rgba(242,235,217,0.45); transition: all 0.2s; letter-spacing: 0.3px; }
-    .lib-filter-btn:hover { border-color: rgba(109,196,138,0.5); color: rgba(242,235,217,0.75); }
-    .lib-filter-btn.active { background: var(--green); border-color: var(--green); color: #fff; }
-    .library-grid { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .lib-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(242,235,217,0.07); border-radius: 14px; padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 14px; transition: background 0.2s, border-color 0.2s; cursor: default; }
-    .lib-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(109,196,138,0.2); }
-    .lib-track-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
-    .lib-track-tech { color: var(--gold); }
-    .lib-track-emo { color: #A78BD4; }
-    .lib-pain { font-family: 'Instrument Serif', serif; font-size: 16px; color: rgba(242,235,217,0.55); font-style: italic; line-height: 1.4; }
-    .lib-title { font-size: 14.5px; font-weight: 700; color: var(--parchment); line-height: 1.4; }
-    .lib-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
     .lib-pillar { font-size: 10px; padding: 3px 10px; border-radius: 20px; background: rgba(255,255,255,0.06); color: rgba(242,235,217,0.4); font-weight: 600; letter-spacing: 0.5px; }
 
     /* ── DATA INTELLIGENCE ── */
@@ -347,13 +334,41 @@
     .footer-links a:hover { color: rgba(242,235,217,0.7); }
     .footer-note { font-size: 12px; color: rgba(242,235,217,0.25); }
 
+    /* ── LIBRARY SPLIT ── */
+    .library-split { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1px 1fr; align-items: start; }
+    .lib-divider { background: rgba(255,255,255,0.08); margin: 0 40px; }
+    .library-track-head { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .lib-track-pd-label { color: #A78BD4; }
+    .lib-track-bd-label { color: var(--gold); }
+    .library-track-cards { display: flex; flex-direction: column; gap: 12px; }
+    .lib-card-v2 { background: rgba(255,255,255,0.04); border: 1px solid rgba(242,235,217,0.07); border-radius: 12px; padding: 20px 20px 16px; transition: background 0.2s, border-color 0.2s; }
+    .lib-card-v2:hover { background: rgba(255,255,255,0.07); border-color: rgba(109,196,138,0.2); }
+    .lib-pain-v2 { font-family: 'Instrument Serif', serif; font-size: 14px; color: rgba(242,235,217,0.45); font-style: italic; line-height: 1.4; margin-bottom: 8px; }
+    .lib-desc-v2 { font-size: 12.5px; color: rgba(242,235,217,0.38); line-height: 1.7; margin-bottom: 12px; }
+    .lib-name-v2 { font-size: 13.5px; font-weight: 700; color: var(--parchment); margin-bottom: 12px; }
+    .lib-meta-v2 { display: flex; gap: 8px; flex-wrap: wrap; }
+    .lib-bridge { max-width: 1200px; margin: 40px auto 0; padding: 0 48px; }
+    .lib-bridge-inner { background: rgba(109,196,138,0.05); border: 1px solid rgba(109,196,138,0.15); border-radius: 16px; padding: 44px; }
+    .lib-bridge-head { text-align: center; margin-bottom: 36px; }
+    .lib-bridge-head h3 { font-family: 'Instrument Serif', serif; font-size: clamp(22px, 2.5vw, 30px); color: var(--parchment); font-weight: 400; line-height: 1.3; margin-bottom: 12px; }
+    .lib-bridge-head p { font-size: 14px; color: rgba(242,235,217,0.45); line-height: 1.75; max-width: 580px; margin: 0 auto; }
+    .lib-bridge-examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .lib-bridge-ex { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 24px 20px; text-align: center; }
+    .lib-bridge-side { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+    .lib-bridge-pd { color: #A78BD4; }
+    .lib-bridge-bd { color: var(--gold); }
+    .lib-bridge-arrow { font-size: 20px; color: var(--mint); margin: 10px 0; opacity: 0.6; }
+    .lib-bridge-ex p { font-size: 13px; color: rgba(242,235,217,0.5); line-height: 1.65; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
       .hero-inner { grid-template-columns: 1fr; gap: 48px; }
       .hero-stat-row { grid-template-columns: repeat(4, 1fr); }
       .gap-grid { grid-template-columns: 1fr; }
       .gap-col-old { border-right: none; border-bottom: 1px solid var(--border); }
-      .library-grid { grid-template-columns: 1fr 1fr; }
+      .library-split { grid-template-columns: 1fr; }
+      .lib-divider { height: 1px; margin: 32px 0; }
+      .lib-bridge-examples { grid-template-columns: 1fr; }
       .dash-stats { grid-template-columns: 1fr 1fr; }
       .dash-bottom { grid-template-columns: 1fr; }
       .intel-uses { grid-template-columns: 1fr 1fr; }
@@ -375,8 +390,8 @@
       .hero-inner, .gap-inner, .library-head, .library-filters, .library-grid,
       .intel-head, .intel-dash, .intel-uses, .acct-inner, .revenue-inner,
       .tracks-inner, .proof-inner, .pricing-inner, .cta-inner { padding-left: 20px; padding-right: 20px; }
+      .library-split, .lib-bridge { padding-left: 20px; padding-right: 20px; }
       .hero-stat-row { grid-template-columns: 1fr 1fr; }
-      .library-grid { grid-template-columns: 1fr; }
       .dash-stats { grid-template-columns: 1fr 1fr; }
       .intel-uses { grid-template-columns: 1fr; }
       .profile-body { grid-template-columns: 1fr; }
@@ -503,15 +518,153 @@
 <section class="library" id="library">
   <div class="library-head">
     <div class="eyebrow">The Content Library</div>
-    <h2>Every struggle. Every stage.<br>Every answer — in one place.</h2>
-    <p>This is what your members are going through. When they say they need something — it's here. When your staff asks "have they looked into that?" — they can check.</p>
+    <h2>Personal Development.<br>Business Development.<br><em style="color:var(--mint);font-style:italic;">Both — in one place.</em></h2>
+    <p>Your members need to work on themselves AND their business at the same time. Every resource in the Hub lives in one of these two tracks. Most programs only offer one side. We built both.</p>
   </div>
-  <div class="library-filters">
-    <button class="lib-filter-btn active" data-filter="all" onclick="filterLibrary('all')">All Content</button>
-    <button class="lib-filter-btn" data-filter="technical" onclick="filterLibrary('technical')">Technical Track</button>
-    <button class="lib-filter-btn" data-filter="emotional" onclick="filterLibrary('emotional')">Emotional Track</button>
+
+  <div class="library-split">
+
+    <!-- PERSONAL DEVELOPMENT -->
+    <div>
+      <div class="library-track-head"><span class="lib-track-pd-label">● Personal Development</span></div>
+      <div class="library-track-cards">
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I don't know if I'm actually cut out for this."</div>
+          <div class="lib-desc-v2">Maps the 5 stages every entrepreneur goes through when building something new — so you can identify exactly where you are and know what's coming next.</div>
+          <div class="lib-name-v2">The Pain Principle</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Foundation</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I lead differently than everyone around me — and I don't understand why."</div>
+          <div class="lib-desc-v2">A personality assessment built specifically for entrepreneurs. Reveals how you naturally make decisions, take charge, and connect with others — and how it affects everything you build.</div>
+          <div class="lib-name-v2">Drive + Relationship Assessment</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Know Yourself</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I react badly under pressure and I don't know how to stop it."</div>
+          <div class="lib-desc-v2">A scored self-assessment that measures your ability to recognize and manage your emotions in high-stakes situations — with a targeted exercise plan based on your results.</div>
+          <div class="lib-name-v2">Emotional Intelligence Assessment</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Know Yourself</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"My relationship is suffering because of what I'm building."</div>
+          <div class="lib-desc-v2">A course for couples navigating entrepreneurship together — covering shared finances, communication, roles, and how to stay connected when the business puts everything under pressure.</div>
+          <div class="lib-name-v2">Couples in Entrepreneurship</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Relationships</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I know how I show up — I just don't understand why I lead the way I do."</div>
+          <div class="lib-desc-v2">12 real-world leadership scenarios that reveal your natural style — whether you lead through vision, structure, collaboration, or autonomy — with guidance on developing each.</div>
+          <div class="lib-name-v2">Leadership Style Assessment</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Lead</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I'm running on empty. I can't keep this pace."</div>
+          <div class="lib-desc-v2">Practical strategies for sustainable energy, recovery, and performance as an entrepreneur — because no business outlasts the person running it.</div>
+          <div class="lib-name-v2">The Rested Brain</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Life</span><span class="status-soon">Coming</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lib-divider"></div>
+
+    <!-- BUSINESS DEVELOPMENT -->
+    <div>
+      <div class="library-track-head"><span class="lib-track-bd-label">● Business Development</span></div>
+      <div class="library-track-cards">
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I have an idea but no idea where to actually start."</div>
+          <div class="lib-desc-v2">A 15-step checklist that walks you from idea to legally operating business — covering structure, licensing, tax ID, branding, insurance, accounting, and launch in the right order.</div>
+          <div class="lib-name-v2">Starting a Business — Complete Checklist</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Build</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"My money situation is a mess and I don't know where it goes."</div>
+          <div class="lib-desc-v2">A budgeting tool built for real people — track income, expenses, and financial goals on a month-by-month calendar that shows you exactly where you stand.</div>
+          <div class="lib-name-v2">Money Moves — Budget + Financial Planning Tool</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Money</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I want to launch something but I have a full-time job and no time."</div>
+          <div class="lib-desc-v2">A structured 90-day program that takes you from idea to first-paying customer — with daily actions, accountability check-ins, and a real plan that works around your current schedule.</div>
+          <div class="lib-name-v2">90 Day Side Hustle Program</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Build</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I don't understand my numbers well enough to make confident decisions."</div>
+          <div class="lib-desc-v2">A plain-language course covering cash flow, profit and loss, pricing strategy, and financial planning — designed for entrepreneurs with no accounting background.</div>
+          <div class="lib-name-v2">Financial Literacy for Entrepreneurs</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Money</span><span class="status-soon">Coming</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I know I'm a leader — but I don't know how to build and keep a real team."</div>
+          <div class="lib-desc-v2">11 practical principles for building, leading, and retaining people — written from direct experience running companies, not from a management theory textbook.</div>
+          <div class="lib-name-v2">LeadLoud — 11 Commandments of the Next-Gen Leader</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Lead</span><span class="status-live">Live</span></div>
+        </div>
+
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I'm afraid technology and AI are going to leave me behind."</div>
+          <div class="lib-desc-v2">A practical guide to AI tools, automation, and digital technology for entrepreneurs — what to learn, what to ignore, and how to use it to compete regardless of your technical background.</div>
+          <div class="lib-name-v2">Technology + AI for Entrepreneurs</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Life</span><span class="status-building">Building</span></div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-  <div class="library-grid">
+
+  <!-- THE BRIDGE -->
+  <div class="lib-bridge">
+    <div class="lib-bridge-inner">
+      <div class="lib-bridge-head">
+        <h3>They don't just coexist. They multiply each other.</h3>
+        <p>We've been told to keep the personal out of the business. The reality: the more self-aware you are, the better your business decisions become. These two tracks work together — and the Hub is built to show you how.</p>
+      </div>
+      <div class="lib-bridge-examples">
+        <div class="lib-bridge-ex">
+          <div class="lib-bridge-side lib-bridge-pd">Personal Development</div>
+          <div class="lib-bridge-arrow">↓</div>
+          <p>Understanding how you're naturally wired to lead and make decisions</p>
+          <div class="lib-bridge-arrow">↓</div>
+          <div class="lib-bridge-side lib-bridge-bd">Business Development</div>
+          <p>Knowing which business role to own, which to delegate, and exactly who to hire to fill your gaps</p>
+        </div>
+        <div class="lib-bridge-ex">
+          <div class="lib-bridge-side lib-bridge-pd">Personal Development</div>
+          <div class="lib-bridge-arrow">↓</div>
+          <p>Building your emotional intelligence and understanding how you show up</p>
+          <div class="lib-bridge-arrow">↓</div>
+          <div class="lib-bridge-side lib-bridge-bd">Business Development</div>
+          <p>How you sell, how you negotiate, how you handle conflict, and how your team responds to your leadership</p>
+        </div>
+        <div class="lib-bridge-ex">
+          <div class="lib-bridge-side lib-bridge-pd">Personal Development</div>
+          <div class="lib-bridge-arrow">↓</div>
+          <p>Understanding your relationship with money and what drives your financial decisions</p>
+          <div class="lib-bridge-arrow">↓</div>
+          <div class="lib-bridge-side lib-bridge-bd">Business Development</div>
+          <p>How you price your services, whether you undercharge, and how you invest in your business growth</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
 
     <div class="lib-card" data-track="emotional">
       <div class="lib-track-label lib-track-emo">Emotional Track</div>
@@ -897,14 +1050,14 @@
 <section class="tracks">
   <div class="tracks-inner">
     <div class="tracks-head">
-      <div class="eyebrow">The Two-Track Difference</div>
-      <h2>Every other program teaches one side.<br>We built both.</h2>
-      <p>The technical side of entrepreneurship is well documented. The emotional side — what it actually feels like to build something — almost never gets addressed. We address both, together, because that's the reality.</p>
+      <div class="eyebrow">Personal Development + Business Development</div>
+      <h2>Every other program gives you one.<br>We built both — because you need both.</h2>
+      <p>Business development without personal development creates an entrepreneur who knows what to do but can't execute it. Personal development without business development creates growth with no direction. The Hub is the first place built for both — simultaneously.</p>
     </div>
     <div class="tracks-split">
       <div class="track-col track-tech">
-        <div class="track-label">Technical Track</div>
-        <div class="track-title">The business of building a business.</div>
+        <div class="track-label">Business Development</div>
+        <div class="track-title">The operations of building a business.</div>
         <ul class="track-items">
           <li><span class="track-check">✓</span> Business structure, legal foundations, and licensing</li>
           <li><span class="track-check">✓</span> Personal finance and business financial literacy</li>
@@ -917,8 +1070,8 @@
         </ul>
       </div>
       <div class="track-col track-emo">
-        <div class="track-label">Emotional Track</div>
-        <div class="track-title">The person behind the business.</div>
+        <div class="track-label">Personal Development</div>
+        <div class="track-title">The person running the business.</div>
         <ul class="track-items">
           <li><span class="track-check">✓</span> Self-awareness and identity as an entrepreneur</li>
           <li><span class="track-check">✓</span> Fear, doubt, and the transition stages</li>
@@ -932,7 +1085,7 @@
       </div>
     </div>
     <div class="tracks-statement">
-      <p>Most programs treat entrepreneurship as a business problem.<br><em>We treat it as a human experience — because that's what it actually is.</em></p>
+      <p>Most programs tell you to keep the personal out of the business.<br><em>The data says the opposite — work on both simultaneously and everything grows faster.</em></p>
     </div>
   </div>
 </section>
@@ -1095,16 +1248,6 @@
   document.querySelector('.nav-hamburger').addEventListener('click', function() {
     this.closest('.site-nav').classList.toggle('nav-open');
   });
-
-  // Library filter
-  function filterLibrary(track) {
-    document.querySelectorAll('.lib-card').forEach(card => {
-      card.style.display = (track === 'all' || card.dataset.track === track) ? '' : 'none';
-    });
-    document.querySelectorAll('.lib-filter-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.filter === track);
-    });
-  }
 
   // Dashboard bar animation
   const dashObserver = new IntersectionObserver((entries) => {
