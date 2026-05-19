@@ -67,6 +67,7 @@
     { "source": "/media-kit",                    "destination": "/media-kit.html" },
     { "source": "/speaking",                     "destination": "/speaking.html" },
     { "source": "/platform",                     "destination": "/platform.html" },
+    { "source": "/hub-demo",                     "destination": "/hub-demo.html" },
     { "source": "/rfp-tracker",                  "destination": "/rfp-tracker.html" },
     { "source": "/capability-statement",         "destination": "/capability-statement.html" },
     { "source": "/admin",                        "destination": "/admin/dashboard.html" },
