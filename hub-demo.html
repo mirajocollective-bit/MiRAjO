@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MiRAjO Hub</title>
+  <title>MiRAjO Hub — Interactive Demo</title>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -33,8 +33,7 @@
     ══════════════════════════════ */
     #view-login { min-height:100vh; align-items:stretch; }
     .login-left {
-      width:44%;
-      background:var(--forest);
+      width:44%; background:var(--forest);
       display:flex; flex-direction:column; justify-content:center; padding:64px 56px;
       position:relative; overflow:hidden;
     }
@@ -45,8 +44,9 @@
     }
     .login-brand { margin-bottom:56px; }
     .login-brand img { height:48px; width:auto; }
+    .login-brand-name { font-family:'Instrument Serif',serif; font-size:24px; color:var(--parchment); font-weight:400; letter-spacing:-0.5px; margin-top:6px; }
     .login-hero-label { font-size:11px; letter-spacing:5px; text-transform:uppercase; color:var(--mint); font-weight:700; margin-bottom:20px; }
-    .login-hero-title { font-family:'Instrument Serif', serif; font-size:clamp(32px,3vw,48px); color:var(--parchment); font-weight:400; line-height:1.1; margin-bottom:24px; }
+    .login-hero-title { font-family:'Instrument Serif',serif; font-size:clamp(32px,3vw,48px); color:var(--parchment); font-weight:400; line-height:1.1; margin-bottom:24px; }
     .login-hero-title em { color:var(--mint); font-style:italic; }
     .login-hero-sub { font-size:14px; color:rgba(242,235,217,0.45); line-height:1.8; max-width:340px; }
     .login-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:48px; }
@@ -54,9 +54,7 @@
     .login-stat-num { font-family:'Instrument Serif',serif; font-size:28px; color:var(--mint); line-height:1; margin-bottom:4px; }
     .login-stat-label { font-size:11px; color:rgba(242,235,217,0.35); line-height:1.4; }
 
-    .login-right {
-      flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:64px 48px; background:var(--card);
-    }
+    .login-right { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:64px 48px; background:var(--card); }
     .login-form-wrap { width:100%; max-width:380px; }
     .login-form-title { font-family:'Instrument Serif',serif; font-size:30px; color:var(--text); font-weight:400; margin-bottom:6px; }
     .login-form-sub { font-size:13px; color:var(--muted); margin-bottom:36px; }
@@ -71,9 +69,13 @@
     .login-divider-line { flex:1; height:1px; background:var(--border); }
     .login-divider-text { font-size:12px; color:var(--muted); white-space:nowrap; }
     .login-demo-btns { display:flex; flex-direction:column; gap:10px; }
-    .demo-btn { width:100%; padding:13px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; transition:all 0.2s; border:1.5px solid var(--border); background:#fff; color:var(--text); display:flex; align-items:center; justify-content:space-between; }
-    .demo-btn:hover { border-color:var(--green); color:var(--green); }
-    .demo-btn-arrow { font-size:16px; opacity:0.5; }
+    .demo-btn { width:100%; padding:14px 16px; border-radius:8px; cursor:pointer; font-family:inherit; transition:all 0.2s; border:1.5px solid var(--border); background:#fff; color:var(--text); display:flex; align-items:center; justify-content:space-between; }
+    .demo-btn:hover { border-color:var(--green); }
+    .demo-btn-label { display:flex; flex-direction:column; align-items:flex-start; gap:2px; }
+    .demo-btn-title { font-size:13px; font-weight:700; color:var(--text); }
+    .demo-btn-sub { font-size:11px; color:var(--muted); }
+    .demo-btn:hover .demo-btn-title { color:var(--green); }
+    .demo-btn-arrow { font-size:16px; color:var(--muted); }
 
     /* ══════════════════════════════
        PORTAL SHELL (shared)
@@ -87,12 +89,13 @@
     }
     .sidebar-logo { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.06); }
     .sidebar-logo img { height:36px; width:auto; }
+    .sidebar-logo-name { font-family:'Instrument Serif',serif; font-size:18px; color:var(--parchment); font-weight:400; margin-top:4px; }
     .sidebar-org { padding:16px 20px; border-bottom:1px solid rgba(255,255,255,0.06); }
     .sidebar-org-name { font-size:12px; font-weight:700; color:var(--parchment); margin-bottom:2px; }
     .sidebar-org-type { font-size:11px; color:rgba(242,235,217,0.35); }
     .sidebar-nav { flex:1; padding:16px 0; }
     .sidebar-section-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(242,235,217,0.25); font-weight:700; padding:14px 20px 8px; }
-    .sidebar-nav-item { display:flex; align-items:center; gap:11px; padding:10px 20px; font-size:13px; color:rgba(242,235,217,0.55); cursor:pointer; transition:all 0.15s; border-radius:0; position:relative; }
+    .sidebar-nav-item { display:flex; align-items:center; gap:11px; padding:10px 20px; font-size:13px; color:rgba(242,235,217,0.55); cursor:pointer; transition:all 0.15s; position:relative; }
     .sidebar-nav-item:hover { color:rgba(242,235,217,0.85); background:rgba(255,255,255,0.04); }
     .sidebar-nav-item.active { color:var(--mint); background:rgba(109,196,138,0.1); }
     .sidebar-nav-item.active::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--mint); border-radius:0 2px 2px 0; }
@@ -102,38 +105,34 @@
     .sidebar-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; flex-shrink:0; }
     .sidebar-user-name { font-size:13px; color:rgba(242,235,217,0.75); font-weight:600; }
     .sidebar-user-role { font-size:11px; color:rgba(242,235,217,0.3); }
-    .sidebar-back { margin-top:auto; padding:12px 20px; }
+    .sidebar-back { padding:12px 20px; border-top:1px solid rgba(255,255,255,0.06); }
     .sidebar-back-btn { font-size:12px; color:rgba(242,235,217,0.3); cursor:pointer; display:flex; align-items:center; gap:6px; transition:color 0.2s; }
     .sidebar-back-btn:hover { color:rgba(242,235,217,0.6); }
 
     .portal-body { flex:1; display:flex; flex-direction:column; min-width:0; }
-    .portal-topbar { height:60px; background:var(--card); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 32px; flex-shrink:0; position:sticky; top:0; z-index:10; }
-    .topbar-title { font-size:15px; font-weight:700; color:var(--text); }
-    .topbar-right { display:flex; align-items:center; gap:16px; }
-    .topbar-badge { font-size:11px; padding:4px 12px; border-radius:20px; font-weight:700; }
+    .portal-topbar { height:60px; background:var(--card); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 28px; flex-shrink:0; position:sticky; top:0; z-index:10; gap:16px; }
+    .topbar-title { font-size:15px; font-weight:700; color:var(--text); flex-shrink:0; }
+    .topbar-right { display:flex; align-items:center; gap:12px; }
+    .topbar-badge { font-size:11px; padding:4px 12px; border-radius:20px; font-weight:700; flex-shrink:0; }
     .badge-org { background:rgba(37,107,66,0.1); color:var(--green); }
     .badge-admin { background:rgba(196,162,69,0.12); color:#8B6914; }
-    .topbar-notif { width:32px; height:32px; border-radius:50%; background:var(--bg); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; }
-    .topbar-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; cursor:pointer; }
+    .topbar-notif { width:32px; height:32px; border-radius:50%; background:var(--bg); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+    .topbar-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; cursor:pointer; flex-shrink:0; }
+
+    /* ── VIEW SWITCHER ── */
+    .view-switcher { display:flex; gap:2px; background:var(--bg); border-radius:8px; padding:3px; border:1px solid var(--border); flex-shrink:0; }
+    .vs-btn { padding:5px 16px; border-radius:6px; border:none; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; background:transparent; color:var(--muted); transition:all 0.15s; white-space:nowrap; }
+    .vs-btn.vs-active { background:var(--card); color:var(--text); box-shadow:0 1px 3px rgba(0,0,0,0.08); }
 
     .portal-content { flex:1; padding:28px 32px; overflow-y:auto; }
 
     /* ── CARDS ── */
     .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; }
-    .card-sm { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
     .card-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; font-weight:700; color:var(--muted); margin-bottom:14px; }
-    .card-title { font-family:'Instrument Serif',serif; font-size:22px; color:var(--text); font-weight:400; }
 
     /* ── PROGRESS BAR ── */
     .progress-track { height:6px; background:rgba(18,32,18,0.07); border-radius:3px; overflow:hidden; }
-    .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--mint)); border-radius:3px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
-
-    /* ── STATUS DOTS ── */
-    .status-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; display:inline-block; }
-    .dot-green { background:var(--mint); }
-    .dot-yellow { background:var(--yellow); }
-    .dot-red { background:var(--red); }
-    .dot-gray { background:rgba(18,32,18,0.2); }
+    .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--mint)); border-radius:3px; }
 
     /* ── PILLS ── */
     .pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:0.3px; }
@@ -158,27 +157,26 @@
     .member-kpi-num { font-family:'Instrument Serif',serif; font-size:30px; color:var(--text); line-height:1; margin-bottom:4px; }
     .member-kpi-label { font-size:11px; color:var(--muted); line-height:1.4; }
 
-    .member-grid { display:grid; grid-template-columns:1fr 340px; gap:20px; }
+    .member-grid { display:grid; grid-template-columns:1fr 320px; gap:20px; }
 
     .assess-profile-cards { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
     .assess-profile-card { display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--card); border:1px solid var(--border); border-radius:12px; }
-    .assess-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-    .assess-icon-pd { background:rgba(61,43,114,0.08); }
-    .assess-icon-eq { background:rgba(37,107,66,0.08); }
-    .assess-icon-lead { background:rgba(196,162,69,0.1); }
+    .assess-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .assess-icon-drive { background:rgba(61,43,114,0.08); color:#6B4DC4; }
+    .assess-icon-eq   { background:rgba(37,107,66,0.08); color:var(--green); }
+    .assess-icon-lead { background:rgba(196,162,69,0.1);  color:var(--gold); }
     .assess-profile-info { flex:1; }
     .assess-profile-label { font-size:11px; color:var(--muted); font-weight:700; letter-spacing:0.5px; margin-bottom:3px; }
     .assess-profile-value { font-size:14px; font-weight:700; color:var(--text); }
     .assess-profile-sub { font-size:11px; color:var(--muted); margin-top:1px; }
     .assess-start-btn { font-size:12px; padding:7px 14px; border-radius:6px; border:1.5px solid var(--border); background:#fff; color:var(--green); font-weight:700; cursor:pointer; font-family:inherit; transition:all 0.2s; white-space:nowrap; }
     .assess-start-btn:hover { background:var(--green); color:#fff; border-color:var(--green); }
-    .assess-profile-prog { display:flex; flex-direction:column; gap:6px; flex:1; }
-    .assess-profile-prog-bar { height:5px; background:rgba(18,32,18,0.07); border-radius:3px; overflow:hidden; }
+    .assess-profile-prog-bar { height:5px; background:rgba(18,32,18,0.07); border-radius:3px; overflow:hidden; margin-top:6px; }
     .assess-profile-prog-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--mint)); border-radius:3px; }
 
     .course-list { display:flex; flex-direction:column; gap:10px; }
     .course-item { display:flex; align-items:center; gap:14px; padding:14px 18px; background:var(--card); border:1px solid var(--border); border-radius:12px; }
-    .course-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; background:var(--bg); }
+    .course-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
     .course-info { flex:1; min-width:0; }
     .course-name { font-size:13px; font-weight:700; color:var(--text); margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .course-prog-row { display:flex; align-items:center; gap:8px; }
@@ -196,9 +194,9 @@
     .quick-links { display:flex; flex-direction:column; gap:8px; }
     .quick-link { display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--card); border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:border-color 0.15s; }
     .quick-link:hover { border-color:var(--green); }
-    .quick-link-icon { font-size:16px; }
+    .quick-link-icon { width:18px; height:18px; color:var(--muted); flex-shrink:0; }
     .quick-link-text { font-size:13px; font-weight:600; color:var(--text); flex:1; }
-    .quick-link-arrow { font-size:14px; color:var(--muted); }
+    .quick-link-arrow { font-size:13px; color:var(--muted); }
 
     /* ══════════════════════════════
        ADMIN VIEW
@@ -217,15 +215,13 @@
 
     .admin-main-grid { display:grid; grid-template-columns:1fr 300px; gap:16px; margin-bottom:16px; }
 
-    /* bar chart */
     .bar-chart-rows { display:flex; flex-direction:column; gap:14px; }
     .bar-row { display:flex; align-items:center; gap:12px; }
-    .bar-row-label { font-size:12px; color:var(--muted); width:180px; flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .bar-row-label { font-size:12px; color:var(--muted); width:190px; flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .bar-track { flex:1; height:8px; background:rgba(18,32,18,0.06); border-radius:4px; overflow:hidden; }
     .bar-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--mint)); border-radius:4px; width:0; transition:width 1.4s cubic-bezier(0.4,0,0.2,1); }
     .bar-pct { font-size:12px; color:var(--muted); width:32px; text-align:right; flex-shrink:0; }
 
-    /* attention list */
     .attention-list { display:flex; flex-direction:column; gap:10px; }
     .attention-item { display:flex; align-items:flex-start; gap:10px; padding:12px; background:var(--bg); border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:border-color 0.15s; }
     .attention-item:hover { border-color:var(--green); }
@@ -234,7 +230,6 @@
     .attention-name { font-size:13px; font-weight:700; color:var(--text); margin-bottom:2px; }
     .attention-note { font-size:11px; color:var(--muted); line-height:1.4; }
 
-    /* demographics */
     .demo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:16px; }
     .demo-panel { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
     .demo-panel-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:14px; }
@@ -250,7 +245,6 @@
     .type-pct { font-size:12px; color:var(--muted); font-weight:700; }
     .demo-insight { margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:11px; color:var(--green); line-height:1.5; }
 
-    /* member table */
     .member-table { width:100%; border-collapse:collapse; }
     .member-table th { text-align:left; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); font-weight:700; padding:0 16px 12px; border-bottom:1px solid var(--border); }
     .member-table td { padding:13px 16px; border-bottom:1px solid var(--border); font-size:13px; color:var(--text); }
@@ -264,13 +258,16 @@
     .prog-cell-track { width:72px; height:5px; background:rgba(18,32,18,0.06); border-radius:3px; overflow:hidden; flex-shrink:0; }
     .prog-cell-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--mint)); border-radius:3px; }
 
+    /* ── DEMO TOAST ── */
+    .demo-toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px); background:var(--forest); color:var(--parchment); padding:10px 22px; border-radius:8px; font-size:13px; font-weight:600; opacity:0; transition:all 0.25s; pointer-events:none; z-index:1000; white-space:nowrap; border:1px solid rgba(109,196,138,0.15); }
+    .demo-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
     /* ── RESPONSIVE ── */
     @media(max-width:1100px) {
       .admin-kpi-row { grid-template-columns:1fr 1fr; }
       .demo-grid { grid-template-columns:1fr 1fr; }
       .admin-main-grid { grid-template-columns:1fr; }
       .member-grid { grid-template-columns:1fr; }
-      .member-kpi-row { grid-template-columns:1fr 1fr 1fr; }
     }
     @media(max-width:768px) {
       .login-left { display:none; }
@@ -279,25 +276,28 @@
       .portal-content { padding:20px 16px; }
       .admin-kpi-row { grid-template-columns:1fr 1fr; }
       .demo-grid { grid-template-columns:1fr 1fr; }
+      .topbar-badge { display:none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════ LOGIN ═══════════════ -->
+<!-- ═══════════════════════════════════════
+     LOGIN
+═══════════════════════════════════════ -->
 <div id="view-login" class="view active">
   <div class="login-left">
     <div class="login-brand">
       <img src="img/logo-horizontal.png" alt="MiRAjO Collective" onerror="this.style.display='none'">
-      <div style="font-family:'Instrument Serif',serif;font-size:24px;color:var(--parchment);font-weight:400;letter-spacing:-0.5px;">MiRAjO Hub</div>
+      <div class="login-brand-name">MiRAjO Hub</div>
     </div>
     <div class="login-hero-label">Entrepreneurship Platform</div>
     <div class="login-hero-title">Your learning.<br>Your data.<br><em>Your growth.</em></div>
-    <div class="login-hero-sub">Assessments, courses, tools, and community — built for every stage of the entrepreneurial journey.</div>
+    <div class="login-hero-sub">Assessments, courses, financial tools, and community — built for every stage of the entrepreneurial journey.</div>
     <div class="login-stats">
       <div class="login-stat">
         <div class="login-stat-num">40+</div>
-        <div class="login-stat-label">Resources live now</div>
+        <div class="login-stat-label">Resources available</div>
       </div>
       <div class="login-stat">
         <div class="login-stat-num">84%</div>
@@ -328,16 +328,22 @@
       <button class="login-btn" onclick="showView('member')">Sign In</button>
       <div class="login-divider">
         <div class="login-divider-line"></div>
-        <div class="login-divider-text">Preview demo views</div>
+        <div class="login-divider-text">Preview the demo</div>
         <div class="login-divider-line"></div>
       </div>
       <div class="login-demo-btns">
         <button class="demo-btn" onclick="showView('member')">
-          <span>👤 &nbsp; Member Portal — How members experience the Hub</span>
+          <div class="demo-btn-label">
+            <span class="demo-btn-title">Member Portal</span>
+            <span class="demo-btn-sub">How members experience the Hub</span>
+          </div>
           <span class="demo-btn-arrow">→</span>
         </button>
         <button class="demo-btn" onclick="showView('admin')">
-          <span>🏢 &nbsp; Admin Dashboard — What your organization sees</span>
+          <div class="demo-btn-label">
+            <span class="demo-btn-title">Admin Dashboard</span>
+            <span class="demo-btn-sub">What your organization sees</span>
+          </div>
           <span class="demo-btn-arrow">→</span>
         </button>
       </div>
@@ -345,13 +351,14 @@
   </div>
 </div>
 
-<!-- ═══════════════ MEMBER VIEW ═══════════════ -->
+<!-- ═══════════════════════════════════════
+     MEMBER VIEW
+═══════════════════════════════════════ -->
 <div id="view-member" class="view">
-  <!-- SIDEBAR -->
   <aside class="portal-sidebar">
     <div class="sidebar-logo">
       <img src="img/logo-horizontal.png" alt="MiRAjO" onerror="this.style.display='none'">
-      <div style="font-family:'Instrument Serif',serif;font-size:18px;color:var(--parchment);font-weight:400;margin-top:4px;">Hub</div>
+      <div class="sidebar-logo-name">Hub</div>
     </div>
     <div class="sidebar-org">
       <div class="sidebar-org-name">Suncoast Chamber of Commerce</div>
@@ -363,26 +370,26 @@
         My Dashboard
       </div>
       <div class="sidebar-section-label">Self-Discovery</div>
-      <div class="sidebar-nav-item" onclick="">
+      <div class="sidebar-nav-item" onclick="demoToast()">
         <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         My Assessments
       </div>
-      <div class="sidebar-nav-item">
+      <div class="sidebar-nav-item" onclick="demoToast()">
         <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         Course Library
       </div>
-      <div class="sidebar-nav-item">
+      <div class="sidebar-nav-item" onclick="demoToast()">
         <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         My Progress
       </div>
       <div class="sidebar-section-label">Tools</div>
-      <div class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Money Moves
+      <div class="sidebar-nav-item" onclick="demoToast()">
+        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Budget Calendar
       </div>
       <div class="sidebar-section-label">Community</div>
-      <div class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      <div class="sidebar-nav-item" onclick="demoToast()">
+        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Member Directory
       </div>
     </nav>
@@ -398,19 +405,23 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="portal-body">
     <header class="portal-topbar">
       <div class="topbar-title">My Dashboard</div>
       <div class="topbar-right">
+        <div class="view-switcher">
+          <button class="vs-btn vs-active" data-view="member" onclick="showView('member')">Member View</button>
+          <button class="vs-btn" data-view="admin" onclick="showView('admin')">Admin View</button>
+        </div>
         <span class="topbar-badge badge-org">Suncoast Chamber</span>
-        <div class="topbar-notif">🔔</div>
+        <div class="topbar-notif" onclick="demoToast()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;color:var(--muted);"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        </div>
         <div class="topbar-avatar" style="background:#5A3F9A;">PS</div>
       </div>
     </header>
     <div class="portal-content">
 
-      <!-- Welcome -->
       <div class="member-welcome">
         <div class="member-welcome-text">
           <h1>Good morning, Priya.</h1>
@@ -422,7 +433,6 @@
         </div>
       </div>
 
-      <!-- KPIs -->
       <div class="member-kpi-row">
         <div class="member-kpi">
           <div class="member-kpi-num">1</div>
@@ -438,49 +448,56 @@
         </div>
       </div>
 
-      <!-- Main grid -->
       <div class="member-grid">
         <div>
-
-          <!-- Assessment Profile -->
           <div class="card-label" style="margin-bottom:12px;">Your Entrepreneur Profile</div>
           <div class="assess-profile-cards" style="margin-bottom:20px;">
+
             <div class="assess-profile-card">
-              <div class="assess-icon assess-icon-pd">🧭</div>
+              <div class="assess-icon assess-icon-drive">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:20px;height:20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+              </div>
               <div class="assess-profile-info">
-                <div class="assess-profile-label">Drive + Relationship Type</div>
+                <div class="assess-profile-label">DrivAmor Assessment</div>
                 <div class="assess-profile-value">Amplifier</div>
                 <div class="assess-profile-sub">You energize every room — and every team you lead</div>
               </div>
               <span class="pill pill-green">Complete</span>
             </div>
+
             <div class="assess-profile-card">
-              <div class="assess-icon assess-icon-eq">🧠</div>
+              <div class="assess-icon assess-icon-eq">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:20px;height:20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+              </div>
               <div class="assess-profile-info">
-                <div class="assess-profile-label">Emotional Intelligence Score</div>
+                <div class="assess-profile-label">Emotional Intelligence</div>
                 <div class="assess-profile-value" style="color:var(--muted);font-weight:400;">Not yet assessed</div>
                 <div class="assess-profile-sub">Takes about 15 minutes</div>
               </div>
-              <button class="assess-start-btn">Start →</button>
+              <button class="assess-start-btn" onclick="demoToast()">Start →</button>
             </div>
+
             <div class="assess-profile-card">
-              <div class="assess-icon assess-icon-lead">⚡</div>
+              <div class="assess-icon assess-icon-lead">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:20px;height:20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+              </div>
               <div class="assess-profile-info">
                 <div class="assess-profile-label">Leadership Style</div>
                 <div class="assess-profile-value">In Progress</div>
-                <div class="assess-profile-prog">
-                  <div class="assess-profile-prog-bar"><div class="assess-profile-prog-fill" style="width:60%;"></div></div>
-                </div>
+                <div class="assess-profile-prog-bar"><div class="assess-profile-prog-fill" style="width:60%;"></div></div>
               </div>
               <span class="pill pill-yellow">60%</span>
             </div>
+
           </div>
 
-          <!-- Courses -->
           <div class="card-label" style="margin-bottom:12px;">Your Courses</div>
           <div class="course-list">
+
             <div class="course-item">
-              <div class="course-icon">💑</div>
+              <div class="course-icon" style="background:rgba(61,43,114,0.08);">
+                <svg fill="none" stroke="#6B4DC4" stroke-width="2" viewBox="0 0 24 24" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              </div>
               <div class="course-info">
                 <div class="course-name">Couples in Entrepreneurship</div>
                 <div class="course-prog-row">
@@ -488,10 +505,13 @@
                   <div class="course-pct">0%</div>
                 </div>
               </div>
-              <button class="course-continue-btn">Start</button>
+              <button class="course-continue-btn" onclick="demoToast()">Start</button>
             </div>
+
             <div class="course-item">
-              <div class="course-icon">📖</div>
+              <div class="course-icon" style="background:rgba(37,107,66,0.08);">
+                <svg fill="none" stroke="var(--green)" stroke-width="2" viewBox="0 0 24 24" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
               <div class="course-info">
                 <div class="course-name">The Pain Principle</div>
                 <div class="course-prog-row">
@@ -499,51 +519,48 @@
                   <div class="course-pct">40%</div>
                 </div>
               </div>
-              <button class="course-continue-btn">Continue</button>
+              <button class="course-continue-btn" onclick="demoToast()">Continue</button>
             </div>
+
             <div class="course-item">
-              <div class="course-icon">💰</div>
+              <div class="course-icon" style="background:rgba(196,162,69,0.1);">
+                <svg fill="none" stroke="var(--gold)" stroke-width="2" viewBox="0 0 24 24" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
               <div class="course-info">
-                <div class="course-name">Money Moves — Budget Tool</div>
+                <div class="course-name">Budget Calendar</div>
                 <div class="course-prog-row">
                   <div class="course-prog-track"><div class="course-prog-fill" style="width:0%;"></div></div>
                   <div class="course-pct">0%</div>
                 </div>
               </div>
-              <button class="course-continue-btn">Start</button>
+              <button class="course-continue-btn" onclick="demoToast()">Start</button>
             </div>
-          </div>
 
+          </div>
         </div>
 
-        <!-- Right column -->
         <div class="member-sidebar-col">
           <div class="next-step-card">
             <div class="next-step-label">Recommended Next Step</div>
             <div class="next-step-title">Complete your EQ Assessment</div>
             <div class="next-step-desc">You know your Drive type — now understand how you manage emotions under pressure. 15 minutes that change how you lead.</div>
-            <button class="next-step-btn">Take the Assessment →</button>
+            <button class="next-step-btn" onclick="demoToast()">Take the Assessment →</button>
           </div>
           <div class="card-label" style="margin-bottom:8px;">Quick Access</div>
           <div class="quick-links">
-            <div class="quick-link">
-              <div class="quick-link-icon">📚</div>
+            <div class="quick-link" onclick="demoToast()">
+              <svg class="quick-link-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
               <div class="quick-link-text">Browse Full Library</div>
               <div class="quick-link-arrow">→</div>
             </div>
-            <div class="quick-link">
-              <div class="quick-link-icon">👥</div>
+            <div class="quick-link" onclick="demoToast()">
+              <svg class="quick-link-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               <div class="quick-link-text">Member Directory</div>
               <div class="quick-link-arrow">→</div>
             </div>
-            <div class="quick-link">
-              <div class="quick-link-icon">📊</div>
+            <div class="quick-link" onclick="demoToast()">
+              <svg class="quick-link-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
               <div class="quick-link-text">My Progress Report</div>
-              <div class="quick-link-arrow">→</div>
-            </div>
-            <div class="quick-link" onclick="showView('admin')">
-              <div class="quick-link-icon">🏢</div>
-              <div class="quick-link-text">Switch to Admin View</div>
               <div class="quick-link-arrow">→</div>
             </div>
           </div>
@@ -554,13 +571,14 @@
   </div>
 </div>
 
-<!-- ═══════════════ ADMIN VIEW ═══════════════ -->
+<!-- ═══════════════════════════════════════
+     ADMIN VIEW
+═══════════════════════════════════════ -->
 <div id="view-admin" class="view">
-  <!-- SIDEBAR -->
   <aside class="portal-sidebar">
     <div class="sidebar-logo">
       <img src="img/logo-horizontal.png" alt="MiRAjO" onerror="this.style.display='none'">
-      <div style="font-family:'Instrument Serif',serif;font-size:18px;color:var(--parchment);font-weight:400;margin-top:4px;">Hub Admin</div>
+      <div class="sidebar-logo-name">Hub Admin</div>
     </div>
     <div class="sidebar-org">
       <div class="sidebar-org-name">Suncoast Chamber of Commerce</div>
@@ -571,15 +589,15 @@
         <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         Overview
       </div>
-      <div class="sidebar-nav-item">
+      <div class="sidebar-nav-item" onclick="demoToast()">
         <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Members
       </div>
-      <div class="sidebar-nav-item">
+      <div class="sidebar-nav-item" onclick="demoToast()">
         <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Reports &amp; Exports
       </div>
-      <div class="sidebar-nav-item">
+      <div class="sidebar-nav-item" onclick="demoToast()">
         <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Settings
       </div>
@@ -596,28 +614,29 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="portal-body">
     <header class="portal-topbar">
       <div class="topbar-title">Organization Overview</div>
       <div class="topbar-right">
+        <div class="view-switcher">
+          <button class="vs-btn" data-view="member" onclick="showView('member')">Member View</button>
+          <button class="vs-btn vs-active" data-view="admin" onclick="showView('admin')">Admin View</button>
+        </div>
         <span class="topbar-badge badge-admin">Admin</span>
-        <button class="admin-export-btn" style="padding:7px 16px;font-size:12px;">⬇ Export Report</button>
+        <button class="admin-export-btn" style="padding:7px 16px;font-size:12px;" onclick="demoToast()">Export Report</button>
         <div class="topbar-avatar" style="background:var(--gold);">MJ</div>
       </div>
     </header>
     <div class="portal-content">
 
-      <!-- Welcome -->
       <div class="admin-welcome">
         <div>
           <h1>Suncoast Chamber of Commerce</h1>
           <p>Last updated today · 124 active members this month</p>
         </div>
-        <button class="admin-export-btn">⬇ &nbsp;Export Grant Report</button>
+        <button class="admin-export-btn" onclick="demoToast()">Export Grant Report</button>
       </div>
 
-      <!-- KPIs -->
       <div class="admin-kpi-row">
         <div class="admin-kpi">
           <div class="admin-kpi-label">Active Members</div>
@@ -641,15 +660,14 @@
         </div>
       </div>
 
-      <!-- Charts + Attention -->
       <div class="admin-main-grid">
         <div class="card" style="padding:24px;">
           <div class="card-label" style="margin-bottom:20px;">Most Accessed Content — This Quarter</div>
-          <div class="bar-chart-rows" id="adminBars">
-            <div class="bar-row"><span class="bar-row-label">Money Moves Tool</span><div class="bar-track"><div class="bar-fill" data-pct="78"></div></div><span class="bar-pct">78%</span></div>
-            <div class="bar-row"><span class="bar-row-label">Drive + Relationship Assessment</span><div class="bar-track"><div class="bar-fill" data-pct="71"></div></div><span class="bar-pct">71%</span></div>
+          <div class="bar-chart-rows">
+            <div class="bar-row"><span class="bar-row-label">Budget Calendar</span><div class="bar-track"><div class="bar-fill" data-pct="78"></div></div><span class="bar-pct">78%</span></div>
+            <div class="bar-row"><span class="bar-row-label">DrivAmor Assessment</span><div class="bar-track"><div class="bar-fill" data-pct="71"></div></div><span class="bar-pct">71%</span></div>
             <div class="bar-row"><span class="bar-row-label">The Pain Principle</span><div class="bar-track"><div class="bar-fill" data-pct="64"></div></div><span class="bar-pct">64%</span></div>
-            <div class="bar-row"><span class="bar-row-label">Financial Literacy</span><div class="bar-track"><div class="bar-fill" data-pct="48"></div></div><span class="bar-pct">48%</span></div>
+            <div class="bar-row"><span class="bar-row-label">Business Credit &amp; Funding</span><div class="bar-track"><div class="bar-fill" data-pct="48"></div></div><span class="bar-pct">48%</span></div>
             <div class="bar-row"><span class="bar-row-label">Couples in Entrepreneurship</span><div class="bar-track"><div class="bar-fill" data-pct="38"></div></div><span class="bar-pct">38%</span></div>
             <div class="bar-row"><span class="bar-row-label">90 Day Side Hustle</span><div class="bar-track"><div class="bar-fill" data-pct="31"></div></div><span class="bar-pct">31%</span></div>
           </div>
@@ -657,39 +675,38 @@
         <div class="card" style="padding:24px;">
           <div class="card-label" style="margin-bottom:16px;">Needs Attention</div>
           <div class="attention-list">
-            <div class="attention-item">
+            <div class="attention-item" onclick="demoToast()">
               <div class="attention-avatar" style="background:#E8A020;">MT</div>
               <div class="attention-info">
                 <div class="attention-name">Marcus T. <span class="pill pill-red" style="margin-left:4px;">Urgent</span></div>
-                <div class="attention-note">14 days inactive · Cash flow stress · Money Moves not started</div>
+                <div class="attention-note">14 days inactive · Cash flow stress · Budget Calendar not started</div>
               </div>
             </div>
-            <div class="attention-item">
+            <div class="attention-item" onclick="demoToast()">
               <div class="attention-avatar" style="background:#5A3F9A;">PS</div>
               <div class="attention-info">
                 <div class="attention-name">Priya S. <span class="pill pill-yellow" style="margin-left:4px;">Follow Up</span></div>
                 <div class="attention-note">Leadership 60% · Stalled 3 weeks · No check-in response</div>
               </div>
             </div>
-            <div class="attention-item">
+            <div class="attention-item" onclick="demoToast()">
               <div class="attention-avatar" style="background:var(--green);">JR</div>
               <div class="attention-info">
                 <div class="attention-name">James R. <span class="pill pill-green" style="margin-left:4px;">On Track</span></div>
-                <div class="attention-note">Drive Assessment complete · Starting Foundation track</div>
+                <div class="attention-note">DrivAmor complete · Starting Business Foundation track</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Demographics -->
       <div style="margin:16px 0 8px;">
         <div class="card-label">Member Intelligence</div>
       </div>
       <div class="demo-grid">
         <div class="demo-panel">
           <div class="demo-panel-label">Member Industries</div>
-          <div class="mini-bar-rows" id="demoIndustry">
+          <div class="mini-bar-rows">
             <div class="mini-bar-row"><span class="mini-bar-label">Retail / Food &amp; Bev</span><div class="mini-track"><div class="mini-fill" data-pct="34"></div></div><span class="mini-pct">34%</span></div>
             <div class="mini-bar-row"><span class="mini-bar-label">Professional Services</span><div class="mini-track"><div class="mini-fill" data-pct="28"></div></div><span class="mini-pct">28%</span></div>
             <div class="mini-bar-row"><span class="mini-bar-label">Construction / Trades</span><div class="mini-track"><div class="mini-fill" data-pct="21"></div></div><span class="mini-pct">21%</span></div>
@@ -715,21 +732,20 @@
           </div>
         </div>
         <div class="demo-panel">
-          <div class="demo-panel-label">Top Entrepreneur Types</div>
+          <div class="demo-panel-label">Entrepreneur Types</div>
           <div class="type-list">
             <div class="type-row"><span class="type-badge" style="background:rgba(61,43,114,0.1);color:#6B4DC4;">Builder</span><span class="type-pct">31%</span></div>
             <div class="type-row"><span class="type-badge" style="background:rgba(37,107,66,0.1);color:var(--green);">Amplifier</span><span class="type-pct">24%</span></div>
             <div class="type-row"><span class="type-badge" style="background:rgba(196,162,69,0.15);color:#8B6914;">Architect</span><span class="type-pct">22%</span></div>
             <div class="type-row"><span class="type-badge" style="background:rgba(192,57,43,0.1);color:var(--red);">Anchor</span><span class="type-pct">23%</span></div>
           </div>
-          <div class="demo-insight">Builder-heavy base → prioritize growth capital, scaling content, and team-building programming.</div>
+          <div class="demo-insight">Builder-heavy base — prioritize growth capital, scaling content, and team-building programming.</div>
         </div>
       </div>
 
-      <!-- Member Table -->
       <div style="margin:20px 0 8px; display:flex; justify-content:space-between; align-items:center;">
         <div class="card-label">All Members</div>
-        <button class="admin-export-btn" style="padding:7px 14px;font-size:11px;">View All Members →</button>
+        <button class="admin-export-btn" style="padding:7px 14px;font-size:11px;" onclick="demoToast()">View All Members →</button>
       </div>
       <div class="card" style="padding:0; overflow:hidden;">
         <table class="member-table">
@@ -784,11 +800,16 @@
   </div>
 </div>
 
+<div id="demo-toast" class="demo-toast">This feature is available in the full Hub.</div>
+
 <script>
   function showView(name) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + name).classList.add('active');
     window.scrollTo(0, 0);
+    document.querySelectorAll('.vs-btn').forEach(btn => {
+      btn.classList.toggle('vs-active', btn.dataset.view === name);
+    });
     if (name === 'admin') animateBars();
   }
 
@@ -800,7 +821,13 @@
     }, 200);
   }
 
-  // Animate on load if starting on admin
+  function demoToast() {
+    const t = document.getElementById('demo-toast');
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
   if (document.getElementById('view-admin').classList.contains('active')) animateBars();
 </script>
 </body>
