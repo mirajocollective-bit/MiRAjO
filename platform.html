@@ -360,6 +360,27 @@
     .lib-bridge-arrow { font-size: 20px; color: var(--mint); margin: 10px 0; opacity: 0.6; }
     .lib-bridge-ex p { font-size: 13px; color: rgba(242,235,217,0.5); line-height: 1.65; }
 
+    /* ── COMMUNITY ── */
+    .community { background: var(--forest); padding: 96px 0; }
+    .community-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .community-head { margin-bottom: 48px; }
+    .community-head .eyebrow { color: var(--mint); margin-bottom: 18px; }
+    .community-head h2 { font-family: 'Instrument Serif', serif; font-size: clamp(30px, 3.5vw, 48px); color: var(--parchment); font-weight: 400; line-height: 1.1; margin-bottom: 14px; }
+    .community-head p { font-size: 16px; color: rgba(242,235,217,0.55); line-height: 1.8; max-width: 680px; }
+    .community-head p em { color: var(--mint); font-style: italic; }
+    .community-claim { background: rgba(255,255,255,0.04); border: 1px solid rgba(109,196,138,0.12); border-radius: 14px; padding: 28px 36px; margin-bottom: 48px; display: flex; align-items: center; gap: 32px; }
+    .community-claim-text { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--parchment); font-style: italic; flex: 1; line-height: 1.4; }
+    .community-claim-stat { font-size: 13px; color: rgba(242,235,217,0.4); line-height: 1.7; flex: 1; border-left: 1px solid rgba(255,255,255,0.08); padding-left: 32px; }
+    .community-features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .community-feature { background: rgba(255,255,255,0.04); border: 1px solid rgba(242,235,217,0.07); border-radius: 14px; padding: 28px 24px; display: flex; flex-direction: column; }
+    .community-feature-icon { font-size: 24px; margin-bottom: 14px; }
+    .community-feature h4 { font-size: 15px; font-weight: 700; color: var(--parchment); margin-bottom: 10px; }
+    .community-feature p { font-size: 13px; color: rgba(242,235,217,0.45); line-height: 1.7; margin-bottom: 16px; flex: 1; }
+    .community-org-note { background: rgba(109,196,138,0.06); border: 1px solid rgba(109,196,138,0.15); border-radius: 14px; padding: 28px 36px; display: flex; gap: 20px; align-items: flex-start; }
+    .community-org-icon { font-size: 24px; flex-shrink: 0; }
+    .community-org-note h4 { font-size: 15px; font-weight: 700; color: var(--parchment); margin-bottom: 8px; }
+    .community-org-note p { font-size: 14px; color: rgba(242,235,217,0.5); line-height: 1.75; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
       .hero-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -381,6 +402,9 @@
       .pricing-individual { flex-direction: column; }
       .pricing-individual-price { text-align: left; }
       .cta-inner { grid-template-columns: 1fr; gap: 48px; }
+      .community-features { grid-template-columns: 1fr 1fr; }
+      .community-claim { flex-direction: column; gap: 16px; }
+      .community-claim-stat { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; }
       .site-footer { padding: 32px 40px; }
     }
     @media (max-width: 700px) {
@@ -391,6 +415,8 @@
       .intel-head, .intel-dash, .intel-uses, .acct-inner, .revenue-inner,
       .tracks-inner, .proof-inner, .pricing-inner, .cta-inner { padding-left: 20px; padding-right: 20px; }
       .library-split, .lib-bridge { padding-left: 20px; padding-right: 20px; }
+      .community-inner { padding-left: 20px; padding-right: 20px; }
+      .community-features { grid-template-columns: 1fr; }
       .hero-stat-row { grid-template-columns: 1fr 1fr; }
       .dash-stats { grid-template-columns: 1fr 1fr; }
       .intel-uses { grid-template-columns: 1fr; }
@@ -441,7 +467,7 @@
       <h1 class="hero-title">They came to your organization for help.<br><em>Now you have something<br>that actually helps.</em></h1>
       <p class="hero-sub">Entrepreneurs don't just need a business plan. They need to understand themselves, manage their money, lead through chaos, protect their relationships, and keep going when everything feels impossible — all at the same time. The MiRAjO Hub was built for that reality. And it gives your organization the data, the accountability tools, and the member outcomes to prove your programming is working.</p>
       <div class="hero-tags">
-        <div class="hero-tag"><div class="hero-tag-dot"></div><span><strong>Technical + Emotional tracks</strong> — the only platform that addresses both sides of the entrepreneurial experience</span></div>
+        <div class="hero-tag"><div class="hero-tag-dot"></div><span><strong>Personal + Business Development tracks</strong> — the only platform built for both sides of the entrepreneurial experience</span></div>
         <div class="hero-tag"><div class="hero-tag-dot"></div><span><strong>Real outcome data</strong> — completion rates, engagement scores, member progress, grant-ready reports</span></div>
         <div class="hero-tag"><div class="hero-tag-dot"></div><span><strong>Staff accountability tools</strong> — your team can see exactly where every member is and reach out when it matters</span></div>
       </div>
@@ -463,7 +489,7 @@
         </div>
         <div class="hero-stat-sm">
           <div class="hero-stat-sm-num">7</div>
-          <div class="hero-stat-sm-label">Content pillars — technical &amp; emotional</div>
+          <div class="hero-stat-sm-label">Content pillars — Personal + Business Development</div>
         </div>
         <div class="hero-stat-sm">
           <div class="hero-stat-sm-num">25+</div>
@@ -501,7 +527,7 @@
       <div class="gap-col gap-col-new">
         <div class="gap-col-title">What the MiRAjO Hub Delivers</div>
         <div class="gap-items">
-          <div class="gap-item"><div class="gap-icon">✓</div><div class="gap-item-text"><strong>Technical AND emotional content tracks</strong> — the full reality of building a business in one place</div></div>
+          <div class="gap-item"><div class="gap-icon">✓</div><div class="gap-item-text"><strong>Personal development AND business development</strong> — the full reality of building a business in one place</div></div>
           <div class="gap-item"><div class="gap-icon">✓</div><div class="gap-item-text"><strong>A living platform</strong> members return to every week — not a workshop that ends and gets forgotten</div></div>
           <div class="gap-item"><div class="gap-icon">✓</div><div class="gap-item-text"><strong>Real engagement data</strong> — what content members use, how long, what they complete, what resonates</div></div>
           <div class="gap-item"><div class="gap-icon">✓</div><div class="gap-item-text"><strong>Staff accountability tools</strong> — see every member's progress and reach out before they disengage</div></div>
@@ -571,6 +597,13 @@
           <div class="lib-meta-v2"><span class="lib-pillar">Life</span><span class="status-soon">Coming</span></div>
         </div>
 
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"Nobody around me actually understands what I'm going through."</div>
+          <div class="lib-desc-v2">Entrepreneurial loneliness is real — and almost completely unaddressed anywhere else. This is where you find people who get it. MiRAjO Collective was built on one belief: finding your people changes everything.</div>
+          <div class="lib-name-v2">Community + Belonging — Member Directory &amp; Connections</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Foundation</span><span class="status-soon">Coming</span></div>
+        </div>
+
       </div>
     </div>
 
@@ -623,6 +656,13 @@
           <div class="lib-meta-v2"><span class="lib-pillar">Life</span><span class="status-building">Building</span></div>
         </div>
 
+        <div class="lib-card-v2">
+          <div class="lib-pain-v2">"I don't know how to build business credit or get approved for a loan."</div>
+          <div class="lib-desc-v2">How to build business credit from scratch — DUNS numbers, net-30 vendors, business credit bureaus, SBA 7(a) loans, microloans, CDFI lending, and access to capital. Who qualifies, how to prepare your business, and how to walk into any lender conversation ready.</div>
+          <div class="lib-name-v2">Business Credit + Access to Capital</div>
+          <div class="lib-meta-v2"><span class="lib-pillar">Money</span><span class="status-soon">Coming</span></div>
+        </div>
+
       </div>
     </div>
 
@@ -666,134 +706,6 @@
 
 </section>
 
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"I don't know if I'm actually cut out for this."</div>
-      <div class="lib-title">The Pain Principle — 5-Stage Transition Framework</div>
-      <div class="lib-meta"><span class="lib-pillar">Foundation</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"My money situation keeps me up at night."</div>
-      <div class="lib-title">Money Moves — Personal + Business Budget Tool</div>
-      <div class="lib-meta"><span class="lib-pillar">Money</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"I lead differently than everyone around me and I don't understand why."</div>
-      <div class="lib-title">DrivAmor — Drive + Amor Assessment (12 Drive types × 5 Amor types)</div>
-      <div class="lib-meta"><span class="lib-pillar">Know Yourself</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"I have a business idea but I have no idea where to actually start."</div>
-      <div class="lib-title">Starting a Business — Complete Step-by-Step Checklist</div>
-      <div class="lib-meta"><span class="lib-pillar">Build</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"My relationship is suffering because of what I'm building."</div>
-      <div class="lib-title">Couples in Entrepreneurship — Business + Partnership Course</div>
-      <div class="lib-meta"><span class="lib-pillar">Relationships</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"I want to launch something on the side but I don't know how to start with no time."</div>
-      <div class="lib-title">90 Day Side Hustle — Structured Launch Program</div>
-      <div class="lib-meta"><span class="lib-pillar">Build</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"I snap at my team and I can't seem to control my reactions under pressure."</div>
-      <div class="lib-title">Emotional Intelligence Assessment — 10-Question Scored Evaluation</div>
-      <div class="lib-meta"><span class="lib-pillar">Know Yourself</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"I need to understand my numbers but I'm not a finance person."</div>
-      <div class="lib-title">Financial Literacy for Entrepreneurs — Full Course</div>
-      <div class="lib-meta"><span class="lib-pillar">Money</span><span class="status-soon">Coming</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"I don't feel like a real leader. I'm figuring this out as I go."</div>
-      <div class="lib-title">LeadLoud — 11 Commandments of the Next-Gen Leader</div>
-      <div class="lib-meta"><span class="lib-pillar">Lead</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"I'm not sure what business structure is right for me legally."</div>
-      <div class="lib-title">Business Structure + Legal Foundations Guide</div>
-      <div class="lib-meta"><span class="lib-pillar">Build</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"I'm exhausted. I can't keep running at this pace."</div>
-      <div class="lib-title">The Rested Brain — Recovery and Sustainable Energy</div>
-      <div class="lib-meta"><span class="lib-pillar">Life</span><span class="status-soon">Coming</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"My passion isn't paying the bills and I'm starting to panic."</div>
-      <div class="lib-title">My Passion Doesn't Pay — and What To Do About It</div>
-      <div class="lib-meta"><span class="lib-pillar">Money</span><span class="status-soon">Coming</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"I don't understand AI and I'm afraid it's going to leave me behind."</div>
-      <div class="lib-title">Technology + AI for Entrepreneurs — Practical Navigation</div>
-      <div class="lib-meta"><span class="lib-pillar">Life</span><span class="status-building">Building</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"I know how I show up — I just don't know why I lead the way I do."</div>
-      <div class="lib-title">Leadership Style Assessment — 12-Scenario Self-Evaluation</div>
-      <div class="lib-meta"><span class="lib-pillar">Know Yourself</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"My faith is the only thing holding me together right now."</div>
-      <div class="lib-title">My Faith Matters — Purpose, Entrepreneurship &amp; Belief</div>
-      <div class="lib-meta"><span class="lib-pillar">Life</span><span class="status-soon">Coming</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"I need my marriage and my business to both survive this season."</div>
-      <div class="lib-title">25 Days &amp; 25 Nights — Couples Leadership &amp; Communication</div>
-      <div class="lib-meta"><span class="lib-pillar">Relationships</span><span class="status-live">Live</span></div>
-    </div>
-
-    <div class="lib-card" data-track="technical">
-      <div class="lib-track-label lib-track-tech">Technical Track</div>
-      <div class="lib-pain">"I need to market this business but I don't know where to start."</div>
-      <div class="lib-title">Market Strategy + Customer Acquisition Foundations</div>
-      <div class="lib-meta"><span class="lib-pillar">Build</span><span class="status-soon">Coming</span></div>
-    </div>
-
-    <div class="lib-card" data-track="emotional">
-      <div class="lib-track-label lib-track-emo">Emotional Track</div>
-      <div class="lib-pain">"I was successful before. Starting over feels like going backwards."</div>
-      <div class="lib-title">Bracing for Impact — Starting Over Without Losing Yourself</div>
-      <div class="lib-meta"><span class="lib-pillar">Foundation</span><span class="status-soon">Coming</span></div>
-    </div>
-
-  </div>
-</section>
 
 <!-- DATA INTELLIGENCE -->
 <section class="intel" id="data">
@@ -1014,6 +926,54 @@
   </div>
 </section>
 
+<!-- COMMUNITY -->
+<section class="community">
+  <div class="community-inner">
+    <div class="community-head">
+      <div class="eyebrow">Community + Belonging</div>
+      <h2>84% of entrepreneurs report imposter syndrome.<br>No mainstream platform addresses it.</h2>
+      <p>Entrepreneurial loneliness is one of the most pervasive, least-addressed problems in business. There are courses for cash flow and courses for marketing — but nothing for the feeling that <em>no one around you actually gets what you're going through.</em> MiRAjO was built on the belief that finding your people changes everything. That's why the Hub has a community layer built in — not bolted on as an afterthought.</p>
+    </div>
+    <div class="community-claim">
+      <div class="community-claim-text">"Nobody around me actually understands what I'm going through."</div>
+      <div class="community-claim-stat">The most common unsaid sentence in every entrepreneurship program. It's the reason people stop showing up — and the reason MiRAjO was called a <em>Collective</em> from day one. Your members don't just need content. They need each other.</div>
+    </div>
+    <div class="community-features">
+      <div class="community-feature">
+        <div class="community-feature-icon">👥</div>
+        <h4>Member Directory</h4>
+        <p>Searchable by industry, business stage, location, and interest. Members find each other — and your organization becomes the place where real connections happen, not just courses.</p>
+        <div class="status-soon">Coming</div>
+      </div>
+      <div class="community-feature">
+        <div class="community-feature-icon">⭐</div>
+        <h4>Course Ratings + Reviews</h4>
+        <p>Members rate and review content — creating a feedback loop that shapes what gets built next. Community shapes the library, not just the curriculum team.</p>
+        <div class="status-soon">Coming</div>
+      </div>
+      <div class="community-feature">
+        <div class="community-feature-icon">💬</div>
+        <h4>Discussion + Comments</h4>
+        <p>Course boards and article comments let members process content together. The learning doesn't end when the lesson does — it continues in the conversation that follows it.</p>
+        <div class="status-soon">Coming</div>
+      </div>
+      <div class="community-feature">
+        <div class="community-feature-icon">🏷️</div>
+        <h4>White-Label for Your Organization</h4>
+        <p>The Hub lives inside your website — under your brand, your name, your colors. Members never feel sent elsewhere. It's your community. Powered by MiRAjO.</p>
+        <div class="status-soon">Coming</div>
+      </div>
+    </div>
+    <div class="community-org-note">
+      <div class="community-org-icon">📊</div>
+      <div>
+        <h4>Community activity surfaces in your admin dashboard</h4>
+        <p>See which members are connecting, what discussions are happening, where the energy is — not just course completions. Engagement across the full community is visible to your staff, so you know which members are plugged in and which ones are still on the outside looking in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- REVENUE -->
 <section class="revenue">
   <div class="revenue-inner">
@@ -1200,7 +1160,7 @@
       <h2 class="cta-heading">Show your members what it looks like when an organization <em>actually</em> shows up for them.</h2>
       <p class="cta-sub">We'll walk you through the full Hub in 30 minutes — the content library, the admin dashboard, the accountability tools, and how onboarding works. No pressure. Just a real look at what your members would have access to.</p>
       <ul class="cta-checklist">
-        <li>Full content library walkthrough — both technical and emotional tracks</li>
+        <li>Full content library walkthrough — Personal Development and Business Development tracks</li>
         <li>Live admin dashboard demo with real member data examples</li>
         <li>Staff accountability tools and member monitoring</li>
         <li>Outcome data and reporting — what you can show your board and funders</li>
