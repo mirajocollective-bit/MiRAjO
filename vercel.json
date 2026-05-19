@@ -68,6 +68,7 @@
     { "source": "/speaking",                     "destination": "/speaking.html" },
     { "source": "/platform",                     "destination": "/platform.html" },
     { "source": "/hub-demo",                     "destination": "/hub-demo.html" },
+    { "source": "/hub/course/:slug",             "destination": "/programs/hub-course.html" },
     { "source": "/rfp-tracker",                  "destination": "/rfp-tracker.html" },
     { "source": "/capability-statement",         "destination": "/capability-statement.html" },
     { "source": "/admin",                        "destination": "/admin/dashboard.html" },
