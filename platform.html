@@ -135,6 +135,21 @@
     .flag-red { background: rgba(192,57,43,0.2); color: #E57368; }
     .flag-yellow { background: rgba(232,160,32,0.2); color: #E8A020; }
     .flag-green { background: rgba(109,196,138,0.15); color: var(--mint); }
+    /* ── DASHBOARD DEMOGRAPHICS ── */
+    .dash-demo-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .dash-demo-panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+    .dash-mini-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .dash-mini-row { display: flex; align-items: center; gap: 8px; }
+    .dash-mini-label { font-size: 11px; color: rgba(242,235,217,0.45); width: 120px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dash-mini-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .dash-mini-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--mint)); border-radius: 3px; width: 0; transition: width 1.4s cubic-bezier(0.4,0,0.2,1); }
+    .dash-mini-pct { font-size: 11px; color: rgba(242,235,217,0.3); width: 28px; text-align: right; flex-shrink: 0; }
+    .dash-type-list { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    .dash-type-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .dash-type-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; letter-spacing: 0.3px; }
+    .dash-type-pct { font-size: 12px; color: rgba(242,235,217,0.4); font-weight: 700; flex-shrink: 0; }
+    .dash-demo-insight { margin-top: 14px; font-size: 11px; color: rgba(109,196,138,0.6); line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; }
+
     .intel-uses { max-width: 1200px; margin: 36px auto 0; padding: 0 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .intel-use { background: var(--soft); border: 1px solid var(--border); border-radius: 14px; padding: 24px 20px; }
     .intel-use-icon { font-size: 22px; margin-bottom: 12px; }
@@ -309,6 +324,7 @@
       .lib-bridge-examples { grid-template-columns: 1fr; }
       .dash-stats { grid-template-columns: 1fr 1fr; }
       .dash-bottom { grid-template-columns: 1fr; }
+      .dash-demo-row { grid-template-columns: 1fr 1fr; }
       .intel-uses { grid-template-columns: 1fr 1fr; }
       .acct-split { grid-template-columns: 1fr; }
       .pricing-grid { grid-template-columns: 1fr; }
@@ -331,6 +347,7 @@
       .hero-stat-row { grid-template-columns: 1fr 1fr; }
       .assess-grid { grid-template-columns: 1fr 1fr; }
       .dash-stats { grid-template-columns: 1fr 1fr; }
+      .dash-demo-row { grid-template-columns: 1fr 1fr; }
       .intel-uses { grid-template-columns: 1fr; }
       .profile-body { grid-template-columns: 1fr; }
       .profile-actions { flex-direction: column; }
@@ -465,8 +482,8 @@
 <section class="intel" id="data">
   <div class="intel-head">
     <div class="eyebrow">Organization Intelligence</div>
-    <h2>Your admin dashboard. Real data.</h2>
-    <p>See who's engaged, who needs support, and what outcomes you can prove — then export the reports your board and funders need.</p>
+    <h2>Your admin dashboard. Real data — about your content <em>and</em> your members.</h2>
+    <p>See who's engaged, who needs support, who your members actually are — age, industry, business stage, entrepreneur type — and export the reports your board and funders require.</p>
   </div>
   <div class="intel-dash">
     <div class="dash-wrap" id="dashWrap">
@@ -565,6 +582,46 @@
             </div>
           </div>
         </div>
+        <!-- MEMBER DEMOGRAPHICS ROW -->
+        <div class="dash-demo-row">
+          <div class="dash-demo-panel">
+            <div class="dash-chart-title">Member Industries</div>
+            <div class="dash-mini-bars">
+              <div class="dash-mini-row"><span class="dash-mini-label">Retail / Food &amp; Bev</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="34"></div></div><span class="dash-mini-pct">34%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">Professional Services</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="28"></div></div><span class="dash-mini-pct">28%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">Construction / Trades</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="21"></div></div><span class="dash-mini-pct">21%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">Health / Wellness</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="17"></div></div><span class="dash-mini-pct">17%</span></div>
+            </div>
+          </div>
+          <div class="dash-demo-panel">
+            <div class="dash-chart-title">Age Range</div>
+            <div class="dash-mini-bars">
+              <div class="dash-mini-row"><span class="dash-mini-label">25–34</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="38"></div></div><span class="dash-mini-pct">38%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">35–44</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="31"></div></div><span class="dash-mini-pct">31%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">45–54</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="19"></div></div><span class="dash-mini-pct">19%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">55+</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="12"></div></div><span class="dash-mini-pct">12%</span></div>
+            </div>
+          </div>
+          <div class="dash-demo-panel">
+            <div class="dash-chart-title">Business Stage</div>
+            <div class="dash-mini-bars">
+              <div class="dash-mini-row"><span class="dash-mini-label">Idea / Pre-launch</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="29"></div></div><span class="dash-mini-pct">29%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">Early (0–2 yrs)</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="41"></div></div><span class="dash-mini-pct">41%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">Established (3–5 yrs)</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="22"></div></div><span class="dash-mini-pct">22%</span></div>
+              <div class="dash-mini-row"><span class="dash-mini-label">Scaling (5+ yrs)</span><div class="dash-mini-track"><div class="dash-mini-fill" data-pct="8"></div></div><span class="dash-mini-pct">8%</span></div>
+            </div>
+          </div>
+          <div class="dash-demo-panel">
+            <div class="dash-chart-title">Top Entrepreneur Types</div>
+            <div class="dash-type-list">
+              <div class="dash-type-row"><span class="dash-type-badge" style="background:rgba(61,43,114,0.4);color:#B8A0E8;">Builder</span><span class="dash-type-pct">31%</span></div>
+              <div class="dash-type-row"><span class="dash-type-badge" style="background:rgba(37,107,66,0.3);color:var(--mint);">Amplifier</span><span class="dash-type-pct">24%</span></div>
+              <div class="dash-type-row"><span class="dash-type-badge" style="background:rgba(196,162,69,0.25);color:#D4B85A;">Architect</span><span class="dash-type-pct">22%</span></div>
+              <div class="dash-type-row"><span class="dash-type-badge" style="background:rgba(192,57,43,0.2);color:#E57368;">Anchor</span><span class="dash-type-pct">23%</span></div>
+            </div>
+            <div class="dash-demo-insight">Builder-heavy base → respond to growth capital, scaling content, and team-building programming.</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -572,22 +629,22 @@
     <div class="intel-use">
       <div class="intel-use-icon">📊</div>
       <h4>Grant Reporting</h4>
-      <p>Export completion and outcome data that meets SBA, state, and federal requirements — in one click.</p>
+      <p>Member demographics — age, industry, business stage, gender, race — captured at onboarding and exportable for SBA, state, and federal reporting requirements.</p>
     </div>
     <div class="intel-use">
       <div class="intel-use-icon">📋</div>
       <h4>Board Presentations</h4>
-      <p>Show your board exactly what members are engaging with, how often, and what outcomes they're achieving.</p>
+      <p>Who your members are, what they're working on, how they're progressing — real data your board can see, not anecdotes.</p>
     </div>
     <div class="intel-use">
       <div class="intel-use-icon">🎯</div>
       <h4>Sponsor Targeting</h4>
-      <p>Know what your members are focused on. Match sponsors to the right audience and charge accordingly.</p>
+      <p>Know the industry breakdown, age range, and entrepreneur type of your member base — and price your sponsorships accordingly.</p>
     </div>
     <div class="intel-use">
-      <div class="intel-use-icon">📈</div>
-      <h4>Membership Growth</h4>
-      <p>See which content attracts new members and which gaps you can fill — with data, not guesswork.</p>
+      <div class="intel-use-icon">🔍</div>
+      <h4>Member Intelligence</h4>
+      <p>See which members are loan-ready, which are pre-revenue, which are scaling — and direct the right resource to the right person at the right time.</p>
     </div>
   </div>
 </section>
@@ -995,13 +1052,13 @@
   const dashObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.dash-bar-fill').forEach(bar => {
+        entry.target.querySelectorAll('.dash-bar-fill, .dash-mini-fill').forEach(bar => {
           bar.style.width = bar.dataset.pct + '%';
         });
         dashObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0.2 });
   const dashWrap = document.getElementById('dashWrap');
   if (dashWrap) dashObserver.observe(dashWrap);
 
