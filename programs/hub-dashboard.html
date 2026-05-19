@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub — MiRAjO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest:   #122012;
+      --green:    #256B42;
+      --mint:     #6DC48A;
+      --gold:     #C4A245;
+      --parchment:#F2EBD9;
+      --bg:       #F5F7F5;
+      --mist:     #EDF3EF;
+      --card:     #ffffff;
+      --border:   rgba(18,32,18,0.08);
+      --text:     #122012;
+      --muted:    #5A6E58;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--bg);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .top-nav {
+      background: #fff;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo img { height: 32px; display:block; }
+    .nav-right { display:flex; align-items:center; gap:20px; }
+    .nav-name { font-size:13px; font-weight:600; color:var(--muted); }
+    .nav-signout {
+      font-size:13px; font-weight:600; color:var(--green);
+      background:none; border:none; cursor:pointer; padding:0;
+    }
+    .nav-signout:hover { text-decoration:underline; }
+    .nav-avatar {
+      width:34px; height:34px; border-radius:50%;
+      background:var(--green); color:#fff;
+      font-size:12px; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+    }
+
+    /* ── PAGE ── */
+    .page { padding-top:62px; }
+
+    /* ── HERO BANNER ── */
+    .hub-hero {
+      background: linear-gradient(135deg, #EDF5F0 0%, #F5FAF7 60%, #EEF6EE 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 32px 40px;
+    }
+    .hub-hero-inner { max-width: 1080px; margin: 0 auto; }
+    .hub-greeting {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+    .hub-subline {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .hub-body { max-width: 1080px; margin: 0 auto; padding: 40px 32px 80px; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--forest);
+    }
+    .section-count {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── CONTINUE CARD (in-progress) ── */
+    .continue-strip {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .continue-strip:hover { box-shadow: 0 6px 24px rgba(18,32,18,0.08); transform: translateY(-1px); }
+    .continue-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: var(--mist);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 24px;
+    }
+    .continue-info { flex: 1; min-width: 0; }
+    .continue-label { font-size: 11px; font-weight: 700; color: var(--green); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:4px; }
+    .continue-title { font-size: 17px; font-weight: 700; color: var(--forest); margin-bottom: 10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .continue-bar-wrap { display:flex; align-items:center; gap:10px; }
+    .continue-bar { flex:1; height:5px; background:rgba(18,32,18,0.08); border-radius:3px; overflow:hidden; }
+    .continue-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--mint)); border-radius:3px; transition:width 0.5s; }
+    .continue-pct { font-size:12px; font-weight:600; color:var(--muted); white-space:nowrap; }
+    .continue-cta {
+      background: var(--green);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── COURSE GRID ── */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .course-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .course-card:hover { box-shadow: 0 6px 24px rgba(18,32,18,0.08); transform: translateY(-1px); }
+    .course-card.locked { opacity: 0.6; pointer-events: none; }
+    .card-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--mist);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .card-badge {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 10px; font-weight: 700; letter-spacing:0.06em; text-transform:uppercase;
+      padding: 3px 8px; border-radius: 20px;
+    }
+    .badge-enrolled { background: #EDF5F0; color: var(--green); }
+    .badge-complete { background: var(--green); color: #fff; }
+    .badge-available { background: var(--mist); color: var(--muted); }
+    .badge-coming { background: #f3f3f3; color: #aaa; }
+    .card-title { font-size: 16px; font-weight: 700; color: var(--forest); margin-bottom: 6px; line-height:1.3; }
+    .card-desc { font-size: 13px; color: var(--muted); line-height: 1.5; flex:1; margin-bottom:16px; }
+    .card-meta { display:flex; align-items:center; justify-content:space-between; }
+    .card-lessons { font-size: 12px; color: var(--muted); font-weight:500; }
+    .card-progress-wrap { display:flex; align-items:center; gap:8px; }
+    .card-bar { width:80px; height:4px; background:rgba(18,32,18,0.08); border-radius:2px; overflow:hidden; }
+    .card-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--mint)); border-radius:2px; }
+    .card-pct { font-size:11px; font-weight:600; color:var(--muted); }
+    .card-start {
+      font-size: 12px; font-weight: 700; color: var(--green);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      background: #fff;
+      border: 1px dashed rgba(18,32,18,0.15);
+      border-radius: 14px;
+      padding: 48px 32px;
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .empty-state p { font-size: 15px; line-height:1.6; }
+
+    /* ── LOADING ── */
+    .loading-state { text-align:center; padding:80px 0; color:var(--muted); font-size:14px; }
+    .spinner {
+      width:32px; height:32px; border:3px solid rgba(18,32,18,0.1);
+      border-top-color:var(--green); border-radius:50%;
+      animation:spin 0.8s linear infinite; margin:0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 640px) {
+      .top-nav { padding: 0 16px; }
+      .hub-hero { padding: 32px 16px 28px; }
+      .hub-body { padding: 24px 16px 60px; }
+      .hub-greeting { font-size: 26px; }
+      .continue-strip { flex-wrap:wrap; }
+      .continue-cta { width:100%; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-logo">
+    <a href="/"><img src="/img/logo-horizontal.png" alt="MiRAjO"></a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-name" id="navName"></span>
+    <div class="nav-avatar" id="navAvatar"></div>
+    <button class="nav-signout" id="signoutBtn">Sign out</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="hub-hero">
+    <div class="hub-hero-inner">
+      <div class="hub-greeting" id="heroGreeting">Welcome back.</div>
+      <div class="hub-subline">Your courses, resources, and tools — all in one place.</div>
+    </div>
+  </div>
+
+  <div class="hub-body" id="hubBody">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      Loading your Hub...
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const { createClient } = supabase;
+const sb = createClient(
+  'https://bqfzklmujyxkfmfbcnrb.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxZnprbG11anl4a2ZtZmJjbnJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM2MTM3MTMsImV4cCI6MjA1OTE4OTcxM30.FvLwjHMlBMBWYrLzpaqB4MEVoSMICTl6oF4VpQB17Bs'
+);
+
+// All Hub courses — drives the library display
+// Add new courses here as they're loaded into Supabase
+const COURSE_CATALOG = [
+  {
+    slug: 'budget-calendar',
+    title: 'Budget Calendar: Know Your Numbers',
+    description: 'Build a budget that works with your real life — income, expenses, and a calendar that keeps you on track every month.',
+    icon: '📅',
+    lessons: 24,
+    available: true
+  },
+  {
+    slug: 'starting-a-business',
+    title: 'Starting a Business: From Idea to Open for Business',
+    description: 'Everything you need to move from "I have an idea" to a real, legal, operating business — without the overwhelm.',
+    icon: '🏢',
+    lessons: 24,
+    available: false,
+    comingSoon: true
+  },
+  {
+    slug: 'marketing-for-entrepreneurs',
+    title: 'Marketing for Entrepreneurs',
+    description: 'How to get your business in front of the right people without spending a fortune or faking who you are.',
+    icon: '📣',
+    lessons: 0,
+    available: false,
+    comingSoon: true
+  },
+  {
+    slug: 'branding-your-business',
+    title: 'Branding Your Business',
+    description: 'Your brand is more than a logo. Build a brand identity that attracts the right customers and reflects who you really are.',
+    icon: '✦',
+    lessons: 0,
+    available: false,
+    comingSoon: true
+  },
+  {
+    slug: 'business-credit',
+    title: 'Business Credit & Access to Capital',
+    description: 'Build business credit from scratch, understand your funding options, and access the capital your business needs to grow.',
+    icon: '💳',
+    lessons: 0,
+    available: false,
+    comingSoon: true
+  },
+  {
+    slug: 'ai-tools-for-entrepreneurs',
+    title: 'AI Tools for Entrepreneurs',
+    description: 'The practical guide to using AI in your business — what actually works, what to skip, and how to save hours every week.',
+    icon: '⚡',
+    lessons: 0,
+    available: false,
+    comingSoon: true
+  }
+];
+
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = '/programs/login'; return; }
+
+  const user = session.user;
+  const name = user.user_metadata?.full_name || user.email.split('@')[0];
+  const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+
+  document.getElementById('heroGreeting').textContent = `${greeting}, ${name.split(' ')[0]}.`;
+  document.getElementById('navName').textContent = name;
+  document.getElementById('navAvatar').textContent = initials;
+
+  document.getElementById('signoutBtn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+    window.location.href = '/programs/login';
+  });
+
+  await loadDashboard(user.id);
+}
+
+async function loadDashboard(userId) {
+  // Load all enrollments for this user
+  const { data: enrollments } = await sb
+    .from('enrollments')
+    .select('course_id, enrolled_at, courses(id, slug, title)')
+    .eq('user_id', userId);
+
+  // Load progress counts per course
+  const { data: progressRows } = await sb
+    .from('progress')
+    .select('lesson_id, completed, lessons(module_id, modules(course_id))')
+    .eq('user_id', userId)
+    .eq('completed', true);
+
+  // Build a map: course_id → completed lesson count
+  const completedByCourse = {};
+  (progressRows || []).forEach(p => {
+    const cid = p.lessons?.modules?.course_id;
+    if (cid) completedByCourse[cid] = (completedByCourse[cid] || 0) + 1;
+  });
+
+  // Build enrollment map: slug → enrollment data
+  const enrolledSlugs = {};
+  (enrollments || []).forEach(e => {
+    if (e.courses) enrolledSlugs[e.courses.slug] = { courseId: e.courses.id };
+  });
+
+  // Load lesson counts per enrolled course from Supabase
+  const enrolledCourseSlugs = Object.keys(enrolledSlugs);
+  let lessonCountByCourseId = {};
+  if (enrolledCourseSlugs.length > 0) {
+    const { data: lessons } = await sb
+      .from('lessons')
+      .select('id, modules(course_id)')
+      .in('modules.course_id', Object.values(enrolledSlugs).map(e => e.courseId));
+    (lessons || []).forEach(l => {
+      const cid = l.modules?.course_id;
+      if (cid) lessonCountByCourseId[cid] = (lessonCountByCourseId[cid] || 0) + 1;
+    });
+  }
+
+  renderDashboard(enrolledSlugs, completedByCourse, lessonCountByCourseId);
+}
+
+function renderDashboard(enrolledSlugs, completedByCourse, lessonCountByCourseId) {
+  const inProgress = [];
+  const completed  = [];
+  const available  = [];
+  const coming     = [];
+
+  COURSE_CATALOG.forEach(course => {
+    const enrolled = enrolledSlugs[course.slug];
+    if (enrolled) {
+      const total = lessonCountByCourseId[enrolled.courseId] || course.lessons;
+      const done  = completedByCourse[enrolled.courseId] || 0;
+      const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
+      const obj   = { ...course, total, done, pct, courseId: enrolled.courseId };
+      if (pct === 100) completed.push(obj);
+      else inProgress.push(obj);
+    } else if (course.comingSoon) {
+      coming.push(course);
+    } else if (course.available) {
+      available.push(course);
+    } else {
+      coming.push(course);
+    }
+  });
+
+  let html = '';
+
+  // In-progress courses
+  if (inProgress.length > 0) {
+    html += `<div class="section-header"><div class="section-title">Continue Learning</div></div>`;
+    inProgress.forEach(c => {
+      html += `
+        <a class="continue-strip" href="/hub/course/${c.slug}">
+          <div class="continue-icon">${c.icon}</div>
+          <div class="continue-info">
+            <div class="continue-label">In Progress</div>
+            <div class="continue-title">${c.title}</div>
+            <div class="continue-bar-wrap">
+              <div class="continue-bar"><div class="continue-fill" style="width:${c.pct}%"></div></div>
+              <span class="continue-pct">${c.done} of ${c.total} lessons</span>
+            </div>
+          </div>
+          <div class="continue-cta">Continue</div>
+        </a>`;
+    });
+  }
+
+  // Completed courses
+  if (completed.length > 0) {
+    html += `<div class="section-header" style="margin-top:8px"><div class="section-title">Completed</div><div class="section-count">${completed.length} course${completed.length > 1 ? 's' : ''}</div></div>`;
+    html += `<div class="course-grid">`;
+    completed.forEach(c => {
+      html += courseCard(c, 'complete', 'Completed');
+    });
+    html += `</div>`;
+  }
+
+  // Available to enroll
+  if (available.length > 0) {
+    html += `<div class="section-header" style="margin-top:8px"><div class="section-title">Available Courses</div><div class="section-count">${available.length} course${available.length > 1 ? 's' : ''}</div></div>`;
+    html += `<div class="course-grid">`;
+    available.forEach(c => {
+      html += courseCard(c, 'available', 'Start Course');
+    });
+    html += `</div>`;
+  }
+
+  // Nothing enrolled yet
+  if (inProgress.length === 0 && completed.length === 0 && available.length === 0) {
+    html += `<div class="empty-state"><p>Your courses will appear here once you're enrolled.<br>Check back soon or contact your organization administrator.</p></div>`;
+  }
+
+  // Coming soon
+  if (coming.length > 0) {
+    html += `<div class="section-header" style="margin-top:8px"><div class="section-title">Coming Soon</div></div>`;
+    html += `<div class="course-grid">`;
+    coming.forEach(c => {
+      html += courseCard(c, 'coming', 'Coming Soon', true);
+    });
+    html += `</div>`;
+  }
+
+  document.getElementById('hubBody').innerHTML = html;
+}
+
+function courseCard(c, badgeClass, badgeLabel, locked = false) {
+  const href = locked ? '#' : `/hub/course/${c.slug}`;
+  const lockAttr = locked ? ' locked' : '';
+  const lessonMeta = c.lessons > 0 ? `${c.lessons} lessons` : 'In development';
+  let progressHtml = '';
+  if (c.pct !== undefined && !locked) {
+    progressHtml = `
+      <div class="card-progress-wrap">
+        <div class="card-bar"><div class="card-fill" style="width:${c.pct}%"></div></div>
+        <span class="card-pct">${c.pct}%</span>
+      </div>`;
+  } else if (!locked) {
+    progressHtml = `<span class="card-start">${badgeLabel} →</span>`;
+  }
+  return `
+    <a class="course-card${lockAttr}" href="${href}">
+      <span class="card-badge badge-${badgeClass}">${badgeLabel}</span>
+      <div class="card-icon">${c.icon}</div>
+      <div class="card-title">${c.title}</div>
+      <div class="card-desc">${c.description}</div>
+      <div class="card-meta">
+        <span class="card-lessons">${lessonMeta}</span>
+        ${progressHtml}
+      </div>
+    </a>`;
+}
+
+init();
+</script>
+</body>
+</html>
