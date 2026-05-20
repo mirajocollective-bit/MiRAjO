@@ -288,9 +288,11 @@
 <script>
   const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-  // If already signed in, go straight to dashboard
+  const nextUrl = new URLSearchParams(window.location.search).get('next') || '/programs/dashboard';
+
+  // If already signed in, go straight to destination
   db.auth.getSession().then(({ data: { session } }) => {
-    if (session) window.location.href = '/programs/dashboard';
+    if (session) window.location.href = nextUrl;
   });
 
   // Google sign in
@@ -337,7 +339,7 @@
       return;
     }
 
-    window.location.href = '/programs/dashboard';
+    window.location.href = nextUrl;
   });
 
   // Show forgot password form
