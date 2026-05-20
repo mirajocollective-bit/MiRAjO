@@ -288,7 +288,7 @@
 <script>
   const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-  const nextUrl = new URLSearchParams(window.location.search).get('next') || '/programs/dashboard';
+  const nextUrl = new URLSearchParams(window.location.search).get('next') || '/hub';
 
   // If already signed in, go straight to destination
   db.auth.getSession().then(({ data: { session } }) => {
@@ -299,10 +299,10 @@
   document.getElementById('google-btn').addEventListener('click', async function() {
     this.disabled = true;
     this.textContent = 'Redirecting...';
-    if (nextUrl !== '/programs/dashboard') sessionStorage.setItem('postLoginNext', nextUrl);
+    if (nextUrl !== '/hub') sessionStorage.setItem('postLoginNext', nextUrl);
     await db.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: 'https://www.mirajoco.org/programs/dashboard' }
+      options: { redirectTo: 'https://www.mirajoco.org/hub' }
     });
   });
 
@@ -310,10 +310,10 @@
   document.getElementById('linkedin-btn').addEventListener('click', async function() {
     this.disabled = true;
     this.textContent = 'Redirecting...';
-    if (nextUrl !== '/programs/dashboard') sessionStorage.setItem('postLoginNext', nextUrl);
+    if (nextUrl !== '/hub') sessionStorage.setItem('postLoginNext', nextUrl);
     await db.auth.signInWithOAuth({
       provider: 'linkedin_oidc',
-      options: { redirectTo: 'https://www.mirajoco.org/programs/dashboard' }
+      options: { redirectTo: 'https://www.mirajoco.org/hub' }
     });
   });
 
