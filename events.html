@@ -45,36 +45,40 @@
     }
   }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --deep-forest: #122012;
-      --forest-mid: #1E4226;
+      --slate: #1E2A3A;
+      --slate-mid: #2D3F55;
       --living-green: #256B42;
-      --living-green-light: #339158;
-      --new-growth: #6DC48A;
+      --living-green-light: #2E7D4F;
       --dry-sage: #C4A245;
-      --warm-parchment: #F2EBD9;
-      --soft-white: #FAF7F2;
-      --cream: #FBF9F5;
-      --bronze-earth: #A89068;
-      --text-on-dark: #F2EBD9;
-      --text-muted-dark: #8FAA8A;
-      --text-on-light: #122012;
-      --text-muted-light: #5A6E58;
-      --text-body-light: #3A4E38;
-      --border-light: rgba(18,32,18,0.08);
-      --border-dark: rgba(242,235,217,0.1);
+      --soft-white: #F7F8FA;
+      --cool-mist: #F0F4F8;
+      --border: rgba(30,42,58,0.1);
+      --text: #1E2A3A;
+      --muted: #64748B;
+      /* legacy aliases for compatibility */
+      --deep-forest: #1E2A3A;
+      --forest-mid: #2D3F55;
+      --new-growth: #C4A245;
+      --warm-parchment: #F7F8FA;
+      --text-on-dark: #F7F8FA;
+      --text-muted-dark: #94A3B8;
+      --text-on-light: #1E2A3A;
+      --text-muted-light: #64748B;
+      --text-body-light: #1E2A3A;
+      --border-light: rgba(30,42,58,0.1);
+      --border-dark: rgba(247,248,250,0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { overflow-x: hidden; }
     body {
       background: var(--soft-white);
-      color: var(--text-on-light);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -113,7 +117,7 @@
       text-decoration: none;
       transition: background 0.3s;
     }
-    .nav-cta:hover { background: var(--living-green-light); }
+    .nav-cta:hover { background: var(--living-green); color: #fff; }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
     .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--deep-forest); }
     .mobile-menu {
@@ -133,8 +137,8 @@
     .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
     .nav-dropdown-menu {
       display: none; position: absolute; top: calc(100% + 12px); left: 50%;
-      transform: translateX(-50%); background: #1e2e1e;
-      border: 1px solid rgba(168,192,160,0.2); border-radius: 10px;
+      transform: translateX(-50%); background: var(--slate);
+      border: 1px solid rgba(30,42,58,0.2); border-radius: 10px;
       padding: 8px 0; min-width: 180px; z-index: 200;
       box-shadow: 0 12px 40px rgba(0,0,0,0.35);
     }
@@ -156,7 +160,7 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 20% 50%, rgba(109,196,138,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 50%, rgba(196,162,69,0.08) 0%, transparent 55%),
         radial-gradient(ellipse at 80% 20%, rgba(196,162,69,0.07) 0%, transparent 50%);
       pointer-events: none;
     }
@@ -189,8 +193,8 @@
     .countdown-wrap {
       display: inline-flex;
       gap: 0;
-      background: rgba(109,196,138,0.06);
-      border: 1px solid rgba(109,196,138,0.2);
+      background: rgba(196,162,69,0.06);
+      border: 1px solid rgba(196,162,69,0.2);
       border-radius: 16px;
       padding: 28px 40px;
       margin-bottom: 40px;
@@ -201,7 +205,7 @@
       align-items: center;
       min-width: 80px;
       padding: 0 20px;
-      border-right: 1px solid rgba(109,196,138,0.15);
+      border-right: 1px solid rgba(196,162,69,0.15);
     }
     .countdown-item:last-child { border-right: none; }
     .countdown-num {
@@ -341,14 +345,14 @@
       text-transform: uppercase;
       padding: 9px 24px;
       border-radius: 20px;
-      border: 1px solid rgba(109,196,138,0.25);
+      border: 1px solid rgba(196,162,69,0.25);
       background: transparent;
       color: var(--text-muted-dark);
       cursor: pointer;
       transition: all 0.2s;
     }
-    .filter-btn:hover { border-color: var(--new-growth); color: var(--new-growth); }
-    .filter-btn.active { background: var(--new-growth); color: var(--deep-forest); border-color: var(--new-growth); }
+    .filter-btn:hover { border-color: var(--dry-sage); color: var(--dry-sage); }
+    .filter-btn.active { background: var(--dry-sage); color: var(--slate); border-color: var(--dry-sage); }
 
     /* ═══ EVENTS GRID ═══ */
     .events-section {
@@ -399,7 +403,7 @@
     .event-card-img-placeholder span {
       font-family: 'Instrument Serif', serif;
       font-size: 48px;
-      color: rgba(109,196,138,0.25);
+      color: rgba(196,162,69,0.25);
       font-style: italic;
     }
     .event-card-header {
@@ -416,7 +420,7 @@
       border-radius: 20px;
       margin-bottom: 10px;
     }
-    .event-type-badge.online { background: rgba(109,196,138,0.12); color: var(--living-green); border: 1px solid rgba(109,196,138,0.25); }
+    .event-type-badge.online { background: rgba(37,107,66,0.10); color: var(--living-green); border: 1px solid rgba(37,107,66,0.2); }
     .event-type-badge.inperson { background: rgba(196,162,69,0.12); color: #8A6E1A; border: 1px solid rgba(196,162,69,0.25); }
     .event-date { font-size: 12px; color: var(--text-muted-light); font-weight: 500; margin-bottom: 6px; letter-spacing: 0.3px; }
     .event-name {
@@ -651,7 +655,7 @@
     /* ═══ FOOTER ═══ */
     .site-footer { background: var(--deep-forest); padding: 48px 40px 24px; border-top: 1px solid var(--border-dark); }
     .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 24px; }
-    .footer-links a { font-size: 13px; color: var(--text-muted-light); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+    .footer-links a { font-size: 13px; color: var(--text-muted-dark); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
     .footer-links a:hover { color: var(--warm-parchment); }
     .footer-tagline { font-size: 14px; color: var(--text-muted-dark); text-align: center; margin-bottom: 32px; line-height: 1.6; }
     .footer-social { display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; }
@@ -883,7 +887,7 @@
   <h2 class="events-cta-title">Never miss what's next.</h2>
   <p class="events-cta-sub">Join the newsletter and be first to know when new events drop near you.</p>
   <form id="events-nl-form" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
-    <input type="email" id="events-nl-email" placeholder="Your email address" required style="padding:14px 20px;border:none;border-radius:8px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;min-width:220px;flex:1;max-width:320px;">
+    <input type="email" id="events-nl-email" placeholder="Your email address" required style="padding:14px 20px;border:none;border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;outline:none;min-width:220px;flex:1;max-width:320px;">
     <button type="submit" class="events-cta-btn" style="margin:0;">Stay Connected</button>
   </form>
   <p id="events-nl-msg" style="margin-top:14px;font-size:14px;min-height:20px;"></p>
@@ -911,11 +915,11 @@
 </section>
 
 <!-- ═══ MANIFESTO STRIP ═══ -->
-<section style="background:#122012;padding:64px 40px;text-align:center;">
+<section style="background:#1E2A3A;padding:64px 40px;text-align:center;">
   <div style="max-width:680px;margin:0 auto;">
-    <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:#6DC48A;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:24px;">The MiRAjO Mission</div>
-    <blockquote style="font-family:'Instrument Serif',serif;font-size:clamp(18px,2.2vw,24px);color:#F2EBD9;line-height:1.85;font-weight:400;font-style:italic;margin:0 0 32px;border:none;padding:0;">Peace. Turning chaos into peace. Bringing this home. No more feeling like you don't have the tools you need. You do have them. We are not hiding tools from you. We are giving you everything you need, because you have all you need in your hands. You just need someone to show you how to use them. That is why the seed matters. Planting brings the harvest.</blockquote>
-    <div style="font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#6DC48A;font-family:'Plus Jakarta Sans',sans-serif;">You already have everything you need. We'll show you how to use it.</div>
+    <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:#C4A245;font-weight:600;font-family:'Inter',sans-serif;margin-bottom:24px;">The MiRAjO Mission</div>
+    <blockquote style="font-family:'Instrument Serif',serif;font-size:clamp(18px,2.2vw,24px);color:#F7F8FA;line-height:1.85;font-weight:400;font-style:italic;margin:0 0 32px;border:none;padding:0;">Peace. Turning chaos into peace. Bringing this home. No more feeling like you don't have the tools you need. You do have them. We are not hiding tools from you. We are giving you everything you need, because you have all you need in your hands. You just need someone to show you how to use them. That is why the seed matters. Planting brings the harvest.</blockquote>
+    <div style="font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#C4A245;font-family:'Inter',sans-serif;">You already have everything you need. We'll show you how to use it.</div>
   </div>
 </section>
 
@@ -950,10 +954,7 @@
   </div>
 </footer>
 
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init({ duration: 700, easing: 'ease-in-out', once: true });
-
   // Countdown to June 4, 2026 at 7pm ET
   const target = new Date('2026-06-04T19:00:00-04:00');
   function updateCountdown() {

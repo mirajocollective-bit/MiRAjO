@@ -8,27 +8,33 @@
   <meta name="description" content="Miranda Johnson brings a proprietary wiring framework to corporate teams, leadership retreats, and ERGs. Half-day and full-day engagements. Based in Tampa Bay, FL. Book at mirajoco.org.">
   <link rel="canonical" href="https://www.mirajoco.org/speaking">
 
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --forest:     #122012;
-      --green:      #8DB600;
-      --green-lt:   #9EC900;
-      --mint:       #BDDE42;
-      --mint-tint:  #F3F9D5;
-      --gold:       #C4A245;
-      --parchment:  #F2EBD9;
-      --soft-white: #FAF7F2;
-      --white:      #FFFFFF;
-      --muted:      #5A6E58;
-      --border:     rgba(18,32,18,0.1);
+      --slate:       #1E2A3A;
+      --slate-mid:   #2D3F55;
+      --living-green:#256B42;
+      --dry-sage:    #C4A245;
+      --gold:        #C4A245;
+      --soft-white:  #F7F8FA;
+      --cool-mist:   #F0F4F8;
+      --white:       #FFFFFF;
+      --muted:       #64748B;
+      --border:      rgba(30,42,58,0.1);
+      /* legacy aliases used inline */
+      --forest:      #1E2A3A;
+      --green:       #256B42;
+      --green-lt:    #256B42;
+      --mint:        #C4A245;
+      --mint-tint:   #F0F4F8;
+      --parchment:   #F7F8FA;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { overflow-x: hidden; }
     body {
       background: var(--soft-white);
       color: var(--forest);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 15px;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
@@ -36,7 +42,7 @@
 
     /* ── PRINT BAR ── */
     .print-bar {
-      background: var(--green);
+      background: var(--slate);
       padding: 12px 48px;
       display: flex;
       align-items: center;
@@ -44,11 +50,11 @@
     }
     .print-bar-note { font-size: 13px; color: var(--white); font-weight: 600; }
     .print-btn {
-      background: var(--white); color: var(--green); border: none;
+      background: var(--white); color: var(--living-green); border: none;
       border-radius: 6px; padding: 10px 24px; font-size: 13px; font-weight: 700;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.2s;
     }
-    .print-btn:hover { background: var(--parchment); }
+    .print-btn:hover { background: var(--cool-mist); }
 
     /* ── NAV ── */
     .site-nav {
@@ -62,10 +68,10 @@
     .nav-links a:hover, .nav-links a.active { color: var(--forest); }
     .nav-cta {
       display: inline-block; font-size: 12px; padding: 9px 22px; background: #fff;
-      color: var(--green); border: 1.5px solid var(--green); border-radius: 6px;
+      color: var(--living-green); border: 1.5px solid var(--living-green); border-radius: 6px;
       font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: background 0.3s, color 0.3s;
     }
-    .nav-cta:hover { background: var(--green); color: #fff; }
+    .nav-cta:hover { background: var(--living-green); color: #fff; }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
     .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--forest); }
     .mobile-menu {
@@ -85,15 +91,15 @@
     .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
     .nav-dropdown-menu {
       display: none; position: absolute; top: calc(100% + 12px); left: 50%;
-      transform: translateX(-50%); background: #1e2e1e;
-      border: 1px solid rgba(168,192,160,0.2); border-radius: 10px;
+      transform: translateX(-50%); background: var(--slate);
+      border: 1px solid rgba(30,42,58,0.3); border-radius: 10px;
       padding: 8px 0; min-width: 180px; z-index: 200;
       box-shadow: 0 12px 40px rgba(0,0,0,0.35);
     }
     .nav-dropdown:hover .nav-dropdown-menu { display: block; }
     .nav-dropdown-menu::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
-    .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 13px; color: rgba(242,235,217,0.6); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
-    .nav-dropdown-menu a:hover { color: var(--parchment); background: rgba(168,192,160,0.08); }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 13px; color: rgba(247,248,250,0.65); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
+    .nav-dropdown-menu a:hover { color: #F7F8FA; background: rgba(196,162,69,0.1); }
 
     /* ── HERO ── */
     .hero {
@@ -101,7 +107,7 @@
     }
     .hero-left {
       padding: 80px 64px; display: flex; flex-direction: column; justify-content: center;
-      border-right: 1px solid rgba(242,235,217,0.08);
+      border-right: 1px solid rgba(247,248,250,0.08);
     }
     .hero-eyebrow {
       font-size: 11px; letter-spacing: 6px; text-transform: uppercase;
@@ -114,16 +120,16 @@
     }
     .hero-name em { color: var(--mint); font-style: italic; }
     .hero-tagline {
-      font-size: 17px; color: rgba(242,235,217,0.6); font-style: italic;
+      font-size: 17px; color: rgba(247,248,250,0.65); font-style: italic;
       margin-bottom: 40px; line-height: 1.5; font-family: 'Instrument Serif', serif;
     }
     .hero-roles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
     .hero-role {
-      font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--mint);
-      background: rgba(189,222,66,0.1); border: 1px solid rgba(189,222,66,0.25);
+      font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--dry-sage);
+      background: rgba(196,162,69,0.12); border: 1px solid rgba(196,162,69,0.3);
       border-radius: 4px; padding: 6px 14px; font-weight: 600;
     }
-    .hero-contact { font-size: 14px; color: rgba(242,235,217,0.5); }
+    .hero-contact { font-size: 14px; color: rgba(247,248,250,0.55); }
     .hero-contact a { color: var(--mint); text-decoration: none; }
     .hero-contact a:hover { text-decoration: underline; }
     .hero-right { position: relative; overflow: hidden; }
@@ -136,13 +142,13 @@
     /* ── SECTIONS ── */
     .section { padding: 80px; }
     .section-white { background: var(--white); }
-    .section-mint  { background: var(--mint-tint); }
-    .section-forest { background: var(--forest); color: var(--parchment); }
+    .section-mint  { background: var(--cool-mist); }
+    .section-forest { background: var(--slate); color: #F7F8FA; }
     .section-label {
       font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
-      font-weight: 700; color: var(--green-lt); margin-bottom: 36px;
+      font-weight: 700; color: var(--living-green); margin-bottom: 36px;
     }
-    .section-forest .section-label { color: var(--mint); }
+    .section-forest .section-label { color: var(--dry-sage); }
 
     /* ── FRAMEWORK ── */
     .framework-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -150,8 +156,8 @@
       background: var(--white); border-radius: 12px; padding: 32px;
       border: 1px solid var(--border); transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .framework-card:hover { border-color: var(--mint); box-shadow: 0 4px 20px rgba(189,222,66,0.12); }
-    .framework-num { font-size: 11px; letter-spacing: 2px; color: var(--mint); font-weight: 700; margin-bottom: 12px; }
+    .framework-card:hover { border-color: var(--living-green); box-shadow: 0 4px 20px rgba(37,107,66,0.12); }
+    .framework-num { font-size: 11px; letter-spacing: 2px; color: var(--living-green); font-weight: 700; margin-bottom: 12px; }
     .framework-title {
       font-family: 'Instrument Serif', serif; font-size: 21px;
       font-weight: 400; color: var(--forest); margin-bottom: 10px; line-height: 1.2;
@@ -163,7 +169,7 @@
     .get-card {
       background: var(--white); border-radius: 12px; padding: 32px 28px;
       border: 1px solid var(--border); text-align: center;
-      box-shadow: 0 2px 12px rgba(18,32,18,0.04);
+      box-shadow: 0 2px 12px rgba(30,42,58,0.06);
     }
     .get-icon { font-size: 32px; margin-bottom: 16px; }
     .get-title { font-family: 'Instrument Serif', serif; font-size: 19px; font-weight: 400; color: var(--forest); margin-bottom: 10px; }
@@ -173,18 +179,18 @@
     .formats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
     .format-card {
       border-radius: 12px; padding: 32px 28px;
-      border: 1px solid rgba(242,235,217,0.12); background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(247,248,250,0.1); background: rgba(255,255,255,0.04);
     }
     .format-tag {
       font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-      font-weight: 700; color: var(--mint); margin-bottom: 12px;
+      font-weight: 700; color: var(--dry-sage); margin-bottom: 12px;
     }
     .format-name {
       font-family: 'Instrument Serif', serif; font-size: 20px;
-      font-weight: 400; color: var(--parchment); margin-bottom: 8px; line-height: 1.2;
+      font-weight: 400; color: #F7F8FA; margin-bottom: 8px; line-height: 1.2;
     }
-    .format-rate { font-size: 22px; font-weight: 700; color: var(--mint); margin-bottom: 12px; }
-    .format-desc { font-size: 13px; color: rgba(242,235,217,0.55); line-height: 1.7; }
+    .format-rate { font-size: 22px; font-weight: 700; color: var(--dry-sage); margin-bottom: 12px; }
+    .format-desc { font-size: 13px; color: rgba(247,248,250,0.6); line-height: 1.7; }
 
     /* ── BIO SECTION ── */
     .bio-grid { display: grid; grid-template-columns: 1fr 340px; gap: 72px; align-items: start; }
@@ -193,24 +199,24 @@
       color: var(--parchment); font-style: italic; line-height: 1.5;
       border-left: 4px solid var(--gold); padding-left: 28px; margin-bottom: 36px;
     }
-    .bio-body { font-size: 15px; color: rgba(242,235,217,0.68); line-height: 1.9; margin-bottom: 20px; }
+    .bio-body { font-size: 15px; color: rgba(247,248,250,0.72); line-height: 1.9; margin-bottom: 20px; }
     .bio-sidebar { display: flex; flex-direction: column; gap: 16px; padding-top: 4px; }
     .bio-stat-card {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(189,222,66,0.18);
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(196,162,69,0.2);
       border-radius: 12px; padding: 22px 24px;
     }
     .bio-stat-label {
       font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--mint); font-weight: 700; margin-bottom: 10px;
+      color: var(--dry-sage); font-weight: 700; margin-bottom: 10px;
     }
     .bio-stat-num {
       font-family: 'Instrument Serif', serif; font-size: 38px;
       color: var(--parchment); line-height: 1; margin-bottom: 8px;
     }
-    .bio-stat-sub { font-size: 13px; color: rgba(242,235,217,0.45); line-height: 1.65; }
+    .bio-stat-sub { font-size: 13px; color: rgba(247,248,250,0.45); line-height: 1.65; }
     .bio-stat-quote {
       font-family: 'Instrument Serif', serif; font-size: 15px;
-      color: rgba(242,235,217,0.75); font-style: italic; line-height: 1.65;
+      color: rgba(247,248,250,0.8); font-style: italic; line-height: 1.65;
     }
 
     /* ── QUOTE ── */
@@ -227,7 +233,7 @@
       background: var(--white); border-radius: 10px; border: 1px solid var(--border);
     }
     .engagement-dot {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--mint); flex-shrink: 0; margin-top: 6px;
+      width: 8px; height: 8px; border-radius: 50%; background: var(--living-green); flex-shrink: 0; margin-top: 6px;
     }
     .engagement-name { font-size: 14px; font-weight: 600; color: var(--forest); line-height: 1.3; margin-bottom: 3px; }
     .engagement-org { font-size: 12px; color: var(--muted); }
@@ -241,26 +247,26 @@
 
     /* ── CTA ── */
     .cta-wrap {
-      background: var(--green); padding: 80px; display: grid;
+      background: var(--slate); padding: 80px; display: grid;
       grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
     }
-    .cta-eyebrow { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--mint); font-weight: 700; margin-bottom: 20px; }
+    .cta-eyebrow { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--dry-sage); font-weight: 700; margin-bottom: 20px; }
     .cta-heading { font-family: 'Instrument Serif', serif; font-size: clamp(30px, 3.5vw, 46px); color: var(--white); font-weight: 400; line-height: 1.15; margin-bottom: 20px; }
-    .cta-heading em { color: rgba(189,222,66,0.85); font-style: italic; }
+    .cta-heading em { color: rgba(196,162,69,0.9); font-style: italic; }
     .cta-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.75; }
     .cta-contact { display: flex; flex-direction: column; gap: 24px; }
     .cta-contact-item { font-size: 15px; color: rgba(255,255,255,0.8); }
-    .cta-contact-item a { color: var(--mint); text-decoration: none; font-weight: 600; }
+    .cta-contact-item a { color: var(--dry-sage); text-decoration: none; font-weight: 600; }
     .cta-contact-item a:hover { text-decoration: underline; }
     .cta-contact-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700; margin-bottom: 4px; }
 
     /* ── FOOTER ── */
     .kit-footer {
-      background: var(--forest); padding: 28px 80px;
+      background: var(--slate); padding: 28px 80px;
       display: flex; align-items: center; justify-content: space-between;
     }
     .kit-footer-brand { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--white); font-weight: 400; }
-    .kit-footer-note { font-size: 12px; color: rgba(242,235,217,0.45); letter-spacing: 0.5px; }
+    .kit-footer-note { font-size: 12px; color: rgba(247,248,250,0.45); letter-spacing: 0.5px; }
 
     /* ── ONE-SHEET (printed) ── */
     .os { display: none; }
@@ -277,11 +283,11 @@
         overflow: hidden;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', sans-serif;
       }
 
       .os-left {
-        width: 38%; background: #122012;
+        width: 38%; background: #1E2A3A;
         padding: 0.55in 0.45in 0.45in;
         display: flex; flex-direction: column; overflow: hidden;
       }
@@ -296,66 +302,66 @@
 
       .os-name {
         font-family: 'Instrument Serif', Georgia, serif; font-size: 28pt;
-        color: #F2EBD9; line-height: 1.0; font-weight: normal; margin: 0 0 4pt;
+        color: #F7F8FA; line-height: 1.0; font-weight: normal; margin: 0 0 4pt;
       }
-      .os-name em { font-style: italic; color: #BDDE42; }
-      .os-title { font-size: 9pt; color: #BDDE42; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 2pt; }
-      .os-sub { font-size: 8.5pt; color: rgba(242,235,217,0.55); margin: 0 0 10pt; line-height: 1.4; }
-      .os-divider { border: none; border-top: 1px solid rgba(189,222,66,0.3); margin: 0 0 10pt; }
+      .os-name em { font-style: italic; color: #C4A245; }
+      .os-title { font-size: 9pt; color: #C4A245; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 2pt; }
+      .os-sub { font-size: 8.5pt; color: rgba(247,248,250,0.55); margin: 0 0 10pt; line-height: 1.4; }
+      .os-divider { border: none; border-top: 1px solid rgba(196,162,69,0.3); margin: 0 0 10pt; }
 
       .os-left-label {
-        font-size: 7.5pt; letter-spacing: 2.5px; text-transform: uppercase; color: #BDDE42;
-        font-weight: 700; margin: 0 0 6pt; border-top: 1px solid rgba(189,222,66,0.2); padding-top: 7pt;
+        font-size: 7.5pt; letter-spacing: 2.5px; text-transform: uppercase; color: #C4A245;
+        font-weight: 700; margin: 0 0 6pt; border-top: 1px solid rgba(196,162,69,0.2); padding-top: 7pt;
       }
       .os-left-label:first-of-type { border-top: none; padding-top: 0; }
 
       .os-engagement { margin-bottom: 5pt; }
-      .os-eng-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 10pt; color: #F2EBD9; line-height: 1.3; }
-      .os-eng-org { font-size: 8pt; color: rgba(189,222,66,0.75); }
+      .os-eng-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 10pt; color: #F7F8FA; line-height: 1.3; }
+      .os-eng-org { font-size: 8pt; color: rgba(196,162,69,0.85); }
 
-      .os-press { font-size: 9.5pt; color: rgba(242,235,217,0.7); line-height: 1.6; }
+      .os-press { font-size: 9.5pt; color: rgba(247,248,250,0.7); line-height: 1.6; }
 
       .os-contact-bar {
-        margin-top: auto; padding-top: 8pt; border-top: 2px solid #8DB600;
-        font-size: 9pt; color: #BDDE42; font-weight: 700; letter-spacing: 0.3px;
+        margin-top: auto; padding-top: 8pt; border-top: 2px solid #256B42;
+        font-size: 9pt; color: #C4A245; font-weight: 700; letter-spacing: 0.3px;
         display: flex; flex-direction: column; gap: 3pt;
       }
 
       /* Right panel */
       .os-tagline {
         font-family: 'Instrument Serif', Georgia, serif; font-size: 15pt;
-        color: #122012; font-style: italic; line-height: 1.4;
+        color: #1E2A3A; font-style: italic; line-height: 1.4;
         border-left: 3pt solid #C4A245; padding-left: 10pt; margin: 0 0 10pt;
       }
 
-      .os-bio { font-size: 9.5pt; color: #3A4E38; line-height: 1.7; margin: 0 0 10pt; }
+      .os-bio { font-size: 9.5pt; color: #2D3F55; line-height: 1.7; margin: 0 0 10pt; }
 
       .os-right-label {
         font-size: 7.5pt; letter-spacing: 2.5px; text-transform: uppercase;
-        color: #9EC900; font-weight: 700; margin: 0 0 6pt;
-        border-top: 1px solid rgba(18,32,18,0.1); padding-top: 7pt;
+        color: #256B42; font-weight: 700; margin: 0 0 6pt;
+        border-top: 1px solid rgba(30,42,58,0.1); padding-top: 7pt;
       }
 
       .os-what-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6pt; margin-bottom: 0; }
       .os-what-item {
-        background: #F2EBD9; border-radius: 4pt; padding: 7pt 8pt;
+        background: #F0F4F8; border-radius: 4pt; padding: 7pt 8pt;
       }
-      .os-what-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 9.5pt; color: #122012; line-height: 1.3; margin-bottom: 2pt; }
-      .os-what-rate { font-size: 8.5pt; color: #8DB600; font-weight: 700; margin-bottom: 3pt; }
-      .os-what-desc { font-size: 7.5pt; color: #5A6E58; line-height: 1.5; }
+      .os-what-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 9.5pt; color: #1E2A3A; line-height: 1.3; margin-bottom: 2pt; }
+      .os-what-rate { font-size: 8.5pt; color: #256B42; font-weight: 700; margin-bottom: 3pt; }
+      .os-what-desc { font-size: 7.5pt; color: #64748B; line-height: 1.5; }
 
       .os-topics { margin: 0; padding: 0; }
       .os-topic {
-        font-size: 9.5pt; color: #122012; padding: 3.5pt 0 3.5pt 8pt;
-        border-left: 2pt solid #BDDE42; margin-bottom: 4pt; line-height: 1.4;
+        font-size: 9.5pt; color: #1E2A3A; padding: 3.5pt 0 3.5pt 8pt;
+        border-left: 2pt solid #256B42; margin-bottom: 4pt; line-height: 1.4;
       }
 
       .os-bottom-bar {
-        margin-top: auto; background: #122012; border-radius: 6pt;
+        margin-top: auto; background: #1E2A3A; border-radius: 6pt;
         padding: 8pt 12pt; display: flex; justify-content: space-between; align-items: center;
       }
-      .os-bottom-quote { font-family: 'Instrument Serif', Georgia, serif; font-size: 9pt; color: rgba(242,235,217,0.8); font-style: italic; }
-      .os-bottom-book { font-size: 8pt; font-weight: 700; color: #BDDE42; letter-spacing: 0.5px; text-align: right; }
+      .os-bottom-quote { font-family: 'Instrument Serif', Georgia, serif; font-size: 9pt; color: rgba(247,248,250,0.85); font-style: italic; }
+      .os-bottom-book { font-size: 8pt; font-weight: 700; color: #C4A245; letter-spacing: 0.5px; text-align: right; }
     }
 
     @media (max-width: 900px) {
@@ -670,7 +676,7 @@
       </div>
     </div>
     <div>
-      <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 32px rgba(18,32,18,0.07);border:1px solid var(--border);">
+      <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 32px rgba(30,42,58,0.08);border:1px solid var(--border);">
         <div style="padding:18px 24px;background:var(--forest);display:flex;justify-content:space-between;align-items:center;">
           <span style="font-family:'Instrument Serif',serif;font-size:18px;color:#fff;">Discovery Call &mdash; 60 min</span>
         </div>
@@ -789,8 +795,8 @@
     "layout": "month_view",
     "cssVarsPerTheme": {
       "light": {
-        "--cal-brand": "#8DB600",
-        "--cal-brand-emphasis": "#122012",
+        "--cal-brand": "#256B42",
+        "--cal-brand-emphasis": "#1E2A3A",
         "--cal-brand-text": "#ffffff"
       }
     }
