@@ -517,6 +517,14 @@
       return;
     }
 
+    // After OAuth, redirect to Hub if that's where the user came from
+    const postLoginNext = sessionStorage.getItem('postLoginNext');
+    if (postLoginNext) {
+      sessionStorage.removeItem('postLoginNext');
+      window.location.href = postLoginNext;
+      return;
+    }
+
     // Refresh to pick up latest user metadata
     const { data: refreshed } = await db.auth.refreshSession();
     if (refreshed?.session) session = refreshed.session;
