@@ -539,6 +539,83 @@
     @media (max-width: 700px) { .books-grid { grid-template-columns: 1fr; } .books-section { padding: 72px 24px; } }
     @media (max-width: 480px) { .book-card { flex-direction: column; } .book-cover { width: 100px; } }
 
+    /* ── TWO TRACKS ── */
+    .tracks-section {
+      padding: 100px 40px;
+      background: var(--mist);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .tracks-inner { max-width: 1100px; margin: 0 auto; }
+    .tracks-header { text-align: center; margin-bottom: 60px; }
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .track-col {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      border: 1px solid var(--border);
+    }
+    .track-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .track-label-pd { color: #7B5EA7; }
+    .track-label-bd { color: var(--dry-sage); }
+    .track-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--deep-forest);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .track-sub {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .track-items { display: flex; flex-direction: column; gap: 12px; }
+    .track-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .track-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .track-dot-pd { background: #7B5EA7; }
+    .track-dot-bd { background: var(--dry-sage); }
+    .track-item-text { font-size: 14px; color: var(--deep-forest); line-height: 1.5; }
+    .track-item-text span { font-size: 12px; color: var(--muted); display: block; margin-top: 2px; }
+    .tracks-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--living-green);
+      text-decoration: none;
+      border-bottom: 1.5px solid currentColor;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 2px;
+    }
+    .tracks-link:hover { color: var(--forest-mid); }
+    @media (max-width: 700px) { .tracks-grid { grid-template-columns: 1fr; } .tracks-section { padding: 72px 24px; } }
+
     /* ── CLOSING CTA ── */
     .closing-section {
       padding: 100px 40px;
@@ -617,6 +694,122 @@
     .footer-socials a:hover { color: var(--warm-parchment); }
     @media (max-width: 860px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; } }
     @media (max-width: 540px) { .footer-top { grid-template-columns: 1fr; } .site-footer { padding: 48px 24px 32px; } }
+
+    /* ── WHO STRIP ── */
+    .who-strip {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 18px 40px;
+    }
+    .who-strip-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .who-strip-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .who-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .who-chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      background: var(--mist);
+      white-space: nowrap;
+    }
+
+    /* ── ORG CALLOUT ── */
+    .org-callout {
+      background: var(--deep-forest);
+      padding: 80px 40px;
+    }
+    .org-callout-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .org-callout-text .section-eyebrow { color: var(--new-growth); }
+    .org-callout-text h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 400;
+      color: var(--warm-parchment);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .org-callout-text p {
+      font-size: 15px;
+      color: rgba(242,235,217,0.6);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .org-cta {
+      display: inline-block;
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--new-growth);
+      border: 1.5px solid var(--new-growth);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .org-cta:hover { background: var(--new-growth); color: var(--deep-forest); }
+    .org-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .org-stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(109,196,138,0.15);
+      border-radius: 14px;
+      padding: 24px 22px;
+    }
+    .org-stat-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 40px;
+      color: var(--new-growth);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .org-stat-label {
+      font-size: 12px;
+      color: rgba(242,235,217,0.4);
+      line-height: 1.5;
+    }
+    .org-orgs {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .org-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: rgba(109,196,138,0.08);
+      color: rgba(109,196,138,0.7);
+      border: 1px solid rgba(109,196,138,0.15);
+    }
+    @media (max-width: 860px) {
+      .org-callout-inner { grid-template-columns: 1fr; gap: 40px; }
+      .org-callout { padding: 72px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -654,14 +847,31 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">MiRAjO Collective</div>
-    <h1 class="hero-headline">You already have everything you need.<br>We'll show you how to use it.</h1>
-    <p class="hero-sub">A platform built for entrepreneurs and leaders who are done waiting — courses, tools, and resources for every stage of the build.</p>
+    <h1 class="hero-headline">The entrepreneurship platform built for the whole entrepreneur.</h1>
+    <p class="hero-sub">40+ courses, tools, and assessments covering both sides of building a business — the skills to grow your company and the personal development that makes those skills actually work. For individuals. For organizations.</p>
     <div class="hero-ctas">
-      <a href="/hub" class="btn-primary">Enter the Hub</a>
-      <a href="#products" class="btn-outline">See everything we offer</a>
+      <a href="/hub" class="btn-primary">Enter the Hub — It's Free</a>
+      <a href="#org" class="btn-outline">For Organizations</a>
     </div>
   </div>
 </section>
+
+<!-- ── WHO STRIP ── -->
+<div class="who-strip">
+  <div class="who-strip-inner">
+    <span class="who-strip-label">Built for</span>
+    <div class="who-chips">
+      <span class="who-chip">Aspiring Entrepreneurs</span>
+      <span class="who-chip">Side Hustlers</span>
+      <span class="who-chip">Business Owners</span>
+      <span class="who-chip">Couples in Business</span>
+      <span class="who-chip">Chambers of Commerce</span>
+      <span class="who-chip">CDFIs &amp; Credit Unions</span>
+      <span class="who-chip">Workforce Programs</span>
+      <span class="who-chip">Nonprofits</span>
+    </div>
+  </div>
+</div>
 
 <!-- ── TICKER ── -->
 <div class="ticker-wrap" aria-hidden="true">
@@ -706,68 +916,46 @@
   </div>
 </div>
 
-<!-- ── HUB SECTION ── -->
-<section class="hub-section" id="hub">
-  <div class="hub-inner">
-    <div class="hub-header">
-      <div class="hub-header-text">
-        <div class="section-eyebrow">The Hub</div>
-        <h2 class="section-headline">Your learning home base</h2>
-        <p class="section-sub">Free courses on the skills that actually move your business. Start where you are. Go at your pace.</p>
+<!-- ── TWO TRACKS ── -->
+<section class="tracks-section" id="tracks">
+  <div class="tracks-inner">
+    <div class="tracks-header">
+      <div class="section-eyebrow">The Content Library</div>
+      <h2 class="section-headline">Two tracks. 40+ courses and resources. All in one place.</h2>
+      <p class="section-sub" style="max-width:580px;margin:0 auto;">Most platforms teach business skills OR personal development. We built both — because the person and the business grow together.</p>
+    </div>
+    <div class="tracks-grid">
+
+      <div class="track-col">
+        <div class="track-label track-label-pd">Personal Development</div>
+        <div class="track-title">Know yourself first. Everything else follows.</div>
+        <div class="track-sub">How you lead, make decisions, handle pressure, and show up in relationships directly affects how your business performs.</div>
+        <div class="track-items">
+          <div class="track-item"><div class="track-dot track-dot-pd"></div><div class="track-item-text">Leadership Style &amp; EQ<span>How you lead under pressure, in conflict, and at scale</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-pd"></div><div class="track-item-text">Drive &amp; Relationship Assessment<span>20 personality profiles built for entrepreneurs</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-pd"></div><div class="track-item-text">Entrepreneur Mindset &amp; Resilience<span>Moving through setbacks without being destroyed by them</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-pd"></div><div class="track-item-text">Couples in Entrepreneurship<span>Money, roles, communication, and staying connected while building</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-pd"></div><div class="track-item-text">Work-Life Sustainability<span>Burnout recovery and sustainable performance for real operators</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-pd"></div><div class="track-item-text">Community &amp; Belonging<span>Find people in the same stage, industry, and fight</span></div></div>
+        </div>
       </div>
-      <a href="/hub" class="hub-header-link">Access the Hub &rarr;</a>
-    </div>
-    <div class="hub-grid">
 
-      <a href="/hub/course/budget-calendar" class="hub-card">
-        <span class="hub-card-badge">Available</span>
-        <div class="hub-card-icon">&#128197;</div>
-        <div class="hub-card-title">Budget Calendar: Know Your Numbers</div>
-        <div class="hub-card-desc">Build a budget that works with your real life — not an idealized version of it.</div>
-        <div class="hub-card-lessons">24 lessons</div>
-      </a>
-
-      <a href="/hub" class="hub-card">
-        <span class="hub-card-badge">Available</span>
-        <div class="hub-card-icon">&#127970;</div>
-        <div class="hub-card-title">Starting a Business: From Idea to Open</div>
-        <div class="hub-card-desc">Legal structure, money foundation, first customers — everything to go from idea to operating.</div>
-        <div class="hub-card-lessons">24 lessons</div>
-      </a>
-
-      <a href="/hub" class="hub-card">
-        <span class="hub-card-badge">Available</span>
-        <div class="hub-card-icon">&#128227;</div>
-        <div class="hub-card-title">Marketing for Entrepreneurs</div>
-        <div class="hub-card-desc">Stop posting and hoping. Build a marketing system that actually brings people in.</div>
-        <div class="hub-card-lessons">24 lessons</div>
-      </a>
-
-      <a href="/hub" class="hub-card">
-        <span class="hub-card-badge">Available</span>
-        <div class="hub-card-icon">&#10022;</div>
-        <div class="hub-card-title">Branding Your Business</div>
-        <div class="hub-card-desc">Your brand is not a logo. Build an identity that attracts the right people every time.</div>
-        <div class="hub-card-lessons">24 lessons</div>
-      </a>
-
-      <a href="/hub" class="hub-card">
-        <span class="hub-card-badge">Available</span>
-        <div class="hub-card-icon">&#128179;</div>
-        <div class="hub-card-title">Business Credit &amp; Access to Capital</div>
-        <div class="hub-card-desc">Build the financial identity your business deserves. CDFIs, grants, equity, and credit — all of it.</div>
-        <div class="hub-card-lessons">24 lessons</div>
-      </a>
-
-      <a href="/hub" class="hub-card">
-        <span class="hub-card-badge">Available</span>
-        <div class="hub-card-icon">&#128200;</div>
-        <div class="hub-card-title">Financial Literacy: Know Your Money</div>
-        <div class="hub-card-desc">From net worth to generational wealth. See clearly. Build deliberately.</div>
-        <div class="hub-card-lessons">24 lessons</div>
-      </a>
+      <div class="track-col">
+        <div class="track-label track-label-bd">Business Development</div>
+        <div class="track-title">Build the business you actually want.</div>
+        <div class="track-sub">From idea to operating, from broke to funded — the practical skills most entrepreneurship programs leave out or water down.</div>
+        <div class="track-items">
+          <div class="track-item"><div class="track-dot track-dot-bd"></div><div class="track-item-text">Starting a Business<span>Legal structure, first customers, and the right order of operations</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-bd"></div><div class="track-item-text">Marketing &amp; Branding<span>Get in front of the right people without faking who you are</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-bd"></div><div class="track-item-text">Financial Literacy &amp; Money Management<span>Cash flow, P&amp;L, pricing, and budgeting in plain language</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-bd"></div><div class="track-item-text">Business Credit &amp; Access to Capital<span>Build credit from scratch, navigate CDFIs, SBA, and grants</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-bd"></div><div class="track-item-text">AI &amp; Technology for Entrepreneurs<span>What to use, what to skip, and how to compete — technical or not</span></div></div>
+          <div class="track-item"><div class="track-dot track-dot-bd"></div><div class="track-item-text">90-Day Side Hustle &amp; LinkedIn Strategy<span>From idea to first paying customer while working full time</span></div></div>
+        </div>
+      </div>
 
     </div>
+    <a href="/hub" class="tracks-link">Browse the full course library &rarr;</a>
   </div>
 </section>
 
@@ -821,6 +1009,46 @@
         </div>
       </a>
 
+    </div>
+  </div>
+</section>
+
+<!-- ── ORG CALLOUT ── -->
+<section class="org-callout" id="org">
+  <div class="org-callout-inner">
+    <div class="org-callout-text">
+      <div class="section-eyebrow">For Organizations</div>
+      <h2>Bring this to your members. Measure what actually changes.</h2>
+      <p>Chambers of commerce, CDFIs, credit unions, nonprofits, and workforce development programs use MiRAjO to give their members a real resource — and get the outcome data they need for grant reports, board decks, and member retention.</p>
+      <a href="/platform" class="org-cta">See the organizational platform &rarr;</a>
+    </div>
+    <div>
+      <div class="org-stats">
+        <div class="org-stat">
+          <div class="org-stat-num">40+</div>
+          <div class="org-stat-label">Courses and resources across both tracks</div>
+        </div>
+        <div class="org-stat">
+          <div class="org-stat-num">2</div>
+          <div class="org-stat-label">Tracks — Personal Development and Business Development</div>
+        </div>
+        <div class="org-stat">
+          <div class="org-stat-num">25+</div>
+          <div class="org-stat-label">Years of real-world business experience behind the content</div>
+        </div>
+        <div class="org-stat">
+          <div class="org-stat-num">Free</div>
+          <div class="org-stat-label">Hub access for individual members — no barrier to entry</div>
+        </div>
+      </div>
+      <div class="org-orgs">
+        <span class="org-tag">Chambers of Commerce</span>
+        <span class="org-tag">CDFIs</span>
+        <span class="org-tag">Credit Unions</span>
+        <span class="org-tag">Nonprofits</span>
+        <span class="org-tag">Workforce Programs</span>
+        <span class="org-tag">SBDCs</span>
+      </div>
     </div>
   </div>
 </section>
