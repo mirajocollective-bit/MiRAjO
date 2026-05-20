@@ -188,13 +188,14 @@
         document.getElementById('set-password-section').style.display = 'block';
         return;
       }
-      window.location.href = isCIE ? '/programs/couples-dashboard' : '/programs/dashboard';
+      window.location.href = isCIE ? '/programs/couples-dashboard' : '/hub';
       return;
     }
 
     // Legacy implicit flow: #access_token in hash
     const accessToken = hashParams.get('access_token');
     const refreshToken = hashParams.get('refresh_token');
+    const tokenType = hashParams.get('type');
     if (accessToken && refreshToken) {
       const { error } = await db.auth.setSession({
         access_token: accessToken,
@@ -204,14 +205,22 @@
         showError('Your link has expired. Please request a new one.');
         return;
       }
-      window.location.href = isCIE ? '/programs/couples-dashboard' : '/programs/dashboard';
+      // Recovery = password reset — show set-password form
+      if (tokenType === 'recovery' || isSetup) {
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('confirm-title').textContent = 'Set your password';
+        document.getElementById('confirm-sub').textContent = 'Choose a password to use every time you log in.';
+        document.getElementById('set-password-section').style.display = 'block';
+        return;
+      }
+      window.location.href = isCIE ? '/programs/couples-dashboard' : '/hub';
       return;
     }
 
     // Fallback: already have a session
     const { data: { session } } = await db.auth.getSession();
     if (session) {
-      window.location.href = isCIE ? '/programs/couples-dashboard' : '/programs/dashboard';
+      window.location.href = isCIE ? '/programs/couples-dashboard' : '/hub';
     } else {
       showError('Your link has expired or is invalid. Please request a new one.');
     }
@@ -265,7 +274,7 @@
     msg.textContent = 'Password set! Taking you to your course...';
     msg.style.color = 'var(--new-growth)';
     msg.style.display = 'block';
-    setTimeout(() => { window.location.href = '/programs/dashboard'; }, 1200);
+    setTimeout(() => { window.location.href = '/hub'; }, 1200);
   }
 
   async function resendLink() {
